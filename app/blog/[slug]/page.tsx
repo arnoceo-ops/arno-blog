@@ -8,7 +8,7 @@ function urlFor(source: unknown) {
   return builder.image(source as Parameters<typeof builder.image>[0])
 }
 
-interface Post {interface Post {
+interface Post {
   title: string
   publishedAt: string
   body: unknown[]
