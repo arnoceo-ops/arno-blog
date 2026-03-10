@@ -197,7 +197,7 @@ export default async function Home() {
         }
         .footer-logo {
           font-family: 'Bebas Neue', sans-serif; font-size: 40px;
-          color: #EE7700; letter-spacing: 3px; display: block; margin-bottom: 12px;
+          color: #EE7700; letter-spacing: 3px; display: block; margin-bottom: 12px; margin-top: -7px;
         }
         .footer-desc { font-size: 13px; color: #888; line-height: 2; max-width: 320px; }
         .footer-quote { font-size: 15px; color: #888; line-height: 2; max-width: 520px; font-family: 'Space Mono', monospace; }
