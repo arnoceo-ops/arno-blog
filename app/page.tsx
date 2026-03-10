@@ -97,7 +97,8 @@ export default async function Home() {
           font-family: 'Bebas Neue', sans-serif;
           font-size: clamp(40px, 4vw, 64px);
           line-height: 1.05; color: #0a0a0a;
-          border-left: 4px solid #EE7700; padding-left: 32px;
+          border-right: 4px solid #EE7700; padding-right: 32px;
+          text-align: right;
         }
         .canvas-quote em { font-style: normal; color: #EE7700; }
         .canvas-right {
@@ -151,6 +152,7 @@ export default async function Home() {
           font-family: 'Bebas Neue', sans-serif;
           font-size: clamp(40px, 4vw, 64px);
           line-height: 1.05; letter-spacing: 1px; margin-bottom: 4px;
+          text-align: right;
         }
         .subscribe-title .black { color: #f0ede6; }
         .subscribe-title .orange { color: #EE7700; }
@@ -185,13 +187,13 @@ export default async function Home() {
           font-family: 'Bebas Neue', sans-serif; font-size: 40px;
           color: #EE7700; letter-spacing: 3px; display: block; margin-bottom: 12px;
         }
-        .footer-desc { font-size: 11px; color: #888; line-height: 2; }
+        .footer-desc { font-size: 13px; color: #888; line-height: 2; }
         .footer-col h4 {
-          font-size: 10px; letter-spacing: 3px; text-transform: uppercase; color: #aaa; margin-bottom: 20px;
+          font-size: 13px; letter-spacing: 3px; text-transform: uppercase; color: #aaa; margin-bottom: 20px;
         }
         .footer-links { list-style: none; }
         .footer-links li { margin-bottom: 10px; }
-        .footer-links a { color: #666; text-decoration: none; font-size: 12px; transition: color 0.1s; }
+        .footer-links a { color: #666; text-decoration: none; font-size: 13px; transition: color 0.1s; }
         .footer-links a:hover { color: #EE7700; }
         .footer-bottom {
           grid-column: span 3; border-top: 1px solid #ddd; padding-top: 32px;
@@ -264,7 +266,7 @@ export default async function Home() {
       <footer>
         <div>
           <span className="footer-logo">Royal Dutch Sales</span>
-          <p className="footer-desc">Provocerend. Suggestief. Ongefilterd. Priceless.<br /><br />Rua Presidente Arriaga, Lisboa 🇵🇹</p>
+          <p className="footer-desc">Provocerend. Suggestief. Ongefilterd. Priceless.</p>
         </div>
         <div className="footer-col">
           <h4>Navigatie</h4>
