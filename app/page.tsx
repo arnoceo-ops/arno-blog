@@ -392,7 +392,7 @@ export default async function Home() {
       {/* NAV */}
       <nav className="site-nav">
         <div className="nav-links">
-          <Link href="/">BLOG</Link>
+          <Link href="/blog">BLOG</Link>
           <Link href="/bio">BIO</Link>
           <Link href="/canvas">CANVAS</Link>
           <a href="#subscribe" className="nav-cta">SUBSCRIBE</a>
@@ -428,36 +428,13 @@ export default async function Home() {
         </div>
         <div className="canvas-right">
           <span className="canvas-label">Nieuw</span>
-          <h2 className="canvas-title">RDS<br />Canvas</h2>
+          <h2 className="canvas-title">RDS 🚀<br /><span style={{color:'#EE7700'}}>Canvas</span></h2>
           <p className="canvas-body">
             Het Royal Dutch Sales Canvas is een visueel denkkader voor verkopers en commercieel leiders die écht willen begrijpen wat ze doen — en waarom het werkt. Of niet.
           </p>
           <Link href="/canvas" className="canvas-link">
             Ontdek het Canvas →
           </Link>
-        </div>
-      </section>
-
-      {/* POSTS GRID */}
-      <section id="blog" className="posts-section">
-        <div className="posts-header">
-          <h2>Laatste Posts</h2>
-          <Link href="/blog">Alle posts →</Link>
-        </div>
-        <div className="posts-grid">
-          {posts.map((post, i) => (
-            <Link key={post._id} href={`/blog/${post.slug.current}`} className="post-card">
-              <div>
-                <div className="post-num">{String(i + 1).padStart(2, '0')}</div>
-                <div className="post-title">{decodeHtml(post.title)}</div>
-              </div>
-              <div className="post-date">
-                {new Date(post.publishedAt).toLocaleDateString('nl-NL', {
-                  month: 'short', year: 'numeric'
-                })}
-              </div>
-            </Link>
-          ))}
         </div>
       </section>
 
