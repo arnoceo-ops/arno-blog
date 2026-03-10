@@ -91,7 +91,11 @@ export default async function Home() {
           border-top: 3px solid #EE7700;
         }
         .canvas-left {
-          padding: 80px 60px; border-right: 1px solid #ddd; display: flex; align-items: center;
+          padding: 80px 60px; border-right: 1px solid #ddd; display: flex;
+          align-items: center; justify-content: flex-end;
+        }
+        .canvas-left-inner {
+          max-width: 480px; width: 100%;
         }
         .canvas-quote {
           font-family: 'Bebas Neue', sans-serif;
@@ -103,7 +107,7 @@ export default async function Home() {
         .canvas-quote em { font-style: normal; color: #EE7700; }
         .canvas-right {
           padding: 80px 60px; display: flex; flex-direction: column;
-          justify-content: center; gap: 24px;
+          justify-content: center; gap: 24px; max-width: 560px;
         }
         .canvas-label {
           font-family: 'Bebas Neue', sans-serif; font-size: 13px;
@@ -145,14 +149,20 @@ export default async function Home() {
           display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center;
           border-top: 3px solid #EE7700;
         }
-        .subscribe-left {
+        .subscribe-form-col {
+          display: flex; align-items: center; justify-content: flex-end;
+        }
+        .subscribe-form-inner {
+          max-width: 380px; width: 100%; display: flex; flex-direction: column; gap: 12px;
+        }
+        .subscribe-text-col {
           display: flex; flex-direction: column; gap: 16px;
         }
         .subscribe-title {
           font-family: 'Bebas Neue', sans-serif;
           font-size: clamp(40px, 4vw, 64px);
           line-height: 1.05; letter-spacing: 1px; margin-bottom: 4px;
-          text-align: right;
+          text-align: left;
         }
         .subscribe-title .black { color: #f0ede6; }
         .subscribe-title .orange { color: #EE7700; }
@@ -227,15 +237,17 @@ export default async function Home() {
       {/* RDS CANVAS */}
       <section className="canvas-section">
         <div className="canvas-left">
-          <div className="canvas-quote">
-            "Vision without action<br />
-            is a <em>daydream.</em><br />
-            Action without vision<br />
-            is a <em>nightmare.</em>"
+          <div className="canvas-left-inner">
+            <div className="canvas-quote">
+              "Vision without action<br />
+              is a <em>daydream.</em><br />
+              Action without vision<br />
+              is a <em>nightmare.</em>"
+            </div>
           </div>
         </div>
         <div className="canvas-right">
-          <span className="canvas-label">Nieuw</span>
+          <span className="canvas-label">Trending</span>
           <h2 className="canvas-title">RDS 🚀<br /><span style={{color:'#EE7700'}}>Canvas</span></h2>
           <p className="canvas-body">
             De meeste verkopers weten niet waarom ze winnen. En al helemaal niet waarom ze verliezen. Het RDS Canvas legt het bloot. Geen excuses, geen flaterende spiegel. Goed verkopen is geen talent — het is een systeem. Brutaal eerlijk, zonder ruimte voor zelfbedrog.
@@ -246,19 +258,21 @@ export default async function Home() {
 
       {/* SUBSCRIBE */}
       <section className="subscribe-section" id="subscribe">
-        <div className="subscribe-left">
+        <div className="subscribe-form-col">
+          <div className="subscribe-form-inner">
+            <input className="subscribe-input" type="text" placeholder="Naam" />
+            <input className="subscribe-input" type="email" placeholder="Email" />
+            <button className="subscribe-btn">GO!</button>
+          </div>
+        </div>
+        <div className="subscribe-text-col">
           <h2 className="subscribe-title">
             <span className="black">Chief Sales</span><br />
-            <span className="orange">Updates</span> 🤠
+            <span className="orange">Updates</span>
           </h2>
           <p className="subscribe-body">
             Abonneer je op de Chief Sales Updates, <em>formerly known as Royal Dutch Updates.</em> Bijna iedere vrijdag, bij het wakker worden: food for thought and food for action. Het grootste risico is dat je meer gaat verkopen. Als je er iets mee doet dan, hè? Het is niks waard of miljoenen. Hoe dan ook, <em>priceless.</em>
           </p>
-        </div>
-        <div className="subscribe-right">
-          <input className="subscribe-input" type="text" placeholder="Naam" />
-          <input className="subscribe-input" type="email" placeholder="Email" />
-          <button className="subscribe-btn">GO!</button>
         </div>
       </section>
 
