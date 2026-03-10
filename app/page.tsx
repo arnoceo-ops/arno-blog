@@ -148,17 +148,18 @@ export default async function Home() {
         /* ── SUBSCRIBE ── */
         .subscribe-section {
           background: #111; color: #f0ede6; padding: 80px 60px;
-          display: flex; gap: 80px; align-items: flex-start;
+          display: grid; grid-template-columns: 1fr 1fr;
           border-top: 3px solid #EE7700;
         }
         .subscribe-form-col {
-          flex: 0 0 380px;
+          padding: 80px 60px 80px 0;
+          border-right: 1px solid #333;
           display: flex; flex-direction: column; gap: 12px;
-          padding-top: calc(clamp(40px, 4vw, 64px) * 2.2 + 24px);
-          margin-left: auto;
+          justify-content: flex-start; align-items: flex-end;
+          padding-top: calc(clamp(40px, 4vw, 64px) * 2.2 + 80px);
         }
         .subscribe-text-col {
-          flex: 0 0 420px;
+          padding: 80px 0 80px 60px;
           display: flex; flex-direction: column; gap: 16px;
         }
         .subscribe-title {
@@ -171,14 +172,16 @@ export default async function Home() {
         .subscribe-input {
           background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.12);
           color: #f0ede6; font-family: 'Space Mono', monospace;
-          font-size: 13px; padding: 14px 18px; outline: none; width: 380px;
+          font-size: 13px; padding: 14px 18px; outline: none;
+          width: 380px; max-width: 100%;
         }
         .subscribe-input::placeholder { color: #555; }
         .subscribe-btn {
           background: #EE7700; color: #0a0a0a;
           font-family: 'Bebas Neue', sans-serif;
           font-size: 24px; letter-spacing: 3px; text-transform: uppercase;
-          padding: 14px 18px; border: none; cursor: pointer; width: 380px;
+          padding: 14px 18px; border: none; cursor: pointer;
+          width: 380px; max-width: 100%;
           transition: background 0.2s;
         }
         .subscribe-btn:hover { background: #ff8800; }
