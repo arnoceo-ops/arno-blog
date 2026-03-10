@@ -146,11 +146,12 @@ export default async function Home() {
         /* ── SUBSCRIBE ── */
         .subscribe-section {
           background: #111; color: #f0ede6; padding: 80px 60px;
-          display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center;
+          display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: flex-start;
           border-top: 3px solid #EE7700;
         }
         .subscribe-form-col {
-          display: flex; align-items: center; justify-content: flex-end;
+          display: flex; align-items: flex-start; justify-content: flex-end;
+          padding-top: calc(clamp(40px, 4vw, 64px) * 2.1 + 20px);
         }
         .subscribe-form-inner {
           max-width: 380px; width: 100%; display: flex; flex-direction: column; gap: 12px;
@@ -258,7 +259,7 @@ export default async function Home() {
           <p className="canvas-body">
             De meeste verkopers weten niet waarom ze winnen. En al helemaal niet waarom ze verliezen. Het RDS Canvas legt het bloot. Geen excuses, geen flaterende spiegel. Goed verkopen is geen talent — het is een systeem. Brutaal eerlijk, zonder ruimte voor zelfbedrog.
           </p>
-          <Link href="/canvas" className="canvas-link">SUBSCRIBE →</Link>
+          <Link href="/canvas" className="canvas-link">GO GO CANVAS →</Link>
         </div>
       </section>
 
