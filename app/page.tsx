@@ -156,8 +156,13 @@ export default async function Home() {
         }
         .subscribe-form-col {
           display: flex; flex-direction: column; gap: 12px;
-          justify-content: flex-start;
+          justify-content: flex-start; align-items: flex-start;
           padding-top: calc(clamp(40px, 4vw, 64px) * 2.2 + 24px);
+          width: 380px; max-width: 100%;
+        }
+        .subscribe-form-col .subscribe-input,
+        .subscribe-form-col .subscribe-btn {
+          width: 380px; max-width: 100%;
         }
         .subscribe-title {
           font-family: 'Bebas Neue', sans-serif;
@@ -199,7 +204,7 @@ export default async function Home() {
           color: #EE7700; letter-spacing: 3px; display: block; margin-bottom: 12px;
         }
         .footer-desc { font-size: 13px; color: #888; line-height: 2; max-width: 320px; }
-        .footer-quote { font-size: 13px; color: #888; line-height: 2; max-width: 520px; font-family: 'Space Mono', monospace; }
+        .footer-quote { font-size: 15px; color: #888; line-height: 2; max-width: 520px; font-family: 'Space Mono', monospace; }
         .footer-quote em { font-style: normal; color: #888; }
         .footer-quote .attribution { font-family: 'Bebas Neue', sans-serif; font-size: 16px; letter-spacing: 3px; color: #EE7700; display: block; margin-top: 6px; }
         .social-icons { display: flex; gap: 20px; margin-top: 24px; }
@@ -212,12 +217,12 @@ export default async function Home() {
         .icon-linkedin { color: #0A66C2; }
         .footer-col h4 {
           font-size: 13px; letter-spacing: 3px; text-transform: uppercase;
-          color: #0a0a0a; margin-bottom: 20px; font-family: 'Space Mono', monospace;
+          color: #0a0a0a; margin-bottom: 20px; font-family: 'Space Mono', monospace; font-size: 15px;
           font-weight: 700;
         }
         .footer-links { list-style: none; }
         .footer-links li { margin-bottom: 10px; }
-        .footer-links a { color: #888; text-decoration: none; font-size: 13px; font-family: 'Space Mono', monospace; transition: color 0.1s; }
+        .footer-links a { color: #888; text-decoration: none; font-size: 15px; font-family: 'Space Mono', monospace; transition: color 0.1s; }
         .footer-links a:hover { color: #EE7700; }
         .footer-bottom {
           grid-column: span 3; border-top: 1px solid #ddd; padding-top: 32px;
@@ -271,6 +276,11 @@ export default async function Home() {
 
       {/* SUBSCRIBE */}
       <section className="subscribe-section" id="subscribe">
+        <div className="subscribe-form-col">
+          <input className="subscribe-input" type="text" placeholder="Naam" />
+          <input className="subscribe-input" type="email" placeholder="Email" />
+          <button className="subscribe-btn">SUBSCRIBE</button>
+        </div>
         <div className="subscribe-text-col">
           <h2 className="subscribe-title">
             <span className="black">Chief Sales</span><br />
@@ -279,11 +289,6 @@ export default async function Home() {
           <p className="subscribe-body">
             Abonneer je op de Chief Sales Updates, <em>formerly known as Royal Dutch Updates.</em> Bijna iedere vrijdag, bij het wakker worden: food for thought and food for action. Het grootste risico is dat je meer gaat verkopen. Als je er iets mee doet dan, hè? Het is niks waard of miljoenen. Hoe dan ook, <em>priceless.</em>
           </p>
-        </div>
-        <div className="subscribe-form-col">
-          <input className="subscribe-input" type="text" placeholder="Naam" />
-          <input className="subscribe-input" type="email" placeholder="Email" />
-          <button className="subscribe-btn">SUBSCRIBE</button>
         </div>
       </section>
 
