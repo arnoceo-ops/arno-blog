@@ -8,12 +8,27 @@ interface Post {
   publishedAt: string
 }
 
+function decodeHtml(str: string): string {
+  return str
+    .replace(/&#x([0-9a-fA-F]+);/g, (_, h) => String.fromCodePoint(parseInt(h, 16)))
+    .replace(/&#(\d+);/g, (_, d) => String.fromCodePoint(parseInt(d, 10)))
+    .replace(/&amp;/g, '&').replace(/&lt;/g, '<').replace(/&gt;/g, '>')
+}
+
 async function getPosts(): Promise<Post[]> {
-  return client.fetch(
+  const posts = await client.fetch(
     `*[_type == "post"] | order(publishedAt desc) {
       _id, title, slug, publishedAt
     }`
   )
+  // Dedup op titel (vangnet)
+  const seen = new Set<string>()
+  return posts.filter((p: Post) => {
+    const key = decodeHtml(p.title || '').toLowerCase().trim()
+    if (seen.has(key)) return false
+    seen.add(key)
+    return true
+  })
 }
 
 export default async function Home() {
@@ -291,7 +306,8 @@ export default async function Home() {
             fontFamily: 'Space Mono, monospace',
             fontWeight: 700, fontSize: '12px',
             letterSpacing: '2px', textTransform: 'uppercase',
-            padding: '16px 32px'
+            padding: '16px 32px',
+            alignSelf: 'flex-start'
           }}>Lees de laatste post →</a>
         </div>
 
@@ -301,7 +317,7 @@ export default async function Home() {
           display: 'flex', flexDirection: 'column', justifyContent: 'flex-end'
         }}>
           <div style={{ display: 'flex', gap: '48px' }}>
-            {[['18+', 'Jaar actief'], ['100+', 'Posts'], ['0', 'Filters']].map(([num, label]) => (
+            {[['18+', 'Jaar actief'], ['190+', 'Posts'], ['0', 'Filters']].map(([num, label]) => (
               <div key={label}>
                 <span style={{
                   fontFamily: 'Bebas Neue, sans-serif',
@@ -347,7 +363,7 @@ export default async function Home() {
           {posts.map((post, i) => (
             <Link key={post._id} href={`/blog/${post.slug.current}`} className="post-card">
               <span className="post-num">{String(i + 1).padStart(2, '0')}</span>
-              <span className="post-title">{post.title}</span>
+              <span className="post-title">{decodeHtml(post.title)}</span>
               <span className="post-date">
                 {new Date(post.publishedAt).toLocaleDateString('nl-NL', {
                   month: 'short', year: 'numeric'
