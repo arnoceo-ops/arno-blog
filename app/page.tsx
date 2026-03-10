@@ -87,16 +87,16 @@ export default async function Home() {
 
         /* ── CANVAS ── */
         .canvas-section {
-          background: #111; display: grid; grid-template-columns: 1fr 1fr;
-          border-top: 1px solid #1e1e1e;
+          background: #f0ede6; display: grid; grid-template-columns: 1fr 1fr;
+          border-top: 3px solid #EE7700;
         }
         .canvas-left {
-          padding: 80px 60px; border-right: 1px solid #1e1e1e; display: flex; align-items: center;
+          padding: 80px 60px; border-right: 1px solid #ddd; display: flex; align-items: center;
         }
         .canvas-quote {
           font-family: 'Bebas Neue', sans-serif;
           font-size: clamp(40px, 4vw, 64px);
-          line-height: 1.05; color: #f0ede6;
+          line-height: 1.05; color: #0a0a0a;
           border-left: 4px solid #EE7700; padding-left: 32px;
         }
         .canvas-quote em { font-style: normal; color: #EE7700; }
@@ -111,10 +111,10 @@ export default async function Home() {
         .canvas-title {
           font-family: 'Bebas Neue', sans-serif;
           font-size: clamp(40px, 4vw, 64px);
-          line-height: 1.05; color: #f0ede6; letter-spacing: 1px;
+          line-height: 1.05; color: #0a0a0a; letter-spacing: 1px;
         }
         .canvas-body {
-          font-size: 15px; line-height: 2; color: #888; max-width: 420px;
+          font-size: 15px; line-height: 2; color: #555; max-width: 420px;
         }
         .canvas-link {
           display: inline-flex; align-items: center; gap: 12px;
@@ -140,9 +140,9 @@ export default async function Home() {
 
         /* ── SUBSCRIBE ── */
         .subscribe-section {
-          background: #f0ede6; color: #0a0a0a; padding: 80px 60px;
+          background: #111; color: #f0ede6; padding: 80px 60px;
           display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center;
-          border-top: 1px solid #ddd;
+          border-top: 3px solid #EE7700;
         }
         .subscribe-left {
           display: flex; flex-direction: column; gap: 16px;
@@ -152,49 +152,50 @@ export default async function Home() {
           font-size: clamp(40px, 4vw, 64px);
           line-height: 1.05; letter-spacing: 1px; margin-bottom: 4px;
         }
-        .subscribe-title .black { color: #0a0a0a; }
+        .subscribe-title .black { color: #f0ede6; }
         .subscribe-title .orange { color: #EE7700; }
         .subscribe-input {
-          background: rgba(0,0,0,0.06); border: 1px solid rgba(0,0,0,0.15);
-          color: #0a0a0a; font-family: 'Space Mono', monospace;
+          background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.12);
+          color: #f0ede6; font-family: 'Space Mono', monospace;
           font-size: 13px; padding: 14px 18px; outline: none; width: 100%;
         }
+        .subscribe-input::placeholder { color: #555; }
         .subscribe-btn {
-          background: #0a0a0a; color: #EE7700;
+          background: #EE7700; color: #0a0a0a;
           font-family: 'Bebas Neue', sans-serif;
           font-size: 24px; letter-spacing: 3px; text-transform: uppercase;
           padding: 14px 18px; border: none; cursor: pointer; width: 100%;
           transition: background 0.2s;
         }
-        .subscribe-btn:hover { background: #1a1a1a; }
+        .subscribe-btn:hover { background: #ff8800; }
         .subscribe-right {
           display: flex; flex-direction: column; gap: 12px; max-width: 380px;
         }
         .subscribe-body {
-          font-size: 15px; line-height: 2; color: #666; margin-bottom: 8px;
+          font-size: 15px; line-height: 2; color: #888; max-width: 420px; margin-bottom: 8px;
         }
-        .subscribe-body em { font-style: normal; font-weight: 700; color: #0a0a0a; }
+        .subscribe-body em { font-style: normal; font-weight: 700; color: #f0ede6; }
 
         /* ── FOOTER ── */
         footer {
-          background: #050505; padding: 60px;
-          display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 40px; border-top: 1px solid #111;
+          background: #f0ede6; color: #0a0a0a; padding: 60px;
+          display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 40px; border-top: 3px solid #EE7700;
         }
         .footer-logo {
           font-family: 'Bebas Neue', sans-serif; font-size: 40px;
           color: #EE7700; letter-spacing: 3px; display: block; margin-bottom: 12px;
         }
-        .footer-desc { font-size: 11px; color: #555; line-height: 2; }
+        .footer-desc { font-size: 11px; color: #888; line-height: 2; }
         .footer-col h4 {
-          font-size: 10px; letter-spacing: 3px; text-transform: uppercase; color: #555; margin-bottom: 20px;
+          font-size: 10px; letter-spacing: 3px; text-transform: uppercase; color: #aaa; margin-bottom: 20px;
         }
         .footer-links { list-style: none; }
         .footer-links li { margin-bottom: 10px; }
-        .footer-links a { color: #444; text-decoration: none; font-size: 12px; transition: color 0.1s; }
+        .footer-links a { color: #666; text-decoration: none; font-size: 12px; transition: color 0.1s; }
         .footer-links a:hover { color: #EE7700; }
         .footer-bottom {
-          grid-column: span 3; border-top: 1px solid #111; padding-top: 32px;
-          display: flex; justify-content: space-between; color: #333; font-size: 10px;
+          grid-column: span 3; border-top: 1px solid #ddd; padding-top: 32px;
+          display: flex; justify-content: space-between; color: #aaa; font-size: 10px;
         }
       `}</style>
 
