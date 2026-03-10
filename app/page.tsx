@@ -118,15 +118,14 @@ export default async function Home() {
           font-size: 15px; line-height: 2; color: #555; max-width: 420px;
         }
         .canvas-link {
-          display: block;
+          display: inline-block;
           color: #EE7700; text-decoration: none;
           font-family: 'Bebas Neue', sans-serif;
           font-size: 24px; letter-spacing: 3px; text-transform: uppercase;
           margin-top: 16px;
           background: #0a0a0a;
           padding: 14px 18px;
-          border: none; width: 100%;
-          text-align: center;
+          border: none;
           transition: background 0.2s;
         }
         .canvas-link:hover { background: #1a1a1a; }
@@ -147,11 +146,11 @@ export default async function Home() {
         /* ── SUBSCRIBE ── */
         .subscribe-section {
           background: #111; color: #f0ede6; padding: 80px 60px;
-          display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: flex-end;
+          display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center;
           border-top: 3px solid #EE7700;
         }
         .subscribe-form-col {
-          display: flex; align-items: flex-end; justify-content: flex-end;
+          display: flex; align-items: center; justify-content: flex-end;
         }
         .subscribe-form-inner {
           max-width: 380px; width: 100%; display: flex; flex-direction: column; gap: 12px;
@@ -201,7 +200,7 @@ export default async function Home() {
         .footer-desc { font-size: 13px; color: #888; line-height: 2; max-width: 320px; }
         .footer-quote { font-size: 13px; color: #888; line-height: 2; max-width: 320px; font-family: 'Space Mono', monospace; }
         .footer-quote em { font-style: normal; color: #888; }
-        .footer-quote .attribution { font-family: 'Bebas Neue', sans-serif; font-size: 12px; letter-spacing: 2px; color: #EE7700; display: block; margin-top: 4px; }
+        .footer-quote .attribution { font-family: 'Bebas Neue', sans-serif; font-size: 16px; letter-spacing: 3px; color: #EE7700; display: block; margin-top: 6px; }
         .social-icons { display: flex; gap: 20px; margin-top: 24px; }
         .social-icons a { color: #666; text-decoration: none; transition: color 0.2s; }
         .social-icons a:hover { color: #EE7700; }
@@ -269,7 +268,7 @@ export default async function Home() {
           <div className="subscribe-form-inner">
             <input className="subscribe-input" type="text" placeholder="Naam" />
             <input className="subscribe-input" type="email" placeholder="Email" />
-            <button className="subscribe-btn">GO!</button>
+            <button className="subscribe-btn">SUBSCRIBE</button>
           </div>
         </div>
         <div className="subscribe-text-col">
@@ -288,9 +287,10 @@ export default async function Home() {
         <div>
           <span className="footer-logo">Royal Dutch Sales</span>
           <p className="footer-quote">
-            <em>"We are what we repeatedly do. Excellence, then, is not an act but a habit."</em>
+            <span style={{display:'block'}}>"We are what we repeatedly do.</span>
+            <span style={{display:'block'}}>Excellence, then, is not an act but a habit."</span>
             <span className="attribution">~ Aristotle</span>
-            <em>"Unfortunately, so is failure."</em>
+            <span style={{display:'block', marginTop:'16px'}}>"Unfortunately, so is failure."</span>
             <span className="attribution">~ Vince Lombardi</span>
           </p>
         </div>
