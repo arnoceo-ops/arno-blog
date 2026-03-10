@@ -156,7 +156,7 @@ export default async function Home() {
           border-right: 1px solid #333;
           display: flex; flex-direction: column; gap: 12px;
           justify-content: flex-start; align-items: flex-end;
-          padding-top: calc(clamp(40px, 4vw, 64px) * 2.2 + 80px);
+          padding-top: calc(80px + clamp(40px, 4vw, 64px) * 2.1 + 20px);
         }
         .subscribe-text-col {
           padding: 80px 0 80px 60px;
