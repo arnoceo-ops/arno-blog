@@ -199,7 +199,7 @@ export default async function Home() {
           color: #EE7700; letter-spacing: 3px; display: block; margin-bottom: 12px;
         }
         .footer-desc { font-size: 13px; color: #888; line-height: 2; max-width: 320px; }
-        .footer-quote { font-size: 13px; color: #888; line-height: 2; max-width: 320px; font-family: 'Space Mono', monospace; }
+        .footer-quote { font-size: 13px; color: #888; line-height: 2; max-width: 520px; font-family: 'Space Mono', monospace; }
         .footer-quote em { font-style: normal; color: #888; }
         .footer-quote .attribution { font-family: 'Bebas Neue', sans-serif; font-size: 16px; letter-spacing: 3px; color: #EE7700; display: block; margin-top: 6px; }
         .social-icons { display: flex; gap: 20px; margin-top: 24px; }
