@@ -186,7 +186,7 @@ export default async function Home() {
         }
         .subscribe-btn:hover { background: #ff8800; }
         .subscribe-body {
-          font-size: 15px; line-height: 2; color: #888; margin-bottom: 8px;
+          font-size: 15px; line-height: 2; color: #888; margin-bottom: 8px; max-width: 420px;
         }
         .subscribe-body em { font-style: normal; font-weight: 700; color: #f0ede6; }
 
