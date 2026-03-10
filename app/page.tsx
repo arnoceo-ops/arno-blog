@@ -148,49 +148,42 @@ export default async function Home() {
         /* ── SUBSCRIBE ── */
         .subscribe-section {
           background: #111; color: #f0ede6; padding: 80px 60px;
-          display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: flex-start;
+          display: flex; gap: 80px; align-items: flex-start;
           border-top: 3px solid #EE7700;
         }
-        .subscribe-text-col {
-          display: flex; flex-direction: column; gap: 16px;
-        }
         .subscribe-form-col {
+          flex: 0 0 380px;
           display: flex; flex-direction: column; gap: 12px;
-          justify-content: flex-start; align-items: flex-start;
           padding-top: calc(clamp(40px, 4vw, 64px) * 2.2 + 24px);
-          padding-left: 40px;
+          margin-left: auto;
         }
-        .subscribe-form-col .subscribe-input,
-        .subscribe-form-col .subscribe-btn {
-          width: 380px; max-width: 100%;
+        .subscribe-text-col {
+          flex: 0 0 420px;
+          display: flex; flex-direction: column; gap: 16px;
         }
         .subscribe-title {
           font-family: 'Bebas Neue', sans-serif;
           font-size: clamp(40px, 4vw, 64px);
           line-height: 1.05; letter-spacing: 1px; margin-bottom: 4px;
-          text-align: left;
         }
         .subscribe-title .black { color: #f0ede6; }
         .subscribe-title .orange { color: #EE7700; }
         .subscribe-input {
           background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.12);
           color: #f0ede6; font-family: 'Space Mono', monospace;
-          font-size: 13px; padding: 14px 18px; outline: none; width: 100%;
+          font-size: 13px; padding: 14px 18px; outline: none; width: 380px;
         }
         .subscribe-input::placeholder { color: #555; }
         .subscribe-btn {
           background: #EE7700; color: #0a0a0a;
           font-family: 'Bebas Neue', sans-serif;
           font-size: 24px; letter-spacing: 3px; text-transform: uppercase;
-          padding: 14px 18px; border: none; cursor: pointer; width: 100%;
+          padding: 14px 18px; border: none; cursor: pointer; width: 380px;
           transition: background 0.2s;
         }
         .subscribe-btn:hover { background: #ff8800; }
-        .subscribe-right {
-          display: flex; flex-direction: column; gap: 12px; max-width: 380px;
-        }
         .subscribe-body {
-          font-size: 15px; line-height: 2; color: #888; max-width: 420px; margin-bottom: 8px;
+          font-size: 15px; line-height: 2; color: #888; margin-bottom: 8px;
         }
         .subscribe-body em { font-style: normal; font-weight: 700; color: #f0ede6; }
 
