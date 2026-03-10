@@ -130,28 +130,6 @@ export default async function Home() {
           color: #EE7700;
         }
 
-        /* ── TICKER ── */
-        .ticker {
-          background: #EE7700;
-          color: #0a0a0a;
-          padding: 12px 0;
-          overflow: hidden;
-          white-space: nowrap;
-        }
-        .ticker-inner {
-          display: inline-flex;
-          animation: scroll 25s linear infinite;
-        }
-        .ticker-item {
-          font-family: 'Bebas Neue', sans-serif;
-          font-size: 20px;
-          letter-spacing: 3px;
-          padding: 0 40px;
-        }
-        @keyframes scroll {
-          from { transform: translateX(0); }
-          to { transform: translateX(-50%); }
-        }
 
         /* ── POSTS GRID ── */
         .posts-section {
@@ -193,9 +171,9 @@ export default async function Home() {
           background: #141414;
           text-decoration: none;
           color: #f0ede6;
-          border-left: 2px solid transparent;
+          border-left: 3px solid transparent;
           transition: border-color 0.2s, background 0.2s;
-          min-height: 200px;
+          min-height: 260px;
         }
         .post-card:hover {
           border-left-color: #EE7700;
@@ -203,18 +181,18 @@ export default async function Home() {
         }
         .post-num {
           font-family: 'Bebas Neue', sans-serif;
-          font-size: 48px;
-          color: #222;
+          font-size: 24px;
+          color: #2a2a2a;
           line-height: 1;
           transition: color 0.2s;
-          margin-bottom: 16px;
+          margin-bottom: 12px;
         }
         .post-card:hover .post-num { color: #EE7700; }
         .post-title {
-          font-family: 'Barlow Condensed', sans-serif;
-          font-weight: 600;
-          font-size: 22px;
-          line-height: 1.2;
+          font-family: 'Bebas Neue', sans-serif;
+          font-size: 42px;
+          line-height: 1.0;
+          letter-spacing: 0.5px;
           flex: 1;
         }
         .post-date {
@@ -377,16 +355,6 @@ export default async function Home() {
         </div>
       </section>
 
-      {/* TICKER */}
-      <div className="ticker">
-        <div className="ticker-inner">
-          {['PROVOCEREND', '✦', 'SUGGESTIEF', '✦', 'ONGEFILTERD', '✦', 'PRICELESS', '✦', 'ANTI-MIDDELMATIGHEID', '✦', 'ROYAL DUTCH SALES', '✦', 'LISBOA 🇵🇹', '✦',
-            'PROVOCEREND', '✦', 'SUGGESTIEF', '✦', 'ONGEFILTERD', '✦', 'PRICELESS', '✦', 'ANTI-MIDDELMATIGHEID', '✦', 'ROYAL DUTCH SALES', '✦', 'LISBOA 🇵🇹', '✦'
-          ].map((item, i) => (
-            <span key={i} className="ticker-item">{item}</span>
-          ))}
-        </div>
-      </div>
 
       {/* POSTS GRID */}
       <section id="blog" className="posts-section">
