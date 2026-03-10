@@ -32,7 +32,7 @@ async function getPosts(): Promise<Post[]> {
 
 export default async function Home() {
   const allPosts = await getPosts()
-  const posts = allPosts.slice(0, 9)
+  const posts = allPosts.slice(0, 12)
 
   return (
     <>
@@ -51,31 +51,26 @@ export default async function Home() {
           position: fixed;
           top: 0; left: 0; right: 0;
           z-index: 100;
-          padding: 20px 40px;
+          padding: 16px 40px;
           display: flex;
-          justify-content: space-between;
+          justify-content: center;
           align-items: center;
+          gap: 48px;
           border-bottom: 1px solid rgba(255,255,255,0.06);
           background: rgba(10,10,10,0.9);
           backdrop-filter: blur(12px);
         }
-        .nav-logo {
-          font-family: 'Bebas Neue', sans-serif;
-          font-size: 22px;
-          letter-spacing: 3px;
-          color: #EE7700;
-          text-decoration: none;
-        }
         .nav-links {
           display: flex;
-          gap: 32px;
+          gap: 48px;
           align-items: center;
         }
         .nav-links a {
-          color: #555;
+          color: #888;
           text-decoration: none;
-          font-size: 11px;
-          letter-spacing: 2px;
+          font-family: 'Bebas Neue', sans-serif;
+          font-size: 22px;
+          letter-spacing: 3px;
           text-transform: uppercase;
           transition: color 0.2s;
         }
@@ -129,6 +124,24 @@ export default async function Home() {
         .hero-title span {
           color: #EE7700;
         }
+        .hero-tagline {
+          position: absolute;
+          bottom: 80px;
+          right: 60px;
+          z-index: 2;
+          text-align: right;
+        }
+        .hero-tagline p {
+          font-family: 'Barlow Condensed', sans-serif;
+          font-size: 14px;
+          letter-spacing: 3px;
+          text-transform: uppercase;
+          color: rgba(240,237,230,0.35);
+          line-height: 2;
+        }
+        .hero-tagline p span {
+          color: rgba(238,119,0,0.5);
+        }
 
 
         /* ── POSTS GRID ── */
@@ -160,7 +173,7 @@ export default async function Home() {
 
         .posts-grid {
           display: grid;
-          grid-template-columns: repeat(3, 1fr);
+          grid-template-columns: repeat(4, 1fr);
           gap: 2px;
         }
         .post-card {
@@ -333,12 +346,11 @@ export default async function Home() {
 
       {/* NAV */}
       <nav className="site-nav">
-        <span className="nav-logo">Royal Dutch Sales</span>
         <div className="nav-links">
-          {['Blog', 'Bio', 'Tools', 'Contact'].map(item => (
+          {['BLOG', 'BIO', 'CANVAS'].map(item => (
             <a key={item} href="#">{item}</a>
           ))}
-          <a href="#subscribe" className="nav-cta">Subscribe →</a>
+          <a href="#subscribe" className="nav-cta">SUBSCRIBE</a>
         </div>
       </nav>
 
@@ -346,6 +358,10 @@ export default async function Home() {
       <section className="hero">
         <div className="hero-bg" />
         <div className="hero-overlay" />
+        <div className="hero-tagline">
+          <p>Provocerend. Suggestief.</p>
+          <p>Ongefilterd. <span>Priceless.</span></p>
+        </div>
         <div className="hero-content">
           <h1 className="hero-title">
             ROYAL<br />
