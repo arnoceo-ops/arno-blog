@@ -8,11 +8,11 @@ function urlFor(source: unknown) {
   return builder.image(source as Parameters<typeof builder.image>[0])
 }
 
-interface Post {
+interface Post {interface Post {
   title: string
   publishedAt: string
   body: unknown[]
-  coverImage: unknown
+  coverImage: Record<string, unknown> | null
 }
 
 async function getPost(slug: string): Promise<Post> {
