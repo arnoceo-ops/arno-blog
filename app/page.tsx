@@ -140,12 +140,25 @@ export default async function Home() {
 
         /* ── SUBSCRIBE ── */
         .subscribe-section {
-          background: #EE7700; color: #0a0a0a; padding: 80px 60px;
+          background: #f0ede6; color: #0a0a0a; padding: 80px 60px;
           display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center;
+          border-top: 1px solid #ddd;
         }
-        .subscribe-form { display: flex; flex-direction: column; gap: 12px; max-width: 360px; }
+        .subscribe-left {
+          display: flex; flex-direction: column; gap: 12px; max-width: 360px;
+        }
+        .subscribe-label {
+          font-family: 'Bebas Neue', sans-serif; font-size: 13px;
+          letter-spacing: 5px; color: #EE7700; text-transform: uppercase;
+        }
+        .subscribe-title {
+          font-family: 'Bebas Neue', sans-serif;
+          font-size: clamp(40px, 4vw, 64px);
+          line-height: 1.05; color: #0a0a0a; letter-spacing: 1px;
+          margin-bottom: 8px;
+        }
         .subscribe-input {
-          background: rgba(0,0,0,0.08); border: 1px solid rgba(0,0,0,0.15);
+          background: rgba(0,0,0,0.06); border: 1px solid rgba(0,0,0,0.15);
           color: #0a0a0a; font-family: 'Space Mono', monospace;
           font-size: 13px; padding: 14px 18px; outline: none; width: 100%;
         }
@@ -157,15 +170,11 @@ export default async function Home() {
           transition: background 0.2s;
         }
         .subscribe-btn:hover { background: #1a1a1a; }
-        .subscribe-text { }
-        .subscribe-text h3 {
-          font-family: 'Bebas Neue', sans-serif; font-size: 32px;
-          letter-spacing: 2px; margin-bottom: 20px; line-height: 1;
+        .subscribe-right { }
+        .subscribe-body {
+          font-size: 15px; line-height: 2; color: #666; max-width: 420px;
         }
-        .subscribe-text p {
-          font-size: 13px; line-height: 2; color: rgba(0,0,0,0.7);
-        }
-        .subscribe-text em { font-style: normal; font-weight: 700; color: #0a0a0a; }
+        .subscribe-body em { font-style: normal; font-weight: 700; color: #0a0a0a; }
 
         /* ── FOOTER ── */
         footer {
@@ -233,31 +242,17 @@ export default async function Home() {
         </div>
       </section>
 
-      {/* MANIFESTO */}
-      <section className="manifesto">
-        <div className="manifesto-quote">
-          "Excellence is not an act — it's a <em>habit.</em> Unfortunately, so is <em>failure.</em>"
-        </div>
-        <div>
-          <div className="manifesto-body">
-            <p>Royal Dutch Sales dient geen enkel commercieel doel. Het is wars van alles wat iedereen al doet.</p>
-            <p>Geen thought leadership-bingo, geen LinkedIn-pap. Wel directe, ruwe, soms pijnlijke waarheden over verkoop, mensen en excellentie.</p>
-            <p>Voor de een een arrogant betwetertje. Voor de ander een bron van rijkmakende ideeën.</p>
-          </div>
-          <div className="manifesto-sig">— Arno Diepeveen, Lisboa</div>
-        </div>
-      </section>
-
       {/* SUBSCRIBE */}
       <section className="subscribe-section" id="subscribe">
-        <div className="subscribe-form">
+        <div className="subscribe-left">
+          <span className="subscribe-label">Elke vrijdag</span>
+          <h2 className="subscribe-title">Chief Sales<br />Updates</h2>
           <input className="subscribe-input" type="text" placeholder="Naam" />
           <input className="subscribe-input" type="email" placeholder="Email" />
           <button className="subscribe-btn">GO!</button>
         </div>
-        <div className="subscribe-text">
-          <h3>Chief Sales Updates</h3>
-          <p>
+        <div className="subscribe-right">
+          <p className="subscribe-body">
             Abonneer je op de Chief Sales Updates, <em>formerly known as Royal Dutch Updates.</em> Bijna iedere vrijdag, bij het wakker worden: food for thought and food for action. Het grootste risico is dat je meer gaat verkopen. Als je er iets mee doet dan, hè? Het is niks waard of miljoenen. Hoe dan ook, <em>priceless.</em>
           </p>
         </div>

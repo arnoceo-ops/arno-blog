@@ -92,7 +92,8 @@ export default function CanvasPage() {
 
       <nav className="site-nav">
         <div className="nav-links">
-          <Link href="/">BLOG</Link>
+          <Link href="/">HOME</Link>
+          <Link href="/blog">BLOG</Link>
           <Link href="/bio">BIO</Link>
           <Link href="/canvas" className="nav-active">CANVAS</Link>
           <a href="/#subscribe" className="nav-cta">SUBSCRIBE</a>
