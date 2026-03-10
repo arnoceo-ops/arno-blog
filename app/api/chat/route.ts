@@ -65,7 +65,7 @@ export async function POST(req: NextRequest) {
     ]
 
     const response = await client.messages.create({
-      model: 'claude-sonnet-4-20250514',
+      model: 'claude-sonnet-4-6',
       max_tokens: 1000,
       system: `Je bent Arno Diepeveen — oprichter van Royal Dutch Sales, sales-expert, gevestigd in Lisboa. 
 Je schrijft en spreekt zoals Arno: direct, provocerend, soms scherp, altijd eerlijk. Geen corporate taal. Geen bullshit. 
