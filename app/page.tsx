@@ -109,10 +109,6 @@ export default async function Home() {
           padding: 80px 60px; display: flex; flex-direction: column;
           justify-content: flex-start; gap: 24px;
         }
-        .canvas-label {
-          font-family: 'Bebas Neue', sans-serif; font-size: 13px;
-          letter-spacing: 5px; color: #EE7700; text-transform: uppercase;
-        }
         .canvas-title {
           font-family: 'Bebas Neue', sans-serif;
           font-size: clamp(40px, 4vw, 64px);
@@ -122,17 +118,18 @@ export default async function Home() {
           font-size: 15px; line-height: 2; color: #555; max-width: 420px;
         }
         .canvas-link {
-          display: inline-flex; align-items: center; gap: 14px;
-          color: #0a0a0a; text-decoration: none;
+          display: block;
+          color: #EE7700; text-decoration: none;
           font-family: 'Bebas Neue', sans-serif;
-          font-size: 22px; letter-spacing: 3px; text-transform: uppercase;
+          font-size: 24px; letter-spacing: 3px; text-transform: uppercase;
           margin-top: 16px;
-          background: #EE7700;
-          padding: 16px 28px;
-          border: none;
-          transition: background 0.2s, gap 0.2s;
+          background: #0a0a0a;
+          padding: 14px 18px;
+          border: none; width: 100%;
+          text-align: center;
+          transition: background 0.2s;
         }
-        .canvas-link:hover { background: #ff8c00; gap: 22px; }
+        .canvas-link:hover { background: #1a1a1a; }
 
         /* ── MANIFESTO ── */
         .manifesto {
@@ -150,12 +147,11 @@ export default async function Home() {
         /* ── SUBSCRIBE ── */
         .subscribe-section {
           background: #111; color: #f0ede6; padding: 80px 60px;
-          display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: flex-start;
+          display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: flex-end;
           border-top: 3px solid #EE7700;
         }
         .subscribe-form-col {
-          display: flex; align-items: flex-start; justify-content: flex-end;
-          padding-top: 152px;
+          display: flex; align-items: flex-end; justify-content: flex-end;
         }
         .subscribe-form-inner {
           max-width: 380px; width: 100%; display: flex; flex-direction: column; gap: 12px;
@@ -203,19 +199,19 @@ export default async function Home() {
           color: #EE7700; letter-spacing: 3px; display: block; margin-bottom: 12px;
         }
         .footer-desc { font-size: 13px; color: #888; line-height: 2; max-width: 320px; }
-        .footer-quote { font-size: 13px; color: #888; line-height: 2; max-width: 320px; }
-        .footer-quote em { font-style: italic; color: #aaa; }
+        .footer-quote { font-size: 13px; color: #888; line-height: 2; max-width: 320px; font-family: 'Space Mono', monospace; }
+        .footer-quote em { font-style: normal; color: #888; }
         .footer-quote .attribution { font-family: 'Bebas Neue', sans-serif; font-size: 12px; letter-spacing: 2px; color: #EE7700; display: block; margin-top: 4px; }
         .social-icons { display: flex; gap: 20px; margin-top: 24px; }
         .social-icons a { color: #666; text-decoration: none; transition: color 0.2s; }
         .social-icons a:hover { color: #EE7700; }
         .social-icons svg { width: 20px; height: 20px; fill: currentColor; }
         .footer-col h4 {
-          font-size: 13px; letter-spacing: 3px; text-transform: uppercase; color: #aaa; margin-bottom: 20px;
+          font-size: 13px; letter-spacing: 3px; text-transform: uppercase; color: #888; margin-bottom: 20px; font-family: 'Space Mono', monospace;
         }
         .footer-links { list-style: none; }
         .footer-links li { margin-bottom: 10px; }
-        .footer-links a { color: #666; text-decoration: none; font-size: 13px; transition: color 0.1s; }
+        .footer-links a { color: #888; text-decoration: none; font-size: 13px; font-family: 'Space Mono', monospace; transition: color 0.1s; }
         .footer-links a:hover { color: #EE7700; }
         .footer-bottom {
           grid-column: span 3; border-top: 1px solid #ddd; padding-top: 32px;
@@ -259,12 +255,11 @@ export default async function Home() {
           </div>
         </div>
         <div className="canvas-right">
-          <span className="canvas-label">Trending</span>
           <h2 className="canvas-title">RDS 🚀<br /><span style={{color:'#EE7700'}}>Canvas</span></h2>
           <p className="canvas-body">
             De meeste verkopers weten niet waarom ze winnen. En al helemaal niet waarom ze verliezen. Het RDS Canvas legt het bloot. Geen excuses, geen flaterende spiegel. Goed verkopen is geen talent — het is een systeem. Brutaal eerlijk, zonder ruimte voor zelfbedrog.
           </p>
-          <Link href="/canvas" className="canvas-link">Go Go Canvas →</Link>
+          <Link href="/canvas" className="canvas-link">SUBSCRIBE →</Link>
         </div>
       </section>
 
