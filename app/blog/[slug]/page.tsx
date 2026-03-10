@@ -22,6 +22,11 @@ interface Post {
   coverImage: Record<string, unknown> | null
 }
 
+interface NavPost {
+  title: string
+  slug: { current: string }
+}
+
 async function getPost(slug: string): Promise<Post> {
   return client.fetch(
     `*[_type == "post" && slug.current == $slug][0] {
@@ -29,6 +34,17 @@ async function getPost(slug: string): Promise<Post> {
     }`,
     { slug }
   )
+}
+
+async function getAdjacentPosts(slug: string): Promise<{ prev: NavPost | null, next: NavPost | null }> {
+  const all = await client.fetch(
+    `*[_type == "post"] | order(publishedAt desc) { title, slug, publishedAt }`
+  )
+  const index = all.findIndex((p: { slug: { current: string } }) => p.slug.current === slug)
+  return {
+    prev: index < all.length - 1 ? all[index + 1] : null,
+    next: index > 0 ? all[index - 1] : null,
+  }
 }
 
 const portableTextComponents = {
@@ -82,7 +98,10 @@ const portableTextComponents = {
 
 export default async function PostPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params
-  const post = await getPost(slug)
+  const [post, { prev, next }] = await Promise.all([
+    getPost(slug),
+    getAdjacentPosts(slug),
+  ])
 
   if (!post) {
     return (
@@ -207,7 +226,7 @@ export default async function PostPage({ params }: { params: Promise<{ slug: str
         .post-body {
           max-width: 800px;
           margin: 0 auto;
-          padding: 0 60px 120px;
+          padding: 0 60px 80px;
         }
 
         .body-p {
@@ -278,32 +297,53 @@ export default async function PostPage({ params }: { params: Promise<{ slug: str
           color: #EE7700;
         }
 
-        .post-footer {
-          background: #0a0a0a;
+        /* ── POST NAVIGATION ── */
+        .post-nav-bottom {
           border-top: 1px solid #1a1a1a;
-          padding: 60px;
-          max-width: 800px;
-          margin: 0 auto;
-          display: flex;
-          justify-content: space-between;
-          align-items: center;
+          display: grid;
+          grid-template-columns: 1fr 1fr;
         }
-        .post-footer-logo {
-          font-family: 'Bebas Neue', sans-serif;
-          font-size: 20px;
-          color: #EE7700;
-          letter-spacing: 3px;
-        }
-        .post-footer-back {
-          color: #555;
+        .post-nav-prev,
+        .post-nav-next {
+          padding: 40px 60px;
           text-decoration: none;
-          font-size: 11px;
+          color: #f0ede6;
+          transition: background 0.2s;
+          display: flex;
+          flex-direction: column;
+          gap: 12px;
+        }
+        .post-nav-prev:hover,
+        .post-nav-next:hover {
+          background: #141414;
+        }
+        .post-nav-next {
+          border-left: 1px solid #1a1a1a;
+          text-align: right;
+          align-items: flex-end;
+        }
+        .post-nav-arrow {
+          font-size: 32px;
+          color: #EE7700;
+          line-height: 1;
+        }
+        .post-nav-label {
+          font-size: 10px;
           letter-spacing: 3px;
           text-transform: uppercase;
+          color: #444;
           font-family: 'Space Mono', monospace;
-          transition: color 0.2s;
         }
-        .post-footer-back:hover { color: #EE7700; }
+        .post-nav-title {
+          font-family: 'Barlow Condensed', sans-serif;
+          font-weight: 600;
+          font-size: 18px;
+          color: #f0ede6;
+          line-height: 1.3;
+        }
+        .post-nav-empty {
+          padding: 40px 60px;
+        }
       `}</style>
 
       <nav className="post-nav">
@@ -325,10 +365,7 @@ export default async function PostPage({ params }: { params: Promise<{ slug: str
 
       {post.coverImage && (
         <div className="post-cover">
-          <img
-            src={urlFor(post.coverImage).width(800).url()}
-            alt={title}
-          />
+          <img src={urlFor(post.coverImage).width(800).url()} alt={title} />
         </div>
       )}
 
@@ -336,9 +373,26 @@ export default async function PostPage({ params }: { params: Promise<{ slug: str
         <PortableText value={post.body} components={portableTextComponents} />
       </div>
 
-      <div className="post-footer">
-        <span className="post-footer-logo">Royal Dutch Sales</span>
-        <Link href="/" className="post-footer-back">← Terug naar alle posts</Link>
+      {/* PREV / NEXT NAVIGATIE */}
+      <div className="post-nav-bottom">
+        {prev ? (
+          <Link href={`/blog/${prev.slug.current}`} className="post-nav-prev">
+            <span className="post-nav-arrow">←</span>
+            <span className="post-nav-label">Vorige post</span>
+            <span className="post-nav-title">{decodeHtml(prev.title)}</span>
+          </Link>
+        ) : (
+          <div className="post-nav-empty" />
+        )}
+        {next ? (
+          <Link href={`/blog/${next.slug.current}`} className="post-nav-next">
+            <span className="post-nav-arrow">→</span>
+            <span className="post-nav-label">Volgende post</span>
+            <span className="post-nav-title">{decodeHtml(next.title)}</span>
+          </Link>
+        ) : (
+          <div className="post-nav-empty" />
+        )}
       </div>
     </>
   )

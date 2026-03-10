@@ -9,7 +9,7 @@ interface Post {
 }
 
 function decodeHtml(str: string): string {
-  return str
+  return (str || '')
     .replace(/&#x([0-9a-fA-F]+);/g, (_, h) => String.fromCodePoint(parseInt(h, 16)))
     .replace(/&#(\d+);/g, (_, d) => String.fromCodePoint(parseInt(d, 10)))
     .replace(/&amp;/g, '&').replace(/&lt;/g, '<').replace(/&gt;/g, '>')
@@ -21,7 +21,6 @@ async function getPosts(): Promise<Post[]> {
       _id, title, slug, publishedAt
     }`
   )
-  // Dedup op titel (vangnet)
   const seen = new Set<string>()
   return posts.filter((p: Post) => {
     const key = decodeHtml(p.title || '').toLowerCase().trim()
@@ -32,7 +31,8 @@ async function getPosts(): Promise<Post[]> {
 }
 
 export default async function Home() {
-  const posts = await getPosts()
+  const allPosts = await getPosts()
+  const posts = allPosts.slice(0, 9)
 
   return (
     <>
@@ -40,13 +40,97 @@ export default async function Home() {
         @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Mono:wght@400;700&family=Barlow+Condensed:wght@300;600;900&display=swap');
 
         * { box-sizing: border-box; margin: 0; padding: 0; }
-
         body {
           background: #0a0a0a;
           color: #f0ede6;
           font-family: 'Space Mono', monospace;
         }
 
+        /* ── NAV ── */
+        .site-nav {
+          position: fixed;
+          top: 0; left: 0; right: 0;
+          z-index: 100;
+          padding: 20px 40px;
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          border-bottom: 1px solid rgba(255,255,255,0.06);
+          background: rgba(10,10,10,0.9);
+          backdrop-filter: blur(12px);
+        }
+        .nav-logo {
+          font-family: 'Bebas Neue', sans-serif;
+          font-size: 22px;
+          letter-spacing: 3px;
+          color: #EE7700;
+          text-decoration: none;
+        }
+        .nav-links {
+          display: flex;
+          gap: 32px;
+          align-items: center;
+        }
+        .nav-links a {
+          color: #555;
+          text-decoration: none;
+          font-size: 11px;
+          letter-spacing: 2px;
+          text-transform: uppercase;
+          transition: color 0.2s;
+        }
+        .nav-links a:hover { color: #f0ede6; }
+        .nav-cta {
+          color: #EE7700 !important;
+        }
+
+        /* ── HERO ── */
+        .hero {
+          position: relative;
+          width: 100%;
+          height: 100vh;
+          min-height: 600px;
+          overflow: hidden;
+          display: flex;
+          align-items: flex-end;
+        }
+        .hero-bg {
+          position: absolute;
+          inset: 0;
+          background-image: url('/hero.jpg');
+          background-size: cover;
+          background-position: center;
+          background-color: #1a1a1a;
+        }
+        .hero-overlay {
+          position: absolute;
+          inset: 0;
+          background: linear-gradient(
+            to right,
+            rgba(10,10,10,0.85) 0%,
+            rgba(10,10,10,0.5) 50%,
+            rgba(10,10,10,0.1) 100%
+          );
+        }
+        .hero-content {
+          position: relative;
+          z-index: 2;
+          padding: 0 60px 80px;
+          max-width: 700px;
+        }
+        .hero-title {
+          font-family: 'Bebas Neue', sans-serif;
+          font-size: clamp(80px, 12vw, 160px);
+          line-height: 0.88;
+          letter-spacing: -2px;
+          color: #f0ede6;
+          margin-bottom: 0;
+        }
+        .hero-title span {
+          color: #EE7700;
+        }
+
+        /* ── TICKER ── */
         .ticker {
           background: #EE7700;
           color: #0a0a0a;
@@ -69,18 +153,49 @@ export default async function Home() {
           to { transform: translateX(-50%); }
         }
 
-        .post-card {
+        /* ── POSTS GRID ── */
+        .posts-section {
+          padding: 80px 60px 100px;
+        }
+        .posts-header {
+          display: flex;
+          justify-content: space-between;
+          align-items: baseline;
+          margin-bottom: 48px;
+          border-top: 1px solid #1e1e1e;
+          padding-top: 32px;
+        }
+        .posts-header h2 {
+          font-family: 'Bebas Neue', sans-serif;
+          font-size: 64px;
+          letter-spacing: 2px;
+        }
+        .posts-header a {
+          color: #EE7700;
+          text-decoration: none;
+          font-size: 11px;
+          letter-spacing: 2px;
+          text-transform: uppercase;
+          transition: opacity 0.2s;
+        }
+        .posts-header a:hover { opacity: 0.7; }
+
+        .posts-grid {
           display: grid;
-          grid-template-columns: 48px 1fr auto;
-          gap: 32px;
-          align-items: center;
-          padding: 24px;
+          grid-template-columns: repeat(3, 1fr);
+          gap: 2px;
+        }
+        .post-card {
+          display: flex;
+          flex-direction: column;
+          justify-content: space-between;
+          padding: 32px;
           background: #141414;
           text-decoration: none;
           color: #f0ede6;
           border-left: 2px solid transparent;
           transition: border-color 0.2s, background 0.2s;
-          margin-bottom: 2px;
+          min-height: 200px;
         }
         .post-card:hover {
           border-left-color: #EE7700;
@@ -88,23 +203,29 @@ export default async function Home() {
         }
         .post-num {
           font-family: 'Bebas Neue', sans-serif;
-          font-size: 36px;
+          font-size: 48px;
           color: #222;
+          line-height: 1;
           transition: color 0.2s;
+          margin-bottom: 16px;
         }
         .post-card:hover .post-num { color: #EE7700; }
         .post-title {
           font-family: 'Barlow Condensed', sans-serif;
           font-weight: 600;
-          font-size: 24px;
+          font-size: 22px;
+          line-height: 1.2;
+          flex: 1;
         }
         .post-date {
+          margin-top: 20px;
           font-size: 10px;
           letter-spacing: 2px;
           text-transform: uppercase;
-          color: #555;
+          color: #444;
         }
 
+        /* ── MANIFESTO ── */
         .manifesto {
           background: #f0ede6;
           color: #0a0a0a;
@@ -137,6 +258,7 @@ export default async function Home() {
           letter-spacing: 4px;
         }
 
+        /* ── SUBSCRIBE ── */
         .subscribe-section {
           background: #EE7700;
           color: #0a0a0a;
@@ -182,6 +304,7 @@ export default async function Home() {
         }
         .subscribe-btn:hover { background: #1a1a1a; }
 
+        /* ── FOOTER ── */
         footer {
           background: #050505;
           padding: 60px;
@@ -230,110 +353,31 @@ export default async function Home() {
         }
       `}</style>
 
-      <nav style={{
-        position: 'fixed', top: 0, left: 0, right: 0, zIndex: 100,
-        padding: '20px 40px',
-        display: 'flex', justifyContent: 'space-between', alignItems: 'center',
-        borderBottom: '1px solid #1e1e1e',
-        background: 'rgba(10,10,10,0.95)',
-        backdropFilter: 'blur(10px)',
-        fontFamily: 'Space Mono, monospace'
-      }}>
-        <span style={{
-          fontFamily: 'Bebas Neue, sans-serif',
-          fontSize: '24px', letterSpacing: '3px', color: '#EE7700'
-        }}>Royal Dutch Sales</span>
-        <div style={{ display: 'flex', gap: '32px' }}>
+      {/* NAV */}
+      <nav className="site-nav">
+        <span className="nav-logo">Royal Dutch Sales</span>
+        <div className="nav-links">
           {['Blog', 'Bio', 'Tools', 'Contact'].map(item => (
-            <a key={item} href="#" style={{
-              color: '#555', textDecoration: 'none',
-              fontSize: '11px', letterSpacing: '2px', textTransform: 'uppercase'
-            }}>{item}</a>
+            <a key={item} href="#">{item}</a>
           ))}
-          <a href="#subscribe" style={{
-            color: '#EE7700', textDecoration: 'none',
-            fontSize: '11px', letterSpacing: '2px', textTransform: 'uppercase'
-          }}>Subscribe →</a>
+          <a href="#subscribe" className="nav-cta">Subscribe →</a>
         </div>
       </nav>
 
-      <section style={{
-        minHeight: '100vh',
-        display: 'grid',
-        gridTemplateColumns: '1fr 1fr',
-        paddingTop: '80px',
-        position: 'relative',
-        overflow: 'hidden'
-      }}>
-        <div style={{
-          position: 'absolute', top: 0, right: 0,
-          width: '50%', height: '100%',
-          background: '#141414', zIndex: 0
-        }} />
-
-        <div style={{
-          position: 'relative', zIndex: 1,
-          padding: '80px 40px 80px 60px',
-          display: 'flex', flexDirection: 'column', justifyContent: 'center'
-        }}>
-          <p style={{
-            fontSize: '11px', letterSpacing: '4px', textTransform: 'uppercase',
-            color: '#EE7700', marginBottom: '24px'
-          }}>Since 2007 — arno.blog</p>
-
-          <h1 style={{
-            fontFamily: 'Bebas Neue, sans-serif',
-            fontSize: 'clamp(72px, 10vw, 130px)',
-            lineHeight: '0.9', letterSpacing: '-2px',
-            marginBottom: '40px', color: '#f0ede6'
-          }}>
-            Royal<br />Dutch<br /><span style={{ color: '#EE7700' }}>Sales.</span>
+      {/* HERO */}
+      <section className="hero">
+        <div className="hero-bg" />
+        <div className="hero-overlay" />
+        <div className="hero-content">
+          <h1 className="hero-title">
+            ROYAL<br />
+            DUTCH<br />
+            <span>SALES.</span>
           </h1>
-
-          <p style={{
-            fontSize: '13px', lineHeight: '1.8', color: '#888',
-            maxWidth: '380px', marginBottom: '48px'
-          }}>
-            Het bijtertje onder de nationale sales blogs.<br />
-            <strong style={{ color: '#f0ede6' }}>Anti-middelmatigheid.</strong> Anti-bullshit.<br />
-            Pro-resultaat. Voor wie het aankan.
-          </p>
-
-          <a href="#blog" style={{
-            display: 'inline-block',
-            background: '#EE7700', color: '#0a0a0a',
-            textDecoration: 'none',
-            fontFamily: 'Space Mono, monospace',
-            fontWeight: 700, fontSize: '12px',
-            letterSpacing: '2px', textTransform: 'uppercase',
-            padding: '16px 32px',
-            alignSelf: 'flex-start'
-          }}>Lees de laatste post →</a>
-        </div>
-
-        <div style={{
-          position: 'relative', zIndex: 1,
-          padding: '80px 60px 80px 40px',
-          display: 'flex', flexDirection: 'column', justifyContent: 'flex-end'
-        }}>
-          <div style={{ display: 'flex', gap: '48px' }}>
-            {[['18+', 'Jaar actief'], ['190+', 'Posts'], ['0', 'Filters']].map(([num, label]) => (
-              <div key={label}>
-                <span style={{
-                  fontFamily: 'Bebas Neue, sans-serif',
-                  fontSize: '48px', color: '#f0ede6',
-                  letterSpacing: '2px', display: 'block'
-                }}>{num}</span>
-                <span style={{
-                  fontSize: '10px', letterSpacing: '3px',
-                  textTransform: 'uppercase', color: '#555'
-                }}>{label}</span>
-              </div>
-            ))}
-          </div>
         </div>
       </section>
 
+      {/* TICKER */}
       <div className="ticker">
         <div className="ticker-inner">
           {['PROVOCEREND', '✦', 'SUGGESTIEF', '✦', 'ONGEFILTERD', '✦', 'PRICELESS', '✦', 'ANTI-MIDDELMATIGHEID', '✦', 'ROYAL DUTCH SALES', '✦', 'LISBOA 🇵🇹', '✦',
@@ -344,36 +388,30 @@ export default async function Home() {
         </div>
       </div>
 
-      <section id="blog" style={{ padding: '100px 60px' }}>
-        <div style={{
-          display: 'flex', justifyContent: 'space-between', alignItems: 'baseline',
-          marginBottom: '60px', borderTop: '1px solid #1e1e1e', paddingTop: '32px'
-        }}>
-          <h2 style={{
-            fontFamily: 'Bebas Neue, sans-serif',
-            fontSize: '64px', letterSpacing: '2px'
-          }}>Posts</h2>
-          <a href="#" style={{
-            color: '#EE7700', textDecoration: 'none',
-            fontSize: '11px', letterSpacing: '2px', textTransform: 'uppercase'
-          }}>Alle posts →</a>
+      {/* POSTS GRID */}
+      <section id="blog" className="posts-section">
+        <div className="posts-header">
+          <h2>Laatste Posts</h2>
+          <Link href="/blog">Alle posts →</Link>
         </div>
-
-        <div>
+        <div className="posts-grid">
           {posts.map((post, i) => (
             <Link key={post._id} href={`/blog/${post.slug.current}`} className="post-card">
-              <span className="post-num">{String(i + 1).padStart(2, '0')}</span>
-              <span className="post-title">{decodeHtml(post.title)}</span>
-              <span className="post-date">
+              <div>
+                <div className="post-num">{String(i + 1).padStart(2, '0')}</div>
+                <div className="post-title">{decodeHtml(post.title)}</div>
+              </div>
+              <div className="post-date">
                 {new Date(post.publishedAt).toLocaleDateString('nl-NL', {
                   month: 'short', year: 'numeric'
                 })}
-              </span>
+              </div>
             </Link>
           ))}
         </div>
       </section>
 
+      {/* MANIFESTO */}
       <section className="manifesto">
         <div className="manifesto-quote">
           "Excellence is not an act — it's a <em>habit.</em> Unfortunately, so is <em>failure.</em>"
@@ -388,6 +426,7 @@ export default async function Home() {
         </div>
       </section>
 
+      {/* SUBSCRIBE */}
       <section className="subscribe-section" id="subscribe">
         <div>
           <h2 className="subscribe-title">Word wakker.<br />Abonneer.</h2>
@@ -399,6 +438,7 @@ export default async function Home() {
         </div>
       </section>
 
+      {/* FOOTER */}
       <footer>
         <div>
           <span className="footer-logo">Royal Dutch Sales</span>
