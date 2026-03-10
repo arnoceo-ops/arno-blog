@@ -11,7 +11,7 @@ function urlFor(source: unknown) {
 interface Post {
   title: string
   publishedAt: string
-  body: unknown[]
+  body: import('@portabletext/types').PortableTextBlock[]
   coverImage: Record<string, unknown> | null
 }
 
