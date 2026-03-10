@@ -107,7 +107,7 @@ export default async function Home() {
         .canvas-quote em { font-style: normal; color: #EE7700; }
         .canvas-right {
           padding: 80px 60px; display: flex; flex-direction: column;
-          justify-content: flex-start; gap: 24px; max-width: 560px;
+          justify-content: flex-start; gap: 24px;
         }
         .canvas-label {
           font-family: 'Bebas Neue', sans-serif; font-size: 13px;
@@ -122,13 +122,17 @@ export default async function Home() {
           font-size: 15px; line-height: 2; color: #555; max-width: 420px;
         }
         .canvas-link {
-          display: inline-flex; align-items: center; gap: 12px;
-          color: #EE7700; text-decoration: none;
+          display: inline-flex; align-items: center; gap: 14px;
+          color: #0a0a0a; text-decoration: none;
           font-family: 'Bebas Neue', sans-serif;
-          font-size: 20px; letter-spacing: 3px; text-transform: uppercase;
-          margin-top: 8px; transition: gap 0.2s;
+          font-size: 22px; letter-spacing: 3px; text-transform: uppercase;
+          margin-top: 16px;
+          background: #EE7700;
+          padding: 16px 28px;
+          border: none;
+          transition: background 0.2s, gap 0.2s;
         }
-        .canvas-link:hover { gap: 20px; }
+        .canvas-link:hover { background: #ff8c00; gap: 22px; }
 
         /* ── MANIFESTO ── */
         .manifesto {
@@ -151,7 +155,7 @@ export default async function Home() {
         }
         .subscribe-form-col {
           display: flex; align-items: flex-start; justify-content: flex-end;
-          padding-top: 108px;
+          padding-top: 152px;
         }
         .subscribe-form-inner {
           max-width: 380px; width: 100%; display: flex; flex-direction: column; gap: 12px;
@@ -289,7 +293,7 @@ export default async function Home() {
         <div>
           <span className="footer-logo">Royal Dutch Sales</span>
           <p className="footer-quote">
-            <em>"We are what we repeatedly do.<br />Excellence, then, is not an act<br />but a habit."</em>
+            <em>"We are what we repeatedly do. Excellence, then, is not an act but a habit."</em>
             <span className="attribution">~ Aristotle</span>
             <em>"Unfortunately, so is failure."</em>
             <span className="attribution">~ Vince Lombardi</span>

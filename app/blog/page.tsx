@@ -29,6 +29,15 @@ async function getPosts(): Promise<Post[]> {
 export default async function BlogPage() {
   const posts = await getPosts()
 
+  // Groepeer per jaar
+  const byYear: Record<string, Post[]> = {}
+  for (const post of posts) {
+    const year = new Date(post.publishedAt).getFullYear().toString()
+    if (!byYear[year]) byYear[year] = []
+    byYear[year].push(post)
+  }
+  const years = Object.keys(byYear).sort((a, b) => Number(b) - Number(a))
+
   return (
     <>
       <style>{`
@@ -36,6 +45,7 @@ export default async function BlogPage() {
         * { box-sizing: border-box; margin: 0; padding: 0; }
         body { background: #0a0a0a; color: #f0ede6; font-family: 'Space Mono', monospace; }
 
+        /* ── NAV ── */
         .site-nav {
           position: fixed; top: 0; left: 0; right: 0; z-index: 100;
           padding: 16px 40px; display: flex; justify-content: center;
@@ -44,104 +54,96 @@ export default async function BlogPage() {
         }
         .nav-links { display: flex; gap: 48px; align-items: center; }
         .nav-links a {
-          color: #888; text-decoration: none;
-          font-family: 'Bebas Neue', sans-serif;
+          color: #888; text-decoration: none; font-family: 'Bebas Neue', sans-serif;
           font-size: 22px; letter-spacing: 3px; transition: color 0.2s;
         }
         .nav-links a:hover { color: #f0ede6; }
         .nav-active { color: #f0ede6 !important; }
         .nav-cta { color: #EE7700 !important; }
 
-        /* ── BLOG HEADER ── */
+        /* ── HEADER ── */
         .blog-header {
-          padding-top: 80px;
-          background: #0a0a0a;
+          padding-top: 80px; background: #0a0a0a;
         }
         .blog-header-inner {
-          padding: 60px 60px 0;
+          padding: 60px 60px 40px;
           border-bottom: 3px solid #EE7700;
-          display: flex;
-          justify-content: space-between;
-          align-items: flex-end;
-          padding-bottom: 40px;
+          display: flex; justify-content: space-between; align-items: flex-end;
         }
         .blog-title {
           font-family: 'Bebas Neue', sans-serif;
           font-size: clamp(72px, 10vw, 140px);
-          line-height: 0.88;
-          color: #f0ede6;
-          letter-spacing: -2px;
+          line-height: 0.88; color: #f0ede6; letter-spacing: -2px;
         }
         .blog-title span { color: #EE7700; }
-        .blog-meta {
-          text-align: right;
-          padding-bottom: 8px;
-        }
-        .blog-count {
-          font-family: 'Bebas Neue', sans-serif;
-          font-size: 48px; color: #EE7700; display: block; line-height: 1;
-        }
-        .blog-count-label {
-          font-size: 10px; letter-spacing: 3px; text-transform: uppercase; color: #444;
-        }
+        .blog-meta { text-align: right; padding-bottom: 8px; }
+        .blog-count { font-family: 'Bebas Neue', sans-serif; font-size: 48px; color: #EE7700; display: block; line-height: 1; }
+        .blog-count-label { font-size: 10px; letter-spacing: 3px; text-transform: uppercase; color: #444; }
 
-        /* ── BRUTALE INTRO BALK ── */
-        .blog-intro {
-          background: #EE7700;
-          padding: 20px 60px;
-          display: flex;
-          align-items: center;
-          gap: 40px;
-          overflow: hidden;
-        }
-        .blog-intro-item {
-          font-family: 'Bebas Neue', sans-serif;
-          font-size: 18px; letter-spacing: 3px;
-          color: #0a0a0a; white-space: nowrap;
-        }
-        .blog-intro-dot {
-          width: 6px; height: 6px; background: #0a0a0a;
-          border-radius: 50%; flex-shrink: 0;
-        }
+        /* ── ARCHIEF ── */
+        .archive { padding: 0 60px 80px; }
 
-        /* ── POSTS GRID ── */
-        .posts-grid {
+        .year-block { margin-top: 0; }
+
+        .year-divider {
           display: grid;
-          grid-template-columns: repeat(4, 1fr);
-          gap: 2px;
-          padding: 2px;
+          grid-template-columns: auto 1fr;
+          align-items: center;
+          gap: 24px;
+          padding: 48px 0 0;
+          margin-bottom: 0;
         }
-        @media (max-width: 1024px) { .posts-grid { grid-template-columns: repeat(3, 1fr); } }
-        @media (max-width: 768px) { .posts-grid { grid-template-columns: repeat(2, 1fr); } }
+        .year-label {
+          font-family: 'Bebas Neue', sans-serif;
+          font-size: 100px; line-height: 1;
+          color: #1a1a1a; letter-spacing: -2px;
+          user-select: none;
+        }
+        .year-line { height: 1px; background: #1e1e1e; }
 
-        .post-card {
-          display: flex; flex-direction: column; justify-content: space-between;
-          padding: 28px; background: #111;
-          text-decoration: none; color: #f0ede6;
-          border-bottom: 2px solid transparent;
-          transition: border-color 0.2s, background 0.2s;
-          min-height: 200px;
+        /* Post rij */
+        .post-row {
+          display: grid;
+          grid-template-columns: 56px 1fr auto;
+          align-items: baseline;
+          gap: 24px;
+          padding: 20px 0;
+          border-bottom: 1px solid #141414;
+          text-decoration: none;
+          color: #f0ede6;
+          transition: background 0.15s;
+          margin: 0 -60px;
+          padding-left: 60px;
+          padding-right: 60px;
         }
-        .post-card:hover { border-bottom-color: #EE7700; background: #161616; }
-        .post-num {
+        .post-row:hover {
+          background: #EE7700;
+          color: #0a0a0a;
+        }
+        .post-row:hover .post-row-num { color: rgba(0,0,0,0.25); }
+        .post-row:hover .post-row-date { color: rgba(0,0,0,0.5); }
+
+        .post-row-num {
           font-family: 'Bebas Neue', sans-serif;
-          font-size: 16px; color: #2a2a2a; transition: color 0.2s; margin-bottom: 10px;
+          font-size: 14px; color: #2a2a2a;
+          transition: color 0.15s;
         }
-        .post-card:hover .post-num { color: #EE7700; }
-        .post-title {
+        .post-row-title {
           font-family: 'Bebas Neue', sans-serif;
-          font-size: 28px; line-height: 1.0; flex: 1;
+          font-size: clamp(22px, 2.5vw, 34px);
+          line-height: 1; letter-spacing: 0.5px;
         }
-        .post-date {
-          margin-top: 16px; font-size: 10px;
-          letter-spacing: 2px; text-transform: uppercase; color: #333;
+        .post-row-date {
+          font-size: 10px; letter-spacing: 2px;
+          text-transform: uppercase; color: #444;
+          white-space: nowrap; transition: color 0.15s;
         }
 
         /* ── FOOTER ── */
         footer {
           background: #050505; padding: 40px 60px;
           display: flex; justify-content: space-between; align-items: center;
-          border-top: 1px solid #111; margin-top: 2px;
+          border-top: 1px solid #111;
         }
         .footer-logo { font-family: 'Bebas Neue', sans-serif; font-size: 24px; color: #EE7700; letter-spacing: 3px; }
         .footer-copy { font-size: 10px; color: #333; }
@@ -167,26 +169,30 @@ export default async function BlogPage() {
         </div>
       </div>
 
-      <div className="blog-intro">
-        {['Provocerend', '•', 'Ongefilterd', '•', 'Anti-middelmatigheid', '•', 'Sales', '•', 'Excellentie', '•', 'Lisboa', '•', 'Priceless', '•', 'Provocerend', '•', 'Ongefilterd', '•', 'Anti-middelmatigheid', '•', 'Sales', '•', 'Excellentie'].map((item, i) => (
-          item === '•'
-            ? <div key={i} className="blog-intro-dot" />
-            : <span key={i} className="blog-intro-item">{item}</span>
-        ))}
-      </div>
-
-      <div className="posts-grid">
-        {posts.map((post, i) => (
-          <Link key={post._id} href={`/blog/${post.slug.current}`} className="post-card">
-            <div>
-              <div className="post-num">{String(i + 1).padStart(2, '0')}</div>
-              <div className="post-title">{decodeHtml(post.title)}</div>
+      <div className="archive">
+        {years.map((year) => {
+          const yearPosts = byYear[year]
+          return (
+            <div key={year} className="year-block">
+              <div className="year-divider">
+                <span className="year-label">{year}</span>
+                <div className="year-line" />
+              </div>
+              {yearPosts.map((post, i) => {
+                const globalIdx = posts.findIndex(p => p._id === post._id)
+                return (
+                  <Link key={post._id} href={`/blog/${post.slug.current}`} className="post-row">
+                    <span className="post-row-num">{String(globalIdx + 1).padStart(2, '0')}</span>
+                    <span className="post-row-title">{decodeHtml(post.title)}</span>
+                    <span className="post-row-date">
+                      {new Date(post.publishedAt).toLocaleDateString('nl-NL', { day: 'numeric', month: 'short' })}
+                    </span>
+                  </Link>
+                )
+              })}
             </div>
-            <div className="post-date">
-              {new Date(post.publishedAt).toLocaleDateString('nl-NL', { month: 'short', year: 'numeric' })}
-            </div>
-          </Link>
-        ))}
+          )
+        })}
       </div>
 
       <footer>
