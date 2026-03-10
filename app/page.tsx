@@ -145,18 +145,15 @@ export default async function Home() {
           border-top: 1px solid #ddd;
         }
         .subscribe-left {
-          display: flex; flex-direction: column; gap: 12px; max-width: 360px;
-        }
-        .subscribe-label {
-          font-family: 'Bebas Neue', sans-serif; font-size: 13px;
-          letter-spacing: 5px; color: #EE7700; text-transform: uppercase;
+          display: flex; flex-direction: column; gap: 16px;
         }
         .subscribe-title {
           font-family: 'Bebas Neue', sans-serif;
           font-size: clamp(40px, 4vw, 64px);
-          line-height: 1.05; color: #0a0a0a; letter-spacing: 1px;
-          margin-bottom: 8px;
+          line-height: 1.05; letter-spacing: 1px; margin-bottom: 4px;
         }
+        .subscribe-title .black { color: #0a0a0a; }
+        .subscribe-title .orange { color: #EE7700; }
         .subscribe-input {
           background: rgba(0,0,0,0.06); border: 1px solid rgba(0,0,0,0.15);
           color: #0a0a0a; font-family: 'Space Mono', monospace;
@@ -170,9 +167,11 @@ export default async function Home() {
           transition: background 0.2s;
         }
         .subscribe-btn:hover { background: #1a1a1a; }
-        .subscribe-right { }
+        .subscribe-right {
+          display: flex; flex-direction: column; gap: 12px; max-width: 380px;
+        }
         .subscribe-body {
-          font-size: 15px; line-height: 2; color: #666; max-width: 420px;
+          font-size: 15px; line-height: 2; color: #666; margin-bottom: 8px;
         }
         .subscribe-body em { font-style: normal; font-weight: 700; color: #0a0a0a; }
 
@@ -245,16 +244,18 @@ export default async function Home() {
       {/* SUBSCRIBE */}
       <section className="subscribe-section" id="subscribe">
         <div className="subscribe-left">
-          <span className="subscribe-label">Elke vrijdag</span>
-          <h2 className="subscribe-title">Chief Sales<br />Updates</h2>
-          <input className="subscribe-input" type="text" placeholder="Naam" />
-          <input className="subscribe-input" type="email" placeholder="Email" />
-          <button className="subscribe-btn">GO!</button>
-        </div>
-        <div className="subscribe-right">
+          <h2 className="subscribe-title">
+            <span className="black">Chief Sales</span><br />
+            <span className="orange">Updates</span> 🤠
+          </h2>
           <p className="subscribe-body">
             Abonneer je op de Chief Sales Updates, <em>formerly known as Royal Dutch Updates.</em> Bijna iedere vrijdag, bij het wakker worden: food for thought and food for action. Het grootste risico is dat je meer gaat verkopen. Als je er iets mee doet dan, hè? Het is niks waard of miljoenen. Hoe dan ook, <em>priceless.</em>
           </p>
+        </div>
+        <div className="subscribe-right">
+          <input className="subscribe-input" type="text" placeholder="Naam" />
+          <input className="subscribe-input" type="email" placeholder="Email" />
+          <button className="subscribe-btn">GO!</button>
         </div>
       </section>
 
