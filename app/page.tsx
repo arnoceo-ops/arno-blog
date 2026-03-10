@@ -120,23 +120,27 @@ export default async function Home() {
         }
         .hero-title span { color: #EE7700; }
 
-        /* Tagline rechtsonder — groter en duidelijker */
+        /* Tagline rechtsonder */
         .hero-tagline {
           position: absolute;
-          bottom: 60px;
+          bottom: 80px;
           right: 60px;
           z-index: 2;
           text-align: right;
+          display: none;
         }
         .hero-tagline p {
           font-family: 'Bebas Neue', sans-serif;
-          font-size: 28px;
+          font-size: clamp(28px, 3vw, 44px);
           letter-spacing: 4px;
           text-transform: uppercase;
-          color: rgba(240,237,230,0.55);
-          line-height: 1.5;
+          color: rgba(240,237,230,0.6);
+          line-height: 1.4;
         }
-        .hero-tagline p span { color: rgba(238,119,0,0.85); }
+        .hero-tagline p span { color: rgba(238,119,0,0.9); }
+        @media (min-width: 768px) {
+          .hero-tagline { display: block; }
+        }
 
         /* ── CANVAS SECTIE ── */
         .canvas-section {
@@ -179,8 +183,8 @@ export default async function Home() {
         }
         .canvas-title {
           font-family: 'Bebas Neue', sans-serif;
-          font-size: 56px;
-          line-height: 0.95;
+          font-size: clamp(40px, 4vw, 64px);
+          line-height: 1.05;
           color: #f0ede6;
           letter-spacing: 1px;
         }
@@ -416,10 +420,10 @@ export default async function Home() {
       <section className="canvas-section">
         <div className="canvas-left">
           <div className="canvas-quote">
-            "Verkopen is geen trucje.<br />
-            Het is een <em>vak.</em><br />
-            Een levenshouding.<br />
-            Een <em>keuze.</em>"
+            "Vision without action<br />
+            is a <em>daydream.</em><br />
+            Action without vision<br />
+            is a <em>nightmare.</em>"
           </div>
         </div>
         <div className="canvas-right">
