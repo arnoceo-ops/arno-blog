@@ -158,7 +158,7 @@ export default async function Home() {
           display: flex; flex-direction: column; gap: 12px;
           justify-content: flex-start; align-items: flex-start;
           padding-top: calc(clamp(40px, 4vw, 64px) * 2.2 + 24px);
-          width: 380px; max-width: 100%;
+          padding-left: 40px;
         }
         .subscribe-form-col .subscribe-input,
         .subscribe-form-col .subscribe-btn {
