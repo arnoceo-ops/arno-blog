@@ -71,14 +71,6 @@ export default async function BlogPage() {
           line-height: 0.9; color: #f0ede6;
         }
         .blog-title-orange { color: #EE7700; }
-        .blog-title-t {
-          color: #EE7700;
-          font-size: 0.65em;
-          vertical-align: super;
-          letter-spacing: 0;
-          margin-left: 6px;
-          opacity: 0.9;
-        }
         .blog-meta { text-align: right; padding-bottom: 8px; }
         .blog-count { font-family: 'Bebas Neue', sans-serif; font-size: 48px; color: #EE7700; display: block; line-height: 1; }
         .blog-count-label { font-size: 10px; letter-spacing: 3px; text-transform: uppercase; color: #444; }
@@ -133,7 +125,7 @@ export default async function BlogPage() {
         <div className="blog-header-inner">
           <h1 className="blog-title">
             ARNO<br />
-            <span className="blog-title-orange">BLOG</span><span className="blog-title-t">(T)</span>
+            <span className="blog-title-orange">BLOG(T)</span>
           </h1>
           <div className="blog-meta">
             <span className="blog-count">{posts.length}</span>

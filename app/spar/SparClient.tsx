@@ -29,12 +29,28 @@ export default function SparClient() {
   const [loading, setLoading] = useState(false)
   const [history, setHistory] = useState<{role: string, content: string}[]>([])
   const [started, setStarted] = useState(false)
+  const [blinkGlow, setBlinkGlow] = useState(false)
   const bottomRef = useRef<HTMLDivElement>(null)
   const inputRef = useRef<HTMLTextAreaElement>(null)
 
   useEffect(() => {
     bottomRef.current?.scrollIntoView({ behavior: 'smooth' })
   }, [messages, loading])
+
+  function reset() {
+    setStarted(false)
+    setMessages([])
+    setHistory([])
+    setInput('')
+    setBlinkGlow(false)
+    window.scrollTo({ top: 0, behavior: 'smooth' })
+  }
+
+  function triggerBlink() {
+    setBlinkGlow(true)
+    setTimeout(() => setBlinkGlow(false), 1800)
+    setTimeout(() => inputRef.current?.focus(), 100)
+  }
 
   async function ask(question: string) {
     if (!question.trim() || loading) return
@@ -108,10 +124,10 @@ export default function SparClient() {
         }
         .spar-title span { color: #EE7700; }
         .spar-tagline {
-          text-align: right; padding-bottom: 8px; max-width: 360px;
+          text-align: right; padding-bottom: 8px; max-width: 420px;
         }
-        .spar-tagline p { font-size: 15px; line-height: 1.9; color: #888; }
-        .spar-tagline strong { font-weight: 700; color: #f0ede6; font-family: 'Barlow Condensed', sans-serif; font-size: 18px; letter-spacing: 0.5px; }
+        .spar-tagline p { font-size: 17px; line-height: 1.9; color: #aaa; }
+        .spar-tagline strong { font-weight: 700; color: #f0ede6; font-family: 'Barlow Condensed', sans-serif; font-size: 26px; letter-spacing: 0.5px; display: block; margin-bottom: 6px; }
 
         /* INPUT — PROMINENT BOVENAAN */
         .spar-input-area {
@@ -249,31 +265,43 @@ export default function SparClient() {
           box-shadow: 0 0 0 3px rgba(238,119,0,0.25), 0 0 24px rgba(238,119,0,0.15);
           animation: glowpulse 2s ease-in-out infinite;
         }
+        .spar-input-row.blink-glow {
+          animation: blinkglow 0.4s ease-in-out 4;
+        }
         @keyframes glowpulse {
           0%, 100% { box-shadow: 0 0 0 3px rgba(238,119,0,0.2), 0 0 16px rgba(238,119,0,0.1); }
-          50% { box-shadow: 0 0 0 3px rgba(238,119,0,0.4), 0 0 32px rgba(238,119,0,0.25); }
+          50% { box-shadow: 0 0 0 3px rgba(238,119,0,0.5), 0 0 40px rgba(238,119,0,0.3); }
+        }
+        @keyframes blinkglow {
+          0%, 100% { box-shadow: 0 0 0 3px rgba(238,119,0,0.15); }
+          50% { box-shadow: 0 0 0 6px rgba(238,119,0,0.7), 0 0 48px rgba(238,119,0,0.4); border-color: #ff9900; }
         }
 
-        /* HINT onder antwoord */
-        .msg-continue-hint {
-          padding: 20px 0 0 120px;
-          font-size: 11px; letter-spacing: 3px; text-transform: uppercase;
-          color: #EE7700; opacity: 0.6;
-          animation: fadein 0.6s ease;
+        /* ACTIE KNOPPEN onder antwoord */
+        .msg-actions {
+          padding: 20px 0 20px 120px;
+          display: flex; gap: 12px; align-items: center;
+          border-bottom: 1px solid #141414;
+          animation: fadein 0.4s ease;
         }
-        @keyframes fadein { from { opacity: 0; } to { opacity: 0.6; } }
-
-        /* RESET knop zwevend rechtsonder */
-        .spar-reset-btn {
-          position: fixed; bottom: 32px; right: 32px; z-index: 200;
-          background: #111; border: 1px solid #333;
-          color: #555; font-family: 'Bebas Neue', sans-serif;
-          font-size: 14px; letter-spacing: 2px;
-          padding: 12px 20px; cursor: pointer;
-          transition: all 0.2s;
+        @keyframes fadein { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
+        .msg-action-btn {
+          background: none; border: 1px solid #2a2a2a;
+          font-family: 'Bebas Neue', sans-serif;
+          font-size: 15px; letter-spacing: 2px;
+          padding: 10px 20px; cursor: pointer; transition: all 0.15s;
         }
-        .spar-reset-btn:hover {
-          background: #1a1a1a; border-color: #EE7700; color: #EE7700;
+        .msg-action-btn.primary {
+          color: #EE7700; border-color: #EE7700;
+        }
+        .msg-action-btn.primary:hover {
+          background: #EE7700; color: #0a0a0a;
+        }
+        .msg-action-btn.secondary {
+          color: #444; border-color: #222;
+        }
+        .msg-action-btn.secondary:hover {
+          border-color: #555; color: #888;
         }
       `}</style>
 
@@ -307,7 +335,7 @@ export default function SparClient() {
           <span className="spar-input-label">
             {started ? '↓ Volgende vraag — ga door' : '↓ Stel je vraag — geen filter, geen bullshit'}
           </span>
-          <div className={`spar-input-row${started ? ' active-glow' : ''}`}>
+          <div className={`spar-input-row${started ? (blinkGlow ? ' blink-glow' : ' active-glow') : ''}`}>
             <textarea
               ref={inputRef}
               className="spar-textarea"
@@ -360,7 +388,14 @@ export default function SparClient() {
                   <span className="msg-arno-text">{msg.content}</span>
                 </div>
                 {i === messages.length - 1 && !loading && (
-                  <div className="msg-continue-hint">↑ Stel je volgende vraag hierboven</div>
+                  <div className="msg-actions">
+                    <button className="msg-action-btn primary" onClick={triggerBlink}>
+                      ↑ Vervolgvraag stellen
+                    </button>
+                    <button className="msg-action-btn secondary" onClick={reset}>
+                      ← Nieuwe sessie
+                    </button>
+                  </div>
                 )}
               </div>
             )
@@ -377,21 +412,10 @@ export default function SparClient() {
           )}
           <div ref={bottomRef} />
         </div>
-
-        {started && (
-          <button
-            className="spar-reset-btn"
-            onClick={() => {
-              setStarted(false)
-              setMessages([])
-              setHistory([])
-              setInput('')
-              window.scrollTo({ top: 0, behavior: 'smooth' })
-            }}
-          >
-            ← Nieuwe sessie
-          </button>
-        )}
+      </div>
+    </>
+  )
+}
 
 
       </div>
