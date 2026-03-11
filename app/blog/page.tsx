@@ -72,22 +72,24 @@ export default async function BlogPage() {
         }
         .blog-title {
           font-family: 'Bebas Neue', sans-serif;
-          font-size: clamp(72px, 10vw, 140px);
-          line-height: 0.88; color: #f0ede6;
+          font-size: clamp(64px, 10vw, 120px);
+          line-height: 0.9; color: #f0ede6;
         }
         .blog-title-arno {
           display: block;
           letter-spacing: 0.21em;
+          color: #f0ede6;
         }
         .blog-title-blogt {
           display: block;
           color: #EE7700;
-          letter-spacing: -0.02em;
+          letter-spacing: 0.21em;
           white-space: nowrap;
         }
         .blog-title-blog {
           display: inline-block;
           letter-spacing: 0.21em;
+          color: #EE7700;
         }
         .blog-title-t {
           color: #EE7700;

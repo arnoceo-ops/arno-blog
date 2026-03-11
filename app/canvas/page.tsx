@@ -39,7 +39,8 @@ export default function CanvasPage() {
         }
         .canvas-title {
           font-family: 'Bebas Neue', sans-serif;
-          font-size: clamp(80px, 12vw, 160px);
+          font-size: clamp(64px, 10vw, 120px);
+          line-height: 0.9;
           line-height: 0.88; color: #f0ede6; margin-bottom: 32px;
         }
         .canvas-title span { color: #EE7700; }

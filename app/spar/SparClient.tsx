@@ -103,8 +103,8 @@ export default function SparClient() {
         }
         .spar-title {
           font-family: 'Bebas Neue', sans-serif;
-          font-size: clamp(100px, 14vw, 180px);
-          line-height: 0.82; letter-spacing: -4px;
+          font-size: clamp(64px, 10vw, 120px);
+          line-height: 0.9; letter-spacing: -2px;
         }
         .spar-title span { color: #EE7700; }
         .spar-tagline {

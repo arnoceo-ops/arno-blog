@@ -44,8 +44,10 @@ export default function BioPage() {
         .bio-title {
           font-family: 'Bebas Neue', sans-serif;
           font-size: clamp(64px, 10vw, 120px);
-          line-height: 0.9; color: #f0ede6; margin-bottom: 32px;
+          line-height: 0.9; margin-bottom: 32px;
         }
+        .bio-title-arno { color: #EE7700; }
+        .bio-title-diepeveen { color: #f0ede6; }
         .bio-subtitle {
           font-family: 'Barlow Condensed', sans-serif;
           font-size: 24px; font-weight: 300; color: #666; letter-spacing: 1px;
@@ -101,7 +103,7 @@ export default function BioPage() {
       <div className="bio-hero">
         <div className="bio-hero-inner">
           <span className="bio-label">Royal Dutch Sales</span>
-          <h1 className="bio-title">Arno<br />Diepeveen.</h1>
+          <h1 className="bio-title"><span className="bio-title-arno">ARNO</span><br /><span className="bio-title-diepeveen">DIEPEVEEN.</span></h1>
           <p className="bio-subtitle">Verkoper. Schrijver. Provocateur. Lisboa.</p>
         </div>
       </div>
