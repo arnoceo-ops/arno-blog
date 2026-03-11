@@ -219,33 +219,43 @@ export default function SparClient() {
           position: sticky;
           bottom: 0;
           background: #0a0a0a;
-          border-top: 1px solid #1a1a1a;
-          padding: 24px 60px;
-          display: flex;
-          gap: 0;
+          border-top: 3px solid #EE7700;
+          padding: 32px 60px;
+        }
+        .spar-input-label {
+          font-family: 'Bebas Neue', sans-serif;
+          font-size: 11px; letter-spacing: 4px; text-transform: uppercase;
+          color: #EE7700; margin-bottom: 12px; display: block;
+        }
+        .spar-input-row {
+          display: flex; gap: 0;
         }
         .spar-textarea {
           flex: 1;
-          background: #111; border: 1px solid #222; border-right: none;
-          color: #f0ede6; font-family: 'Space Mono', monospace;
-          font-size: 13px; padding: 16px 20px; outline: none;
-          resize: none; min-height: 56px; max-height: 160px;
+          background: #f0ede6;
+          border: none;
+          border-right: none;
+          color: #0a0a0a;
+          font-family: 'Space Mono', monospace;
+          font-size: 15px; padding: 20px 24px; outline: none;
+          resize: none; min-height: 64px; max-height: 180px;
           line-height: 1.6;
         }
-        .spar-textarea::placeholder { color: #333; }
+        .spar-textarea::placeholder { color: #888; font-size: 13px; }
+        .spar-textarea:focus { background: #fff; }
         .spar-send {
           background: #EE7700; color: #0a0a0a;
           font-family: 'Bebas Neue', sans-serif;
-          font-size: 22px; letter-spacing: 3px;
-          padding: 0 36px; border: none; cursor: pointer;
+          font-size: 24px; letter-spacing: 3px;
+          padding: 0 48px; border: none; cursor: pointer;
           transition: background 0.2s; white-space: nowrap;
-          min-width: 140px;
+          min-width: 160px;
         }
         .spar-send:hover { background: #ff8800; }
-        .spar-send:disabled { background: #222; color: #444; cursor: not-allowed; }
+        .spar-send:disabled { background: #1a1a1a; color: #333; cursor: not-allowed; }
         .spar-hint {
           font-size: 10px; letter-spacing: 2px; color: #2a2a2a;
-          text-transform: uppercase; padding: 8px 60px 0;
+          text-transform: uppercase; margin-top: 10px;
         }
       `}</style>
 
@@ -316,30 +326,33 @@ export default function SparClient() {
         </div>
 
         <div className="spar-input-area">
-          <textarea
-            ref={inputRef}
-            className="spar-textarea"
-            value={input}
-            onChange={e => setInput(e.target.value)}
-            onKeyDown={e => {
-              if (e.key === 'Enter' && !e.shiftKey) {
-                e.preventDefault()
-                ask(input)
-              }
-            }}
-            placeholder="Stel je vraag..."
-            disabled={loading}
-            rows={1}
-          />
-          <button
-            className="spar-send"
-            onClick={() => ask(input)}
-            disabled={loading || !input.trim()}
-          >
-            {loading ? '...' : 'SPAR →'}
-          </button>
+          <span className="spar-input-label">↓ Jouw vraag — geen bullshit, geen filter</span>
+          <div className="spar-input-row">
+            <textarea
+              ref={inputRef}
+              className="spar-textarea"
+              value={input}
+              onChange={e => setInput(e.target.value)}
+              onKeyDown={e => {
+                if (e.key === 'Enter' && !e.shiftKey) {
+                  e.preventDefault()
+                  ask(input)
+                }
+              }}
+              placeholder="Wat wil je weten? Stel de vraag die je al 3 jaar niet durft te stellen..."
+              disabled={loading}
+              rows={2}
+            />
+            <button
+              className="spar-send"
+              onClick={() => ask(input)}
+              disabled={loading || !input.trim()}
+            >
+              {loading ? '...' : 'SPAR →'}
+            </button>
+          </div>
+          <p className="spar-hint">Enter = sturen — Shift+Enter = nieuwe regel</p>
         </div>
-        {!loading && <p className="spar-hint">Enter om te sturen — Shift+Enter voor nieuwe regel</p>}
       </div>
     </>
   )
