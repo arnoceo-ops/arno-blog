@@ -103,8 +103,8 @@ export default function SparClient() {
         }
         .spar-title {
           font-family: 'Bebas Neue', sans-serif;
-          font-size: clamp(80px, 12vw, 160px);
-          line-height: 0.85; letter-spacing: -2px;
+          font-size: clamp(100px, 14vw, 180px);
+          line-height: 0.82; letter-spacing: -4px;
         }
         .spar-title span { color: #EE7700; }
         .spar-tagline {
@@ -116,12 +116,12 @@ export default function SparClient() {
         /* INPUT — PROMINENT BOVENAAN */
         .spar-input-area {
           background: #0a0a0a;
-          padding: 48px 60px 0;
+          padding: 28px 60px 0;
         }
         .spar-input-label {
           font-family: 'Bebas Neue', sans-serif;
-          font-size: 13px; letter-spacing: 5px; text-transform: uppercase;
-          color: #EE7700; margin-bottom: 16px; display: block;
+          font-size: 11px; letter-spacing: 4px; text-transform: uppercase;
+          color: #EE7700; margin-bottom: 10px; display: block;
         }
         .spar-input-row {
           display: flex; gap: 0;
@@ -133,24 +133,24 @@ export default function SparClient() {
           border: none;
           color: #f0ede6;
           font-family: 'Space Mono', monospace;
-          font-size: 15px; padding: 24px 28px; outline: none;
-          resize: none; min-height: 80px; max-height: 200px;
-          line-height: 1.7;
+          font-size: 13px; padding: 14px 18px; outline: none;
+          resize: none; min-height: 48px; max-height: 48px;
+          line-height: 1.5;
         }
-        .spar-textarea::placeholder { color: #444; font-style: italic; }
+        .spar-textarea::placeholder { color: #555; font-style: italic; font-size: 12px; }
         .spar-textarea:focus { background: #161616; }
         .spar-send {
           background: #EE7700; color: #0a0a0a;
           font-family: 'Bebas Neue', sans-serif;
-          font-size: 24px; letter-spacing: 3px;
-          padding: 0 48px; border: none; cursor: pointer;
-          transition: background 0.2s; white-space: nowrap; min-width: 160px;
+          font-size: 20px; letter-spacing: 3px;
+          padding: 0 32px; border: none; cursor: pointer;
+          transition: background 0.2s; white-space: nowrap; min-width: 120px;
         }
         .spar-send:hover { background: #ff8800; }
         .spar-send:disabled { background: #1a1a1a; color: #2a2a2a; cursor: not-allowed; }
         .spar-hint {
           font-size: 10px; letter-spacing: 2px; color: #2a2a2a;
-          text-transform: uppercase; margin-top: 10px; padding-bottom: 48px;
+          text-transform: uppercase; margin-top: 8px; padding-bottom: 28px;
         }
 
         /* OPENERS */
