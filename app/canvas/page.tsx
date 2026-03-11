@@ -1,112 +1,234 @@
-import Link from 'next/link'
-import { client } from '@/sanity/client'
+'use client'
 
-async function getCanvasPage() {
-  return await client.fetch(`*[_type == "canvasPage"][0]`, {}, { next: { revalidate: 0 } })
+import { useState, useEffect } from 'react'
+import { useUser } from '@clerk/nextjs'
+import { supabase } from '@/lib/supabase'
+import { useRouter } from 'next/navigation'
+import Link from 'next/link'
+import PdfExportButton from '@/components/PdfExportButton'
+
+const TOTAL_FIELDS = {
+  strategie: ['missie','cultuur_1','cultuur_2','cultuur_3','cultuur_4','cultuur_5','waardepropositie','kerncompetenties','dienstverlening','zandbak','doelen_omzet','doelen_winst','doelen_klanten','doelen_marktaandeel','doelen_liquiditeit','acties_omzet','acties_winst','acties_klanten','acties_brutomarge','acties_cash','leiderschap_markt','leiderschap_wanneer','merkbelofte','strategie_in_1_zin','onderscheidend_1','onderscheidend_2','onderscheidend_3','onderscheidend_4','onderscheidend_5','xfactor','winst_per_eenheid','moonshot_1','moonshot_2','moonshot_3','moonshot_4','moonshot_5','schaalbaarheid','repeterende_omzet','klantretentie','referrals','omtm'],
+  mensen: ['leider_naam','leider_rol','topteam_1','topteam_2','topteam_3','topteam_4','topteam_5','salesteam_structuur','rollen_verantwoordelijkheden','aanname_criteria','onboarding','training_ontwikkeling','compensatie_model','targets_kpi','performance_management','cultuur_energie','retentie_talent','zwakste_schakel','ideale_teamgrootte','externe_partners','succession_plan'],
+  uitvoering: ['salesproces','pipeline_fases','leadgeneratie','kwalificatie','gemiddelde_dealgrootte','gemiddelde_salescyclus','conversieratio','prioriteit_accounts','tools_crm','grootste_bottleneck','kpi_omzet','kpi_nieuwe_klanten','kpi_churn','kpi_nps','kpi_winst','groei_hefboom','quick_wins','strategische_projecten','risicos','actieplan_90_dagen'],
 }
 
-export default async function CanvasPage() {
-  const canvas = await getCanvasPage()
+const ALL_TOTAL = Object.values(TOTAL_FIELDS).flat().length
+
+function getScoreLabel(score: number) {
+  if (score < 25) return 'ONVOLLEDIG'
+  if (score < 50) return 'IN OPBOUW'
+  if (score < 75) return 'GEVORDERD'
+  if (score < 100) return 'BIJNA KLAAR'
+  return 'COMPLEET'
+}
+
+const SECTIONS = [
+  { key: 'strategie' as const, pages: '01 — 02', title: 'STRATEGIE' },
+  { key: 'mensen' as const, pages: '03 — 04', title: 'MENSEN' },
+  { key: 'uitvoering' as const, pages: '05 — 06', title: 'UITVOERING' },
+]
+
+export default function CanvasPage() {
+  const { user, isLoaded } = useUser()
+  const router = useRouter()
+  const [scores, setScores] = useState({ strategie: 0, mensen: 0, uitvoering: 0 })
+  const [loading, setLoading] = useState(true)
+  const [hovered, setHovered] = useState<string | null>(null)
+
+  useEffect(() => {
+    if (isLoaded && !user) router.push('/sign-in')
+  }, [isLoaded, user, router])
+
+  useEffect(() => {
+    if (!user) return
+    const load = async () => {
+      const allIds = [
+        ...TOTAL_FIELDS.strategie.map(id => `strategie_${id}`),
+        ...TOTAL_FIELDS.mensen.map(id => `mensen_${id}`),
+        ...TOTAL_FIELDS.uitvoering.map(id => `uitvoering_${id}`),
+      ]
+      const { data } = await supabase
+        .from('canvas_answers')
+        .select('question_id, answer')
+        .eq('user_id', user.id)
+        .in('question_id', allIds)
+
+      if (data) {
+        const filled = new Set(data.filter(r => r.answer?.trim()).map(r => r.question_id))
+        setScores({
+          strategie: TOTAL_FIELDS.strategie.filter(id => filled.has(`strategie_${id}`)).length,
+          mensen: TOTAL_FIELDS.mensen.filter(id => filled.has(`mensen_${id}`)).length,
+          uitvoering: TOTAL_FIELDS.uitvoering.filter(id => filled.has(`uitvoering_${id}`)).length,
+        })
+      }
+      setLoading(false)
+    }
+    load()
+  }, [user])
+
+  const totalFilled = scores.strategie + scores.mensen + scores.uitvoering
+  const healthScore = Math.round((totalFilled / ALL_TOTAL) * 100)
+  const scoreLabel = getScoreLabel(healthScore)
+
+  const sectionScore = (segment: keyof typeof TOTAL_FIELDS) =>
+    Math.round((scores[segment] / TOTAL_FIELDS[segment].length) * 100)
+
+  if (!isLoaded || !user) return null
 
   return (
-    <>
-      <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Mono:wght@400;700&family=Barlow+Condensed:wght@300;600;900&display=swap');
-        * { box-sizing: border-box; margin: 0; padding: 0; }
-        body { background: #0a0a0a; color: #f0ede6; font-family: 'Space Mono', monospace; }
+    <main style={{
+      backgroundColor: '#0a0a0a',
+      minHeight: '100vh',
+      color: '#f0ede6',
+      fontFamily: 'var(--font-geist-sans), sans-serif',
+      padding: '64px 48px',
+    }}>
 
-        .site-nav {
-          position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-          padding: 16px 40px; display: flex; justify-content: center;
-          border-bottom: 1px solid rgba(255,255,255,0.06);
-          background: rgba(10,10,10,0.9); backdrop-filter: blur(12px);
-        }
-        .nav-links { display: flex; gap: 48px; align-items: center; }
-        .nav-links a {
-          color: #888; text-decoration: none;
-          font-family: 'Bebas Neue', sans-serif;
-          font-size: 22px; letter-spacing: 3px; transition: color 0.2s;
-        }
-        .nav-links a:hover { color: #f0ede6; }
-        .nav-active { color: #EE7700 !important; }
-        .nav-cta { color: #EE7700 !important; }
+      {/* Header */}
+      <div style={{ marginBottom: '80px' }}>
+        <p style={{ color: '#EE7700', fontSize: '11px', letterSpacing: '4px', marginBottom: '12px', opacity: 0.7 }}>
+          ROYAL DUTCH SALES
+        </p>
+        <h1 style={{
+          fontFamily: 'var(--font-bebas), sans-serif',
+          fontSize: '96px',
+          letterSpacing: '6px',
+          color: '#f0ede6',
+          margin: '0 0 8px 0',
+          lineHeight: 1,
+        }}>
+          RDS CANVAS
+        </h1>
+        <p style={{ color: '#f0ede6', opacity: 0.35, fontSize: '13px', letterSpacing: '1px' }}>
+          {user.firstName} — Verkoopplan {new Date().getFullYear()}
+        </p>
+      </div>
 
-        .canvas-hero { padding-top: 80px; background: #0a0a0a; }
-        .canvas-hero-inner {
-          padding: 80px 60px 60px;
-          border-bottom: 3px solid #EE7700;
-          display: flex; justify-content: space-between; align-items: flex-end;
-        }
-        .canvas-title {
-          font-family: 'Bebas Neue', sans-serif;
-          font-size: clamp(64px, 10vw, 120px);
-          line-height: 0.9; color: #f0ede6;
-        }
-        .canvas-title span { color: #EE7700; }
-
-        .canvas-coming {
-          display: flex; flex-direction: column;
-          align-items: center; justify-content: center;
-          padding: 120px 60px; text-align: center;
-          border-bottom: 1px solid #1e1e1e;
-        }
-        .coming-label {
-          font-family: 'Bebas Neue', sans-serif;
-          font-size: 14px; letter-spacing: 6px; color: #EE7700; margin-bottom: 32px;
-        }
-        .coming-title {
-          font-family: 'Bebas Neue', sans-serif;
-          font-size: clamp(48px, 6vw, 80px);
-          color: #f0ede6; margin-bottom: 24px; line-height: 1;
-        }
-        .coming-body {
-          font-size: 13px; line-height: 2; color: #555;
-          max-width: 500px; margin-bottom: 48px;
-        }
-        .coming-back {
-          color: #EE7700; text-decoration: none;
-          font-size: 11px; letter-spacing: 3px; text-transform: uppercase;
-          font-family: 'Space Mono', monospace; transition: opacity 0.2s;
-        }
-        .coming-back:hover { opacity: 0.7; }
-
-        footer {
-          background: #050505; padding: 40px 60px;
-          display: flex; justify-content: space-between; align-items: center;
-          border-top: 1px solid #111;
-        }
-        .footer-logo { font-family: 'Bebas Neue', sans-serif; font-size: 24px; color: #EE7700; letter-spacing: 3px; }
-        .footer-copy { font-size: 10px; color: #333; }
-      `}</style>
-
-      <nav className="site-nav">
-        <div className="nav-links">
-          <Link href="/">HOME</Link>
-          <Link href="/blog">BLOG</Link>
-          <Link href="/bio">BIO</Link>
-          <Link href="/canvas" className="nav-active">CANVAS</Link>
-          <Link href="/spar" className="nav-cta">SPAR</Link>
-          <a href="/#subscribe" className="nav-cta">SUBSCRIBE</a>
+      {/* Plan Health Score */}
+      <div style={{
+        borderTop: '1px solid #1e1e1e',
+        paddingTop: '48px',
+        marginBottom: '80px',
+      }}>
+        <div style={{ display: 'flex', alignItems: 'baseline', gap: '20px', marginBottom: '16px' }}>
+          <span style={{ color: '#EE7700', fontSize: '11px', letterSpacing: '4px' }}>PLAN HEALTH SCORE</span>
+          <span style={{ color: '#EE7700', fontSize: '11px', letterSpacing: '2px', opacity: 0.4 }}>
+            {loading ? '...' : scoreLabel}
+          </span>
         </div>
-      </nav>
 
-      <div className="canvas-hero">
-        <div className="canvas-hero-inner">
-          <h1 className="canvas-title">RDS<br /><span>Canvas.</span></h1>
+        <div style={{
+          fontFamily: 'var(--font-bebas), sans-serif',
+          fontSize: '120px',
+          color: '#f0ede6',
+          lineHeight: 1,
+          marginBottom: '24px',
+          letterSpacing: '2px',
+        }}>
+          {loading ? '—' : `${healthScore}%`}
+        </div>
+
+        {/* Hoofdbalk */}
+        <div style={{ width: '100%', height: '2px', backgroundColor: '#1a1a1a', marginBottom: '32px' }}>
+          <div style={{
+            height: '2px',
+            width: loading ? '0%' : `${healthScore}%`,
+            backgroundColor: '#EE7700',
+            transition: 'width 1s ease',
+          }} />
+        </div>
+
+        {/* Per segment stats + PDF knop */}
+        <div style={{ display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between' }}>
+          <div style={{ display: 'flex', gap: '64px' }}>
+            {SECTIONS.map(s => (
+              <div key={s.key}>
+                <p style={{ color: '#EE7700', fontSize: '10px', letterSpacing: '3px', marginBottom: '6px' }}>
+                  {s.title}
+                </p>
+                <p style={{ color: '#f0ede6', fontSize: '13px', opacity: 0.5, letterSpacing: '1px' }}>
+                  {loading ? '—' : `${scores[s.key]} / ${TOTAL_FIELDS[s.key].length}`}
+                </p>
+              </div>
+            ))}
+          </div>
+
+          <PdfExportButton />
         </div>
       </div>
 
-      <div className="canvas-coming">
-        <p className="coming-label">Coming Soon</p>
-        <h2 className="coming-title">{canvas?.comingTitle}</h2>
-        <p className="coming-body">{canvas?.comingBody}</p>
-        <a href="/#subscribe" className="coming-back">Houd me op de hoogte →</a>
-      </div>
+      {/* Sectie kaarten */}
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '2px' }}>
+        {SECTIONS.map(s => {
+          const pct = sectionScore(s.key)
+          const isHovered = hovered === s.key
+          const isComplete = pct === 100
 
-      <footer>
-        <span className="footer-logo">Royal Dutch Sales</span>
-        <span className="footer-copy">© Since 2007 — CC BY-ND 4.0</span>
-      </footer>
-    </>
+          return (
+            <Link key={s.key} href={`/canvas/${s.key}`} style={{ textDecoration: 'none' }}>
+              <div
+                onMouseEnter={() => setHovered(s.key)}
+                onMouseLeave={() => setHovered(null)}
+                style={{
+                  padding: '40px 32px',
+                  backgroundColor: isHovered ? '#111' : '#0a0a0a',
+                  border: '1px solid',
+                  borderColor: isComplete ? '#EE7700' : isHovered ? '#444' : '#1e1e1e',
+                  transition: 'all 0.2s ease',
+                  cursor: 'pointer',
+                  minHeight: '220px',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  justifyContent: 'space-between',
+                }}
+              >
+                <div>
+                  <p style={{ color: '#EE7700', fontSize: '11px', letterSpacing: '3px', marginBottom: '12px', opacity: 0.6 }}>
+                    {s.pages}
+                  </p>
+                  <h2 style={{
+                    fontFamily: 'var(--font-bebas), sans-serif',
+                    color: '#f0ede6',
+                    fontSize: '48px',
+                    letterSpacing: '3px',
+                    margin: '0 0 8px 0',
+                    lineHeight: 1,
+                  }}>
+                    {s.title}
+                  </h2>
+                  <p style={{ color: '#f0ede6', opacity: 0.3, fontSize: '12px', letterSpacing: '1px' }}>
+                    {TOTAL_FIELDS[s.key].length} velden
+                  </p>
+                </div>
+
+                {!loading && (
+                  <div style={{ marginTop: '32px' }}>
+                    <div style={{ width: '100%', height: '1px', backgroundColor: '#1e1e1e', marginBottom: '10px' }}>
+                      <div style={{
+                        height: '1px',
+                        width: `${pct}%`,
+                        backgroundColor: '#EE7700',
+                        transition: 'width 0.8s ease',
+                      }} />
+                    </div>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                      <span style={{ color: '#EE7700', fontSize: '11px', letterSpacing: '2px', opacity: 0.5 }}>
+                        {pct}%
+                      </span>
+                      {isHovered && (
+                        <span style={{ color: '#EE7700', fontSize: '10px', letterSpacing: '2px', opacity: 0.5 }}>
+                          OPEN →
+                        </span>
+                      )}
+                    </div>
+                  </div>
+                )}
+              </div>
+            </Link>
+          )
+        })}
+      </div>
+    </main>
   )
 }
