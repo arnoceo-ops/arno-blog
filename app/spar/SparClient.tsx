@@ -125,12 +125,12 @@ export default function SparClient() {
           font-family: 'Bebas Neue', sans-serif;
           font-size: clamp(36px, 4vw, 56px); letter-spacing: 2px; text-transform: uppercase;
           color: #f0ede6; margin-bottom: 16px; display: block; line-height: 1;
-          width: 100%; max-width: 1323px;
+          width: 100%; max-width: 890px; text-align: center;
         }
         .spar-input-row {
           display: flex; gap: 0;
           border: 2px solid #EE7700;
-          width: 100%; max-width: 1323px;
+          width: 100%; max-width: 890px;
         }
         .spar-textarea {
           flex: 1;
@@ -156,7 +156,7 @@ export default function SparClient() {
         .spar-hint {
           font-size: 10px; letter-spacing: 2px; color: #2a2a2a;
           text-transform: uppercase; margin-top: 8px; padding-bottom: 28px;
-          width: 100%; max-width: 1323px;
+          width: 100%; max-width: 890px; text-align: center;
         }
 
         /* OPENERS */
@@ -170,7 +170,7 @@ export default function SparClient() {
         }
         .openers-grid {
           display: grid;
-          grid-template-columns: repeat(4, 1fr);
+          grid-template-columns: repeat(3, 1fr);
           width: 100%;
           gap: 2px;
           margin-bottom: 2px;
@@ -180,9 +180,9 @@ export default function SparClient() {
         .opener-btn {
           background: #111; border: none; color: #888;
           font-family: 'Bebas Neue', sans-serif;
-          font-size: 18px; letter-spacing: 1px;
-          padding: 24px 28px; cursor: pointer; text-align: left;
-          line-height: 1.3; transition: all 0.15s;
+          font-size: clamp(20px, 1.8vw, 28px); letter-spacing: 1.5px;
+          padding: 32px 36px; cursor: pointer; text-align: left;
+          line-height: 1.25; transition: all 0.15s;
           border-bottom: 2px solid transparent;
         }
         .opener-btn:hover {
