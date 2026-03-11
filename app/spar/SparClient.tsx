@@ -163,9 +163,6 @@ export default function SparClient() {
         .spar-openers {
           padding: 0 60px 0;
           border-bottom: 1px solid #1a1a1a;
-          display: flex;
-          flex-direction: column;
-          align-items: center;
         }
         .openers-label {
           font-size: 10px; letter-spacing: 4px; text-transform: uppercase;
@@ -173,14 +170,13 @@ export default function SparClient() {
         }
         .openers-grid {
           display: grid;
-          grid-template-columns: repeat(3, 1fr);
-          max-width: 1323px;
+          grid-template-columns: repeat(4, 1fr);
           width: 100%;
           gap: 2px;
           margin-bottom: 2px;
         }
-        @media (max-width: 1024px) { .openers-grid { grid-template-columns: repeat(2, 1fr); } }
-        @media (max-width: 640px) { .openers-grid { grid-template-columns: 1fr; } }
+        @media (max-width: 900px) { .openers-grid { grid-template-columns: repeat(2, 1fr); } }
+        @media (max-width: 500px) { .openers-grid { grid-template-columns: 1fr; } }
         .opener-btn {
           background: #111; border: none; color: #888;
           font-family: 'Bebas Neue', sans-serif;
