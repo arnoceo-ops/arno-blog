@@ -29,7 +29,6 @@ async function getPosts(): Promise<Post[]> {
 export default async function BlogPage() {
   const posts = await getPosts()
 
-  // Groepeer per jaar
   const byYear: Record<string, Post[]> = {}
   for (const post of posts) {
     const year = new Date(post.publishedAt).getFullYear().toString()
@@ -45,7 +44,6 @@ export default async function BlogPage() {
         * { box-sizing: border-box; margin: 0; padding: 0; }
         body { background: #0a0a0a; color: #f0ede6; font-family: 'Space Mono', monospace; }
 
-        /* ── NAV ── */
         .site-nav {
           position: fixed; top: 0; left: 0; right: 0; z-index: 100;
           padding: 16px 40px; display: flex; justify-content: center;
@@ -61,13 +59,9 @@ export default async function BlogPage() {
         .nav-active { color: #f0ede6 !important; }
         .nav-cta { color: #EE7700 !important; }
 
-        /* ── HEADER ── */
-        .blog-header {
-          padding-top: 80px; background: #0a0a0a;
-        }
+        .blog-header { padding-top: 80px; background: #0a0a0a; }
         .blog-header-inner {
           padding: 80px 60px 60px;
-          border-bottom: 3px solid #EE7700;
           border-bottom: 3px solid #EE7700;
           display: flex; justify-content: space-between; align-items: flex-end;
         }
@@ -76,22 +70,7 @@ export default async function BlogPage() {
           font-size: clamp(64px, 10vw, 120px);
           line-height: 0.9; color: #f0ede6;
         }
-        .blog-title-arno {
-          display: block;
-          letter-spacing: 0.21em;
-          color: #f0ede6;
-        }
-        .blog-title-blogt {
-          display: block;
-          letter-spacing: 0.21em;
-          white-space: nowrap;
-        }
-        .blog-title-blog {
-          display: inline-block;
-          letter-spacing: 0.21em;
-          color: #EE7700;
-          font-size: clamp(64px, 10vw, 120px);
-        }
+        .blog-title-orange { color: #EE7700; }
         .blog-title-t {
           color: #EE7700;
           font-size: 0.45em;
@@ -104,66 +83,32 @@ export default async function BlogPage() {
         .blog-count { font-family: 'Bebas Neue', sans-serif; font-size: 48px; color: #EE7700; display: block; line-height: 1; }
         .blog-count-label { font-size: 10px; letter-spacing: 3px; text-transform: uppercase; color: #444; }
 
-        /* ── ARCHIEF ── */
         .archive { padding: 0 60px 80px; }
-
         .year-block { margin-top: 0; }
-
         .year-divider {
-          display: grid;
-          grid-template-columns: auto 1fr;
-          align-items: center;
-          gap: 24px;
-          padding: 48px 0 0;
-          margin-bottom: 0;
+          display: grid; grid-template-columns: auto 1fr;
+          align-items: center; gap: 24px; padding: 48px 0 0; margin-bottom: 0;
         }
         .year-label {
           font-family: 'Bebas Neue', sans-serif;
-          font-size: 100px; line-height: 1;
-          color: #1a1a1a; letter-spacing: -2px;
-          user-select: none;
+          font-size: 100px; line-height: 1; color: #1a1a1a; letter-spacing: -2px; user-select: none;
         }
         .year-line { height: 1px; background: #1e1e1e; }
 
-        /* Post rij */
         .post-row {
-          display: grid;
-          grid-template-columns: 56px 1fr auto;
-          align-items: baseline;
-          gap: 24px;
-          padding: 20px 0;
-          border-bottom: 1px solid #141414;
-          text-decoration: none;
-          color: #f0ede6;
-          transition: background 0.15s;
+          display: grid; grid-template-columns: 56px 1fr auto;
+          align-items: baseline; gap: 24px;
+          padding: 20px 60px; border-bottom: 1px solid #141414;
+          text-decoration: none; color: #f0ede6; transition: background 0.15s;
           margin: 0 -60px;
-          padding-left: 60px;
-          padding-right: 60px;
         }
-        .post-row:hover {
-          background: #EE7700;
-          color: #0a0a0a;
-        }
+        .post-row:hover { background: #EE7700; color: #0a0a0a; }
         .post-row:hover .post-row-num { color: rgba(0,0,0,0.25); }
         .post-row:hover .post-row-date { color: rgba(0,0,0,0.5); }
+        .post-row-num { font-family: 'Bebas Neue', sans-serif; font-size: 14px; color: #2a2a2a; transition: color 0.15s; }
+        .post-row-title { font-family: 'Bebas Neue', sans-serif; font-size: clamp(22px, 2.5vw, 34px); line-height: 1; letter-spacing: 0.5px; }
+        .post-row-date { font-size: 10px; letter-spacing: 2px; text-transform: uppercase; color: #444; white-space: nowrap; transition: color 0.15s; }
 
-        .post-row-num {
-          font-family: 'Bebas Neue', sans-serif;
-          font-size: 14px; color: #2a2a2a;
-          transition: color 0.15s;
-        }
-        .post-row-title {
-          font-family: 'Bebas Neue', sans-serif;
-          font-size: clamp(22px, 2.5vw, 34px);
-          line-height: 1; letter-spacing: 0.5px;
-        }
-        .post-row-date {
-          font-size: 10px; letter-spacing: 2px;
-          text-transform: uppercase; color: #444;
-          white-space: nowrap; transition: color 0.15s;
-        }
-
-        /* ── FOOTER ── */
         footer {
           background: #050505; padding: 40px 60px;
           display: flex; justify-content: space-between; align-items: center;
@@ -186,7 +131,10 @@ export default async function BlogPage() {
 
       <div className="blog-header">
         <div className="blog-header-inner">
-          <h1 className="blog-title"><span className="blog-title-arno">ARNO</span><span className="blog-title-blogt"><span className="blog-title-blog">BLOG</span><span className="blog-title-t">(T)</span></span></h1>
+          <h1 className="blog-title">
+            ARNO<br />
+            <span className="blog-title-orange">BLOG</span><span className="blog-title-t">(T)</span>
+          </h1>
           <div className="blog-meta">
             <span className="blog-count">{posts.length}</span>
             <span className="blog-count-label">Posts — Since 2007</span>
@@ -203,7 +151,7 @@ export default async function BlogPage() {
                 <span className="year-label">{year}</span>
                 <div className="year-line" />
               </div>
-              {yearPosts.map((post, i) => {
+              {yearPosts.map((post) => {
                 const globalIdx = posts.findIndex(p => p._id === post._id)
                 return (
                   <Link key={post._id} href={`/blog/${post.slug.current}`} className="post-row">

@@ -125,12 +125,12 @@ export default function SparClient() {
           font-family: 'Bebas Neue', sans-serif;
           font-size: clamp(36px, 4vw, 56px); letter-spacing: 2px; text-transform: uppercase;
           color: #f0ede6; margin-bottom: 16px; display: block; line-height: 1;
-          width: 100%; max-width: 890px; text-align: center;
+          width: 100%; max-width: 812px; text-align: center;
         }
         .spar-input-row {
           display: flex; gap: 0;
           border: 2px solid #EE7700;
-          width: 100%; max-width: 890px;
+          width: 100%; max-width: 812px;
         }
         .spar-textarea {
           flex: 1;
@@ -142,7 +142,7 @@ export default function SparClient() {
           resize: none; min-height: 48px; max-height: 48px;
           line-height: 1.5;
         }
-        .spar-textarea::placeholder { color: #555; font-style: italic; font-size: 12px; }
+        .spar-textarea::placeholder { color: #555; font-style: normal; font-size: 12px; }
         .spar-textarea:focus { background: #161616; }
         .spar-send {
           background: #EE7700; color: #0a0a0a;
@@ -156,7 +156,7 @@ export default function SparClient() {
         .spar-hint {
           font-size: 10px; letter-spacing: 2px; color: #2a2a2a;
           text-transform: uppercase; margin-top: 8px; padding-bottom: 28px;
-          width: 100%; max-width: 890px; text-align: center;
+          width: 100%; max-width: 812px; text-align: center;
         }
 
         /* OPENERS */

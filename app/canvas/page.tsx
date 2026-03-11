@@ -26,42 +26,32 @@ export default function CanvasPage() {
 
         .canvas-hero {
           padding-top: 80px;
-          min-height: 60vh;
-          display: flex;
-          align-items: flex-end;
           background: #0a0a0a;
-          border-bottom: 3px solid #EE7700;
         }
-        .canvas-hero-inner { padding: 80px 60px 60px; border-bottom: 3px solid #EE7700; }
-        .canvas-label {
-          font-size: 11px; letter-spacing: 4px; text-transform: uppercase;
-          color: #EE7700; font-family: 'Space Mono', monospace; margin-bottom: 24px; display: block;
+        .canvas-hero-inner {
+          padding: 80px 60px 60px;
+          border-bottom: 3px solid #EE7700;
         }
         .canvas-title {
           font-family: 'Bebas Neue', sans-serif;
           font-size: clamp(64px, 10vw, 120px);
-          line-height: 0.9;
-          line-height: 0.88; color: #f0ede6; margin-bottom: 32px;
+          line-height: 0.9; color: #f0ede6; margin-bottom: 32px;
         }
         .canvas-title span { color: #EE7700; }
-        .canvas-intro {
-          font-size: 13px; line-height: 2; color: #666;
-          max-width: 600px;
+        .canvas-subtitle {
+          font-family: 'Barlow Condensed', sans-serif;
+          font-size: 24px; font-weight: 300; color: #666; letter-spacing: 1px;
         }
 
         .canvas-coming {
-          display: flex;
-          flex-direction: column;
-          align-items: center;
-          justify-content: center;
-          padding: 120px 60px;
-          text-align: center;
+          display: flex; flex-direction: column;
+          align-items: center; justify-content: center;
+          padding: 120px 60px; text-align: center;
           border-bottom: 1px solid #1e1e1e;
         }
         .coming-label {
           font-family: 'Bebas Neue', sans-serif;
-          font-size: 14px; letter-spacing: 6px; color: #EE7700;
-          margin-bottom: 32px;
+          font-size: 14px; letter-spacing: 6px; color: #EE7700; margin-bottom: 32px;
         }
         .coming-title {
           font-family: 'Bebas Neue', sans-serif;
@@ -84,10 +74,7 @@ export default function CanvasPage() {
           display: flex; justify-content: space-between; align-items: center;
           border-top: 1px solid #111;
         }
-        .footer-logo {
-          font-family: 'Bebas Neue', sans-serif; font-size: 24px;
-          color: #EE7700; letter-spacing: 3px;
-        }
+        .footer-logo { font-family: 'Bebas Neue', sans-serif; font-size: 24px; color: #EE7700; letter-spacing: 3px; }
         .footer-copy { font-size: 10px; color: #333; }
       `}</style>
 
@@ -104,10 +91,8 @@ export default function CanvasPage() {
 
       <div className="canvas-hero">
         <div className="canvas-hero-inner">
-<h1 className="canvas-title">RDS<br /><span>Canvas.</span></h1>
-          <p className="canvas-intro">
-            Een visueel denkkader voor verkopers en commercieel leiders die écht willen begrijpen wat ze doen — en waarom het werkt. Of niet.
-          </p>
+          <h1 className="canvas-title">RDS<br /><span>Canvas.</span></h1>
+          <p className="canvas-subtitle">Framework. Strategie. Geen excuses.</p>
         </div>
       </div>
 
