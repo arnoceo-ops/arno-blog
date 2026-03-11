@@ -1,24 +1,19 @@
 import { NextRequest, NextResponse } from 'next/server'
 import Anthropic from '@anthropic-ai/sdk'
-import { promises as fs } from 'fs'
-import path from 'path'
 
 const client = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY })
 
-// Simpele keyword-based search (geen embeddings nodig)
 function searchChunks(chunks: string[], query: string, topN = 6): string[] {
   const queryWords = query.toLowerCase().split(/\s+/).filter(w => w.length > 3)
-  
-  const scored = chunks.map((chunk, i) => {
+  const scored = chunks.map((chunk) => {
     const lower = chunk.toLowerCase()
     let score = 0
     for (const word of queryWords) {
-      const count = (lower.match(new RegExp(word, 'g')) || []).length
+      const count = (lower.match(new RegExp(word.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'g')) || []).length
       score += count
     }
-    return { chunk, score, i }
+    return { chunk, score }
   })
-
   return scored
     .sort((a, b) => b.score - a.score)
     .slice(0, topN)
@@ -30,10 +25,16 @@ let cachedChunks: string[] | null = null
 
 async function getChunks(): Promise<string[]> {
   if (cachedChunks) return cachedChunks
-  
-  const pdfPath = path.join(process.cwd(), 'public', 'chief_sales_updates.txt')
-  const text = await fs.readFile(pdfPath, 'utf-8')
-  
+
+  // Fetch het tekstbestand via HTTP (werkt op Vercel)
+  const baseUrl = process.env.VERCEL_URL
+    ? `https://${process.env.VERCEL_URL}`
+    : 'http://localhost:3000'
+
+  const res = await fetch(`${baseUrl}/chief_sales_updates.txt`, { cache: 'force-cache' })
+  if (!res.ok) throw new Error(`Kon tekstbestand niet laden: ${res.status}`)
+  const text = await res.text()
+
   const words = text.split(/\s+/)
   const chunks: string[] = []
   const chunkSize = 400
@@ -43,7 +44,7 @@ async function getChunks(): Promise<string[]> {
     chunks.push(words.slice(i, i + chunkSize).join(' '))
     i += chunkSize - overlap
   }
-  
+
   cachedChunks = chunks
   return chunks
 }
@@ -51,10 +52,10 @@ async function getChunks(): Promise<string[]> {
 export async function POST(req: NextRequest) {
   try {
     const { question, history } = await req.json()
-    
+
     const chunks = await getChunks()
     const relevant = searchChunks(chunks, question)
-    
+
     const context = relevant.length > 0
       ? relevant.join('\n\n---\n\n')
       : 'Geen specifieke context gevonden.'
@@ -83,7 +84,8 @@ ${context}`,
     const answer = response.content[0].type === 'text' ? response.content[0].text : ''
     return NextResponse.json({ answer })
   } catch (err) {
-    console.error(err)
-    return NextResponse.json({ error: 'Er ging iets mis' }, { status: 500 })
+    const msg = err instanceof Error ? err.message : String(err)
+    console.error('Chat error:', msg)
+    return NextResponse.json({ error: msg }, { status: 500 })
   }
 }
