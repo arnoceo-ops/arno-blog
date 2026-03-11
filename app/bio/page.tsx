@@ -53,10 +53,12 @@ export default function BioPage() {
 
         /* c) Sidebar: stoerder font */
         .bio-body {
-          max-width: 900px; margin: 0 auto;
+          max-width: 960px; margin: 0 auto;
           padding: 80px 60px 120px;
-          display: grid; grid-template-columns: 500px 1fr; gap: 80px;
-          align-items: start;
+          display: flex; flex-direction: column; gap: 60px;
+        }
+        .bio-video {
+          width: 800px; max-width: 100%; margin: 0 auto;
         }
         .bio-sidebar-item { margin-bottom: 40px; }
         .bio-sidebar-label {
@@ -124,16 +126,19 @@ export default function BioPage() {
         </div>
         <div className="bio-text">
           <p>
-            <strong>Arno Diepeveen</strong> schrijft over verkoop zoals anderen over voetbal schrijven — met passie, mening en zonder respect voor heilige huisjes.
+            Arno is een rainmaker <strong>(Dikke Deals Doen)</strong>, een cut the crap mentor en sinds zijn jongste jaren een schrijver met een enigszins rauwe, provocerende en eerlijke schrijfstijl. Zijn waarde? Priceless. Als je er iets mee doet, tenminste.
           </p>
           <p>
-            Royal Dutch Sales begon in 2007 als een manier om te zeggen wat anderen niet durfden. Sindsdien zijn er honderden posts verschenen — over acquisitie, excellentie, middelmaat, en alles wat daartussen zit.
+            Hij schrijft geen stappenplannen om ergens te komen. Geen verzameling van gelikte verkooptrucs met succesgarantie. Zijn blogs zijn een staalkaart van ongefilterde observaties, doorwrochte meningen en liefdevolle provocaties uit ruim 40 jaar frontlinie en 19 jaar blogs schrijven. Over sales. Over leiderschap. Over klantvrijheid, cultuur en karakter. Over bullshit, blinde vlekken en het ongemak van het beter weten maar niet doen.
           </p>
           <p>
-            <em>Anti-middelmatigheid</em> is geen slogan. Het is een levenshouding. Voor wie het aankan.
+            Zijn teksten zijn ritmische denkschoppen. Geschreven voor wie de moed heeft om het vak serieus te nemen. Voor de eindbazen, salesbazen en sales pro's die snappen dat winst alleen duurzaam is als die ontstaat uit aandacht, excellentie en het lef om het anders te doen.
           </p>
           <p>
-            Arno woont en werkt vanuit <strong>Lisboa, Portugal</strong> — ver van de Nederlandse polderconsensus, dichtbij de zon en de Atlantische Oceaan.
+            <em>Winstgeving is zijn zingeving.</em>
+          </p>
+          <p>
+            Dat is geen slogan. Dat is een kompas.
           </p>
         </div>
       </div>
