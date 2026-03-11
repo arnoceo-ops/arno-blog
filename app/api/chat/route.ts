@@ -1,5 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import Anthropic from '@anthropic-ai/sdk'
+import { readFileSync } from 'fs'
+import { join } from 'path'
 
 const client = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY })
 
@@ -9,7 +11,8 @@ function searchChunks(chunks: string[], query: string, topN = 6): string[] {
     const lower = chunk.toLowerCase()
     let score = 0
     for (const word of queryWords) {
-      const count = (lower.match(new RegExp(word.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'g')) || []).length
+      const escaped = word.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
+      const count = (lower.match(new RegExp(escaped, 'g')) || []).length
       score += count
     }
     return { chunk, score }
@@ -23,17 +26,11 @@ function searchChunks(chunks: string[], query: string, topN = 6): string[] {
 
 let cachedChunks: string[] | null = null
 
-async function getChunks(): Promise<string[]> {
+function getChunks(): string[] {
   if (cachedChunks) return cachedChunks
 
-  // Fetch het tekstbestand via HTTP (werkt op Vercel)
-  const baseUrl = process.env.VERCEL_URL
-    ? `https://${process.env.VERCEL_URL}`
-    : 'http://localhost:3000'
-
-  const res = await fetch(`${baseUrl}/chief_sales_updates.txt`, { cache: 'force-cache' })
-  if (!res.ok) throw new Error(`Kon tekstbestand niet laden: ${res.status}`)
-  const text = await res.text()
+  const filePath = join(process.cwd(), 'data', 'chief_sales_updates.txt')
+  const text = readFileSync(filePath, 'utf-8')
 
   const words = text.split(/\s+/)
   const chunks: string[] = []
@@ -53,7 +50,7 @@ export async function POST(req: NextRequest) {
   try {
     const { question, history } = await req.json()
 
-    const chunks = await getChunks()
+    const chunks = getChunks()
     const relevant = searchChunks(chunks, question)
 
     const context = relevant.length > 0
