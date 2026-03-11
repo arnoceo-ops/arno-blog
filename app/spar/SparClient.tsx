@@ -9,14 +9,18 @@ interface Message {
 }
 
 const OPENERS = [
-  'Waarom haal ik mijn target niet?',
-  'Hoe kom ik binnen bij een nieuwe klant?',
-  'Wat maakt een topverkoper anders dan de rest?',
-  'Hoe ga ik om met afwijzing?',
-  'Mijn team presteert onder de maat. Wat nu?',
-  'Hoe bouw ik een winnend sales team?',
-  'Wat is het verschil tussen verkopen en opdringen?',
-  'Hoe overtuig ik een sceptische klant?',
+  'Mijn salesteam haalt structureel de targets niet. Waar ligt het écht aan?',
+  'Hoe bouw ik een commerciële strategie die de markt overspoelt?',
+  'Wat onderscheidt een winnende salesorganisatie van een gemiddelde?',
+  'Hoe zorg ik dat mijn mensen briljant worden in plaats van aardig?',
+  'Mijn pipeline ziet er goed uit maar de conversie klopt niet. Waarom?',
+  'Hoe creëer ik een cultuur waarin excellentie de norm is?',
+  'Wanneer is een salesstrategie echt een strategie en niet een wensenlijst?',
+  'Hoe stop ik met managen en begin ik met leiden?',
+  'Wat is de grootste mindset-fout die salesbazen maken?',
+  'Hoe verkoop ik intern mijn strategie aan de board?',
+  'Mijn beste verkoper vertrekt. Hoe had ik dat kunnen voorkomen?',
+  'Wat moet ik morgen anders doen om over een jaar marktleider te zijn?',
 ]
 
 export default function SparClient() {
@@ -160,11 +164,12 @@ export default function SparClient() {
         }
         .openers-grid {
           display: grid;
-          grid-template-columns: repeat(4, 1fr);
+          grid-template-columns: repeat(3, 1fr);
           gap: 2px;
           margin-bottom: 2px;
         }
         @media (max-width: 1024px) { .openers-grid { grid-template-columns: repeat(2, 1fr); } }
+        @media (max-width: 640px) { .openers-grid { grid-template-columns: 1fr; } }
         .opener-btn {
           background: #111; border: none; color: #888;
           font-family: 'Bebas Neue', sans-serif;
