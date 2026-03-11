@@ -263,9 +263,38 @@ export default function SparClient() {
           </div>
         </div>
 
+        <div className="spar-input-area">
+          <span className="spar-input-label">↓ Stel je vraag — geen filter, geen bullshit</span>
+          <div className="spar-input-row">
+            <textarea
+              ref={inputRef}
+              className="spar-textarea"
+              value={input}
+              onChange={e => setInput(e.target.value)}
+              onKeyDown={e => {
+                if (e.key === 'Enter' && !e.shiftKey) {
+                  e.preventDefault()
+                  ask(input)
+                }
+              }}
+              placeholder="Tsja, stel eens een goeie vraag..."
+              disabled={loading}
+              rows={2}
+            />
+            <button
+              className="spar-send"
+              onClick={() => ask(input)}
+              disabled={loading || !input.trim()}
+            >
+              {loading ? '...' : 'SPAR →'}
+            </button>
+          </div>
+          <p className="spar-hint">Enter = sturen — Shift+Enter = nieuwe regel</p>
+        </div>
+
         {!started && (
           <div className="spar-openers">
-            <p className="openers-label">Of begin hier</p>
+            <span className="openers-label">Of trap hier in</span>
             <div className="openers-grid">
               {OPENERS.map((q, i) => (
                 <button key={i} className="opener-btn" onClick={() => ask(q)}>
