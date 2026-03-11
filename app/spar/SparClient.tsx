@@ -416,9 +416,3 @@ export default function SparClient() {
     </>
   )
 }
-
-
-      </div>
-    </>
-  )
-}
