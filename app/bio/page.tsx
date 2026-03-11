@@ -4,7 +4,7 @@ export default function BioPage() {
   return (
     <>
       <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Mono:wght@400;700&family=Barlow+Condensed:wght@300;600;900&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Mono:wght@400;700&family=Barlow:wght@400;700&family=Barlow+Condensed:wght@300;600;900&display=swap');
         * { box-sizing: border-box; margin: 0; padding: 0; }
         body { background: #0a0a0a; color: #f0ede6; font-family: 'Space Mono', monospace; }
 
@@ -24,11 +24,7 @@ export default function BioPage() {
         .nav-active { color: #EE7700 !important; }
         .nav-cta { color: #EE7700 !important; }
 
-        /* HERO — zelfde structuur als BLOG/CANVAS/SPAR */
-        .bio-hero {
-          padding-top: 80px;
-          background: #0a0a0a;
-        }
+        .bio-hero { padding-top: 80px; background: #0a0a0a; }
         .bio-hero-inner {
           padding: 80px 60px 60px;
           border-bottom: 3px solid #EE7700;
@@ -41,19 +37,25 @@ export default function BioPage() {
         }
         .bio-title-arno { color: #EE7700; display: block; }
         .bio-title-diepeveen { color: #f0ede6; display: block; }
-        .bio-subtitle {
-          font-family: 'Barlow Condensed', sans-serif;
-          font-size: 24px; font-weight: 300; color: #666;
-          letter-spacing: 1px; padding-bottom: 8px;
+
+        /* b) Tagline: Barlow bold 26px titel + Space Mono 15px tekst */
+        .bio-tagline { text-align: right; padding-bottom: 8px; max-width: 420px; }
+        .bio-tagline-title {
+          font-family: 'Barlow', sans-serif;
+          font-size: 26px; font-weight: 700; color: #f0ede6;
+          display: block; margin-bottom: 8px; letter-spacing: 0.5px;
+        }
+        .bio-tagline-sub {
+          font-family: 'Space Mono', monospace;
+          font-size: 15px; line-height: 1.9; color: #aaa;
+          display: block;
         }
 
+        /* c) Sidebar: stoerder font */
         .bio-body {
-          max-width: 900px;
-          margin: 0 auto;
+          max-width: 900px; margin: 0 auto;
           padding: 80px 60px 120px;
-          display: grid;
-          grid-template-columns: 1fr 2fr;
-          gap: 80px;
+          display: grid; grid-template-columns: 1fr 2fr; gap: 80px;
         }
         .bio-sidebar-item { margin-bottom: 40px; }
         .bio-sidebar-label {
@@ -61,11 +63,13 @@ export default function BioPage() {
           color: #444; font-family: 'Space Mono', monospace; margin-bottom: 8px;
         }
         .bio-sidebar-value {
-          font-family: 'Barlow Condensed', sans-serif;
-          font-size: 20px; font-weight: 600; color: #f0ede6;
+          font-family: 'Barlow', sans-serif;
+          font-size: 22px; font-weight: 700; color: #f0ede6; letter-spacing: 0.3px;
         }
+
+        /* a) Body tekst: 15px, line-height 1.875 (≈30px) */
         .bio-text p {
-          font-size: 13px; line-height: 2.2; color: #888; margin-bottom: 28px;
+          font-size: 15px; line-height: 1.875; color: #888; margin-bottom: 28px;
         }
         .bio-text strong { color: #f0ede6; font-weight: 700; }
         .bio-text em { color: #EE7700; font-style: normal; }
@@ -96,7 +100,10 @@ export default function BioPage() {
             <span className="bio-title-arno">ARNO</span>
             <span className="bio-title-diepeveen">DIEPEVEEN.</span>
           </h1>
-          <p className="bio-subtitle">Verkoper. Schrijver. Provocateur. Lisboa.</p>
+          <div className="bio-tagline">
+            <span className="bio-tagline-title">Verkoper. Schrijver. Provocateur.</span>
+            <span className="bio-tagline-sub">Lisboa, Portugal — sinds 2007.</span>
+          </div>
         </div>
       </div>
 
@@ -113,7 +120,7 @@ export default function BioPage() {
           <div className="bio-sidebar-item">
             <div className="bio-sidebar-label">Contact</div>
             <div className="bio-sidebar-value">
-              <a href="mailto:hq@royaldutchsales.com" style={{color:'#EE7700',textDecoration:'none',fontSize:'14px'}}>
+              <a href="mailto:hq@royaldutchsales.com" style={{color:'#EE7700',textDecoration:'none',fontSize:'16px',fontFamily:'Barlow, sans-serif',fontWeight:'700'}}>
                 hq@royaldutchsales.com
               </a>
             </div>
