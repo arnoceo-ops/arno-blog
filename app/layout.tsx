@@ -12,7 +12,7 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-export const metadata: metadata = {
+export const metadata: Metadata = {
   title: 'Royal Dutch Sales',
   description: 'Arno Diepeveen — Rainmaker, Mentor, Schrijver.',
 };
