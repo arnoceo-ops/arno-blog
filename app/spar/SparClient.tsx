@@ -84,7 +84,7 @@ export default function SparClient() {
   return (
     <>
       <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Mono:wght@400;700&family=Barlow+Condensed:wght@300;600;900&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Mono:wght@400;700&family=Barlow:wght@400;700&family=Barlow+Condensed:wght@300;600;900&display=swap');
         * { box-sizing: border-box; margin: 0; padding: 0; }
         html, body { height: 100%; }
         body { background: #0a0a0a; color: #f0ede6; font-family: 'Space Mono', monospace; }
@@ -124,10 +124,10 @@ export default function SparClient() {
         }
         .spar-title span { color: #EE7700; }
         .spar-tagline {
-          text-align: right; padding-bottom: 8px; max-width: 420px;
+          text-align: right; padding-bottom: 8px; max-width: 520px;
         }
-        .spar-tagline p { font-size: 17px; line-height: 1.9; color: #aaa; }
-        .spar-tagline strong { font-weight: 700; color: #f0ede6; font-family: 'Barlow Condensed', sans-serif; font-size: 26px; letter-spacing: 0.5px; display: block; margin-bottom: 6px; }
+        .spar-tagline p { font-size: 15px; line-height: 1.9; color: #aaa; }
+        .spar-tagline strong { font-weight: 700; color: #f0ede6; font-family: 'Barlow', sans-serif; font-size: 26px; letter-spacing: 0.5px; display: block; margin-bottom: 6px; }
 
         /* INPUT — PROMINENT BOVENAAN */
         .spar-input-area {
