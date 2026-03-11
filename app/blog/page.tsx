@@ -73,11 +73,11 @@ export default async function BlogPage() {
         .blog-title-orange { color: #EE7700; }
         .blog-title-t {
           color: #EE7700;
-          font-size: 0.45em;
+          font-size: 0.65em;
           vertical-align: super;
           letter-spacing: 0;
-          margin-left: 4px;
-          opacity: 0.7;
+          margin-left: 6px;
+          opacity: 0.9;
         }
         .blog-meta { text-align: right; padding-bottom: 8px; }
         .blog-count { font-family: 'Bebas Neue', sans-serif; font-size: 48px; color: #EE7700; display: block; line-height: 1; }

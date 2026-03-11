@@ -242,6 +242,39 @@ export default function SparClient() {
         .loading-text {
           font-size: 11px; letter-spacing: 3px; text-transform: uppercase; color: #333;
         }
+
+        /* GLOW op invoerveld na gesprek */
+        .spar-input-row.active-glow {
+          border-color: #EE7700;
+          box-shadow: 0 0 0 3px rgba(238,119,0,0.25), 0 0 24px rgba(238,119,0,0.15);
+          animation: glowpulse 2s ease-in-out infinite;
+        }
+        @keyframes glowpulse {
+          0%, 100% { box-shadow: 0 0 0 3px rgba(238,119,0,0.2), 0 0 16px rgba(238,119,0,0.1); }
+          50% { box-shadow: 0 0 0 3px rgba(238,119,0,0.4), 0 0 32px rgba(238,119,0,0.25); }
+        }
+
+        /* HINT onder antwoord */
+        .msg-continue-hint {
+          padding: 20px 0 0 120px;
+          font-size: 11px; letter-spacing: 3px; text-transform: uppercase;
+          color: #EE7700; opacity: 0.6;
+          animation: fadein 0.6s ease;
+        }
+        @keyframes fadein { from { opacity: 0; } to { opacity: 0.6; } }
+
+        /* RESET knop zwevend rechtsonder */
+        .spar-reset-btn {
+          position: fixed; bottom: 32px; right: 32px; z-index: 200;
+          background: #111; border: 1px solid #333;
+          color: #555; font-family: 'Bebas Neue', sans-serif;
+          font-size: 14px; letter-spacing: 2px;
+          padding: 12px 20px; cursor: pointer;
+          transition: all 0.2s;
+        }
+        .spar-reset-btn:hover {
+          background: #1a1a1a; border-color: #EE7700; color: #EE7700;
+        }
       `}</style>
 
       <nav className="site-nav">
@@ -271,8 +304,10 @@ export default function SparClient() {
         </div>
 
         <div className="spar-input-area">
-          <span className="spar-input-label">↓ Stel je vraag — geen filter, geen bullshit</span>
-          <div className="spar-input-row">
+          <span className="spar-input-label">
+            {started ? '↓ Volgende vraag — ga door' : '↓ Stel je vraag — geen filter, geen bullshit'}
+          </span>
+          <div className={`spar-input-row${started ? ' active-glow' : ''}`}>
             <textarea
               ref={inputRef}
               className="spar-textarea"
@@ -319,9 +354,14 @@ export default function SparClient() {
                 <span className="msg-user-text">{msg.content}</span>
               </div>
             ) : (
-              <div key={i} className="msg-arno">
-                <span className="msg-arno-label">ARNO</span>
-                <span className="msg-arno-text">{msg.content}</span>
+              <div key={i}>
+                <div className="msg-arno">
+                  <span className="msg-arno-label">ARNO</span>
+                  <span className="msg-arno-text">{msg.content}</span>
+                </div>
+                {i === messages.length - 1 && !loading && (
+                  <div className="msg-continue-hint">↑ Stel je volgende vraag hierboven</div>
+                )}
               </div>
             )
           ))}
@@ -337,6 +377,21 @@ export default function SparClient() {
           )}
           <div ref={bottomRef} />
         </div>
+
+        {started && (
+          <button
+            className="spar-reset-btn"
+            onClick={() => {
+              setStarted(false)
+              setMessages([])
+              setHistory([])
+              setInput('')
+              window.scrollTo({ top: 0, behavior: 'smooth' })
+            }}
+          >
+            ← Nieuwe sessie
+          </button>
+        )}
 
 
       </div>

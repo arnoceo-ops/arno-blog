@@ -31,17 +31,14 @@ export default function CanvasPage() {
         .canvas-hero-inner {
           padding: 80px 60px 60px;
           border-bottom: 3px solid #EE7700;
+          display: flex; justify-content: space-between; align-items: flex-end;
         }
         .canvas-title {
           font-family: 'Bebas Neue', sans-serif;
           font-size: clamp(64px, 10vw, 120px);
-          line-height: 0.9; color: #f0ede6; margin-bottom: 32px;
+          line-height: 0.9; color: #f0ede6;
         }
         .canvas-title span { color: #EE7700; }
-        .canvas-subtitle {
-          font-family: 'Barlow Condensed', sans-serif;
-          font-size: 24px; font-weight: 300; color: #666; letter-spacing: 1px;
-        }
 
         .canvas-coming {
           display: flex; flex-direction: column;
@@ -92,7 +89,6 @@ export default function CanvasPage() {
       <div className="canvas-hero">
         <div className="canvas-hero-inner">
           <h1 className="canvas-title">RDS<br /><span>Canvas.</span></h1>
-          <p className="canvas-subtitle">Framework. Strategie. Geen excuses.</p>
         </div>
       </div>
 
