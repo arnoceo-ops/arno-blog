@@ -310,7 +310,7 @@ export default function SparClient({ taglineTitle, taglineSub, openers }: Props)
       <div className="spar-page">
         <div className="spar-hero">
           <h1 className="spar-title">
-            LET&apos;S<br />ARNO<span>BOT.</span>
+            ARNO<br /><span>BOT.</span>
           </h1>
           <div className="spar-tagline">
             <p>
