@@ -69,7 +69,7 @@ export default function SparClient() {
         html, body { height: 100%; }
         body { background: #0a0a0a; color: #f0ede6; font-family: 'Space Mono', monospace; }
 
-        /* NAV */
+                /* NAV */
         .site-nav {
           position: fixed; top: 0; left: 0; right: 0; z-index: 100;
           padding: 16px 40px; display: flex; justify-content: center;
@@ -87,46 +87,76 @@ export default function SparClient() {
 
         /* SPAR LAYOUT */
         .spar-page {
-          min-height: 100vh;
-          padding-top: 80px;
-          display: flex;
-          flex-direction: column;
+          min-height: 100vh; padding-top: 80px;
+          display: flex; flex-direction: column;
         }
 
         /* HERO */
         .spar-hero {
           padding: 80px 60px 60px;
           border-bottom: 3px solid #EE7700;
-          display: flex;
-          justify-content: space-between;
-          align-items: flex-end;
+          display: flex; justify-content: space-between; align-items: flex-end;
         }
         .spar-title {
           font-family: 'Bebas Neue', sans-serif;
           font-size: clamp(80px, 12vw, 160px);
-          line-height: 0.85;
-          letter-spacing: -2px;
+          line-height: 0.85; letter-spacing: -2px;
         }
         .spar-title span { color: #EE7700; }
         .spar-tagline {
-          text-align: right;
-          padding-bottom: 8px;
-          max-width: 360px;
+          text-align: right; padding-bottom: 8px; max-width: 360px;
         }
-        .spar-tagline p {
-          font-size: 13px; line-height: 2; color: #555;
+        .spar-tagline p { font-size: 13px; line-height: 2; color: #555; }
+        .spar-tagline strong { font-weight: normal; color: #888; }
+
+        /* INPUT — PROMINENT BOVENAAN */
+        .spar-input-area {
+          background: #0a0a0a;
+          padding: 48px 60px 0;
         }
-        .spar-tagline strong {
-          font-weight: normal; color: #888;
+        .spar-input-label {
+          font-family: 'Bebas Neue', sans-serif;
+          font-size: 13px; letter-spacing: 5px; text-transform: uppercase;
+          color: #EE7700; margin-bottom: 16px; display: block;
+        }
+        .spar-input-row {
+          display: flex; gap: 0;
+          border: 2px solid #EE7700;
+        }
+        .spar-textarea {
+          flex: 1;
+          background: #111;
+          border: none;
+          color: #f0ede6;
+          font-family: 'Space Mono', monospace;
+          font-size: 15px; padding: 24px 28px; outline: none;
+          resize: none; min-height: 80px; max-height: 200px;
+          line-height: 1.7;
+        }
+        .spar-textarea::placeholder { color: #444; font-style: italic; }
+        .spar-textarea:focus { background: #161616; }
+        .spar-send {
+          background: #EE7700; color: #0a0a0a;
+          font-family: 'Bebas Neue', sans-serif;
+          font-size: 24px; letter-spacing: 3px;
+          padding: 0 48px; border: none; cursor: pointer;
+          transition: background 0.2s; white-space: nowrap; min-width: 160px;
+        }
+        .spar-send:hover { background: #ff8800; }
+        .spar-send:disabled { background: #1a1a1a; color: #2a2a2a; cursor: not-allowed; }
+        .spar-hint {
+          font-size: 10px; letter-spacing: 2px; color: #2a2a2a;
+          text-transform: uppercase; margin-top: 10px; padding-bottom: 48px;
         }
 
         /* OPENERS */
         .spar-openers {
-          padding: 60px 60px 0;
+          padding: 0 60px 0;
+          border-bottom: 1px solid #1a1a1a;
         }
         .openers-label {
           font-size: 10px; letter-spacing: 4px; text-transform: uppercase;
-          color: #333; margin-bottom: 24px;
+          color: #333; padding: 32px 0 20px; display: block;
         }
         .openers-grid {
           display: grid;
@@ -136,63 +166,50 @@ export default function SparClient() {
         }
         @media (max-width: 1024px) { .openers-grid { grid-template-columns: repeat(2, 1fr); } }
         .opener-btn {
-          background: #111; border: none; color: #666;
-          font-family: 'Space Mono', monospace; font-size: 12px;
-          padding: 20px 24px; cursor: pointer; text-align: left;
-          line-height: 1.6; transition: all 0.2s;
-          border-left: 3px solid transparent;
+          background: #111; border: none; color: #888;
+          font-family: 'Bebas Neue', sans-serif;
+          font-size: 18px; letter-spacing: 1px;
+          padding: 24px 28px; cursor: pointer; text-align: left;
+          line-height: 1.3; transition: all 0.15s;
+          border-bottom: 2px solid transparent;
         }
         .opener-btn:hover {
-          background: #161616; color: #f0ede6;
-          border-left-color: #EE7700;
+          background: #EE7700; color: #0a0a0a;
+          border-bottom-color: transparent;
         }
 
         /* GESPREK */
         .spar-conversation {
-          flex: 1;
-          padding: 0 60px;
-          display: flex;
-          flex-direction: column;
-          gap: 0;
+          flex: 1; padding: 0 60px;
+          display: flex; flex-direction: column; gap: 0;
         }
 
         .msg-user {
-          padding: 40px 0;
-          border-bottom: 1px solid #141414;
-          display: flex;
-          gap: 40px;
-          align-items: flex-start;
+          padding: 40px 0; border-bottom: 1px solid #141414;
+          display: flex; gap: 40px; align-items: flex-start;
         }
         .msg-user-label {
           font-family: 'Bebas Neue', sans-serif;
           font-size: 13px; letter-spacing: 3px;
-          color: #333; white-space: nowrap; padding-top: 4px;
-          min-width: 80px;
+          color: #333; white-space: nowrap; padding-top: 4px; min-width: 80px;
         }
         .msg-user-text {
-          font-size: 20px; line-height: 1.6; color: #f0ede6;
-          font-family: 'Barlow Condensed', sans-serif;
-          font-weight: 600; letter-spacing: 0.5px;
+          font-size: 22px; line-height: 1.5; color: #f0ede6;
+          font-family: 'Bebas Neue', sans-serif; letter-spacing: 0.5px;
         }
 
         .msg-arno {
-          padding: 40px 0;
-          border-bottom: 1px solid #141414;
-          display: flex;
-          gap: 40px;
-          align-items: flex-start;
-          background: transparent;
+          padding: 40px 0; border-bottom: 1px solid #141414;
+          display: flex; gap: 40px; align-items: flex-start;
         }
         .msg-arno-label {
           font-family: 'Bebas Neue', sans-serif;
           font-size: 13px; letter-spacing: 3px;
-          color: #EE7700; white-space: nowrap; padding-top: 4px;
-          min-width: 80px;
+          color: #EE7700; white-space: nowrap; padding-top: 4px; min-width: 80px;
         }
         .msg-arno-text {
           font-size: 15px; line-height: 2; color: #aaa;
-          max-width: 680px;
-          white-space: pre-wrap;
+          max-width: 680px; white-space: pre-wrap;
         }
 
         .msg-loading {
@@ -212,50 +229,6 @@ export default function SparClient() {
         }
         .loading-text {
           font-size: 11px; letter-spacing: 3px; text-transform: uppercase; color: #333;
-        }
-
-        /* INPUT */
-        .spar-input-area {
-          position: sticky;
-          bottom: 0;
-          background: #0a0a0a;
-          border-top: 3px solid #EE7700;
-          padding: 32px 60px;
-        }
-        .spar-input-label {
-          font-family: 'Bebas Neue', sans-serif;
-          font-size: 11px; letter-spacing: 4px; text-transform: uppercase;
-          color: #EE7700; margin-bottom: 12px; display: block;
-        }
-        .spar-input-row {
-          display: flex; gap: 0;
-        }
-        .spar-textarea {
-          flex: 1;
-          background: #f0ede6;
-          border: none;
-          border-right: none;
-          color: #0a0a0a;
-          font-family: 'Space Mono', monospace;
-          font-size: 15px; padding: 20px 24px; outline: none;
-          resize: none; min-height: 64px; max-height: 180px;
-          line-height: 1.6;
-        }
-        .spar-textarea::placeholder { color: #888; font-size: 13px; }
-        .spar-textarea:focus { background: #fff; }
-        .spar-send {
-          background: #EE7700; color: #0a0a0a;
-          font-family: 'Bebas Neue', sans-serif;
-          font-size: 24px; letter-spacing: 3px;
-          padding: 0 48px; border: none; cursor: pointer;
-          transition: background 0.2s; white-space: nowrap;
-          min-width: 160px;
-        }
-        .spar-send:hover { background: #ff8800; }
-        .spar-send:disabled { background: #1a1a1a; color: #333; cursor: not-allowed; }
-        .spar-hint {
-          font-size: 10px; letter-spacing: 2px; color: #2a2a2a;
-          text-transform: uppercase; margin-top: 10px;
         }
       `}</style>
 
@@ -325,34 +298,7 @@ export default function SparClient() {
           <div ref={bottomRef} />
         </div>
 
-        <div className="spar-input-area">
-          <span className="spar-input-label">↓ Jouw vraag — geen bullshit, geen filter</span>
-          <div className="spar-input-row">
-            <textarea
-              ref={inputRef}
-              className="spar-textarea"
-              value={input}
-              onChange={e => setInput(e.target.value)}
-              onKeyDown={e => {
-                if (e.key === 'Enter' && !e.shiftKey) {
-                  e.preventDefault()
-                  ask(input)
-                }
-              }}
-              placeholder="Wat wil je weten? Stel de vraag die je al 3 jaar niet durft te stellen..."
-              disabled={loading}
-              rows={2}
-            />
-            <button
-              className="spar-send"
-              onClick={() => ask(input)}
-              disabled={loading || !input.trim()}
-            >
-              {loading ? '...' : 'SPAR →'}
-            </button>
-          </div>
-          <p className="spar-hint">Enter = sturen — Shift+Enter = nieuwe regel</p>
-        </div>
+
       </div>
     </>
   )
