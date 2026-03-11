@@ -2,7 +2,7 @@ import { client } from '@/sanity/client'
 import SparClient from './SparClient'
 
 async function getSparPage() {
-  return await client.fetch(`*[_type == "sparPage"][0]`)
+  return await client.fetch(`*[_type == "sparPage"][0]`, {}, { next: { revalidate: 0 } })
 }
 
 export default async function SparPage() {

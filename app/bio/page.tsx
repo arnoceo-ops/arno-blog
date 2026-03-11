@@ -3,7 +3,7 @@ import { client } from '@/sanity/client'
 import { PortableText } from '@portabletext/react'
 
 async function getBioPage() {
-  return await client.fetch(`*[_type == "bioPage"][0]`)
+  return await client.fetch(`*[_type == "bioPage"][0]`, {}, { next: { revalidate: 0 } })
 }
 
 export default async function BioPage() {

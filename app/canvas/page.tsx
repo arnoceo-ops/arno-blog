@@ -1,6 +1,13 @@
 import Link from 'next/link'
+import { client } from '@/sanity/client'
 
-export default function CanvasPage() {
+async function getCanvasPage() {
+  return await client.fetch(`*[_type == "canvasPage"][0]`, {}, { next: { revalidate: 0 } })
+}
+
+export default async function CanvasPage() {
+  const canvas = await getCanvasPage()
+
   return (
     <>
       <style>{`
@@ -24,10 +31,7 @@ export default function CanvasPage() {
         .nav-active { color: #EE7700 !important; }
         .nav-cta { color: #EE7700 !important; }
 
-        .canvas-hero {
-          padding-top: 80px;
-          background: #0a0a0a;
-        }
+        .canvas-hero { padding-top: 80px; background: #0a0a0a; }
         .canvas-hero-inner {
           padding: 80px 60px 60px;
           border-bottom: 3px solid #EE7700;
@@ -94,10 +98,8 @@ export default function CanvasPage() {
 
       <div className="canvas-coming">
         <p className="coming-label">Coming Soon</p>
-        <h2 className="coming-title">Wordt gebouwd.<br />Wordt brutaal.</h2>
-        <p className="coming-body">
-          Het RDS Canvas is in ontwikkeling. Een framework dat de bullshit eruit haalt en de kern blootlegt. Meld je aan voor de nieuwsbrief en je bent de eerste die het weet.
-        </p>
+        <h2 className="coming-title">{canvas?.comingTitle}</h2>
+        <p className="coming-body">{canvas?.comingBody}</p>
         <a href="/#subscribe" className="coming-back">Houd me op de hoogte →</a>
       </div>
 
