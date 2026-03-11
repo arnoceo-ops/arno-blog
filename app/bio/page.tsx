@@ -18,40 +18,33 @@ export default function BioPage() {
         .nav-links a {
           color: #888; text-decoration: none;
           font-family: 'Bebas Neue', sans-serif;
-          font-size: 22px; letter-spacing: 3px;
-          transition: color 0.2s;
+          font-size: 22px; letter-spacing: 3px; transition: color 0.2s;
         }
         .nav-links a:hover { color: #f0ede6; }
         .nav-active { color: #EE7700 !important; }
         .nav-cta { color: #EE7700 !important; }
 
+        /* HERO — zelfde structuur als BLOG/CANVAS/SPAR */
         .bio-hero {
           padding-top: 80px;
-          min-height: 50vh;
-          display: flex;
-          align-items: flex-end;
-          background: #111;
-          border-bottom: 1px solid #1e1e1e;
+          background: #0a0a0a;
         }
         .bio-hero-inner {
           padding: 80px 60px 60px;
           border-bottom: 3px solid #EE7700;
-          max-width: 900px;
-        }
-        .bio-label {
-          font-size: 11px; letter-spacing: 4px; text-transform: uppercase;
-          color: #EE7700; font-family: 'Space Mono', monospace; margin-bottom: 24px; display: block;
+          display: flex; justify-content: space-between; align-items: flex-end;
         }
         .bio-title {
           font-family: 'Bebas Neue', sans-serif;
           font-size: clamp(64px, 10vw, 120px);
-          line-height: 0.9; margin-bottom: 32px;
+          line-height: 0.9;
         }
-        .bio-title-arno { color: #EE7700; }
-        .bio-title-diepeveen { color: #f0ede6; }
+        .bio-title-arno { color: #EE7700; display: block; }
+        .bio-title-diepeveen { color: #f0ede6; display: block; }
         .bio-subtitle {
           font-family: 'Barlow Condensed', sans-serif;
-          font-size: 24px; font-weight: 300; color: #666; letter-spacing: 1px;
+          font-size: 24px; font-weight: 300; color: #666;
+          letter-spacing: 1px; padding-bottom: 8px;
         }
 
         .bio-body {
@@ -62,7 +55,6 @@ export default function BioPage() {
           grid-template-columns: 1fr 2fr;
           gap: 80px;
         }
-        .bio-sidebar {}
         .bio-sidebar-item { margin-bottom: 40px; }
         .bio-sidebar-label {
           font-size: 10px; letter-spacing: 3px; text-transform: uppercase;
@@ -83,10 +75,7 @@ export default function BioPage() {
           display: flex; justify-content: space-between; align-items: center;
           border-top: 1px solid #111;
         }
-        .footer-logo {
-          font-family: 'Bebas Neue', sans-serif; font-size: 24px;
-          color: #EE7700; letter-spacing: 3px;
-        }
+        .footer-logo { font-family: 'Bebas Neue', sans-serif; font-size: 24px; color: #EE7700; letter-spacing: 3px; }
         .footer-copy { font-size: 10px; color: #333; }
       `}</style>
 
@@ -103,7 +92,10 @@ export default function BioPage() {
 
       <div className="bio-hero">
         <div className="bio-hero-inner">
-<h1 className="bio-title"><span className="bio-title-arno">ARNO</span><br /><span className="bio-title-diepeveen">DIEPEVEEN.</span></h1>
+          <h1 className="bio-title">
+            <span className="bio-title-arno">ARNO</span>
+            <span className="bio-title-diepeveen">DIEPEVEEN.</span>
+          </h1>
           <p className="bio-subtitle">Verkoper. Schrijver. Provocateur. Lisboa.</p>
         </div>
       </div>
