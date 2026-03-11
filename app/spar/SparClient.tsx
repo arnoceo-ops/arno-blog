@@ -8,22 +8,13 @@ interface Message {
   content: string
 }
 
-const OPENERS = [
-  'Mijn salesteam haalt structureel de targets niet. Waar ligt het écht aan?',
-  'Hoe bouw ik een commerciële strategie die de markt overspoelt?',
-  'Wat onderscheidt een winnende salesorganisatie van een gemiddelde?',
-  'Hoe zorg ik dat mijn mensen briljant worden in plaats van aardig?',
-  'Mijn pipeline ziet er goed uit maar de conversie klopt niet. Waarom?',
-  'Hoe creëer ik een cultuur waarin excellentie de norm is?',
-  'Wanneer is een salesstrategie echt een strategie en niet een wensenlijst?',
-  'Hoe stop ik met managen en begin ik met leiden?',
-  'Wat is de grootste mindset-fout die salesbazen maken?',
-  'Hoe verkoop ik intern mijn strategie aan de board?',
-  'Mijn beste verkoper vertrekt. Hoe had ik dat kunnen voorkomen?',
-  'Wat moet ik morgen anders doen om over een jaar marktleider te zijn?',
-]
+interface Props {
+  taglineTitle: string
+  taglineSub: string
+  openers: string[]
+}
 
-export default function SparClient() {
+export default function SparClient({ taglineTitle, taglineSub, openers }: Props) {
   const [messages, setMessages] = useState<Message[]>([])
   const [input, setInput] = useState('')
   const [loading, setLoading] = useState(false)
@@ -323,10 +314,8 @@ export default function SparClient() {
           </h1>
           <div className="spar-tagline">
             <p>
-              <strong>19 jaar blogs. 369.000 woorden.</strong><br />
-              Stel je vraag over sales, strategie of mindset.<br />
-              Geen bullshit. Geen corporate taal.<br />
-              Gewoon Arno — direct en ongefilterd.
+              <strong>{taglineTitle}</strong><br />
+              {taglineSub}
             </p>
           </div>
         </div>
@@ -365,7 +354,7 @@ export default function SparClient() {
         {!started && (
           <div className="spar-openers">
               <div className="openers-grid">
-              {OPENERS.map((q, i) => (
+              {openers.map((q, i) => (
                 <button key={i} className="opener-btn" onClick={() => ask(q)}>
                   {q}
                 </button>
