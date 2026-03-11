@@ -55,7 +55,8 @@ export default function BioPage() {
         .bio-body {
           max-width: 900px; margin: 0 auto;
           padding: 80px 60px 120px;
-          display: grid; grid-template-columns: 1fr 2fr; gap: 80px;
+          display: grid; grid-template-columns: 500px 1fr; gap: 80px;
+          align-items: start;
         }
         .bio-sidebar-item { margin-bottom: 40px; }
         .bio-sidebar-label {
@@ -101,29 +102,24 @@ export default function BioPage() {
             <span className="bio-title-diepeveen">DIEPEVEEN.</span>
           </h1>
           <div className="bio-tagline">
-            <span className="bio-tagline-title">Verkoper. Schrijver. Provocateur.</span>
-            <span className="bio-tagline-sub">Lisboa, Portugal — sinds 2007.</span>
+            <span className="bio-tagline-title">Rainmaker. Mentor. Schrijver.</span>
+            <span className="bio-tagline-sub">Winstgeving is mijn zingeving.</span>
           </div>
         </div>
       </div>
 
       <div className="bio-body">
-        <div className="bio-sidebar">
-          <div className="bio-sidebar-item">
-            <div className="bio-sidebar-label">Woonplaats</div>
-            <div className="bio-sidebar-value">Lisboa, Portugal 🇵🇹</div>
-          </div>
-          <div className="bio-sidebar-item">
-            <div className="bio-sidebar-label">Actief sinds</div>
-            <div className="bio-sidebar-value">2007</div>
-          </div>
-          <div className="bio-sidebar-item">
-            <div className="bio-sidebar-label">Contact</div>
-            <div className="bio-sidebar-value">
-              <a href="mailto:hq@royaldutchsales.com" style={{color:'#EE7700',textDecoration:'none',fontSize:'16px',fontFamily:'Barlow, sans-serif',fontWeight:'700'}}>
-                hq@royaldutchsales.com
-              </a>
-            </div>
+        <div className="bio-video">
+          <div style={{position:'relative',overflow:'hidden',paddingBottom:'56.25%'}}>
+            <iframe
+              src="https://cdn.jwplayer.com/players/e737ObvZ-NOqL4ECN.html"
+              width="100%" height="100%"
+              frameBorder="0"
+              scrolling="no"
+              title="ABOUT ARNO"
+              style={{position:'absolute',top:0,left:0}}
+              allowFullScreen
+            />
           </div>
         </div>
         <div className="bio-text">
