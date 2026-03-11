@@ -110,22 +110,27 @@ export default function SparClient() {
         .spar-tagline {
           text-align: right; padding-bottom: 8px; max-width: 360px;
         }
-        .spar-tagline p { font-size: 13px; line-height: 2; color: #555; }
-        .spar-tagline strong { font-weight: normal; color: #888; }
+        .spar-tagline p { font-size: 15px; line-height: 1.9; color: #888; }
+        .spar-tagline strong { font-weight: 700; color: #f0ede6; font-family: 'Barlow Condensed', sans-serif; font-size: 18px; letter-spacing: 0.5px; }
 
         /* INPUT — PROMINENT BOVENAAN */
         .spar-input-area {
           background: #0a0a0a;
           padding: 28px 60px 0;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
         }
         .spar-input-label {
           font-family: 'Bebas Neue', sans-serif;
           font-size: clamp(36px, 4vw, 56px); letter-spacing: 2px; text-transform: uppercase;
           color: #f0ede6; margin-bottom: 16px; display: block; line-height: 1;
+          width: 100%; max-width: 1323px;
         }
         .spar-input-row {
           display: flex; gap: 0;
           border: 2px solid #EE7700;
+          width: 100%; max-width: 1323px;
         }
         .spar-textarea {
           flex: 1;
@@ -151,12 +156,16 @@ export default function SparClient() {
         .spar-hint {
           font-size: 10px; letter-spacing: 2px; color: #2a2a2a;
           text-transform: uppercase; margin-top: 8px; padding-bottom: 28px;
+          width: 100%; max-width: 1323px;
         }
 
         /* OPENERS */
         .spar-openers {
           padding: 0 60px 0;
           border-bottom: 1px solid #1a1a1a;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
         }
         .openers-label {
           font-size: 10px; letter-spacing: 4px; text-transform: uppercase;
@@ -166,6 +175,7 @@ export default function SparClient() {
           display: grid;
           grid-template-columns: repeat(3, 1fr);
           max-width: 1323px;
+          width: 100%;
           gap: 2px;
           margin-bottom: 2px;
         }
