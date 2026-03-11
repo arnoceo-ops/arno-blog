@@ -120,8 +120,8 @@ export default function SparClient() {
         }
         .spar-input-label {
           font-family: 'Bebas Neue', sans-serif;
-          font-size: 11px; letter-spacing: 4px; text-transform: uppercase;
-          color: #EE7700; margin-bottom: 10px; display: block;
+          font-size: clamp(36px, 4vw, 56px); letter-spacing: 2px; text-transform: uppercase;
+          color: #f0ede6; margin-bottom: 16px; display: block; line-height: 1;
         }
         .spar-input-row {
           display: flex; gap: 0;
@@ -165,6 +165,7 @@ export default function SparClient() {
         .openers-grid {
           display: grid;
           grid-template-columns: repeat(3, 1fr);
+          max-width: 1323px;
           gap: 2px;
           margin-bottom: 2px;
         }
@@ -255,7 +256,7 @@ export default function SparClient() {
           </h1>
           <div className="spar-tagline">
             <p>
-              <strong>15 jaar blogs. 167.000 woorden.</strong><br />
+              <strong>19 jaar blogs. 369.000 woorden.</strong><br />
               Stel je vraag over sales, strategie of mindset.<br />
               Geen bullshit. Geen corporate taal.<br />
               Gewoon Arno — direct en ongefilterd.
@@ -294,8 +295,7 @@ export default function SparClient() {
 
         {!started && (
           <div className="spar-openers">
-            <span className="openers-label">Of trap hier in</span>
-            <div className="openers-grid">
+              <div className="openers-grid">
               {OPENERS.map((q, i) => (
                 <button key={i} className="opener-btn" onClick={() => ask(q)}>
                   {q}
