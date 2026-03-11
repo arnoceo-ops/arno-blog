@@ -74,6 +74,9 @@ export default function BioPage() {
         .bio-text p {
           font-size: 15px; line-height: 1.875; color: #888; margin-bottom: 28px;
         }
+        .bio-text {
+          width: 800px; max-width: 100%; margin: 0 auto;
+        }
         .bio-text strong { color: #f0ede6; font-weight: 700; }
         .bio-text em { color: #EE7700; font-style: normal; }
 
