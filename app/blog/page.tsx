@@ -1,6 +1,5 @@
 import { client } from '@/sanity/client'
 import Link from 'next/link'
-import ArnoChatbox from './ArnoChatbox'
 
 interface Post {
   _id: string
@@ -148,74 +147,6 @@ export default async function BlogPage() {
           white-space: nowrap; transition: color 0.15s;
         }
 
-        /* ── CHATBOX ── */
-        .chat-section {
-          background: #0a0a0a; border-top: 3px solid #EE7700;
-          padding: 80px 60px;
-        }
-        .chat-header {
-          display: flex; align-items: baseline; gap: 24px; margin-bottom: 48px;
-        }
-        .chat-title {
-          font-family: 'Bebas Neue', sans-serif;
-          font-size: clamp(48px, 6vw, 80px);
-          line-height: 0.9; color: #f0ede6;
-        }
-        .chat-title span { color: #EE7700; }
-        .chat-sub {
-          font-size: 11px; letter-spacing: 3px; text-transform: uppercase; color: #444;
-        }
-        .chat-messages {
-          min-height: 120px; margin-bottom: 24px;
-          display: flex; flex-direction: column; gap: 24px;
-        }
-        .chat-msg-user {
-          align-self: flex-end; max-width: 60%;
-          background: #1a1a1a; padding: 16px 20px;
-          font-size: 13px; line-height: 1.8; color: #f0ede6;
-          border-left: 3px solid #EE7700;
-        }
-        .chat-msg-arno {
-          align-self: flex-start; max-width: 75%;
-          background: #111; padding: 20px 24px;
-          font-size: 14px; line-height: 1.9; color: #ccc;
-          border-left: 3px solid #333;
-        }
-        .chat-msg-arno strong { color: #EE7700; font-weight: normal; font-family: 'Bebas Neue', sans-serif; font-size: 12px; letter-spacing: 3px; display: block; margin-bottom: 8px; }
-        .chat-loading {
-          align-self: flex-start;
-          font-size: 12px; letter-spacing: 3px; color: #444; text-transform: uppercase;
-          padding: 16px 0;
-        }
-        .chat-input-row {
-          display: flex; gap: 0;
-        }
-        .chat-input {
-          flex: 1; background: #111; border: 1px solid #222; border-right: none;
-          color: #f0ede6; font-family: 'Space Mono', monospace;
-          font-size: 13px; padding: 16px 20px; outline: none;
-        }
-        .chat-input::placeholder { color: #444; }
-        .chat-send {
-          background: #EE7700; color: #0a0a0a;
-          font-family: 'Bebas Neue', sans-serif;
-          font-size: 20px; letter-spacing: 3px;
-          padding: 16px 32px; border: none; cursor: pointer;
-          transition: background 0.2s; white-space: nowrap;
-        }
-        .chat-send:hover { background: #ff8800; }
-        .chat-send:disabled { background: #555; cursor: not-allowed; }
-        .chat-starters {
-          display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 32px;
-        }
-        .chat-starter {
-          background: transparent; border: 1px solid #222;
-          color: #555; font-family: 'Space Mono', monospace;
-          font-size: 11px; padding: 8px 14px; cursor: pointer;
-          transition: all 0.2s; text-align: left;
-        }
-        .chat-starter:hover { border-color: #EE7700; color: #EE7700; }
-
         /* ── FOOTER ── */
         footer {
           background: #050505; padding: 40px 60px;
@@ -232,6 +163,7 @@ export default async function BlogPage() {
           <Link href="/blog" className="nav-active">BLOG</Link>
           <Link href="/bio">BIO</Link>
           <Link href="/canvas">CANVAS</Link>
+          <Link href="/spar" className="nav-cta">SPAR</Link>
           <a href="/#subscribe" className="nav-cta">SUBSCRIBE</a>
         </div>
       </nav>
@@ -270,10 +202,6 @@ export default async function BlogPage() {
             </div>
           )
         })}
-      </div>
-
-      <div className="chat-section">
-        <ArnoChatbox />
       </div>
 
       <footer>

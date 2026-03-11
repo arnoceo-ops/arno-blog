@@ -93,6 +93,7 @@ export default function BioPage() {
           <Link href="/blog">BLOG</Link>
           <Link href="/bio" className="nav-active">BIO</Link>
           <Link href="/canvas">CANVAS</Link>
+          <Link href="/spar" className="nav-cta">SPAR</Link>
           <a href="/#subscribe" className="nav-cta">SUBSCRIBE</a>
         </div>
       </nav>
