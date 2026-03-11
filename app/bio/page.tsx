@@ -34,7 +34,8 @@ export default function BioPage() {
           border-bottom: 1px solid #1e1e1e;
         }
         .bio-hero-inner {
-          padding: 80px 60px;
+          padding: 80px 60px 60px;
+          border-bottom: 3px solid #EE7700;
           max-width: 900px;
         }
         .bio-label {
@@ -102,8 +103,7 @@ export default function BioPage() {
 
       <div className="bio-hero">
         <div className="bio-hero-inner">
-          <span className="bio-label">Royal Dutch Sales</span>
-          <h1 className="bio-title"><span className="bio-title-arno">ARNO</span><br /><span className="bio-title-diepeveen">DIEPEVEEN.</span></h1>
+<h1 className="bio-title"><span className="bio-title-arno">ARNO</span><br /><span className="bio-title-diepeveen">DIEPEVEEN.</span></h1>
           <p className="bio-subtitle">Verkoper. Schrijver. Provocateur. Lisboa.</p>
         </div>
       </div>

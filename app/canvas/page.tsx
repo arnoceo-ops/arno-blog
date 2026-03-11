@@ -32,7 +32,7 @@ export default function CanvasPage() {
           background: #0a0a0a;
           border-bottom: 3px solid #EE7700;
         }
-        .canvas-hero-inner { padding: 80px 60px; }
+        .canvas-hero-inner { padding: 80px 60px 60px; border-bottom: 3px solid #EE7700; }
         .canvas-label {
           font-size: 11px; letter-spacing: 4px; text-transform: uppercase;
           color: #EE7700; font-family: 'Space Mono', monospace; margin-bottom: 24px; display: block;
@@ -104,8 +104,7 @@ export default function CanvasPage() {
 
       <div className="canvas-hero">
         <div className="canvas-hero-inner">
-          <span className="canvas-label">Royal Dutch Sales</span>
-          <h1 className="canvas-title">RDS<br /><span>Canvas.</span></h1>
+<h1 className="canvas-title">RDS<br /><span>Canvas.</span></h1>
           <p className="canvas-intro">
             Een visueel denkkader voor verkopers en commercieel leiders die écht willen begrijpen wat ze doen — en waarom het werkt. Of niet.
           </p>

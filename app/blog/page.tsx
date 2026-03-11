@@ -66,7 +66,8 @@ export default async function BlogPage() {
           padding-top: 80px; background: #0a0a0a;
         }
         .blog-header-inner {
-          padding: 60px 60px 40px;
+          padding: 80px 60px 60px;
+          border-bottom: 3px solid #EE7700;
           border-bottom: 3px solid #EE7700;
           display: flex; justify-content: space-between; align-items: flex-end;
         }
@@ -82,7 +83,6 @@ export default async function BlogPage() {
         }
         .blog-title-blogt {
           display: block;
-          color: #EE7700;
           letter-spacing: 0.21em;
           white-space: nowrap;
         }
@@ -90,6 +90,7 @@ export default async function BlogPage() {
           display: inline-block;
           letter-spacing: 0.21em;
           color: #EE7700;
+          font-size: clamp(64px, 10vw, 120px);
         }
         .blog-title-t {
           color: #EE7700;
