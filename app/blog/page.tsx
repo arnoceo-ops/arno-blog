@@ -72,8 +72,8 @@ export default async function BlogPage() {
         }
         .blog-title-orange { color: #EE7700; }
         .blog-meta { text-align: right; padding-bottom: 8px; }
-        .blog-count { font-family: 'Bebas Neue', sans-serif; font-size: 48px; color: #EE7700; display: block; line-height: 1; }
-        .blog-count-label { font-size: 10px; letter-spacing: 3px; text-transform: uppercase; color: #444; }
+        .blog-count { font-family: 'Barlow', sans-serif; font-weight: 700; font-size: 26px; line-height: 39px; color: #f0ede6; display: block; }
+        .blog-count-label { font-family: 'Space Mono', monospace; font-weight: 400; font-size: 15px; line-height: 29px; color: #f0ede6; display: block; }
 
         .archive { padding: 0 60px 80px; }
         .year-block { margin-top: 0; }
@@ -128,7 +128,7 @@ export default async function BlogPage() {
             <span className="blog-title-orange">BLOG(T)</span>
           </h1>
           <div className="blog-meta">
-            <span className="blog-count">{posts.length}</span>
+            <span className="blog-count">500+</span>
             <span className="blog-count-label">Posts — Since 2007</span>
           </div>
         </div>
