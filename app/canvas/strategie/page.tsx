@@ -6,47 +6,47 @@ import { useSupabaseClient } from '@/lib/supabase'
 import Link from 'next/link'
 
 const SECTIONS = [
-  { id: 'missie', label: 'MISSIE', sub: 'Reden van bestaan', type: 'textarea' },
-  { id: 'cultuur_1', label: 'CULTUUR 1', sub: 'DNA, kernwaarde', type: 'input' },
-  { id: 'cultuur_2', label: 'CULTUUR 2', sub: 'DNA, kernwaarde', type: 'input' },
-  { id: 'cultuur_3', label: 'CULTUUR 3', sub: 'DNA, kernwaarde', type: 'input' },
-  { id: 'cultuur_4', label: 'CULTUUR 4', sub: 'DNA, kernwaarde', type: 'input' },
-  { id: 'cultuur_5', label: 'CULTUUR 5', sub: 'DNA, kernwaarde', type: 'input' },
-  { id: 'waardepropositie', label: 'WAARDEPROPOSITIE', sub: 'Welk voordeel bieden we?', type: 'textarea' },
-  { id: 'kerncompetenties', label: 'KERNCOMPETENTIES', sub: 'Waarin verschillen we van anderen?', type: 'textarea' },
-  { id: 'dienstverlening', label: 'DIENSTVERLENING', sub: 'Wat kopen klanten van ons?', type: 'textarea' },
-  { id: 'zandbak', label: 'ZANDBAK', sub: 'Marktsegmenten / Niches / Kernklanten / Personas', type: 'textarea' },
-  { id: 'doelen_omzet', label: 'DOELEN — Omzet €', sub: '3-5 jaar', type: 'input' },
-  { id: 'doelen_winst', label: 'DOELEN — Winst €', sub: '3-5 jaar', type: 'input' },
-  { id: 'doelen_klanten', label: 'DOELEN — Klanten #', sub: '3-5 jaar', type: 'input' },
-  { id: 'doelen_marktaandeel', label: 'DOELEN — Marktaandeel %', sub: '3-5 jaar', type: 'input' },
-  { id: 'doelen_liquiditeit', label: 'DOELEN — Liquiditeit %', sub: '3-5 jaar', type: 'input' },
-  { id: 'acties_omzet', label: 'ACTIES — Omzet €', sub: '1 jaar', type: 'input' },
-  { id: 'acties_winst', label: 'ACTIES — Winst €', sub: '1 jaar', type: 'input' },
-  { id: 'acties_klanten', label: 'ACTIES — Klanten #', sub: '1 jaar', type: 'input' },
-  { id: 'acties_brutomarge', label: 'ACTIES — Brutomarge %', sub: '1 jaar', type: 'input' },
-  { id: 'acties_cash', label: 'ACTIES — Cash €', sub: '1 jaar', type: 'input' },
-  { id: 'leiderschap_markt', label: 'LEIDERSCHAP — Markt', sub: 'Welke markt(en) willen we domineren?', type: 'input' },
-  { id: 'leiderschap_wanneer', label: 'LEIDERSCHAP — Wanneer', sub: 'Wanneer domineren we deze markt?', type: 'input' },
-  { id: 'merkbelofte', label: 'MERKBELOFTE', sub: 'Wat zijn onze unieke merkbeloftes en garanties?', type: 'textarea' },
-  { id: 'strategie_in_1_zin', label: 'STRATEGIE IN 1 ZIN', sub: 'Hoe onderscheiden we ons in de executie van onze concurrenten?', type: 'textarea' },
-  { id: 'onderscheidend_1', label: 'ONDERSCHEIDEND 1', sub: 'Kernactiviteit die strategie ondersteunt', type: 'input' },
-  { id: 'onderscheidend_2', label: 'ONDERSCHEIDEND 2', sub: 'Kernactiviteit die strategie ondersteunt', type: 'input' },
-  { id: 'onderscheidend_3', label: 'ONDERSCHEIDEND 3', sub: 'Kernactiviteit die strategie ondersteunt', type: 'input' },
-  { id: 'onderscheidend_4', label: 'ONDERSCHEIDEND 4', sub: 'Kernactiviteit die strategie ondersteunt', type: 'input' },
-  { id: 'onderscheidend_5', label: 'ONDERSCHEIDEND 5', sub: 'Kernactiviteit die strategie ondersteunt', type: 'input' },
-  { id: 'xfactor', label: 'X-FACTOR', sub: '10X Meerwaarde', type: 'textarea' },
-  { id: 'winst_per_eenheid', label: 'WINST PER EENHEID', sub: 'Economische motor', type: 'textarea' },
-  { id: 'moonshot_1', label: 'MOONSHOT 1', sub: '+1000%', type: 'input' },
-  { id: 'moonshot_2', label: 'MOONSHOT 2', sub: '+1000%', type: 'input' },
-  { id: 'moonshot_3', label: 'MOONSHOT 3', sub: '+1000%', type: 'input' },
-  { id: 'moonshot_4', label: 'MOONSHOT 4', sub: '+1000%', type: 'input' },
-  { id: 'moonshot_5', label: 'MOONSHOT 5', sub: '+1000%', type: 'input' },
-  { id: 'schaalbaarheid', label: 'SCHAALBAARHEID', sub: 'Hoe maken we onze dienstverlening schaalbaar?', type: 'textarea' },
-  { id: 'repeterende_omzet', label: 'REPETERENDE OMZET', sub: 'Hoe blijven we klanten aan ons binden?', type: 'textarea' },
-  { id: 'klantretentie', label: 'KLANTRETENTIE', sub: 'Hoe leveren we continue waarde aan onze klanten?', type: 'textarea' },
-  { id: 'referrals', label: 'REFERRALS', sub: 'Hoe maken we ambassadeurs van onze klanten?', type: 'textarea' },
-  { id: 'omtm', label: 'OMTM', sub: 'Wat is de belangrijkste prestatie-indicator?', type: 'input' },
+  // Pagina 1
+  { id: 'missie', label: 'MISSIE', sub: 'Reden van bestaan', type: 'textarea', page: 1 },
+  { id: 'cultuur_1', label: 'CULTUUR 1', sub: 'DNA, kernwaarden en gedrag', type: 'input', page: 1 },
+  { id: 'cultuur_2', label: 'CULTUUR 2', sub: 'DNA, kernwaarden en gedrag', type: 'input', page: 1 },
+  { id: 'cultuur_3', label: 'CULTUUR 3', sub: 'DNA, kernwaarden en gedrag', type: 'input', page: 1 },
+  { id: 'cultuur_4', label: 'CULTUUR 4', sub: 'DNA, kernwaarden en gedrag', type: 'input', page: 1 },
+  { id: 'cultuur_5', label: 'CULTUUR 5', sub: 'DNA, kernwaarden en gedrag', type: 'input', page: 1 },
+  { id: 'waardepropositie', label: 'WAARDEPROPOSITIE', sub: 'Welk voordeel bieden we?', type: 'textarea', page: 1 },
+  { id: 'kerncompetenties', label: 'KERNCOMPETENTIES', sub: 'Waarin verschillen we van anderen?', type: 'textarea', page: 1 },
+  { id: 'dienstverlening', label: 'DIENSTVERLENING', sub: 'Wat kopen klanten van ons?', type: 'textarea', page: 1 },
+  { id: 'zandbak', label: 'ZANDBAK', sub: 'Marktsegmenten / Niches / Kernklanten / Personas', type: 'textarea', page: 1 },
+  { id: 'doelen_datum', label: 'DOELEN — Datum', sub: '3-5 jaar', type: 'input', page: 1 },
+  { id: 'doelen_omzet', label: 'DOELEN — Omzet €', sub: '3-5 jaar', type: 'input', page: 1 },
+  { id: 'doelen_winst', label: 'DOELEN — Winst €', sub: '3-5 jaar', type: 'input', page: 1 },
+  { id: 'doelen_klanten', label: 'DOELEN — Klanten #', sub: '3-5 jaar', type: 'input', page: 1 },
+  { id: 'doelen_marktaandeel', label: 'DOELEN — Marktaandeel %', sub: '3-5 jaar', type: 'input', page: 1 },
+  { id: 'doelen_liquiditeit', label: 'DOELEN — Liquiditeit %', sub: '3-5 jaar', type: 'input', page: 1 },
+  { id: 'acties_datum', label: 'ACTIES — Datum', sub: '1 jaar', type: 'input', page: 1 },
+  { id: 'acties_omzet', label: 'ACTIES — Omzet €', sub: '1 jaar', type: 'input', page: 1 },
+  { id: 'acties_winst', label: 'ACTIES — Winst €', sub: '1 jaar', type: 'input', page: 1 },
+  { id: 'acties_brutomarge', label: 'ACTIES — Brutomarge %', sub: '1 jaar', type: 'input', page: 1 },
+  { id: 'acties_cash', label: 'ACTIES — Cash €', sub: '1 jaar', type: 'input', page: 1 },
+  { id: 'acties_klanten', label: 'ACTIES — Klanten #', sub: '1 jaar', type: 'input', page: 1 },
+  { id: 'leiderschap_markten', label: 'LEIDERSCHAP — Markten', sub: 'Welke markt(en) willen we domineren?', type: 'input', page: 1 },
+  { id: 'leiderschap_wanneer', label: 'LEIDERSCHAP — Wanneer', sub: 'Wanneer domineren we deze markt?', type: 'input', page: 1 },
+  // Pagina 2
+  { id: 'merkbelofte', label: 'MERKBELOFTE', sub: 'Wat zijn onze unieke merkbeloftes en garanties?', type: 'textarea', page: 2 },
+  { id: 'strategie_1_zin', label: 'STRATEGIE IN 1 ZIN', sub: 'Hoe onderscheiden we ons in de executie van onze concurrenten?', type: 'textarea', page: 2 },
+  { id: 'onderscheidend_1', label: 'ONDERSCHEIDEND VERMOGEN 1', sub: 'Welke kernactiviteiten ondersteunen de strategie?', type: 'input', page: 2 },
+  { id: 'onderscheidend_2', label: 'ONDERSCHEIDEND VERMOGEN 2', sub: 'Welke kernactiviteiten ondersteunen de strategie?', type: 'input', page: 2 },
+  { id: 'onderscheidend_3', label: 'ONDERSCHEIDEND VERMOGEN 3', sub: 'Welke kernactiviteiten ondersteunen de strategie?', type: 'input', page: 2 },
+  { id: 'onderscheidend_4', label: 'ONDERSCHEIDEND VERMOGEN 4', sub: 'Welke kernactiviteiten ondersteunen de strategie?', type: 'input', page: 2 },
+  { id: 'onderscheidend_5', label: 'ONDERSCHEIDEND VERMOGEN 5', sub: 'Welke kernactiviteiten ondersteunen de strategie?', type: 'input', page: 2 },
+  { id: 'xfactor', label: 'X-FACTOR', sub: '10X meerwaarde', type: 'textarea', page: 2 },
+  { id: 'winst_per_eenheid', label: 'WINST PER EENHEID', sub: 'Economische motor', type: 'textarea', page: 2 },
+  { id: 'moonshots', label: 'MOONSHOTS', sub: '+1000%', type: 'textarea', page: 2 },
+  { id: 'schaalbaarheid', label: 'SCHAALBAARHEID', sub: 'Hoe maken we onze dienstverlening schaalbaar?', type: 'textarea', page: 2 },
+  { id: 'repeterende_omzet', label: 'REPETERENDE OMZET', sub: 'Hoe blijven we klanten aan ons binden?', type: 'textarea', page: 2 },
+  { id: 'klantretentie', label: 'KLANTRETENTIE', sub: 'Hoe leveren we continue waarde aan onze klanten?', type: 'textarea', page: 2 },
+  { id: 'referrals', label: 'REFERRALS', sub: 'Hoe maken we ambassadeurs van onze klanten?', type: 'textarea', page: 2 },
+  { id: 'omtm', label: 'OMTM', sub: 'Wat is de belangrijkste prestatie-indicator?', type: 'input', page: 2 },
 ]
 
 const styles = {
@@ -66,9 +66,6 @@ const styles = {
   arnobotBtnLoading: { marginTop: '10px', background: 'none', border: 'none', color: '#EE7700', fontSize: '10px', letterSpacing: '2px', cursor: 'default', padding: '0', opacity: 0.3 } as React.CSSProperties,
   arnobotBox: { marginTop: '12px', borderLeft: '2px solid #EE7700', paddingLeft: '12px', fontSize: '12px', lineHeight: 1.7, color: '#f0ede6', opacity: 0.75 } as React.CSSProperties,
 }
-
-const PAGE1_IDS = ['missie','cultuur_1','cultuur_2','cultuur_3','cultuur_4','cultuur_5','waardepropositie','kerncompetenties','dienstverlening','zandbak','doelen_omzet','doelen_winst','doelen_klanten','doelen_marktaandeel','doelen_liquiditeit','acties_omzet','acties_winst','acties_klanten','acties_brutomarge','acties_cash','leiderschap_markt','leiderschap_wanneer']
-const PAGE2_IDS = ['merkbelofte','strategie_in_1_zin','onderscheidend_1','onderscheidend_2','onderscheidend_3','onderscheidend_4','onderscheidend_5','xfactor','winst_per_eenheid','moonshot_1','moonshot_2','moonshot_3','moonshot_4','moonshot_5','schaalbaarheid','repeterende_omzet','klantretentie','referrals','omtm']
 
 async function getArnoBotFeedback(label: string, sub: string, answer: string): Promise<string> {
   if (!answer.trim()) return 'Vul dit veld in voor ArnoBot feedback.'
@@ -169,9 +166,9 @@ export default function StrategiePage() {
       <p style={styles.tag}>01 — 02</p>
       <h1 style={styles.title}>STRATEGIE</h1>
       <div style={styles.divider}>PAGINA 01 — FUNDAMENT</div>
-      <div style={styles.grid}>{SECTIONS.filter(s => PAGE1_IDS.includes(s.id)).map(renderSection)}</div>
+      <div style={styles.grid}>{SECTIONS.filter(s => s.page === 1).map(renderSection)}</div>
       <div style={styles.divider}>PAGINA 02 — GROEI & ONDERSCHEID</div>
-      <div style={styles.grid}>{SECTIONS.filter(s => PAGE2_IDS.includes(s.id)).map(renderSection)}</div>
+      <div style={styles.grid}>{SECTIONS.filter(s => s.page === 2).map(renderSection)}</div>
       {saveStatus && <p style={styles.saveStatus}>{saveStatus}</p>}
     </main>
   )
