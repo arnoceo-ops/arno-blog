@@ -5,12 +5,13 @@
 
 interface PageHeroProps {
   number: number
+  title: string
 }
 
-const heroConfig: Record<number, { image: string; numberLabel: string }> = {
-  1: { image: '/canvas/strategie-hero.png', numberLabel: '#1' },
-  2: { image: '/canvas/mensen-hero.png',    numberLabel: '#2' },
-  3: { image: '/canvas/uitvoering-hero.png', numberLabel: '#3' },
+const heroConfig: Record<number, { image: string }> = {
+  1: { image: '/canvas/strategie-hero.png' },
+  2: { image: '/canvas/mensen-hero.png' },
+  3: { image: '/canvas/uitvoering-hero.png' },
 }
 
 export function PageHero({ number }: PageHeroProps) {
@@ -20,39 +21,31 @@ export function PageHero({ number }: PageHeroProps) {
     <div style={{
       position: 'relative',
       width: '100%',
-      height: '320px',
+      height: '480px',
       overflow: 'hidden',
+      backgroundColor: '#1c1a17',
     }}>
 
-      {/* Achtergrond foto */}
-      <div style={{
-        position: 'absolute',
-        inset: 0,
-        backgroundImage: `url(${config.image})`,
-        backgroundSize: 'cover',
-        backgroundPosition: 'center 30%',
-        filter: 'grayscale(20%) brightness(0.55)',
-      }} />
+      {/* Achtergrond foto — volledig zichtbaar */}
+      <img
+        src={config.image}
+        alt=""
+        style={{
+          position: 'absolute',
+          inset: 0,
+          width: '100%',
+          height: '100%',
+          objectFit: 'cover',
+          objectPosition: 'center center',
+          filter: 'grayscale(15%) brightness(0.6)',
+        }}
+      />
 
-      {/* Donkere overlay — links donkerder, rechts iets lichter, zoals origineel */}
+      {/* Donkere overlay */}
       <div style={{
         position: 'absolute',
         inset: 0,
-        background: 'linear-gradient(to right, rgba(10,8,6,0.75) 0%, rgba(10,8,6,0.35) 50%, rgba(10,8,6,0.55) 100%)',
-      }} />
-
-      {/* Diagonale textuur overlay */}
-      <div style={{
-        position: 'absolute',
-        inset: 0,
-        backgroundImage: `repeating-linear-gradient(
-          -45deg,
-          transparent,
-          transparent 60px,
-          rgba(255,255,255,0.015) 60px,
-          rgba(255,255,255,0.015) 61px
-        )`,
-        pointerEvents: 'none',
+        background: 'linear-gradient(to right, rgba(10,8,6,0.65) 0%, rgba(10,8,6,0.25) 50%, rgba(10,8,6,0.45) 100%)',
       }} />
 
       {/* Oranje gloed linksonder */}
@@ -62,7 +55,7 @@ export function PageHero({ number }: PageHeroProps) {
         left: '-40px',
         width: '350px',
         height: '200px',
-        background: 'radial-gradient(ellipse at center, rgba(238,119,0,0.18) 0%, transparent 70%)',
+        background: 'radial-gradient(ellipse at center, rgba(238,119,0,0.15) 0%, transparent 70%)',
         pointerEvents: 'none',
       }} />
 
@@ -88,51 +81,33 @@ export function PageHero({ number }: PageHeroProps) {
         alignItems: 'center',
         gap: '12px',
       }}>
-        <svg width="40" height="32" viewBox="0 0 40 32" fill="none">
+        <svg width="44" height="34" viewBox="0 0 40 32" fill="none">
           <path d="M2 26L9 8L16 19L20 4L24 19L31 8L38 26H2Z" fill="#EE7700" opacity="0.95"/>
           <rect x="2" y="27" width="36" height="3" rx="1.5" fill="#EE7700" opacity="0.75"/>
         </svg>
         <div style={{
           fontFamily: 'var(--font-barlow, sans-serif)',
-          fontSize: '14px',
+          fontSize: '15px',
           fontWeight: 700,
           letterSpacing: '7px',
           color: '#f0ede6',
           opacity: 0.9,
-          textShadow: '0 1px 20px rgba(0,0,0,0.8)',
+          textShadow: '0 1px 20px rgba(0,0,0,0.9)',
         }}>
           SALES CANVAS
-        </div>
-      </div>
-
-      {/* Links onderin: nummer + titel */}
-      <div style={{
-        position: 'absolute',
-        bottom: '40px',
-        left: '48px',
-      }}>
-        <div style={{
-          fontFamily: 'var(--font-barlow, sans-serif)',
-          fontSize: '13px',
-          letterSpacing: '4px',
-          color: '#EE7700',
-          opacity: 0.85,
-          marginBottom: '6px',
-        }}>
-          {config.numberLabel}. {title}
         </div>
       </div>
 
       {/* Rechts onderin: ROYAL DUTCH SALES */}
       <div style={{
         position: 'absolute',
-        bottom: '40px',
+        bottom: '36px',
         right: '48px',
         fontFamily: 'var(--font-barlow, sans-serif)',
         fontSize: '11px',
         letterSpacing: '5px',
         color: '#f0ede6',
-        opacity: 0.25,
+        opacity: 0.2,
       }}>
         ROYAL DUTCH SALES
       </div>
