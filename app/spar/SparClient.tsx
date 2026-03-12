@@ -301,7 +301,7 @@ export default function SparClient({ taglineTitle, taglineSub, openers }: Props)
           <Link href="/">HOME</Link>
           <Link href="/blog">BLOG</Link>
           <Link href="/bio">BIO</Link>
-          <Link href="/spar" className="nav-active">BOT</Link>
+          <Link href="/spar" className="nav-active">ARNOBOT</Link>
           <Link href="/canvas">CANVAS</Link>
           <a href="/#subscribe" className="nav-cta">SUBSCRIBE</a>
         </div>
@@ -310,7 +310,7 @@ export default function SparClient({ taglineTitle, taglineSub, openers }: Props)
       <div className="spar-page">
         <div className="spar-hero">
           <h1 className="spar-title">
-            LET&apos;S<br /><span>SPAR.</span>
+            ARNO<br /><span>BOT.</span>
           </h1>
           <div className="spar-tagline">
             <p>

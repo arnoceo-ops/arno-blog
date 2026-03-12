@@ -200,7 +200,7 @@ export default async function Home() {
         <div className="nav-links">
           <Link href="/blog">BLOG</Link>
           <Link href="/bio">BIO</Link>
-          <Link href="/spar">BOT</Link>
+          <Link href="/spar">ARNOBOT</Link>
           <Link href="/canvas">CANVAS</Link>
           <a href="#subscribe" className="nav-cta">SUBSCRIBE</a>
         </div>
