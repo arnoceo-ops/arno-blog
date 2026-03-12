@@ -80,7 +80,7 @@ const s = {
   fieldLabel: { fontSize: '11px', fontWeight: 700, letterSpacing: '3px', color: '#f0ede6', marginBottom: '4px', display: 'flex', alignItems: 'center', gap: '12px' } as React.CSSProperties,
   fieldLabelLine: { flex: 1, height: '1px', backgroundColor: '#222' } as React.CSSProperties,
   fieldSub: { fontSize: '12px', color: '#f0ede6', opacity: 0.35, marginBottom: '12px' } as React.CSSProperties,
-  textarea: { width: '100%', backgroundColor: 'transparent', border: 'none', borderBottom: '1px solid #1e1e1e', color: '#f0ede6', fontSize: '14px', padding: '12px 0', resize: 'none', outline: 'none', fontFamily: 'var(--font-space-mono, monospace)', lineHeight: 1.7, minHeight: '100px', boxSizing: 'border-box' as const },
+  textarea: { width: '100%', backgroundColor: 'transparent', border: 'none', borderBottom: '1px solid #1e1e1e', color: '#f0ede6', fontSize: '14px', padding: '12px 0', resize: 'none' as const, outline: 'none', fontFamily: 'var(--font-space-mono, monospace)', lineHeight: 1.7, minHeight: '100px', boxSizing: 'border-box' as const },
   input: { width: '100%', backgroundColor: 'transparent', border: 'none', borderBottom: '1px solid #1e1e1e', color: '#f0ede6', fontSize: '14px', padding: '10px 0', outline: 'none', fontFamily: 'var(--font-space-mono, monospace)', boxSizing: 'border-box' as const },
   arnobotBtn: { marginTop: '8px', background: 'none', border: 'none', color: '#EE7700', fontSize: '10px', letterSpacing: '2px', cursor: 'pointer', padding: '0' } as React.CSSProperties,
   arnobotBox: { marginTop: '12px', borderLeft: '2px solid #EE7700', paddingLeft: '12px', fontSize: '12px', lineHeight: 1.7, color: '#f0ede6', opacity: 0.7, fontFamily: 'var(--font-space-mono, monospace)' } as React.CSSProperties,
