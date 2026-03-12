@@ -5,7 +5,6 @@
 
 interface PageHeroProps {
   number: number
-  title: string
 }
 
 const heroConfig: Record<number, { image: string; numberLabel: string }> = {
