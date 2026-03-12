@@ -44,7 +44,7 @@ export function PageHero({ number }: PageHeroProps) {
       <div style={{
         position: 'absolute',
         inset: 0,
-        background: 'linear-gradient(to right, rgba(10,8,6,0.65) 0%, rgba(10,8,6,0.25) 50%, rgba(10,8,6,0.45) 100%)',
+        background: 'linear-gradient(to right, rgba(10,8,6,0.45) 0%, rgba(10,8,6,0.15) 50%, rgba(10,8,6,0.30) 100%)',
       }} />
 
       {/* Oranje gloed linksonder */}
