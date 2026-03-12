@@ -7,7 +7,7 @@ import Link from 'next/link'
 
 type FieldType = 'textarea' | 'input'
 
-interface Field {
+interface FieldDef {
   id: string
   label: string
   sub: string
@@ -16,7 +16,7 @@ interface Field {
 
 const PREFIX = 'strategie'
 
-const ALL_FIELDS: Field[] = [
+const ALL_FIELDS: FieldDef[] = [
   { id: 'missie', label: 'MISSIE', sub: 'Reden van bestaan', type: 'textarea' },
   { id: 'cultuur_1', label: 'CULTUUR 1', sub: '', type: 'input' },
   { id: 'cultuur_2', label: 'CULTUUR 2', sub: '', type: 'input' },
@@ -76,20 +76,80 @@ const s = {
   pageHeader: { padding: '48px 48px 0', marginBottom: '64px' } as React.CSSProperties,
   pageTag: { color: '#EE7700', fontSize: '11px', letterSpacing: '4px', marginBottom: '8px', opacity: 0.7 } as React.CSSProperties,
   pageTitle: { fontFamily: 'var(--font-bebas), sans-serif', fontSize: '80px', letterSpacing: '6px', color: '#f0ede6', margin: 0, lineHeight: 1 } as React.CSSProperties,
-  section: { padding: '0 48px', marginBottom: '0' } as React.CSSProperties,
   sectionDivider: { borderTop: '1px solid #1e1e1e', padding: '48px 48px 0' } as React.CSSProperties,
   fieldLabel: { fontSize: '11px', fontWeight: 700, letterSpacing: '3px', color: '#f0ede6', marginBottom: '4px', display: 'flex', alignItems: 'center', gap: '12px' } as React.CSSProperties,
   fieldLabelLine: { flex: 1, height: '1px', backgroundColor: '#222' } as React.CSSProperties,
   fieldSub: { fontSize: '12px', color: '#f0ede6', opacity: 0.35, marginBottom: '12px' } as React.CSSProperties,
-  textarea: { width: '100%', backgroundColor: 'transparent', border: 'none', borderBottom: '1px solid #1e1e1e', color: '#f0ede6', fontSize: '14px', padding: '12px 0', resize: 'none', outline: 'none', fontFamily: 'var(--font-space-mono, monospace)', lineHeight: 1.7, minHeight: '100px', boxSizing: 'border-box' } as React.CSSProperties,
-  input: { width: '100%', backgroundColor: 'transparent', border: 'none', borderBottom: '1px solid #1e1e1e', color: '#f0ede6', fontSize: '14px', padding: '10px 0', outline: 'none', fontFamily: 'var(--font-space-mono, monospace)', boxSizing: 'border-box' } as React.CSSProperties,
-  arnobotBtn: { marginTop: '8px', background: 'none', border: 'none', color: '#EE7700', fontSize: '10px', letterSpacing: '2px', cursor: 'pointer', padding: '0', opacity: 0.4 } as React.CSSProperties,
+  textarea: { width: '100%', backgroundColor: 'transparent', border: 'none', borderBottom: '1px solid #1e1e1e', color: '#f0ede6', fontSize: '14px', padding: '12px 0', resize: 'none', outline: 'none', fontFamily: 'var(--font-space-mono, monospace)', lineHeight: 1.7, minHeight: '100px', boxSizing: 'border-box' as const },
+  input: { width: '100%', backgroundColor: 'transparent', border: 'none', borderBottom: '1px solid #1e1e1e', color: '#f0ede6', fontSize: '14px', padding: '10px 0', outline: 'none', fontFamily: 'var(--font-space-mono, monospace)', boxSizing: 'border-box' as const },
+  arnobotBtn: { marginTop: '8px', background: 'none', border: 'none', color: '#EE7700', fontSize: '10px', letterSpacing: '2px', cursor: 'pointer', padding: '0' } as React.CSSProperties,
   arnobotBox: { marginTop: '12px', borderLeft: '2px solid #EE7700', paddingLeft: '12px', fontSize: '12px', lineHeight: 1.7, color: '#f0ede6', opacity: 0.7, fontFamily: 'var(--font-space-mono, monospace)' } as React.CSSProperties,
-  saveStatus: { position: 'fixed', bottom: '24px', right: '24px', fontSize: '10px', letterSpacing: '3px', color: '#EE7700', opacity: 0.6 } as React.CSSProperties,
-  groupSectionLabel: { fontSize: '11px', fontWeight: 700, letterSpacing: '4px', color: '#EE7700', marginBottom: '24px', display: 'flex', alignItems: 'center', gap: '12px' } as React.CSSProperties,
-  groupSectionSub: { fontSize: '11px', color: '#f0ede6', opacity: 0.35, letterSpacing: '1px', fontWeight: 400 } as React.CSSProperties,
+  saveStatus: { position: 'fixed' as const, bottom: '24px', right: '24px', fontSize: '10px', letterSpacing: '3px', color: '#EE7700', opacity: 0.6 },
+  groupLabel: { fontSize: '11px', fontWeight: 700, letterSpacing: '4px', color: '#EE7700', marginBottom: '24px', display: 'flex', alignItems: 'center', gap: '12px' } as React.CSSProperties,
+  groupSub: { fontSize: '11px', color: '#f0ede6', opacity: 0.35, letterSpacing: '1px', fontWeight: 400 } as React.CSSProperties,
 }
 
+// ── FIELD COMPONENT — buiten StrategiePage zodat React niet remount op elke render ──
+interface FieldProps {
+  id: string
+  label: string
+  sub: string
+  type: FieldType
+  value: string
+  onChange: (id: string, value: string) => void
+  onBlur: (id: string) => void
+  feedback: string
+  loading: boolean
+  onArnoBot: (id: string, label: string, sub: string) => void
+}
+
+function Field({ id, label, sub, type, value, onChange, onBlur, feedback, loading, onArnoBot }: FieldProps) {
+  const hasAnswer = !!value.trim()
+  return (
+    <div>
+      <div style={s.fieldLabel}>
+        {label}
+        <span style={s.fieldLabelLine} />
+      </div>
+      {sub && <div style={s.fieldSub}>{sub}</div>}
+      {type === 'textarea'
+        ? <textarea style={s.textarea} value={value} onChange={e => onChange(id, e.target.value)} onBlur={() => onBlur(id)} placeholder="..." rows={4} />
+        : <input style={s.input} value={value} onChange={e => onChange(id, e.target.value)} onBlur={() => onBlur(id)} placeholder="..." />
+      }
+      {hasAnswer && (
+        <button style={{ ...s.arnobotBtn, opacity: loading ? 0.2 : 0.4 }} onClick={() => !loading && onArnoBot(id, label, sub)}>
+          {loading ? '→ ARNOBOT DENKT...' : feedback ? '→ OPNIEUW VRAGEN' : '→ ARNOBOT'}
+        </button>
+      )}
+      {feedback && !loading && <div style={s.arnobotBox}>{feedback}</div>}
+    </div>
+  )
+}
+
+interface SmallInputProps {
+  id: string
+  label: string
+  value: string
+  onChange: (id: string, value: string) => void
+  onBlur: (id: string) => void
+}
+
+function SmallInput({ id, label, value, onChange, onBlur }: SmallInputProps) {
+  return (
+    <div style={{ display: 'grid', gridTemplateColumns: '130px 1fr', alignItems: 'center', gap: '16px', borderBottom: '1px solid #1a1a1a', padding: '10px 0' }}>
+      <span style={{ fontSize: '12px', color: '#f0ede6', opacity: 0.5, letterSpacing: '1px' }}>{label}</span>
+      <input
+        style={{ backgroundColor: 'transparent', border: 'none', borderBottom: '1px solid #1e1e1e', color: '#f0ede6', fontSize: '13px', padding: '4px 0', outline: 'none', fontFamily: 'var(--font-space-mono, monospace)', width: '100%', boxSizing: 'border-box' as const }}
+        value={value}
+        onChange={e => onChange(id, e.target.value)}
+        onBlur={() => onBlur(id)}
+        placeholder="—"
+      />
+    </div>
+  )
+}
+
+// ── MAIN PAGE ──
 export default function StrategiePage() {
   const { user } = useUser()
   const supabase = useSupabaseClient()
@@ -127,54 +187,40 @@ export default function StrategiePage() {
     setTimeout(() => setSaveStatus(''), 2000)
   }, [user])
 
-  const handleChange = (id: string, value: string) => setAnswers(prev => ({ ...prev, [id]: value }))
-  const handleBlur = (id: string) => save(id, answers[id] || '')
+  const handleChange = useCallback((id: string, value: string) => {
+    setAnswers(prev => ({ ...prev, [id]: value }))
+  }, [])
 
-  const handleArnoBot = async (id: string, label: string, sub: string) => {
-    const answer = answers[id] || ''
-    setArnobotLoading(prev => ({ ...prev, [id]: true }))
-    setArnobotFeedback(prev => ({ ...prev, [id]: '' }))
-    try {
-      const feedback = await getArnoBotFeedback(label, sub, answer)
-      setArnobotFeedback(prev => ({ ...prev, [id]: feedback }))
-    } catch {
-      setArnobotFeedback(prev => ({ ...prev, [id]: 'ArnoBot is tijdelijk niet beschikbaar.' }))
-    } finally {
-      setArnobotLoading(prev => ({ ...prev, [id]: false }))
-    }
-  }
+  const handleBlur = useCallback((id: string) => {
+    setAnswers(prev => {
+      save(id, prev[id] || '')
+      return prev
+    })
+  }, [save])
 
-  const Field = ({ id, label, sub, type, showArnoBot = true }: Field & { showArnoBot?: boolean }) => {
-    const isLoading = arnobotLoading[id]
-    const feedback = arnobotFeedback[id]
-    const hasAnswer = !!(answers[id] || '').trim()
-    return (
-      <div>
-        <div style={s.fieldLabel}>
-          {label}
-          <span style={s.fieldLabelLine} />
-        </div>
-        {sub && <div style={s.fieldSub}>{sub}</div>}
-        {type === 'textarea'
-          ? <textarea style={s.textarea} value={answers[id] || ''} onChange={e => handleChange(id, e.target.value)} onBlur={() => handleBlur(id)} placeholder="..." rows={4} />
-          : <input style={s.input} value={answers[id] || ''} onChange={e => handleChange(id, e.target.value)} onBlur={() => handleBlur(id)} placeholder="..." />
-        }
-        {showArnoBot && hasAnswer && (
-          <button style={{ ...s.arnobotBtn, opacity: isLoading ? 0.2 : 0.4 }} onClick={() => !isLoading && handleArnoBot(id, label, sub)}>
-            {isLoading ? '→ ARNOBOT DENKT...' : feedback ? '→ OPNIEUW VRAGEN' : '→ ARNOBOT'}
-          </button>
-        )}
-        {feedback && !isLoading && <div style={s.arnobotBox}>{feedback}</div>}
-      </div>
-    )
-  }
+  const handleArnoBot = useCallback(async (id: string, label: string, sub: string) => {
+    setAnswers(prev => {
+      const answer = prev[id] || ''
+      setArnobotLoading(l => ({ ...l, [id]: true }))
+      setArnobotFeedback(f => ({ ...f, [id]: '' }))
+      getArnoBotFeedback(label, sub, answer)
+        .then(feedback => setArnobotFeedback(f => ({ ...f, [id]: feedback })))
+        .catch(() => setArnobotFeedback(f => ({ ...f, [id]: 'ArnoBot is tijdelijk niet beschikbaar.' })))
+        .finally(() => setArnobotLoading(l => ({ ...l, [id]: false })))
+      return prev
+    })
+  }, [])
 
-  const SmallInput = ({ id, label }: { id: string; label: string }) => (
-    <div style={{ display: 'grid', gridTemplateColumns: '120px 1fr', alignItems: 'center', gap: '16px', borderBottom: '1px solid #1a1a1a', padding: '10px 0' }}>
-      <span style={{ fontSize: '12px', color: '#f0ede6', opacity: 0.5, letterSpacing: '1px' }}>{label}</span>
-      <input style={{ backgroundColor: 'transparent', border: 'none', borderBottom: '1px solid #1e1e1e', color: '#f0ede6', fontSize: '13px', padding: '4px 0', outline: 'none', fontFamily: 'var(--font-space-mono, monospace)', width: '100%', boxSizing: 'border-box' as const }} value={answers[id] || ''} onChange={e => handleChange(id, e.target.value)} onBlur={() => handleBlur(id)} placeholder="—" />
-    </div>
-  )
+  const fieldProps = (id: string) => ({
+    value: answers[id] || '',
+    onChange: handleChange,
+    onBlur: handleBlur,
+    feedback: arnobotFeedback[id] || '',
+    loading: arnobotLoading[id] || false,
+    onArnoBot: handleArnoBot,
+  })
+
+  const f = (id: string) => ALL_FIELDS.find(x => x.id === id)!
 
   return (
     <main style={s.page}>
@@ -189,14 +235,12 @@ export default function StrategiePage() {
         <h1 style={s.pageTitle}>STRATEGIE</h1>
       </div>
 
-      {/* PAGINA 1 */}
-
       {/* ROW 1: Missie + Cultuur */}
       <div style={{ ...s.sectionDivider, display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '48px', paddingBottom: '48px' }}>
-        <Field {...ALL_FIELDS[0]} />
+        <Field {...f('missie')} {...fieldProps('missie')} />
         <div>
-          <div style={s.groupSectionLabel}>
-            CULTUUR <span style={s.groupSectionSub}>DNA, kernwaarden en gedrag</span>
+          <div style={s.groupLabel}>
+            CULTUUR <span style={s.groupSub}>DNA, kernwaarden en gedrag</span>
             <span style={s.fieldLabelLine} />
           </div>
           {['cultuur_1','cultuur_2','cultuur_3','cultuur_4','cultuur_5'].map((id, i) => (
@@ -210,63 +254,52 @@ export default function StrategiePage() {
 
       {/* ROW 2: Waardepropositie / Kerncompetenties / Dienstverlening */}
       <div style={{ ...s.sectionDivider, display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '48px', paddingBottom: '48px' }}>
-        <Field {...ALL_FIELDS[6]} />
-        <Field {...ALL_FIELDS[7]} />
-        <Field {...ALL_FIELDS[8]} />
+        <Field {...f('waardepropositie')} {...fieldProps('waardepropositie')} />
+        <Field {...f('kerncompetenties')} {...fieldProps('kerncompetenties')} />
+        <Field {...f('dienstverlening')} {...fieldProps('dienstverlening')} />
       </div>
 
       {/* ROW 3: Zandbak + Doelen + Acties */}
       <div style={{ ...s.sectionDivider, display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '48px', paddingBottom: '48px' }}>
-        <Field {...ALL_FIELDS[9]} />
+        <Field {...f('zandbak')} {...fieldProps('zandbak')} />
         <div>
-          <div style={s.groupSectionLabel}>DOELEN <span style={s.groupSectionSub}>3-5 JR</span><span style={s.fieldLabelLine} /></div>
-          {[
-            { id: 'doelen_datum', label: 'Datum' },
-            { id: 'doelen_omzet', label: 'Omzet €' },
-            { id: 'doelen_winst', label: 'Winst €' },
-            { id: 'doelen_klanten', label: 'Klanten #' },
-            { id: 'doelen_marktaandeel', label: 'Marktaandeel %' },
-            { id: 'doelen_liquiditeit', label: 'Liquiditeit %' },
-          ].map(f => <SmallInput key={f.id} {...f} />)}
+          <div style={s.groupLabel}>DOELEN <span style={s.groupSub}>3–5 JR</span><span style={s.fieldLabelLine} /></div>
+          {(['doelen_datum','doelen_omzet','doelen_winst','doelen_klanten','doelen_marktaandeel','doelen_liquiditeit'] as const).map(id => (
+            <SmallInput key={id} id={id} label={f(id).label} value={answers[id] || ''} onChange={handleChange} onBlur={handleBlur} />
+          ))}
         </div>
         <div>
-          <div style={s.groupSectionLabel}>ACTIES <span style={s.groupSectionSub}>1 JR</span><span style={s.fieldLabelLine} /></div>
-          {[
-            { id: 'acties_datum', label: 'Datum' },
-            { id: 'acties_omzet', label: 'Omzet €' },
-            { id: 'acties_winst', label: 'Winst €' },
-            { id: 'acties_brutomarge', label: 'Brutomarge %' },
-            { id: 'acties_cash', label: 'Cash €' },
-            { id: 'acties_klanten', label: 'Klanten #' },
-          ].map(f => <SmallInput key={f.id} {...f} />)}
+          <div style={s.groupLabel}>ACTIES <span style={s.groupSub}>1 JR</span><span style={s.fieldLabelLine} /></div>
+          {(['acties_datum','acties_omzet','acties_winst','acties_brutomarge','acties_cash','acties_klanten'] as const).map(id => (
+            <SmallInput key={id} id={id} label={f(id).label} value={answers[id] || ''} onChange={handleChange} onBlur={handleBlur} />
+          ))}
         </div>
       </div>
 
       {/* ROW 4: Leiderschap */}
       <div style={{ ...s.sectionDivider, display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '48px', paddingBottom: '64px' }}>
         <div>
-          <div style={s.groupSectionLabel}>LEIDERSCHAP <span style={s.groupSectionSub}>Welke markt(en) willen we domineren?</span><span style={s.fieldLabelLine} /></div>
+          <div style={s.groupLabel}>LEIDERSCHAP <span style={s.groupSub}>Welke markt(en) willen we domineren?</span><span style={s.fieldLabelLine} /></div>
           <input style={s.input} value={answers['leiderschap_markten'] || ''} onChange={e => handleChange('leiderschap_markten', e.target.value)} onBlur={() => handleBlur('leiderschap_markten')} placeholder="..." />
         </div>
         <div>
-          <div style={s.groupSectionLabel}>WANNEER?<span style={s.fieldLabelLine} /></div>
+          <div style={s.groupLabel}>WANNEER?<span style={s.fieldLabelLine} /></div>
           <input style={s.input} value={answers['leiderschap_wanneer'] || ''} onChange={e => handleChange('leiderschap_wanneer', e.target.value)} onBlur={() => handleBlur('leiderschap_wanneer')} placeholder="..." />
         </div>
       </div>
 
       {/* PAGINA 2 */}
-
       {/* ROW 5: Merkbelofte / Strategie in 1 zin / Onderscheidend Vermogen */}
       <div style={{ ...s.sectionDivider, display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '48px', paddingBottom: '48px', borderTop: '2px solid #EE7700' }}>
         <div style={{ gridColumn: '1 / -1', marginBottom: '8px' }}>
           <p style={{ color: '#EE7700', fontSize: '11px', letterSpacing: '4px', opacity: 0.6, margin: 0 }}>PAGINA 02 — GROEI & ONDERSCHEID</p>
         </div>
-        <Field {...ALL_FIELDS[24]} />
-        <Field {...ALL_FIELDS[25]} />
+        <Field {...f('merkbelofte')} {...fieldProps('merkbelofte')} />
+        <Field {...f('strategie_1_zin')} {...fieldProps('strategie_1_zin')} />
         <div>
-          <div style={s.groupSectionLabel}>ONDERSCHEIDEND VERMOGEN <span style={s.fieldLabelLine} /></div>
-          <div style={{ ...s.groupSectionSub, marginBottom: '16px' }}>Welke kernactiviteiten ondersteunen de strategie in 1 zin?</div>
-          {['onderscheidend_1','onderscheidend_2','onderscheidend_3','onderscheidend_4','onderscheidend_5'].map((id, i) => (
+          <div style={s.groupLabel}>ONDERSCHEIDEND VERMOGEN <span style={s.fieldLabelLine} /></div>
+          <div style={{ ...s.groupSub, marginBottom: '16px' }}>Welke kernactiviteiten ondersteunen de strategie in 1 zin?</div>
+          {(['onderscheidend_1','onderscheidend_2','onderscheidend_3','onderscheidend_4','onderscheidend_5'] as const).map((id, i) => (
             <div key={id} style={{ display: 'grid', gridTemplateColumns: '24px 1fr', gap: '12px', alignItems: 'center', marginBottom: '12px' }}>
               <span style={{ color: '#EE7700', fontSize: '12px', opacity: 0.5 }}>{i + 1}</span>
               <input style={s.input} value={answers[id] || ''} onChange={e => handleChange(id, e.target.value)} onBlur={() => handleBlur(id)} placeholder="..." />
@@ -277,24 +310,24 @@ export default function StrategiePage() {
 
       {/* ROW 6: X-Factor / Winst per eenheid / Moonshots */}
       <div style={{ ...s.sectionDivider, display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '48px', paddingBottom: '48px' }}>
-        <Field {...ALL_FIELDS[31]} />
-        <Field {...ALL_FIELDS[32]} />
-        <Field {...ALL_FIELDS[33]} />
+        <Field {...f('xfactor')} {...fieldProps('xfactor')} />
+        <Field {...f('winst_per_eenheid')} {...fieldProps('winst_per_eenheid')} />
+        <Field {...f('moonshots')} {...fieldProps('moonshots')} />
       </div>
 
-      {/* ROW 7: Schaalbaarheid (breed) */}
+      {/* ROW 7: Schaalbaarheid */}
       <div style={{ ...s.sectionDivider, paddingBottom: '48px' }}>
-        <Field {...ALL_FIELDS[34]} />
+        <Field {...f('schaalbaarheid')} {...fieldProps('schaalbaarheid')} />
       </div>
 
       {/* ROW 8: Repeterende omzet / Klantretentie / Referrals */}
       <div style={{ ...s.sectionDivider, display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '48px', paddingBottom: '48px' }}>
-        <Field {...ALL_FIELDS[35]} />
-        <Field {...ALL_FIELDS[36]} />
-        <Field {...ALL_FIELDS[37]} />
+        <Field {...f('repeterende_omzet')} {...fieldProps('repeterende_omzet')} />
+        <Field {...f('klantretentie')} {...fieldProps('klantretentie')} />
+        <Field {...f('referrals')} {...fieldProps('referrals')} />
       </div>
 
-      {/* ROW 9: OMTM (breed) */}
+      {/* ROW 9: OMTM */}
       <div style={{ ...s.sectionDivider, paddingBottom: '80px' }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: '24px' }}>
           <span style={{ fontFamily: 'var(--font-bebas)', fontSize: '18px', letterSpacing: '4px', color: '#f0ede6', whiteSpace: 'nowrap' }}>OMTM</span>
