@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import { useUser } from '@clerk/nextjs'
-import { supabase } from '@/lib/supabase'
+import { useSupabaseClient } from '@/lib/supabase'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import PdfExportButton from '@/components/PdfExportButton'
@@ -32,6 +32,7 @@ const SECTIONS = [
 export default function CanvasPage() {
   const { user, isLoaded } = useUser()
   const router = useRouter()
+  const supabase = useSupabaseClient()
   const [scores, setScores] = useState({ strategie: 0, mensen: 0, uitvoering: 0 })
   const [loading, setLoading] = useState(true)
   const [hovered, setHovered] = useState<string | null>(null)
@@ -84,8 +85,6 @@ export default function CanvasPage() {
       fontFamily: 'var(--font-geist-sans), sans-serif',
       padding: '64px 48px',
     }}>
-
-      {/* Header */}
       <div style={{ marginBottom: '80px' }}>
         <p style={{ color: '#EE7700', fontSize: '11px', letterSpacing: '4px', marginBottom: '12px', opacity: 0.7 }}>
           ROYAL DUTCH SALES
@@ -105,19 +104,13 @@ export default function CanvasPage() {
         </p>
       </div>
 
-      {/* Plan Health Score */}
-      <div style={{
-        borderTop: '1px solid #1e1e1e',
-        paddingTop: '48px',
-        marginBottom: '80px',
-      }}>
+      <div style={{ borderTop: '1px solid #1e1e1e', paddingTop: '48px', marginBottom: '80px' }}>
         <div style={{ display: 'flex', alignItems: 'baseline', gap: '20px', marginBottom: '16px' }}>
           <span style={{ color: '#EE7700', fontSize: '11px', letterSpacing: '4px' }}>PLAN HEALTH SCORE</span>
           <span style={{ color: '#EE7700', fontSize: '11px', letterSpacing: '2px', opacity: 0.4 }}>
             {loading ? '...' : scoreLabel}
           </span>
         </div>
-
         <div style={{
           fontFamily: 'var(--font-bebas), sans-serif',
           fontSize: '120px',
@@ -128,8 +121,6 @@ export default function CanvasPage() {
         }}>
           {loading ? '—' : `${healthScore}%`}
         </div>
-
-        {/* Hoofdbalk */}
         <div style={{ width: '100%', height: '2px', backgroundColor: '#1a1a1a', marginBottom: '32px' }}>
           <div style={{
             height: '2px',
@@ -138,8 +129,6 @@ export default function CanvasPage() {
             transition: 'width 1s ease',
           }} />
         </div>
-
-        {/* Per segment stats + PDF knop */}
         <div style={{ display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between' }}>
           <div style={{ display: 'flex', gap: '64px' }}>
             {SECTIONS.map(s => (
@@ -153,18 +142,15 @@ export default function CanvasPage() {
               </div>
             ))}
           </div>
-
           <PdfExportButton />
         </div>
       </div>
 
-      {/* Sectie kaarten */}
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '2px' }}>
         {SECTIONS.map(s => {
           const pct = sectionScore(s.key)
           const isHovered = hovered === s.key
           const isComplete = pct === 100
-
           return (
             <Link key={s.key} href={`/canvas/${s.key}`} style={{ textDecoration: 'none' }}>
               <div
@@ -201,7 +187,6 @@ export default function CanvasPage() {
                     {TOTAL_FIELDS[s.key].length} velden
                   </p>
                 </div>
-
                 {!loading && (
                   <div style={{ marginTop: '32px' }}>
                     <div style={{ width: '100%', height: '1px', backgroundColor: '#1e1e1e', marginBottom: '10px' }}>

@@ -2,11 +2,10 @@
 
 import { useState, useEffect, useCallback } from 'react'
 import { useUser } from '@clerk/nextjs'
-import { supabase } from '@/lib/supabase'
+import { useSupabaseClient } from '@/lib/supabase'
 import Link from 'next/link'
 
 const SECTIONS = [
-  // Pagina 1
   { id: 'missie', label: 'MISSIE', sub: 'Reden van bestaan', type: 'textarea' },
   { id: 'cultuur_1', label: 'CULTUUR 1', sub: 'DNA, kernwaarde', type: 'input' },
   { id: 'cultuur_2', label: 'CULTUUR 2', sub: 'DNA, kernwaarde', type: 'input' },
@@ -29,7 +28,6 @@ const SECTIONS = [
   { id: 'acties_cash', label: 'ACTIES — Cash €', sub: '1 jaar', type: 'input' },
   { id: 'leiderschap_markt', label: 'LEIDERSCHAP — Markt', sub: 'Welke markt(en) willen we domineren?', type: 'input' },
   { id: 'leiderschap_wanneer', label: 'LEIDERSCHAP — Wanneer', sub: 'Wanneer domineren we deze markt?', type: 'input' },
-  // Pagina 2
   { id: 'merkbelofte', label: 'MERKBELOFTE', sub: 'Wat zijn onze unieke merkbeloftes en garanties?', type: 'textarea' },
   { id: 'strategie_in_1_zin', label: 'STRATEGIE IN 1 ZIN', sub: 'Hoe onderscheiden we ons in de executie van onze concurrenten?', type: 'textarea' },
   { id: 'onderscheidend_1', label: 'ONDERSCHEIDEND 1', sub: 'Kernactiviteit die strategie ondersteunt', type: 'input' },
@@ -74,13 +72,11 @@ const PAGE2_IDS = ['merkbelofte','strategie_in_1_zin','onderscheidend_1','onders
 
 async function getArnoBotFeedback(label: string, sub: string, answer: string): Promise<string> {
   if (!answer.trim()) return 'Vul dit veld in voor ArnoBot feedback.'
-
   const response = await fetch('/api/arnobot', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ label, sub, answer }),
   })
-
   if (!response.ok) throw new Error('ArnoBot request failed')
   const data = await response.json()
   return data.feedback
@@ -88,6 +84,7 @@ async function getArnoBotFeedback(label: string, sub: string, answer: string): P
 
 export default function StrategiePage() {
   const { user } = useUser()
+  const supabase = useSupabaseClient()
   const [answers, setAnswers] = useState<Record<string, string>>({})
   const [saveStatus, setSaveStatus] = useState('')
   const [arnobotFeedback, setArnobotFeedback] = useState<Record<string, string>>({})
@@ -143,47 +140,21 @@ export default function StrategiePage() {
     const isLoading = arnobotLoading[section.id]
     const feedback = arnobotFeedback[section.id]
     const hasAnswer = !!(answers[section.id] || '').trim()
-
     return (
       <div key={section.id} style={styles.card}>
         <p style={styles.label}>{section.label}</p>
         <p style={styles.sub}>{section.sub}</p>
         {section.type === 'textarea' ? (
-          <textarea
-            style={styles.textarea}
-            value={answers[section.id] || ''}
-            onChange={e => handleChange(section.id, e.target.value)}
-            onBlur={() => handleBlur(section.id)}
-            placeholder="..."
-          />
+          <textarea style={styles.textarea} value={answers[section.id] || ''} onChange={e => handleChange(section.id, e.target.value)} onBlur={() => handleBlur(section.id)} placeholder="..." />
         ) : (
-          <input
-            style={styles.input}
-            value={answers[section.id] || ''}
-            onChange={e => handleChange(section.id, e.target.value)}
-            onBlur={() => handleBlur(section.id)}
-            placeholder="..."
-          />
+          <input style={styles.input} value={answers[section.id] || ''} onChange={e => handleChange(section.id, e.target.value)} onBlur={() => handleBlur(section.id)} placeholder="..." />
         )}
-
-        {/* ArnoBot trigger */}
         {hasAnswer && (
-          <button
-            style={isLoading ? styles.arnobotBtnLoading : styles.arnobotBtn}
-            onClick={() => !isLoading && handleArnoBot(section)}
-            onMouseEnter={e => { if (!isLoading) (e.target as HTMLElement).style.opacity = '1' }}
-            onMouseLeave={e => { if (!isLoading) (e.target as HTMLElement).style.opacity = '0.5' }}
-          >
+          <button style={isLoading ? styles.arnobotBtnLoading : styles.arnobotBtn} onClick={() => !isLoading && handleArnoBot(section)} onMouseEnter={e => { if (!isLoading) (e.target as HTMLElement).style.opacity = '1' }} onMouseLeave={e => { if (!isLoading) (e.target as HTMLElement).style.opacity = '0.5' }}>
             {isLoading ? '→ ARNOBOT DENKT...' : feedback ? '→ OPNIEUW VRAGEN' : '→ ARNOBOT'}
           </button>
         )}
-
-        {/* ArnoBot feedback */}
-        {feedback && !isLoading && (
-          <div style={styles.arnobotBox}>
-            {feedback}
-          </div>
-        )}
+        {feedback && !isLoading && <div style={styles.arnobotBox}>{feedback}</div>}
       </div>
     )
   }
@@ -195,20 +166,12 @@ export default function StrategiePage() {
         <span style={{ opacity: 0.4 }}>/</span>
         <span style={{ color: '#EE7700', fontSize: '12px', letterSpacing: '2px' }}>STRATEGIE</span>
       </nav>
-
       <p style={styles.tag}>01 — 02</p>
       <h1 style={styles.title}>STRATEGIE</h1>
-
       <div style={styles.divider}>PAGINA 01 — FUNDAMENT</div>
-      <div style={styles.grid}>
-        {SECTIONS.filter(s => PAGE1_IDS.includes(s.id)).map(renderSection)}
-      </div>
-
+      <div style={styles.grid}>{SECTIONS.filter(s => PAGE1_IDS.includes(s.id)).map(renderSection)}</div>
       <div style={styles.divider}>PAGINA 02 — GROEI & ONDERSCHEID</div>
-      <div style={styles.grid}>
-        {SECTIONS.filter(s => PAGE2_IDS.includes(s.id)).map(renderSection)}
-      </div>
-
+      <div style={styles.grid}>{SECTIONS.filter(s => PAGE2_IDS.includes(s.id)).map(renderSection)}</div>
       {saveStatus && <p style={styles.saveStatus}>{saveStatus}</p>}
     </main>
   )

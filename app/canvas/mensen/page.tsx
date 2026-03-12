@@ -2,11 +2,10 @@
 
 import { useState, useEffect, useCallback } from 'react'
 import { useUser } from '@clerk/nextjs'
-import { supabase } from '@/lib/supabase'
+import { useSupabaseClient } from '@/lib/supabase'
 import Link from 'next/link'
 
 const SECTIONS = [
-  // Pagina 3
   { id: 'leider_naam', label: 'LEIDER', sub: 'Naam van de leider / CEO', type: 'input' },
   { id: 'leider_rol', label: 'ROL VAN DE LEIDER', sub: 'Wat is de primaire rol van de leider?', type: 'textarea' },
   { id: 'topteam_1', label: 'TOPTEAM 1', sub: 'Naam + functie', type: 'input' },
@@ -19,7 +18,6 @@ const SECTIONS = [
   { id: 'aanname_criteria', label: 'AANNAME CRITERIA', sub: 'Wat zijn de criteria voor nieuwe salesmensen?', type: 'textarea' },
   { id: 'onboarding', label: 'ONBOARDING', sub: 'Hoe worden nieuwe salesmensen ingewerkt?', type: 'textarea' },
   { id: 'training_ontwikkeling', label: 'TRAINING & ONTWIKKELING', sub: 'Hoe ontwikkelen we ons salesteam continu?', type: 'textarea' },
-  // Pagina 4
   { id: 'compensatie_model', label: 'COMPENSATIE MODEL', sub: 'Hoe beloont en motiveert het bedrijf zijn verkopers?', type: 'textarea' },
   { id: 'targets_kpi', label: 'TARGETS & KPI\'S', sub: 'Welke targets worden gesteld per verkoper?', type: 'textarea' },
   { id: 'performance_management', label: 'PERFORMANCE MANAGEMENT', sub: 'Hoe worden resultaten gemeten en besproken?', type: 'textarea' },
@@ -66,6 +64,7 @@ async function getArnoBotFeedback(label: string, sub: string, answer: string): P
 
 export default function MensenPage() {
   const { user } = useUser()
+  const supabase = useSupabaseClient()
   const [answers, setAnswers] = useState<Record<string, string>>({})
   const [saveStatus, setSaveStatus] = useState('')
   const [arnobotFeedback, setArnobotFeedback] = useState<Record<string, string>>({})
@@ -121,43 +120,21 @@ export default function MensenPage() {
     const isLoading = arnobotLoading[section.id]
     const feedback = arnobotFeedback[section.id]
     const hasAnswer = !!(answers[section.id] || '').trim()
-
     return (
       <div key={section.id} style={styles.card}>
         <p style={styles.label}>{section.label}</p>
         <p style={styles.sub}>{section.sub}</p>
         {section.type === 'textarea' ? (
-          <textarea
-            style={styles.textarea}
-            value={answers[section.id] || ''}
-            onChange={e => handleChange(section.id, e.target.value)}
-            onBlur={() => handleBlur(section.id)}
-            placeholder="..."
-          />
+          <textarea style={styles.textarea} value={answers[section.id] || ''} onChange={e => handleChange(section.id, e.target.value)} onBlur={() => handleBlur(section.id)} placeholder="..." />
         ) : (
-          <input
-            style={styles.input}
-            value={answers[section.id] || ''}
-            onChange={e => handleChange(section.id, e.target.value)}
-            onBlur={() => handleBlur(section.id)}
-            placeholder="..."
-          />
+          <input style={styles.input} value={answers[section.id] || ''} onChange={e => handleChange(section.id, e.target.value)} onBlur={() => handleBlur(section.id)} placeholder="..." />
         )}
-
         {hasAnswer && (
-          <button
-            style={isLoading ? styles.arnobotBtnLoading : styles.arnobotBtn}
-            onClick={() => !isLoading && handleArnoBot(section)}
-            onMouseEnter={e => { if (!isLoading) (e.target as HTMLElement).style.opacity = '1' }}
-            onMouseLeave={e => { if (!isLoading) (e.target as HTMLElement).style.opacity = '0.5' }}
-          >
+          <button style={isLoading ? styles.arnobotBtnLoading : styles.arnobotBtn} onClick={() => !isLoading && handleArnoBot(section)} onMouseEnter={e => { if (!isLoading) (e.target as HTMLElement).style.opacity = '1' }} onMouseLeave={e => { if (!isLoading) (e.target as HTMLElement).style.opacity = '0.5' }}>
             {isLoading ? '→ ARNOBOT DENKT...' : feedback ? '→ OPNIEUW VRAGEN' : '→ ARNOBOT'}
           </button>
         )}
-
-        {feedback && !isLoading && (
-          <div style={styles.arnobotBox}>{feedback}</div>
-        )}
+        {feedback && !isLoading && <div style={styles.arnobotBox}>{feedback}</div>}
       </div>
     )
   }
@@ -169,20 +146,12 @@ export default function MensenPage() {
         <span style={{ opacity: 0.4 }}>/</span>
         <span style={{ color: '#EE7700', fontSize: '12px', letterSpacing: '2px' }}>MENSEN</span>
       </nav>
-
       <p style={styles.tag}>03 — 04</p>
       <h1 style={styles.title}>MENSEN</h1>
-
       <div style={styles.divider}>PAGINA 03 — TEAM & STRUCTUUR</div>
-      <div style={styles.grid}>
-        {SECTIONS.filter(s => PAGE3_IDS.includes(s.id)).map(renderSection)}
-      </div>
-
+      <div style={styles.grid}>{SECTIONS.filter(s => PAGE3_IDS.includes(s.id)).map(renderSection)}</div>
       <div style={styles.divider}>PAGINA 04 — PERFORMANCE & RETENTIE</div>
-      <div style={styles.grid}>
-        {SECTIONS.filter(s => PAGE4_IDS.includes(s.id)).map(renderSection)}
-      </div>
-
+      <div style={styles.grid}>{SECTIONS.filter(s => PAGE4_IDS.includes(s.id)).map(renderSection)}</div>
       {saveStatus && <p style={styles.saveStatus}>{saveStatus}</p>}
     </main>
   )

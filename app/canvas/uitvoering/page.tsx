@@ -2,11 +2,10 @@
 
 import { useState, useEffect, useCallback } from 'react'
 import { useUser } from '@clerk/nextjs'
-import { supabase } from '@/lib/supabase'
+import { useSupabaseClient } from '@/lib/supabase'
 import Link from 'next/link'
 
 const SECTIONS = [
-  // Pagina 5
   { id: 'salesproces', label: 'SALESPROCES', sub: 'Beschrijf het stap-voor-stap salesproces', type: 'textarea' },
   { id: 'pipeline_fases', label: 'PIPELINE FASES', sub: 'Welke fases heeft jullie pipeline?', type: 'textarea' },
   { id: 'leadgeneratie', label: 'LEADGENERATIE', sub: 'Hoe genereren we nieuwe leads?', type: 'textarea' },
@@ -17,7 +16,6 @@ const SECTIONS = [
   { id: 'prioriteit_accounts', label: 'PRIORITEIT ACCOUNTS', sub: 'Welke accounts of sectoren krijgen prioriteit?', type: 'textarea' },
   { id: 'tools_crm', label: 'TOOLS & CRM', sub: 'Welke tools en CRM gebruiken we?', type: 'textarea' },
   { id: 'grootste_bottleneck', label: 'GROOTSTE BOTTLENECK', sub: 'Wat blokkeert groei in de pipeline nu?', type: 'textarea' },
-  // Pagina 6
   { id: 'kpi_omzet', label: 'KPI — Omzet', sub: 'Maandelijkse omzetdoelstelling €', type: 'input' },
   { id: 'kpi_nieuwe_klanten', label: 'KPI — Nieuwe Klanten', sub: 'Aantal nieuwe klanten per maand #', type: 'input' },
   { id: 'kpi_churn', label: 'KPI — Churn', sub: 'Klantverloop % per kwartaal', type: 'input' },
@@ -65,6 +63,7 @@ async function getArnoBotFeedback(label: string, sub: string, answer: string): P
 
 export default function UitvoeringPage() {
   const { user } = useUser()
+  const supabase = useSupabaseClient()
   const [answers, setAnswers] = useState<Record<string, string>>({})
   const [saveStatus, setSaveStatus] = useState('')
   const [arnobotFeedback, setArnobotFeedback] = useState<Record<string, string>>({})
@@ -120,43 +119,21 @@ export default function UitvoeringPage() {
     const isLoading = arnobotLoading[section.id]
     const feedback = arnobotFeedback[section.id]
     const hasAnswer = !!(answers[section.id] || '').trim()
-
     return (
       <div key={section.id} style={styles.card}>
         <p style={styles.label}>{section.label}</p>
         <p style={styles.sub}>{section.sub}</p>
         {section.type === 'textarea' ? (
-          <textarea
-            style={styles.textarea}
-            value={answers[section.id] || ''}
-            onChange={e => handleChange(section.id, e.target.value)}
-            onBlur={() => handleBlur(section.id)}
-            placeholder="..."
-          />
+          <textarea style={styles.textarea} value={answers[section.id] || ''} onChange={e => handleChange(section.id, e.target.value)} onBlur={() => handleBlur(section.id)} placeholder="..." />
         ) : (
-          <input
-            style={styles.input}
-            value={answers[section.id] || ''}
-            onChange={e => handleChange(section.id, e.target.value)}
-            onBlur={() => handleBlur(section.id)}
-            placeholder="..."
-          />
+          <input style={styles.input} value={answers[section.id] || ''} onChange={e => handleChange(section.id, e.target.value)} onBlur={() => handleBlur(section.id)} placeholder="..." />
         )}
-
         {hasAnswer && (
-          <button
-            style={isLoading ? styles.arnobotBtnLoading : styles.arnobotBtn}
-            onClick={() => !isLoading && handleArnoBot(section)}
-            onMouseEnter={e => { if (!isLoading) (e.target as HTMLElement).style.opacity = '1' }}
-            onMouseLeave={e => { if (!isLoading) (e.target as HTMLElement).style.opacity = '0.5' }}
-          >
+          <button style={isLoading ? styles.arnobotBtnLoading : styles.arnobotBtn} onClick={() => !isLoading && handleArnoBot(section)} onMouseEnter={e => { if (!isLoading) (e.target as HTMLElement).style.opacity = '1' }} onMouseLeave={e => { if (!isLoading) (e.target as HTMLElement).style.opacity = '0.5' }}>
             {isLoading ? '→ ARNOBOT DENKT...' : feedback ? '→ OPNIEUW VRAGEN' : '→ ARNOBOT'}
           </button>
         )}
-
-        {feedback && !isLoading && (
-          <div style={styles.arnobotBox}>{feedback}</div>
-        )}
+        {feedback && !isLoading && <div style={styles.arnobotBox}>{feedback}</div>}
       </div>
     )
   }
@@ -168,20 +145,12 @@ export default function UitvoeringPage() {
         <span style={{ opacity: 0.4 }}>/</span>
         <span style={{ color: '#EE7700', fontSize: '12px', letterSpacing: '2px' }}>UITVOERING</span>
       </nav>
-
       <p style={styles.tag}>05 — 06</p>
       <h1 style={styles.title}>UITVOERING</h1>
-
       <div style={styles.divider}>PAGINA 05 — EXECUTIE & PIPELINE</div>
-      <div style={styles.grid}>
-        {SECTIONS.filter(s => PAGE5_IDS.includes(s.id)).map(renderSection)}
-      </div>
-
+      <div style={styles.grid}>{SECTIONS.filter(s => PAGE5_IDS.includes(s.id)).map(renderSection)}</div>
       <div style={styles.divider}>PAGINA 06 — KPI DASHBOARD & GROEI</div>
-      <div style={styles.grid}>
-        {SECTIONS.filter(s => PAGE6_IDS.includes(s.id)).map(renderSection)}
-      </div>
-
+      <div style={styles.grid}>{SECTIONS.filter(s => PAGE6_IDS.includes(s.id)).map(renderSection)}</div>
       {saveStatus && <p style={styles.saveStatus}>{saveStatus}</p>}
     </main>
   )
