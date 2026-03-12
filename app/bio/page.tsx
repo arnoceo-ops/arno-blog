@@ -40,22 +40,17 @@ export default async function BioPage() {
         }
         .bio-title {
           font-family: 'Bebas Neue', sans-serif;
-          font-size: clamp(64px, 10vw, 120px);
-          line-height: 0.9;
+          font-size: clamp(64px, 10vw, 120px); line-height: 0.9;
         }
         .bio-title-arno { color: #EE7700; display: block; }
         .bio-title-diepeveen { color: #f0ede6; display: block; }
-
         .bio-tagline { text-align: right; padding-bottom: 8px; max-width: 420px; }
         .bio-tagline-title {
           font-family: 'Barlow', sans-serif;
           font-size: 26px; font-weight: 700; color: #f0ede6;
           display: block; margin-bottom: 8px; letter-spacing: 0.5px;
         }
-        .bio-tagline-sub {
-          font-family: 'Space Mono', monospace;
-          font-size: 15px; line-height: 1.9; color: #aaa; display: block;
-        }
+        .bio-tagline-sub { font-family: 'Space Mono', monospace; font-size: 15px; line-height: 1.9; color: #aaa; display: block; }
 
         .bio-body {
           max-width: 960px; margin: 0 auto;
@@ -64,9 +59,7 @@ export default async function BioPage() {
         }
         .bio-video { width: 800px; max-width: 100%; margin: 0 auto; }
         .bio-text { width: 800px; max-width: 100%; margin: 0 auto; }
-        .bio-text p {
-          font-size: 15px; line-height: 1.875; color: #888; margin-bottom: 28px;
-        }
+        .bio-text p { font-size: 15px; line-height: 1.875; color: #888; margin-bottom: 28px; }
         .bio-text strong { color: #f0ede6; font-weight: 700; }
         .bio-text em { color: #EE7700; font-style: normal; }
 
@@ -84,8 +77,8 @@ export default async function BioPage() {
           <Link href="/">HOME</Link>
           <Link href="/blog">BLOG</Link>
           <Link href="/bio" className="nav-active">BIO</Link>
+          <Link href="/spar">BOT</Link>
           <Link href="/canvas">CANVAS</Link>
-          <Link href="/spar" className="nav-cta">SPAR</Link>
           <a href="/#subscribe" className="nav-cta">SUBSCRIBE</a>
         </div>
       </nav>

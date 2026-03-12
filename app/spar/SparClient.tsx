@@ -301,8 +301,8 @@ export default function SparClient({ taglineTitle, taglineSub, openers }: Props)
           <Link href="/">HOME</Link>
           <Link href="/blog">BLOG</Link>
           <Link href="/bio">BIO</Link>
+          <Link href="/spar" className="nav-active">BOT</Link>
           <Link href="/canvas">CANVAS</Link>
-          <Link href="/spar" className="nav-active nav-cta">ARNOBOT</Link>
           <a href="/#subscribe" className="nav-cta">SUBSCRIBE</a>
         </div>
       </nav>
@@ -310,7 +310,7 @@ export default function SparClient({ taglineTitle, taglineSub, openers }: Props)
       <div className="spar-page">
         <div className="spar-hero">
           <h1 className="spar-title">
-            ARNO<br /><span>BOT.</span>
+            LET&apos;S<br /><span>SPAR.</span>
           </h1>
           <div className="spar-tagline">
             <p>
@@ -345,7 +345,7 @@ export default function SparClient({ taglineTitle, taglineSub, openers }: Props)
               onClick={() => ask(input)}
               disabled={loading || !input.trim()}
             >
-              {loading ? '...' : 'ARNOBOT →'}
+              {loading ? '...' : 'SPAR →'}
             </button>
           </div>
           <p className="spar-hint">Enter = sturen — Shift+Enter = nieuwe regel</p>

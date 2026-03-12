@@ -56,7 +56,7 @@ export default async function BlogPage() {
           font-size: 22px; letter-spacing: 3px; transition: color 0.2s;
         }
         .nav-links a:hover { color: #f0ede6; }
-        .nav-active { color: #f0ede6 !important; }
+        .nav-active { color: #EE7700 !important; }
         .nav-cta { color: #EE7700 !important; }
 
         .blog-header { padding-top: 80px; background: #0a0a0a; }
@@ -115,8 +115,8 @@ export default async function BlogPage() {
           <Link href="/">HOME</Link>
           <Link href="/blog" className="nav-active">BLOG</Link>
           <Link href="/bio">BIO</Link>
+          <Link href="/spar">BOT</Link>
           <Link href="/canvas">CANVAS</Link>
-          <Link href="/spar" className="nav-cta">SPAR</Link>
           <a href="/#subscribe" className="nav-cta">SUBSCRIBE</a>
         </div>
       </nav>
@@ -167,4 +167,3 @@ export default async function BlogPage() {
     </>
   )
 }
- 
