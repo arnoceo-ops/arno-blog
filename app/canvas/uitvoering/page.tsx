@@ -22,24 +22,24 @@ const ALL_FIELDS: FieldDef[] = [
   { id: 'themanaam', label: 'Themanaam', sub: '', type: 'input' },
   { id: 'meetbaar_doel', label: 'Meetbaar doel', sub: '', type: 'input' },
   { id: 'cruciale_kpi', label: 'Cruciale KPI', sub: '', type: 'input' },
-  { id: 'okr_wat_1', label: 'Doelstelling 1', sub: 'Wat willen we bereiken?', type: 'textarea' },
-  { id: 'okr_hoe_1', label: 'Kernresultaat 1', sub: 'Hoe meten we succes?', type: 'textarea' },
-  { id: 'okr_wie_1', label: 'Wie 1', sub: '', type: 'input' },
-  { id: 'okr_wat_2', label: 'Doelstelling 2', sub: 'Wat willen we bereiken?', type: 'textarea' },
-  { id: 'okr_hoe_2', label: 'Kernresultaat 2', sub: 'Hoe meten we succes?', type: 'textarea' },
-  { id: 'okr_wie_2', label: 'Wie 2', sub: '', type: 'input' },
-  { id: 'okr_wat_3', label: 'Doelstelling 3', sub: 'Wat willen we bereiken?', type: 'textarea' },
-  { id: 'okr_hoe_3', label: 'Kernresultaat 3', sub: 'Hoe meten we succes?', type: 'textarea' },
-  { id: 'okr_wie_3', label: 'Wie 3', sub: '', type: 'input' },
-  { id: 'klanten_krijgen_1', label: 'Actie 1', sub: '', type: 'textarea' },
-  { id: 'klanten_krijgen_2', label: 'Actie 2', sub: '', type: 'textarea' },
-  { id: 'klanten_krijgen_3', label: 'Actie 3', sub: '', type: 'textarea' },
-  { id: 'klanten_uitbouwen_1', label: 'Actie 1', sub: '', type: 'textarea' },
-  { id: 'klanten_uitbouwen_2', label: 'Actie 2', sub: '', type: 'textarea' },
-  { id: 'klanten_uitbouwen_3', label: 'Actie 3', sub: '', type: 'textarea' },
-  { id: 'klanten_houden_1', label: 'Actie 1', sub: '', type: 'textarea' },
-  { id: 'klanten_houden_2', label: 'Actie 2', sub: '', type: 'textarea' },
-  { id: 'klanten_houden_3', label: 'Actie 3', sub: '', type: 'textarea' },
+  { id: 'okr_wat_1', label: 'Doelstelling', sub: 'Wat willen we bereiken?', type: 'textarea' },
+  { id: 'okr_hoe_1', label: 'Kernresultaat', sub: 'Hoe meten we succes?', type: 'textarea' },
+  { id: 'okr_wie_1', label: 'Wie', sub: '', type: 'input' },
+  { id: 'okr_wat_2', label: 'Doelstelling', sub: 'Wat willen we bereiken?', type: 'textarea' },
+  { id: 'okr_hoe_2', label: 'Kernresultaat', sub: 'Hoe meten we succes?', type: 'textarea' },
+  { id: 'okr_wie_2', label: 'Wie', sub: '', type: 'input' },
+  { id: 'okr_wat_3', label: 'Doelstelling', sub: 'Wat willen we bereiken?', type: 'textarea' },
+  { id: 'okr_hoe_3', label: 'Kernresultaat', sub: 'Hoe meten we succes?', type: 'textarea' },
+  { id: 'okr_wie_3', label: 'Wie', sub: '', type: 'input' },
+  { id: 'klanten_krijgen_1', label: 'Actie', sub: '', type: 'textarea' },
+  { id: 'klanten_krijgen_2', label: 'Actie', sub: '', type: 'textarea' },
+  { id: 'klanten_krijgen_3', label: 'Actie', sub: '', type: 'textarea' },
+  { id: 'klanten_uitbouwen_1', label: 'Actie', sub: '', type: 'textarea' },
+  { id: 'klanten_uitbouwen_2', label: 'Actie', sub: '', type: 'textarea' },
+  { id: 'klanten_uitbouwen_3', label: 'Actie', sub: '', type: 'textarea' },
+  { id: 'klanten_houden_1', label: 'Actie', sub: '', type: 'textarea' },
+  { id: 'klanten_houden_2', label: 'Actie', sub: '', type: 'textarea' },
+  { id: 'klanten_houden_3', label: 'Actie', sub: '', type: 'textarea' },
   { id: 'numbers_leads', label: '# Leads', sub: '', type: 'input' },
   { id: 'numbers_bezoeken', label: '# Bezoeken', sub: '', type: 'input' },
   { id: 'numbers_offertes', label: '# Offertes', sub: '', type: 'input' },
@@ -79,19 +79,16 @@ async function getArnoBotFeedback(label: string, sub: string, answer: string): P
 const s = {
   page: { backgroundColor: '#1c1a17', minHeight: '100vh', color: '#f0ede6', fontFamily: 'var(--font-barlow, sans-serif)' } as React.CSSProperties,
   nav: { display: 'flex', alignItems: 'center', gap: '16px', padding: '24px 48px', fontSize: '12px', letterSpacing: '3px', borderBottom: '1px solid #2a2520' } as React.CSSProperties,
-  pageHeader: { padding: '48px 48px 0', marginBottom: '64px' } as React.CSSProperties,
-  pageTag: { color: '#EE7700', fontSize: '12px', letterSpacing: '4px', marginBottom: '8px', opacity: 0.8 } as React.CSSProperties,
-  pageTitle: { fontFamily: 'var(--font-bebas), sans-serif', fontSize: '96px', letterSpacing: '8px', color: '#f0ede6', margin: 0, lineHeight: 1 } as React.CSSProperties,
   sectionDivider: { borderTop: '1px solid #2a2520', padding: '48px 48px 0' } as React.CSSProperties,
   fieldLabel: { fontSize: '13px', fontWeight: 700, letterSpacing: '3px', color: '#f0ede6', marginBottom: '6px', display: 'flex', alignItems: 'center', gap: '12px' } as React.CSSProperties,
   fieldLabelLine: { flex: 1, height: '1px', backgroundColor: '#2a2520' } as React.CSSProperties,
   fieldSub: { fontSize: '13px', color: '#f0ede6', opacity: 0.5, marginBottom: '14px' } as React.CSSProperties,
-  textarea: { width: '100%', backgroundColor: 'transparent', border: 'none', borderBottom: '1px solid #2a2520', color: '#f0ede6', fontSize: '15px', padding: '12px 0', resize: 'none' as const, outline: 'none', fontFamily: 'var(--font-space-mono, monospace)', lineHeight: 1.8, minHeight: '100px', boxSizing: 'border-box' as const },
+  textarea: { width: '100%', backgroundColor: 'transparent', border: 'none', borderBottom: '1px solid #2a2520', color: '#f0ede6', fontSize: '15px', padding: '12px 0', resize: 'none' as const, outline: 'none', fontFamily: 'var(--font-space-mono, monospace)', lineHeight: 1.8, minHeight: '90px', boxSizing: 'border-box' as const },
   input: { width: '100%', backgroundColor: 'transparent', border: 'none', borderBottom: '1px solid #2a2520', color: '#f0ede6', fontSize: '15px', padding: '10px 0', outline: 'none', fontFamily: 'var(--font-space-mono, monospace)', boxSizing: 'border-box' as const },
   arnobotBtn: { marginTop: '8px', background: 'none', border: 'none', color: '#EE7700', fontSize: '11px', letterSpacing: '2px', cursor: 'pointer', padding: '0' } as React.CSSProperties,
   arnobotBox: { marginTop: '12px', borderLeft: '2px solid #EE7700', paddingLeft: '12px', fontSize: '13px', lineHeight: 1.8, color: '#f0ede6', opacity: 0.75, fontFamily: 'var(--font-space-mono, monospace)' } as React.CSSProperties,
   saveStatus: { position: 'fixed' as const, bottom: '24px', right: '24px', fontSize: '11px', letterSpacing: '3px', color: '#EE7700', opacity: 0.7 },
-  groupLabel: { fontSize: '12px', fontWeight: 700, letterSpacing: '4px', color: '#EE7700', marginBottom: '24px', display: 'flex', alignItems: 'center', gap: '12px' } as React.CSSProperties,
+  groupLabel: { fontSize: '12px', fontWeight: 700, letterSpacing: '4px', color: '#EE7700', marginBottom: '8px', display: 'flex', alignItems: 'center', gap: '12px' } as React.CSSProperties,
   groupSub: { fontSize: '12px', color: '#f0ede6', opacity: 0.5, letterSpacing: '1px', fontWeight: 400 } as React.CSSProperties,
 }
 
@@ -123,18 +120,19 @@ function Field({ id, label, sub, type, value, onChange, onBlur, feedback, loadin
 
 function KpiRow({ id, label, value, onChange, onBlur }: { id: string; label: string; value: string; onChange: (id: string, v: string) => void; onBlur: (id: string) => void }) {
   return (
-    <div style={{ display: 'grid', gridTemplateColumns: '160px 1fr', alignItems: 'center', gap: '16px', borderBottom: '1px solid #1a1a1a', padding: '10px 0' }}>
-      <span style={{ fontSize: '12px', color: '#f0ede6', opacity: 0.5, letterSpacing: '1px' }}>{label}</span>
-      <input style={{ backgroundColor: 'transparent', border: 'none', borderBottom: '1px solid #1e1e1e', color: '#f0ede6', fontSize: '13px', padding: '4px 0', outline: 'none', fontFamily: 'var(--font-space-mono, monospace)', width: '100%', boxSizing: 'border-box' as const }} value={value} onChange={e => onChange(id, e.target.value)} onBlur={() => onBlur(id)} placeholder="—" />
+    <div style={{ display: 'grid', gridTemplateColumns: '160px 1fr', alignItems: 'center', gap: '16px', borderBottom: '1px solid #2a2520', padding: '10px 0' }}>
+      <span style={{ fontSize: '13px', color: '#f0ede6', opacity: 0.5, letterSpacing: '1px' }}>{label}</span>
+      <input style={{ backgroundColor: 'transparent', border: 'none', borderBottom: '1px solid #2a2520', color: '#f0ede6', fontSize: '15px', padding: '4px 0', outline: 'none', fontFamily: 'var(--font-space-mono, monospace)', width: '100%', boxSizing: 'border-box' as const }} value={value} onChange={e => onChange(id, e.target.value)} onBlur={() => onBlur(id)} placeholder="—" />
     </div>
   )
 }
 
+// Fix: oranje lijn vervangen door normale stijl
 function NumberCol({ id, label, value, onChange, onBlur }: { id: string; label: string; value: string; onChange: (id: string, v: string) => void; onBlur: (id: string) => void }) {
   return (
-    <div style={{ borderTop: '1px solid #1e1e1e', paddingTop: '16px' }}>
-      <div style={{ fontSize: '11px', fontWeight: 700, letterSpacing: '3px', color: '#EE7700', marginBottom: '12px' }}>{label}</div>
-      <input style={{ ...s.input, borderBottom: '1px solid #EE7700' }} value={value} onChange={e => onChange(id, e.target.value)} onBlur={() => onBlur(id)} placeholder="—" />
+    <div style={{ borderTop: '1px solid #2a2520', paddingTop: '16px' }}>
+      <div style={{ fontSize: '13px', fontWeight: 700, letterSpacing: '3px', color: '#EE7700', marginBottom: '12px' }}>{label}</div>
+      <input style={s.input} value={value} onChange={e => onChange(id, e.target.value)} onBlur={() => onBlur(id)} placeholder="—" />
     </div>
   )
 }
@@ -227,14 +225,14 @@ export default function UitvoeringPage() {
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr 1fr', gap: '32px' }}>
           {(['kwartaal_jaar','themanaam','meetbaar_doel','cruciale_kpi'] as const).map(id => (
             <div key={id}>
-              <div style={{ fontSize: '11px', color: '#f0ede6', opacity: 0.4, letterSpacing: '2px', marginBottom: '8px' }}>{f(id).label}</div>
+              <div style={{ fontSize: '12px', color: '#f0ede6', opacity: 0.4, letterSpacing: '2px', marginBottom: '8px' }}>{f(id).label}</div>
               <input style={s.input} value={answers[id] || ''} onChange={e => handleChange(id, e.target.value)} onBlur={() => handleBlur(id)} placeholder="..." />
             </div>
           ))}
         </div>
       </div>
 
-      {/* OKR'S — 3 rijen, elk: WAT / HOE / WIE */}
+      {/* OKR'S — nummers verwijderd uit labels */}
       <div style={{ ...s.sectionDivider, paddingBottom: '48px' }}>
         <div style={{ ...s.groupLabel, marginBottom: '32px' }}>OKR'S — DOELSTELLINGEN<span style={s.fieldLabelLine} /></div>
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 160px', gap: '32px', marginBottom: '32px' }}>
@@ -254,7 +252,7 @@ export default function UitvoeringPage() {
         </div>
       </div>
 
-      {/* KLANTEN KRIJGEN / UITBOUWEN / HOUDEN */}
+      {/* KLANTEN KRIJGEN / UITBOUWEN / HOUDEN — nummers verwijderd */}
       <div style={{ ...s.sectionDivider, display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '48px', paddingBottom: '48px' }}>
         <div>
           <div style={{ ...s.groupLabel, marginBottom: '8px' }}>KLANTEN KRIJGEN<span style={s.fieldLabelLine} /></div>
@@ -285,7 +283,7 @@ export default function UitvoeringPage() {
         </div>
       </div>
 
-      {/* NUMBERS + CONVERSIES */}
+      {/* NUMBERS + CONVERSIES — oranje lijnen vervangen door normale stijl */}
       <div style={{ ...s.sectionDivider, paddingBottom: '48px' }}>
         <div style={{ ...s.groupLabel, marginBottom: '32px' }}>NUMBERS & CONVERSIES<span style={s.fieldLabelLine} /></div>
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(5, 1fr)', gap: '24px', marginBottom: '32px' }}>
@@ -302,11 +300,11 @@ export default function UitvoeringPage() {
 
       {/* PAGINA 6 */}
       <div style={{ ...s.sectionDivider, borderTop: '2px solid #EE7700', paddingBottom: '0' }}>
-        <p style={{ color: '#EE7700', fontSize: '11px', letterSpacing: '4px', opacity: 0.6, margin: '0 0 40px' }}>PAGINA 06 — KPI DASHBOARD</p>
+        <p style={{ color: '#EE7700', fontSize: '12px', letterSpacing: '4px', opacity: 0.6, margin: '0 0 40px' }}>PAGINA 06 — KPI DASHBOARD</p>
       </div>
 
       {/* WENSENLIJST */}
-      <div style={{ padding: '0 48px 48px', borderTop: '1px solid #1e1e1e', paddingTop: '48px' }}>
+      <div style={{ padding: '48px 48px 48px', borderTop: '1px solid #2a2520' }}>
         <Field {...f('wensenlijst')} {...fp('wensenlijst')} />
       </div>
 

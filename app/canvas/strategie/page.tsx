@@ -74,9 +74,6 @@ async function getArnoBotFeedback(label: string, sub: string, answer: string): P
 const s = {
   page: { backgroundColor: '#1c1a17', minHeight: '100vh', color: '#f0ede6', fontFamily: 'var(--font-barlow, sans-serif)' } as React.CSSProperties,
   nav: { display: 'flex', alignItems: 'center', gap: '16px', padding: '24px 48px', fontSize: '12px', letterSpacing: '3px', borderBottom: '1px solid #2a2520' } as React.CSSProperties,
-  pageHeader: { padding: '48px 48px 0', marginBottom: '64px' } as React.CSSProperties,
-  pageTag: { color: '#EE7700', fontSize: '12px', letterSpacing: '4px', marginBottom: '8px', opacity: 0.8 } as React.CSSProperties,
-  pageTitle: { fontFamily: 'var(--font-bebas), sans-serif', fontSize: '96px', letterSpacing: '8px', color: '#f0ede6', margin: 0, lineHeight: 1 } as React.CSSProperties,
   sectionDivider: { borderTop: '1px solid #2a2520', padding: '48px 48px 0' } as React.CSSProperties,
   fieldLabel: { fontSize: '13px', fontWeight: 700, letterSpacing: '3px', color: '#f0ede6', marginBottom: '6px', display: 'flex', alignItems: 'center', gap: '12px' } as React.CSSProperties,
   fieldLabelLine: { flex: 1, height: '1px', backgroundColor: '#2a2520' } as React.CSSProperties,
@@ -90,7 +87,6 @@ const s = {
   groupSub: { fontSize: '12px', color: '#f0ede6', opacity: 0.5, letterSpacing: '1px', fontWeight: 400 } as React.CSSProperties,
 }
 
-// ── FIELD COMPONENT — buiten StrategiePage zodat React niet remount op elke render ──
 interface FieldProps {
   id: string
   label: string
@@ -137,10 +133,10 @@ interface SmallInputProps {
 
 function SmallInput({ id, label, value, onChange, onBlur }: SmallInputProps) {
   return (
-    <div style={{ display: 'grid', gridTemplateColumns: '130px 1fr', alignItems: 'center', gap: '16px', borderBottom: '1px solid #1a1a1a', padding: '10px 0' }}>
-      <span style={{ fontSize: '12px', color: '#f0ede6', opacity: 0.5, letterSpacing: '1px' }}>{label}</span>
+    <div style={{ display: 'grid', gridTemplateColumns: '130px 1fr', alignItems: 'center', gap: '16px', borderBottom: '1px solid #2a2520', padding: '10px 0' }}>
+      <span style={{ fontSize: '13px', color: '#f0ede6', opacity: 0.5, letterSpacing: '1px' }}>{label}</span>
       <input
-        style={{ backgroundColor: 'transparent', border: 'none', borderBottom: '1px solid #1e1e1e', color: '#f0ede6', fontSize: '13px', padding: '4px 0', outline: 'none', fontFamily: 'var(--font-space-mono, monospace)', width: '100%', boxSizing: 'border-box' as const }}
+        style={{ backgroundColor: 'transparent', border: 'none', borderBottom: '1px solid #2a2520', color: '#f0ede6', fontSize: '15px', padding: '4px 0', outline: 'none', fontFamily: 'var(--font-space-mono, monospace)', width: '100%', boxSizing: 'border-box' as const }}
         value={value}
         onChange={e => onChange(id, e.target.value)}
         onBlur={() => onBlur(id)}
@@ -150,7 +146,6 @@ function SmallInput({ id, label, value, onChange, onBlur }: SmallInputProps) {
   )
 }
 
-// ── MAIN PAGE ──
 export default function StrategiePage() {
   const { user } = useUser()
   const supabase = useSupabaseClient()
@@ -243,7 +238,7 @@ export default function StrategiePage() {
           </div>
           {['cultuur_1','cultuur_2','cultuur_3','cultuur_4','cultuur_5'].map((id, i) => (
             <div key={id} style={{ display: 'grid', gridTemplateColumns: '24px 1fr', gap: '12px', alignItems: 'center', marginBottom: '12px' }}>
-              <span style={{ color: '#EE7700', fontSize: '12px', opacity: 0.5 }}>{i + 1}</span>
+              <span style={{ color: '#EE7700', fontSize: '13px', opacity: 0.5 }}>{i + 1}</span>
               <input style={s.input} value={answers[id] || ''} onChange={e => handleChange(id, e.target.value)} onBlur={() => handleBlur(id)} placeholder="..." />
             </div>
           ))}
@@ -287,19 +282,18 @@ export default function StrategiePage() {
       </div>
 
       {/* PAGINA 2 */}
-      {/* ROW 5: Merkbelofte / Strategie in 1 zin / Onderscheidend Vermogen */}
       <div style={{ ...s.sectionDivider, display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '48px', paddingBottom: '48px', borderTop: '2px solid #EE7700' }}>
         <div style={{ gridColumn: '1 / -1', marginBottom: '8px' }}>
-          <p style={{ color: '#EE7700', fontSize: '11px', letterSpacing: '4px', opacity: 0.6, margin: 0 }}>PAGINA 02 — GROEI & ONDERSCHEID</p>
+          <p style={{ color: '#EE7700', fontSize: '12px', letterSpacing: '4px', opacity: 0.6, margin: 0 }}>PAGINA 02 — GROEI & ONDERSCHEID</p>
         </div>
         <Field {...f('merkbelofte')} {...fieldProps('merkbelofte')} />
         <Field {...f('strategie_1_zin')} {...fieldProps('strategie_1_zin')} />
         <div>
           <div style={s.groupLabel}>ONDERSCHEIDEND VERMOGEN <span style={s.fieldLabelLine} /></div>
-          <div style={{ ...s.groupSub, marginBottom: '16px' }}>Welke kernactiviteiten ondersteunen de strategie in 1 zin?</div>
+          <div style={{ fontSize: '12px', color: '#f0ede6', opacity: 0.5, marginBottom: '16px' }}>Welke kernactiviteiten ondersteunen de strategie in 1 zin?</div>
           {(['onderscheidend_1','onderscheidend_2','onderscheidend_3','onderscheidend_4','onderscheidend_5'] as const).map((id, i) => (
             <div key={id} style={{ display: 'grid', gridTemplateColumns: '24px 1fr', gap: '12px', alignItems: 'center', marginBottom: '12px' }}>
-              <span style={{ color: '#EE7700', fontSize: '12px', opacity: 0.5 }}>{i + 1}</span>
+              <span style={{ color: '#EE7700', fontSize: '13px', opacity: 0.5 }}>{i + 1}</span>
               <input style={s.input} value={answers[id] || ''} onChange={e => handleChange(id, e.target.value)} onBlur={() => handleBlur(id)} placeholder="..." />
             </div>
           ))}
@@ -328,8 +322,8 @@ export default function StrategiePage() {
       {/* ROW 9: OMTM */}
       <div style={{ ...s.sectionDivider, paddingBottom: '80px' }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: '24px' }}>
-          <span style={{ fontFamily: 'var(--font-bebas)', fontSize: '18px', letterSpacing: '4px', color: '#f0ede6', whiteSpace: 'nowrap' }}>OMTM</span>
-          <span style={{ fontSize: '12px', color: '#f0ede6', opacity: 0.35, whiteSpace: 'nowrap' }}>Wat is de belangrijkste prestatie-indicator?</span>
+          <span style={{ fontFamily: 'var(--font-bebas)', fontSize: '20px', letterSpacing: '4px', color: '#f0ede6', whiteSpace: 'nowrap' }}>OMTM</span>
+          <span style={{ fontSize: '13px', color: '#f0ede6', opacity: 0.5, whiteSpace: 'nowrap' }}>Wat is de belangrijkste prestatie-indicator?</span>
           <input style={{ ...s.input, borderBottom: '1px solid #EE7700' }} value={answers['omtm'] || ''} onChange={e => handleChange('omtm', e.target.value)} onBlur={() => handleBlur('omtm')} placeholder="..." />
         </div>
       </div>

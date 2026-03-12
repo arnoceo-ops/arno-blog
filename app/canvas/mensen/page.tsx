@@ -48,9 +48,6 @@ async function getArnoBotFeedback(label: string, sub: string, answer: string): P
 const s = {
   page: { backgroundColor: '#1c1a17', minHeight: '100vh', color: '#f0ede6', fontFamily: 'var(--font-barlow, sans-serif)' } as React.CSSProperties,
   nav: { display: 'flex', alignItems: 'center', gap: '16px', padding: '24px 48px', fontSize: '12px', letterSpacing: '3px', borderBottom: '1px solid #2a2520' } as React.CSSProperties,
-  pageHeader: { padding: '48px 48px 0', marginBottom: '64px' } as React.CSSProperties,
-  pageTag: { color: '#EE7700', fontSize: '12px', letterSpacing: '4px', marginBottom: '8px', opacity: 0.8 } as React.CSSProperties,
-  pageTitle: { fontFamily: 'var(--font-bebas), sans-serif', fontSize: '96px', letterSpacing: '8px', color: '#f0ede6', margin: 0, lineHeight: 1 } as React.CSSProperties,
   sectionDivider: { borderTop: '1px solid #2a2520', padding: '48px 48px 0' } as React.CSSProperties,
   fieldLabel: { fontSize: '13px', fontWeight: 700, letterSpacing: '3px', color: '#f0ede6', marginBottom: '6px', display: 'flex', alignItems: 'center', gap: '12px' } as React.CSSProperties,
   fieldLabelLine: { flex: 1, height: '1px', backgroundColor: '#2a2520' } as React.CSSProperties,
@@ -110,16 +107,16 @@ interface QuarterBlockProps {
 
 function QuarterBlock({ quarter, ids, answers, onChange, onBlur }: QuarterBlockProps) {
   const row = (label: string, id: string) => (
-    <div style={{ display: 'grid', gridTemplateColumns: '120px 1fr', alignItems: 'center', gap: '12px', borderBottom: '1px solid #1a1a1a', padding: '8px 0' }}>
-      <span style={{ fontSize: '12px', color: '#f0ede6', opacity: 0.4 }}>{label}</span>
-      <input style={{ backgroundColor: 'transparent', border: 'none', borderBottom: '1px solid #1e1e1e', color: '#f0ede6', fontSize: '13px', padding: '4px 0', outline: 'none', fontFamily: 'var(--font-space-mono, monospace)', width: '100%', boxSizing: 'border-box' as const }} value={answers[id] || ''} onChange={e => onChange(id, e.target.value)} onBlur={() => onBlur(id)} placeholder="—" />
+    <div style={{ display: 'grid', gridTemplateColumns: '120px 1fr', alignItems: 'center', gap: '12px', borderBottom: '1px solid #2a2520', padding: '8px 0' }}>
+      <span style={{ fontSize: '13px', color: '#f0ede6', opacity: 0.4 }}>{label}</span>
+      <input style={{ backgroundColor: 'transparent', border: 'none', borderBottom: '1px solid #2a2520', color: '#f0ede6', fontSize: '15px', padding: '4px 0', outline: 'none', fontFamily: 'var(--font-space-mono, monospace)', width: '100%', boxSizing: 'border-box' as const }} value={answers[id] || ''} onChange={e => onChange(id, e.target.value)} onBlur={() => onBlur(id)} placeholder="—" />
     </div>
   )
   return (
-    <div style={{ borderTop: '1px solid #1e1e1e', paddingTop: '20px' }}>
-      <div style={{ fontSize: '11px', fontWeight: 700, letterSpacing: '3px', color: '#EE7700', marginBottom: '16px', display: 'flex', alignItems: 'center', gap: '12px' }}>
+    <div style={{ borderTop: '1px solid #2a2520', paddingTop: '20px' }}>
+      <div style={{ fontSize: '12px', fontWeight: 700, letterSpacing: '3px', color: '#EE7700', marginBottom: '16px', display: 'flex', alignItems: 'center', gap: '12px' }}>
         {quarter}
-        <span style={{ flex: 1, height: '1px', backgroundColor: '#1e1e1e' }} />
+        <span style={{ flex: 1, height: '1px', backgroundColor: '#2a2520' }} />
       </div>
       {row('# verkopers', ids.verkopers)}
       {row('# die blijven', ids.blijven)}
@@ -211,9 +208,7 @@ export default function MensenPage() {
 
       <PageHero number={2} title="MENSEN" />
 
-      {/* PAGINA 3 */}
-
-      {/* ROW 1: Aantrekkingskracht (breed) + Profielen */}
+      {/* ROW 1: Aantrekkingskracht + Profielen */}
       <div style={{ ...s.sectionDivider, display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '48px', paddingBottom: '48px' }}>
         <Field {...f('aantrekkingskracht')} {...fp('aantrekkingskracht')} />
         <Field {...f('profielen')} {...fp('profielen')} />
@@ -228,11 +223,11 @@ export default function MensenPage() {
 
       {/* PAGINA 4 */}
       <div style={{ ...s.sectionDivider, borderTop: '2px solid #EE7700', paddingBottom: '0' }}>
-        <p style={{ color: '#EE7700', fontSize: '11px', letterSpacing: '4px', opacity: 0.6, margin: '0 0 40px' }}>PAGINA 04 — CAPACITEIT & ACTIEPLAN</p>
+        <p style={{ color: '#EE7700', fontSize: '12px', letterSpacing: '4px', opacity: 0.6, margin: '0 0 40px' }}>PAGINA 04 — CAPACITEIT & ACTIEPLAN</p>
       </div>
 
       {/* ROW 3: Benodigde capaciteit Q1-Q4 */}
-      <div style={{ padding: '0 48px 48px', borderTop: '1px solid #1e1e1e' }}>
+      <div style={{ padding: '0 48px 48px', borderTop: '1px solid #2a2520' }}>
         <div style={{ ...s.groupLabel, marginTop: '48px' }}>
           BENODIGDE CAPACITEIT
           <span style={s.groupSub}>Hoeveel verkopers hebben we nodig om het jaardoel te halen?</span>
@@ -268,12 +263,12 @@ export default function MensenPage() {
         <Field {...f('onboarding')} {...fp('onboarding')} />
       </div>
 
-      {/* ROW 5: Tijd tot volledig rendement (breed) */}
+      {/* ROW 5: Tijd tot volledig rendement */}
       <div style={{ ...s.sectionDivider, paddingBottom: '48px' }}>
         <Field {...f('tijd_rendement')} {...fp('tijd_rendement')} />
       </div>
 
-      {/* ROW 6: Actieplan (breed) */}
+      {/* ROW 6: Actieplan */}
       <div style={{ ...s.sectionDivider, paddingBottom: '80px' }}>
         <Field {...f('actieplan')} {...fp('actieplan')} />
       </div>

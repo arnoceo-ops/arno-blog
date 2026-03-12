@@ -1,47 +1,48 @@
-// PageHero.tsx
-// Plaatsen in: components/canvas/PageHero.tsx
-// Gebruik: <PageHero number={1} title="STRATEGIE" />
+'use client'
 
-import React from 'react'
+// PageHero.tsx
+// Locatie: components/canvas/PageHero.tsx
 
 interface PageHeroProps {
-  number: number        // 1 = Strategie, 2 = Mensen, 3 = Uitvoering
-  title: string         // 'STRATEGIE' | 'MENSEN' | 'UITVOERING'
+  number: number
+  title: string
 }
 
-// Elk thema heeft een uniek gradient/patroon passend bij het originele document
-const themes: Record<number, { gradient: string; accent: string }> = {
-  1: {
-    // Strategie — koud, krachtig (beer/vis imagery in origineel)
-    gradient: 'linear-gradient(135deg, #0d1117 0%, #1a2a1a 40%, #0d1117 70%, #1c1a17 100%)',
-    accent: '#2a4a2a',
-  },
-  2: {
-    // Mensen — warm, menselijk (sollicitanten/Matrix imagery)
-    gradient: 'linear-gradient(135deg, #0d0d0d 0%, #1a1209 40%, #0d0d0d 70%, #1c1a17 100%)',
-    accent: '#3a2a10',
-  },
-  3: {
-    // Uitvoering — dynamisch, snel (atleet/cheetah imagery)
-    gradient: 'linear-gradient(135deg, #0a0f1a 0%, #1a1020 40%, #0a0f1a 70%, #1c1a17 100%)',
-    accent: '#1a1030',
-  },
+const heroConfig: Record<number, { image: string; numberLabel: string }> = {
+  1: { image: '/canvas/strategie-hero.png', numberLabel: '#1' },
+  2: { image: '/canvas/mensen-hero.png',    numberLabel: '#2' },
+  3: { image: '/canvas/uitvoering-hero.png', numberLabel: '#3' },
 }
 
 export function PageHero({ number, title }: PageHeroProps) {
-  const theme = themes[number] || themes[1]
+  const config = heroConfig[number] || heroConfig[1]
 
   return (
     <div style={{
       position: 'relative',
       width: '100%',
-      height: '280px',
+      height: '320px',
       overflow: 'hidden',
-      background: theme.gradient,
-      marginBottom: '0',
     }}>
 
-      {/* Achtergrond textuur — diagonale lijnen */}
+      {/* Achtergrond foto */}
+      <div style={{
+        position: 'absolute',
+        inset: 0,
+        backgroundImage: `url(${config.image})`,
+        backgroundSize: 'cover',
+        backgroundPosition: 'center 30%',
+        filter: 'grayscale(20%) brightness(0.55)',
+      }} />
+
+      {/* Donkere overlay — links donkerder, rechts iets lichter, zoals origineel */}
+      <div style={{
+        position: 'absolute',
+        inset: 0,
+        background: 'linear-gradient(to right, rgba(10,8,6,0.75) 0%, rgba(10,8,6,0.35) 50%, rgba(10,8,6,0.55) 100%)',
+      }} />
+
+      {/* Diagonale textuur overlay */}
       <div style={{
         position: 'absolute',
         inset: 0,
@@ -49,31 +50,31 @@ export function PageHero({ number, title }: PageHeroProps) {
           -45deg,
           transparent,
           transparent 60px,
-          rgba(255,255,255,0.012) 60px,
-          rgba(255,255,255,0.012) 61px
+          rgba(255,255,255,0.015) 60px,
+          rgba(255,255,255,0.015) 61px
         )`,
         pointerEvents: 'none',
       }} />
 
-      {/* Oranje gloed links — filmisch lichtlek */}
+      {/* Oranje gloed linksonder */}
       <div style={{
         position: 'absolute',
         bottom: '-40px',
-        left: '-60px',
-        width: '400px',
+        left: '-40px',
+        width: '350px',
         height: '200px',
-        background: 'radial-gradient(ellipse at center, rgba(238,119,0,0.12) 0%, transparent 70%)',
+        background: 'radial-gradient(ellipse at center, rgba(238,119,0,0.18) 0%, transparent 70%)',
         pointerEvents: 'none',
       }} />
 
-      {/* Verticale scheidingslijn midden — zoals in origineel */}
+      {/* Verticale scheidingslijn midden */}
       <div style={{
         position: 'absolute',
         left: '50%',
         top: 0,
         bottom: 0,
         width: '1px',
-        background: 'linear-gradient(to bottom, transparent, rgba(238,119,0,0.3) 30%, rgba(238,119,0,0.3) 70%, transparent)',
+        background: 'linear-gradient(to bottom, transparent, rgba(238,119,0,0.4) 25%, rgba(238,119,0,0.4) 75%, transparent)',
         pointerEvents: 'none',
       }} />
 
@@ -86,78 +87,66 @@ export function PageHero({ number, title }: PageHeroProps) {
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
-        gap: '10px',
+        gap: '12px',
       }}>
-        {/* Kroontje SVG — RDS stijl */}
-        <svg width="36" height="28" viewBox="0 0 36 28" fill="none">
-          <path d="M2 22L8 8L14 16L18 4L22 16L28 8L34 22H2Z" fill="#EE7700" opacity="0.9"/>
-          <rect x="2" y="23" width="32" height="3" rx="1" fill="#EE7700" opacity="0.7"/>
+        <svg width="40" height="32" viewBox="0 0 40 32" fill="none">
+          <path d="M2 26L9 8L16 19L20 4L24 19L31 8L38 26H2Z" fill="#EE7700" opacity="0.95"/>
+          <rect x="2" y="27" width="36" height="3" rx="1.5" fill="#EE7700" opacity="0.75"/>
         </svg>
         <div style={{
           fontFamily: 'var(--font-barlow, sans-serif)',
-          fontSize: '13px',
+          fontSize: '14px',
           fontWeight: 700,
-          letterSpacing: '6px',
+          letterSpacing: '7px',
           color: '#f0ede6',
-          opacity: 0.85,
+          opacity: 0.9,
+          textShadow: '0 1px 20px rgba(0,0,0,0.8)',
         }}>
           SALES CANVAS
         </div>
       </div>
 
-      {/* Links onderin: sectienummer + titel */}
+      {/* Links onderin: nummer + titel */}
       <div style={{
         position: 'absolute',
-        bottom: '36px',
+        bottom: '40px',
         left: '48px',
-        display: 'flex',
-        flexDirection: 'column',
-        gap: '4px',
       }}>
         <div style={{
           fontFamily: 'var(--font-barlow, sans-serif)',
-          fontSize: '11px',
-          letterSpacing: '3px',
+          fontSize: '13px',
+          letterSpacing: '4px',
           color: '#EE7700',
-          opacity: 0.7,
+          opacity: 0.85,
+          marginBottom: '6px',
         }}>
-          #{number < 10 ? `0${number}` : number}
-        </div>
-        <div style={{
-          fontFamily: 'var(--font-bebas), sans-serif',
-          fontSize: '64px',
-          letterSpacing: '8px',
-          color: '#f0ede6',
-          lineHeight: 1,
-          textShadow: '0 2px 40px rgba(0,0,0,0.8)',
-        }}>
-          {title}
+          {config.numberLabel}. {title}
         </div>
       </div>
 
-      {/* Rechts onderin: subtiele RDS tekst */}
+      {/* Rechts onderin: ROYAL DUTCH SALES */}
       <div style={{
         position: 'absolute',
-        bottom: '36px',
+        bottom: '40px',
         right: '48px',
         fontFamily: 'var(--font-barlow, sans-serif)',
-        fontSize: '10px',
-        letterSpacing: '4px',
+        fontSize: '11px',
+        letterSpacing: '5px',
         color: '#f0ede6',
-        opacity: 0.2,
+        opacity: 0.25,
       }}>
         ROYAL DUTCH SALES
       </div>
 
-      {/* Onderrand: oranje lijn */}
+      {/* Onderrand oranje lijn */}
       <div style={{
         position: 'absolute',
         bottom: 0,
         left: 0,
         right: 0,
         height: '2px',
-        background: 'linear-gradient(to right, transparent, #EE7700 30%, #EE7700 70%, transparent)',
-        opacity: 0.4,
+        background: 'linear-gradient(to right, transparent, #EE7700 25%, #EE7700 75%, transparent)',
+        opacity: 0.5,
       }} />
 
     </div>
