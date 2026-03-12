@@ -113,9 +113,9 @@ export default async function BlogPage() {
       <nav className="site-nav">
         <div className="nav-links">
           <Link href="/">HOME</Link>
-          <Link href="/blog" className="nav-active">BLOG</Link>
-          <Link href="/bio">BIO</Link>
           <Link href="/spar">ARNOBOT</Link>
+          <Link href="/bio">BIO</Link>
+          <Link href="/blog" className="nav-active">BLOG</Link>
           <Link href="/canvas">CANVAS</Link>
           <a href="/#subscribe" className="nav-cta">SUBSCRIBE</a>
         </div>

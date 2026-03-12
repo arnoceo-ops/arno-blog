@@ -299,9 +299,9 @@ export default function SparClient({ taglineTitle, taglineSub, openers }: Props)
       <nav className="site-nav">
         <div className="nav-links">
           <Link href="/">HOME</Link>
-          <Link href="/blog">BLOG</Link>
-          <Link href="/bio">BIO</Link>
           <Link href="/spar" className="nav-active">ARNOBOT</Link>
+          <Link href="/bio">BIO</Link>
+          <Link href="/blog">BLOG</Link>
           <Link href="/canvas">CANVAS</Link>
           <a href="/#subscribe" className="nav-cta">SUBSCRIBE</a>
         </div>

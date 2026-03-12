@@ -75,9 +75,9 @@ export default async function BioPage() {
       <nav className="site-nav">
         <div className="nav-links">
           <Link href="/">HOME</Link>
-          <Link href="/blog">BLOG</Link>
-          <Link href="/bio" className="nav-active">BIO</Link>
           <Link href="/spar">ARNOBOT</Link>
+          <Link href="/bio" className="nav-active">BIO</Link>
+          <Link href="/blog">BLOG</Link>
           <Link href="/canvas">CANVAS</Link>
           <a href="/#subscribe" className="nav-cta">SUBSCRIBE</a>
         </div>

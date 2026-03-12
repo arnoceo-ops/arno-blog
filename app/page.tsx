@@ -198,9 +198,9 @@ export default async function Home() {
       {/* NAV — homepage: geen HOME */}
       <nav className="site-nav">
         <div className="nav-links">
-          <Link href="/blog">BLOG</Link>
-          <Link href="/bio">BIO</Link>
           <Link href="/spar">ARNOBOT</Link>
+          <Link href="/bio">BIO</Link>
+          <Link href="/blog">BLOG</Link>
           <Link href="/canvas">CANVAS</Link>
           <a href="#subscribe" className="nav-cta">SUBSCRIBE</a>
         </div>
