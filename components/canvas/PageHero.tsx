@@ -13,7 +13,7 @@ const heroConfig: Record<number, { image: string; numberLabel: string }> = {
   3: { image: '/canvas/uitvoering-hero.png', numberLabel: '#3' },
 }
 
-export function PageHero({ number, title }: PageHeroProps) {
+export function PageHero({ number }: PageHeroProps) {
   const config = heroConfig[number] || heroConfig[1]
 
   return (
