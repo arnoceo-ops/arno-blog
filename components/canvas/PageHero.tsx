@@ -69,35 +69,7 @@ export function PageHero({ number }: PageHeroProps) {
         pointerEvents: 'none',
       }} />
 
-      {/* Centrum: kroontje + SALES CANVAS */}
-      <div style={{
-        position: 'absolute',
-        top: '50%',
-        left: '50%',
-        transform: 'translate(-50%, -50%)',
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        gap: '12px',
-      }}>
-        <svg width="44" height="34" viewBox="0 0 40 32" fill="none">
-          <path d="M2 26L9 8L16 19L20 4L24 19L31 8L38 26H2Z" fill="#EE7700" opacity="0.95"/>
-          <rect x="2" y="27" width="36" height="3" rx="1.5" fill="#EE7700" opacity="0.75"/>
-        </svg>
-        <div style={{
-          fontFamily: 'var(--font-barlow, sans-serif)',
-          fontSize: '15px',
-          fontWeight: 700,
-          letterSpacing: '7px',
-          color: '#f0ede6',
-          opacity: 0.9,
-          textShadow: '0 1px 20px rgba(0,0,0,0.9)',
-        }}>
-          SALES CANVAS
-        </div>
-      </div>
-
-      {/* Rechts onderin: ROYAL DUTCH SALES */}
+           {/* Rechts onderin: ROYAL DUTCH SALES */}
       <div style={{
         position: 'absolute',
         bottom: '36px',
