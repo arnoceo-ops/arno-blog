@@ -5,50 +5,61 @@ import { useUser } from '@clerk/nextjs'
 import { useSupabaseClient } from '@/lib/supabase'
 import Link from 'next/link'
 
-const SECTIONS = [
+type FieldType = 'textarea' | 'input'
+
+interface Field {
+  id: string
+  label: string
+  sub: string
+  type: FieldType
+  page: number
+  group?: string
+}
+
+const SECTIONS: Field[] = [
   // Pagina 5
-  { id: 'kwartaal_jaar', label: 'KWARTAAL / JAAR', sub: 'Kwartaalthema periode', type: 'input', page: 5 },
-  { id: 'themanaam', label: 'THEMANAAM', sub: 'Naam van het kwartaalthema', type: 'input', page: 5 },
-  { id: 'meetbaar_doel', label: 'MEETBAAR DOEL', sub: 'Wat is het meetbare doel dit kwartaal?', type: 'textarea', page: 5 },
-  { id: 'cruciale_kpi', label: 'CRUCIALE KPI', sub: 'Welke KPI is doorslaggevend?', type: 'input', page: 5 },
-  { id: 'okr_wat_1', label: 'OKR — Doelstelling 1', sub: 'Wat willen we bereiken?', type: 'textarea', page: 5 },
-  { id: 'okr_hoe_1', label: 'OKR — Kernresultaat 1', sub: 'Hoe meten we succes?', type: 'textarea', page: 5 },
-  { id: 'okr_wie_1', label: 'OKR — Wie 1', sub: 'Wie is verantwoordelijk?', type: 'input', page: 5 },
-  { id: 'okr_wat_2', label: 'OKR — Doelstelling 2', sub: 'Wat willen we bereiken?', type: 'textarea', page: 5 },
-  { id: 'okr_hoe_2', label: 'OKR — Kernresultaat 2', sub: 'Hoe meten we succes?', type: 'textarea', page: 5 },
-  { id: 'okr_wie_2', label: 'OKR — Wie 2', sub: 'Wie is verantwoordelijk?', type: 'input', page: 5 },
-  { id: 'okr_wat_3', label: 'OKR — Doelstelling 3', sub: 'Wat willen we bereiken?', type: 'textarea', page: 5 },
-  { id: 'okr_hoe_3', label: 'OKR — Kernresultaat 3', sub: 'Hoe meten we succes?', type: 'textarea', page: 5 },
-  { id: 'okr_wie_3', label: 'OKR — Wie 3', sub: 'Wie is verantwoordelijk?', type: 'input', page: 5 },
-  { id: 'klanten_krijgen_1', label: 'KLANTEN KRIJGEN — Actie 1', sub: 'Effectieve leadgeneratie', type: 'textarea', page: 5 },
-  { id: 'klanten_krijgen_2', label: 'KLANTEN KRIJGEN — Actie 2', sub: 'Effectieve leadgeneratie', type: 'textarea', page: 5 },
-  { id: 'klanten_krijgen_3', label: 'KLANTEN KRIJGEN — Actie 3', sub: 'Effectieve leadgeneratie', type: 'textarea', page: 5 },
-  { id: 'klanten_uitbouwen_1', label: 'KLANTEN UITBOUWEN — Actie 1', sub: '100% klantaandeel', type: 'textarea', page: 5 },
-  { id: 'klanten_uitbouwen_2', label: 'KLANTEN UITBOUWEN — Actie 2', sub: '100% klantaandeel', type: 'textarea', page: 5 },
-  { id: 'klanten_uitbouwen_3', label: 'KLANTEN UITBOUWEN — Actie 3', sub: '100% klantaandeel', type: 'textarea', page: 5 },
-  { id: 'klanten_houden_1', label: 'KLANTEN HOUDEN — Actie 1', sub: 'Levenslange retentie', type: 'textarea', page: 5 },
-  { id: 'klanten_houden_2', label: 'KLANTEN HOUDEN — Actie 2', sub: 'Levenslange retentie', type: 'textarea', page: 5 },
-  { id: 'klanten_houden_3', label: 'KLANTEN HOUDEN — Actie 3', sub: 'Levenslange retentie', type: 'textarea', page: 5 },
-  { id: 'numbers_leads', label: 'LEADS #', sub: 'Aantal leads per periode', type: 'input', page: 5 },
-  { id: 'numbers_bezoeken', label: 'BEZOEKEN #', sub: 'Aantal bezoeken per periode', type: 'input', page: 5 },
-  { id: 'numbers_offertes', label: 'OFFERTES #', sub: 'Aantal offertes per periode', type: 'input', page: 5 },
-  { id: 'numbers_orders', label: 'ORDERS #', sub: 'Aantal orders per periode', type: 'input', page: 5 },
-  { id: 'numbers_referrals', label: 'REFERRALS #', sub: 'Aantal referrals per periode', type: 'input', page: 5 },
-  { id: 'conversie_leads_bezoeken', label: 'CONVERSIE Leads : Bezoeken', sub: '% conversie', type: 'input', page: 5 },
-  { id: 'conversie_bezoeken_offertes', label: 'CONVERSIE Bezoeken : Offertes', sub: '% conversie', type: 'input', page: 5 },
-  { id: 'conversie_offertes_orders', label: 'CONVERSIE Offertes : Orders', sub: '% conversie', type: 'input', page: 5 },
+  { id: 'kwartaal_jaar', label: 'Kwartaal / Jaar', sub: 'Kwartaalthema periode', type: 'input', page: 5, group: 'KWARTAALTHEMA' },
+  { id: 'themanaam', label: 'Themanaam', sub: 'Naam van het kwartaalthema', type: 'input', page: 5, group: 'KWARTAALTHEMA' },
+  { id: 'meetbaar_doel', label: 'Meetbaar doel', sub: 'Wat is het meetbare doel dit kwartaal?', type: 'textarea', page: 5, group: 'KWARTAALTHEMA' },
+  { id: 'cruciale_kpi', label: 'Cruciale KPI', sub: 'Welke KPI is doorslaggevend?', type: 'input', page: 5, group: 'KWARTAALTHEMA' },
+  { id: 'okr_wat_1', label: 'Doelstelling 1', sub: 'Wat willen we bereiken?', type: 'textarea', page: 5, group: "OKR'S" },
+  { id: 'okr_hoe_1', label: 'Kernresultaat 1', sub: 'Hoe meten we succes?', type: 'textarea', page: 5, group: "OKR'S" },
+  { id: 'okr_wie_1', label: 'Wie 1', sub: 'Wie is verantwoordelijk?', type: 'input', page: 5, group: "OKR'S" },
+  { id: 'okr_wat_2', label: 'Doelstelling 2', sub: 'Wat willen we bereiken?', type: 'textarea', page: 5, group: "OKR'S" },
+  { id: 'okr_hoe_2', label: 'Kernresultaat 2', sub: 'Hoe meten we succes?', type: 'textarea', page: 5, group: "OKR'S" },
+  { id: 'okr_wie_2', label: 'Wie 2', sub: 'Wie is verantwoordelijk?', type: 'input', page: 5, group: "OKR'S" },
+  { id: 'okr_wat_3', label: 'Doelstelling 3', sub: 'Wat willen we bereiken?', type: 'textarea', page: 5, group: "OKR'S" },
+  { id: 'okr_hoe_3', label: 'Kernresultaat 3', sub: 'Hoe meten we succes?', type: 'textarea', page: 5, group: "OKR'S" },
+  { id: 'okr_wie_3', label: 'Wie 3', sub: 'Wie is verantwoordelijk?', type: 'input', page: 5, group: "OKR'S" },
+  { id: 'klanten_krijgen_1', label: 'Actie 1', sub: 'Effectieve leadgeneratie', type: 'textarea', page: 5, group: 'KLANTEN KRIJGEN' },
+  { id: 'klanten_krijgen_2', label: 'Actie 2', sub: 'Effectieve leadgeneratie', type: 'textarea', page: 5, group: 'KLANTEN KRIJGEN' },
+  { id: 'klanten_krijgen_3', label: 'Actie 3', sub: 'Effectieve leadgeneratie', type: 'textarea', page: 5, group: 'KLANTEN KRIJGEN' },
+  { id: 'klanten_uitbouwen_1', label: 'Actie 1', sub: '100% klantaandeel', type: 'textarea', page: 5, group: 'KLANTEN UITBOUWEN' },
+  { id: 'klanten_uitbouwen_2', label: 'Actie 2', sub: '100% klantaandeel', type: 'textarea', page: 5, group: 'KLANTEN UITBOUWEN' },
+  { id: 'klanten_uitbouwen_3', label: 'Actie 3', sub: '100% klantaandeel', type: 'textarea', page: 5, group: 'KLANTEN UITBOUWEN' },
+  { id: 'klanten_houden_1', label: 'Actie 1', sub: 'Levenslange retentie', type: 'textarea', page: 5, group: 'KLANTEN HOUDEN' },
+  { id: 'klanten_houden_2', label: 'Actie 2', sub: 'Levenslange retentie', type: 'textarea', page: 5, group: 'KLANTEN HOUDEN' },
+  { id: 'klanten_houden_3', label: 'Actie 3', sub: 'Levenslange retentie', type: 'textarea', page: 5, group: 'KLANTEN HOUDEN' },
+  { id: 'numbers_leads', label: '# Leads', sub: 'Aantal leads per periode', type: 'input', page: 5, group: 'NUMBERS' },
+  { id: 'numbers_bezoeken', label: '# Bezoeken', sub: 'Aantal bezoeken per periode', type: 'input', page: 5, group: 'NUMBERS' },
+  { id: 'numbers_offertes', label: '# Offertes', sub: 'Aantal offertes per periode', type: 'input', page: 5, group: 'NUMBERS' },
+  { id: 'numbers_orders', label: '# Orders', sub: 'Aantal orders per periode', type: 'input', page: 5, group: 'NUMBERS' },
+  { id: 'numbers_referrals', label: '# Referrals', sub: 'Aantal referrals per periode', type: 'input', page: 5, group: 'NUMBERS' },
+  { id: 'conversie_leads_bezoeken', label: 'Leads : Bezoeken', sub: '% conversie', type: 'input', page: 5, group: 'CONVERSIES' },
+  { id: 'conversie_bezoeken_offertes', label: 'Bezoeken : Offertes', sub: '% conversie', type: 'input', page: 5, group: 'CONVERSIES' },
+  { id: 'conversie_offertes_orders', label: 'Offertes : Orders', sub: '% conversie', type: 'input', page: 5, group: 'CONVERSIES' },
   // Pagina 6
-  { id: 'wensenlijst', label: 'WENSENLIJST', sub: 'Nieuwe Logo\'s (Olifanten)', type: 'textarea', page: 6 },
-  { id: 'kpi_verkoopcyclus', label: 'VERKOOPCYCLUS', sub: 'Doorlooptijd', type: 'input', page: 6 },
-  { id: 'kpi_conversieratio', label: 'CONVERSIERATIO', sub: '% conversie', type: 'input', page: 6 },
-  { id: 'kpi_klantaandeel', label: '% KLANTAANDEEL', sub: 'Aandeel bij bestaande klanten', type: 'input', page: 6 },
-  { id: 'kpi_klantretentie', label: '% KLANTRETENTIE', sub: 'Klantbehoud %', type: 'input', page: 6 },
-  { id: 'kpi_forecast', label: '% BEHAALDE FORECAST', sub: 'Forecastnauwkeurigheid', type: 'input', page: 6 },
-  { id: 'kpi_ordergrootte', label: '€ GEMIDDELDE ORDERGROOTTE', sub: 'Gemiddelde dealwaarde', type: 'input', page: 6 },
-  { id: 'kpi_nieuwe_logos', label: '# NIEUWE LOGO\'S', sub: 'Nieuwe klanten', type: 'input', page: 6 },
-  { id: 'kpi_omzet', label: '€ OMZET', sub: 'Omzetdoelstelling', type: 'input', page: 6 },
-  { id: 'kpi_winst', label: '€/% WINST', sub: 'Winstdoelstelling', type: 'input', page: 6 },
-  { id: 'kpi_referrals', label: '# REFERRALS', sub: 'Aantal referrals', type: 'input', page: 6 },
+  { id: 'wensenlijst', label: 'WENSENLIJST', sub: "Nieuwe Logo's (Olifanten)", type: 'textarea', page: 6 },
+  { id: 'kpi_verkoopcyclus', label: 'Verkoopcyclus', sub: 'Doorlooptijd', type: 'input', page: 6, group: 'KPI DASHBOARD' },
+  { id: 'kpi_conversieratio', label: 'Conversieratio', sub: '% conversie', type: 'input', page: 6, group: 'KPI DASHBOARD' },
+  { id: 'kpi_klantaandeel', label: '% Klantaandeel', sub: 'Aandeel bij bestaande klanten', type: 'input', page: 6, group: 'KPI DASHBOARD' },
+  { id: 'kpi_klantretentie', label: '% Klantretentie', sub: 'Klantbehoud %', type: 'input', page: 6, group: 'KPI DASHBOARD' },
+  { id: 'kpi_forecast', label: '% Behaalde Forecast', sub: 'Forecastnauwkeurigheid', type: 'input', page: 6, group: 'KPI DASHBOARD' },
+  { id: 'kpi_ordergrootte', label: '€ Gem. Ordergrootte', sub: 'Gemiddelde dealwaarde', type: 'input', page: 6, group: 'KPI DASHBOARD' },
+  { id: 'kpi_nieuwe_logos', label: "# Nieuwe Logo's", sub: 'Nieuwe klanten', type: 'input', page: 6, group: 'KPI DASHBOARD' },
+  { id: 'kpi_omzet', label: '€ Omzet', sub: 'Omzetdoelstelling', type: 'input', page: 6, group: 'KPI DASHBOARD' },
+  { id: 'kpi_winst', label: '€/% Winst', sub: 'Winstdoelstelling', type: 'input', page: 6, group: 'KPI DASHBOARD' },
+  { id: 'kpi_referrals', label: '# Referrals', sub: 'Aantal referrals', type: 'input', page: 6, group: 'KPI DASHBOARD' },
   { id: 'verkoopproces', label: 'VERKOOPPROCES / KLANTREIS', sub: 'Hoe ziet ons verkoopproces er uit? Wat hebben we geleerd? Wat willen we verbeteren?', type: 'textarea', page: 6 },
   { id: 'feestje', label: 'BOUW EEN FEESTJE', sub: 'Hoe vieren we onze successen?', type: 'textarea', page: 6 },
   { id: 'beloning', label: 'BELONING', sub: 'Hoe belonen we betrokken medewerkers?', type: 'textarea', page: 6 },
@@ -62,7 +73,11 @@ const styles = {
   divider: { color: '#EE7700', fontSize: '11px', letterSpacing: '4px', borderTop: '1px solid #EE7700', paddingTop: '12px', marginBottom: '32px', marginTop: '48px' } as React.CSSProperties,
   grid: { display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(340px, 1fr))', gap: '24px' } as React.CSSProperties,
   card: { borderTop: '1px solid #222', paddingTop: '20px' } as React.CSSProperties,
+  groupCard: { borderTop: '1px solid #EE7700', paddingTop: '20px' } as React.CSSProperties,
+  groupTitle: { fontFamily: 'var(--font-bebas), sans-serif', color: '#EE7700', fontSize: '16px', letterSpacing: '3px', marginBottom: '20px' } as React.CSSProperties,
+  groupField: { marginBottom: '16px' } as React.CSSProperties,
   label: { color: '#EE7700', fontSize: '11px', letterSpacing: '3px', marginBottom: '4px' } as React.CSSProperties,
+  groupLabel: { color: '#f0ede6', fontSize: '11px', letterSpacing: '2px', marginBottom: '4px', opacity: 0.6 } as React.CSSProperties,
   sub: { color: '#f0ede6', opacity: 0.35, fontSize: '12px', marginBottom: '12px' } as React.CSSProperties,
   textarea: { width: '100%', backgroundColor: 'transparent', border: 'none', borderBottom: '1px solid #333', color: '#f0ede6', fontSize: '14px', padding: '8px 0', resize: 'none', outline: 'none', fontFamily: 'sans-serif', lineHeight: 1.6, minHeight: '80px', boxSizing: 'border-box' } as React.CSSProperties,
   input: { width: '100%', backgroundColor: 'transparent', border: 'none', borderBottom: '1px solid #333', color: '#f0ede6', fontSize: '14px', padding: '8px 0', outline: 'none', fontFamily: 'sans-serif', boxSizing: 'border-box' } as React.CSSProperties,
@@ -124,41 +139,88 @@ export default function UitvoeringPage() {
   const handleChange = (id: string, value: string) => setAnswers(prev => ({ ...prev, [id]: value }))
   const handleBlur = (id: string) => save(id, answers[id] || '')
 
-  const handleArnoBot = async (section: typeof SECTIONS[0]) => {
-    const answer = answers[section.id] || ''
-    setArnobotLoading(prev => ({ ...prev, [section.id]: true }))
-    setArnobotFeedback(prev => ({ ...prev, [section.id]: '' }))
-    try {
-      const feedback = await getArnoBotFeedback(section.label, section.sub, answer)
-      setArnobotFeedback(prev => ({ ...prev, [section.id]: feedback }))
-    } catch {
-      setArnobotFeedback(prev => ({ ...prev, [section.id]: 'ArnoBot is tijdelijk niet beschikbaar.' }))
-    } finally {
-      setArnobotLoading(prev => ({ ...prev, [section.id]: false }))
-    }
-  }
-
-  const renderSection = (section: typeof SECTIONS[0]) => {
+  const renderField = (section: Field, inGroup = false) => {
     const isLoading = arnobotLoading[section.id]
     const feedback = arnobotFeedback[section.id]
     const hasAnswer = !!(answers[section.id] || '').trim()
     return (
-      <div key={section.id} style={styles.card}>
-        <p style={styles.label}>{section.label}</p>
-        <p style={styles.sub}>{section.sub}</p>
+      <div key={section.id} style={inGroup ? styles.groupField : styles.card}>
+        <p style={inGroup ? styles.groupLabel : styles.label}>{section.label}</p>
+        {!inGroup && <p style={styles.sub}>{section.sub}</p>}
         {section.type === 'textarea' ? (
           <textarea style={styles.textarea} value={answers[section.id] || ''} onChange={e => handleChange(section.id, e.target.value)} onBlur={() => handleBlur(section.id)} placeholder="..." />
         ) : (
           <input style={styles.input} value={answers[section.id] || ''} onChange={e => handleChange(section.id, e.target.value)} onBlur={() => handleBlur(section.id)} placeholder="..." />
         )}
-        {hasAnswer && (
-          <button style={isLoading ? styles.arnobotBtnLoading : styles.arnobotBtn} onClick={() => !isLoading && handleArnoBot(section)} onMouseEnter={e => { if (!isLoading) (e.target as HTMLElement).style.opacity = '1' }} onMouseLeave={e => { if (!isLoading) (e.target as HTMLElement).style.opacity = '0.5' }}>
+        {hasAnswer && !inGroup && (
+          <button style={isLoading ? styles.arnobotBtnLoading : styles.arnobotBtn} onClick={async () => {
+            setArnobotLoading(prev => ({ ...prev, [section.id]: true }))
+            setArnobotFeedback(prev => ({ ...prev, [section.id]: '' }))
+            try {
+              const fb = await getArnoBotFeedback(section.label, section.sub, answers[section.id] || '')
+              setArnobotFeedback(prev => ({ ...prev, [section.id]: fb }))
+            } catch {
+              setArnobotFeedback(prev => ({ ...prev, [section.id]: 'ArnoBot is tijdelijk niet beschikbaar.' }))
+            } finally {
+              setArnobotLoading(prev => ({ ...prev, [section.id]: false }))
+            }
+          }} onMouseEnter={e => { if (!isLoading) (e.target as HTMLElement).style.opacity = '1' }} onMouseLeave={e => { if (!isLoading) (e.target as HTMLElement).style.opacity = '0.5' }}>
             {isLoading ? '→ ARNOBOT DENKT...' : feedback ? '→ OPNIEUW VRAGEN' : '→ ARNOBOT'}
           </button>
         )}
-        {feedback && !isLoading && <div style={styles.arnobotBox}>{feedback}</div>}
+        {feedback && !isLoading && !inGroup && <div style={styles.arnobotBox}>{feedback}</div>}
       </div>
     )
+  }
+
+  const renderPage = (page: number) => {
+    const fields = SECTIONS.filter(s => s.page === page)
+    const rendered: React.ReactNode[] = []
+    const seenGroups = new Set<string>()
+
+    fields.forEach(field => {
+      if (field.group) {
+        if (seenGroups.has(field.group)) return
+        seenGroups.add(field.group)
+        const groupFields = fields.filter(f => f.group === field.group)
+        const groupIsLoading = arnobotLoading[`group_${field.group}`]
+        const groupFeedback = arnobotFeedback[`group_${field.group}`]
+        const groupHasAnswer = groupFields.some(f => !!(answers[f.id] || '').trim())
+
+        rendered.push(
+          <div key={field.group} style={styles.groupCard}>
+            <p style={styles.groupTitle}>{field.group}</p>
+            {groupFields.map(f => renderField(f, true))}
+            {groupHasAnswer && (
+              <button style={groupIsLoading ? styles.arnobotBtnLoading : styles.arnobotBtn}
+                onClick={async () => {
+                  if (groupIsLoading) return
+                  const combined = groupFields.map(f => `${f.label}: ${answers[f.id] || ''}`).join('\n')
+                  setArnobotLoading(prev => ({ ...prev, [`group_${field.group}`]: true }))
+                  setArnobotFeedback(prev => ({ ...prev, [`group_${field.group}`]: '' }))
+                  try {
+                    const fb = await getArnoBotFeedback(field.group!, field.group!, combined)
+                    setArnobotFeedback(prev => ({ ...prev, [`group_${field.group}`]: fb }))
+                  } catch {
+                    setArnobotFeedback(prev => ({ ...prev, [`group_${field.group}`]: 'ArnoBot is tijdelijk niet beschikbaar.' }))
+                  } finally {
+                    setArnobotLoading(prev => ({ ...prev, [`group_${field.group}`]: false }))
+                  }
+                }}
+                onMouseEnter={e => { if (!groupIsLoading) (e.target as HTMLElement).style.opacity = '1' }}
+                onMouseLeave={e => { if (!groupIsLoading) (e.target as HTMLElement).style.opacity = '0.5' }}>
+                {groupIsLoading ? '→ ARNOBOT DENKT...' : groupFeedback ? '→ OPNIEUW VRAGEN' : '→ ARNOBOT'}
+              </button>
+            )}
+            {groupFeedback && !groupIsLoading && <div style={styles.arnobotBox}>{groupFeedback}</div>}
+          </div>
+        )
+      } else {
+        rendered.push(renderField(field))
+      }
+    })
+
+    return rendered
   }
 
   return (
@@ -171,9 +233,9 @@ export default function UitvoeringPage() {
       <p style={styles.tag}>05 — 06</p>
       <h1 style={styles.title}>UITVOERING</h1>
       <div style={styles.divider}>PAGINA 05 — KWARTAALPLAN & EXECUTIE</div>
-      <div style={styles.grid}>{SECTIONS.filter(s => s.page === 5).map(renderSection)}</div>
+      <div style={styles.grid}>{renderPage(5)}</div>
       <div style={styles.divider}>PAGINA 06 — KPI DASHBOARD</div>
-      <div style={styles.grid}>{SECTIONS.filter(s => s.page === 6).map(renderSection)}</div>
+      <div style={styles.grid}>{renderPage(6)}</div>
       {saveStatus && <p style={styles.saveStatus}>{saveStatus}</p>}
     </main>
   )

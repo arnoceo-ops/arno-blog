@@ -5,18 +5,27 @@ import { useUser } from '@clerk/nextjs'
 import { useSupabaseClient } from '@/lib/supabase'
 import Link from 'next/link'
 
-const SECTIONS = [
-  // Pagina 3
+type FieldType = 'textarea' | 'input'
+
+interface Field {
+  id: string
+  label: string
+  sub: string
+  type: FieldType
+  page: number
+  group?: string
+}
+
+const SECTIONS: Field[] = [
   { id: 'aantrekkingskracht', label: 'AANTREKKINGSKRACHT', sub: 'Waarom werken mensen voor ons?', type: 'textarea', page: 3 },
   { id: 'profielen', label: 'PROFIELEN', sub: 'Welke salesprofielen hebben we nodig om onze strategie te laten slagen?', type: 'textarea', page: 3 },
   { id: 'wervingskanalen', label: 'WERVINGSKANALEN', sub: 'Via welke kanalen vinden we de beste verkopers?', type: 'textarea', page: 3 },
   { id: 'selectieproces', label: 'SELECTIEPROCES', sub: 'Hoe krijgen we toptalent aan boord?', type: 'textarea', page: 3 },
   { id: 'behoud_sterspelers', label: 'BEHOUD VAN STERSPELERS', sub: 'Hoe houden we sterspelers binnen de gelederen?', type: 'textarea', page: 3 },
-  // Pagina 4
-  { id: 'verkopers_q1', label: 'VERKOPERS Q1', sub: 'Benodigde capaciteit Q1', type: 'input', page: 4 },
-  { id: 'verkopers_q2', label: 'VERKOPERS Q2', sub: 'Benodigde capaciteit Q2', type: 'input', page: 4 },
-  { id: 'verkopers_q3', label: 'VERKOPERS Q3', sub: 'Benodigde capaciteit Q3', type: 'input', page: 4 },
-  { id: 'verkopers_q4', label: 'VERKOPERS Q4', sub: 'Benodigde capaciteit Q4', type: 'input', page: 4 },
+  { id: 'verkopers_q1', label: 'Q1', sub: 'Benodigde capaciteit Q1', type: 'input', page: 4, group: 'BENODIGDE CAPACITEIT' },
+  { id: 'verkopers_q2', label: 'Q2', sub: 'Benodigde capaciteit Q2', type: 'input', page: 4, group: 'BENODIGDE CAPACITEIT' },
+  { id: 'verkopers_q3', label: 'Q3', sub: 'Benodigde capaciteit Q3', type: 'input', page: 4, group: 'BENODIGDE CAPACITEIT' },
+  { id: 'verkopers_q4', label: 'Q4', sub: 'Benodigde capaciteit Q4', type: 'input', page: 4, group: 'BENODIGDE CAPACITEIT' },
   { id: 'werving_selectie', label: 'WERVING EN SELECTIE', sub: 'Hoeveel tijd beslaat het proces van vacature tot eerste werkdag?', type: 'textarea', page: 4 },
   { id: 'onboarding', label: 'ONBOARDING', sub: 'Binnen hoeveel maanden realiseert een verkoper 100% van de doelstelling?', type: 'textarea', page: 4 },
   { id: 'tijd_rendement', label: 'TIJD TOT VOLLEDIG RENDEMENT', sub: 'Hoeveel tijd van vacature tot 100% doelstelling?', type: 'textarea', page: 4 },
@@ -31,7 +40,11 @@ const styles = {
   divider: { color: '#EE7700', fontSize: '11px', letterSpacing: '4px', borderTop: '1px solid #EE7700', paddingTop: '12px', marginBottom: '32px', marginTop: '48px' } as React.CSSProperties,
   grid: { display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(340px, 1fr))', gap: '24px' } as React.CSSProperties,
   card: { borderTop: '1px solid #222', paddingTop: '20px' } as React.CSSProperties,
+  groupCard: { borderTop: '1px solid #EE7700', paddingTop: '20px' } as React.CSSProperties,
+  groupTitle: { fontFamily: 'var(--font-bebas), sans-serif', color: '#EE7700', fontSize: '16px', letterSpacing: '3px', marginBottom: '20px' } as React.CSSProperties,
+  groupField: { marginBottom: '16px' } as React.CSSProperties,
   label: { color: '#EE7700', fontSize: '11px', letterSpacing: '3px', marginBottom: '4px' } as React.CSSProperties,
+  groupLabel: { color: '#f0ede6', fontSize: '11px', letterSpacing: '2px', marginBottom: '4px', opacity: 0.6 } as React.CSSProperties,
   sub: { color: '#f0ede6', opacity: 0.35, fontSize: '12px', marginBottom: '12px' } as React.CSSProperties,
   textarea: { width: '100%', backgroundColor: 'transparent', border: 'none', borderBottom: '1px solid #333', color: '#f0ede6', fontSize: '14px', padding: '8px 0', resize: 'none', outline: 'none', fontFamily: 'sans-serif', lineHeight: 1.6, minHeight: '80px', boxSizing: 'border-box' } as React.CSSProperties,
   input: { width: '100%', backgroundColor: 'transparent', border: 'none', borderBottom: '1px solid #333', color: '#f0ede6', fontSize: '14px', padding: '8px 0', outline: 'none', fontFamily: 'sans-serif', boxSizing: 'border-box' } as React.CSSProperties,
@@ -93,41 +106,88 @@ export default function MensenPage() {
   const handleChange = (id: string, value: string) => setAnswers(prev => ({ ...prev, [id]: value }))
   const handleBlur = (id: string) => save(id, answers[id] || '')
 
-  const handleArnoBot = async (section: typeof SECTIONS[0]) => {
-    const answer = answers[section.id] || ''
-    setArnobotLoading(prev => ({ ...prev, [section.id]: true }))
-    setArnobotFeedback(prev => ({ ...prev, [section.id]: '' }))
-    try {
-      const feedback = await getArnoBotFeedback(section.label, section.sub, answer)
-      setArnobotFeedback(prev => ({ ...prev, [section.id]: feedback }))
-    } catch {
-      setArnobotFeedback(prev => ({ ...prev, [section.id]: 'ArnoBot is tijdelijk niet beschikbaar.' }))
-    } finally {
-      setArnobotLoading(prev => ({ ...prev, [section.id]: false }))
-    }
-  }
-
-  const renderSection = (section: typeof SECTIONS[0]) => {
+  const renderField = (section: Field, inGroup = false) => {
     const isLoading = arnobotLoading[section.id]
     const feedback = arnobotFeedback[section.id]
     const hasAnswer = !!(answers[section.id] || '').trim()
     return (
-      <div key={section.id} style={styles.card}>
-        <p style={styles.label}>{section.label}</p>
-        <p style={styles.sub}>{section.sub}</p>
+      <div key={section.id} style={inGroup ? styles.groupField : styles.card}>
+        <p style={inGroup ? styles.groupLabel : styles.label}>{section.label}</p>
+        {!inGroup && <p style={styles.sub}>{section.sub}</p>}
         {section.type === 'textarea' ? (
           <textarea style={styles.textarea} value={answers[section.id] || ''} onChange={e => handleChange(section.id, e.target.value)} onBlur={() => handleBlur(section.id)} placeholder="..." />
         ) : (
           <input style={styles.input} value={answers[section.id] || ''} onChange={e => handleChange(section.id, e.target.value)} onBlur={() => handleBlur(section.id)} placeholder="..." />
         )}
-        {hasAnswer && (
-          <button style={isLoading ? styles.arnobotBtnLoading : styles.arnobotBtn} onClick={() => !isLoading && handleArnoBot(section)} onMouseEnter={e => { if (!isLoading) (e.target as HTMLElement).style.opacity = '1' }} onMouseLeave={e => { if (!isLoading) (e.target as HTMLElement).style.opacity = '0.5' }}>
+        {hasAnswer && !inGroup && (
+          <button style={isLoading ? styles.arnobotBtnLoading : styles.arnobotBtn} onClick={async () => {
+            setArnobotLoading(prev => ({ ...prev, [section.id]: true }))
+            setArnobotFeedback(prev => ({ ...prev, [section.id]: '' }))
+            try {
+              const fb = await getArnoBotFeedback(section.label, section.sub, answers[section.id] || '')
+              setArnobotFeedback(prev => ({ ...prev, [section.id]: fb }))
+            } catch {
+              setArnobotFeedback(prev => ({ ...prev, [section.id]: 'ArnoBot is tijdelijk niet beschikbaar.' }))
+            } finally {
+              setArnobotLoading(prev => ({ ...prev, [section.id]: false }))
+            }
+          }} onMouseEnter={e => { if (!isLoading) (e.target as HTMLElement).style.opacity = '1' }} onMouseLeave={e => { if (!isLoading) (e.target as HTMLElement).style.opacity = '0.5' }}>
             {isLoading ? '→ ARNOBOT DENKT...' : feedback ? '→ OPNIEUW VRAGEN' : '→ ARNOBOT'}
           </button>
         )}
-        {feedback && !isLoading && <div style={styles.arnobotBox}>{feedback}</div>}
+        {feedback && !isLoading && !inGroup && <div style={styles.arnobotBox}>{feedback}</div>}
       </div>
     )
+  }
+
+  const renderPage = (page: number) => {
+    const fields = SECTIONS.filter(s => s.page === page)
+    const rendered: React.ReactNode[] = []
+    const seenGroups = new Set<string>()
+
+    fields.forEach(field => {
+      if (field.group) {
+        if (seenGroups.has(field.group)) return
+        seenGroups.add(field.group)
+        const groupFields = fields.filter(f => f.group === field.group)
+        const groupIsLoading = arnobotLoading[`group_${field.group}`]
+        const groupFeedback = arnobotFeedback[`group_${field.group}`]
+        const groupHasAnswer = groupFields.some(f => !!(answers[f.id] || '').trim())
+
+        rendered.push(
+          <div key={field.group} style={styles.groupCard}>
+            <p style={styles.groupTitle}>{field.group}</p>
+            {groupFields.map(f => renderField(f, true))}
+            {groupHasAnswer && (
+              <button style={groupIsLoading ? styles.arnobotBtnLoading : styles.arnobotBtn}
+                onClick={async () => {
+                  if (groupIsLoading) return
+                  const combined = groupFields.map(f => `${f.label}: ${answers[f.id] || ''}`).join('\n')
+                  setArnobotLoading(prev => ({ ...prev, [`group_${field.group}`]: true }))
+                  setArnobotFeedback(prev => ({ ...prev, [`group_${field.group}`]: '' }))
+                  try {
+                    const fb = await getArnoBotFeedback(field.group!, field.group!, combined)
+                    setArnobotFeedback(prev => ({ ...prev, [`group_${field.group}`]: fb }))
+                  } catch {
+                    setArnobotFeedback(prev => ({ ...prev, [`group_${field.group}`]: 'ArnoBot is tijdelijk niet beschikbaar.' }))
+                  } finally {
+                    setArnobotLoading(prev => ({ ...prev, [`group_${field.group}`]: false }))
+                  }
+                }}
+                onMouseEnter={e => { if (!groupIsLoading) (e.target as HTMLElement).style.opacity = '1' }}
+                onMouseLeave={e => { if (!groupIsLoading) (e.target as HTMLElement).style.opacity = '0.5' }}>
+                {groupIsLoading ? '→ ARNOBOT DENKT...' : groupFeedback ? '→ OPNIEUW VRAGEN' : '→ ARNOBOT'}
+              </button>
+            )}
+            {groupFeedback && !groupIsLoading && <div style={styles.arnobotBox}>{groupFeedback}</div>}
+          </div>
+        )
+      } else {
+        rendered.push(renderField(field))
+      }
+    })
+
+    return rendered
   }
 
   return (
@@ -140,9 +200,9 @@ export default function MensenPage() {
       <p style={styles.tag}>03 — 04</p>
       <h1 style={styles.title}>MENSEN</h1>
       <div style={styles.divider}>PAGINA 03 — AANTREKKINGSKRACHT & TALENT</div>
-      <div style={styles.grid}>{SECTIONS.filter(s => s.page === 3).map(renderSection)}</div>
+      <div style={styles.grid}>{renderPage(3)}</div>
       <div style={styles.divider}>PAGINA 04 — CAPACITEIT & ACTIEPLAN</div>
-      <div style={styles.grid}>{SECTIONS.filter(s => s.page === 4).map(renderSection)}</div>
+      <div style={styles.grid}>{renderPage(4)}</div>
       {saveStatus && <p style={styles.saveStatus}>{saveStatus}</p>}
     </main>
   )

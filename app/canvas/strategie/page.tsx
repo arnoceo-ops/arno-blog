@@ -5,40 +5,51 @@ import { useUser } from '@clerk/nextjs'
 import { useSupabaseClient } from '@/lib/supabase'
 import Link from 'next/link'
 
-const SECTIONS = [
+type FieldType = 'textarea' | 'input'
+
+interface Field {
+  id: string
+  label: string
+  sub: string
+  type: FieldType
+  page: number
+  group?: string
+}
+
+const SECTIONS: Field[] = [
   // Pagina 1
   { id: 'missie', label: 'MISSIE', sub: 'Reden van bestaan', type: 'textarea', page: 1 },
-  { id: 'cultuur_1', label: 'CULTUUR 1', sub: 'DNA, kernwaarden en gedrag', type: 'input', page: 1 },
-  { id: 'cultuur_2', label: 'CULTUUR 2', sub: 'DNA, kernwaarden en gedrag', type: 'input', page: 1 },
-  { id: 'cultuur_3', label: 'CULTUUR 3', sub: 'DNA, kernwaarden en gedrag', type: 'input', page: 1 },
-  { id: 'cultuur_4', label: 'CULTUUR 4', sub: 'DNA, kernwaarden en gedrag', type: 'input', page: 1 },
-  { id: 'cultuur_5', label: 'CULTUUR 5', sub: 'DNA, kernwaarden en gedrag', type: 'input', page: 1 },
+  { id: 'cultuur_1', label: 'CULTUUR 1', sub: 'DNA, kernwaarden en gedrag', type: 'input', page: 1, group: 'CULTUUR' },
+  { id: 'cultuur_2', label: 'CULTUUR 2', sub: 'DNA, kernwaarden en gedrag', type: 'input', page: 1, group: 'CULTUUR' },
+  { id: 'cultuur_3', label: 'CULTUUR 3', sub: 'DNA, kernwaarden en gedrag', type: 'input', page: 1, group: 'CULTUUR' },
+  { id: 'cultuur_4', label: 'CULTUUR 4', sub: 'DNA, kernwaarden en gedrag', type: 'input', page: 1, group: 'CULTUUR' },
+  { id: 'cultuur_5', label: 'CULTUUR 5', sub: 'DNA, kernwaarden en gedrag', type: 'input', page: 1, group: 'CULTUUR' },
   { id: 'waardepropositie', label: 'WAARDEPROPOSITIE', sub: 'Welk voordeel bieden we?', type: 'textarea', page: 1 },
   { id: 'kerncompetenties', label: 'KERNCOMPETENTIES', sub: 'Waarin verschillen we van anderen?', type: 'textarea', page: 1 },
   { id: 'dienstverlening', label: 'DIENSTVERLENING', sub: 'Wat kopen klanten van ons?', type: 'textarea', page: 1 },
   { id: 'zandbak', label: 'ZANDBAK', sub: 'Marktsegmenten / Niches / Kernklanten / Personas', type: 'textarea', page: 1 },
-  { id: 'doelen_datum', label: 'DOELEN — Datum', sub: '3-5 jaar', type: 'input', page: 1 },
-  { id: 'doelen_omzet', label: 'DOELEN — Omzet €', sub: '3-5 jaar', type: 'input', page: 1 },
-  { id: 'doelen_winst', label: 'DOELEN — Winst €', sub: '3-5 jaar', type: 'input', page: 1 },
-  { id: 'doelen_klanten', label: 'DOELEN — Klanten #', sub: '3-5 jaar', type: 'input', page: 1 },
-  { id: 'doelen_marktaandeel', label: 'DOELEN — Marktaandeel %', sub: '3-5 jaar', type: 'input', page: 1 },
-  { id: 'doelen_liquiditeit', label: 'DOELEN — Liquiditeit %', sub: '3-5 jaar', type: 'input', page: 1 },
-  { id: 'acties_datum', label: 'ACTIES — Datum', sub: '1 jaar', type: 'input', page: 1 },
-  { id: 'acties_omzet', label: 'ACTIES — Omzet €', sub: '1 jaar', type: 'input', page: 1 },
-  { id: 'acties_winst', label: 'ACTIES — Winst €', sub: '1 jaar', type: 'input', page: 1 },
-  { id: 'acties_brutomarge', label: 'ACTIES — Brutomarge %', sub: '1 jaar', type: 'input', page: 1 },
-  { id: 'acties_cash', label: 'ACTIES — Cash €', sub: '1 jaar', type: 'input', page: 1 },
-  { id: 'acties_klanten', label: 'ACTIES — Klanten #', sub: '1 jaar', type: 'input', page: 1 },
-  { id: 'leiderschap_markten', label: 'LEIDERSCHAP — Markten', sub: 'Welke markt(en) willen we domineren?', type: 'input', page: 1 },
-  { id: 'leiderschap_wanneer', label: 'LEIDERSCHAP — Wanneer', sub: 'Wanneer domineren we deze markt?', type: 'input', page: 1 },
+  { id: 'doelen_datum', label: 'Datum', sub: '3-5 jaar', type: 'input', page: 1, group: 'DOELEN 3-5 JR' },
+  { id: 'doelen_omzet', label: 'Omzet €', sub: '3-5 jaar', type: 'input', page: 1, group: 'DOELEN 3-5 JR' },
+  { id: 'doelen_winst', label: 'Winst €', sub: '3-5 jaar', type: 'input', page: 1, group: 'DOELEN 3-5 JR' },
+  { id: 'doelen_klanten', label: 'Klanten #', sub: '3-5 jaar', type: 'input', page: 1, group: 'DOELEN 3-5 JR' },
+  { id: 'doelen_marktaandeel', label: 'Marktaandeel %', sub: '3-5 jaar', type: 'input', page: 1, group: 'DOELEN 3-5 JR' },
+  { id: 'doelen_liquiditeit', label: 'Liquiditeit %', sub: '3-5 jaar', type: 'input', page: 1, group: 'DOELEN 3-5 JR' },
+  { id: 'acties_datum', label: 'Datum', sub: '1 jaar', type: 'input', page: 1, group: 'ACTIES 1 JR' },
+  { id: 'acties_omzet', label: 'Omzet €', sub: '1 jaar', type: 'input', page: 1, group: 'ACTIES 1 JR' },
+  { id: 'acties_winst', label: 'Winst €', sub: '1 jaar', type: 'input', page: 1, group: 'ACTIES 1 JR' },
+  { id: 'acties_brutomarge', label: 'Brutomarge %', sub: '1 jaar', type: 'input', page: 1, group: 'ACTIES 1 JR' },
+  { id: 'acties_cash', label: 'Cash €', sub: '1 jaar', type: 'input', page: 1, group: 'ACTIES 1 JR' },
+  { id: 'acties_klanten', label: 'Klanten #', sub: '1 jaar', type: 'input', page: 1, group: 'ACTIES 1 JR' },
+  { id: 'leiderschap_markten', label: 'Markten', sub: 'Welke markt(en) willen we domineren?', type: 'input', page: 1, group: 'LEIDERSCHAP' },
+  { id: 'leiderschap_wanneer', label: 'Wanneer', sub: 'Wanneer domineren we deze markt?', type: 'input', page: 1, group: 'LEIDERSCHAP' },
   // Pagina 2
   { id: 'merkbelofte', label: 'MERKBELOFTE', sub: 'Wat zijn onze unieke merkbeloftes en garanties?', type: 'textarea', page: 2 },
   { id: 'strategie_1_zin', label: 'STRATEGIE IN 1 ZIN', sub: 'Hoe onderscheiden we ons in de executie van onze concurrenten?', type: 'textarea', page: 2 },
-  { id: 'onderscheidend_1', label: 'ONDERSCHEIDEND VERMOGEN 1', sub: 'Welke kernactiviteiten ondersteunen de strategie?', type: 'input', page: 2 },
-  { id: 'onderscheidend_2', label: 'ONDERSCHEIDEND VERMOGEN 2', sub: 'Welke kernactiviteiten ondersteunen de strategie?', type: 'input', page: 2 },
-  { id: 'onderscheidend_3', label: 'ONDERSCHEIDEND VERMOGEN 3', sub: 'Welke kernactiviteiten ondersteunen de strategie?', type: 'input', page: 2 },
-  { id: 'onderscheidend_4', label: 'ONDERSCHEIDEND VERMOGEN 4', sub: 'Welke kernactiviteiten ondersteunen de strategie?', type: 'input', page: 2 },
-  { id: 'onderscheidend_5', label: 'ONDERSCHEIDEND VERMOGEN 5', sub: 'Welke kernactiviteiten ondersteunen de strategie?', type: 'input', page: 2 },
+  { id: 'onderscheidend_1', label: 'Vermogen 1', sub: 'Kernactiviteit die strategie ondersteunt', type: 'input', page: 2, group: 'ONDERSCHEIDEND VERMOGEN' },
+  { id: 'onderscheidend_2', label: 'Vermogen 2', sub: 'Kernactiviteit die strategie ondersteunt', type: 'input', page: 2, group: 'ONDERSCHEIDEND VERMOGEN' },
+  { id: 'onderscheidend_3', label: 'Vermogen 3', sub: 'Kernactiviteit die strategie ondersteunt', type: 'input', page: 2, group: 'ONDERSCHEIDEND VERMOGEN' },
+  { id: 'onderscheidend_4', label: 'Vermogen 4', sub: 'Kernactiviteit die strategie ondersteunt', type: 'input', page: 2, group: 'ONDERSCHEIDEND VERMOGEN' },
+  { id: 'onderscheidend_5', label: 'Vermogen 5', sub: 'Kernactiviteit die strategie ondersteunt', type: 'input', page: 2, group: 'ONDERSCHEIDEND VERMOGEN' },
   { id: 'xfactor', label: 'X-FACTOR', sub: '10X meerwaarde', type: 'textarea', page: 2 },
   { id: 'winst_per_eenheid', label: 'WINST PER EENHEID', sub: 'Economische motor', type: 'textarea', page: 2 },
   { id: 'moonshots', label: 'MOONSHOTS', sub: '+1000%', type: 'textarea', page: 2 },
@@ -57,7 +68,11 @@ const styles = {
   divider: { color: '#EE7700', fontSize: '11px', letterSpacing: '4px', borderTop: '1px solid #EE7700', paddingTop: '12px', marginBottom: '32px', marginTop: '48px' } as React.CSSProperties,
   grid: { display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(340px, 1fr))', gap: '24px' } as React.CSSProperties,
   card: { borderTop: '1px solid #222', paddingTop: '20px' } as React.CSSProperties,
+  groupCard: { borderTop: '1px solid #EE7700', paddingTop: '20px', gridColumn: 'span 1' } as React.CSSProperties,
+  groupTitle: { fontFamily: 'var(--font-bebas), sans-serif', color: '#EE7700', fontSize: '16px', letterSpacing: '3px', marginBottom: '20px' } as React.CSSProperties,
+  groupField: { marginBottom: '16px' } as React.CSSProperties,
   label: { color: '#EE7700', fontSize: '11px', letterSpacing: '3px', marginBottom: '4px' } as React.CSSProperties,
+  groupLabel: { color: '#f0ede6', fontSize: '11px', letterSpacing: '2px', marginBottom: '4px', opacity: 0.6 } as React.CSSProperties,
   sub: { color: '#f0ede6', opacity: 0.35, fontSize: '12px', marginBottom: '12px' } as React.CSSProperties,
   textarea: { width: '100%', backgroundColor: 'transparent', border: 'none', borderBottom: '1px solid #333', color: '#f0ede6', fontSize: '14px', padding: '8px 0', resize: 'none', outline: 'none', fontFamily: 'sans-serif', lineHeight: 1.6, minHeight: '80px', boxSizing: 'border-box' } as React.CSSProperties,
   input: { width: '100%', backgroundColor: 'transparent', border: 'none', borderBottom: '1px solid #333', color: '#f0ede6', fontSize: '14px', padding: '8px 0', outline: 'none', fontFamily: 'sans-serif', boxSizing: 'border-box' } as React.CSSProperties,
@@ -119,7 +134,7 @@ export default function StrategiePage() {
   const handleChange = (id: string, value: string) => setAnswers(prev => ({ ...prev, [id]: value }))
   const handleBlur = (id: string) => save(id, answers[id] || '')
 
-  const handleArnoBot = async (section: typeof SECTIONS[0]) => {
+  const handleArnoBot = async (section: Field) => {
     const answer = answers[section.id] || ''
     setArnobotLoading(prev => ({ ...prev, [section.id]: true }))
     setArnobotFeedback(prev => ({ ...prev, [section.id]: '' }))
@@ -133,27 +148,79 @@ export default function StrategiePage() {
     }
   }
 
-  const renderSection = (section: typeof SECTIONS[0]) => {
+  const renderField = (section: Field, inGroup = false) => {
     const isLoading = arnobotLoading[section.id]
     const feedback = arnobotFeedback[section.id]
     const hasAnswer = !!(answers[section.id] || '').trim()
     return (
-      <div key={section.id} style={styles.card}>
-        <p style={styles.label}>{section.label}</p>
-        <p style={styles.sub}>{section.sub}</p>
+      <div key={section.id} style={inGroup ? styles.groupField : styles.card}>
+        <p style={inGroup ? styles.groupLabel : styles.label}>{section.label}</p>
+        {!inGroup && <p style={styles.sub}>{section.sub}</p>}
         {section.type === 'textarea' ? (
           <textarea style={styles.textarea} value={answers[section.id] || ''} onChange={e => handleChange(section.id, e.target.value)} onBlur={() => handleBlur(section.id)} placeholder="..." />
         ) : (
           <input style={styles.input} value={answers[section.id] || ''} onChange={e => handleChange(section.id, e.target.value)} onBlur={() => handleBlur(section.id)} placeholder="..." />
         )}
-        {hasAnswer && (
+        {hasAnswer && !inGroup && (
           <button style={isLoading ? styles.arnobotBtnLoading : styles.arnobotBtn} onClick={() => !isLoading && handleArnoBot(section)} onMouseEnter={e => { if (!isLoading) (e.target as HTMLElement).style.opacity = '1' }} onMouseLeave={e => { if (!isLoading) (e.target as HTMLElement).style.opacity = '0.5' }}>
             {isLoading ? '→ ARNOBOT DENKT...' : feedback ? '→ OPNIEUW VRAGEN' : '→ ARNOBOT'}
           </button>
         )}
-        {feedback && !isLoading && <div style={styles.arnobotBox}>{feedback}</div>}
+        {feedback && !isLoading && !inGroup && <div style={styles.arnobotBox}>{feedback}</div>}
       </div>
     )
+  }
+
+  const renderPage = (page: number) => {
+    const fields = SECTIONS.filter(s => s.page === page)
+    const rendered: React.ReactNode[] = []
+    const seenGroups = new Set<string>()
+
+    fields.forEach(field => {
+      if (field.group) {
+        if (seenGroups.has(field.group)) return
+        seenGroups.add(field.group)
+        const groupFields = fields.filter(f => f.group === field.group)
+        const groupHasAnswer = groupFields.some(f => !!(answers[f.id] || '').trim())
+        const groupIsLoading = groupFields.some(f => arnobotLoading[f.id])
+        const groupFeedback = arnobotFeedback[`group_${field.group}`]
+
+        rendered.push(
+          <div key={field.group} style={styles.groupCard}>
+            <p style={styles.groupTitle}>{field.group}</p>
+            {groupFields.map(f => renderField(f, true))}
+            {groupHasAnswer && (
+              <button
+                style={groupIsLoading ? styles.arnobotBtnLoading : styles.arnobotBtn}
+                onClick={async () => {
+                  if (groupIsLoading) return
+                  const combined = groupFields.map(f => `${f.label}: ${answers[f.id] || ''}`).join('\n')
+                  setArnobotLoading(prev => ({ ...prev, [`group_${field.group}`]: true }))
+                  setArnobotFeedback(prev => ({ ...prev, [`group_${field.group}`]: '' }))
+                  try {
+                    const feedback = await getArnoBotFeedback(field.group!, field.group!, combined)
+                    setArnobotFeedback(prev => ({ ...prev, [`group_${field.group}`]: feedback }))
+                  } catch {
+                    setArnobotFeedback(prev => ({ ...prev, [`group_${field.group}`]: 'ArnoBot is tijdelijk niet beschikbaar.' }))
+                  } finally {
+                    setArnobotLoading(prev => ({ ...prev, [`group_${field.group}`]: false }))
+                  }
+                }}
+                onMouseEnter={e => { if (!groupIsLoading) (e.target as HTMLElement).style.opacity = '1' }}
+                onMouseLeave={e => { if (!groupIsLoading) (e.target as HTMLElement).style.opacity = '0.5' }}
+              >
+                {groupIsLoading ? '→ ARNOBOT DENKT...' : groupFeedback ? '→ OPNIEUW VRAGEN' : '→ ARNOBOT'}
+              </button>
+            )}
+            {groupFeedback && !groupIsLoading && <div style={styles.arnobotBox}>{groupFeedback}</div>}
+          </div>
+        )
+      } else {
+        rendered.push(renderField(field))
+      }
+    })
+
+    return rendered
   }
 
   return (
@@ -166,9 +233,9 @@ export default function StrategiePage() {
       <p style={styles.tag}>01 — 02</p>
       <h1 style={styles.title}>STRATEGIE</h1>
       <div style={styles.divider}>PAGINA 01 — FUNDAMENT</div>
-      <div style={styles.grid}>{SECTIONS.filter(s => s.page === 1).map(renderSection)}</div>
+      <div style={styles.grid}>{renderPage(1)}</div>
       <div style={styles.divider}>PAGINA 02 — GROEI & ONDERSCHEID</div>
-      <div style={styles.grid}>{SECTIONS.filter(s => s.page === 2).map(renderSection)}</div>
+      <div style={styles.grid}>{renderPage(2)}</div>
       {saveStatus && <p style={styles.saveStatus}>{saveStatus}</p>}
     </main>
   )
