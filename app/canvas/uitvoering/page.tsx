@@ -217,7 +217,7 @@ export default function UitvoeringPage() {
         <span style={{ color: '#EE7700' }}>UITVOERING</span>
       </nav>
 
-      <PageHero number={3} title="UITVOERING" />
+      <PageHero number={3} />
 
       {/* KWARTAALTHEMA */}
       <div style={{ ...s.sectionDivider, paddingBottom: '48px' }}>

@@ -226,7 +226,7 @@ export default function StrategiePage() {
         <span style={{ color: '#EE7700' }}>STRATEGIE</span>
       </nav>
 
-      <PageHero number={1} title="STRATEGIE" />
+      <PageHero number={1} />
 
       {/* ROW 1: Missie + Cultuur */}
       <div style={{ ...s.sectionDivider, display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '48px', paddingBottom: '48px' }}>

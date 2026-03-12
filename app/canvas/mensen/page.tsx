@@ -206,7 +206,7 @@ export default function MensenPage() {
         <span style={{ color: '#EE7700' }}>MENSEN</span>
       </nav>
 
-      <PageHero number={2} title="MENSEN" />
+      <PageHero number={2} />
 
       {/* ROW 1: Aantrekkingskracht + Profielen */}
       <div style={{ ...s.sectionDivider, display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '48px', paddingBottom: '48px' }}>
