@@ -21,8 +21,10 @@ export function PageHero({ number }: PageHeroProps) {
       position: 'relative',
       width: '100%',
       height: '855px',
+      minHeight: '855px',
       overflow: 'hidden',
       backgroundColor: '#1c1a17',
+      display: 'block',
     }}>
 
       {/* Achtergrond foto — volledig zichtbaar */}
@@ -31,12 +33,14 @@ export function PageHero({ number }: PageHeroProps) {
         alt=""
         style={{
           position: 'absolute',
-          inset: 0,
+          top: 0,
+          left: 0,
           width: '100%',
           height: '100%',
           objectFit: 'cover',
           objectPosition: 'center center',
           filter: 'grayscale(10%) brightness(0.85)',
+          display: 'block',
         }}
       />
 
@@ -69,7 +73,7 @@ export function PageHero({ number }: PageHeroProps) {
         pointerEvents: 'none',
       }} />
 
-           {/* Rechts onderin: ROYAL DUTCH SALES */}
+      {/* Rechts onderin: ROYAL DUTCH SALES */}
       <div style={{
         position: 'absolute',
         bottom: '36px',
