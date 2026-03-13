@@ -20,7 +20,7 @@ export function PageHero({ number }: PageHeroProps) {
     <div style={{
       position: 'relative',
       width: '100%',
-      height: '480px',
+      height: '855px',
       overflow: 'hidden',
       backgroundColor: '#1c1a17',
     }}>
