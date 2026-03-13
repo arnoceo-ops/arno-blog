@@ -46,19 +46,19 @@ async function getArnoBotFeedback(label: string, sub: string, answer: string): P
 }
 
 const s = {
-  page: { backgroundColor: '#2a2620', minHeight: '100vh', color: '#f0ede6', fontFamily: 'var(--font-barlow, sans-serif)' } as React.CSSProperties,
-  nav: { display: 'flex', alignItems: 'center', gap: '16px', padding: '24px 48px', fontSize: '12px', letterSpacing: '3px', borderBottom: '1px solid #2a2520' } as React.CSSProperties,
-  sectionDivider: { borderTop: '1px solid #2a2520', padding: '48px 48px 0' } as React.CSSProperties,
-  fieldLabel: { fontSize: '13px', fontWeight: 700, letterSpacing: '3px', color: '#f0ede6', marginBottom: '6px', display: 'flex', alignItems: 'center', gap: '12px' } as React.CSSProperties,
-  fieldLabelLine: { flex: 1, height: '1px', backgroundColor: '#2a2520' } as React.CSSProperties,
-  fieldSub: { fontSize: '13px', color: '#f0ede6', opacity: 0.5, marginBottom: '14px' } as React.CSSProperties,
-  textarea: { width: '100%', backgroundColor: 'transparent', border: 'none', borderBottom: '1px solid #2a2520', color: '#f0ede6', fontSize: '15px', padding: '12px 0', resize: 'none' as const, outline: 'none', fontFamily: 'var(--font-space-mono, monospace)', lineHeight: 1.8, minHeight: '100px', boxSizing: 'border-box' as const },
-  input: { width: '100%', backgroundColor: 'transparent', border: 'none', borderBottom: '1px solid #2a2520', color: '#f0ede6', fontSize: '15px', padding: '10px 0', outline: 'none', fontFamily: 'var(--font-space-mono, monospace)', boxSizing: 'border-box' as const },
+  page: { backgroundColor: '#f5f0e8', minHeight: '100vh', color: '#1a1714', fontFamily: 'var(--font-barlow, sans-serif)' } as React.CSSProperties,
+  nav: { display: 'flex', alignItems: 'center', gap: '16px', padding: '24px 48px', fontSize: '12px', letterSpacing: '3px', borderBottom: '1px solid #e0d8cc' } as React.CSSProperties,
+  sectionDivider: { borderTop: '1px solid #e0d8cc', padding: '48px 48px 0' } as React.CSSProperties,
+  fieldLabel: { fontSize: '13px', fontWeight: 700, letterSpacing: '3px', color: '#1a1714', marginBottom: '6px', display: 'flex', alignItems: 'center', gap: '12px' } as React.CSSProperties,
+  fieldLabelLine: { flex: 1, height: '1px', backgroundColor: '#e0d8cc' } as React.CSSProperties,
+  fieldSub: { fontSize: '13px', color: '#1a1714', opacity: 0.5, marginBottom: '14px' } as React.CSSProperties,
+  textarea: { width: '100%', backgroundColor: 'transparent', border: 'none', borderBottom: '1px solid #e0d8cc', color: '#1a1714', fontSize: '15px', padding: '12px 0', resize: 'none' as const, outline: 'none', fontFamily: 'var(--font-space-mono, monospace)', lineHeight: 1.8, minHeight: '100px', boxSizing: 'border-box' as const },
+  input: { width: '100%', backgroundColor: 'transparent', border: 'none', borderBottom: '1px solid #e0d8cc', color: '#1a1714', fontSize: '15px', padding: '10px 0', outline: 'none', fontFamily: 'var(--font-space-mono, monospace)', boxSizing: 'border-box' as const },
   arnobotBtn: { marginTop: '8px', background: 'none', border: 'none', color: '#EE7700', fontSize: '11px', letterSpacing: '2px', cursor: 'pointer', padding: '0' } as React.CSSProperties,
-  arnobotBox: { marginTop: '12px', borderLeft: '2px solid #EE7700', paddingLeft: '12px', fontSize: '13px', lineHeight: 1.8, color: '#f0ede6', opacity: 0.75, fontFamily: 'var(--font-space-mono, monospace)' } as React.CSSProperties,
-  saveStatus: { position: 'fixed' as const, bottom: '24px', right: '24px', fontSize: '11px', letterSpacing: '3px', color: '#EE7700', opacity: 0.7 },
+  arnobotBox: { marginTop: '12px', borderLeft: '2px solid #EE7700', paddingLeft: '12px', fontSize: '13px', lineHeight: 1.8, color: '#1a1714', opacity: 0.8, fontFamily: 'var(--font-space-mono, monospace)', backgroundColor: '#fdf6ec', padding: '12px' } as React.CSSProperties,
+  saveStatus: { position: 'fixed' as const, bottom: '24px', right: '24px', fontSize: '11px', letterSpacing: '3px', color: '#EE7700', opacity: 0.8 },
   groupLabel: { fontSize: '12px', fontWeight: 700, letterSpacing: '4px', color: '#EE7700', marginBottom: '24px', display: 'flex', alignItems: 'center', gap: '12px' } as React.CSSProperties,
-  groupSub: { fontSize: '12px', color: '#f0ede6', opacity: 0.5, letterSpacing: '1px', fontWeight: 400 } as React.CSSProperties,
+  groupSub: { fontSize: '12px', color: '#1a1714', opacity: 0.5, letterSpacing: '1px', fontWeight: 400 } as React.CSSProperties,
 }
 
 interface FieldProps {
@@ -108,8 +108,8 @@ interface QuarterBlockProps {
 function QuarterBlock({ quarter, ids, answers, onChange, onBlur }: QuarterBlockProps) {
   const row = (label: string, id: string) => (
     <div style={{ display: 'grid', gridTemplateColumns: '120px 1fr', alignItems: 'center', gap: '12px', borderBottom: '1px solid #2a2520', padding: '8px 0' }}>
-      <span style={{ fontSize: '13px', color: '#f0ede6', opacity: 0.4 }}>{label}</span>
-      <input style={{ backgroundColor: 'transparent', border: 'none', borderBottom: '1px solid #2a2520', color: '#f0ede6', fontSize: '15px', padding: '4px 0', outline: 'none', fontFamily: 'var(--font-space-mono, monospace)', width: '100%', boxSizing: 'border-box' as const }} value={answers[id] || ''} onChange={e => onChange(id, e.target.value)} onBlur={() => onBlur(id)} placeholder="—" />
+      <span style={{ fontSize: '13px', color: '#1a1714', opacity: 0.4 }}>{label}</span>
+      <input style={{ backgroundColor: 'transparent', border: 'none', borderBottom: '1px solid #2a2520', color: '#1a1714', fontSize: '15px', padding: '4px 0', outline: 'none', fontFamily: 'var(--font-space-mono, monospace)', width: '100%', boxSizing: 'border-box' as const }} value={answers[id] || ''} onChange={e => onChange(id, e.target.value)} onBlur={() => onBlur(id)} placeholder="—" />
     </div>
   )
   return (
@@ -201,7 +201,7 @@ export default function MensenPage() {
   return (
     <main style={s.page}>
       <nav style={s.nav}>
-        <Link href="/canvas" style={{ color: '#f0ede6', textDecoration: 'none', opacity: 0.4 }}>← CANVAS</Link>
+        <Link href="/canvas" style={{ color: '#1a1714', textDecoration: 'none', opacity: 0.4 }}>← CANVAS</Link>
         <span style={{ opacity: 0.2 }}>/</span>
         <span style={{ color: '#EE7700' }}>MENSEN</span>
       </nav>
