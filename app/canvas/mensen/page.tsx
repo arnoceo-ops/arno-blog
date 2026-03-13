@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect, useCallback } from 'react'
+import React, { useState, useEffect, useCallback, useRef } from 'react'
 import { useUser } from '@clerk/nextjs'
 import { useSupabaseClient } from '@/lib/supabase'
 import Link from 'next/link'
@@ -38,8 +38,8 @@ const MONO_SUB: React.CSSProperties = { ...MONO18, opacity: 0.5, marginBottom: '
 const LINE: React.CSSProperties = { flex: 1, height: '1px', backgroundColor: '#e0d8cc' }
 
 function AutoTextarea({ value, onChange, onBlur, style }: { value: string; onChange: (v: string) => void; onBlur: () => void; style?: React.CSSProperties }) {
-  const ref = React.useRef<HTMLTextAreaElement>(null)
-  React.useEffect(() => {
+  const ref = useRef<HTMLTextAreaElement>(null)
+  useEffect(() => {
     const el = ref.current
     if (!el) return
     el.style.height = 'auto'
