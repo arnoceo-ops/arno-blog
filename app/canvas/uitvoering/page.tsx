@@ -248,7 +248,7 @@ export default function UitvoeringPage() {
   const save = useCallback(async (id: string, value: string) => {
     if (!user) return
     setSaveStatus('OPSLAAN...')
-    await supabase.from('canvas_answers').upsert({ user_id: user.id, question_id: `${PREFIX}_${id}`, answer: value }, { onConflict: 'user_id,question_id' })
+    await (supabase.from('canvas_answers') as any).upsert({ user_id: user.id, question_id: `${PREFIX}_${id}`, answer: value }, { onConflict: 'user_id,question_id' })
     setSaveStatus('OPGESLAGEN ✓')
     setTimeout(() => setSaveStatus(''), 2000)
   }, [user])
