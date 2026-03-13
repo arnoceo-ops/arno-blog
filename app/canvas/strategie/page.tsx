@@ -192,7 +192,7 @@ export default function StrategiePage() {
   useEffect(() => {
     if (!user) return
     ;(async () => {
-      const { data } = await supabase.from('canvas_answers').select('question_id, answer').eq('user_id', user.id).like('question_id', `${PREFIX}_%`)
+      const { data } = await supabase.from('canvas_answers').select('question_id, answer').eq('user_id', user.id).like('question_id', `${PREFIX}_%`) as unknown as { data: { question_id: string; answer: string }[] | null; error: unknown }
       if (data) {
         const map: Record<string, string> = {}
         data.forEach(r => { map[r.question_id.slice(PREFIX.length + 1)] = r.answer })
