@@ -40,8 +40,8 @@ const ALL_FIELDS: FieldDef[] = [
   { id: 'acties_brutomarge', label: 'Brutomarge %', sub: '', type: 'input' },
   { id: 'acties_cash', label: 'Cash €', sub: '', type: 'input' },
   { id: 'acties_klanten', label: 'Klanten #', sub: '', type: 'input' },
-  { id: 'leiderschap_markten', label: 'Markten', sub: '', type: 'input' },
-  { id: 'leiderschap_wanneer', label: 'Wanneer', sub: '', type: 'input' },
+  { id: 'leiderschap_markten', label: 'LEIDERSCHAP', sub: 'Welke markt(en) willen we domineren?', type: 'input' },
+  { id: 'leiderschap_wanneer', label: 'WANNEER?', sub: '', type: 'input' },
   { id: 'merkbelofte', label: 'MERKBELOFTE', sub: 'Wat zijn onze unieke merkbeloftes en garanties?', type: 'textarea' },
   { id: 'strategie_1_zin', label: 'STRATEGIE IN 1 ZIN', sub: 'Hoe onderscheiden we ons in de executie van onze concurrenten?', type: 'textarea' },
   { id: 'onderscheidend_1', label: '1', sub: '', type: 'input' },
@@ -71,20 +71,25 @@ async function getArnoBotFeedback(label: string, sub: string, answer: string): P
   return data.feedback
 }
 
+// Gedeelde stijlen
+const BEBAS: React.CSSProperties = { fontFamily: 'var(--font-bebas), sans-serif', fontSize: '22px', letterSpacing: '3px', color: '#1a1714' }
+const MONO_SUB: React.CSSProperties = { fontFamily: 'var(--font-space-mono, monospace)', fontSize: '13px', color: '#1a1714', opacity: 0.5, marginBottom: '14px' }
+const LINE: React.CSSProperties = { flex: 1, height: '1px', backgroundColor: '#e0d8cc' }
+
 const s = {
   page: { backgroundColor: '#f5f0e8', minHeight: '100vh', color: '#1a1714', fontFamily: 'var(--font-barlow, sans-serif)' } as React.CSSProperties,
   nav: { display: 'flex', alignItems: 'center', gap: '16px', padding: '24px 48px', fontSize: '12px', letterSpacing: '3px', borderBottom: '1px solid #e0d8cc' } as React.CSSProperties,
   sectionDivider: { borderTop: '1px solid #e0d8cc', padding: '48px 48px 0' } as React.CSSProperties,
-  fieldLabel: { fontSize: '22px', fontFamily: 'var(--font-bebas), sans-serif', letterSpacing: '3px', color: '#1a1714', marginBottom: '6px', display: 'flex', alignItems: 'center', gap: '12px' } as React.CSSProperties,
-  fieldLabelLine: { flex: 1, height: '1px', backgroundColor: '#e0d8cc' } as React.CSSProperties,
-  fieldSub: { fontSize: '13px', color: '#1a1714', opacity: 0.5, marginBottom: '14px', fontFamily: 'var(--font-space-mono, monospace)' } as React.CSSProperties,
+  fieldLabel: { ...BEBAS, marginBottom: '6px', display: 'flex', alignItems: 'center', gap: '12px' } as React.CSSProperties,
+  fieldLabelLine: LINE,
+  fieldSub: MONO_SUB,
   textarea: { width: '100%', backgroundColor: 'transparent', border: 'none', borderBottom: '1px solid #e0d8cc', color: '#1a1714', fontSize: '16px', padding: '12px 0', resize: 'none' as const, outline: 'none', fontFamily: 'var(--font-space-mono, monospace)', lineHeight: 1.8, minHeight: '100px', boxSizing: 'border-box' as const },
   input: { width: '100%', backgroundColor: 'transparent', border: 'none', borderBottom: '1px solid #e0d8cc', color: '#1a1714', fontSize: '16px', padding: '10px 0', outline: 'none', fontFamily: 'var(--font-space-mono, monospace)', boxSizing: 'border-box' as const },
   arnobotBtn: { marginTop: '8px', background: 'none', border: 'none', color: '#EE7700', fontSize: '11px', letterSpacing: '2px', cursor: 'pointer', padding: '0' } as React.CSSProperties,
   arnobotBox: { marginTop: '12px', borderLeft: '2px solid #EE7700', paddingLeft: '12px', fontSize: '13px', lineHeight: 1.8, color: '#1a1714', opacity: 0.8, fontFamily: 'var(--font-space-mono, monospace)', backgroundColor: '#fdf6ec', padding: '12px' } as React.CSSProperties,
   saveStatus: { position: 'fixed' as const, bottom: '24px', right: '24px', fontSize: '11px', letterSpacing: '3px', color: '#EE7700', opacity: 0.8 },
-  groupLabel: { fontSize: '12px', fontWeight: 700, letterSpacing: '4px', color: '#EE7700', marginBottom: '24px', display: 'flex', alignItems: 'center', gap: '12px' } as React.CSSProperties,
-  groupSub: { fontSize: '12px', color: '#1a1714', opacity: 0.5, letterSpacing: '1px', fontWeight: 400 } as React.CSSProperties,
+  groupLabel: { ...BEBAS, marginBottom: '8px', display: 'flex', alignItems: 'center', gap: '12px' } as React.CSSProperties,
+  groupSub: MONO_SUB,
 }
 
 interface FieldProps {
@@ -100,6 +105,7 @@ interface FieldProps {
   onArnoBot: (id: string, label: string, sub: string) => void
 }
 
+// Fix 7: ArnoBot altijd zichtbaar bij ingevulde velden
 function Field({ id, label, sub, type, value, onChange, onBlur, feedback, loading, onArnoBot }: FieldProps) {
   const hasAnswer = !!value.trim()
   return (
@@ -114,7 +120,7 @@ function Field({ id, label, sub, type, value, onChange, onBlur, feedback, loadin
         : <input style={s.input} value={value} onChange={e => onChange(id, e.target.value)} onBlur={() => onBlur(id)} placeholder="..." />
       }
       {hasAnswer && (
-        <button style={{ ...s.arnobotBtn, opacity: loading ? 0.4 : 0.6 }} onClick={() => !loading && onArnoBot(id, label, sub)}>
+        <button style={{ ...s.arnobotBtn, opacity: loading ? 0.4 : 0.7 }} onClick={() => !loading && onArnoBot(id, label, sub)}>
           {loading ? '→ ARNOBOT DENKT...' : feedback ? '→ OPNIEUW VRAGEN' : '→ ARNOBOT'}
         </button>
       )}
@@ -123,25 +129,65 @@ function Field({ id, label, sub, type, value, onChange, onBlur, feedback, loadin
   )
 }
 
+// Fix 7: ArnoBot voor inline input velden (cultuur, onderscheidend, leiderschap etc)
+interface InlineInputProps {
+  id: string
+  value: string
+  onChange: (id: string, value: string) => void
+  onBlur: (id: string) => void
+  feedback: string
+  loading: boolean
+  onArnoBot: (id: string, label: string, sub: string) => void
+  label: string
+}
+
+function InlineInput({ id, value, onChange, onBlur, feedback, loading, onArnoBot, label }: InlineInputProps) {
+  const hasAnswer = !!value.trim()
+  return (
+    <div style={{ marginBottom: '12px' }}>
+      <input style={s.input} value={value} onChange={e => onChange(id, e.target.value)} onBlur={() => onBlur(id)} placeholder="..." />
+      {hasAnswer && (
+        <button style={{ ...s.arnobotBtn, opacity: loading ? 0.4 : 0.7 }} onClick={() => !loading && onArnoBot(id, label, '')}>
+          {loading ? '→ ARNOBOT DENKT...' : feedback ? '→ OPNIEUW VRAGEN' : '→ ARNOBOT'}
+        </button>
+      )}
+      {feedback && !loading && <div style={s.arnobotBox}>{feedback}</div>}
+    </div>
+  )
+}
+
+// Fix 3: SmallInput zonder borderBottom lijn, alleen placeholder punten
 interface SmallInputProps {
   id: string
   label: string
   value: string
   onChange: (id: string, value: string) => void
   onBlur: (id: string) => void
+  feedback: string
+  loading: boolean
+  onArnoBot: (id: string, label: string, sub: string) => void
 }
 
-function SmallInput({ id, label, value, onChange, onBlur }: SmallInputProps) {
+function SmallInput({ id, label, value, onChange, onBlur, feedback, loading, onArnoBot }: SmallInputProps) {
+  const hasAnswer = !!value.trim()
   return (
-    <div style={{ display: 'grid', gridTemplateColumns: '130px 1fr', alignItems: 'center', gap: '16px', borderBottom: '1px solid #2a2520', padding: '10px 0' }}>
-      <span style={{ fontSize: '13px', color: '#1a1714', opacity: 0.5, letterSpacing: '1px' }}>{label}</span>
-      <input
-        style={{ backgroundColor: 'transparent', border: 'none', borderBottom: '1px solid #2a2520', color: '#1a1714', fontSize: '15px', padding: '4px 0', outline: 'none', fontFamily: 'var(--font-space-mono, monospace)', width: '100%', boxSizing: 'border-box' as const }}
-        value={value}
-        onChange={e => onChange(id, e.target.value)}
-        onBlur={() => onBlur(id)}
-        placeholder="..."
-      />
+    <div style={{ marginBottom: '4px' }}>
+      <div style={{ display: 'grid', gridTemplateColumns: '140px 1fr', alignItems: 'center', gap: '16px', padding: '8px 0' }}>
+        <span style={{ fontFamily: 'var(--font-space-mono, monospace)', fontSize: '13px', color: '#1a1714', opacity: 0.5 }}>{label}</span>
+        <input
+          style={{ backgroundColor: 'transparent', border: 'none', borderBottom: '1px solid #e0d8cc', color: '#1a1714', fontSize: '16px', padding: '4px 0', outline: 'none', fontFamily: 'var(--font-space-mono, monospace)', width: '100%', boxSizing: 'border-box' as const }}
+          value={value}
+          onChange={e => onChange(id, e.target.value)}
+          onBlur={() => onBlur(id)}
+          placeholder="..."
+        />
+      </div>
+      {hasAnswer && (
+        <button style={{ ...s.arnobotBtn, opacity: loading ? 0.4 : 0.7, marginLeft: '156px' }} onClick={() => !loading && onArnoBot(id, label, '')}>
+          {loading ? '→ ARNOBOT DENKT...' : feedback ? '→ OPNIEUW VRAGEN' : '→ ARNOBOT'}
+        </button>
+      )}
+      {feedback && !loading && <div style={{ ...s.arnobotBox, marginLeft: '156px' }}>{feedback}</div>}
     </div>
   )
 }
@@ -207,7 +253,7 @@ export default function StrategiePage() {
     })
   }, [])
 
-  const fieldProps = (id: string) => ({
+  const fp = (id: string) => ({
     value: answers[id] || '',
     onChange: handleChange,
     onBlur: handleBlur,
@@ -230,16 +276,17 @@ export default function StrategiePage() {
 
       {/* ROW 1: Missie + Cultuur */}
       <div style={{ ...s.sectionDivider, display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '48px', paddingBottom: '48px' }}>
-        <Field {...f('missie')} {...fieldProps('missie')} />
+        <Field {...f('missie')} {...fp('missie')} />
+        {/* Fix 1: CULTUUR in Bebas Neue, subtekst monospace eronder */}
         <div>
-          <div style={s.groupLabel}>
-            CULTUUR <span style={s.groupSub}>DNA, kernwaarden en gedrag</span>
-            <span style={s.fieldLabelLine} />
+          <div style={{ ...BEBAS, marginBottom: '4px', display: 'flex', alignItems: 'center', gap: '12px' }}>
+            CULTUUR <span style={LINE} />
           </div>
+          <div style={{ ...MONO_SUB, marginBottom: '20px' }}>DNA, kernwaarden en gedrag</div>
           {['cultuur_1','cultuur_2','cultuur_3','cultuur_4','cultuur_5'].map((id, i) => (
-            <div key={id} style={{ display: 'grid', gridTemplateColumns: '24px 1fr', gap: '12px', alignItems: 'center', marginBottom: '12px' }}>
-              <span style={{ color: '#EE7700', fontSize: '13px', opacity: 0.5 }}>{i + 1}</span>
-              <input style={s.input} value={answers[id] || ''} onChange={e => handleChange(id, e.target.value)} onBlur={() => handleBlur(id)} placeholder="..." />
+            <div key={id} style={{ display: 'grid', gridTemplateColumns: '24px 1fr', gap: '12px', alignItems: 'flex-start' }}>
+              <span style={{ color: '#EE7700', fontSize: '13px', opacity: 0.5, paddingTop: '10px' }}>{i + 1}</span>
+              <InlineInput id={id} label={`Cultuur ${i + 1}`} {...fp(id)} />
             </div>
           ))}
         </div>
@@ -247,38 +294,39 @@ export default function StrategiePage() {
 
       {/* ROW 2: Waardepropositie / Kerncompetenties / Dienstverlening */}
       <div style={{ ...s.sectionDivider, display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '48px', paddingBottom: '48px' }}>
-        <Field {...f('waardepropositie')} {...fieldProps('waardepropositie')} />
-        <Field {...f('kerncompetenties')} {...fieldProps('kerncompetenties')} />
-        <Field {...f('dienstverlening')} {...fieldProps('dienstverlening')} />
+        <Field {...f('waardepropositie')} {...fp('waardepropositie')} />
+        <Field {...f('kerncompetenties')} {...fp('kerncompetenties')} />
+        <Field {...f('dienstverlening')} {...fp('dienstverlening')} />
       </div>
 
       {/* ROW 3: Zandbak + Doelen + Acties */}
       <div style={{ ...s.sectionDivider, display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '48px', paddingBottom: '48px' }}>
-        <Field {...f('zandbak')} {...fieldProps('zandbak')} />
+        <Field {...f('zandbak')} {...fp('zandbak')} />
+        {/* Fix 2: DOELEN in Bebas, Fix 3: geen strepen, alleen punten */}
         <div>
-          <div style={s.groupLabel}>DOELEN <span style={s.groupSub}>3–5 JR</span><span style={s.fieldLabelLine} /></div>
+          <div style={{ ...BEBAS, marginBottom: '4px', display: 'flex', alignItems: 'center', gap: '12px' }}>
+            DOELEN <span style={{ fontFamily: 'var(--font-space-mono, monospace)', fontSize: '13px', opacity: 0.5, fontWeight: 400 }}>3–5 JR</span>
+            <span style={LINE} />
+          </div>
           {(['doelen_datum','doelen_omzet','doelen_winst','doelen_klanten','doelen_marktaandeel','doelen_liquiditeit'] as const).map(id => (
-            <SmallInput key={id} id={id} label={f(id).label} value={answers[id] || ''} onChange={handleChange} onBlur={handleBlur} />
+            <SmallInput key={id} id={id} label={f(id).label} value={answers[id] || ''} onChange={handleChange} onBlur={handleBlur} feedback={arnobotFeedback[id] || ''} loading={arnobotLoading[id] || false} onArnoBot={handleArnoBot} />
           ))}
         </div>
         <div>
-          <div style={s.groupLabel}>ACTIES <span style={s.groupSub}>1 JR</span><span style={s.fieldLabelLine} /></div>
+          <div style={{ ...BEBAS, marginBottom: '4px', display: 'flex', alignItems: 'center', gap: '12px' }}>
+            ACTIES <span style={{ fontFamily: 'var(--font-space-mono, monospace)', fontSize: '13px', opacity: 0.5, fontWeight: 400 }}>1 JR</span>
+            <span style={LINE} />
+          </div>
           {(['acties_datum','acties_omzet','acties_winst','acties_brutomarge','acties_cash','acties_klanten'] as const).map(id => (
-            <SmallInput key={id} id={id} label={f(id).label} value={answers[id] || ''} onChange={handleChange} onBlur={handleBlur} />
+            <SmallInput key={id} id={id} label={f(id).label} value={answers[id] || ''} onChange={handleChange} onBlur={handleBlur} feedback={arnobotFeedback[id] || ''} loading={arnobotLoading[id] || false} onArnoBot={handleArnoBot} />
           ))}
         </div>
       </div>
 
-      {/* ROW 4: Leiderschap */}
+      {/* ROW 4: Leiderschap — Fix 4: Field component zodat ArnoBot werkt */}
       <div style={{ ...s.sectionDivider, display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '48px', paddingBottom: '64px' }}>
-        <div>
-          <div style={s.groupLabel}>LEIDERSCHAP <span style={s.groupSub}>Welke markt(en) willen we domineren?</span><span style={s.fieldLabelLine} /></div>
-          <input style={s.input} value={answers['leiderschap_markten'] || ''} onChange={e => handleChange('leiderschap_markten', e.target.value)} onBlur={() => handleBlur('leiderschap_markten')} placeholder="..." />
-        </div>
-        <div>
-          <div style={s.groupLabel}>WANNEER?<span style={s.fieldLabelLine} /></div>
-          <input style={s.input} value={answers['leiderschap_wanneer'] || ''} onChange={e => handleChange('leiderschap_wanneer', e.target.value)} onBlur={() => handleBlur('leiderschap_wanneer')} placeholder="..." />
-        </div>
+        <Field {...f('leiderschap_markten')} {...fp('leiderschap_markten')} />
+        <Field {...f('leiderschap_wanneer')} {...fp('leiderschap_wanneer')} />
       </div>
 
       {/* PAGINA 2 */}
@@ -286,15 +334,18 @@ export default function StrategiePage() {
         <div style={{ gridColumn: '1 / -1', marginBottom: '8px' }}>
           <p style={{ color: '#EE7700', fontSize: '12px', letterSpacing: '4px', opacity: 0.6, margin: 0 }}>PAGINA 02 — GROEI & ONDERSCHEID</p>
         </div>
-        <Field {...f('merkbelofte')} {...fieldProps('merkbelofte')} />
-        <Field {...f('strategie_1_zin')} {...fieldProps('strategie_1_zin')} />
+        <Field {...f('merkbelofte')} {...fp('merkbelofte')} />
+        <Field {...f('strategie_1_zin')} {...fp('strategie_1_zin')} />
+        {/* Fix 5: ONDERSCHEIDEND VERMOGEN in Bebas + ArnoBot per veld */}
         <div>
-          <div style={s.groupLabel}>ONDERSCHEIDEND VERMOGEN <span style={s.fieldLabelLine} /></div>
-          <div style={{ fontSize: '12px', color: '#1a1714', opacity: 0.5, marginBottom: '16px' }}>Welke kernactiviteiten ondersteunen de strategie in 1 zin?</div>
+          <div style={{ ...BEBAS, marginBottom: '4px', display: 'flex', alignItems: 'center', gap: '12px' }}>
+            ONDERSCHEIDEND VERMOGEN <span style={LINE} />
+          </div>
+          <div style={{ ...MONO_SUB, marginBottom: '16px' }}>Welke kernactiviteiten ondersteunen de strategie in 1 zin?</div>
           {(['onderscheidend_1','onderscheidend_2','onderscheidend_3','onderscheidend_4','onderscheidend_5'] as const).map((id, i) => (
-            <div key={id} style={{ display: 'grid', gridTemplateColumns: '24px 1fr', gap: '12px', alignItems: 'center', marginBottom: '12px' }}>
-              <span style={{ color: '#EE7700', fontSize: '13px', opacity: 0.5 }}>{i + 1}</span>
-              <input style={s.input} value={answers[id] || ''} onChange={e => handleChange(id, e.target.value)} onBlur={() => handleBlur(id)} placeholder="..." />
+            <div key={id} style={{ display: 'grid', gridTemplateColumns: '24px 1fr', gap: '12px', alignItems: 'flex-start' }}>
+              <span style={{ color: '#EE7700', fontSize: '13px', opacity: 0.5, paddingTop: '10px' }}>{i + 1}</span>
+              <InlineInput id={id} label={`Onderscheidend ${i + 1}`} {...fp(id)} />
             </div>
           ))}
         </div>
@@ -302,30 +353,26 @@ export default function StrategiePage() {
 
       {/* ROW 6: X-Factor / Winst per eenheid / Moonshots */}
       <div style={{ ...s.sectionDivider, display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '48px', paddingBottom: '48px' }}>
-        <Field {...f('xfactor')} {...fieldProps('xfactor')} />
-        <Field {...f('winst_per_eenheid')} {...fieldProps('winst_per_eenheid')} />
-        <Field {...f('moonshots')} {...fieldProps('moonshots')} />
+        <Field {...f('xfactor')} {...fp('xfactor')} />
+        <Field {...f('winst_per_eenheid')} {...fp('winst_per_eenheid')} />
+        <Field {...f('moonshots')} {...fp('moonshots')} />
       </div>
 
       {/* ROW 7: Schaalbaarheid */}
       <div style={{ ...s.sectionDivider, paddingBottom: '48px' }}>
-        <Field {...f('schaalbaarheid')} {...fieldProps('schaalbaarheid')} />
+        <Field {...f('schaalbaarheid')} {...fp('schaalbaarheid')} />
       </div>
 
       {/* ROW 8: Repeterende omzet / Klantretentie / Referrals */}
       <div style={{ ...s.sectionDivider, display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '48px', paddingBottom: '48px' }}>
-        <Field {...f('repeterende_omzet')} {...fieldProps('repeterende_omzet')} />
-        <Field {...f('klantretentie')} {...fieldProps('klantretentie')} />
-        <Field {...f('referrals')} {...fieldProps('referrals')} />
+        <Field {...f('repeterende_omzet')} {...fp('repeterende_omzet')} />
+        <Field {...f('klantretentie')} {...fp('klantretentie')} />
+        <Field {...f('referrals')} {...fp('referrals')} />
       </div>
 
-      {/* ROW 9: OMTM */}
+      {/* ROW 9: OMTM — Fix 6: subtekst eronder, Fix 7: ArnoBot via Field */}
       <div style={{ ...s.sectionDivider, paddingBottom: '80px' }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '24px' }}>
-          <span style={{ fontFamily: 'var(--font-bebas)', fontSize: '20px', letterSpacing: '4px', color: '#1a1714', whiteSpace: 'nowrap' }}>OMTM</span>
-          <span style={{ fontSize: '13px', color: '#1a1714', opacity: 0.5, whiteSpace: 'nowrap' }}>Wat is de belangrijkste prestatie-indicator?</span>
-          <input style={{ ...s.input, borderBottom: '1px solid #EE7700' }} value={answers['omtm'] || ''} onChange={e => handleChange('omtm', e.target.value)} onBlur={() => handleBlur('omtm')} placeholder="..." />
-        </div>
+        <Field {...f('omtm')} {...fp('omtm')} />
       </div>
 
       {saveStatus && <p style={s.saveStatus}>{saveStatus}</p>}
