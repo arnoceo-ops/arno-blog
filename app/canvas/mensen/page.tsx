@@ -191,9 +191,6 @@ export default function MensenPage() {
 
 Dan:
 ```
-git add .
-git commit -m "add error handling to save in mensen and uitvoering"
-git push origin master
     setTimeout(() => setSaveStatus(''), 2000)
   }, [user])
 
