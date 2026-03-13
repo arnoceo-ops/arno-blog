@@ -171,7 +171,7 @@ export default function MensenPage() {
   useEffect(() => {
     if (!user) return
     ;(async () => {
-      const { data } = await supabase.from('canvas_answers').select('question_id, answer').eq('user_id', user.id).like('question_id', `${PREFIX}_%`) as unknown as { data: { question_id: string; answer: string }[] | null; error: unknown }
+      const { data } = await supabase.from('canvas_answers').select('question_id, answer').eq('user_id', user.id).like('question_id', `${PREFIX}_%`)
       if (data) {
         const map: Record<string, string> = {}
         data.forEach(r => { map[r.question_id.slice(PREFIX.length + 1)] = r.answer })
@@ -183,7 +183,7 @@ export default function MensenPage() {
   const save = useCallback(async (id: string, value: string) => {
     if (!user) return
     setSaveStatus('OPSLAAN...')
-    await (supabase.from('canvas_answers') as any).upsert({ user_id: user.id, question_id: `${PREFIX}_${id}`, answer: value }, { onConflict: 'user_id,question_id' })
+    await supabase.from('canvas_answers').upsert({ user_id: user.id, question_id: `${PREFIX}_${id}`, answer: value }, { onConflict: 'user_id,question_id' })
     setSaveStatus('OPGESLAGEN ✓')
     setTimeout(() => setSaveStatus(''), 2000)
   }, [user])

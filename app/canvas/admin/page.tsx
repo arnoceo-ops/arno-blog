@@ -42,12 +42,12 @@ export default function AdminPage() {
 
       if (profiles) {
         const withScores = await Promise.all(
-          (profiles as UserProfile[]).map(async (profile) => {
+          profiles.map(async (profile) => {
             const { data: answers } = await supabase
               .from('canvas_answers')
               .select('question_id, answer')
               .eq('user_id', profile.user_id)
-            const filled = answers?.filter((a: { answer?: string }) => a.answer?.trim()).length || 0
+            const filled = answers?.filter(a => a.answer?.trim()).length || 0
             const health_score = Math.round((filled / ALL_TOTAL) * 100)
             return { ...profile, health_score }
           })
@@ -63,7 +63,7 @@ export default function AdminPage() {
     if (!inviteEmail.trim() || !user) return
     setInviteStatus('Versturen...')
     try {
-      await (supabase.from('invites') as any).insert({
+      await supabase.from('invites').insert({
         email: inviteEmail.trim(),
         invited_by: user.id,
       })
