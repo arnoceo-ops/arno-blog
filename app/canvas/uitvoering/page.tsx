@@ -71,6 +71,20 @@ const BEBAS: React.CSSProperties = { fontFamily: 'var(--font-bebas), sans-serif'
 const MONO18: React.CSSProperties = { fontFamily: 'var(--font-space-mono, monospace)', fontSize: '18px', color: '#1a1714' }
 const MONO_SUB: React.CSSProperties = { ...MONO18, opacity: 0.5, marginBottom: '14px' }
 const LINE: React.CSSProperties = { flex: 1, height: '1px', backgroundColor: '#e0d8cc' }
+
+function autoResize(el: HTMLTextAreaElement) {
+  el.style.height = 'auto'
+  el.style.height = el.scrollHeight + 'px'
+}
+
+function ArnobotBox({ text, onClose, style }: { text: string; onClose: () => void; style?: React.CSSProperties }) {
+  return (
+    <div style={{ position: 'relative', marginTop: '12px', borderLeft: '2px solid #EE7700', fontSize: '18px', lineHeight: 1.8, color: '#1a1714', opacity: 0.8, fontFamily: 'var(--font-space-mono, monospace)', backgroundColor: '#fdf6ec', padding: '12px 36px 12px 12px', ...style }}>
+      <button onClick={onClose} style={{ position: 'absolute', top: '10px', right: '12px', background: 'none', border: 'none', color: '#EE7700', fontSize: '16px', cursor: 'pointer', padding: '0', lineHeight: 1 }} title="Sluiten">00d7</button>
+      {text}
+    </div>
+  )
+}
 // ─────────────────────────────────────────────────────────────────────
 
 const s = {
@@ -104,7 +118,10 @@ function Field({ id, label, sub, type, value, onChange, onBlur, feedback, loadin
       <div style={s.fieldLabel}>{label}<span style={s.fieldLabelLine} /></div>
       {sub && <div style={s.fieldSub}>{sub}</div>}
       {type === 'textarea'
-        ? <textarea style={s.textarea} value={value} onChange={e => onChange(id, e.target.value)} onBlur={() => onBlur(id)} placeholder="..." rows={3} />
+        ? <textarea style={{ ...s.textarea, overflow: 'hidden' }} value={value}
+            onChange={e => { onChange(id, e.target.value); autoResize(e.target) }}
+            onInput={e => autoResize(e.currentTarget)}
+            onBlur={() => onBlur(id)} placeholder="..." rows={3} />
         : <input style={s.input} value={value} onChange={e => onChange(id, e.target.value)} onBlur={() => onBlur(id)} placeholder="..." />
       }
       {hasAnswer && (
@@ -112,7 +129,7 @@ function Field({ id, label, sub, type, value, onChange, onBlur, feedback, loadin
           {loading ? '→ ARNOBOT DENKT...' : feedback ? '→ OPNIEUW VRAGEN' : '→ ARNOBOT'}
         </button>
       )}
-      {feedback && !loading && <div style={s.arnobotBox}>{feedback}</div>}
+      {feedback && !loading && <ArnobotBox text={feedback} onClose={() => onArnoBot(id, '__clear__', '')} />}
     </div>
   )
 }
@@ -148,7 +165,7 @@ function OkrCol({ title, sub, prefix, answers, arnobotFeedback, arnobotLoading, 
                 {arnobotLoading[id] ? '→ ARNOBOT DENKT...' : arnobotFeedback[id] ? '→ OPNIEUW VRAGEN' : '→ ARNOBOT'}
               </button>
             )}
-            {arnobotFeedback[id] && !arnobotLoading[id] && <div style={{ ...s.arnobotBox, marginLeft: '34px' }}>{arnobotFeedback[id]}</div>}
+            {arnobotFeedback[id] && !arnobotLoading[id] && <ArnobotBox text={arnobotFeedback[id]} onClose={() => handleArnoBot(id, '__clear__', '')} style={{ marginLeft: '34px' }} />}
           </div>
         )
       })}
@@ -169,7 +186,7 @@ function NumberCol({ id, label, value, onChange, onBlur, feedback, loading, onAr
           {loading ? '→ ARNOBOT DENKT...' : feedback ? '→ OPNIEUW VRAGEN' : '→ ARNOBOT'}
         </button>
       )}
-      {feedback && !loading && <div style={s.arnobotBox}>{feedback}</div>}
+      {feedback && !loading && <ArnobotBox text={feedback} onClose={() => onArnoBot(id, '__clear__', '')} />}
     </div>
   )
 }
@@ -189,7 +206,7 @@ function KpiRow({ id, label, value, onChange, onBlur, feedback, loading, onArnoB
           {loading ? '→ ARNOBOT DENKT...' : feedback ? '→ OPNIEUW VRAGEN' : '→ ARNOBOT'}
         </button>
       )}
-      {feedback && !loading && <div style={{ ...s.arnobotBox, marginLeft: '216px' }}>{feedback}</div>}
+      {feedback && !loading && <ArnobotBox text={feedback} onClose={() => onArnoBot(id, '__clear__', '')} style={{ marginLeft: '216px' }} />}
     </div>
   )
 }
@@ -226,6 +243,7 @@ export default function UitvoeringPage() {
   const handleBlur = useCallback((id: string) => setAnswers(prev => { save(id, prev[id] || ''); return prev }), [save])
 
   const handleArnoBot = useCallback((id: string, label: string, sub: string) => {
+    if (label === '__clear__') { setArnobotFeedback(f => ({ ...f, [id]: '' })); return }
     setAnswers(prev => {
       const answer = prev[id] || ''
       setArnobotLoading(l => ({ ...l, [id]: true }))
@@ -280,7 +298,7 @@ export default function UitvoeringPage() {
                     {arnobotLoading[id] ? '→ ARNOBOT DENKT...' : arnobotFeedback[id] ? '→ OPNIEUW VRAGEN' : '→ ARNOBOT'}
                   </button>
                 )}
-                {arnobotFeedback[id] && !arnobotLoading[id] && <div style={s.arnobotBox}>{arnobotFeedback[id]}</div>}
+                {arnobotFeedback[id] && !arnobotLoading[id] && <ArnobotBox text={arnobotFeedback[id]} onClose={() => handleArnoBot(id, '__clear__', '')} />}
               </div>
             )
           })}
@@ -322,7 +340,7 @@ export default function UitvoeringPage() {
                   <div key={id}>
                     <div style={{ display: 'grid', gridTemplateColumns: '24px 1fr', gap: '10px', alignItems: 'flex-start' }}>
                       <span style={{ ...MONO18, opacity: 0.4, paddingTop: '10px' }}>{n}</span>
-                      <textarea style={{ ...s.textarea, minHeight: '70px' }} value={value} onChange={e => handleChange(id, e.target.value)} onBlur={() => handleBlur(id)} placeholder="..." rows={2} />
+                      <textarea style={{ ...s.textarea, minHeight: '70px', overflow: 'hidden' }} value={value} onChange={e => { handleChange(id, e.target.value); autoResize(e.target) }} onInput={e => autoResize(e.currentTarget)} onBlur={() => handleBlur(id)} placeholder="..." rows={2} />
                     </div>
                     {hasAnswer && (
                       <button style={{ ...s.arnobotBtn, opacity: arnobotLoading[id] ? 0.4 : 0.7, marginLeft: '34px' }}
@@ -330,7 +348,7 @@ export default function UitvoeringPage() {
                         {arnobotLoading[id] ? '→ ARNOBOT DENKT...' : arnobotFeedback[id] ? '→ OPNIEUW VRAGEN' : '→ ARNOBOT'}
                       </button>
                     )}
-                    {arnobotFeedback[id] && !arnobotLoading[id] && <div style={{ ...s.arnobotBox, marginLeft: '34px' }}>{arnobotFeedback[id]}</div>}
+                    {arnobotFeedback[id] && !arnobotLoading[id] && <ArnobotBox text={arnobotFeedback[id]} onClose={() => handleArnoBot(id, '__clear__', '')} style={{ marginLeft: '34px' }} />}
                   </div>
                 )
               })}
