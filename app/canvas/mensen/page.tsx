@@ -206,7 +206,7 @@ export default function MensenPage() {
         <div style={{ ...s.groupLabel, marginTop: '48px' }}>
           BENODIGDE CAPACITEIT
           {/* fix 9: subtekst monospace 18px */}
-          <span style={{ ...MONO_SUB, marginBottom: 0, fontSize: '15px' }}>Hoeveel verkopers hebben we nodig om het jaardoel te halen?</span>
+          <span style={{ ...MONO_SUB, marginBottom: 0 }}>Hoeveel verkopers hebben we nodig om het jaardoel te halen?</span>
           <span style={LINE} />
         </div>
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '48px' }}>

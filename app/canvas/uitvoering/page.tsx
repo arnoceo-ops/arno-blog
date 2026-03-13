@@ -40,9 +40,9 @@ const ALL_FIELDS: FieldDef[] = [
   { id: 'numbers_offertes', label: '# Offertes', sub: '', type: 'input' },
   { id: 'numbers_orders', label: '# Orders', sub: '', type: 'input' },
   { id: 'numbers_referrals', label: '# Referrals', sub: '', type: 'input' },
-  { id: 'conversie_leads_bezoeken', label: 'Leads → Bezoeken', sub: '', type: 'input' },
-  { id: 'conversie_bezoeken_offertes', label: 'Bezoeken → Offertes', sub: '', type: 'input' },
-  { id: 'conversie_offertes_orders', label: 'Offertes → Orders', sub: '', type: 'input' },
+  { id: 'conversie_leads_bezoeken', label: 'Bezoeken / Leads', sub: '', type: 'input' },
+  { id: 'conversie_bezoeken_offertes', label: 'Offertes / Bezoeken', sub: '', type: 'input' },
+  { id: 'conversie_offertes_orders', label: 'Orders / Offertes', sub: '', type: 'input' },
   { id: 'wensenlijst', label: 'WENSENLIJST', sub: "Nieuwe Logo's (Olifanten)", type: 'textarea' },
   { id: 'kpi_verkoopcyclus', label: 'Verkoopcyclus', sub: 'Doorlooptijd', type: 'input' },
   { id: 'kpi_conversieratio', label: 'Conversieratio', sub: '', type: 'input' },
@@ -117,38 +117,41 @@ function Field({ id, label, sub, type, value, onChange, onBlur, feedback, loadin
   )
 }
 
-// fix 15: OKR blok met 3 invoervelden onder OWNER
-function OkrBlock({ n, fp }: { n: number; fp: (id: string) => FieldProps }) {
+// Fix 3: OKR kolom — titel Bebas 26px, subtekst Mono 18px, 3 genummerde invoervelden
+function OkrCol({ title, sub, prefix, answers, arnobotFeedback, arnobotLoading, handleChange, handleBlur, handleArnoBot }: {
+  title: string; sub: string; prefix: string
+  answers: Record<string, string>
+  arnobotFeedback: Record<string, string>
+  arnobotLoading: Record<string, boolean>
+  handleChange: (id: string, v: string) => void
+  handleBlur: (id: string) => void
+  handleArnoBot: (id: string, label: string, sub: string) => void
+}) {
   return (
-    <div style={{ borderTop: '1px solid #e0d8cc', paddingTop: '32px', marginBottom: '32px' }}>
-      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '32px' }}>
-        <Field {...fp(`okr_wat_${n}`)} />
-        <Field {...fp(`okr_hoe_${n}`)} />
-        {/* OWNER met 3 losse invoervelden */}
-        <div>
-          <div style={s.fieldLabel}>OWNER<span style={s.fieldLabelLine} /></div>
-          <div style={MONO_SUB}>Wie is verantwoordelijk voor het behalen van dit resultaat?</div>
-          {[1,2,3].map(i => {
-            const id = `okr_owner_${n}_${i}`
-            const p = fp(id)
-            const hasAnswer = !!p.value.trim()
-            return (
-              <div key={id} style={{ marginBottom: '8px' }}>
-                <div style={{ display: 'grid', gridTemplateColumns: '20px 1fr', gap: '10px', alignItems: 'center' }}>
-                  <span style={{ ...MONO18, opacity: 0.4 }}>{i}</span>
-                  <input style={s.input} value={p.value} onChange={e => p.onChange(id, e.target.value)} onBlur={() => p.onBlur(id)} placeholder="..." />
-                </div>
-                {hasAnswer && (
-                  <button style={{ ...s.arnobotBtn, opacity: p.loading ? 0.4 : 0.7, marginLeft: '30px' }} onClick={() => !p.loading && p.onArnoBot(id, `Owner ${n}.${i}`, '')}>
-                    {p.loading ? '→ ARNOBOT DENKT...' : p.feedback ? '→ OPNIEUW VRAGEN' : '→ ARNOBOT'}
-                  </button>
-                )}
-                {p.feedback && !p.loading && <div style={{ ...s.arnobotBox, marginLeft: '30px' }}>{p.feedback}</div>}
-              </div>
-            )
-          })}
-        </div>
-      </div>
+    <div>
+      <div style={{ ...BEBAS, marginBottom: '6px', display: 'flex', alignItems: 'center', gap: '12px' }}>{title}<span style={LINE} /></div>
+      <div style={MONO_SUB}>{sub}</div>
+      {[1,2,3].map(i => {
+        const id = `${prefix}_${i}`
+        const value = answers[id] || ''
+        const hasAnswer = !!value.trim()
+        return (
+          <div key={id} style={{ marginBottom: '12px' }}>
+            <div style={{ display: 'grid', gridTemplateColumns: '24px 1fr', gap: '10px', alignItems: 'center' }}>
+              <span style={{ ...MONO18, opacity: 0.4 }}>{i}</span>
+              <input style={{ backgroundColor: 'transparent', border: 'none', borderBottom: '1px solid #e0d8cc', color: '#1a1714', fontSize: '18px', padding: '8px 0', outline: 'none', fontFamily: 'var(--font-space-mono, monospace)', width: '100%', boxSizing: 'border-box' as const }}
+                value={value} onChange={e => handleChange(id, e.target.value)} onBlur={() => handleBlur(id)} placeholder="..." />
+            </div>
+            {hasAnswer && (
+              <button style={{ ...s.arnobotBtn, opacity: arnobotLoading[id] ? 0.4 : 0.7, marginLeft: '34px' }}
+                onClick={() => !arnobotLoading[id] && handleArnoBot(id, `${title} ${i}`, sub)}>
+                {arnobotLoading[id] ? '→ ARNOBOT DENKT...' : arnobotFeedback[id] ? '→ OPNIEUW VRAGEN' : '→ ARNOBOT'}
+              </button>
+            )}
+            {arnobotFeedback[id] && !arnobotLoading[id] && <div style={{ ...s.arnobotBox, marginLeft: '34px' }}>{arnobotFeedback[id]}</div>}
+          </div>
+        )
+      })}
     </div>
   )
 }
@@ -269,8 +272,7 @@ export default function UitvoeringPage() {
             const hasAnswer = !!answers[id]?.trim()
             return (
               <div key={id}>
-                {/* fix 14a: Bebas 26px */}
-                <div style={{ ...BEBAS, fontSize: '20px', marginBottom: '8px' }}>{f(id).label}</div>
+                <div style={{ ...MONO18, opacity: 0.5, marginBottom: '8px' }}>{f(id).label}</div>
                 <input style={s.input} value={answers[id] || ''} onChange={e => handleChange(id, e.target.value)} onBlur={() => handleBlur(id)} placeholder="..." />
                 {/* fix 14b: ArnoBot */}
                 {hasAnswer && (
@@ -285,26 +287,53 @@ export default function UitvoeringPage() {
         </div>
       </div>
 
-      {/* fix 15: OKR blokken */}
+      {/* Fix 3: OKR — geen lijn, één blok met 3 kolommen elk 3 velden */}
       <div style={{ ...s.sectionDivider, paddingBottom: '48px' }}>
-        <div style={{ ...s.groupLabel, marginBottom: '8px' }}>OKR'S — DOELSTELLINGEN<span style={s.fieldLabelLine} /></div>
-        <OkrBlock n={1} fp={fp} />
-        <OkrBlock n={2} fp={fp} />
-        <OkrBlock n={3} fp={fp} />
+        <div style={{ ...s.groupLabel, marginBottom: '32px' }}>OKR'S — DOELSTELLINGEN<span style={s.fieldLabelLine} /></div>
+        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '48px' }}>
+          <OkrCol title="DOELSTELLING (WAT)" sub="Wat willen we bereiken?" prefix="okr_wat"
+            answers={answers} arnobotFeedback={arnobotFeedback} arnobotLoading={arnobotLoading}
+            handleChange={handleChange} handleBlur={handleBlur} handleArnoBot={handleArnoBot} />
+          <OkrCol title="KERNRESULTAAT (HOE)" sub="Hoe weten we dat we het doel bereikt hebben?" prefix="okr_hoe"
+            answers={answers} arnobotFeedback={arnobotFeedback} arnobotLoading={arnobotLoading}
+            handleChange={handleChange} handleBlur={handleBlur} handleArnoBot={handleArnoBot} />
+          <OkrCol title="OWNER (WIE)" sub="Wie is verantwoordelijk voor het behalen van dit resultaat?" prefix="okr_wie"
+            answers={answers} arnobotFeedback={arnobotFeedback} arnobotLoading={arnobotLoading}
+            handleChange={handleChange} handleBlur={handleBlur} handleArnoBot={handleArnoBot} />
+        </div>
       </div>
 
-      {/* fix 16: KLANTEN blokken — ACTIE vervangen door nummers 1, 2, 3 */}
+      {/* Fix 4: KLANTEN blokken — nummers 1/2/3 in Monospace 18px */}
       <div style={{ ...s.sectionDivider, display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '48px', paddingBottom: '48px' }}>
         {[
           { key: 'krijgen', label: 'KLANTEN KRIJGEN', sub: 'Effectieve leadgeneratie' },
           { key: 'uitbouwen', label: 'KLANTEN UITBOUWEN', sub: '100% klantaandeel' },
-          { key: 'houden', label: 'KLANTEN HOUDEN', sub: 'Levenslange retentie' },
+          { key: 'houden', label: 'KLANTEN BEHOUDEN', sub: 'Levenslange retentie' },
         ].map(({ key, label, sub }) => (
           <div key={key}>
             <div style={{ ...s.groupLabel, marginBottom: '4px' }}>{label}<span style={s.fieldLabelLine} /></div>
             <div style={{ ...MONO_SUB, marginBottom: '24px' }}>{sub}</div>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
-              {[1,2,3].map(n => <Field key={n} {...fp(`klanten_${key}_${n}`)} />)}
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+              {[1,2,3].map(n => {
+                const id = `klanten_${key}_${n}`
+                const value = answers[id] || ''
+                const hasAnswer = !!value.trim()
+                return (
+                  <div key={id}>
+                    <div style={{ display: 'grid', gridTemplateColumns: '24px 1fr', gap: '10px', alignItems: 'flex-start' }}>
+                      <span style={{ ...MONO18, opacity: 0.4, paddingTop: '10px' }}>{n}</span>
+                      <textarea style={{ ...s.textarea, minHeight: '70px' }} value={value} onChange={e => handleChange(id, e.target.value)} onBlur={() => handleBlur(id)} placeholder="..." rows={2} />
+                    </div>
+                    {hasAnswer && (
+                      <button style={{ ...s.arnobotBtn, opacity: arnobotLoading[id] ? 0.4 : 0.7, marginLeft: '34px' }}
+                        onClick={() => !arnobotLoading[id] && handleArnoBot(id, `${label} ${n}`, '')}>
+                        {arnobotLoading[id] ? '→ ARNOBOT DENKT...' : arnobotFeedback[id] ? '→ OPNIEUW VRAGEN' : '→ ARNOBOT'}
+                      </button>
+                    )}
+                    {arnobotFeedback[id] && !arnobotLoading[id] && <div style={{ ...s.arnobotBox, marginLeft: '34px' }}>{arnobotFeedback[id]}</div>}
+                  </div>
+                )
+              })}
             </div>
           </div>
         ))}
