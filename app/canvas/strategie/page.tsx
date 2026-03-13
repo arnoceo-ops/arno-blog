@@ -67,17 +67,60 @@ const MONO_SUB: React.CSSProperties = { ...MONO18, opacity: 0.5, marginBottom: '
 const LINE: React.CSSProperties = { flex: 1, height: '1px', backgroundColor: '#e0d8cc' }
 
 // Auto-resize textarea
-function autoResize(el: HTMLTextAreaElement) {
-  el.style.height = 'auto'
-  el.style.height = el.scrollHeight + 'px'
+function AutoTextarea({ value, onChange, onBlur, style }: { value: string; onChange: (v: string) => void; onBlur: () => void; style?: React.CSSProperties }) {
+  const ref = React.useRef<HTMLTextAreaElement>(null)
+  React.useEffect(() => {
+    const el = ref.current
+    if (!el) return
+    el.style.height = 'auto'
+    el.style.height = el.scrollHeight + 'px'
+  }, [value])
+  return (
+    <textarea
+      ref={ref}
+      style={{ ...style, overflow: 'hidden', resize: 'none' }}
+      value={value}
+      onChange={e => onChange(e.target.value)}
+      onBlur={onBlur}
+      placeholder="..."
+      rows={3}
+    />
+  )
+}: { value: string; onChange: (v: string) => void; onBlur: () => void; placeholder?: string; style?: React.CSSProperties }) {
+  const ref = React.useRef<HTMLTextAreaElement>(null)
+  React.useEffect(() => {
+    if (ref.current) { ref.current.style.height = 'auto'; ref.current.style.height = ref.current.scrollHeight + 'px' }
+  }, [value])
+  return (
+    <textarea
+      ref={ref}
+      style={{ ...style, overflow: 'hidden' }}
+      value={value}
+      onChange={e => onChange(e.target.value)}
+      onBlur={onBlur}
+      placeholder={placeholder ?? '...'}
+      rows={3}
+    />
+  )
 }
 
 // ArnoBot feedback box met sluitknop
 function ArnobotBox({ text, onClose, style }: { text: string; onClose: () => void; style?: React.CSSProperties }) {
   return (
-    <div style={{ position: 'relative', marginTop: '12px', borderLeft: '2px solid #EE7700', fontSize: '18px', lineHeight: 1.8, color: '#1a1714', opacity: 0.8, fontFamily: 'var(--font-space-mono, monospace)', backgroundColor: '#fdf6ec', padding: '12px 36px 12px 12px', ...style }}>
-      <button onClick={onClose} style={{ position: 'absolute', top: '10px', right: '12px', background: 'none', border: 'none', color: '#EE7700', fontSize: '16px', cursor: 'pointer', padding: '0', lineHeight: 1 }} title="Sluiten">×</button>
+    <div style={{ marginTop: '12px', borderLeft: '2px solid #EE7700', fontSize: '18px', lineHeight: 1.8, color: '#1a1714', opacity: 0.8, fontFamily: 'var(--font-space-mono, monospace)', backgroundColor: '#fdf6ec', padding: '12px', ...style }}>
       {text}
+      <button onClick={onClose} style={{ marginTop: '12px', display: 'block', background: 'none', border: 'none', color: '#EE7700', fontSize: '11px', letterSpacing: '2px', cursor: 'pointer', padding: '0' }}>
+        {'→ SLUITEN'}
+      </button>
+    </div>
+  )
+}: { text: string; onClose: () => void; style?: React.CSSProperties }) {
+  return (
+    <div style={{ marginTop: '12px', borderLeft: '2px solid #EE7700', fontSize: '18px', lineHeight: 1.8, color: '#1a1714', opacity: 0.8, fontFamily: 'var(--font-space-mono, monospace)', backgroundColor: '#fdf6ec', padding: '12px', ...style }}>
+      {text}
+      <button onClick={onClose} style={{ marginTop: '12px', display: 'block', background: 'none', border: 'none', color: '#EE7700', fontSize: '11px', letterSpacing: '2px', cursor: 'pointer', padding: '0' }}>
+        → SLUITEN
+      </button>
     </div>
   )
 }
@@ -115,10 +158,7 @@ function Field({ id, label, sub, type, value, onChange, onBlur, feedback, loadin
       <div style={s.fieldLabel}>{label}<span style={s.fieldLabelLine} /></div>
       {sub && <div style={s.fieldSub}>{sub}</div>}
       {type === 'textarea'
-        ? <textarea style={{ ...s.textarea, overflow: 'hidden' }} value={value}
-            onChange={e => { onChange(id, e.target.value); autoResize(e.target) }}
-            onInput={e => autoResize(e.currentTarget)}
-            onBlur={() => onBlur(id)} placeholder="..." rows={3} />
+        ? <AutoTextarea style={s.textarea} value={value} onChange={v => onChange(id, v)} onBlur={() => onBlur(id)} />
         : <input style={s.input} value={value} onChange={e => onChange(id, e.target.value)} onBlur={() => onBlur(id)} placeholder="..." />
       }
       {hasAnswer && (
