@@ -7,39 +7,34 @@ import Link from 'next/link'
 import { PageHero } from '@/components/canvas/PageHero'
 
 type FieldType = 'textarea' | 'input'
-
-interface FieldDef {
-  id: string
-  label: string
-  sub: string
-  type: FieldType
-}
+interface FieldDef { id: string; label: string; sub: string; type: FieldType }
 
 const PREFIX = 'uitvoering'
 
+// fix 15: OKR subteksten aangepast
 const ALL_FIELDS: FieldDef[] = [
   { id: 'kwartaal_jaar', label: 'Kwartaal / Jaar', sub: '', type: 'input' },
   { id: 'themanaam', label: 'Themanaam', sub: '', type: 'input' },
   { id: 'meetbaar_doel', label: 'Meetbaar doel', sub: '', type: 'input' },
   { id: 'cruciale_kpi', label: 'Cruciale KPI', sub: '', type: 'input' },
-  { id: 'okr_wat_1', label: 'DOELSTELLING', sub: 'WAT willen we bereiken?', type: 'textarea' },
-  { id: 'okr_hoe_1', label: 'KERNRESULTAAT', sub: 'HOE meten we succes?', type: 'textarea' },
-  { id: 'okr_wie_1', label: 'EIGENAAR', sub: 'WIE is verantwoordelijk?', type: 'input' },
-  { id: 'okr_wat_2', label: 'DOELSTELLING', sub: 'WAT willen we bereiken?', type: 'textarea' },
-  { id: 'okr_hoe_2', label: 'KERNRESULTAAT', sub: 'HOE meten we succes?', type: 'textarea' },
-  { id: 'okr_wie_2', label: 'EIGENAAR', sub: 'WIE is verantwoordelijk?', type: 'input' },
-  { id: 'okr_wat_3', label: 'DOELSTELLING', sub: 'WAT willen we bereiken?', type: 'textarea' },
-  { id: 'okr_hoe_3', label: 'KERNRESULTAAT', sub: 'HOE meten we succes?', type: 'textarea' },
-  { id: 'okr_wie_3', label: 'EIGENAAR', sub: 'WIE is verantwoordelijk?', type: 'input' },
-  { id: 'klanten_krijgen_1', label: 'Actie', sub: '', type: 'textarea' },
-  { id: 'klanten_krijgen_2', label: 'Actie', sub: '', type: 'textarea' },
-  { id: 'klanten_krijgen_3', label: 'Actie', sub: '', type: 'textarea' },
-  { id: 'klanten_uitbouwen_1', label: 'Actie', sub: '', type: 'textarea' },
-  { id: 'klanten_uitbouwen_2', label: 'Actie', sub: '', type: 'textarea' },
-  { id: 'klanten_uitbouwen_3', label: 'Actie', sub: '', type: 'textarea' },
-  { id: 'klanten_houden_1', label: 'Actie', sub: '', type: 'textarea' },
-  { id: 'klanten_houden_2', label: 'Actie', sub: '', type: 'textarea' },
-  { id: 'klanten_houden_3', label: 'Actie', sub: '', type: 'textarea' },
+  { id: 'okr_wat_1', label: 'DOELSTELLING (WAT)', sub: 'Wat willen we bereiken?', type: 'textarea' },
+  { id: 'okr_hoe_1', label: 'KERNRESULTAAT (HOE)', sub: 'Hoe weten we dat we het doel bereikt hebben?', type: 'textarea' },
+  { id: 'okr_wie_1', label: 'OWNER', sub: 'Wie is verantwoordelijk voor het behalen van dit resultaat?', type: 'input' },
+  { id: 'okr_wat_2', label: 'DOELSTELLING (WAT)', sub: 'Wat willen we bereiken?', type: 'textarea' },
+  { id: 'okr_hoe_2', label: 'KERNRESULTAAT (HOE)', sub: 'Hoe weten we dat we het doel bereikt hebben?', type: 'textarea' },
+  { id: 'okr_wie_2', label: 'OWNER', sub: 'Wie is verantwoordelijk voor het behalen van dit resultaat?', type: 'input' },
+  { id: 'okr_wat_3', label: 'DOELSTELLING (WAT)', sub: 'Wat willen we bereiken?', type: 'textarea' },
+  { id: 'okr_hoe_3', label: 'KERNRESULTAAT (HOE)', sub: 'Hoe weten we dat we het doel bereikt hebben?', type: 'textarea' },
+  { id: 'okr_wie_3', label: 'OWNER', sub: 'Wie is verantwoordelijk voor het behalen van dit resultaat?', type: 'input' },
+  { id: 'klanten_krijgen_1', label: '1', sub: '', type: 'textarea' },
+  { id: 'klanten_krijgen_2', label: '2', sub: '', type: 'textarea' },
+  { id: 'klanten_krijgen_3', label: '3', sub: '', type: 'textarea' },
+  { id: 'klanten_uitbouwen_1', label: '1', sub: '', type: 'textarea' },
+  { id: 'klanten_uitbouwen_2', label: '2', sub: '', type: 'textarea' },
+  { id: 'klanten_uitbouwen_3', label: '3', sub: '', type: 'textarea' },
+  { id: 'klanten_houden_1', label: '1', sub: '', type: 'textarea' },
+  { id: 'klanten_houden_2', label: '2', sub: '', type: 'textarea' },
+  { id: 'klanten_houden_3', label: '3', sub: '', type: 'textarea' },
   { id: 'numbers_leads', label: '# Leads', sub: '', type: 'input' },
   { id: 'numbers_bezoeken', label: '# Bezoeken', sub: '', type: 'input' },
   { id: 'numbers_offertes', label: '# Offertes', sub: '', type: 'input' },
@@ -66,23 +61,22 @@ const ALL_FIELDS: FieldDef[] = [
 
 async function getArnoBotFeedback(label: string, sub: string, answer: string): Promise<string> {
   if (!answer.trim()) return 'Vul dit veld in voor ArnoBot feedback.'
-  const response = await fetch('/api/arnobot', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ label, sub, answer }),
-  })
-  if (!response.ok) throw new Error('ArnoBot request failed')
-  const data = await response.json()
-  return data.feedback
+  const res = await fetch('/api/arnobot', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ label, sub, answer }) })
+  if (!res.ok) throw new Error('ArnoBot request failed')
+  return (await res.json()).feedback
 }
 
+// ─── GEDEELDE STIJLCONSTANTEN ─────────────────────────────────────────
 const BEBAS: React.CSSProperties = { fontFamily: 'var(--font-bebas), sans-serif', fontSize: '26px', letterSpacing: '3px', color: '#1a1714' }
-const MONO_SUB: React.CSSProperties = { fontFamily: 'var(--font-space-mono, monospace)', fontSize: '18px', color: '#1a1714', opacity: 0.5, marginBottom: '14px' }
+const MONO18: React.CSSProperties = { fontFamily: 'var(--font-space-mono, monospace)', fontSize: '18px', color: '#1a1714' }
+const MONO_SUB: React.CSSProperties = { ...MONO18, opacity: 0.5, marginBottom: '14px' }
 const LINE: React.CSSProperties = { flex: 1, height: '1px', backgroundColor: '#e0d8cc' }
+// ─────────────────────────────────────────────────────────────────────
 
 const s = {
   page: { backgroundColor: '#f5f0e8', minHeight: '100vh', color: '#1a1714', fontFamily: 'var(--font-barlow, sans-serif)' } as React.CSSProperties,
-  nav: { display: 'flex', alignItems: 'center', gap: '16px', padding: '24px 48px', fontSize: '12px', letterSpacing: '3px', borderBottom: '1px solid #e0d8cc' } as React.CSSProperties,
+  // fix 13: nav Bebas 36px
+  nav: { display: 'flex', alignItems: 'center', gap: '16px', padding: '24px 48px', fontFamily: 'var(--font-bebas), sans-serif', fontSize: '36px', letterSpacing: '3px', borderBottom: '1px solid #e0d8cc' } as React.CSSProperties,
   sectionDivider: { borderTop: '1px solid #e0d8cc', padding: '48px 48px 0' } as React.CSSProperties,
   fieldLabel: { ...BEBAS, marginBottom: '6px', display: 'flex', alignItems: 'center', gap: '12px' } as React.CSSProperties,
   fieldLabelLine: LINE,
@@ -90,7 +84,8 @@ const s = {
   textarea: { width: '100%', backgroundColor: 'transparent', border: 'none', borderBottom: '1px solid #e0d8cc', color: '#1a1714', fontSize: '18px', padding: '12px 0', resize: 'none' as const, outline: 'none', fontFamily: 'var(--font-space-mono, monospace)', lineHeight: 1.8, minHeight: '90px', boxSizing: 'border-box' as const },
   input: { width: '100%', backgroundColor: 'transparent', border: 'none', borderBottom: '1px solid #e0d8cc', color: '#1a1714', fontSize: '18px', padding: '10px 0', outline: 'none', fontFamily: 'var(--font-space-mono, monospace)', boxSizing: 'border-box' as const },
   arnobotBtn: { marginTop: '8px', background: 'none', border: 'none', color: '#EE7700', fontSize: '11px', letterSpacing: '2px', cursor: 'pointer', padding: '0' } as React.CSSProperties,
-  arnobotBox: { marginTop: '12px', borderLeft: '2px solid #EE7700', paddingLeft: '12px', fontSize: '13px', lineHeight: 1.8, color: '#1a1714', opacity: 0.8, fontFamily: 'var(--font-space-mono, monospace)', backgroundColor: '#fdf6ec', padding: '12px' } as React.CSSProperties,
+  // fix 1: arnobotBox 18px
+  arnobotBox: { marginTop: '12px', borderLeft: '2px solid #EE7700', paddingLeft: '12px', fontSize: '18px', lineHeight: 1.8, color: '#1a1714', opacity: 0.8, fontFamily: 'var(--font-space-mono, monospace)', backgroundColor: '#fdf6ec', padding: '12px' } as React.CSSProperties,
   saveStatus: { position: 'fixed' as const, bottom: '24px', right: '24px', fontSize: '11px', letterSpacing: '3px', color: '#EE7700', opacity: 0.8 },
   groupLabel: { ...BEBAS, marginBottom: '8px', display: 'flex', alignItems: 'center', gap: '12px' } as React.CSSProperties,
   groupSub: MONO_SUB,
@@ -122,11 +117,49 @@ function Field({ id, label, sub, type, value, onChange, onBlur, feedback, loadin
   )
 }
 
-function NumberCol({ id, label, value, onChange, onBlur, feedback, loading, onArnoBot }: { id: string; label: string; value: string; onChange: (id: string, v: string) => void; onBlur: (id: string) => void; feedback: string; loading: boolean; onArnoBot: (id: string, label: string, sub: string) => void }) {
+// fix 15: OKR blok met 3 invoervelden onder OWNER
+function OkrBlock({ n, fp }: { n: number; fp: (id: string) => FieldProps }) {
+  return (
+    <div style={{ borderTop: '1px solid #e0d8cc', paddingTop: '32px', marginBottom: '32px' }}>
+      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '32px' }}>
+        <Field {...fp(`okr_wat_${n}`)} />
+        <Field {...fp(`okr_hoe_${n}`)} />
+        {/* OWNER met 3 losse invoervelden */}
+        <div>
+          <div style={s.fieldLabel}>OWNER<span style={s.fieldLabelLine} /></div>
+          <div style={MONO_SUB}>Wie is verantwoordelijk voor het behalen van dit resultaat?</div>
+          {[1,2,3].map(i => {
+            const id = `okr_owner_${n}_${i}`
+            const p = fp(id)
+            const hasAnswer = !!p.value.trim()
+            return (
+              <div key={id} style={{ marginBottom: '8px' }}>
+                <div style={{ display: 'grid', gridTemplateColumns: '20px 1fr', gap: '10px', alignItems: 'center' }}>
+                  <span style={{ ...MONO18, opacity: 0.4 }}>{i}</span>
+                  <input style={s.input} value={p.value} onChange={e => p.onChange(id, e.target.value)} onBlur={() => p.onBlur(id)} placeholder="..." />
+                </div>
+                {hasAnswer && (
+                  <button style={{ ...s.arnobotBtn, opacity: p.loading ? 0.4 : 0.7, marginLeft: '30px' }} onClick={() => !p.loading && p.onArnoBot(id, `Owner ${n}.${i}`, '')}>
+                    {p.loading ? '→ ARNOBOT DENKT...' : p.feedback ? '→ OPNIEUW VRAGEN' : '→ ARNOBOT'}
+                  </button>
+                )}
+                {p.feedback && !p.loading && <div style={{ ...s.arnobotBox, marginLeft: '30px' }}>{p.feedback}</div>}
+              </div>
+            )
+          })}
+        </div>
+      </div>
+    </div>
+  )
+}
+
+// fix 17: NumberCol met monospace 18px label
+function NumberCol({ id, label, value, onChange, onBlur, feedback, loading, onArnoBot }: FieldProps) {
   const hasAnswer = !!value.trim()
   return (
     <div style={{ borderTop: '1px solid #e0d8cc', paddingTop: '16px' }}>
-      <div style={{ ...BEBAS, fontSize: '18px', letterSpacing: '2px', color: '#1a1714', marginBottom: '12px' }}>{label}</div>
+      {/* fix 17: monospace 18px */}
+      <div style={{ ...MONO18, opacity: 0.6, marginBottom: '12px' }}>{label}</div>
       <input style={s.input} value={value} onChange={e => onChange(id, e.target.value)} onBlur={() => onBlur(id)} placeholder="..." />
       {hasAnswer && (
         <button style={{ ...s.arnobotBtn, opacity: loading ? 0.4 : 0.7 }} onClick={() => !loading && onArnoBot(id, label, '')}>
@@ -138,20 +171,22 @@ function NumberCol({ id, label, value, onChange, onBlur, feedback, loading, onAr
   )
 }
 
-function KpiRow({ id, label, value, onChange, onBlur, feedback, loading, onArnoBot }: { id: string; label: string; value: string; onChange: (id: string, v: string) => void; onBlur: (id: string) => void; feedback: string; loading: boolean; onArnoBot: (id: string, label: string, sub: string) => void }) {
+// fix 18: KpiRow met monospace 18px label
+function KpiRow({ id, label, value, onChange, onBlur, feedback, loading, onArnoBot }: FieldProps) {
   const hasAnswer = !!value.trim()
   return (
     <div style={{ marginBottom: '4px' }}>
-      <div style={{ display: 'grid', gridTemplateColumns: '180px 1fr', alignItems: 'center', gap: '16px', borderBottom: '1px solid #e0d8cc', padding: '10px 0' }}>
-        <span style={{ fontFamily: 'var(--font-space-mono, monospace)', fontSize: '14px', color: '#1a1714', opacity: 0.5 }}>{label}</span>
+      <div style={{ display: 'grid', gridTemplateColumns: '200px 1fr', alignItems: 'center', gap: '16px', borderBottom: '1px solid #e0d8cc', padding: '10px 0' }}>
+        {/* fix 18: monospace 18px */}
+        <span style={{ ...MONO18, opacity: 0.5 }}>{label}</span>
         <input style={{ backgroundColor: 'transparent', border: 'none', borderBottom: '1px solid #e0d8cc', color: '#1a1714', fontSize: '18px', padding: '4px 0', outline: 'none', fontFamily: 'var(--font-space-mono, monospace)', width: '100%', boxSizing: 'border-box' as const }} value={value} onChange={e => onChange(id, e.target.value)} onBlur={() => onBlur(id)} placeholder="..." />
       </div>
       {hasAnswer && (
-        <button style={{ ...s.arnobotBtn, opacity: loading ? 0.4 : 0.7, marginLeft: '196px' }} onClick={() => !loading && onArnoBot(id, label, '')}>
+        <button style={{ ...s.arnobotBtn, opacity: loading ? 0.4 : 0.7, marginLeft: '216px' }} onClick={() => !loading && onArnoBot(id, label, '')}>
           {loading ? '→ ARNOBOT DENKT...' : feedback ? '→ OPNIEUW VRAGEN' : '→ ARNOBOT'}
         </button>
       )}
-      {feedback && !loading && <div style={{ ...s.arnobotBox, marginLeft: '196px' }}>{feedback}</div>}
+      {feedback && !loading && <div style={{ ...s.arnobotBox, marginLeft: '216px' }}>{feedback}</div>}
     </div>
   )
 }
@@ -166,58 +201,45 @@ export default function UitvoeringPage() {
 
   useEffect(() => {
     if (!user) return
-    const load = async () => {
-      const { data } = await supabase
-        .from('canvas_answers')
-        .select('question_id, answer')
-        .eq('user_id', user.id)
-        .in('question_id', ALL_FIELDS.map(f => `${PREFIX}_${f.id}`))
+    ;(async () => {
+      const { data } = await supabase.from('canvas_answers').select('question_id, answer').eq('user_id', user.id).in('question_id', ALL_FIELDS.map(f => `${PREFIX}_${f.id}`))
       if (data) {
         const map: Record<string, string> = {}
-        data.forEach(row => { map[row.question_id.replace(`${PREFIX}_`, '')] = row.answer })
+        data.forEach(r => { map[r.question_id.replace(`${PREFIX}_`, '')] = r.answer })
         setAnswers(map)
       }
-    }
-    load()
+    })()
   }, [user])
 
   const save = useCallback(async (id: string, value: string) => {
     if (!user) return
     setSaveStatus('OPSLAAN...')
-    await supabase.from('canvas_answers').upsert({
-      user_id: user.id,
-      question_id: `${PREFIX}_${id}`,
-      answer: value,
-    }, { onConflict: 'user_id,question_id' })
+    await supabase.from('canvas_answers').upsert({ user_id: user.id, question_id: `${PREFIX}_${id}`, answer: value }, { onConflict: 'user_id,question_id' })
     setSaveStatus('OPGESLAGEN ✓')
     setTimeout(() => setSaveStatus(''), 2000)
   }, [user])
 
-  const handleChange = useCallback((id: string, value: string) => {
-    setAnswers(prev => ({ ...prev, [id]: value }))
-  }, [])
+  const handleChange = useCallback((id: string, value: string) => setAnswers(prev => ({ ...prev, [id]: value })), [])
+  const handleBlur = useCallback((id: string) => setAnswers(prev => { save(id, prev[id] || ''); return prev }), [save])
 
-  const handleBlur = useCallback((id: string) => {
-    setAnswers(prev => {
-      save(id, prev[id] || '')
-      return prev
-    })
-  }, [save])
-
-  const handleArnoBot = useCallback(async (id: string, label: string, sub: string) => {
+  const handleArnoBot = useCallback((id: string, label: string, sub: string) => {
     setAnswers(prev => {
       const answer = prev[id] || ''
       setArnobotLoading(l => ({ ...l, [id]: true }))
       setArnobotFeedback(f => ({ ...f, [id]: '' }))
       getArnoBotFeedback(label, sub, answer)
-        .then(feedback => setArnobotFeedback(f => ({ ...f, [id]: feedback })))
+        .then(fb => setArnobotFeedback(f => ({ ...f, [id]: fb })))
         .catch(() => setArnobotFeedback(f => ({ ...f, [id]: 'ArnoBot is tijdelijk niet beschikbaar.' })))
         .finally(() => setArnobotLoading(l => ({ ...l, [id]: false })))
       return prev
     })
   }, [])
 
-  const fp = (id: string) => ({
+  const fp = (id: string): FieldProps => ({
+    id,
+    label: ALL_FIELDS.find(x => x.id === id)?.label ?? id,
+    sub: ALL_FIELDS.find(x => x.id === id)?.sub ?? '',
+    type: ALL_FIELDS.find(x => x.id === id)?.type ?? 'input',
     value: answers[id] || '',
     onChange: handleChange,
     onBlur: handleBlur,
@@ -226,22 +248,11 @@ export default function UitvoeringPage() {
     onArnoBot: handleArnoBot,
   })
 
-  const numColProps = (id: string) => ({
-    ...fp(id),
-    id,
-    label: ALL_FIELDS.find(x => x.id === id)!.label,
-  })
-
-  const kpiProps = (id: string) => ({
-    ...fp(id),
-    id,
-    label: ALL_FIELDS.find(x => x.id === id)!.label,
-  })
-
   const f = (id: string) => ALL_FIELDS.find(x => x.id === id)!
 
   return (
     <main style={s.page}>
+      {/* fix 13: nav Bebas 36px */}
       <nav style={s.nav}>
         <Link href="/canvas" style={{ color: '#1a1714', textDecoration: 'none', opacity: 0.4 }}>← CANVAS</Link>
         <span style={{ opacity: 0.2 }}>/</span>
@@ -250,32 +261,39 @@ export default function UitvoeringPage() {
 
       <PageHero number={3} />
 
-      {/* KWARTAALTHEMA */}
+      {/* fix 14a+b: KWARTAALTHEMA — Bebas 26px labels, ArnoBot per veld */}
       <div style={{ ...s.sectionDivider, paddingBottom: '48px' }}>
         <div style={{ ...s.groupLabel, marginBottom: '24px' }}>KWARTAALTHEMA<span style={s.fieldLabelLine} /></div>
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr 1fr', gap: '32px' }}>
-          {(['kwartaal_jaar','themanaam','meetbaar_doel','cruciale_kpi'] as const).map(id => (
-            <div key={id}>
-              <div style={{ fontFamily: 'var(--font-space-mono, monospace)', fontSize: '14px', color: '#1a1714', opacity: 0.4, letterSpacing: '2px', marginBottom: '8px' }}>{f(id).label}</div>
-              <input style={s.input} value={answers[id] || ''} onChange={e => handleChange(id, e.target.value)} onBlur={() => handleBlur(id)} placeholder="..." />
-            </div>
-          ))}
+          {(['kwartaal_jaar','themanaam','meetbaar_doel','cruciale_kpi'] as const).map(id => {
+            const hasAnswer = !!answers[id]?.trim()
+            return (
+              <div key={id}>
+                {/* fix 14a: Bebas 26px */}
+                <div style={{ ...BEBAS, fontSize: '20px', marginBottom: '8px' }}>{f(id).label}</div>
+                <input style={s.input} value={answers[id] || ''} onChange={e => handleChange(id, e.target.value)} onBlur={() => handleBlur(id)} placeholder="..." />
+                {/* fix 14b: ArnoBot */}
+                {hasAnswer && (
+                  <button style={{ ...s.arnobotBtn, opacity: arnobotLoading[id] ? 0.4 : 0.7 }} onClick={() => !arnobotLoading[id] && handleArnoBot(id, f(id).label, '')}>
+                    {arnobotLoading[id] ? '→ ARNOBOT DENKT...' : arnobotFeedback[id] ? '→ OPNIEUW VRAGEN' : '→ ARNOBOT'}
+                  </button>
+                )}
+                {arnobotFeedback[id] && !arnobotLoading[id] && <div style={s.arnobotBox}>{arnobotFeedback[id]}</div>}
+              </div>
+            )
+          })}
         </div>
       </div>
 
-      {/* OKR'S */}
+      {/* fix 15: OKR blokken */}
       <div style={{ ...s.sectionDivider, paddingBottom: '48px' }}>
-        <div style={{ ...s.groupLabel, marginBottom: '32px' }}>OKR'S — DOELSTELLINGEN<span style={s.fieldLabelLine} /></div>
-        {[1,2,3].map(n => (
-          <div key={n} style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '32px', marginBottom: n < 3 ? '32px' : 0 }}>
-            <Field {...f(`okr_wat_${n}`)} {...fp(`okr_wat_${n}`)} />
-            <Field {...f(`okr_hoe_${n}`)} {...fp(`okr_hoe_${n}`)} />
-            <Field {...f(`okr_wie_${n}`)} {...fp(`okr_wie_${n}`)} />
-          </div>
-        ))}
+        <div style={{ ...s.groupLabel, marginBottom: '8px' }}>OKR'S — DOELSTELLINGEN<span style={s.fieldLabelLine} /></div>
+        <OkrBlock n={1} fp={fp} />
+        <OkrBlock n={2} fp={fp} />
+        <OkrBlock n={3} fp={fp} />
       </div>
 
-      {/* KLANTEN KRIJGEN / UITBOUWEN / HOUDEN */}
+      {/* fix 16: KLANTEN blokken — ACTIE vervangen door nummers 1, 2, 3 */}
       <div style={{ ...s.sectionDivider, display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '48px', paddingBottom: '48px' }}>
         {[
           { key: 'krijgen', label: 'KLANTEN KRIJGEN', sub: 'Effectieve leadgeneratie' },
@@ -286,56 +304,53 @@ export default function UitvoeringPage() {
             <div style={{ ...s.groupLabel, marginBottom: '4px' }}>{label}<span style={s.fieldLabelLine} /></div>
             <div style={{ ...MONO_SUB, marginBottom: '24px' }}>{sub}</div>
             <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
-              {[1,2,3].map(n => <Field key={n} {...f(`klanten_${key}_${n}`)} {...fp(`klanten_${key}_${n}`)} />)}
+              {[1,2,3].map(n => <Field key={n} {...fp(`klanten_${key}_${n}`)} />)}
             </div>
           </div>
         ))}
       </div>
 
-      {/* NUMBERS + CONVERSIES */}
+      {/* fix 17: AANTALLEN & CONVERSIES */}
       <div style={{ ...s.sectionDivider, paddingBottom: '48px' }}>
-        <div style={{ ...s.groupLabel, marginBottom: '32px' }}>NUMBERS & CONVERSIES<span style={s.fieldLabelLine} /></div>
+        <div style={{ ...s.groupLabel, marginBottom: '32px' }}>AANTALLEN & CONVERSIES<span style={s.fieldLabelLine} /></div>
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(5, 1fr)', gap: '24px', marginBottom: '32px' }}>
           {(['numbers_leads','numbers_bezoeken','numbers_offertes','numbers_orders','numbers_referrals'] as const).map(id => (
-            <NumberCol key={id} {...numColProps(id)} />
+            <NumberCol key={id} {...fp(id)} />
           ))}
         </div>
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '24px' }}>
           {(['conversie_leads_bezoeken','conversie_bezoeken_offertes','conversie_offertes_orders'] as const).map(id => (
-            <NumberCol key={id} {...numColProps(id)} />
+            <NumberCol key={id} {...fp(id)} />
           ))}
         </div>
       </div>
 
-      {/* PAGINA 6 */}
-      <div style={{ ...s.sectionDivider, borderTop: '2px solid #EE7700', paddingBottom: '0' }}>
-        <p style={{ color: '#EE7700', fontSize: '12px', letterSpacing: '4px', opacity: 0.6, margin: '0 0 40px' }}>PAGINA 06 — KPI DASHBOARD</p>
-      </div>
+      {/* fix 12: PAGINA 06 label verwijderd */}
 
       {/* WENSENLIJST */}
-      <div style={{ padding: '48px 48px 48px', borderTop: '1px solid #e0d8cc' }}>
-        <Field {...f('wensenlijst')} {...fp('wensenlijst')} />
+      <div style={{ ...s.sectionDivider, paddingBottom: '48px' }}>
+        <Field {...fp('wensenlijst')} />
       </div>
 
-      {/* KPI DASHBOARD */}
+      {/* fix 18: KPI DASHBOARD */}
       <div style={{ ...s.sectionDivider, paddingBottom: '48px' }}>
         <div style={{ ...s.groupLabel, marginBottom: '24px' }}>DOELEN EN KPI DASHBOARD<span style={s.fieldLabelLine} /></div>
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0 80px' }}>
           {(['kpi_verkoopcyclus','kpi_conversieratio','kpi_klantaandeel','kpi_klantretentie','kpi_forecast','kpi_ordergrootte','kpi_nieuwe_logos','kpi_omzet','kpi_winst','kpi_referrals'] as const).map(id => (
-            <KpiRow key={id} {...kpiProps(id)} />
+            <KpiRow key={id} {...fp(id)} />
           ))}
         </div>
       </div>
 
       {/* VERKOOPPROCES */}
       <div style={{ ...s.sectionDivider, paddingBottom: '48px' }}>
-        <Field {...f('verkoopproces')} {...fp('verkoopproces')} />
+        <Field {...fp('verkoopproces')} />
       </div>
 
       {/* FEESTJE + BELONING */}
       <div style={{ ...s.sectionDivider, display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '48px', paddingBottom: '80px' }}>
-        <Field {...f('feestje')} {...fp('feestje')} />
-        <Field {...f('beloning')} {...fp('beloning')} />
+        <Field {...fp('feestje')} />
+        <Field {...fp('beloning')} />
       </div>
 
       {saveStatus && <p style={s.saveStatus}>{saveStatus}</p>}
