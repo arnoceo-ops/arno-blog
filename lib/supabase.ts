@@ -6,6 +6,7 @@ import type { Database } from '@/types/supabase'
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!
 const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
 
+// ─── ADMIN (server-side alleen) ───────────────────────────────────────
 let _adminClient: ReturnType<typeof createClient<Database>> | null = null
 
 export function getSupabaseAdmin() {
@@ -18,12 +19,9 @@ export function getSupabaseAdmin() {
   return _adminClient
 }
 
-// Client Components — stabiele client, maar getToken altijd vers via ref
+// ─── CLIENT HOOK — gebruikt Clerk JWT via accessToken callback ────────
 export function useSupabaseClient() {
   const { getToken } = useAuth()
-
-  // Sla getToken op in een ref zodat de client niet opnieuw aangemaakt hoeft
-  // te worden, maar toch altijd de laatste token gebruikt
   const getTokenRef = useRef(getToken)
   getTokenRef.current = getToken
 
@@ -31,18 +29,9 @@ export function useSupabaseClient() {
 
   if (!clientRef.current) {
     clientRef.current = createClient<Database>(supabaseUrl, supabaseAnonKey, {
-      global: {
-        fetch: async (url, options = {}) => {
-  const token = await getTokenRef.current({ template: 'supabase' })
-  return fetch(url, {
-    ...options,
-    headers: {
-      ...((options as RequestInit).headers ?? {}),
-      'apikey': supabaseAnonKey,
-      ...(token ? { Authorization: `Bearer ${token}` } : {}),
-    },
-  })
-},
+      accessToken: async () => {
+        const token = await getTokenRef.current({ template: 'supabase' })
+        return token ?? ''
       },
     })
   }
@@ -50,16 +39,13 @@ export function useSupabaseClient() {
   return clientRef.current
 }
 
+// ─── SERVER CLIENT ────────────────────────────────────────────────────
 export async function createSupabaseServerClient(
   getToken: (options?: { template?: string }) => Promise<string | null>
 ) {
   const token = await getToken({ template: 'supabase' })
 
   return createClient<Database>(supabaseUrl, supabaseAnonKey, {
-    global: {
-      headers: {
-        Authorization: `Bearer ${token ?? ''}`,
-      },
-    },
+    accessToken: async () => token ?? '',
   })
 }
