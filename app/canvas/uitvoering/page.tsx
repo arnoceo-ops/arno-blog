@@ -249,8 +249,16 @@ export default function UitvoeringPage() {
   const save = useCallback(async (id: string, value: string) => {
     if (!user) return
     setSaveStatus('OPSLAAN...')
-    await supabase.from('canvas_answers').upsert({ user_id: user.id, question_id: `${PREFIX}_${id}`, answer: value }, { onConflict: 'user_id,question_id' })
+    const { error } = await supabase.from('canvas_answers').upsert({ user_id: user.id, question_id: `${PREFIX}_${id}`, answer: value }, { onConflict: 'user_id,question_id' })
+    if (error) { console.error('SAVE ERROR:', error.code, error.message); setSaveStatus('FOUT ✗'); return }
     setSaveStatus('OPGESLAGEN ✓')
+```
+
+Dan:
+```
+git add .
+git commit -m "add error handling to save in mensen and uitvoering"
+git push origin master
     setTimeout(() => setSaveStatus(''), 2000)
   }, [user])
 
