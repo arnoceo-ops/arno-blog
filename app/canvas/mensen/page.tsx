@@ -157,10 +157,10 @@ export default function MensenPage() {
   useEffect(() => {
     if (!user) return
     ;(async () => {
-      const { data } = await supabase.from('canvas_answers').select('question_id, answer').eq('user_id', user.id).in('question_id', ALL_FIELDS.map(f => `${PREFIX}_${f.id}`))
+      const { data } = await supabase.from('canvas_answers').select('question_id, answer').eq('user_id', user.id).like('question_id', `${PREFIX}_%`)
       if (data) {
         const map: Record<string, string> = {}
-        data.forEach(r => { map[r.question_id.replace(`${PREFIX}_`, '')] = r.answer })
+        data.forEach(r => { map[r.question_id.slice(PREFIX.length + 1)] = r.answer })
         setAnswers(map)
       }
     })()
