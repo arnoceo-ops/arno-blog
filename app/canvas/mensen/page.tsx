@@ -23,10 +23,6 @@ const ALL_FIELDS: FieldDef[] = [
   { id: 'wervingskanalen', label: 'WERVINGSKANALEN', sub: 'Via welke kanalen vinden we de beste verkopers?', type: 'textarea' },
   { id: 'selectieproces', label: 'SELECTIEPROCES', sub: 'Hoe krijgen we toptalent aan boord?', type: 'textarea' },
   { id: 'behoud_sterspelers', label: 'BEHOUD VAN STERSPELERS', sub: 'Hoe houden we sterspelers binnen de gelederen?', type: 'textarea' },
-  { id: 'verkopers_q1', label: 'Q1', sub: '', type: 'input' },
-  { id: 'verkopers_q2', label: 'Q2', sub: '', type: 'input' },
-  { id: 'verkopers_q3', label: 'Q3', sub: '', type: 'input' },
-  { id: 'verkopers_q4', label: 'Q4', sub: '', type: 'input' },
   { id: 'werving_selectie', label: 'WERVING EN SELECTIE', sub: 'Hoeveel tijd beslaat het proces van vacature tot eerste werkdag?', type: 'textarea' },
   { id: 'onboarding', label: 'ONBOARDING', sub: 'Binnen hoeveel maanden realiseert een verkoper 100% van de doelstelling?', type: 'textarea' },
   { id: 'tijd_rendement', label: 'TIJD TOT VOLLEDIG RENDEMENT', sub: 'Hoeveel tijd van vacature tot 100% doelstelling?', type: 'textarea' },
@@ -45,50 +41,44 @@ async function getArnoBotFeedback(label: string, sub: string, answer: string): P
   return data.feedback
 }
 
+const BEBAS: React.CSSProperties = { fontFamily: 'var(--font-bebas), sans-serif', fontSize: '26px', letterSpacing: '3px', color: '#1a1714' }
+const MONO_SUB: React.CSSProperties = { fontFamily: 'var(--font-space-mono, monospace)', fontSize: '18px', color: '#1a1714', opacity: 0.5, marginBottom: '14px' }
+const LINE: React.CSSProperties = { flex: 1, height: '1px', backgroundColor: '#e0d8cc' }
+
 const s = {
   page: { backgroundColor: '#f5f0e8', minHeight: '100vh', color: '#1a1714', fontFamily: 'var(--font-barlow, sans-serif)' } as React.CSSProperties,
   nav: { display: 'flex', alignItems: 'center', gap: '16px', padding: '24px 48px', fontSize: '12px', letterSpacing: '3px', borderBottom: '1px solid #e0d8cc' } as React.CSSProperties,
   sectionDivider: { borderTop: '1px solid #e0d8cc', padding: '48px 48px 0' } as React.CSSProperties,
-  fieldLabel: { fontSize: '22px', fontFamily: 'var(--font-bebas), sans-serif', letterSpacing: '3px', color: '#1a1714', marginBottom: '6px', display: 'flex', alignItems: 'center', gap: '12px' } as React.CSSProperties,
-  fieldLabelLine: { flex: 1, height: '1px', backgroundColor: '#e0d8cc' } as React.CSSProperties,
-  fieldSub: { fontSize: '13px', color: '#1a1714', opacity: 0.5, marginBottom: '14px', fontFamily: 'var(--font-space-mono, monospace)' } as React.CSSProperties,
-  textarea: { width: '100%', backgroundColor: 'transparent', border: 'none', borderBottom: '1px solid #e0d8cc', color: '#1a1714', fontSize: '16px', padding: '12px 0', resize: 'none' as const, outline: 'none', fontFamily: 'var(--font-space-mono, monospace)', lineHeight: 1.8, minHeight: '100px', boxSizing: 'border-box' as const },
-  input: { width: '100%', backgroundColor: 'transparent', border: 'none', borderBottom: '1px solid #e0d8cc', color: '#1a1714', fontSize: '16px', padding: '10px 0', outline: 'none', fontFamily: 'var(--font-space-mono, monospace)', boxSizing: 'border-box' as const },
+  fieldLabel: { ...BEBAS, marginBottom: '6px', display: 'flex', alignItems: 'center', gap: '12px' } as React.CSSProperties,
+  fieldLabelLine: LINE,
+  fieldSub: MONO_SUB,
+  textarea: { width: '100%', backgroundColor: 'transparent', border: 'none', borderBottom: '1px solid #e0d8cc', color: '#1a1714', fontSize: '18px', padding: '12px 0', resize: 'none' as const, outline: 'none', fontFamily: 'var(--font-space-mono, monospace)', lineHeight: 1.8, minHeight: '100px', boxSizing: 'border-box' as const },
+  input: { width: '100%', backgroundColor: 'transparent', border: 'none', borderBottom: '1px solid #e0d8cc', color: '#1a1714', fontSize: '18px', padding: '10px 0', outline: 'none', fontFamily: 'var(--font-space-mono, monospace)', boxSizing: 'border-box' as const },
   arnobotBtn: { marginTop: '8px', background: 'none', border: 'none', color: '#EE7700', fontSize: '11px', letterSpacing: '2px', cursor: 'pointer', padding: '0' } as React.CSSProperties,
   arnobotBox: { marginTop: '12px', borderLeft: '2px solid #EE7700', paddingLeft: '12px', fontSize: '13px', lineHeight: 1.8, color: '#1a1714', opacity: 0.8, fontFamily: 'var(--font-space-mono, monospace)', backgroundColor: '#fdf6ec', padding: '12px' } as React.CSSProperties,
   saveStatus: { position: 'fixed' as const, bottom: '24px', right: '24px', fontSize: '11px', letterSpacing: '3px', color: '#EE7700', opacity: 0.8 },
-  groupLabel: { fontSize: '12px', fontWeight: 700, letterSpacing: '4px', color: '#EE7700', marginBottom: '24px', display: 'flex', alignItems: 'center', gap: '12px' } as React.CSSProperties,
-  groupSub: { fontSize: '12px', color: '#1a1714', opacity: 0.5, letterSpacing: '1px', fontWeight: 400 } as React.CSSProperties,
+  groupLabel: { ...BEBAS, marginBottom: '8px', display: 'flex', alignItems: 'center', gap: '12px' } as React.CSSProperties,
+  groupSub: MONO_SUB,
 }
 
 interface FieldProps {
-  id: string
-  label: string
-  sub: string
-  type: FieldType
-  value: string
-  onChange: (id: string, value: string) => void
-  onBlur: (id: string) => void
-  feedback: string
-  loading: boolean
-  onArnoBot: (id: string, label: string, sub: string) => void
+  id: string; label: string; sub: string; type: FieldType
+  value: string; onChange: (id: string, value: string) => void; onBlur: (id: string) => void
+  feedback: string; loading: boolean; onArnoBot: (id: string, label: string, sub: string) => void
 }
 
 function Field({ id, label, sub, type, value, onChange, onBlur, feedback, loading, onArnoBot }: FieldProps) {
   const hasAnswer = !!value.trim()
   return (
     <div>
-      <div style={s.fieldLabel}>
-        {label}
-        <span style={s.fieldLabelLine} />
-      </div>
+      <div style={s.fieldLabel}>{label}<span style={s.fieldLabelLine} /></div>
       {sub && <div style={s.fieldSub}>{sub}</div>}
       {type === 'textarea'
         ? <textarea style={s.textarea} value={value} onChange={e => onChange(id, e.target.value)} onBlur={() => onBlur(id)} placeholder="..." rows={4} />
         : <input style={s.input} value={value} onChange={e => onChange(id, e.target.value)} onBlur={() => onBlur(id)} placeholder="..." />
       }
       {hasAnswer && (
-        <button style={{ ...s.arnobotBtn, opacity: loading ? 0.4 : 0.6 }} onClick={() => !loading && onArnoBot(id, label, sub)}>
+        <button style={{ ...s.arnobotBtn, opacity: loading ? 0.4 : 0.7 }} onClick={() => !loading && onArnoBot(id, label, sub)}>
           {loading ? '→ ARNOBOT DENKT...' : feedback ? '→ OPNIEUW VRAGEN' : '→ ARNOBOT'}
         </button>
       )}
@@ -97,31 +87,53 @@ function Field({ id, label, sub, type, value, onChange, onBlur, feedback, loadin
   )
 }
 
-interface QuarterBlockProps {
-  quarter: string
-  ids: { verkopers: string; blijven: string; uitbreiding: string; nieuwe: string }
+interface QuarterRowProps {
+  label: string; id: string
   answers: Record<string, string>
-  onChange: (id: string, value: string) => void
+  onChange: (id: string, v: string) => void
   onBlur: (id: string) => void
+  feedback: Record<string, string>
+  loading: Record<string, boolean>
+  onArnoBot: (id: string, label: string, sub: string) => void
 }
 
-function QuarterBlock({ quarter, ids, answers, onChange, onBlur }: QuarterBlockProps) {
-  const row = (label: string, id: string) => (
-    <div style={{ display: 'grid', gridTemplateColumns: '120px 1fr', alignItems: 'center', gap: '12px', borderBottom: '1px solid #2a2520', padding: '8px 0' }}>
-      <span style={{ fontSize: '13px', color: '#1a1714', opacity: 0.4 }}>{label}</span>
-      <input style={{ backgroundColor: 'transparent', border: 'none', borderBottom: '1px solid #2a2520', color: '#1a1714', fontSize: '15px', padding: '4px 0', outline: 'none', fontFamily: 'var(--font-space-mono, monospace)', width: '100%', boxSizing: 'border-box' as const }} value={answers[id] || ''} onChange={e => onChange(id, e.target.value)} onBlur={() => onBlur(id)} placeholder="..." />
+function QuarterRow({ label, id, answers, onChange, onBlur, feedback, loading, onArnoBot }: QuarterRowProps) {
+  const hasAnswer = !!answers[id]?.trim()
+  return (
+    <div style={{ marginBottom: '4px' }}>
+      <div style={{ display: 'grid', gridTemplateColumns: '150px 1fr', alignItems: 'center', gap: '12px', padding: '8px 0' }}>
+        <span style={{ fontFamily: 'var(--font-space-mono, monospace)', fontSize: '15px', color: '#1a1714', opacity: 0.4 }}>{label}</span>
+        <input
+          style={{ backgroundColor: 'transparent', border: 'none', borderBottom: '1px solid #e0d8cc', color: '#1a1714', fontSize: '18px', padding: '4px 0', outline: 'none', fontFamily: 'var(--font-space-mono, monospace)', width: '100%', boxSizing: 'border-box' as const }}
+          value={answers[id] || ''}
+          onChange={e => onChange(id, e.target.value)}
+          onBlur={() => onBlur(id)}
+          placeholder="..."
+        />
+      </div>
+      {hasAnswer && (
+        <button style={{ ...s.arnobotBtn, opacity: loading[id] ? 0.4 : 0.7, marginLeft: '162px' }} onClick={() => !loading[id] && onArnoBot(id, label, '')}>
+          {loading[id] ? '→ ARNOBOT DENKT...' : feedback[id] ? '→ OPNIEUW VRAGEN' : '→ ARNOBOT'}
+        </button>
+      )}
+      {feedback[id] && !loading[id] && <div style={{ ...s.arnobotBox, marginLeft: '162px' }}>{feedback[id]}</div>}
     </div>
   )
+}
+
+function QuarterBlock({ quarter, prefix, answers, onChange, onBlur, feedback, loading, onArnoBot }: { quarter: string; prefix: string } & Omit<QuarterRowProps, 'label' | 'id'>) {
+  const rows = [
+    { label: '# verkopers', id: `${prefix}_aantal` },
+    { label: '# die blijven', id: `${prefix}_blijven` },
+    { label: '# uitbreiding', id: `${prefix}_uitbreiding` },
+    { label: '# nieuwe sales', id: `${prefix}_nieuw` },
+  ]
   return (
-    <div style={{ borderTop: '1px solid #2a2520', paddingTop: '20px' }}>
-      <div style={{ fontSize: '12px', fontWeight: 700, letterSpacing: '3px', color: '#EE7700', marginBottom: '16px', display: 'flex', alignItems: 'center', gap: '12px' }}>
-        {quarter}
-        <span style={{ flex: 1, height: '1px', backgroundColor: '#2a2520' }} />
+    <div style={{ borderTop: '1px solid #e0d8cc', paddingTop: '20px' }}>
+      <div style={{ ...BEBAS, fontSize: '20px', marginBottom: '16px', display: 'flex', alignItems: 'center', gap: '12px' }}>
+        {quarter}<span style={LINE} />
       </div>
-      {row('# verkopers', ids.verkopers)}
-      {row('# die blijven', ids.blijven)}
-      {row('# uitbreiding', ids.uitbreiding)}
-      {row('# nieuwe sales', ids.nieuwe)}
+      {rows.map(r => <QuarterRow key={r.id} label={r.label} id={r.id} answers={answers} onChange={onChange} onBlur={onBlur} feedback={feedback} loading={loading} onArnoBot={onArnoBot} />)}
     </div>
   )
 }
@@ -198,6 +210,8 @@ export default function MensenPage() {
 
   const f = (id: string) => ALL_FIELDS.find(x => x.id === id)!
 
+  const qProps = { answers, onChange: handleChange, onBlur: handleBlur, feedback: arnobotFeedback, loading: arnobotLoading, onArnoBot: handleArnoBot }
+
   return (
     <main style={s.page}>
       <nav style={s.nav}>
@@ -227,33 +241,17 @@ export default function MensenPage() {
       </div>
 
       {/* ROW 3: Benodigde capaciteit Q1-Q4 */}
-      <div style={{ padding: '0 48px 48px', borderTop: '1px solid #2a2520' }}>
-        <div style={{ ...s.groupLabel, marginTop: '48px' }}>
+      <div style={{ padding: '0 48px 48px', borderTop: '1px solid #e0d8cc' }}>
+        <div style={{ ...s.groupLabel, marginTop: '48px', flexWrap: 'wrap', gap: '8px' }}>
           BENODIGDE CAPACITEIT
-          <span style={s.groupSub}>Hoeveel verkopers hebben we nodig om het jaardoel te halen?</span>
-          <span style={s.fieldLabelLine} />
+          <span style={{ ...MONO_SUB, marginBottom: 0, fontSize: '15px' }}>Hoeveel verkopers hebben we nodig om het jaardoel te halen?</span>
+          <span style={LINE} />
         </div>
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '48px' }}>
-          <QuarterBlock
-            quarter="Q1"
-            ids={{ verkopers: 'verkopers_q1_aantal', blijven: 'verkopers_q1_blijven', uitbreiding: 'verkopers_q1_uitbreiding', nieuwe: 'verkopers_q1_nieuw' }}
-            answers={answers} onChange={handleChange} onBlur={handleBlur}
-          />
-          <QuarterBlock
-            quarter="Q2"
-            ids={{ verkopers: 'verkopers_q2_aantal', blijven: 'verkopers_q2_blijven', uitbreiding: 'verkopers_q2_uitbreiding', nieuwe: 'verkopers_q2_nieuw' }}
-            answers={answers} onChange={handleChange} onBlur={handleBlur}
-          />
-          <QuarterBlock
-            quarter="Q3"
-            ids={{ verkopers: 'verkopers_q3_aantal', blijven: 'verkopers_q3_blijven', uitbreiding: 'verkopers_q3_uitbreiding', nieuwe: 'verkopers_q3_nieuw' }}
-            answers={answers} onChange={handleChange} onBlur={handleBlur}
-          />
-          <QuarterBlock
-            quarter="Q4"
-            ids={{ verkopers: 'verkopers_q4_aantal', blijven: 'verkopers_q4_blijven', uitbreiding: 'verkopers_q4_uitbreiding', nieuwe: 'verkopers_q4_nieuw' }}
-            answers={answers} onChange={handleChange} onBlur={handleBlur}
-          />
+          <QuarterBlock quarter="Q1" prefix="verkopers_q1" {...qProps} />
+          <QuarterBlock quarter="Q2" prefix="verkopers_q2" {...qProps} />
+          <QuarterBlock quarter="Q3" prefix="verkopers_q3" {...qProps} />
+          <QuarterBlock quarter="Q4" prefix="verkopers_q4" {...qProps} />
         </div>
       </div>
 
