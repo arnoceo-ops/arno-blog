@@ -36,7 +36,7 @@ export function PageHero({ number }: PageHeroProps) {
           height: '100%',
           objectFit: 'cover',
           objectPosition: 'center center',
-          filter: 'grayscale(15%) brightness(0.6)',
+          filter: 'grayscale(10%) brightness(0.85)',
         }}
       />
 
@@ -44,7 +44,7 @@ export function PageHero({ number }: PageHeroProps) {
       <div style={{
         position: 'absolute',
         inset: 0,
-        background: 'linear-gradient(to right, rgba(10,8,6,0.45) 0%, rgba(10,8,6,0.15) 50%, rgba(10,8,6,0.30) 100%)',
+        background: 'linear-gradient(to right, rgba(10,8,6,0.35) 0%, rgba(10,8,6,0.10) 50%, rgba(10,8,6,0.25) 100%)',
       }} />
 
       {/* Oranje gloed linksonder */}
