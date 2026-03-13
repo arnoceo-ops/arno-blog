@@ -53,7 +53,7 @@ export default function CanvasPage() {
         .from('canvas_answers')
         .select('question_id, answer')
         .eq('user_id', user.id)
-        .in('question_id', allIds)
+        .in('question_id', allIds) as unknown as { data: { question_id: string; answer: string }[] | null; error: unknown }
 
       if (data) {
         const filled = new Set(data.filter(r => r.answer?.trim()).map(r => r.question_id))
