@@ -114,7 +114,7 @@ function Field({ id, label, sub, type, value, onChange, onBlur, feedback, loadin
         : <input style={s.input} value={value} onChange={e => onChange(id, e.target.value)} onBlur={() => onBlur(id)} placeholder="..." />
       }
       {hasAnswer && (
-        <button style={{ ...s.arnobotBtn, opacity: loading ? 0.2 : 0.4 }} onClick={() => !loading && onArnoBot(id, label, sub)}>
+        <button style={{ ...s.arnobotBtn, opacity: loading ? 0.4 : 0.6 }} onClick={() => !loading && onArnoBot(id, label, sub)}>
           {loading ? '→ ARNOBOT DENKT...' : feedback ? '→ OPNIEUW VRAGEN' : '→ ARNOBOT'}
         </button>
       )}
@@ -140,7 +140,7 @@ function SmallInput({ id, label, value, onChange, onBlur }: SmallInputProps) {
         value={value}
         onChange={e => onChange(id, e.target.value)}
         onBlur={() => onBlur(id)}
-        placeholder="—"
+        placeholder="..."
       />
     </div>
   )
