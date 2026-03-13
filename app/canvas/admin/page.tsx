@@ -63,7 +63,7 @@ export default function AdminPage() {
     if (!inviteEmail.trim() || !user) return
     setInviteStatus('Versturen...')
     try {
-      await supabase.from('invites').insert({
+      await (supabase.from('invites') as any).insert({
         email: inviteEmail.trim(),
         invited_by: user.id,
       })
