@@ -46,7 +46,7 @@ async function getArnoBotFeedback(label: string, sub: string, answer: string): P
 }
 
 const s = {
-  page: { backgroundColor: '#1c1a17', minHeight: '100vh', color: '#f0ede6', fontFamily: 'var(--font-barlow, sans-serif)' } as React.CSSProperties,
+  page: { backgroundColor: '#2a2620', minHeight: '100vh', color: '#f0ede6', fontFamily: 'var(--font-barlow, sans-serif)' } as React.CSSProperties,
   nav: { display: 'flex', alignItems: 'center', gap: '16px', padding: '24px 48px', fontSize: '12px', letterSpacing: '3px', borderBottom: '1px solid #2a2520' } as React.CSSProperties,
   sectionDivider: { borderTop: '1px solid #2a2520', padding: '48px 48px 0' } as React.CSSProperties,
   fieldLabel: { fontSize: '13px', fontWeight: 700, letterSpacing: '3px', color: '#f0ede6', marginBottom: '6px', display: 'flex', alignItems: 'center', gap: '12px' } as React.CSSProperties,
