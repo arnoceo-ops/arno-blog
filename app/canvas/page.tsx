@@ -37,13 +37,39 @@ export default function CanvasPage() {
   const [scores, setScores] = useState({ strategie: 0, mensen: 0, uitvoering: 0 })
   const [loading, setLoading] = useState(true)
   const [hovered, setHovered] = useState<string | null>(null)
+  const [approved, setApproved] = useState<boolean | null>(null)
 
   useEffect(() => {
     if (isLoaded && !user) router.push('/sign-in')
   }, [isLoaded, user, router])
 
+  // Check approved_users
   useEffect(() => {
     if (!user) return
+    const checkApproval = async () => {
+      const now = new Date().toISOString()
+      const { data } = await supabase
+        .from('approved_users')
+        .select('id, expires_at')
+        .eq('user_id', user.id)
+        .single()
+
+      if (!data) {
+        setApproved(false)
+        return
+      }
+      // Check expiry
+      if (data.expires_at && data.expires_at < now) {
+        setApproved(false)
+        return
+      }
+      setApproved(true)
+    }
+    checkApproval()
+  }, [user])
+
+  useEffect(() => {
+    if (!user || approved !== true) return
     const load = async () => {
       const allIds = [
         ...TOTAL_FIELDS.strategie.map(id => `strategie_${id}`),
@@ -67,7 +93,7 @@ export default function CanvasPage() {
       setLoading(false)
     }
     load()
-  }, [user])
+  }, [user, approved])
 
   const totalFilled = scores.strategie + scores.mensen + scores.uitvoering
   const healthScore = Math.round((totalFilled / ALL_TOTAL) * 100)
@@ -77,6 +103,51 @@ export default function CanvasPage() {
     Math.round((scores[segment] / TOTAL_FIELDS[segment].length) * 100)
 
   if (!isLoaded || !user) return null
+
+  // Niet goedgekeurd
+  if (approved === false) {
+    return (
+      <main style={{
+        backgroundColor: '#0a0a0a',
+        minHeight: '100vh',
+        color: '#f0ede6',
+        fontFamily: 'var(--font-geist-sans), sans-serif',
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        justifyContent: 'center',
+        padding: '64px 48px',
+        textAlign: 'center',
+      }}>
+        <p style={{ color: '#EE7700', fontSize: '11px', letterSpacing: '4px', marginBottom: '24px', opacity: 0.7 }}>
+          ROYAL DUTCH SALES
+        </p>
+        <h1 style={{
+          fontFamily: 'var(--font-bebas), sans-serif',
+          fontSize: '64px',
+          letterSpacing: '4px',
+          color: '#f0ede6',
+          margin: '0 0 24px 0',
+          lineHeight: 1,
+        }}>
+          TOEGANG AANVRAGEN
+        </h1>
+        <p style={{ color: '#f0ede6', opacity: 0.4, fontSize: '15px', maxWidth: '480px', lineHeight: 1.8, marginBottom: '40px' }}>
+          Jouw account wacht op goedkeuring. Neem contact op via{' '}
+          <a href="mailto:arno@royaldutchsales.com" style={{ color: '#EE7700', textDecoration: 'none' }}>
+            arno@royaldutchsales.com
+          </a>{' '}
+          om toegang te krijgen tot RDS Canvas.
+        </p>
+        <Link href="/" style={{ color: '#EE7700', fontSize: '11px', letterSpacing: '3px', textDecoration: 'none', opacity: 0.6 }}>
+          ← TERUG NAAR HOME
+        </Link>
+      </main>
+    )
+  }
+
+  // Nog aan het laden
+  if (approved === null) return null
 
   return (
     <main style={{
