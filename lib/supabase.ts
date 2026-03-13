@@ -33,15 +33,16 @@ export function useSupabaseClient() {
     clientRef.current = createClient<Database>(supabaseUrl, supabaseAnonKey, {
       global: {
         fetch: async (url, options = {}) => {
-          const token = await getTokenRef.current({ template: 'supabase' })
-          return fetch(url, {
-            ...options,
-            headers: {
-              ...((options as RequestInit).headers ?? {}),
-              ...(token ? { Authorization: `Bearer ${token}` } : {}),
-            },
-          })
-        },
+  const token = await getTokenRef.current({ template: 'supabase' })
+  return fetch(url, {
+    ...options,
+    headers: {
+      ...((options as RequestInit).headers ?? {}),
+      'apikey': supabaseAnonKey,
+      ...(token ? { Authorization: `Bearer ${token}` } : {}),
+    },
+  })
+},
       },
     })
   }
