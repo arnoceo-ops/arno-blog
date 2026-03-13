@@ -72,19 +72,19 @@ const MONO18: React.CSSProperties = { fontFamily: 'var(--font-space-mono, monosp
 const MONO_SUB: React.CSSProperties = { ...MONO18, opacity: 0.5, marginBottom: '14px' }
 const LINE: React.CSSProperties = { flex: 1, height: '1px', backgroundColor: '#e0d8cc' }
 
+
 function AutoTextarea({ value, onChange, onBlur, style }: { value: string; onChange: (v: string) => void; onBlur: () => void; style?: React.CSSProperties }) {
-  const ref = useRef<HTMLTextAreaElement>(null)
-  useEffect(() => {
-    const el = ref.current
+  const setHeight = (el: HTMLTextAreaElement | null) => {
     if (!el) return
     el.style.height = 'auto'
     el.style.height = el.scrollHeight + 'px'
-  }, [value])
+  }
   return (
     <textarea
-      ref={ref}
+      ref={setHeight}
       style={{ ...style, overflow: 'hidden', resize: 'none' }}
       value={value}
+      onInput={e => setHeight(e.currentTarget)}
       onChange={e => onChange(e.target.value)}
       onBlur={onBlur}
       placeholder="..."
@@ -254,7 +254,9 @@ export default function UitvoeringPage() {
   }, [user])
 
   const handleChange = useCallback((id: string, value: string) => setAnswers(prev => ({ ...prev, [id]: value })), [])
-  const handleBlur = useCallback((id: string) => setAnswers(prev => { save(id, prev[id] || ''); return prev }), [save])
+  const answersRef = useRef(answers)
+  useEffect(() => { answersRef.current = answers }, [answers])
+  const handleBlur = useCallback((id: string) => { save(id, answersRef.current[id] || '') }, [save])
 
   const handleArnoBot = useCallback((id: string, label: string, sub: string) => {
     if (label === '__clear__') { setArnobotFeedback(f => ({ ...f, [id]: '' })); return }
