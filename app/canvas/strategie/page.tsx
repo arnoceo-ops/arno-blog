@@ -200,7 +200,7 @@ export default function StrategiePage() {
         setAnswers(map)
       }
     })()
-  }, [user])
+  }, [user, supabase])
 
   const save = useCallback(async (id: string, value: string) => {
     if (!user) return
@@ -208,7 +208,7 @@ export default function StrategiePage() {
     await supabase.from('canvas_answers').upsert({ user_id: user.id, question_id: `${PREFIX}_${id}`, answer: value }, { onConflict: 'user_id,question_id' })
     setSaveStatus('OPGESLAGEN ✓')
     setTimeout(() => setSaveStatus(''), 2000)
-  }, [user])
+  }, [user, supabase])
 
   const handleChange = useCallback((id: string, value: string) => setAnswers(prev => ({ ...prev, [id]: value })), [])
   const answersRef = useRef(answers)
