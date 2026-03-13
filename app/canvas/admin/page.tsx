@@ -42,7 +42,7 @@ export default function AdminPage() {
 
       if (profiles) {
         const withScores = await Promise.all(
-          profiles.map(async (profile) => {
+          profiles.map(async (profile: { user_id: string; email: string | null; full_name: string | null; role: string | null; created_at: string | null; invited_by: string | null }) => {
             const { data: answers } = await supabase
               .from('canvas_answers')
               .select('question_id, answer')
