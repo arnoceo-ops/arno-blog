@@ -66,7 +66,6 @@ const MONO18: React.CSSProperties = { fontFamily: 'var(--font-space-mono, monosp
 const MONO_SUB: React.CSSProperties = { ...MONO18, opacity: 0.5, marginBottom: '14px' }
 const LINE: React.CSSProperties = { flex: 1, height: '1px', backgroundColor: '#e0d8cc' }
 
-// Auto-resize textarea
 function AutoTextarea({ value, onChange, onBlur, style }: { value: string; onChange: (v: string) => void; onBlur: () => void; style?: React.CSSProperties }) {
   const ref = React.useRef<HTMLTextAreaElement>(null)
   React.useEffect(() => {
@@ -86,25 +85,8 @@ function AutoTextarea({ value, onChange, onBlur, style }: { value: string; onCha
       rows={3}
     />
   )
-}: { value: string; onChange: (v: string) => void; onBlur: () => void; placeholder?: string; style?: React.CSSProperties }) {
-  const ref = React.useRef<HTMLTextAreaElement>(null)
-  React.useEffect(() => {
-    if (ref.current) { ref.current.style.height = 'auto'; ref.current.style.height = ref.current.scrollHeight + 'px' }
-  }, [value])
-  return (
-    <textarea
-      ref={ref}
-      style={{ ...style, overflow: 'hidden' }}
-      value={value}
-      onChange={e => onChange(e.target.value)}
-      onBlur={onBlur}
-      placeholder={placeholder ?? '...'}
-      rows={3}
-    />
-  )
 }
 
-// ArnoBot feedback box met sluitknop
 function ArnobotBox({ text, onClose, style }: { text: string; onClose: () => void; style?: React.CSSProperties }) {
   return (
     <div style={{ marginTop: '12px', borderLeft: '2px solid #EE7700', fontSize: '18px', lineHeight: 1.8, color: '#1a1714', opacity: 0.8, fontFamily: 'var(--font-space-mono, monospace)', backgroundColor: '#fdf6ec', padding: '12px', ...style }}>
@@ -114,17 +96,7 @@ function ArnobotBox({ text, onClose, style }: { text: string; onClose: () => voi
       </button>
     </div>
   )
-}: { text: string; onClose: () => void; style?: React.CSSProperties }) {
-  return (
-    <div style={{ marginTop: '12px', borderLeft: '2px solid #EE7700', fontSize: '18px', lineHeight: 1.8, color: '#1a1714', opacity: 0.8, fontFamily: 'var(--font-space-mono, monospace)', backgroundColor: '#fdf6ec', padding: '12px', ...style }}>
-      {text}
-      <button onClick={onClose} style={{ marginTop: '12px', display: 'block', background: 'none', border: 'none', color: '#EE7700', fontSize: '11px', letterSpacing: '2px', cursor: 'pointer', padding: '0' }}>
-        → SLUITEN
-      </button>
-    </div>
-  )
 }
-// ─────────────────────────────────────────────────────────────────────
 
 const s = {
   page: { backgroundColor: '#f5f0e8', minHeight: '100vh', color: '#1a1714', fontFamily: 'var(--font-barlow, sans-serif)' } as React.CSSProperties,
