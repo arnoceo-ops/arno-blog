@@ -49,7 +49,7 @@ const ALL_FIELDS: FieldDef[] = [
   { id: 'conversie_offertes_orders', label: 'Orders / Offertes', sub: '', type: 'input' },
   { id: 'wensenlijst', label: 'WENSENLIJST', sub: "Nieuwe Logo's (Olifanten)", type: 'textarea' },
   { id: 'kpi_verkoopcyclus', label: 'Verkoopcyclus', sub: 'Doorlooptijd', type: 'input' },
-  { id: 'kpi_conversieratio', label: '% Target gehaald', sub: '', type: 'input' },
+  { id: 'kpi_conversieratio', label: '% Target behaald', sub: '', type: 'input' },
   { id: 'kpi_klantaandeel', label: '% Klantaandeel', sub: '', type: 'input' },
   { id: 'kpi_klantretentie', label: '% Klantretentie', sub: '', type: 'input' },
   { id: 'kpi_forecast', label: '% Behaalde Forecast', sub: '', type: 'input' },
