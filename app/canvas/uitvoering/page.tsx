@@ -204,7 +204,7 @@ function OkrCol({ title, sub, prefix, answers, arnobotFeedback, arnobotLoading, 
                 value={value} onChange={v => handleChange(id, v)} onBlur={() => handleBlur(id)} rows={1} />
               {showStatus && (
                 <div style={{ paddingTop: '6px' }}>
-                  <StatusToggle id={statusId} value={answers[statusId] || ''} onChange={(id, v) => { handleChange(id, v); handleBlur(id) }} />
+                  <StatusToggle id={statusId} value={answers[statusId] || ''} onChange={(id, v) => { handleChange(id, v); save(id, v) }} />
                 </div>
               )}
             </div>
