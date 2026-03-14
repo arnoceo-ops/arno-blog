@@ -46,7 +46,7 @@ const ALL_FIELDS: FieldDef[] = [
   { id: 'conversie_offertes_orders', label: 'Orders / Offertes', sub: '', type: 'input' },
   { id: 'wensenlijst', label: 'WENSENLIJST', sub: "Nieuwe Logo's (Olifanten)", type: 'textarea' },
   { id: 'kpi_verkoopcyclus', label: 'Verkoopcyclus', sub: 'Doorlooptijd', type: 'input' },
-  { id: 'kpi_conversieratio', label: 'Conversieratio', sub: '', type: 'input' },
+  { id: 'kpi_conversieratio', label: '% Target gehaald', sub: '', type: 'input' },
   { id: 'kpi_klantaandeel', label: '% Klantaandeel', sub: '', type: 'input' },
   { id: 'kpi_klantretentie', label: '% Klantretentie', sub: '', type: 'input' },
   { id: 'kpi_forecast', label: '% Behaalde Forecast', sub: '', type: 'input' },
@@ -231,6 +231,7 @@ function KpiRowWithLight({ id, label, doelVal, realVal, onDoelChange, onRealChan
   onDoelBlur: () => void; onRealBlur: () => void
   invert?: boolean
 }) {
+  const fmt = KPI_FORMAT[id]
   const doel = parseFloat(doelVal.replace(',', '.'))
   const real = parseFloat(realVal.replace(',', '.'))
   const hasLight = !isNaN(doel) && !isNaN(real) && doel > 0
@@ -240,14 +241,15 @@ function KpiRowWithLight({ id, label, doelVal, realVal, onDoelChange, onRealChan
       ? pct < 100 ? '#38a169' : pct === 100 ? '#dd8800' : '#e53e3e'
       : pct > 100 ? '#38a169' : pct === 100 ? '#dd8800' : '#e53e3e'
   const inputStyle = { backgroundColor: 'transparent', border: 'none', borderBottom: '1px solid #e0d8cc', color: '#1a1714', fontSize: '18px', padding: '4px 0', outline: 'none', fontFamily: 'var(--font-space-mono, monospace)', width: '100%', boxSizing: 'border-box' as const }
+  const placeholder = fmt?.prefix ? `${fmt.prefix}0` : fmt?.suffix ? `0${fmt.suffix}` : '...'
 
   return (
     <div style={{ marginBottom: '4px' }}>
-      <div style={{ display: 'grid', gridTemplateColumns: '20px 350px 100px 100px', alignItems: 'center', gap: '8px', borderBottom: '1px solid #e0d8cc', padding: '10px 0' }}>
+      <div style={{ display: 'grid', gridTemplateColumns: '20px 350px 125px 125px', alignItems: 'center', gap: '8px', borderBottom: '1px solid #e0d8cc', padding: '10px 0' }}>
         <TrafficDot color={color} />
         <span style={{ ...MONO18, opacity: 0.5 }}>{label}</span>
-        <input style={inputStyle} value={doelVal} onChange={e => onDoelChange(e.target.value)} onBlur={onDoelBlur} placeholder="..." />
-        <input style={inputStyle} value={realVal} onChange={e => onRealChange(e.target.value)} onBlur={onRealBlur} placeholder="..." />
+        <input style={inputStyle} value={doelVal} onChange={e => onDoelChange(e.target.value)} onBlur={onDoelBlur} placeholder={placeholder} />
+        <input style={inputStyle} value={realVal} onChange={e => onRealChange(e.target.value)} onBlur={onRealBlur} placeholder={placeholder} />
       </div>
       {/* ARNOBOT — tijdelijk uitgeschakeld, later terugzetten */}
     </div>
@@ -279,6 +281,17 @@ const KPI_LEFT =  ['kpi_verkoopcyclus','kpi_conversieratio','kpi_klantaandeel','
 const KPI_RIGHT = ['kpi_ordergrootte','kpi_nieuwe_logos','kpi_omzet','kpi_winst','kpi_referrals'] as const
 const KPI_IDS = [...KPI_LEFT, ...KPI_RIGHT] as const
 const KPI_INVERT = new Set(['kpi_verkoopcyclus'])
+
+type KpiFormat = { prefix?: string; suffix?: string }
+const KPI_FORMAT: Record<string, KpiFormat> = {
+  kpi_verkoopcyclus:  { suffix: ' dagen' },
+  kpi_conversieratio: { suffix: '%' },
+  kpi_klantaandeel:   { suffix: '%' },
+  kpi_klantretentie:  { suffix: '%' },
+  kpi_forecast:       { suffix: '%' },
+  kpi_ordergrootte:   { prefix: '€' },
+  kpi_omzet:          { prefix: '€' },
+}
 
 export default function UitvoeringPage() {
   const { user } = useUser()
@@ -489,7 +502,7 @@ export default function UitvoeringPage() {
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0 80px' }}>
           {/* Linker kolom */}
           <div>
-            <div style={{ display: 'grid', gridTemplateColumns: '20px 350px 100px 100px', gap: '8px', marginBottom: '8px' }}>
+            <div style={{ display: 'grid', gridTemplateColumns: '20px 350px 125px 125px', gap: '8px', marginBottom: '8px' }}>
               <span /><span />
               <span style={{ ...MONO18, opacity: 0.4 }}>DOEL</span>
               <span style={{ ...MONO18, opacity: 0.4 }}>REALISATIE</span>
@@ -504,7 +517,7 @@ export default function UitvoeringPage() {
           </div>
           {/* Rechter kolom */}
           <div>
-            <div style={{ display: 'grid', gridTemplateColumns: '20px 350px 100px 100px', gap: '8px', marginBottom: '8px' }}>
+            <div style={{ display: 'grid', gridTemplateColumns: '20px 350px 125px 125px', gap: '8px', marginBottom: '8px' }}>
               <span /><span />
               <span style={{ ...MONO18, opacity: 0.4 }}>DOEL</span>
               <span style={{ ...MONO18, opacity: 0.4 }}>REALISATIE</span>
