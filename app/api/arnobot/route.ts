@@ -5,7 +5,48 @@ const client = new Anthropic()
 
 export async function POST(req: NextRequest) {
   try {
-    const { label, sub, answer } = await req.json()
+    const { label, sub, answer, mode, questionId } = await req.json()
+
+    // ── SCORING MODE ──────────────────────────────────────────────
+    if (mode === 'score') {
+      if (!answer?.trim()) {
+        return NextResponse.json({ score: 1, reden: 'Geen antwoord ingevuld.' })
+      }
+
+      const scoreMessage = await client.messages.create({
+        model: 'claude-sonnet-4-5',
+        max_tokens: 150,
+        messages: [
+          {
+            role: 'user',
+            content: `Je bent een sales strategie beoordelaar.
+Beoordeel het volgende antwoord op vraag "${questionId}" op een schaal van 1 tot 5.
+
+Antwoord: "${answer}"
+
+Geef ALLEEN een JSON object terug, geen uitleg, geen markdown:
+{"score": 3, "reden": "Kort maar concreet. Mist meetbare KPI's."}
+
+Schaal:
+1 = Leeg of onbruikbaar
+2 = Vaag, geen richting
+3 = Basis aanwezig, niet scherp
+4 = Concreet en realistisch
+5 = Scherp, meetbaar, actiegericht`,
+          },
+        ],
+      })
+
+      const raw = scoreMessage.content
+        .filter(block => block.type === 'text')
+        .map(block => block.text)
+        .join('')
+
+      const clean = raw.replace(/```json|```/g, '').trim()
+      const parsed = JSON.parse(clean)
+      return NextResponse.json(parsed)
+    }
+    // ── EINDE SCORING MODE ────────────────────────────────────────
 
     if (!answer?.trim()) {
       return NextResponse.json({ feedback: 'Vul dit veld in voor ArnoBot feedback.' })
