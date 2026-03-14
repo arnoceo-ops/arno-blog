@@ -4,7 +4,6 @@
 import { useState } from 'react'
 import { useUser } from '@clerk/nextjs'
 import { useSupabaseClient } from '@/lib/supabase'
-import dynamic from 'next/dynamic'
 
 import dynamic from 'next/dynamic'
 
