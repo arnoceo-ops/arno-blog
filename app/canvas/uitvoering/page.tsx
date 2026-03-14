@@ -225,16 +225,20 @@ function TrafficDot({ color }: { color: string }) {
 }
 
 // KpiRow met traffic light + doelstelling / realisatie
-function KpiRowWithLight({ id, label, doelVal, realVal, onDoelChange, onRealChange, onDoelBlur, onRealBlur }: Omit<FieldProps, 'value' | 'onChange' | 'onBlur' | 'type' | 'sub' | 'feedback' | 'loading' | 'onArnoBot'> & {
+function KpiRowWithLight({ id, label, doelVal, realVal, onDoelChange, onRealChange, onDoelBlur, onRealBlur, invert }: Omit<FieldProps, 'value' | 'onChange' | 'onBlur' | 'type' | 'sub' | 'feedback' | 'loading' | 'onArnoBot'> & {
   doelVal: string; realVal: string
   onDoelChange: (v: string) => void; onRealChange: (v: string) => void
   onDoelBlur: () => void; onRealBlur: () => void
+  invert?: boolean
 }) {
   const doel = parseFloat(doelVal.replace(',', '.'))
   const real = parseFloat(realVal.replace(',', '.'))
   const hasLight = !isNaN(doel) && !isNaN(real) && doel > 0
   const pct = hasLight ? (real / doel) * 100 : null
-  const color = pct === null ? '#444' : pct > 100 ? '#38a169' : pct === 100 ? '#dd8800' : '#e53e3e'
+  const color = pct === null ? '#444'
+    : invert
+      ? pct < 100 ? '#38a169' : pct === 100 ? '#dd8800' : '#e53e3e'
+      : pct > 100 ? '#38a169' : pct === 100 ? '#dd8800' : '#e53e3e'
   const inputStyle = { backgroundColor: 'transparent', border: 'none', borderBottom: '1px solid #e0d8cc', color: '#1a1714', fontSize: '18px', padding: '4px 0', outline: 'none', fontFamily: 'var(--font-space-mono, monospace)', width: '100%', boxSizing: 'border-box' as const }
 
   return (
@@ -272,6 +276,7 @@ function ConversieRow({ label, value, redBelow, greenAbove }: { label: string; v
 
 
 const KPI_IDS = ['kpi_verkoopcyclus','kpi_conversieratio','kpi_klantaandeel','kpi_klantretentie','kpi_forecast','kpi_ordergrootte','kpi_nieuwe_logos','kpi_omzet','kpi_winst','kpi_referrals'] as const
+const KPI_INVERT = new Set(['kpi_verkoopcyclus'])
 
 export default function UitvoeringPage() {
   const { user } = useUser()
@@ -501,6 +506,7 @@ export default function UitvoeringPage() {
               onRealChange={v => handleTargetChange(id, 'real', v)}
               onDoelBlur={() => handleTargetBlur(id, 'doel')}
               onRealBlur={() => handleTargetBlur(id, 'real')}
+              invert={KPI_INVERT.has(id)}
             />
           ))}
         </div>
