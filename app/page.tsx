@@ -201,7 +201,7 @@ export default async function Home() {
           <Link href="/spar">ARNOBOT</Link>
           <Link href="/bio">BIO</Link>
           <Link href="/blog">BLOG</Link>
-          <Link href="/canvas">CANVAS</Link>
+          <Link href="https://canvas.royaldutchsales.com">CANVAS</Link>
           <a href="#subscribe" className="nav-cta">SUBSCRIBE</a>
         </div>
       </nav>
@@ -236,7 +236,7 @@ export default async function Home() {
           <p className="canvas-body">
             De meeste verkopers weten niet waarom ze winnen. En al helemaal niet waarom ze verliezen. Het RDS Canvas legt het bloot. Geen excuses, geen flaterende spiegel. Goed verkopen is geen talent — het is een systeem. Brutaal eerlijk, zonder ruimte voor zelfbedrog.
           </p>
-          <Link href="/canvas" className="canvas-link">GO GO CANVAS →</Link>
+          <Link href="https://canvas.royaldutchsales.com" className="canvas-link">GO GO CANVAS →</Link>
         </div>
       </section>
 
@@ -276,7 +276,7 @@ export default async function Home() {
             <li><Link href="/blog">Blog</Link></li>
             <li><Link href="/bio">Bio</Link></li>
             <li><Link href="/spar">Bot</Link></li>
-            <li><Link href="/canvas">Canvas</Link></li>
+           <li><Link href="https://canvas.royaldutchsales.com">Canvas</Link></li>
             <li><a href="#subscribe">Subscribe</a></li>
           </ul>
         </div>
