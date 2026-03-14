@@ -224,37 +224,34 @@ function TrafficDot({ color }: { color: string }) {
   )
 }
 
-// KpiRow met traffic light + min/max invoer
-function KpiRowWithLight({ id, label, value, onChange, onBlur, feedback, loading, onArnoBot, minVal, maxVal, onMinChange, onMaxChange, onMinBlur, onMaxBlur }: FieldProps & {
-  minVal: string; maxVal: string
-  onMinChange: (v: string) => void; onMaxChange: (v: string) => void
-  onMinBlur: () => void; onMaxBlur: () => void
+// KpiRow met traffic light + doelstelling / realisatie
+function KpiRowWithLight({ id, label, feedback, loading, onArnoBot, doelVal, realVal, onDoelChange, onRealChange, onDoelBlur, onRealBlur }: Omit<FieldProps, 'value' | 'onChange' | 'onBlur' | 'type' | 'sub'> & {
+  doelVal: string; realVal: string
+  onDoelChange: (v: string) => void; onRealChange: (v: string) => void
+  onDoelBlur: () => void; onRealBlur: () => void
 }) {
-  const hasAnswer = !!value.trim()
-  const num = parseFloat(value.replace(',', '.'))
-  const min = parseFloat(minVal.replace(',', '.'))
-  const max = parseFloat(maxVal.replace(',', '.'))
-  const hasLight = !isNaN(num) && !isNaN(min) && !isNaN(max) && max > min
-  const color = hasLight ? trafficLight(num, min, max) : '#444'
+  const hasAnswer = !!realVal.trim()
+  const doel = parseFloat(doelVal.replace(',', '.'))
+  const real = parseFloat(realVal.replace(',', '.'))
+  const hasLight = !isNaN(doel) && !isNaN(real) && doel > 0
+  const pct = hasLight ? (real / doel) * 100 : null
+  const color = pct === null ? '#444' : pct > 100 ? '#38a169' : pct === 100 ? '#dd8800' : '#e53e3e'
+  const inputStyle = { backgroundColor: 'transparent', border: 'none', borderBottom: '1px solid #e0d8cc', color: '#1a1714', fontSize: '18px', padding: '4px 0', outline: 'none', fontFamily: 'var(--font-space-mono, monospace)', width: '100%', boxSizing: 'border-box' as const }
 
   return (
     <div style={{ marginBottom: '4px' }}>
-      <div style={{ display: 'grid', gridTemplateColumns: '12px 180px 1fr 80px 80px', alignItems: 'center', gap: '12px', borderBottom: '1px solid #e0d8cc', padding: '10px 0' }}>
+      <div style={{ display: 'grid', gridTemplateColumns: '12px 1fr 1fr 1fr', alignItems: 'center', gap: '16px', borderBottom: '1px solid #e0d8cc', padding: '10px 0' }}>
         <TrafficDot color={color} />
         <span style={{ ...MONO18, opacity: 0.5 }}>{label}</span>
-        <input style={{ backgroundColor: 'transparent', border: 'none', borderBottom: '1px solid #e0d8cc', color: '#1a1714', fontSize: '18px', padding: '4px 0', outline: 'none', fontFamily: 'var(--font-space-mono, monospace)', width: '100%', boxSizing: 'border-box' as const }}
-          value={value} onChange={e => onChange(id, e.target.value)} onBlur={() => onBlur(id)} placeholder="..." />
-        <input style={{ backgroundColor: 'transparent', border: 'none', borderBottom: '1px solid #e0d8cc', color: '#e53e3e', fontSize: '13px', padding: '4px 0', outline: 'none', fontFamily: 'var(--font-space-mono, monospace)', width: '100%', boxSizing: 'border-box' as const, textAlign: 'center' as const }}
-          value={minVal} onChange={e => onMinChange(e.target.value)} onBlur={onMinBlur} placeholder="min" />
-        <input style={{ backgroundColor: 'transparent', border: 'none', borderBottom: '1px solid #e0d8cc', color: '#38a169', fontSize: '13px', padding: '4px 0', outline: 'none', fontFamily: 'var(--font-space-mono, monospace)', width: '100%', boxSizing: 'border-box' as const, textAlign: 'center' as const }}
-          value={maxVal} onChange={e => onMaxChange(e.target.value)} onBlur={onMaxBlur} placeholder="max" />
+        <input style={inputStyle} value={doelVal} onChange={e => onDoelChange(e.target.value)} onBlur={onDoelBlur} placeholder="doelstelling..." />
+        <input style={inputStyle} value={realVal} onChange={e => onRealChange(e.target.value)} onBlur={onRealBlur} placeholder="realisatie..." />
       </div>
       {hasAnswer && (
-        <button style={{ ...s.arnobotBtn, opacity: loading ? 0.4 : 0.7, marginLeft: '216px' }} onClick={() => !loading && onArnoBot(id, label, '')}>
+        <button style={{ ...s.arnobotBtn, opacity: loading ? 0.4 : 0.7, marginLeft: '28px' }} onClick={() => !loading && onArnoBot(id, label, '')}>
           {loading ? '→ ARNOBOT DENKT...' : feedback ? '→ OPNIEUW VRAGEN' : '→ ARNOBOT'}
         </button>
       )}
-      {feedback && !loading && <ArnobotBox text={feedback} onClose={() => onArnoBot(id, '__clear__', '')} style={{ marginLeft: '216px' }} />}
+      {feedback && !loading && <ArnobotBox text={feedback} onClose={() => onArnoBot(id, '__clear__', '')} style={{ marginLeft: '28px' }} />}
     </div>
   )
 }
@@ -286,7 +283,7 @@ export default function UitvoeringPage() {
   const { user } = useUser()
   const supabase = useSupabaseClient()
   const [answers, setAnswers] = useState<Record<string, string>>({})
-  const [kpiLimits, setKpiLimits] = useState<Record<string, { min: string; max: string }>>({})
+  const [kpiTargets, setKpiTargets] = useState<Record<string, { doel: string; real: string }>>({})
   const [saveStatus, setSaveStatus] = useState('')
   const [arnobotFeedback, setArnobotFeedback] = useState<Record<string, string>>({})
   const [arnobotLoading, setArnobotLoading] = useState<Record<string, boolean>>({})
@@ -300,17 +297,17 @@ export default function UitvoeringPage() {
         const limits: Record<string, { min: string; max: string }> = {}
         data.forEach(r => {
           const key = r.question_id.slice(PREFIX.length + 1)
-          if (key.endsWith('_min') || key.endsWith('_max')) {
+          if (key.endsWith('_doel') || key.endsWith('_real')) {
             const base = key.slice(0, key.lastIndexOf('_'))
-            const type = key.slice(key.lastIndexOf('_') + 1) as 'min' | 'max'
-            if (!limits[base]) limits[base] = { min: '', max: '' }
+            const type = key.slice(key.lastIndexOf('_') + 1) as 'doel' | 'real'
+            if (!limits[base]) limits[base] = { doel: '', real: '' }
             limits[base][type] = r.answer
           } else {
             map[key] = r.answer
           }
         })
         setAnswers(map)
-        setKpiLimits(limits)
+        setKpiTargets(limits)
       }
     })()
   }, [user])
@@ -332,13 +329,13 @@ export default function UitvoeringPage() {
   useEffect(() => { answersRef.current = answers }, [answers])
   const handleBlur = useCallback((id: string) => { save(id, answersRef.current[id] || '') }, [save])
 
-  const handleLimitChange = useCallback((kpiId: string, type: 'min' | 'max', value: string) => {
-    setKpiLimits(prev => ({ ...prev, [kpiId]: { ...prev[kpiId], [type]: value } }))
+  const handleTargetChange = useCallback((kpiId: string, type: 'doel' | 'real', value: string) => {
+    setKpiTargets(prev => ({ ...prev, [kpiId]: { ...prev[kpiId], [type]: value } }))
   }, [])
-  const kpiLimitsRef = useRef(kpiLimits)
-  useEffect(() => { kpiLimitsRef.current = kpiLimits }, [kpiLimits])
-  const handleLimitBlur = useCallback((kpiId: string, type: 'min' | 'max') => {
-    save(`${kpiId}_${type}`, kpiLimitsRef.current[kpiId]?.[type] || '')
+  const kpiTargetsRef = useRef(kpiTargets)
+  useEffect(() => { kpiTargetsRef.current = kpiTargets }, [kpiTargets])
+  const handleTargetBlur = useCallback((kpiId: string, type: 'doel' | 'real') => {
+    save(`${kpiId}_${type}`, kpiTargetsRef.current[kpiId]?.[type] || '')
   }, [save])
 
   const handleArnoBot = useCallback((id: string, label: string, sub: string) => {
@@ -487,24 +484,27 @@ export default function UitvoeringPage() {
       {/* KPI DASHBOARD */}
       <div style={{ ...s.sectionDivider, paddingBottom: '48px' }}>
         <div style={{ ...s.groupLabel, marginBottom: '8px' }}>DOELEN EN KPI DASHBOARD<span style={s.fieldLabelLine} /></div>
-        <div style={{ ...MONO_SUB, marginBottom: '24px', display: 'grid', gridTemplateColumns: '12px 180px 1fr 80px 80px', gap: '12px', alignItems: 'center' }}>
+        <div style={{ ...MONO_SUB, marginBottom: '24px', display: 'grid', gridTemplateColumns: '12px 1fr 1fr 1fr', gap: '16px', alignItems: 'center' }}>
           <span />
           <span style={{ opacity: 0.4, fontSize: '11px', letterSpacing: '2px' }}>KPI</span>
-          <span style={{ opacity: 0.4, fontSize: '11px', letterSpacing: '2px' }}>WAARDE</span>
-          <span style={{ color: '#e53e3e', opacity: 0.6, fontSize: '11px', letterSpacing: '2px', textAlign: 'center' as const }}>MIN</span>
-          <span style={{ color: '#38a169', opacity: 0.6, fontSize: '11px', letterSpacing: '2px', textAlign: 'center' as const }}>MAX</span>
+          <span style={{ opacity: 0.4, fontSize: '11px', letterSpacing: '2px' }}>DOELSTELLING</span>
+          <span style={{ opacity: 0.4, fontSize: '11px', letterSpacing: '2px' }}>REALISATIE</span>
         </div>
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0 80px' }}>
           {KPI_IDS.map(id => (
             <KpiRowWithLight
               key={id}
-              {...fp(id)}
-              minVal={kpiLimits[id]?.min || ''}
-              maxVal={kpiLimits[id]?.max || ''}
-              onMinChange={v => handleLimitChange(id, 'min', v)}
-              onMaxChange={v => handleLimitChange(id, 'max', v)}
-              onMinBlur={() => handleLimitBlur(id, 'min')}
-              onMaxBlur={() => handleLimitBlur(id, 'max')}
+              id={id}
+              label={ALL_FIELDS.find(x => x.id === id)?.label ?? id}
+              feedback={arnobotFeedback[id] || ''}
+              loading={arnobotLoading[id] || false}
+              onArnoBot={handleArnoBot}
+              doelVal={kpiTargets[id]?.doel || ''}
+              realVal={kpiTargets[id]?.real || ''}
+              onDoelChange={v => handleTargetChange(id, 'doel', v)}
+              onRealChange={v => handleTargetChange(id, 'real', v)}
+              onDoelBlur={() => handleTargetBlur(id, 'doel')}
+              onRealBlur={() => handleTargetBlur(id, 'real')}
             />
           ))}
         </div>
