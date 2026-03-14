@@ -494,7 +494,7 @@ export default function UitvoeringPage() {
                   <div key={id}>
                     <div style={{ display: 'grid', gridTemplateColumns: '24px 1fr', gap: '10px', alignItems: 'flex-start' }}>
                       <span style={{ ...MONO18, opacity: 0.4, paddingTop: '10px' }}>{n}</span>
-                      <AutoTextarea style={{ ...s.textarea, minHeight: '70px' }} value={value} onChange={v => handleChange(id, v)} onBlur={() => handleBlur(id)} />
+                      <AutoTextarea style={{ ...s.textarea, minHeight: '70px' }} value={value} onChange={v => handleChange(id, v)} onBlur={() => handleBlur(id)} rows={1} />
                     </div>
                     {hasAnswer && (
                       <button style={{ ...s.arnobotBtn, opacity: arnobotLoading[id] ? 0.4 : 0.7, marginLeft: '34px' }}
