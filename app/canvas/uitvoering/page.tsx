@@ -177,9 +177,10 @@ function StatusToggle({ id, value, onChange }: { id: string; value: string; onCh
 }
 
 // OKR kolom
-function OkrCol({ title, sub, prefix, answers, arnobotFeedback, arnobotLoading, handleChange, handleBlur, handleArnoBot, showStatus }: {
+function OkrCol({ title, sub, prefix, answers, arnobotFeedback, arnobotLoading, handleChange, handleBlur, handleArnoBot, showStatus, save }: {
   title: string; sub: string; prefix: string
   showStatus?: boolean
+  save?: (id: string, value: string) => void
   answers: Record<string, string>
   arnobotFeedback: Record<string, string>
   arnobotLoading: Record<string, boolean>
@@ -204,7 +205,7 @@ function OkrCol({ title, sub, prefix, answers, arnobotFeedback, arnobotLoading, 
                 value={value} onChange={v => handleChange(id, v)} onBlur={() => handleBlur(id)} rows={1} />
               {showStatus && (
                 <div style={{ paddingTop: '6px' }}>
-                  <StatusToggle id={statusId} value={answers[statusId] || ''} onChange={(id, v) => { handleChange(id, v); save(id, v) }} />
+                  <StatusToggle id={statusId} value={answers[statusId] || ''} onChange={(id, v) => { handleChange(id, v); save?.(id, v) }} />
                 </div>
               )}
             </div>
@@ -466,7 +467,7 @@ export default function UitvoeringPage() {
           <OkrCol title="KERNRESULTAAT (HOE)" sub="Hoe meten we succes? (DoD)" prefix="okr_hoe"
             answers={answers} arnobotFeedback={arnobotFeedback} arnobotLoading={arnobotLoading}
             handleChange={handleChange} handleBlur={handleBlur} handleArnoBot={handleArnoBot} />
-          <OkrCol title="INITIATIEF (WELKE)" sub="Welke acties doen we?" prefix="okr_initiatief" showStatus
+          <OkrCol title="INITIATIEF (WELKE)" sub="Welke acties doen we?" prefix="okr_initiatief" showStatus save={save}
             answers={answers} arnobotFeedback={arnobotFeedback} arnobotLoading={arnobotLoading}
             handleChange={handleChange} handleBlur={handleBlur} handleArnoBot={handleArnoBot} />
           <OkrCol title="OWNER (WIE)" sub="Wie is verantwoordelijk?" prefix="okr_wie"
