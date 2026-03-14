@@ -6,16 +6,23 @@ import { useUser } from '@clerk/nextjs'
 import { useSupabaseClient } from '@/lib/supabase'
 import dynamic from 'next/dynamic'
 
+import dynamic from 'next/dynamic'
+
 const PDFDownloadLink = dynamic(
-  () => import('@react-pdf/renderer').then(m => m.PDFDownloadLink),
-  { ssr: false }
+  async () => {
+    const { PDFDownloadLink } = await import('@react-pdf/renderer')
+    return PDFDownloadLink
+  },
+  { ssr: false, loading: () => <span>...</span> }
 )
 
 const CanvasPdfDocumentDynamic = dynamic(
-  () => import('@/components/canvas/CanvasPdfDocument').then(m => m.CanvasPdfDocument),
+  async () => {
+    const mod = await import('@/components/canvas/CanvasPdfDocument')
+    return mod.CanvasPdfDocument
+  },
   { ssr: false }
 )
-
 export default function PdfExportButton() {
   const { user } = useUser()
   const supabase = useSupabaseClient()
