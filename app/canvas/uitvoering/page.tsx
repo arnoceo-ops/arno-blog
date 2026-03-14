@@ -77,7 +77,7 @@ const MONO_SUB: React.CSSProperties = { ...MONO18, opacity: 0.5, marginBottom: '
 const LINE: React.CSSProperties = { flex: 1, height: '1px', backgroundColor: '#e0d8cc' }
 
 
-function AutoTextarea({ value, onChange, onBlur, style }: { value: string; onChange: (v: string) => void; onBlur: () => void; style?: React.CSSProperties }) {
+function AutoTextarea({ value, onChange, onBlur, style, rows = 3 }: { value: string; onChange: (v: string) => void; onBlur: () => void; style?: React.CSSProperties; rows?: number }) {
   const setHeight = (el: HTMLTextAreaElement | null) => {
     if (!el) return
     el.style.height = 'auto'
@@ -92,7 +92,7 @@ function AutoTextarea({ value, onChange, onBlur, style }: { value: string; onCha
       onChange={e => onChange(e.target.value)}
       onBlur={onBlur}
       placeholder="..."
-      rows={3}
+      rows={rows}
     />
   )
 }
@@ -196,7 +196,7 @@ function OkrCol({ title, sub, prefix, answers, arnobotFeedback, arnobotLoading, 
         const hasAnswer = !!value.trim()
         const isStatus = prefix === 'okr_status'
         return (
-          <div key={id} style={{ marginBottom: '12px', minHeight: '52px', display: 'flex', alignItems: 'center' }}>
+          <div key={id} style={{ marginBottom: '12px', minHeight: '52px', display: 'flex', alignItems: 'flex-start', paddingTop: '8px' }}>
             {isStatus ? (
               <StatusToggle id={id} value={value} onChange={(id, v) => { handleChange(id, v); handleBlur(id) }} />
             ) : (
@@ -204,7 +204,7 @@ function OkrCol({ title, sub, prefix, answers, arnobotFeedback, arnobotLoading, 
                 <div style={{ display: 'grid', gridTemplateColumns: '24px 1fr', gap: '10px', alignItems: 'flex-start' }}>
                   <span style={{ ...MONO18, opacity: 0.4, paddingTop: '8px' }}>{i}</span>
                   <AutoTextarea style={{ backgroundColor: 'transparent', border: 'none', borderBottom: '1px solid #e0d8cc', color: '#1a1714', fontSize: '18px', padding: '8px 0', outline: 'none', fontFamily: 'var(--font-space-mono, monospace)', width: '100%', boxSizing: 'border-box' as const, minHeight: '44px' }}
-                    value={value} onChange={v => handleChange(id, v)} onBlur={() => handleBlur(id)} />
+                    value={value} onChange={v => handleChange(id, v)} onBlur={() => handleBlur(id)} rows={1} />
                 </div>
                 {hasAnswer && (
                   <button style={{ ...s.arnobotBtn, opacity: arnobotLoading[id] ? 0.4 : 0.7, marginLeft: '34px' }}
