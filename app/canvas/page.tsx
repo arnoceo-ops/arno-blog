@@ -16,12 +16,9 @@ const TOTAL_FIELDS = {
 
 const ALL_TOTAL = Object.values(TOTAL_FIELDS).flat().length
 
-// Segmentgewichten
 const WEIGHTS = { strategie: 0.30, mensen: 0.40, uitvoering: 0.30 }
 
-// Vraaggewichten per question_id (1=administratief, 2=operationeel, 3=strategisch)
 const QUESTION_WEIGHTS: Record<string, number> = {
-  // STRATEGIE
   strategie_missie: 3, strategie_waardepropositie: 3, strategie_strategie_1_zin: 3,
   strategie_xfactor: 3, strategie_merkbelofte: 3, strategie_kerncompetenties: 3,
   strategie_onderscheidend_1: 3, strategie_onderscheidend_2: 3, strategie_onderscheidend_3: 3,
@@ -37,13 +34,11 @@ const QUESTION_WEIGHTS: Record<string, number> = {
   strategie_acties_omzet: 2, strategie_acties_winst: 2, strategie_acties_brutomarge: 2,
   strategie_acties_cash: 2, strategie_acties_klanten: 2,
   strategie_doelen_datum: 1, strategie_acties_datum: 1,
-  // MENSEN
   mensen_aantrekkingskracht: 3, mensen_profielen: 3, mensen_behoud_sterspelers: 3,
   mensen_onboarding: 3, mensen_actieplan: 3,
   mensen_wervingskanalen: 2, mensen_selectieproces: 2, mensen_werving_selectie: 2,
   mensen_tijd_rendement: 2,
   mensen_verkopers_q1: 1, mensen_verkopers_q2: 1, mensen_verkopers_q3: 1, mensen_verkopers_q4: 1,
-  // UITVOERING
   uitvoering_themanaam: 3, uitvoering_meetbaar_doel: 3, uitvoering_cruciale_kpi: 3,
   uitvoering_verkoopproces: 3,
   uitvoering_okr_wat_1: 3, uitvoering_okr_wat_2: 3, uitvoering_okr_wat_3: 3,
@@ -91,7 +86,6 @@ const SECTIONS = [
   { key: 'uitvoering' as const, pages: '05 — 06', title: 'UITVOERING' },
 ]
 
-// Gewogen gemiddelde berekening per segment
 function berekenGewogenScore(rows: { question_id: string; score: number }[]): number {
   if (rows.length === 0) return 0
   let totalWeight = 0
@@ -120,6 +114,11 @@ function berekenKwaliteitsScore(data: { question_id: string; score: number | nul
   return Math.round(weighted * 100)
 }
 
+function formatTimestamp(date: Date): string {
+  return date.toLocaleDateString('nl-NL', { day: 'numeric', month: 'long', year: 'numeric' }) +
+    ' om ' + date.toLocaleTimeString('nl-NL', { hour: '2-digit', minute: '2-digit' })
+}
+
 export default function CanvasPage() {
   const { user, isLoaded } = useUser()
   const router = useRouter()
@@ -132,6 +131,7 @@ export default function CanvasPage() {
   const [kwaliteitsScore, setKwaliteitsScore] = useState<number | null>(null)
   const [analysing, setAnalysing] = useState(false)
   const [analyseProgress, setAnalyseProgress] = useState<string>('')
+  const [laatsteAnalyse, setLaatsteAnalyse] = useState<Date | null>(null)
 
   useEffect(() => {
     if (isLoaded && !user) router.push('/sign-in')
@@ -174,7 +174,6 @@ export default function CanvasPage() {
           mensen: TOTAL_FIELDS.mensen.filter(id => filled.has(`mensen_${id}`)).length,
           uitvoering: TOTAL_FIELDS.uitvoering.filter(id => filled.has(`uitvoering_${id}`)).length,
         })
-
         const scored = data.filter(r => r.score !== null && r.score !== undefined)
         if (scored.length > 0) {
           setKwaliteitsScore(berekenKwaliteitsScore(data))
@@ -185,6 +184,7 @@ export default function CanvasPage() {
     load()
   }, [user, approved])
 
+  // Analyseer plan — scoort ALLE antwoorden opnieuw (ook bestaande scores)
   const analyseerPlan = async () => {
     if (!user) return
     setAnalysing(true)
@@ -198,13 +198,13 @@ export default function CanvasPage() {
 
     const { data: answers } = await supabase
       .from('canvas_answers')
-      .select('question_id, answer, score')
+      .select('question_id, answer')
       .eq('user_id', user.id)
       .in('question_id', allIds)
 
-    const toScore = (answers ?? []).filter(r => r.answer?.trim() && !r.score)
+    const toScore = (answers ?? []).filter(r => r.answer?.trim())
 
-    if (toScore.length === 0 && (answers ?? []).length === 0) {
+    if (toScore.length === 0) {
       setAnalyseProgress('Geen antwoorden gevonden.')
       setAnalysing(false)
       return
@@ -243,6 +243,8 @@ export default function CanvasPage() {
       setKwaliteitsScore(berekenKwaliteitsScore(allScored))
     }
 
+    const nu = new Date()
+    setLaatsteAnalyse(nu)
     setAnalyseProgress('')
     setAnalysing(false)
   }
@@ -250,7 +252,6 @@ export default function CanvasPage() {
   const totalFilled = scores.strategie + scores.mensen + scores.uitvoering
   const healthScore = Math.round((totalFilled / ALL_TOTAL) * 100)
   const scoreLabel = getScoreLabel(healthScore)
-
   const sectionScore = (segment: keyof typeof TOTAL_FIELDS) =>
     Math.round((scores[segment] / TOTAL_FIELDS[segment].length) * 100)
 
@@ -360,9 +361,9 @@ export default function CanvasPage() {
               >
                 {analysing ? (analyseProgress || 'ANALYSEREN...') : 'ANALYSEER PLAN'}
               </button>
-              {kwaliteitsScore !== null && !analysing && (
+              {laatsteAnalyse && !analysing && (
                 <p style={{ color: '#f0ede6', fontSize: '10px', opacity: 0.25, letterSpacing: '2px', marginTop: '8px' }}>
-                  OPNIEUW ANALYSEREN OVERSCHRIJFT VORIGE SCORES
+                  LAATSTE ANALYSE: {formatTimestamp(laatsteAnalyse)}
                 </p>
               )}
             </div>
