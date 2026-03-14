@@ -518,9 +518,6 @@ export default function UitvoeringPage() {
             ))}
           </div>
         </div>
-          ))}
-        </div>
-      </div>
 
       {/* VERKOOPPROCES */}
       <div style={{ ...s.sectionDivider, paddingBottom: '48px' }}>
