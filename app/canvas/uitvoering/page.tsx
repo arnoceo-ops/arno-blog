@@ -332,6 +332,12 @@ const KPI_FORMAT: Record<string, KpiFormat> = {
 export default function UitvoeringPage() {
   const { user } = useUser()
   const supabase = useSupabaseClient()
+  const pathname = usePathname()
+  const navLink = (href: string, label: string) => (
+    <Link href={href} style={{ color: pathname === href ? '#EE7700' : '#1a1714', textDecoration: 'none', opacity: pathname === href ? 1 : 0.4 }}>
+      {label}
+    </Link>
+  )
   const [answers, setAnswers] = useState<Record<string, string>>({})
   const [kpiTargets, setKpiTargets] = useState<Record<string, { doel: string; real: string }>>({})
   const [saveStatus, setSaveStatus] = useState('')
@@ -428,6 +434,7 @@ export default function UitvoeringPage() {
 
   return (
     <main style={s.page}>
+
       <nav style={s.nav}>
         <Link href="/canvas" style={{ color: '#1a1714', textDecoration: 'none', opacity: 0.4 }}>← CANVAS</Link>
         <span style={{ opacity: 0.2 }}>/</span>
