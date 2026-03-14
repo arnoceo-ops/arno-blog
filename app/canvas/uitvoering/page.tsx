@@ -20,12 +20,15 @@ const ALL_FIELDS: FieldDef[] = [
   { id: 'cruciale_kpi', label: 'Cruciale KPI', sub: '', type: 'input' },
   { id: 'okr_wat_1', label: 'DOELSTELLING (WAT)', sub: 'Wat willen we bereiken?', type: 'textarea' },
   { id: 'okr_hoe_1', label: 'KERNRESULTAAT (HOE)', sub: 'Hoe weten we dat we het doel bereikt hebben?', type: 'textarea' },
+  { id: 'okr_initiatief_1', label: 'INITIATIEF (WELKE)', sub: 'Welke acties doen we?', type: 'textarea' },
   { id: 'okr_wie_1', label: 'OWNER', sub: 'Wie is verantwoordelijk voor het behalen van dit resultaat?', type: 'input' },
   { id: 'okr_wat_2', label: 'DOELSTELLING (WAT)', sub: 'Wat willen we bereiken?', type: 'textarea' },
   { id: 'okr_hoe_2', label: 'KERNRESULTAAT (HOE)', sub: 'Hoe weten we dat we het doel bereikt hebben?', type: 'textarea' },
+  { id: 'okr_initiatief_2', label: 'INITIATIEF (WELKE)', sub: 'Welke acties doen we?', type: 'textarea' },
   { id: 'okr_wie_2', label: 'OWNER', sub: 'Wie is verantwoordelijk voor het behalen van dit resultaat?', type: 'input' },
   { id: 'okr_wat_3', label: 'DOELSTELLING (WAT)', sub: 'Wat willen we bereiken?', type: 'textarea' },
   { id: 'okr_hoe_3', label: 'KERNRESULTAAT (HOE)', sub: 'Hoe weten we dat we het doel bereikt hebben?', type: 'textarea' },
+  { id: 'okr_initiatief_3', label: 'INITIATIEF (WELKE)', sub: 'Welke acties doen we?', type: 'textarea' },
   { id: 'okr_wie_3', label: 'OWNER', sub: 'Wie is verantwoordelijk voor het behalen van dit resultaat?', type: 'input' },
   { id: 'klanten_krijgen_1', label: '1', sub: '', type: 'textarea' },
   { id: 'klanten_krijgen_2', label: '2', sub: '', type: 'textarea' },
@@ -425,11 +428,14 @@ export default function UitvoeringPage() {
       {/* OKR */}
       <div style={{ ...s.sectionDivider, paddingBottom: '48px' }}>
         <div style={{ ...s.groupLabel, marginBottom: '32px' }}>OKR'S — DOELSTELLINGEN<span style={s.fieldLabelLine} /></div>
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '48px' }}>
+        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr 1fr', gap: '32px' }}>
           <OkrCol title="DOELSTELLING (WAT)" sub="Wat willen we bereiken?" prefix="okr_wat"
             answers={answers} arnobotFeedback={arnobotFeedback} arnobotLoading={arnobotLoading}
             handleChange={handleChange} handleBlur={handleBlur} handleArnoBot={handleArnoBot} />
           <OkrCol title="KERNRESULTAAT (HOE)" sub="Hoe weten we dat we het doel bereikt hebben?" prefix="okr_hoe"
+            answers={answers} arnobotFeedback={arnobotFeedback} arnobotLoading={arnobotLoading}
+            handleChange={handleChange} handleBlur={handleBlur} handleArnoBot={handleArnoBot} />
+          <OkrCol title="INITIATIEF (WELKE)" sub="Welke acties doen we?" prefix="okr_initiatief"
             answers={answers} arnobotFeedback={arnobotFeedback} arnobotLoading={arnobotLoading}
             handleChange={handleChange} handleBlur={handleBlur} handleArnoBot={handleArnoBot} />
           <OkrCol title="OWNER (WIE)" sub="Wie is verantwoordelijk voor het behalen van dit resultaat?" prefix="okr_wie"
