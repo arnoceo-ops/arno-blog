@@ -152,7 +152,31 @@ function Field({ id, label, sub, type, value, onChange, onBlur, feedback, loadin
   )
 }
 
-// Fix 3: OKR kolom — titel Bebas 26px, subtekst Mono 18px, 3 genummerde invoervelden
+// OKR status toggle
+type OkrStatus = 'idle' | 'done' | 'failed'
+function StatusToggle({ id, value, onChange }: { id: string; value: string; onChange: (id: string, v: string) => void }) {
+  const status = (value || 'idle') as OkrStatus
+  const next: Record<OkrStatus, OkrStatus> = { idle: 'done', done: 'failed', failed: 'idle' }
+  const cfg: Record<OkrStatus, { icon: string; color: string; bg: string }> = {
+    idle:   { icon: '·',  color: '#aaa',     bg: 'transparent' },
+    done:   { icon: '✓',  color: '#38a169',  bg: '#e8f5ee' },
+    failed: { icon: '✗',  color: '#e53e3e',  bg: '#fde8e8' },
+  }
+  const { icon, color, bg } = cfg[status]
+  return (
+    <button onClick={() => onChange(id, next[status])} style={{
+      width: '32px', height: '32px', borderRadius: '50%',
+      border: `2px solid ${color}`, backgroundColor: bg,
+      color, fontSize: '16px', fontWeight: 'bold',
+      cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center',
+      transition: 'all 0.15s ease', margin: '0 auto',
+    }}>
+      {icon}
+    </button>
+  )
+}
+
+// OKR kolom
 function OkrCol({ title, sub, prefix, answers, arnobotFeedback, arnobotLoading, handleChange, handleBlur, handleArnoBot }: {
   title: string; sub: string; prefix: string
   answers: Record<string, string>
@@ -166,24 +190,31 @@ function OkrCol({ title, sub, prefix, answers, arnobotFeedback, arnobotLoading, 
     <div>
       <div style={{ ...BEBAS, marginBottom: '6px', display: 'flex', alignItems: 'center', gap: '12px' }}>{title}<span style={LINE} /></div>
       <div style={MONO_SUB}>{sub}</div>
-      {[1,2,3].map(i => {
+      {[1,2,3,4,5].map(i => {
         const id = `${prefix}_${i}`
         const value = answers[id] || ''
         const hasAnswer = !!value.trim()
+        const isStatus = prefix === 'okr_status'
         return (
-          <div key={id} style={{ marginBottom: '12px' }}>
-            <div style={{ display: 'grid', gridTemplateColumns: '24px 1fr', gap: '10px', alignItems: 'center' }}>
-              <span style={{ ...MONO18, opacity: 0.4 }}>{i}</span>
-              <input style={{ backgroundColor: 'transparent', border: 'none', borderBottom: '1px solid #e0d8cc', color: '#1a1714', fontSize: '18px', padding: '8px 0', outline: 'none', fontFamily: 'var(--font-space-mono, monospace)', width: '100%', boxSizing: 'border-box' as const }}
-                value={value} onChange={e => handleChange(id, e.target.value)} onBlur={() => handleBlur(id)} placeholder="..." />
-            </div>
-            {hasAnswer && (
-              <button style={{ ...s.arnobotBtn, opacity: arnobotLoading[id] ? 0.4 : 0.7, marginLeft: '34px' }}
-                onClick={() => !arnobotLoading[id] && handleArnoBot(id, `${title} ${i}`, sub)}>
-                {arnobotLoading[id] ? '→ ARNOBOT DENKT...' : arnobotFeedback[id] ? '→ OPNIEUW VRAGEN' : '→ ARNOBOT'}
-              </button>
+          <div key={id} style={{ marginBottom: '12px', minHeight: '52px', display: 'flex', alignItems: 'center' }}>
+            {isStatus ? (
+              <StatusToggle id={id} value={value} onChange={(id, v) => { handleChange(id, v); handleBlur(id) }} />
+            ) : (
+              <div style={{ width: '100%' }}>
+                <div style={{ display: 'grid', gridTemplateColumns: '24px 1fr', gap: '10px', alignItems: 'center' }}>
+                  <span style={{ ...MONO18, opacity: 0.4 }}>{i}</span>
+                  <input style={{ backgroundColor: 'transparent', border: 'none', borderBottom: '1px solid #e0d8cc', color: '#1a1714', fontSize: '18px', padding: '8px 0', outline: 'none', fontFamily: 'var(--font-space-mono, monospace)', width: '100%', boxSizing: 'border-box' as const }}
+                    value={value} onChange={e => handleChange(id, e.target.value)} onBlur={() => handleBlur(id)} placeholder="..." />
+                </div>
+                {hasAnswer && (
+                  <button style={{ ...s.arnobotBtn, opacity: arnobotLoading[id] ? 0.4 : 0.7, marginLeft: '34px' }}
+                    onClick={() => !arnobotLoading[id] && handleArnoBot(id, `${title} ${i}`, sub)}>
+                    {arnobotLoading[id] ? '→ ARNOBOT DENKT...' : arnobotFeedback[id] ? '→ OPNIEUW VRAGEN' : '→ ARNOBOT'}
+                  </button>
+                )}
+                {arnobotFeedback[id] && !arnobotLoading[id] && <ArnobotBox text={arnobotFeedback[id]} onClose={() => handleArnoBot(id, '__clear__', '')} style={{ marginLeft: '34px' }} />}
+              </div>
             )}
-            {arnobotFeedback[id] && !arnobotLoading[id] && <ArnobotBox text={arnobotFeedback[id]} onClose={() => handleArnoBot(id, '__clear__', '')} style={{ marginLeft: '34px' }} />}
           </div>
         )
       })}
@@ -428,7 +459,7 @@ export default function UitvoeringPage() {
       {/* OKR */}
       <div style={{ ...s.sectionDivider, paddingBottom: '48px' }}>
         <div style={{ ...s.groupLabel, marginBottom: '32px' }}>OKR'S — DOELSTELLINGEN<span style={s.fieldLabelLine} /></div>
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr 1fr', gap: '32px' }}>
+        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr 80px 1fr', gap: '32px' }}>
           <OkrCol title="DOELSTELLING (WAT)" sub="Wat willen we bereiken?" prefix="okr_wat"
             answers={answers} arnobotFeedback={arnobotFeedback} arnobotLoading={arnobotLoading}
             handleChange={handleChange} handleBlur={handleBlur} handleArnoBot={handleArnoBot} />
@@ -436,6 +467,9 @@ export default function UitvoeringPage() {
             answers={answers} arnobotFeedback={arnobotFeedback} arnobotLoading={arnobotLoading}
             handleChange={handleChange} handleBlur={handleBlur} handleArnoBot={handleArnoBot} />
           <OkrCol title="INITIATIEF (WELKE)" sub="Welke acties doen we?" prefix="okr_initiatief"
+            answers={answers} arnobotFeedback={arnobotFeedback} arnobotLoading={arnobotLoading}
+            handleChange={handleChange} handleBlur={handleBlur} handleArnoBot={handleArnoBot} />
+          <OkrCol title="STATUS" sub="" prefix="okr_status"
             answers={answers} arnobotFeedback={arnobotFeedback} arnobotLoading={arnobotLoading}
             handleChange={handleChange} handleBlur={handleBlur} handleArnoBot={handleArnoBot} />
           <OkrCol title="OWNER (WIE)" sub="Wie is verantwoordelijk voor het behalen van dit resultaat?" prefix="okr_wie"
