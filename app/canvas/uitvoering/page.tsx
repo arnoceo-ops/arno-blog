@@ -459,7 +459,7 @@ export default function UitvoeringPage() {
       {/* OKR */}
       <div style={{ ...s.sectionDivider, paddingBottom: '48px' }}>
         <div style={{ ...s.groupLabel, marginBottom: '32px' }}>OKR'S — DOELSTELLINGEN<span style={s.fieldLabelLine} /></div>
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr 80px 1fr', gap: '32px' }}>
+        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr 120px 1fr', gap: '32px' }}>
           <OkrCol title="DOELSTELLING (WAT)" sub="Wat willen we bereiken?" prefix="okr_wat"
             answers={answers} arnobotFeedback={arnobotFeedback} arnobotLoading={arnobotLoading}
             handleChange={handleChange} handleBlur={handleBlur} handleArnoBot={handleArnoBot} />
@@ -472,7 +472,7 @@ export default function UitvoeringPage() {
           <OkrCol title="STATUS" sub="" prefix="okr_status"
             answers={answers} arnobotFeedback={arnobotFeedback} arnobotLoading={arnobotLoading}
             handleChange={handleChange} handleBlur={handleBlur} handleArnoBot={handleArnoBot} />
-          <OkrCol title="OWNER (WIE)" sub="Wie is verantwoordelijk voor het behalen van dit resultaat?" prefix="okr_wie"
+          <OkrCol title="OWNER (WIE)" sub="Wie is verantwoordelijk voor het resultaat?" prefix="okr_wie"
             answers={answers} arnobotFeedback={arnobotFeedback} arnobotLoading={arnobotLoading}
             handleChange={handleChange} handleBlur={handleBlur} handleArnoBot={handleArnoBot} />
         </div>
