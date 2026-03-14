@@ -196,7 +196,7 @@ function OkrCol({ title, sub, prefix, answers, arnobotFeedback, arnobotLoading, 
         const hasAnswer = !!value.trim()
         const isStatus = prefix === 'okr_status'
         return (
-          <div key={id} style={{ marginBottom: '12px', minHeight: '52px', display: 'flex', alignItems: 'flex-start', paddingTop: '8px' }}>
+          <div key={id} style={{ marginBottom: '12px', display: 'flex', alignItems: 'flex-start', paddingTop: '16px' }}>
             {isStatus ? (
               <StatusToggle id={id} value={value} onChange={(id, v) => { handleChange(id, v); handleBlur(id) }} />
             ) : (
@@ -463,7 +463,7 @@ export default function UitvoeringPage() {
           <OkrCol title="DOELSTELLING (WAT)" sub="Wat willen we bereiken?" prefix="okr_wat"
             answers={answers} arnobotFeedback={arnobotFeedback} arnobotLoading={arnobotLoading}
             handleChange={handleChange} handleBlur={handleBlur} handleArnoBot={handleArnoBot} />
-          <OkrCol title="KERNRESULTAAT (HOE)" sub="Hoe weten we dat we het doel bereikt hebben?" prefix="okr_hoe"
+          <OkrCol title="KERNRESULTAAT (HOE)" sub="Hoe meten we succes? (DoD)" prefix="okr_hoe"
             answers={answers} arnobotFeedback={arnobotFeedback} arnobotLoading={arnobotLoading}
             handleChange={handleChange} handleBlur={handleBlur} handleArnoBot={handleArnoBot} />
           <OkrCol title="INITIATIEF (WELKE)" sub="Welke acties doen we?" prefix="okr_initiatief"
