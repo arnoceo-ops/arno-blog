@@ -5,6 +5,7 @@ import React, { useState, useEffect, useCallback, useRef } from 'react'
 import { useUser } from '@clerk/nextjs'
 import { useSupabaseClient } from '@/lib/supabase'
 import Link from 'next/link'
+import { usePathname } from 'next/navigation'
 import { PageHero } from '@/components/canvas/PageHero'
 
 type FieldType = 'textarea' | 'input'
@@ -61,12 +62,10 @@ async function getArnoBotFeedback(label: string, sub: string, answer: string): P
   return (await res.json()).feedback
 }
 
-// ─── GEDEELDE STIJLCONSTANTEN ─────────────────────────────────────────
 const BEBAS: React.CSSProperties = { fontFamily: 'var(--font-bebas), sans-serif', fontSize: '26px', letterSpacing: '3px', color: '#1a1714' }
 const MONO18: React.CSSProperties = { fontFamily: 'var(--font-space-mono, monospace)', fontSize: '18px', color: '#1a1714' }
 const MONO_SUB: React.CSSProperties = { ...MONO18, opacity: 0.5, marginBottom: '14px' }
 const LINE: React.CSSProperties = { flex: 1, height: '1px', backgroundColor: '#e0d8cc' }
-
 
 function AutoTextarea({ value, onChange, onBlur, style }: { value: string; onChange: (v: string) => void; onBlur: () => void; style?: React.CSSProperties }) {
   const setHeight = (el: HTMLTextAreaElement | null) => {
@@ -101,17 +100,14 @@ function ArnobotBox({ text, onClose, style }: { text: string; onClose: () => voi
 
 const s = {
   page: { backgroundColor: '#f5f0e8', minHeight: '100vh', color: '#1a1714', fontFamily: 'var(--font-barlow, sans-serif)' } as React.CSSProperties,
-  // fix 5: nav in Bebas 36px
   nav: { display: 'flex', alignItems: 'center', gap: '16px', padding: '24px 48px', fontFamily: 'var(--font-bebas), sans-serif', fontSize: '36px', letterSpacing: '3px', borderBottom: '1px solid #e0d8cc' } as React.CSSProperties,
   sectionDivider: { borderTop: '1px solid #e0d8cc', padding: '48px 48px 0' } as React.CSSProperties,
   fieldLabel: { ...BEBAS, marginBottom: '6px', display: 'flex', alignItems: 'center', gap: '12px' } as React.CSSProperties,
   fieldLabelLine: LINE,
   fieldSub: MONO_SUB,
-  // fix 1: textarea/input 18px
   textarea: { width: '100%', backgroundColor: 'transparent', border: 'none', borderBottom: '1px solid #e0d8cc', color: '#1a1714', fontSize: '18px', padding: '12px 0', resize: 'none' as const, outline: 'none', fontFamily: 'var(--font-space-mono, monospace)', lineHeight: 1.8, minHeight: '100px', boxSizing: 'border-box' as const },
   input: { width: '100%', backgroundColor: 'transparent', border: 'none', borderBottom: '1px solid #e0d8cc', color: '#1a1714', fontSize: '18px', padding: '10px 0', outline: 'none', fontFamily: 'var(--font-space-mono, monospace)', boxSizing: 'border-box' as const },
   arnobotBtn: { marginTop: '8px', background: 'none', border: 'none', color: '#EE7700', fontSize: '11px', letterSpacing: '2px', cursor: 'pointer', padding: '0' } as React.CSSProperties,
-  // fix 1: arnobotBox 18px
   arnobotBox: { marginTop: '12px', borderLeft: '2px solid #EE7700', paddingLeft: '12px', fontSize: '18px', lineHeight: 1.8, color: '#1a1714', opacity: 0.8, fontFamily: 'var(--font-space-mono, monospace)', backgroundColor: '#fdf6ec', padding: '12px' } as React.CSSProperties,
   saveStatus: { position: 'fixed' as const, bottom: '24px', right: '24px', fontSize: '11px', letterSpacing: '3px', color: '#EE7700', opacity: 0.8 },
   groupLabel: { ...BEBAS, marginBottom: '8px', display: 'flex', alignItems: 'center', gap: '12px' } as React.CSSProperties,
@@ -144,10 +140,10 @@ function Field({ id, label, sub, type, value, onChange, onBlur, feedback, loadin
   )
 }
 
-function InlineInput({ id, value, onChange, onBlur, feedback, loading, onArnoBot, label }: { id: string; label: string; value: string; onChange: (id: string, v: string) => void; onBlur: (id: string) => void; feedback: string; loading: boolean; onArnoBot: (id: string, label: string, sub: string) => void }) {
+function InlineInput({ id, label, value, onChange, onBlur, feedback, loading, onArnoBot }: Omit<FieldProps, 'sub' | 'type'>) {
   const hasAnswer = !!value.trim()
   return (
-    <div style={{ marginBottom: '12px' }}>
+    <div style={{ marginBottom: '8px' }}>
       <input style={s.input} value={value} onChange={e => onChange(id, e.target.value)} onBlur={() => onBlur(id)} placeholder="..." />
       {hasAnswer && (
         <button style={{ ...s.arnobotBtn, opacity: loading ? 0.4 : 0.7 }} onClick={() => !loading && onArnoBot(id, label, '')}>
@@ -159,25 +155,21 @@ function InlineInput({ id, value, onChange, onBlur, feedback, loading, onArnoBot
   )
 }
 
-// fix 2+3: SmallInput — veldtitel 18px monospace, subtekst 18px, geen extra rij-strepen
-function SmallInput({ id, label, value, onChange, onBlur, feedback, loading, onArnoBot }: { id: string; label: string; value: string; onChange: (id: string, v: string) => void; onBlur: (id: string) => void; feedback: string; loading: boolean; onArnoBot: (id: string, label: string, sub: string) => void }) {
+function SmallInput({ id, label, value, onChange, onBlur, feedback, loading, onArnoBot }: Omit<FieldProps, 'sub' | 'type'>) {
   const hasAnswer = !!value.trim()
   return (
     <div style={{ marginBottom: '4px' }}>
-      <div style={{ display: 'grid', gridTemplateColumns: '160px 1fr', alignItems: 'center', gap: '16px', padding: '8px 0' }}>
-        {/* fix 3: veldtitel in monospace 18px */}
+      <div style={{ display: 'grid', gridTemplateColumns: '160px 1fr', alignItems: 'center', gap: '12px', padding: '6px 0' }}>
         <span style={{ ...MONO18, opacity: 0.5 }}>{label}</span>
-        <input
-          style={{ backgroundColor: 'transparent', border: 'none', borderBottom: '1px solid #e0d8cc', color: '#1a1714', fontSize: '18px', padding: '4px 0', outline: 'none', fontFamily: 'var(--font-space-mono, monospace)', width: '100%', boxSizing: 'border-box' as const }}
-          value={value} onChange={e => onChange(id, e.target.value)} onBlur={() => onBlur(id)} placeholder="..."
-        />
+        <input style={{ backgroundColor: 'transparent', border: 'none', borderBottom: '1px solid #e0d8cc', color: '#1a1714', fontSize: '18px', padding: '4px 0', outline: 'none', fontFamily: 'var(--font-space-mono, monospace)', width: '100%', boxSizing: 'border-box' as const }}
+          value={value} onChange={e => onChange(id, e.target.value)} onBlur={() => onBlur(id)} placeholder="..." />
       </div>
       {hasAnswer && (
-        <button style={{ ...s.arnobotBtn, opacity: loading ? 0.4 : 0.7, marginLeft: '176px' }} onClick={() => !loading && onArnoBot(id, label, '')}>
+        <button style={{ ...s.arnobotBtn, opacity: loading ? 0.4 : 0.7, marginLeft: '172px' }} onClick={() => !loading && onArnoBot(id, label, '')}>
           {loading ? '→ ARNOBOT DENKT...' : feedback ? '→ OPNIEUW VRAGEN' : '→ ARNOBOT'}
         </button>
       )}
-      {feedback && !loading && <ArnobotBox text={feedback} onClose={() => onArnoBot(id, '__clear__', '')} style={{ marginLeft: '176px' }} />}
+      {feedback && !loading && <ArnobotBox text={feedback} onClose={() => onArnoBot(id, '__clear__', '')} style={{ marginLeft: '172px' }} />}
     </div>
   )
 }
@@ -185,6 +177,7 @@ function SmallInput({ id, label, value, onChange, onBlur, feedback, loading, onA
 export default function StrategiePage() {
   const { user } = useUser()
   const supabase = useSupabaseClient()
+  const pathname = usePathname()
   const [answers, setAnswers] = useState<Record<string, string>>({})
   const [saveStatus, setSaveStatus] = useState('')
   const [arnobotFeedback, setArnobotFeedback] = useState<Record<string, string>>({})
@@ -200,23 +193,16 @@ export default function StrategiePage() {
         setAnswers(map)
       }
     })()
-  }, [user, supabase])
+  }, [user])
 
   const save = useCallback(async (id: string, value: string) => {
-  if (!user) return
-  setSaveStatus('OPSLAAN...')
-  const { error } = await supabase.from('canvas_answers').upsert(
-    { user_id: user.id, question_id: `${PREFIX}_${id}`, answer: value },
-    { onConflict: 'user_id,question_id' }
-  )
-  if (error) {
-    console.error('SAVE ERROR:', error.code, error.message, error.details)
-    setSaveStatus('FOUT ✗')
-    return
-  }
-  setSaveStatus('OPGESLAGEN ✓')
-  setTimeout(() => setSaveStatus(''), 2000)
-}, [user, supabase])
+    if (!user) return
+    setSaveStatus('OPSLAAN...')
+    const { error } = await supabase.from('canvas_answers').upsert({ user_id: user.id, question_id: `${PREFIX}_${id}`, answer: value }, { onConflict: 'user_id,question_id' })
+    if (error) { console.error('SAVE ERROR:', error.code, error.message); setSaveStatus('FOUT ✗'); return }
+    setSaveStatus('OPGESLAGEN ✓')
+    setTimeout(() => setSaveStatus(''), 2000)
+  }, [user, supabase])
 
   const handleChange = useCallback((id: string, value: string) => setAnswers(prev => ({ ...prev, [id]: value })), [])
   const answersRef = useRef(answers)
@@ -241,18 +227,26 @@ export default function StrategiePage() {
   const f = (id: string) => ALL_FIELDS.find(x => x.id === id)!
   const si = (id: string) => <SmallInput key={id} id={id} label={f(id).label} value={answers[id] || ''} onChange={handleChange} onBlur={handleBlur} feedback={arnobotFeedback[id] || ''} loading={arnobotLoading[id] || false} onArnoBot={handleArnoBot} />
 
+  const navLink = (href: string, label: string) => (
+    <Link href={href} style={{ color: pathname === href ? '#EE7700' : '#1a1714', textDecoration: 'none', opacity: pathname === href ? 1 : 0.4 }}>
+      {label}
+    </Link>
+  )
+
   return (
     <main style={s.page}>
-      {/* fix 5: nav Bebas 36px */}
       <nav style={s.nav}>
         <Link href="/canvas" style={{ color: '#1a1714', textDecoration: 'none', opacity: 0.4 }}>← CANVAS</Link>
         <span style={{ opacity: 0.2 }}>/</span>
-        <span style={{ color: '#EE7700' }}>STRATEGIE</span>
+        {navLink('/canvas/strategie', 'STRATEGIE')}
+        <span style={{ opacity: 0.2 }}>/</span>
+        {navLink('/canvas/mensen', 'MENSEN')}
+        <span style={{ opacity: 0.2 }}>/</span>
+        {navLink('/canvas/uitvoering', 'UITVOERING')}
       </nav>
 
       <PageHero number={1} />
 
-      {/* ROW 1: Missie + Cultuur */}
       <div style={{ ...s.sectionDivider, display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '48px', paddingBottom: '48px' }}>
         <Field {...f('missie')} {...fp('missie')} />
         <div>
@@ -267,41 +261,31 @@ export default function StrategiePage() {
         </div>
       </div>
 
-      {/* ROW 2: Waardepropositie / Kerncompetenties / Dienstverlening */}
       <div style={{ ...s.sectionDivider, display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '48px', paddingBottom: '48px' }}>
         <Field {...f('waardepropositie')} {...fp('waardepropositie')} />
         <Field {...f('kerncompetenties')} {...fp('kerncompetenties')} />
         <Field {...f('dienstverlening')} {...fp('dienstverlening')} />
       </div>
 
-      {/* ROW 3: Zandbak + Doelen + Acties */}
       <div style={{ ...s.sectionDivider, display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '48px', paddingBottom: '48px' }}>
         <Field {...f('zandbak')} {...fp('zandbak')} />
         <div>
-          {/* fix 2: subtekst "3–5 JR" in monospace 18px */}
-          <div style={{ ...BEBAS, marginBottom: '4px', display: 'flex', alignItems: 'center', gap: '12px' }}>
-            DOELEN <span style={LINE} />
-          </div>
+          <div style={{ ...BEBAS, marginBottom: '4px', display: 'flex', alignItems: 'center', gap: '12px' }}>DOELEN <span style={LINE} /></div>
           <div style={{ ...MONO_SUB, marginBottom: '16px' }}>3–5 JR</div>
           {['doelen_datum','doelen_omzet','doelen_winst','doelen_klanten','doelen_marktaandeel','doelen_liquiditeit'].map(id => si(id))}
         </div>
         <div>
-          {/* fix 2: subtekst "1 JR" in monospace 18px */}
-          <div style={{ ...BEBAS, marginBottom: '4px', display: 'flex', alignItems: 'center', gap: '12px' }}>
-            ACTIES <span style={LINE} />
-          </div>
+          <div style={{ ...BEBAS, marginBottom: '4px', display: 'flex', alignItems: 'center', gap: '12px' }}>ACTIES <span style={LINE} /></div>
           <div style={{ ...MONO_SUB, marginBottom: '16px' }}>1 JR</div>
           {['acties_datum','acties_omzet','acties_winst','acties_brutomarge','acties_cash','acties_klanten'].map(id => si(id))}
         </div>
       </div>
 
-      {/* ROW 4: Leiderschap + Wanneer */}
       <div style={{ ...s.sectionDivider, display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '48px', paddingBottom: '64px' }}>
         <Field {...f('leiderschap_markten')} {...fp('leiderschap_markten')} />
         <Field {...f('leiderschap_wanneer')} {...fp('leiderschap_wanneer')} />
       </div>
 
-      {/* PAGINA 2 — fix 4: label verwijderd */}
       <div style={{ ...s.sectionDivider, display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '48px', paddingBottom: '48px', borderTop: '2px solid #EE7700' }}>
         <Field {...f('merkbelofte')} {...fp('merkbelofte')} />
         <Field {...f('strategie_1_zin')} {...fp('strategie_1_zin')} />
@@ -317,26 +301,22 @@ export default function StrategiePage() {
         </div>
       </div>
 
-      {/* ROW 6: X-Factor / Winst per eenheid / Moonshots */}
       <div style={{ ...s.sectionDivider, display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '48px', paddingBottom: '48px' }}>
         <Field {...f('xfactor')} {...fp('xfactor')} />
         <Field {...f('winst_per_eenheid')} {...fp('winst_per_eenheid')} />
         <Field {...f('moonshots')} {...fp('moonshots')} />
       </div>
 
-      {/* ROW 7: Schaalbaarheid */}
       <div style={{ ...s.sectionDivider, paddingBottom: '48px' }}>
         <Field {...f('schaalbaarheid')} {...fp('schaalbaarheid')} />
       </div>
 
-      {/* ROW 8: Repeterende omzet / Klantretentie / Referrals */}
       <div style={{ ...s.sectionDivider, display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '48px', paddingBottom: '48px' }}>
         <Field {...f('repeterende_omzet')} {...fp('repeterende_omzet')} />
         <Field {...f('klantretentie')} {...fp('klantretentie')} />
         <Field {...f('referrals')} {...fp('referrals')} />
       </div>
 
-      {/* ROW 9: OMTM */}
       <div style={{ ...s.sectionDivider, paddingBottom: '80px' }}>
         <Field {...f('omtm')} {...fp('omtm')} />
       </div>

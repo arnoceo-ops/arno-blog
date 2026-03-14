@@ -5,6 +5,7 @@ import React, { useState, useEffect, useCallback, useRef } from 'react'
 import { useUser } from '@clerk/nextjs'
 import { useSupabaseClient } from '@/lib/supabase'
 import Link from 'next/link'
+import { usePathname } from 'next/navigation'
 import { PageHero } from '@/components/canvas/PageHero'
 
 type FieldType = 'textarea' | 'input'
@@ -430,7 +431,11 @@ export default function UitvoeringPage() {
       <nav style={s.nav}>
         <Link href="/canvas" style={{ color: '#1a1714', textDecoration: 'none', opacity: 0.4 }}>← CANVAS</Link>
         <span style={{ opacity: 0.2 }}>/</span>
-        <span style={{ color: '#EE7700' }}>UITVOERING</span>
+        {navLink('/canvas/strategie', 'STRATEGIE')}
+        <span style={{ opacity: 0.2 }}>/</span>
+        {navLink('/canvas/mensen', 'MENSEN')}
+        <span style={{ opacity: 0.2 }}>/</span>
+        {navLink('/canvas/uitvoering', 'UITVOERING')}
       </nav>
 
       <PageHero number={3} />
