@@ -16,8 +16,57 @@ const TOTAL_FIELDS = {
 
 const ALL_TOTAL = Object.values(TOTAL_FIELDS).flat().length
 
-// Gewichten kwaliteitsscore
+// Segmentgewichten
 const WEIGHTS = { strategie: 0.30, mensen: 0.40, uitvoering: 0.30 }
+
+// Vraaggewichten per question_id (1=administratief, 2=operationeel, 3=strategisch)
+const QUESTION_WEIGHTS: Record<string, number> = {
+  // STRATEGIE
+  strategie_missie: 3, strategie_waardepropositie: 3, strategie_strategie_1_zin: 3,
+  strategie_xfactor: 3, strategie_merkbelofte: 3, strategie_kerncompetenties: 3,
+  strategie_onderscheidend_1: 3, strategie_onderscheidend_2: 3, strategie_onderscheidend_3: 3,
+  strategie_onderscheidend_4: 3, strategie_onderscheidend_5: 3,
+  strategie_zandbak: 2, strategie_dienstverlening: 2, strategie_moonshots: 2,
+  strategie_schaalbaarheid: 2, strategie_repeterende_omzet: 2, strategie_klantretentie: 2,
+  strategie_referrals: 2, strategie_omtm: 2, strategie_winst_per_eenheid: 2,
+  strategie_leiderschap_markten: 2, strategie_leiderschap_wanneer: 2,
+  strategie_cultuur_1: 2, strategie_cultuur_2: 2, strategie_cultuur_3: 2,
+  strategie_cultuur_4: 2, strategie_cultuur_5: 2,
+  strategie_doelen_omzet: 2, strategie_doelen_winst: 2, strategie_doelen_klanten: 2,
+  strategie_doelen_marktaandeel: 2, strategie_doelen_liquiditeit: 2,
+  strategie_acties_omzet: 2, strategie_acties_winst: 2, strategie_acties_brutomarge: 2,
+  strategie_acties_cash: 2, strategie_acties_klanten: 2,
+  strategie_doelen_datum: 1, strategie_acties_datum: 1,
+  // MENSEN
+  mensen_aantrekkingskracht: 3, mensen_profielen: 3, mensen_behoud_sterspelers: 3,
+  mensen_onboarding: 3, mensen_actieplan: 3,
+  mensen_wervingskanalen: 2, mensen_selectieproces: 2, mensen_werving_selectie: 2,
+  mensen_tijd_rendement: 2,
+  mensen_verkopers_q1: 1, mensen_verkopers_q2: 1, mensen_verkopers_q3: 1, mensen_verkopers_q4: 1,
+  // UITVOERING
+  uitvoering_themanaam: 3, uitvoering_meetbaar_doel: 3, uitvoering_cruciale_kpi: 3,
+  uitvoering_verkoopproces: 3,
+  uitvoering_okr_wat_1: 3, uitvoering_okr_wat_2: 3, uitvoering_okr_wat_3: 3,
+  uitvoering_okr_hoe_1: 3, uitvoering_okr_hoe_2: 3, uitvoering_okr_hoe_3: 3,
+  uitvoering_wensenlijst: 2,
+  uitvoering_klanten_krijgen_1: 2, uitvoering_klanten_krijgen_2: 2, uitvoering_klanten_krijgen_3: 2,
+  uitvoering_klanten_uitbouwen_1: 2, uitvoering_klanten_uitbouwen_2: 2, uitvoering_klanten_uitbouwen_3: 2,
+  uitvoering_klanten_houden_1: 2, uitvoering_klanten_houden_2: 2, uitvoering_klanten_houden_3: 2,
+  uitvoering_kpi_verkoopcyclus: 2, uitvoering_kpi_conversieratio: 2, uitvoering_kpi_klantaandeel: 2,
+  uitvoering_kpi_klantretentie: 2, uitvoering_kpi_forecast: 2, uitvoering_kpi_ordergrootte: 2,
+  uitvoering_kpi_nieuwe_logos: 2, uitvoering_kpi_omzet: 2, uitvoering_kpi_winst: 2,
+  uitvoering_kpi_referrals: 2,
+  uitvoering_okr_wie_1: 1, uitvoering_okr_wie_2: 1, uitvoering_okr_wie_3: 1,
+  uitvoering_numbers_leads: 1, uitvoering_numbers_bezoeken: 1, uitvoering_numbers_offertes: 1,
+  uitvoering_numbers_orders: 1, uitvoering_numbers_referrals: 1,
+  uitvoering_conversie_leads_bezoeken: 1, uitvoering_conversie_bezoeken_offertes: 1,
+  uitvoering_conversie_offertes_orders: 1,
+  uitvoering_kwartaal_jaar: 1, uitvoering_feestje: 1, uitvoering_beloning: 1,
+}
+
+function getQuestionWeight(question_id: string): number {
+  return QUESTION_WEIGHTS[question_id] ?? 2
+}
 
 function getScoreLabel(score: number) {
   if (score < 25) return 'ONVOLLEDIG'
@@ -42,6 +91,35 @@ const SECTIONS = [
   { key: 'uitvoering' as const, pages: '05 — 06', title: 'UITVOERING' },
 ]
 
+// Gewogen gemiddelde berekening per segment
+function berekenGewogenScore(rows: { question_id: string; score: number }[]): number {
+  if (rows.length === 0) return 0
+  let totalWeight = 0
+  let weightedSum = 0
+  for (const row of rows) {
+    const w = getQuestionWeight(row.question_id)
+    weightedSum += (row.score / 5) * w
+    totalWeight += w
+  }
+  return totalWeight > 0 ? weightedSum / totalWeight : 0
+}
+
+function berekenKwaliteitsScore(data: { question_id: string; score: number | null }[]): number {
+  const scored = data.filter(r => r.score !== null && r.score !== undefined) as { question_id: string; score: number }[]
+  const segRows: Record<string, { question_id: string; score: number }[]> = {
+    strategie: [], mensen: [], uitvoering: []
+  }
+  for (const row of scored) {
+    const seg = row.question_id.split('_')[0]
+    if (segRows[seg]) segRows[seg].push(row)
+  }
+  const weighted =
+    berekenGewogenScore(segRows.strategie) * WEIGHTS.strategie +
+    berekenGewogenScore(segRows.mensen) * WEIGHTS.mensen +
+    berekenGewogenScore(segRows.uitvoering) * WEIGHTS.uitvoering
+  return Math.round(weighted * 100)
+}
+
 export default function CanvasPage() {
   const { user, isLoaded } = useUser()
   const router = useRouter()
@@ -51,7 +129,6 @@ export default function CanvasPage() {
   const [hovered, setHovered] = useState<string | null>(null)
   const [approved, setApproved] = useState<boolean | null>(null)
 
-  // Plan Health Score (kwaliteit)
   const [kwaliteitsScore, setKwaliteitsScore] = useState<number | null>(null)
   const [analysing, setAnalysing] = useState(false)
   const [analyseProgress, setAnalyseProgress] = useState<string>('')
@@ -98,20 +175,9 @@ export default function CanvasPage() {
           uitvoering: TOTAL_FIELDS.uitvoering.filter(id => filled.has(`uitvoering_${id}`)).length,
         })
 
-        // Herstel eerder berekende kwaliteitscore als die al bestaat
         const scored = data.filter(r => r.score !== null && r.score !== undefined)
         if (scored.length > 0) {
-          const segScores: Record<string, number[]> = { strategie: [], mensen: [], uitvoering: [] }
-          for (const row of scored) {
-            const seg = row.question_id.split('_')[0] as keyof typeof WEIGHTS
-            if (segScores[seg]) segScores[seg].push(row.score)
-          }
-          const avg = (arr: number[]) => arr.length ? arr.reduce((a, b) => a + b, 0) / arr.length : 0
-          const weighted =
-            (avg(segScores.strategie) / 5) * WEIGHTS.strategie +
-            (avg(segScores.mensen) / 5) * WEIGHTS.mensen +
-            (avg(segScores.uitvoering) / 5) * WEIGHTS.uitvoering
-          setKwaliteitsScore(Math.round(weighted * 100))
+          setKwaliteitsScore(berekenKwaliteitsScore(data))
         }
       }
       setLoading(false)
@@ -119,7 +185,6 @@ export default function CanvasPage() {
     load()
   }, [user, approved])
 
-  // Analyseer plan — scoort alle antwoorden via ArnoBot
   const analyseerPlan = async () => {
     if (!user) return
     setAnalysing(true)
@@ -152,11 +217,7 @@ export default function CanvasPage() {
         const res = await fetch('/api/arnobot', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            mode: 'score',
-            questionId: row.question_id,
-            answer: row.answer,
-          }),
+          body: JSON.stringify({ mode: 'score', questionId: row.question_id, answer: row.answer }),
         })
         const { score } = await res.json()
         if (score) {
@@ -167,11 +228,10 @@ export default function CanvasPage() {
             .eq('question_id', row.question_id)
         }
       } catch {
-        // skip dit antwoord bij fout, ga door
+        // skip bij fout
       }
     }
 
-    // Herbereken score op basis van alle gescoorde rijen (oud + nieuw)
     setAnalyseProgress('Score berekenen...')
     const { data: allScored } = await supabase
       .from('canvas_answers')
@@ -179,19 +239,10 @@ export default function CanvasPage() {
       .eq('user_id', user.id)
       .not('score', 'is', null)
 
-    const segScores: Record<string, number[]> = { strategie: [], mensen: [], uitvoering: [] }
-    for (const row of allScored ?? []) {
-      const seg = row.question_id.split('_')[0] as keyof typeof WEIGHTS
-      if (segScores[seg]) segScores[seg].push(row.score)
+    if (allScored) {
+      setKwaliteitsScore(berekenKwaliteitsScore(allScored))
     }
 
-    const avg = (arr: number[]) => arr.length ? arr.reduce((a, b) => a + b, 0) / arr.length : 0
-    const weighted =
-      (avg(segScores.strategie) / 5) * WEIGHTS.strategie +
-      (avg(segScores.mensen) / 5) * WEIGHTS.mensen +
-      (avg(segScores.uitvoering) / 5) * WEIGHTS.uitvoering
-
-    setKwaliteitsScore(Math.round(weighted * 100))
     setAnalyseProgress('')
     setAnalysing(false)
   }
