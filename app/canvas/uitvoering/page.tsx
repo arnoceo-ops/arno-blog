@@ -243,7 +243,7 @@ function KpiRowWithLight({ id, label, doelVal, realVal, onDoelChange, onRealChan
 
   return (
     <div style={{ marginBottom: '4px' }}>
-      <div style={{ display: 'grid', gridTemplateColumns: '12px 1fr 100px 100px', alignItems: 'center', gap: '8px', borderBottom: '1px solid #e0d8cc', padding: '10px 0' }}>
+      <div style={{ display: 'grid', gridTemplateColumns: '12px 200px 100px 100px', alignItems: 'center', gap: '8px', borderBottom: '1px solid #e0d8cc', padding: '10px 0' }}>
         <TrafficDot color={color} />
         <span style={{ ...MONO18, opacity: 0.5 }}>{label}</span>
         <input style={inputStyle} value={doelVal} onChange={e => onDoelChange(e.target.value)} onBlur={onDoelBlur} placeholder="..." />
@@ -489,7 +489,7 @@ export default function UitvoeringPage() {
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0 80px' }}>
           {/* Linker kolom */}
           <div>
-            <div style={{ display: 'grid', gridTemplateColumns: '12px 1fr 100px 100px', gap: '8px', marginBottom: '8px' }}>
+            <div style={{ display: 'grid', gridTemplateColumns: '12px 200px 100px 100px', gap: '8px', marginBottom: '8px' }}>
               <span /><span />
               <span style={{ ...MONO18, opacity: 0.4 }}>DOEL</span>
               <span style={{ ...MONO18, opacity: 0.4 }}>REALISATIE</span>
@@ -504,7 +504,7 @@ export default function UitvoeringPage() {
           </div>
           {/* Rechter kolom */}
           <div>
-            <div style={{ display: 'grid', gridTemplateColumns: '12px 1fr 100px 100px', gap: '8px', marginBottom: '8px' }}>
+            <div style={{ display: 'grid', gridTemplateColumns: '12px 200px 100px 100px', gap: '8px', marginBottom: '8px' }}>
               <span /><span />
               <span style={{ ...MONO18, opacity: 0.4 }}>DOEL</span>
               <span style={{ ...MONO18, opacity: 0.4 }}>REALISATIE</span>
