@@ -196,7 +196,7 @@ function OkrCol({ title, sub, prefix, answers, arnobotFeedback, arnobotLoading, 
         const hasAnswer = !!value.trim()
         const isStatus = prefix === 'okr_status'
         return (
-          <div key={id} style={{ marginBottom: '12px', display: 'flex', justifyContent: 'center', alignItems: 'flex-start', paddingTop: '8px' }}>
+          <div key={id} style={{ marginBottom: '12px', display: 'flex', justifyContent: 'center', alignItems: 'flex-start', paddingTop: '14px', minHeight: '44px' }}>
             {isStatus ? (
               <StatusToggle id={id} value={value} onChange={(id, v) => { handleChange(id, v); handleBlur(id) }} />
             ) : (
