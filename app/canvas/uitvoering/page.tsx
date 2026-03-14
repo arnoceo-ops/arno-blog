@@ -225,12 +225,11 @@ function TrafficDot({ color }: { color: string }) {
 }
 
 // KpiRow met traffic light + doelstelling / realisatie
-function KpiRowWithLight({ id, label, feedback, loading, onArnoBot, doelVal, realVal, onDoelChange, onRealChange, onDoelBlur, onRealBlur }: Omit<FieldProps, 'value' | 'onChange' | 'onBlur' | 'type' | 'sub'> & {
+function KpiRowWithLight({ id, label, doelVal, realVal, onDoelChange, onRealChange, onDoelBlur, onRealBlur }: Omit<FieldProps, 'value' | 'onChange' | 'onBlur' | 'type' | 'sub' | 'feedback' | 'loading' | 'onArnoBot'> & {
   doelVal: string; realVal: string
   onDoelChange: (v: string) => void; onRealChange: (v: string) => void
   onDoelBlur: () => void; onRealBlur: () => void
 }) {
-  const hasAnswer = !!realVal.trim()
   const doel = parseFloat(doelVal.replace(',', '.'))
   const real = parseFloat(realVal.replace(',', '.'))
   const hasLight = !isNaN(doel) && !isNaN(real) && doel > 0
@@ -240,18 +239,13 @@ function KpiRowWithLight({ id, label, feedback, loading, onArnoBot, doelVal, rea
 
   return (
     <div style={{ marginBottom: '4px' }}>
-      <div style={{ display: 'grid', gridTemplateColumns: '12px 1fr 1fr 1fr', alignItems: 'center', gap: '16px', borderBottom: '1px solid #e0d8cc', padding: '10px 0' }}>
+      <div style={{ display: 'grid', gridTemplateColumns: '12px 1fr 120px 120px', alignItems: 'center', gap: '16px', borderBottom: '1px solid #e0d8cc', padding: '10px 0' }}>
         <TrafficDot color={color} />
         <span style={{ ...MONO18, opacity: 0.5 }}>{label}</span>
-        <input style={inputStyle} value={doelVal} onChange={e => onDoelChange(e.target.value)} onBlur={onDoelBlur} placeholder="doelstelling..." />
-        <input style={inputStyle} value={realVal} onChange={e => onRealChange(e.target.value)} onBlur={onRealBlur} placeholder="realisatie..." />
+        <input style={inputStyle} value={doelVal} onChange={e => onDoelChange(e.target.value)} onBlur={onDoelBlur} placeholder="..." />
+        <input style={inputStyle} value={realVal} onChange={e => onRealChange(e.target.value)} onBlur={onRealBlur} placeholder="..." />
       </div>
-      {hasAnswer && (
-        <button style={{ ...s.arnobotBtn, opacity: loading ? 0.4 : 0.7, marginLeft: '28px' }} onClick={() => !loading && onArnoBot(id, label, '')}>
-          {loading ? '→ ARNOBOT DENKT...' : feedback ? '→ OPNIEUW VRAGEN' : '→ ARNOBOT'}
-        </button>
-      )}
-      {feedback && !loading && <ArnobotBox text={feedback} onClose={() => onArnoBot(id, '__clear__', '')} style={{ marginLeft: '28px' }} />}
+      {/* ARNOBOT — tijdelijk uitgeschakeld, later terugzetten */}
     </div>
   )
 }
@@ -484,11 +478,16 @@ export default function UitvoeringPage() {
       {/* KPI DASHBOARD */}
       <div style={{ ...s.sectionDivider, paddingBottom: '48px' }}>
         <div style={{ ...s.groupLabel, marginBottom: '8px' }}>DOELEN EN KPI DASHBOARD<span style={s.fieldLabelLine} /></div>
-        <div style={{ ...MONO_SUB, marginBottom: '24px', display: 'grid', gridTemplateColumns: '12px 1fr 1fr 1fr', gap: '16px', alignItems: 'center' }}>
-          <span />
-          <span style={{ opacity: 0.4, fontSize: '11px', letterSpacing: '2px' }}>KPI</span>
-          <span style={{ opacity: 0.4, fontSize: '11px', letterSpacing: '2px' }}>DOELSTELLING</span>
-          <span style={{ opacity: 0.4, fontSize: '11px', letterSpacing: '2px' }}>REALISATIE</span>
+
+        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0 80px', marginBottom: '8px' }}>
+          {[0,1].map(i => (
+            <div key={i} style={{ display: 'grid', gridTemplateColumns: '12px 1fr 120px 120px', gap: '16px' }}>
+              <span />
+              <span />
+              <span style={{ ...MONO18, opacity: 0.4, fontSize: '11px', letterSpacing: '2px' }}>DOEL</span>
+              <span style={{ ...MONO18, opacity: 0.4, fontSize: '11px', letterSpacing: '2px' }}>REALISATIE</span>
+            </div>
+          ))}
         </div>
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0 80px' }}>
           {KPI_IDS.map(id => (
@@ -496,9 +495,6 @@ export default function UitvoeringPage() {
               key={id}
               id={id}
               label={ALL_FIELDS.find(x => x.id === id)?.label ?? id}
-              feedback={arnobotFeedback[id] || ''}
-              loading={arnobotLoading[id] || false}
-              onArnoBot={handleArnoBot}
               doelVal={kpiTargets[id]?.doel || ''}
               realVal={kpiTargets[id]?.real || ''}
               onDoelChange={v => handleTargetChange(id, 'doel', v)}
