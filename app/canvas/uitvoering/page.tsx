@@ -55,7 +55,7 @@ const ALL_FIELDS: FieldDef[] = [
   { id: 'kpi_omzet', label: '€ Omzet', sub: '', type: 'input' },
   { id: 'kpi_winst', label: '€/% Winst', sub: '', type: 'input' },
   { id: 'kpi_referrals', label: '# Referrals', sub: '', type: 'input' },
-  { id: 'verkoopproces', label: 'VERKOOPPROCES / KLANTREIS', sub: 'Hoe ziet ons verkoopproces er uit? Wat hebben we geleerd? Wat willen we verbeteren?', type: 'textarea' },
+  { id: 'verkoopproces', label: 'VERKOOPPROCES / KLANTREIS', sub: 'Hoe ziet ons verkoopproces en klantreis er uit? Wat hebben we ervan geleerd? Wat willen we verbeteren? Wat hebben we te ontwikkelen? Hoe kunnen we effectiever worden?', type: 'textarea' },
   { id: 'feestje', label: 'BOUW EEN FEESTJE', sub: 'Hoe vieren we onze successen?', type: 'textarea' },
   { id: 'beloning', label: 'BELONING', sub: 'Hoe belonen we betrokken medewerkers?', type: 'textarea' },
 ]
@@ -275,7 +275,9 @@ function ConversieRow({ label, value, redBelow, greenAbove }: { label: string; v
 }
 
 
-const KPI_IDS = ['kpi_verkoopcyclus','kpi_conversieratio','kpi_klantaandeel','kpi_klantretentie','kpi_forecast','kpi_ordergrootte','kpi_nieuwe_logos','kpi_omzet','kpi_winst','kpi_referrals'] as const
+const KPI_LEFT =  ['kpi_verkoopcyclus','kpi_conversieratio','kpi_klantaandeel','kpi_klantretentie','kpi_forecast'] as const
+const KPI_RIGHT = ['kpi_ordergrootte','kpi_nieuwe_logos','kpi_omzet','kpi_winst','kpi_referrals'] as const
+const KPI_IDS = [...KPI_LEFT, ...KPI_RIGHT] as const
 const KPI_INVERT = new Set(['kpi_verkoopcyclus'])
 
 export default function UitvoeringPage() {
@@ -484,30 +486,38 @@ export default function UitvoeringPage() {
       <div style={{ ...s.sectionDivider, paddingBottom: '48px' }}>
         <div style={{ ...s.groupLabel, marginBottom: '8px' }}>DOELEN EN KPI DASHBOARD<span style={s.fieldLabelLine} /></div>
 
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0 80px', marginBottom: '8px' }}>
-          {[0,1].map(i => (
-            <div key={i} style={{ display: 'grid', gridTemplateColumns: '12px 1fr 120px 120px', gap: '16px' }}>
-              <span />
-              <span />
+        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0 80px' }}>
+          {/* Linker kolom */}
+          <div>
+            <div style={{ display: 'grid', gridTemplateColumns: '12px 1fr 120px 120px', gap: '16px', marginBottom: '8px' }}>
+              <span /><span />
               <span style={{ ...MONO18, opacity: 0.4, fontSize: '11px', letterSpacing: '2px' }}>DOEL</span>
               <span style={{ ...MONO18, opacity: 0.4, fontSize: '11px', letterSpacing: '2px' }}>REALISATIE</span>
             </div>
-          ))}
+            {KPI_LEFT.map(id => (
+              <KpiRowWithLight key={id} id={id} label={ALL_FIELDS.find(x => x.id === id)?.label ?? id}
+                doelVal={kpiTargets[id]?.doel || ''} realVal={kpiTargets[id]?.real || ''}
+                onDoelChange={v => handleTargetChange(id, 'doel', v)} onRealChange={v => handleTargetChange(id, 'real', v)}
+                onDoelBlur={() => handleTargetBlur(id, 'doel')} onRealBlur={() => handleTargetBlur(id, 'real')}
+                invert={KPI_INVERT.has(id)} />
+            ))}
+          </div>
+          {/* Rechter kolom */}
+          <div>
+            <div style={{ display: 'grid', gridTemplateColumns: '12px 1fr 120px 120px', gap: '16px', marginBottom: '8px' }}>
+              <span /><span />
+              <span style={{ ...MONO18, opacity: 0.4, fontSize: '11px', letterSpacing: '2px' }}>DOEL</span>
+              <span style={{ ...MONO18, opacity: 0.4, fontSize: '11px', letterSpacing: '2px' }}>REALISATIE</span>
+            </div>
+            {KPI_RIGHT.map(id => (
+              <KpiRowWithLight key={id} id={id} label={ALL_FIELDS.find(x => x.id === id)?.label ?? id}
+                doelVal={kpiTargets[id]?.doel || ''} realVal={kpiTargets[id]?.real || ''}
+                onDoelChange={v => handleTargetChange(id, 'doel', v)} onRealChange={v => handleTargetChange(id, 'real', v)}
+                onDoelBlur={() => handleTargetBlur(id, 'doel')} onRealBlur={() => handleTargetBlur(id, 'real')}
+                invert={KPI_INVERT.has(id)} />
+            ))}
+          </div>
         </div>
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0 80px' }}>
-          {KPI_IDS.map(id => (
-            <KpiRowWithLight
-              key={id}
-              id={id}
-              label={ALL_FIELDS.find(x => x.id === id)?.label ?? id}
-              doelVal={kpiTargets[id]?.doel || ''}
-              realVal={kpiTargets[id]?.real || ''}
-              onDoelChange={v => handleTargetChange(id, 'doel', v)}
-              onRealChange={v => handleTargetChange(id, 'real', v)}
-              onDoelBlur={() => handleTargetBlur(id, 'doel')}
-              onRealBlur={() => handleTargetBlur(id, 'real')}
-              invert={KPI_INVERT.has(id)}
-            />
           ))}
         </div>
       </div>
