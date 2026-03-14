@@ -196,7 +196,7 @@ function OkrCol({ title, sub, prefix, answers, arnobotFeedback, arnobotLoading, 
         const hasAnswer = !!value.trim()
         const isStatus = prefix === 'okr_status'
         return (
-          <div key={id} style={{ marginBottom: '12px', display: 'flex', alignItems: 'flex-start', paddingTop: '16px' }}>
+          <div key={id} style={{ marginBottom: '12px', display: 'flex', justifyContent: 'center', alignItems: 'flex-start', paddingTop: '8px' }}>
             {isStatus ? (
               <StatusToggle id={id} value={value} onChange={(id, v) => { handleChange(id, v); handleBlur(id) }} />
             ) : (
@@ -469,10 +469,10 @@ export default function UitvoeringPage() {
           <OkrCol title="INITIATIEF (WELKE)" sub="Welke acties doen we?" prefix="okr_initiatief"
             answers={answers} arnobotFeedback={arnobotFeedback} arnobotLoading={arnobotLoading}
             handleChange={handleChange} handleBlur={handleBlur} handleArnoBot={handleArnoBot} />
-          <OkrCol title="STATUS" sub="" prefix="okr_status"
+          <OkrCol title="STATUS" sub="&nbsp;" prefix="okr_status"
             answers={answers} arnobotFeedback={arnobotFeedback} arnobotLoading={arnobotLoading}
             handleChange={handleChange} handleBlur={handleBlur} handleArnoBot={handleArnoBot} />
-          <OkrCol title="OWNER (WIE)" sub="Wie is verantwoordelijk voor het resultaat?" prefix="okr_wie"
+          <OkrCol title="OWNER (WIE)" sub="Wie is verantwoordelijk?" prefix="okr_wie"
             answers={answers} arnobotFeedback={arnobotFeedback} arnobotLoading={arnobotLoading}
             handleChange={handleChange} handleBlur={handleBlur} handleArnoBot={handleArnoBot} />
         </div>
