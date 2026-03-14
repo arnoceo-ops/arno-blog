@@ -200,7 +200,7 @@ function OkrCol({ title, sub, prefix, answers, arnobotFeedback, arnobotLoading, 
           <div key={id} style={{ marginBottom: '12px' }}>
             <div style={{ display: 'grid', gridTemplateColumns: `24px 1fr${showStatus ? ' 40px' : ''}`, gap: '10px', alignItems: 'flex-start' }}>
               <span style={{ ...MONO18, opacity: 0.4, paddingTop: '8px' }}>{i}</span>
-              <AutoTextarea style={{ backgroundColor: 'transparent', border: 'none', borderBottom: '1px solid #e0d8cc', color: '#1a1714', fontSize: '18px', padding: '8px 0', outline: 'none', fontFamily: 'var(--font-space-mono, monospace)', width: '100%', boxSizing: 'border-box' as const }}
+              <AutoTextarea style={{ backgroundColor: 'transparent', border: 'none', borderBottom: '1px solid #e0d8cc', color: '#1a1714', fontSize: '18px', padding: '8px 0', outline: 'none', fontFamily: 'var(--font-space-mono, monospace)', width: '100%', boxSizing: 'border-box' as const, minHeight: '70px' }}
                 value={value} onChange={v => handleChange(id, v)} onBlur={() => handleBlur(id)} rows={1} />
               {showStatus && (
                 <div style={{ paddingTop: '6px' }}>
