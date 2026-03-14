@@ -206,15 +206,48 @@ function NumberCol({ id, label, value, onChange, onBlur, feedback, loading, onAr
   )
 }
 
-// fix 18: KpiRow met monospace 18px label
-function KpiRow({ id, label, value, onChange, onBlur, feedback, loading, onArnoBot }: FieldProps) {
+
+// ─── TRAFFIC LIGHT HELPERS ────────────────────────────────────────────
+function trafficLight(value: number, red: number, green: number): string {
+  if (value <= red) return '#e53e3e'
+  if (value >= green) return '#38a169'
+  return '#dd8800'
+}
+
+function TrafficDot({ color }: { color: string }) {
+  return (
+    <div style={{
+      width: '12px', height: '12px', borderRadius: '50%',
+      backgroundColor: color, flexShrink: 0,
+      boxShadow: `0 0 6px ${color}88`,
+    }} />
+  )
+}
+
+// KpiRow met traffic light + min/max invoer
+function KpiRowWithLight({ id, label, value, onChange, onBlur, feedback, loading, onArnoBot, minVal, maxVal, onMinChange, onMaxChange, onMinBlur, onMaxBlur }: FieldProps & {
+  minVal: string; maxVal: string
+  onMinChange: (v: string) => void; onMaxChange: (v: string) => void
+  onMinBlur: () => void; onMaxBlur: () => void
+}) {
   const hasAnswer = !!value.trim()
+  const num = parseFloat(value.replace(',', '.'))
+  const min = parseFloat(minVal.replace(',', '.'))
+  const max = parseFloat(maxVal.replace(',', '.'))
+  const hasLight = !isNaN(num) && !isNaN(min) && !isNaN(max) && max > min
+  const color = hasLight ? trafficLight(num, min, max) : '#444'
+
   return (
     <div style={{ marginBottom: '4px' }}>
-      <div style={{ display: 'grid', gridTemplateColumns: '200px 1fr', alignItems: 'center', gap: '16px', borderBottom: '1px solid #e0d8cc', padding: '10px 0' }}>
-        {/* fix 18: monospace 18px */}
+      <div style={{ display: 'grid', gridTemplateColumns: '12px 180px 1fr 80px 80px', alignItems: 'center', gap: '12px', borderBottom: '1px solid #e0d8cc', padding: '10px 0' }}>
+        <TrafficDot color={color} />
         <span style={{ ...MONO18, opacity: 0.5 }}>{label}</span>
-        <input style={{ backgroundColor: 'transparent', border: 'none', borderBottom: '1px solid #e0d8cc', color: '#1a1714', fontSize: '18px', padding: '4px 0', outline: 'none', fontFamily: 'var(--font-space-mono, monospace)', width: '100%', boxSizing: 'border-box' as const }} value={value} onChange={e => onChange(id, e.target.value)} onBlur={() => onBlur(id)} placeholder="..." />
+        <input style={{ backgroundColor: 'transparent', border: 'none', borderBottom: '1px solid #e0d8cc', color: '#1a1714', fontSize: '18px', padding: '4px 0', outline: 'none', fontFamily: 'var(--font-space-mono, monospace)', width: '100%', boxSizing: 'border-box' as const }}
+          value={value} onChange={e => onChange(id, e.target.value)} onBlur={() => onBlur(id)} placeholder="..." />
+        <input style={{ backgroundColor: 'transparent', border: 'none', borderBottom: '1px solid #e0d8cc', color: '#e53e3e', fontSize: '13px', padding: '4px 0', outline: 'none', fontFamily: 'var(--font-space-mono, monospace)', width: '100%', boxSizing: 'border-box' as const, textAlign: 'center' as const }}
+          value={minVal} onChange={e => onMinChange(e.target.value)} onBlur={onMinBlur} placeholder="min" />
+        <input style={{ backgroundColor: 'transparent', border: 'none', borderBottom: '1px solid #e0d8cc', color: '#38a169', fontSize: '13px', padding: '4px 0', outline: 'none', fontFamily: 'var(--font-space-mono, monospace)', width: '100%', boxSizing: 'border-box' as const, textAlign: 'center' as const }}
+          value={maxVal} onChange={e => onMaxChange(e.target.value)} onBlur={onMaxBlur} placeholder="max" />
       </div>
       {hasAnswer && (
         <button style={{ ...s.arnobotBtn, opacity: loading ? 0.4 : 0.7, marginLeft: '216px' }} onClick={() => !loading && onArnoBot(id, label, '')}>
@@ -226,10 +259,34 @@ function KpiRow({ id, label, value, onChange, onBlur, feedback, loading, onArnoB
   )
 }
 
+// Conversie berekend met traffic light
+function ConversieRow({ label, value, redBelow, greenAbove }: { label: string; value: number | null; redBelow: number; greenAbove: number }) {
+  const color = value === null ? '#444' : trafficLight(value, redBelow, greenAbove)
+  const display = value === null ? '—' : `${Math.round(value)}%`
+  return (
+    <div style={{ borderTop: '1px solid #e0d8cc', paddingTop: '16px' }}>
+      <div style={{ ...MONO18, opacity: 0.6, marginBottom: '8px', display: 'flex', alignItems: 'center', gap: '10px' }}>
+        <TrafficDot color={color} />
+        {label}
+      </div>
+      <div style={{ fontFamily: 'var(--font-bebas), sans-serif', fontSize: '36px', color, letterSpacing: '2px' }}>
+        {display}
+      </div>
+      <div style={{ fontSize: '11px', fontFamily: 'var(--font-space-mono, monospace)', opacity: 0.35, marginTop: '4px' }}>
+        rood &lt;{redBelow}% · groen &gt;{greenAbove}%
+      </div>
+    </div>
+  )
+}
+
+
+const KPI_IDS = ['kpi_verkoopcyclus','kpi_conversieratio','kpi_klantaandeel','kpi_klantretentie','kpi_forecast','kpi_ordergrootte','kpi_nieuwe_logos','kpi_omzet','kpi_winst','kpi_referrals'] as const
+
 export default function UitvoeringPage() {
   const { user } = useUser()
   const supabase = useSupabaseClient()
   const [answers, setAnswers] = useState<Record<string, string>>({})
+  const [kpiLimits, setKpiLimits] = useState<Record<string, { min: string; max: string }>>({})
   const [saveStatus, setSaveStatus] = useState('')
   const [arnobotFeedback, setArnobotFeedback] = useState<Record<string, string>>({})
   const [arnobotLoading, setArnobotLoading] = useState<Record<string, boolean>>({})
@@ -240,8 +297,20 @@ export default function UitvoeringPage() {
       const { data } = await supabase.from('canvas_answers').select('question_id, answer').eq('user_id', user.id).like('question_id', `${PREFIX}_%`)
       if (data) {
         const map: Record<string, string> = {}
-        data.forEach(r => { map[r.question_id.slice(PREFIX.length + 1)] = r.answer })
+        const limits: Record<string, { min: string; max: string }> = {}
+        data.forEach(r => {
+          const key = r.question_id.slice(PREFIX.length + 1)
+          if (key.endsWith('_min') || key.endsWith('_max')) {
+            const base = key.slice(0, key.lastIndexOf('_'))
+            const type = key.slice(key.lastIndexOf('_') + 1) as 'min' | 'max'
+            if (!limits[base]) limits[base] = { min: '', max: '' }
+            limits[base][type] = r.answer
+          } else {
+            map[key] = r.answer
+          }
+        })
         setAnswers(map)
+        setKpiLimits(limits)
       }
     })()
   }, [user])
@@ -249,7 +318,10 @@ export default function UitvoeringPage() {
   const save = useCallback(async (id: string, value: string) => {
     if (!user) return
     setSaveStatus('OPSLAAN...')
-    const { error } = await supabase.from('canvas_answers').upsert({ user_id: user.id, question_id: `${PREFIX}_${id}`, answer: value }, { onConflict: 'user_id,question_id' })
+    const { error } = await supabase.from('canvas_answers').upsert(
+      { user_id: user.id, question_id: `${PREFIX}_${id}`, answer: value },
+      { onConflict: 'user_id,question_id' }
+    )
     if (error) { console.error('SAVE ERROR:', error.code, error.message); setSaveStatus('FOUT ✗'); return }
     setSaveStatus('OPGESLAGEN ✓')
     setTimeout(() => setSaveStatus(''), 2000)
@@ -259,6 +331,15 @@ export default function UitvoeringPage() {
   const answersRef = useRef(answers)
   useEffect(() => { answersRef.current = answers }, [answers])
   const handleBlur = useCallback((id: string) => { save(id, answersRef.current[id] || '') }, [save])
+
+  const handleLimitChange = useCallback((kpiId: string, type: 'min' | 'max', value: string) => {
+    setKpiLimits(prev => ({ ...prev, [kpiId]: { ...prev[kpiId], [type]: value } }))
+  }, [])
+  const kpiLimitsRef = useRef(kpiLimits)
+  useEffect(() => { kpiLimitsRef.current = kpiLimits }, [kpiLimits])
+  const handleLimitBlur = useCallback((kpiId: string, type: 'min' | 'max') => {
+    save(`${kpiId}_${type}`, kpiLimitsRef.current[kpiId]?.[type] || '')
+  }, [save])
 
   const handleArnoBot = useCallback((id: string, label: string, sub: string) => {
     if (label === '__clear__') { setArnobotFeedback(f => ({ ...f, [id]: '' })); return }
@@ -289,9 +370,17 @@ export default function UitvoeringPage() {
 
   const f = (id: string) => ALL_FIELDS.find(x => x.id === id)!
 
+  // Bereken conversies
+  const leads = parseFloat(answers['numbers_leads'] || '0')
+  const bezoeken = parseFloat(answers['numbers_bezoeken'] || '0')
+  const offertes = parseFloat(answers['numbers_offertes'] || '0')
+  const orders = parseFloat(answers['numbers_orders'] || '0')
+  const conv1 = leads > 0 ? (bezoeken / leads) * 100 : null
+  const conv2 = bezoeken > 0 ? (offertes / bezoeken) * 100 : null
+  const conv3 = offertes > 0 ? (orders / offertes) * 100 : null
+
   return (
     <main style={s.page}>
-      {/* fix 13: nav Bebas 36px */}
       <nav style={s.nav}>
         <Link href="/canvas" style={{ color: '#1a1714', textDecoration: 'none', opacity: 0.4 }}>← CANVAS</Link>
         <span style={{ opacity: 0.2 }}>/</span>
@@ -300,7 +389,7 @@ export default function UitvoeringPage() {
 
       <PageHero number={3} />
 
-      {/* fix 14a+b: KWARTAALTHEMA — Bebas 26px labels, ArnoBot per veld */}
+      {/* KWARTAALTHEMA */}
       <div style={{ ...s.sectionDivider, paddingBottom: '48px' }}>
         <div style={{ ...s.groupLabel, marginBottom: '24px' }}>KWARTAALTHEMA<span style={s.fieldLabelLine} /></div>
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr 1fr', gap: '32px' }}>
@@ -310,7 +399,6 @@ export default function UitvoeringPage() {
               <div key={id}>
                 <div style={{ ...MONO18, opacity: 0.5, marginBottom: '8px' }}>{f(id).label}</div>
                 <input style={s.input} value={answers[id] || ''} onChange={e => handleChange(id, e.target.value)} onBlur={() => handleBlur(id)} placeholder="..." />
-                {/* fix 14b: ArnoBot */}
                 {hasAnswer && (
                   <button style={{ ...s.arnobotBtn, opacity: arnobotLoading[id] ? 0.4 : 0.7 }} onClick={() => !arnobotLoading[id] && handleArnoBot(id, f(id).label, '')}>
                     {arnobotLoading[id] ? '→ ARNOBOT DENKT...' : arnobotFeedback[id] ? '→ OPNIEUW VRAGEN' : '→ ARNOBOT'}
@@ -323,7 +411,7 @@ export default function UitvoeringPage() {
         </div>
       </div>
 
-      {/* Fix 3: OKR — geen lijn, één blok met 3 kolommen elk 3 velden */}
+      {/* OKR */}
       <div style={{ ...s.sectionDivider, paddingBottom: '48px' }}>
         <div style={{ ...s.groupLabel, marginBottom: '32px' }}>OKR'S — DOELSTELLINGEN<span style={s.fieldLabelLine} /></div>
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '48px' }}>
@@ -339,7 +427,7 @@ export default function UitvoeringPage() {
         </div>
       </div>
 
-      {/* Fix 4: KLANTEN blokken — nummers 1/2/3 in Monospace 18px */}
+      {/* KLANTEN */}
       <div style={{ ...s.sectionDivider, display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '48px', paddingBottom: '48px' }}>
         {[
           { key: 'krijgen', label: 'KLANTEN KRIJGEN', sub: 'Effectieve leadgeneratie' },
@@ -375,34 +463,49 @@ export default function UitvoeringPage() {
         ))}
       </div>
 
-      {/* fix 17: AANTALLEN & CONVERSIES */}
+      {/* AANTALLEN */}
       <div style={{ ...s.sectionDivider, paddingBottom: '48px' }}>
         <div style={{ ...s.groupLabel, marginBottom: '32px' }}>AANTALLEN & CONVERSIES<span style={s.fieldLabelLine} /></div>
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(5, 1fr)', gap: '24px', marginBottom: '32px' }}>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(5, 1fr)', gap: '24px', marginBottom: '40px' }}>
           {(['numbers_leads','numbers_bezoeken','numbers_offertes','numbers_orders','numbers_referrals'] as const).map(id => (
             <NumberCol key={id} {...fp(id)} />
           ))}
         </div>
+        {/* Berekende conversies */}
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '24px' }}>
-          {(['conversie_leads_bezoeken','conversie_bezoeken_offertes','conversie_offertes_orders'] as const).map(id => (
-            <NumberCol key={id} {...fp(id)} />
-          ))}
+          <ConversieRow label="Bezoeken / Leads" value={conv1} redBelow={20} greenAbove={40} />
+          <ConversieRow label="Offertes / Bezoeken" value={conv2} redBelow={30} greenAbove={50} />
+          <ConversieRow label="Orders / Offertes" value={conv3} redBelow={30} greenAbove={50} />
         </div>
       </div>
-
-      {/* fix 12: PAGINA 06 label verwijderd */}
 
       {/* WENSENLIJST */}
       <div style={{ ...s.sectionDivider, paddingBottom: '48px' }}>
         <Field {...fp('wensenlijst')} />
       </div>
 
-      {/* fix 18: KPI DASHBOARD */}
+      {/* KPI DASHBOARD */}
       <div style={{ ...s.sectionDivider, paddingBottom: '48px' }}>
-        <div style={{ ...s.groupLabel, marginBottom: '24px' }}>DOELEN EN KPI DASHBOARD<span style={s.fieldLabelLine} /></div>
+        <div style={{ ...s.groupLabel, marginBottom: '8px' }}>DOELEN EN KPI DASHBOARD<span style={s.fieldLabelLine} /></div>
+        <div style={{ ...MONO_SUB, marginBottom: '24px', display: 'grid', gridTemplateColumns: '12px 180px 1fr 80px 80px', gap: '12px', alignItems: 'center' }}>
+          <span />
+          <span style={{ opacity: 0.4, fontSize: '11px', letterSpacing: '2px' }}>KPI</span>
+          <span style={{ opacity: 0.4, fontSize: '11px', letterSpacing: '2px' }}>WAARDE</span>
+          <span style={{ color: '#e53e3e', opacity: 0.6, fontSize: '11px', letterSpacing: '2px', textAlign: 'center' as const }}>MIN</span>
+          <span style={{ color: '#38a169', opacity: 0.6, fontSize: '11px', letterSpacing: '2px', textAlign: 'center' as const }}>MAX</span>
+        </div>
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0 80px' }}>
-          {(['kpi_verkoopcyclus','kpi_conversieratio','kpi_klantaandeel','kpi_klantretentie','kpi_forecast','kpi_ordergrootte','kpi_nieuwe_logos','kpi_omzet','kpi_winst','kpi_referrals'] as const).map(id => (
-            <KpiRow key={id} {...fp(id)} />
+          {KPI_IDS.map(id => (
+            <KpiRowWithLight
+              key={id}
+              {...fp(id)}
+              minVal={kpiLimits[id]?.min || ''}
+              maxVal={kpiLimits[id]?.max || ''}
+              onMinChange={v => handleLimitChange(id, 'min', v)}
+              onMaxChange={v => handleLimitChange(id, 'max', v)}
+              onMinBlur={() => handleLimitBlur(id, 'min')}
+              onMaxBlur={() => handleLimitBlur(id, 'max')}
+            />
           ))}
         </div>
       </div>
