@@ -201,10 +201,10 @@ function OkrCol({ title, sub, prefix, answers, arnobotFeedback, arnobotLoading, 
               <StatusToggle id={id} value={value} onChange={(id, v) => { handleChange(id, v); handleBlur(id) }} />
             ) : (
               <div style={{ width: '100%' }}>
-                <div style={{ display: 'grid', gridTemplateColumns: '24px 1fr', gap: '10px', alignItems: 'center' }}>
-                  <span style={{ ...MONO18, opacity: 0.4 }}>{i}</span>
-                  <input style={{ backgroundColor: 'transparent', border: 'none', borderBottom: '1px solid #e0d8cc', color: '#1a1714', fontSize: '18px', padding: '8px 0', outline: 'none', fontFamily: 'var(--font-space-mono, monospace)', width: '100%', boxSizing: 'border-box' as const }}
-                    value={value} onChange={e => handleChange(id, e.target.value)} onBlur={() => handleBlur(id)} placeholder="..." />
+                <div style={{ display: 'grid', gridTemplateColumns: '24px 1fr', gap: '10px', alignItems: 'flex-start' }}>
+                  <span style={{ ...MONO18, opacity: 0.4, paddingTop: '8px' }}>{i}</span>
+                  <AutoTextarea style={{ backgroundColor: 'transparent', border: 'none', borderBottom: '1px solid #e0d8cc', color: '#1a1714', fontSize: '18px', padding: '8px 0', outline: 'none', fontFamily: 'var(--font-space-mono, monospace)', width: '100%', boxSizing: 'border-box' as const, minHeight: '44px' }}
+                    value={value} onChange={v => handleChange(id, v)} onBlur={() => handleBlur(id)} />
                 </div>
                 {hasAnswer && (
                   <button style={{ ...s.arnobotBtn, opacity: arnobotLoading[id] ? 0.4 : 0.7, marginLeft: '34px' }}
