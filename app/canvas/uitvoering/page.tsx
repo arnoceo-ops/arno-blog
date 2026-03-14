@@ -177,8 +177,9 @@ function StatusToggle({ id, value, onChange }: { id: string; value: string; onCh
 }
 
 // OKR kolom
-function OkrCol({ title, sub, prefix, answers, arnobotFeedback, arnobotLoading, handleChange, handleBlur, handleArnoBot }: {
+function OkrCol({ title, sub, prefix, answers, arnobotFeedback, arnobotLoading, handleChange, handleBlur, handleArnoBot, showStatus }: {
   title: string; sub: string; prefix: string
+  showStatus?: boolean
   answers: Record<string, string>
   arnobotFeedback: Record<string, string>
   arnobotLoading: Record<string, boolean>
@@ -192,29 +193,28 @@ function OkrCol({ title, sub, prefix, answers, arnobotFeedback, arnobotLoading, 
       <div style={MONO_SUB}>{sub}</div>
       {[1,2,3,4,5].map(i => {
         const id = `${prefix}_${i}`
+        const statusId = `okr_status_${i}`
         const value = answers[id] || ''
         const hasAnswer = !!value.trim()
-        const isStatus = prefix === 'okr_status'
         return (
-          <div key={id} style={{ marginBottom: '12px', display: 'flex', justifyContent: 'center', alignItems: 'flex-start', paddingTop: '14px', minHeight: '44px' }}>
-            {isStatus ? (
-              <StatusToggle id={id} value={value} onChange={(id, v) => { handleChange(id, v); handleBlur(id) }} />
-            ) : (
-              <div style={{ width: '100%' }}>
-                <div style={{ display: 'grid', gridTemplateColumns: '24px 1fr', gap: '10px', alignItems: 'flex-start' }}>
-                  <span style={{ ...MONO18, opacity: 0.4, paddingTop: '8px' }}>{i}</span>
-                  <AutoTextarea style={{ backgroundColor: 'transparent', border: 'none', borderBottom: '1px solid #e0d8cc', color: '#1a1714', fontSize: '18px', padding: '8px 0', outline: 'none', fontFamily: 'var(--font-space-mono, monospace)', width: '100%', boxSizing: 'border-box' as const, minHeight: '44px' }}
-                    value={value} onChange={v => handleChange(id, v)} onBlur={() => handleBlur(id)} rows={1} />
+          <div key={id} style={{ marginBottom: '12px' }}>
+            <div style={{ display: 'grid', gridTemplateColumns: `24px 1fr${showStatus ? ' 40px' : ''}`, gap: '10px', alignItems: 'flex-start' }}>
+              <span style={{ ...MONO18, opacity: 0.4, paddingTop: '8px' }}>{i}</span>
+              <AutoTextarea style={{ backgroundColor: 'transparent', border: 'none', borderBottom: '1px solid #e0d8cc', color: '#1a1714', fontSize: '18px', padding: '8px 0', outline: 'none', fontFamily: 'var(--font-space-mono, monospace)', width: '100%', boxSizing: 'border-box' as const }}
+                value={value} onChange={v => handleChange(id, v)} onBlur={() => handleBlur(id)} rows={1} />
+              {showStatus && (
+                <div style={{ paddingTop: '6px' }}>
+                  <StatusToggle id={statusId} value={answers[statusId] || ''} onChange={(id, v) => { handleChange(id, v); handleBlur(id) }} />
                 </div>
-                {hasAnswer && (
-                  <button style={{ ...s.arnobotBtn, opacity: arnobotLoading[id] ? 0.4 : 0.7, marginLeft: '34px' }}
-                    onClick={() => !arnobotLoading[id] && handleArnoBot(id, `${title} ${i}`, sub)}>
-                    {arnobotLoading[id] ? '→ ARNOBOT DENKT...' : arnobotFeedback[id] ? '→ OPNIEUW VRAGEN' : '→ ARNOBOT'}
-                  </button>
-                )}
-                {arnobotFeedback[id] && !arnobotLoading[id] && <ArnobotBox text={arnobotFeedback[id]} onClose={() => handleArnoBot(id, '__clear__', '')} style={{ marginLeft: '34px' }} />}
-              </div>
+              )}
+            </div>
+            {hasAnswer && (
+              <button style={{ ...s.arnobotBtn, opacity: arnobotLoading[id] ? 0.4 : 0.7, marginLeft: '34px' }}
+                onClick={() => !arnobotLoading[id] && handleArnoBot(id, `${title} ${i}`, sub)}>
+                {arnobotLoading[id] ? '→ ARNOBOT DENKT...' : arnobotFeedback[id] ? '→ OPNIEUW VRAGEN' : '→ ARNOBOT'}
+              </button>
             )}
+            {arnobotFeedback[id] && !arnobotLoading[id] && <ArnobotBox text={arnobotFeedback[id]} onClose={() => handleArnoBot(id, '__clear__', '')} style={{ marginLeft: '34px' }} />}
           </div>
         )
       })}
@@ -459,17 +459,14 @@ export default function UitvoeringPage() {
       {/* OKR */}
       <div style={{ ...s.sectionDivider, paddingBottom: '48px' }}>
         <div style={{ ...s.groupLabel, marginBottom: '32px' }}>OKR'S — DOELSTELLINGEN<span style={s.fieldLabelLine} /></div>
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr 120px 1fr', gap: '32px' }}>
+        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr 1fr', gap: '32px' }}>
           <OkrCol title="DOELSTELLING (WAT)" sub="Wat willen we bereiken?" prefix="okr_wat"
             answers={answers} arnobotFeedback={arnobotFeedback} arnobotLoading={arnobotLoading}
             handleChange={handleChange} handleBlur={handleBlur} handleArnoBot={handleArnoBot} />
           <OkrCol title="KERNRESULTAAT (HOE)" sub="Hoe meten we succes? (DoD)" prefix="okr_hoe"
             answers={answers} arnobotFeedback={arnobotFeedback} arnobotLoading={arnobotLoading}
             handleChange={handleChange} handleBlur={handleBlur} handleArnoBot={handleArnoBot} />
-          <OkrCol title="INITIATIEF (WELKE)" sub="Welke acties doen we?" prefix="okr_initiatief"
-            answers={answers} arnobotFeedback={arnobotFeedback} arnobotLoading={arnobotLoading}
-            handleChange={handleChange} handleBlur={handleBlur} handleArnoBot={handleArnoBot} />
-          <OkrCol title="STATUS" sub="&nbsp;" prefix="okr_status"
+          <OkrCol title="INITIATIEF (WELKE)" sub="Welke acties doen we?" prefix="okr_initiatief" showStatus
             answers={answers} arnobotFeedback={arnobotFeedback} arnobotLoading={arnobotLoading}
             handleChange={handleChange} handleBlur={handleBlur} handleArnoBot={handleArnoBot} />
           <OkrCol title="OWNER (WIE)" sub="Wie is verantwoordelijk?" prefix="okr_wie"
