@@ -234,20 +234,20 @@ export default function KpiDashboardPage() {
     }}>
 
       {/* TERUG NAV */}
-      <nav style={{ position: 'sticky' as const, top: 0, zIndex: 100, background: '#f5f0e8', borderBottom: '1px solid #e0d8cc', padding: '0 48px', display: 'flex', alignItems: 'center', height: 103, fontFamily: 'var(--font-bebas), sans-serif', fontSize: 36, letterSpacing: '3px' }}>
-        <Link href="/canvas" style={{ color: '#1a1714', textDecoration: 'none', opacity: 0.4 }}>← CANVAS</Link>
+      <nav style={{ position: 'sticky' as const, top: 0, zIndex: 100, background: '#f5f0e8', borderBottom: '1px solid #e0d8cc', padding: '0 40px', display: 'flex', alignItems: 'center', height: 103, fontFamily: 'Bebas Neue, sans-serif', fontSize: 36, letterSpacing: '3px' }}>
+        <Link href="/canvas" style={{ fontFamily: 'Bebas Neue, sans-serif', fontSize: 36, letterSpacing: '3px', color: '#1a1714', textDecoration: 'none', opacity: 0.4 }}>← CANVAS</Link>
       </nav>
 
       {/* HEADER */}
-      <div style={{ marginBottom: '80px' }}>
-        <p style={{ color: '#EE7700', fontSize: '11px', letterSpacing: '4px', marginBottom: '12px', opacity: 0.7 }}>
+      <div style={{ borderBottom: '1px solid #1f1f1f', padding: '48px 40px 40px' }}>
+        <p style={{ color: '#EE7700', fontSize: '13px', letterSpacing: '0.05em', marginBottom: '8px', opacity: 1, fontFamily: 'Geist, system-ui, sans-serif', textTransform: 'uppercase' as const }}>
           ROYAL DUTCH SALES
         </p>
-        <h1 style={{ fontFamily: 'var(--font-bebas), sans-serif', fontSize: '96px', letterSpacing: '6px', color: '#f0ede6', margin: '0 0 8px 0', lineHeight: 1 }}>
+        <h1 style={{ fontFamily: 'Bebas Neue, sans-serif', fontSize: 'clamp(48px, 7vw, 96px)', fontWeight: 400, letterSpacing: '0.02em', color: '#f0ede6', margin: '0 0 8px 0', lineHeight: 1 }}>
           KPI DASHBOARD
         </h1>
-        <p style={{ color: '#f0ede6', opacity: 0.35, fontSize: '13px', letterSpacing: '1px' }}>
-          {user.firstName} — Doelen vs. realisatie {new Date().getFullYear()}
+        <p style={{ color: 'rgb(136,136,136)', opacity: 1, fontSize: '13px', letterSpacing: '0.03em', fontFamily: 'Geist, system-ui, sans-serif', textTransform: 'uppercase' as const, marginTop: 12 }}>
+          {user.firstName} — DOELEN VS. REALISATIE {new Date().getFullYear()}
         </p>
       </div>
 
