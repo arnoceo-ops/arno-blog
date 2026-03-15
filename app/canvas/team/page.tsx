@@ -341,7 +341,7 @@ export default function TeamPage() {
         );
 
         const answered = userAnswers.filter((a) => a.answer && a.answer.trim() !== '').length;
-        const volledigheid = Math.round((answered / 45) * 100);
+        const volledigheid = Math.round((answered / 134) * 100);
 
         return {
           user_id: user.user_id,
