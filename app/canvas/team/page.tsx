@@ -7,6 +7,10 @@ import Link from 'next/link';
 
 const SEGMENT_WEIGHTS = { mensen: 0.4, strategie: 0.3, uitvoering: 0.3 };
 
+const G = 'Geist, system-ui, sans-serif';
+const BN = 'Bebas Neue, sans-serif';
+const SM = 'Space Mono, monospace';
+
 interface MemberStats {
   user_id: string;
   email: string;
@@ -24,25 +28,17 @@ function ScoreBar({ name, score }: { name: string; score: number }) {
   return (
     <div style={{ marginBottom: 20 }}>
       <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 6 }}>
-        <span style={{
-          fontFamily: 'Bebas Neue, sans-serif',
-          fontSize: 11,
-          letterSpacing: '0.15em',
-          color: '#EE7700',
-        }}>{name}</span>
-        <span style={{
-          fontFamily: 'Bebas Neue, sans-serif',
-          fontSize: 11,
-          letterSpacing: '0.1em',
-          color: pctColor,
-        }}>{score}%</span>
+        <span style={{ fontFamily: G, fontSize: 11, fontWeight: 400, letterSpacing: '0.05em', color: '#888' }}>
+          {name}
+        </span>
+        <span style={{ fontFamily: G, fontSize: 11, fontWeight: 400, color: pctColor }}>
+          {score}%
+        </span>
       </div>
       <div style={{ height: 2, background: '#1a1a1a' }}>
         <div style={{
-          height: '100%',
-          width: `${score}%`,
-          background: barColor,
-          transition: 'width 0.8s ease',
+          height: '100%', width: `${score}%`,
+          background: barColor, transition: 'width 0.8s ease',
         }} />
       </div>
     </div>
@@ -61,10 +57,8 @@ function MemberCard({ member, rank }: { member: MemberStats; rank: number }) {
     }}>
       {isTop && (
         <div style={{
-          position: 'absolute' as const,
-          top: 0, left: 0, right: 0,
-          height: 2,
-          background: '#EE7700',
+          position: 'absolute' as const, top: 0, left: 0, right: 0,
+          height: 2, background: '#EE7700',
         }} />
       )}
 
@@ -77,38 +71,27 @@ function MemberCard({ member, rank }: { member: MemberStats; rank: number }) {
         alignItems: 'flex-start',
       }}>
         <div>
+          <div style={{ fontFamily: G, fontSize: 11, fontWeight: 400, color: '#555', marginBottom: 6 }}>
+            #{rank}
+          </div>
           <div style={{
-            fontFamily: 'Bebas Neue, sans-serif',
-            fontSize: 11,
-            letterSpacing: '0.15em',
-            color: '#555',
-            marginBottom: 6,
-          }}>#{rank}</div>
-          <div style={{
-            fontFamily: 'Space Mono, monospace',
-            fontSize: 13,
-            color: '#f0ede6',
-            maxWidth: 240,
-            overflow: 'hidden' as const,
-            textOverflow: 'ellipsis' as const,
-            whiteSpace: 'nowrap' as const,
+            fontFamily: SM, fontSize: 13, color: '#f0ede6',
+            maxWidth: 240, overflow: 'hidden' as const,
+            textOverflow: 'ellipsis' as const, whiteSpace: 'nowrap' as const,
           }}>{member.email}</div>
         </div>
         <div style={{ textAlign: 'right' as const }}>
           <div style={{
-            fontFamily: 'Bebas Neue, sans-serif',
-            fontSize: 120,
-            lineHeight: 0.85,
-            color: member.plan_kwaliteit >= 70 ? '#EE7700' : '#f0ede6',
+            fontFamily: BN, fontSize: 120, fontWeight: 400,
+            lineHeight: 0.85, color: member.plan_kwaliteit >= 70 ? '#EE7700' : '#f0ede6',
           }}>{member.plan_kwaliteit}%</div>
-          <div style={{
-            fontFamily: 'Bebas Neue, sans-serif',
-            fontSize: 11,
-            letterSpacing: '0.15em',
-            color: '#555',
-            marginTop: 4,
-          }}>PLAN KWALITEIT &nbsp;
-            <span style={{ color: '#EE7700' }}>{kwaliteitLabel}</span>
+          <div style={{ marginTop: 6 }}>
+            <span style={{ fontFamily: G, fontSize: 13, fontWeight: 400, color: '#555' }}>
+              PLAN KWALITEIT&nbsp;
+            </span>
+            <span style={{ fontFamily: G, fontSize: 13, fontWeight: 400, color: '#EE7700' }}>
+              {kwaliteitLabel}
+            </span>
           </div>
         </div>
       </div>
@@ -120,25 +103,15 @@ function MemberCard({ member, rank }: { member: MemberStats; rank: number }) {
         <ScoreBar name="UITVOERING" score={member.uitvoering_score} />
 
         <div style={{
-          marginTop: 8,
-          paddingTop: 16,
-          borderTop: '1px solid #1a1a1a',
-          display: 'flex',
-          justifyContent: 'space-between',
-          alignItems: 'center',
+          marginTop: 8, paddingTop: 16, borderTop: '1px solid #1a1a1a',
+          display: 'flex', justifyContent: 'space-between', alignItems: 'center',
         }}>
-          <span style={{
-            fontFamily: 'Bebas Neue, sans-serif',
-            fontSize: 11,
-            letterSpacing: '0.15em',
-            color: '#555',
-          }}>VOLLEDIGHEID</span>
-          <span style={{
-            fontFamily: 'Bebas Neue, sans-serif',
-            fontSize: 11,
-            letterSpacing: '0.1em',
-            color: '#888',
-          }}>{member.volledigheid}%</span>
+          <span style={{ fontFamily: G, fontSize: 11, fontWeight: 400, color: '#555' }}>
+            VOLLEDIGHEID
+          </span>
+          <span style={{ fontFamily: G, fontSize: 11, fontWeight: 400, color: '#888' }}>
+            {member.volledigheid}%
+          </span>
         </div>
       </div>
     </div>
@@ -159,23 +132,15 @@ function TeamAverages({ members }: { members: MemberStats[] }) {
   ];
 
   return (
-    <div style={{
-      borderBottom: '1px solid #1f1f1f',
-      padding: '40px 40px 48px',
-    }}>
+    <div style={{ borderBottom: '1px solid #1f1f1f', padding: '40px 40px 48px' }}>
       <div style={{
-        fontFamily: 'Bebas Neue, sans-serif',
-        fontSize: 11,
-        letterSpacing: '0.15em',
-        color: '#555',
-        marginBottom: 32,
+        fontFamily: G, fontSize: 13, fontWeight: 400,
+        letterSpacing: '0.05em', color: '#555', marginBottom: 32,
+        textTransform: 'uppercase' as const,
       }}>
         TEAM GEMIDDELDE — {members.length} {members.length === 1 ? 'LID' : 'LEDEN'}
       </div>
-      <div style={{
-        display: 'grid',
-        gridTemplateColumns: 'repeat(5, 1fr)',
-      }}>
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(5, 1fr)' }}>
         {stats.map(({ key, lbl, highlight }, i) => (
           <div key={lbl} style={{
             borderRight: i < 4 ? '1px solid #1a1a1a' : 'none',
@@ -183,17 +148,13 @@ function TeamAverages({ members }: { members: MemberStats[] }) {
             paddingLeft: i > 0 ? 40 : 0,
           }}>
             <div style={{
-              fontFamily: 'Bebas Neue, sans-serif',
-              fontSize: 11,
-              letterSpacing: '0.15em',
-              color: '#EE7700',
-              marginBottom: 8,
+              fontFamily: G, fontSize: 13, fontWeight: 400,
+              letterSpacing: '0.05em', color: '#888', marginBottom: 8,
+              textTransform: 'uppercase' as const,
             }}>{lbl}</div>
             <div style={{
-              fontFamily: 'Bebas Neue, sans-serif',
-              fontSize: 72,
-              lineHeight: 1,
-              color: highlight ? '#EE7700' : '#f0ede6',
+              fontFamily: BN, fontSize: 72, fontWeight: 400,
+              lineHeight: 1, color: highlight ? '#EE7700' : '#f0ede6',
             }}>{avg(key)}%</div>
           </div>
         ))}
@@ -273,60 +234,44 @@ export default function TeamPage() {
   return (
     <div style={{ minHeight: '100vh', background: '#0a0a0a', color: '#f0ede6' }}>
 
-      {/* Nav */}
+      {/* Nav — minimaal, alleen terugknop */}
       <nav style={{
         position: 'sticky' as const, top: 0, zIndex: 100,
         background: '#0a0a0a', borderBottom: '1px solid #1f1f1f',
         padding: '0 40px', display: 'flex', alignItems: 'center',
         justifyContent: 'space-between', height: 56,
       }}>
-        <div style={{ display: 'flex', gap: 32, alignItems: 'center' }}>
-          {['HOME', 'ARNOBOT', 'BIO', 'BLOG', 'CANVAS', 'SUBSCRIBE'].map((item) => (
-            <Link key={item} href={
-              item === 'HOME' ? '/' : item === 'ARNOBOT' ? '/spar' :
-              item === 'SUBSCRIBE' ? '/subscribe' : `/${item.toLowerCase()}`
-            } style={{
-              fontFamily: 'Bebas Neue, sans-serif', fontSize: 14,
-              letterSpacing: '0.12em',
-              color: item === 'CANVAS' ? '#EE7700' : '#888',
-              textDecoration: 'none',
-            }}>{item}</Link>
-          ))}
-        </div>
-        <div style={{ display: 'flex', gap: 24, alignItems: 'center' }}>
-          {['STRATEGIE', 'MENSEN', 'UITVOERING'].map((s) => (
-            <Link key={s} href={`/canvas/${s.toLowerCase()}`} style={{
-              fontFamily: 'Bebas Neue, sans-serif', fontSize: 13,
-              letterSpacing: '0.1em', color: '#555', textDecoration: 'none',
-            }}>{s}</Link>
-          ))}
-          <Link href="/canvas" style={{
-            fontFamily: 'Bebas Neue, sans-serif', fontSize: 13,
-            letterSpacing: '0.1em', color: '#555', textDecoration: 'none',
-          }}>DASHBOARD</Link>
-          <span style={{
-            fontFamily: 'Bebas Neue, sans-serif', fontSize: 13,
-            letterSpacing: '0.1em', color: '#EE7700',
-          }}>TEAM</span>
-        </div>
+        <Link href="https://canvas.royaldutchsales.com/canvas" style={{
+          display: 'flex', alignItems: 'center', gap: 10,
+          fontFamily: G, fontSize: 13, fontWeight: 400,
+          color: '#888', textDecoration: 'none',
+          letterSpacing: '0.03em',
+        }}>
+          <span style={{ fontSize: 16, lineHeight: 1 }}>←</span>
+          CANVAS DASHBOARD
+        </Link>
+        <span style={{
+          fontFamily: BN, fontSize: 13, letterSpacing: '0.15em', color: '#EE7700',
+        }}>TEAM</span>
       </nav>
 
       {/* Page header */}
       <div style={{ borderBottom: '1px solid #1f1f1f', padding: '48px 40px 40px' }}>
         <div style={{
-          fontFamily: 'Bebas Neue, sans-serif', fontSize: 11,
-          letterSpacing: '0.2em', color: '#EE7700', marginBottom: 8,
+          fontFamily: G, fontSize: 13, fontWeight: 400,
+          letterSpacing: '0.05em', color: '#555', marginBottom: 8,
+          textTransform: 'uppercase' as const,
         }}>ROYAL DUTCH SALES</div>
         <h1 style={{
-          fontFamily: 'Bebas Neue, sans-serif',
-          fontSize: 'clamp(48px, 7vw, 96px)',
-          letterSpacing: '0.02em', color: '#f0ede6',
+          fontFamily: BN, fontSize: 'clamp(48px, 7vw, 96px)' as any,
+          fontWeight: 400, letterSpacing: '0.02em', color: '#f0ede6',
           margin: 0, lineHeight: 1,
         }}>TEAM DASHBOARD</h1>
         <p style={{
-          fontFamily: 'Space Mono, monospace', fontSize: 11,
-          color: '#555', marginTop: 12, letterSpacing: '0.02em',
-        }}>Vergelijk plan kwaliteit en voortgang per teamlid</p>
+          fontFamily: G, fontSize: 13, fontWeight: 400,
+          color: '#555', marginTop: 12, letterSpacing: '0.03em',
+          textTransform: 'uppercase' as const,
+        }}>VERGELIJK PLAN KWALITEIT EN VOORTGANG PER TEAMLID</p>
       </div>
 
       {/* Team averages */}
@@ -335,14 +280,14 @@ export default function TeamPage() {
       {/* States */}
       {loading && (
         <div style={{
-          fontFamily: 'Space Mono, monospace', fontSize: 11,
-          color: '#555', textAlign: 'center' as const, padding: '80px 0',
+          fontFamily: G, fontSize: 13, color: '#555',
+          textAlign: 'center' as const, padding: '80px 0',
         }}>Laden...</div>
       )}
       {error && (
         <div style={{
-          fontFamily: 'Space Mono, monospace', fontSize: 11,
-          color: '#c0392b', textAlign: 'center' as const, padding: '80px 0',
+          fontFamily: G, fontSize: 13, color: '#c0392b',
+          textAlign: 'center' as const, padding: '80px 0',
         }}>{error}</div>
       )}
 
@@ -351,8 +296,8 @@ export default function TeamPage() {
         <div style={{ padding: '40px' }}>
           {members.length === 0 ? (
             <div style={{
-              fontFamily: 'Space Mono, monospace', fontSize: 11,
-              color: '#555', textAlign: 'center' as const, padding: '80px 0',
+              fontFamily: G, fontSize: 13, color: '#555',
+              textAlign: 'center' as const, padding: '80px 0',
             }}>Geen teamleden gevonden.</div>
           ) : (
             <div style={{
