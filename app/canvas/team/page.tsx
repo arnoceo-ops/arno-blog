@@ -276,35 +276,46 @@ export default function TeamPage() {
   const [error, setError] = useState<string | null>(null);
 
   const loadTeamData = useCallback(async () => {
-    if (!userId) return;
+  if (!userId) return;
 
-    try {
-      // Check manager access
-      const { data: managerCheck } = await supabase
-        .from('approved_users')
-        .select('is_manager')
-        .eq('user_id', userId)
-        .single();
-
-      if (!managerCheck?.is_manager) {
-        setError('Geen toegang. Dit dashboard is alleen beschikbaar voor managers.');
-        setLoading(false);
-        return;
+  try {
+    const token = await getToken({ template: 'supabase' });
+    const authedSupabase = createClient(
+      process.env.NEXT_PUBLIC_SUPABASE_URL!,
+      process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+      {
+        global: {
+          headers: { Authorization: `Bearer ${token}` },
+        },
       }
+    );
 
-      // Get all approved users
-      const { data: approvedUsers, error: usersError } = await supabase
-        .from('approved_users')
-        .select('user_id, email');
+    // Check manager access
+    const { data: managerCheck } = await authedSupabase
+      .from('approved_users')
+      .select('is_manager')
+      .eq('user_id', userId)
+      .single();
 
-      if (usersError || !approvedUsers) throw usersError;
+    if (!managerCheck?.is_manager) {
+      setError('Geen toegang. Dit dashboard is alleen beschikbaar voor managers.');
+      setLoading(false);
+      return;
+    }
 
-      // Get all canvas answers with scores
-      const { data: answers, error: answersError } = await supabase
-        .from('canvas_answers')
-        .select('user_id, question_id, score, answer');
+    // Get all approved users
+    const { data: approvedUsers, error: usersError } = await authedSupabase
+      .from('approved_users')
+      .select('user_id, email');
 
-      if (answersError) throw answersError;
+    if (usersError || !approvedUsers) throw usersError;
+
+    // Get all canvas answers with scores
+    const { data: answers, error: answersError } = await authedSupabase
+      .from('canvas_answers')
+      .select('user_id, question_id, score, answer');
+
+    if (answersError) throw answersError;
 
       // Aggregate per user
       const stats: MemberStats[] = approvedUsers.map((user) => {
