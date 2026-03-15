@@ -40,7 +40,7 @@ function ScoreBar({ name, score }: { name: string; score: number }) {
         <span style={{ fontFamily: G, fontSize: 18, fontWeight: 400, color: GREY }}>
           {name}
         </span>
-        <span style={{ fontFamily: G, fontSize: 18, fontWeight: 400, color: pctColor }}>
+        <span style={{ fontFamily: G, fontSize: 18, fontWeight: 400, color: GREY }}>
           {score}%
         </span>
       </div>
@@ -69,7 +69,7 @@ function MemberCard({ member, rank }: { member: MemberStats; rank: number }) {
           </div>
         </div>
         <div style={{ textAlign: 'right' as const }}>
-          <div style={{ fontFamily: BN, fontSize: 120, fontWeight: 400, lineHeight: 0.85, color: member.plan_kwaliteit >= 70 ? ORANGE : CREAM }}>
+          <div style={{ fontFamily: BN, fontSize: 120, fontWeight: 400, lineHeight: 0.85, color: CREAM }}>
             {member.plan_kwaliteit}%
           </div>
           <div style={{ marginTop: 6 }}>
@@ -113,7 +113,7 @@ function TeamAverages({ members }: { members: MemberStats[] }) {
   const StatCell = ({ k, lbl, last }: { k: keyof MemberStats; lbl: string; last?: boolean }) => (
     <div style={{ borderRight: last ? 'none' : `1px solid ${LINE2}`, paddingRight: last ? 0 : 48, paddingLeft: 0, marginRight: last ? 0 : 48 }}>
       <div style={{ fontFamily: G, fontSize: 13, fontWeight: 400, letterSpacing: '0.05em', color: ORANGE, marginBottom: 8, textTransform: 'uppercase' as const }}>{lbl}</div>
-      <div style={{ fontFamily: BN, fontSize: 120, fontWeight: 400, lineHeight: 1, color: ORANGE }}>{avg(k)}%</div>
+      <div style={{ fontFamily: BN, fontSize: 120, fontWeight: 400, lineHeight: 1, color: CREAM }}>{avg(k)}%</div>
     </div>
   );
 
@@ -189,7 +189,7 @@ export default function TeamPage() {
     <div style={{ minHeight: '100vh', background: DARK, color: CREAM }}>
 
       {/* Nav */}
-      <nav style={{ position: 'sticky' as const, top: 0, zIndex: 100, background: DARK, borderBottom: `1px solid ${LINE}`, padding: '0 40px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', height: 64 }}>
+      <nav style={{ position: 'sticky' as const, top: 0, zIndex: 100, background: '#f0ede6', borderBottom: `1px solid #ddd`, padding: '0 40px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', height: 64 }}>
         <Link href="https://canvas.royaldutchsales.com/canvas" style={{ display: 'flex', alignItems: 'center', gap: 12, textDecoration: 'none' }}>
           <span style={{ fontFamily: BN, fontSize: 36, fontWeight: 400, color: 'rgb(26, 23, 20)', lineHeight: 1 }}>←</span>
           <span style={{ fontFamily: BN, fontSize: 36, fontWeight: 400, color: 'rgb(26, 23, 20)', lineHeight: 1, letterSpacing: '0.05em' }}>CANVAS DASHBOARD</span>
