@@ -7,9 +7,17 @@ import Link from 'next/link';
 
 const SEGMENT_WEIGHTS = { mensen: 0.4, strategie: 0.3, uitvoering: 0.3 };
 
-const G = 'Geist, system-ui, sans-serif';
+const G  = 'Geist, system-ui, sans-serif';
 const BN = 'Bebas Neue, sans-serif';
 const SM = 'Space Mono, monospace';
+
+const ORANGE = '#EE7700';
+const GREY   = 'rgb(136, 136, 136)';
+const CREAM  = '#f0ede6';
+const DARK   = '#0a0a0a';
+const CARD   = '#0d0d0d';
+const LINE   = '#1f1f1f';
+const LINE2  = '#1a1a1a';
 
 interface MemberStats {
   user_id: string;
@@ -22,152 +30,118 @@ interface MemberStats {
   answered: number;
 }
 
+/* ── Score bar inside member card ── */
 function ScoreBar({ name, score }: { name: string; score: number }) {
-  const barColor = score >= 70 ? '#EE7700' : score >= 50 ? '#888' : '#c0392b';
-  const pctColor = score >= 70 ? '#EE7700' : score >= 50 ? '#f0ede6' : '#c0392b';
+  const barColor = score >= 70 ? ORANGE : score >= 50 ? '#888' : '#c0392b';
+  const pctColor = score >= 70 ? ORANGE : score >= 50 ? CREAM  : '#c0392b';
   return (
     <div style={{ marginBottom: 20 }}>
       <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 6 }}>
-        <span style={{ fontFamily: G, fontSize: 11, fontWeight: 400, letterSpacing: '0.05em', color: '#888' }}>
+        <span style={{ fontFamily: G, fontSize: 18, fontWeight: 400, color: GREY }}>
           {name}
         </span>
-        <span style={{ fontFamily: G, fontSize: 11, fontWeight: 400, color: pctColor }}>
+        <span style={{ fontFamily: G, fontSize: 18, fontWeight: 400, color: pctColor }}>
           {score}%
         </span>
       </div>
-      <div style={{ height: 2, background: '#1a1a1a' }}>
-        <div style={{
-          height: '100%', width: `${score}%`,
-          background: barColor, transition: 'width 0.8s ease',
-        }} />
+      <div style={{ height: 2, background: LINE2 }}>
+        <div style={{ height: '100%', width: `${score}%`, background: barColor, transition: 'width 0.8s ease' }} />
       </div>
     </div>
   );
 }
 
+/* ── Member card ── */
 function MemberCard({ member, rank }: { member: MemberStats; rank: number }) {
   const isTop = rank === 1;
   const kwaliteitLabel = member.plan_kwaliteit >= 70 ? 'STERK' : member.plan_kwaliteit >= 50 ? 'MATIG' : 'ZWAK';
 
   return (
-    <div style={{
-      background: '#0d0d0d',
-      border: `1px solid ${isTop ? '#EE7700' : '#1f1f1f'}`,
-      position: 'relative' as const,
-    }}>
-      {isTop && (
-        <div style={{
-          position: 'absolute' as const, top: 0, left: 0, right: 0,
-          height: 2, background: '#EE7700',
-        }} />
-      )}
+    <div style={{ background: CARD, border: `1px solid ${isTop ? ORANGE : LINE}`, position: 'relative' as const }}>
+      {isTop && <div style={{ position: 'absolute' as const, top: 0, left: 0, right: 0, height: 2, background: ORANGE }} />}
 
-      {/* Card header */}
-      <div style={{
-        padding: '28px 32px 24px',
-        borderBottom: '1px solid #1a1a1a',
-        display: 'flex',
-        justifyContent: 'space-between',
-        alignItems: 'flex-start',
-      }}>
+      {/* Header row */}
+      <div style={{ padding: '28px 32px 24px', borderBottom: `1px solid ${LINE2}`, display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
         <div>
-          <div style={{ fontFamily: G, fontSize: 11, fontWeight: 400, color: '#555', marginBottom: 6 }}>
-            #{rank}
+          <div style={{ fontFamily: G, fontSize: 18, fontWeight: 400, color: GREY, marginBottom: 6 }}>#{rank}</div>
+          <div style={{ fontFamily: SM, fontSize: 13, color: CREAM, maxWidth: 240, overflow: 'hidden' as const, textOverflow: 'ellipsis' as const, whiteSpace: 'nowrap' as const }}>
+            {member.email}
           </div>
-          <div style={{
-            fontFamily: SM, fontSize: 13, color: '#f0ede6',
-            maxWidth: 240, overflow: 'hidden' as const,
-            textOverflow: 'ellipsis' as const, whiteSpace: 'nowrap' as const,
-          }}>{member.email}</div>
         </div>
         <div style={{ textAlign: 'right' as const }}>
-          <div style={{
-            fontFamily: BN, fontSize: 120, fontWeight: 400,
-            lineHeight: 0.85, color: member.plan_kwaliteit >= 70 ? '#EE7700' : '#f0ede6',
-          }}>{member.plan_kwaliteit}%</div>
+          <div style={{ fontFamily: BN, fontSize: 120, fontWeight: 400, lineHeight: 0.85, color: member.plan_kwaliteit >= 70 ? ORANGE : CREAM }}>
+            {member.plan_kwaliteit}%
+          </div>
           <div style={{ marginTop: 6 }}>
-            <span style={{ fontFamily: G, fontSize: 13, fontWeight: 400, color: '#555' }}>
-              PLAN KWALITEIT&nbsp;
-            </span>
-            <span style={{ fontFamily: G, fontSize: 13, fontWeight: 400, color: '#EE7700' }}>
-              {kwaliteitLabel}
-            </span>
+            <span style={{ fontFamily: G, fontSize: 18, fontWeight: 400, color: GREY }}>PLAN KWALITEIT&nbsp;</span>
+            <span style={{ fontFamily: G, fontSize: 18, fontWeight: 400, color: ORANGE }}>{kwaliteitLabel}</span>
           </div>
         </div>
       </div>
 
       {/* Scores */}
       <div style={{ padding: '24px 32px' }}>
-        <ScoreBar name="STRATEGIE" score={member.strategie_score} />
-        <ScoreBar name="MENSEN" score={member.mensen_score} />
+        <ScoreBar name="STRATEGIE"  score={member.strategie_score} />
+        <ScoreBar name="MENSEN"     score={member.mensen_score} />
         <ScoreBar name="UITVOERING" score={member.uitvoering_score} />
 
-        <div style={{
-          marginTop: 8, paddingTop: 16, borderTop: '1px solid #1a1a1a',
-          display: 'flex', justifyContent: 'space-between', alignItems: 'center',
-        }}>
-          <span style={{ fontFamily: G, fontSize: 11, fontWeight: 400, color: '#555' }}>
-            VOLLEDIGHEID
-          </span>
-          <span style={{ fontFamily: G, fontSize: 11, fontWeight: 400, color: '#888' }}>
-            {member.volledigheid}%
-          </span>
+        <div style={{ marginTop: 8, paddingTop: 16, borderTop: `1px solid ${LINE2}`, display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+          <span style={{ fontFamily: G, fontSize: 18, fontWeight: 400, color: GREY }}>VOLLEDIGHEID</span>
+          <span style={{ fontFamily: G, fontSize: 18, fontWeight: 400, color: GREY }}>{member.volledigheid}%</span>
         </div>
       </div>
     </div>
   );
 }
 
+/* ── Team averages block ── */
 function TeamAverages({ members }: { members: MemberStats[] }) {
   if (members.length === 0) return null;
   const avg = (key: keyof MemberStats) =>
     Math.round(members.reduce((s, m) => s + (m[key] as number), 0) / members.length);
 
-  const stats = [
-    { key: 'plan_kwaliteit' as const, lbl: 'PLAN KWALITEIT', highlight: true },
-    { key: 'strategie_score' as const, lbl: 'STRATEGIE', highlight: false },
-    { key: 'mensen_score' as const, lbl: 'MENSEN', highlight: false },
-    { key: 'uitvoering_score' as const, lbl: 'UITVOERING', highlight: false },
-    { key: 'volledigheid' as const, lbl: 'VOLLEDIGHEID', highlight: false },
+  const row1 = [
+    { key: 'plan_kwaliteit' as const, lbl: 'PLAN KWALITEIT' },
+    { key: 'volledigheid'   as const, lbl: 'VOLLEDIGHEID'   },
+  ];
+  const row2 = [
+    { key: 'strategie_score' as const, lbl: 'STRATEGIE'  },
+    { key: 'mensen_score'    as const, lbl: 'MENSEN'      },
+    { key: 'uitvoering_score' as const, lbl: 'UITVOERING' },
   ];
 
+  const StatCell = ({ k, lbl, last }: { k: keyof MemberStats; lbl: string; last?: boolean }) => (
+    <div style={{ borderRight: last ? 'none' : `1px solid ${LINE2}`, paddingRight: last ? 0 : 48, paddingLeft: 0, marginRight: last ? 0 : 48 }}>
+      <div style={{ fontFamily: G, fontSize: 13, fontWeight: 400, letterSpacing: '0.05em', color: ORANGE, marginBottom: 8, textTransform: 'uppercase' as const }}>{lbl}</div>
+      <div style={{ fontFamily: BN, fontSize: 120, fontWeight: 400, lineHeight: 1, color: ORANGE }}>{avg(k)}%</div>
+    </div>
+  );
+
   return (
-    <div style={{ borderBottom: '1px solid #1f1f1f', padding: '40px 40px 48px' }}>
-      <div style={{
-        fontFamily: G, fontSize: 13, fontWeight: 400,
-        letterSpacing: '0.05em', color: '#555', marginBottom: 32,
-        textTransform: 'uppercase' as const,
-      }}>
+    <div style={{ borderBottom: `1px solid ${LINE}`, padding: '40px 40px 48px' }}>
+      <div style={{ fontFamily: G, fontSize: 13, fontWeight: 400, letterSpacing: '0.05em', color: GREY, marginBottom: 40, textTransform: 'uppercase' as const }}>
         TEAM GEMIDDELDE — {members.length} {members.length === 1 ? 'LID' : 'LEDEN'}
       </div>
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(5, 1fr)' }}>
-        {stats.map(({ key, lbl, highlight }, i) => (
-          <div key={lbl} style={{
-            borderRight: i < 4 ? '1px solid #1a1a1a' : 'none',
-            paddingRight: i < 4 ? 40 : 0,
-            paddingLeft: i > 0 ? 40 : 0,
-          }}>
-            <div style={{
-              fontFamily: G, fontSize: 13, fontWeight: 400,
-              letterSpacing: '0.05em', color: '#888', marginBottom: 8,
-              textTransform: 'uppercase' as const,
-            }}>{lbl}</div>
-            <div style={{
-              fontFamily: BN, fontSize: 72, fontWeight: 400,
-              lineHeight: 1, color: highlight ? '#EE7700' : '#f0ede6',
-            }}>{avg(key)}%</div>
-          </div>
-        ))}
+
+      {/* Row 1: plan kwaliteit + volledigheid */}
+      <div style={{ display: 'flex', marginBottom: 48 }}>
+        {row1.map((s, i) => <StatCell key={s.lbl} k={s.key} lbl={s.lbl} last={i === row1.length - 1} />)}
+      </div>
+
+      {/* Row 2: strategie, mensen, uitvoering */}
+      <div style={{ display: 'flex' }}>
+        {row2.map((s, i) => <StatCell key={s.lbl} k={s.key} lbl={s.lbl} last={i === row2.length - 1} />)}
       </div>
     </div>
   );
 }
 
+/* ── Page ── */
 export default function TeamPage() {
   const { userId, getToken } = useAuth();
   const [members, setMembers] = useState<MemberStats[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+  const [loading, setLoading]   = useState(true);
+  const [error,   setError]     = useState<string | null>(null);
 
   const loadTeamData = useCallback(async () => {
     if (!userId) return;
@@ -179,21 +153,13 @@ export default function TeamPage() {
         { global: { headers: { Authorization: `Bearer ${token}` } } }
       );
 
-      const { data: managerCheck } = await db
-        .from('approved_users').select('is_manager').eq('user_id', userId).single();
+      const { data: managerCheck } = await db.from('approved_users').select('is_manager').eq('user_id', userId).single();
+      if (!managerCheck?.is_manager) { setError('Geen toegang. Dit dashboard is alleen beschikbaar voor managers.'); setLoading(false); return; }
 
-      if (!managerCheck?.is_manager) {
-        setError('Geen toegang. Dit dashboard is alleen beschikbaar voor managers.');
-        setLoading(false);
-        return;
-      }
-
-      const { data: approvedUsers, error: ue } = await db
-        .from('approved_users').select('user_id, email');
+      const { data: approvedUsers, error: ue } = await db.from('approved_users').select('user_id, email');
       if (ue || !approvedUsers) throw ue;
 
-      const { data: answers, error: ae } = await db
-        .from('canvas_answers').select('user_id, question_id, score, answer');
+      const { data: answers, error: ae } = await db.from('canvas_answers').select('user_id, question_id, score, answer');
       if (ae) throw ae;
 
       const stats: MemberStats[] = approvedUsers.map((user) => {
@@ -203,113 +169,65 @@ export default function TeamPage() {
           if (!sa.length) return 0;
           return Math.round((sa.reduce((s, a) => s + (a.score ?? 0), 0) / sa.length / 5) * 100);
         };
-        const strategie = segScore('strategie');
-        const mensen = segScore('mensen');
-        const uitvoering = segScore('uitvoering');
-        const plan_kwaliteit = Math.round(
-          strategie * SEGMENT_WEIGHTS.strategie +
-          mensen * SEGMENT_WEIGHTS.mensen +
-          uitvoering * SEGMENT_WEIGHTS.uitvoering
-        );
-        const answered = ua.filter((a) => a.answer && a.answer.trim() !== '').length;
-        return {
-          user_id: user.user_id, email: user.email,
-          strategie_score: strategie, mensen_score: mensen, uitvoering_score: uitvoering,
-          plan_kwaliteit, volledigheid: Math.round((answered / 134) * 100), answered,
-        };
+        const strategie   = segScore('strategie');
+        const mensen      = segScore('mensen');
+        const uitvoering  = segScore('uitvoering');
+        const plan_kwaliteit = Math.round(strategie * SEGMENT_WEIGHTS.strategie + mensen * SEGMENT_WEIGHTS.mensen + uitvoering * SEGMENT_WEIGHTS.uitvoering);
+        const answered    = ua.filter((a) => a.answer && a.answer.trim() !== '').length;
+        return { user_id: user.user_id, email: user.email, strategie_score: strategie, mensen_score: mensen, uitvoering_score: uitvoering, plan_kwaliteit, volledigheid: Math.round((answered / 134) * 100), answered };
       });
 
       stats.sort((a, b) => b.plan_kwaliteit - a.plan_kwaliteit);
       setMembers(stats);
-    } catch (err) {
-      console.error(err);
-      setError('Fout bij laden teamdata.');
-    } finally {
-      setLoading(false);
-    }
+    } catch (err) { console.error(err); setError('Fout bij laden teamdata.'); }
+    finally { setLoading(false); }
   }, [userId]);
 
   useEffect(() => { loadTeamData(); }, [loadTeamData]);
 
   return (
-    <div style={{ minHeight: '100vh', background: '#0a0a0a', color: '#f0ede6' }}>
+    <div style={{ minHeight: '100vh', background: DARK, color: CREAM }}>
 
-      {/* Nav — minimaal, alleen terugknop */}
-      <nav style={{
-        position: 'sticky' as const, top: 0, zIndex: 100,
-        background: '#0a0a0a', borderBottom: '1px solid #1f1f1f',
-        padding: '0 40px', display: 'flex', alignItems: 'center',
-        justifyContent: 'space-between', height: 56,
-      }}>
-        <Link href="https://canvas.royaldutchsales.com/canvas" style={{
-          display: 'flex', alignItems: 'center', gap: 10,
-          fontFamily: G, fontSize: 13, fontWeight: 400,
-          color: '#888', textDecoration: 'none',
-          letterSpacing: '0.03em',
-        }}>
-          <span style={{ fontSize: 16, lineHeight: 1 }}>←</span>
-          CANVAS DASHBOARD
+      {/* Nav */}
+      <nav style={{ position: 'sticky' as const, top: 0, zIndex: 100, background: DARK, borderBottom: `1px solid ${LINE}`, padding: '0 40px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', height: 64 }}>
+        <Link href="https://canvas.royaldutchsales.com/canvas" style={{ display: 'flex', alignItems: 'center', gap: 12, textDecoration: 'none' }}>
+          <span style={{ fontFamily: BN, fontSize: 36, fontWeight: 400, color: 'rgb(26, 23, 20)', lineHeight: 1 }}>←</span>
+          <span style={{ fontFamily: BN, fontSize: 36, fontWeight: 400, color: 'rgb(26, 23, 20)', lineHeight: 1, letterSpacing: '0.05em' }}>CANVAS DASHBOARD</span>
         </Link>
-        <span style={{
-          fontFamily: BN, fontSize: 13, letterSpacing: '0.15em', color: '#EE7700',
-        }}>TEAM</span>
+        <span style={{ fontFamily: BN, fontSize: 36, fontWeight: 400, color: ORANGE, letterSpacing: '0.05em', lineHeight: 1 }}>TEAM</span>
       </nav>
 
       {/* Page header */}
-      <div style={{ borderBottom: '1px solid #1f1f1f', padding: '48px 40px 40px' }}>
-        <div style={{
-          fontFamily: G, fontSize: 13, fontWeight: 400,
-          letterSpacing: '0.05em', color: '#555', marginBottom: 8,
-          textTransform: 'uppercase' as const,
-        }}>ROYAL DUTCH SALES</div>
-        <h1 style={{
-          fontFamily: BN, fontSize: 'clamp(48px, 7vw, 96px)' as any,
-          fontWeight: 400, letterSpacing: '0.02em', color: '#f0ede6',
-          margin: 0, lineHeight: 1,
-        }}>TEAM DASHBOARD</h1>
-        <p style={{
-          fontFamily: G, fontSize: 13, fontWeight: 400,
-          color: '#555', marginTop: 12, letterSpacing: '0.03em',
-          textTransform: 'uppercase' as const,
-        }}>VERGELIJK PLAN KWALITEIT EN VOORTGANG PER TEAMLID</p>
+      <div style={{ borderBottom: `1px solid ${LINE}`, padding: '48px 40px 40px' }}>
+        <div style={{ fontFamily: G, fontSize: 13, fontWeight: 400, letterSpacing: '0.05em', color: ORANGE, marginBottom: 8, textTransform: 'uppercase' as const }}>
+          ROYAL DUTCH SALES
+        </div>
+        <h1 style={{ fontFamily: BN, fontSize: 'clamp(48px, 7vw, 96px)' as any, fontWeight: 400, letterSpacing: '0.02em', color: CREAM, margin: 0, lineHeight: 1 }}>
+          TEAM DASHBOARD
+        </h1>
+        <p style={{ fontFamily: G, fontSize: 13, fontWeight: 400, color: GREY, marginTop: 12, letterSpacing: '0.03em', textTransform: 'uppercase' as const }}>
+          VERGELIJK PLAN KWALITEIT EN VOORTGANG PER TEAMLID
+        </p>
       </div>
 
       {/* Team averages */}
       {!loading && !error && <TeamAverages members={members} />}
 
       {/* States */}
-      {loading && (
-        <div style={{
-          fontFamily: G, fontSize: 13, color: '#555',
-          textAlign: 'center' as const, padding: '80px 0',
-        }}>Laden...</div>
-      )}
-      {error && (
-        <div style={{
-          fontFamily: G, fontSize: 13, color: '#c0392b',
-          textAlign: 'center' as const, padding: '80px 0',
-        }}>{error}</div>
-      )}
+      {loading  && <div style={{ fontFamily: G, fontSize: 13, color: GREY,     textAlign: 'center' as const, padding: '80px 0' }}>Laden...</div>}
+      {error    && <div style={{ fontFamily: G, fontSize: 13, color: '#c0392b', textAlign: 'center' as const, padding: '80px 0' }}>{error}</div>}
 
       {/* Member cards */}
       {!loading && !error && (
         <div style={{ padding: '40px' }}>
-          {members.length === 0 ? (
-            <div style={{
-              fontFamily: G, fontSize: 13, color: '#555',
-              textAlign: 'center' as const, padding: '80px 0',
-            }}>Geen teamleden gevonden.</div>
-          ) : (
-            <div style={{
-              display: 'grid',
-              gridTemplateColumns: 'repeat(auto-fill, minmax(560px, 1fr))',
-              gap: 2,
-            }}>
-              {members.map((member, i) => (
-                <MemberCard key={member.user_id} member={member} rank={i + 1} />
-              ))}
-            </div>
-          )}
+          {members.length === 0
+            ? <div style={{ fontFamily: G, fontSize: 13, color: GREY, textAlign: 'center' as const, padding: '80px 0' }}>Geen teamleden gevonden.</div>
+            : (
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(560px, 1fr))', gap: 2 }}>
+                {members.map((member, i) => <MemberCard key={member.user_id} member={member} rank={i + 1} />)}
+              </div>
+            )
+          }
         </div>
       )}
     </div>
