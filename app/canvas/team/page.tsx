@@ -5,7 +5,6 @@ import { useAuth } from '@clerk/nextjs';
 import { createClient } from '@supabase/supabase-js';
 import Link from 'next/link';
 
-// Default client for non-authed use (not used for RLS queries)
 const supabase = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_URL!,
   process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
@@ -50,9 +49,9 @@ function ScoreBar({
           display: 'flex',
           justifyContent: 'space-between',
           fontFamily: 'Space Mono, monospace',
-          fontSize: 13,
+          fontSize: 10,
           color: '#888',
-          marginBottom: 5,
+          marginBottom: 3,
           textTransform: 'uppercase',
           letterSpacing: '0.05em',
         }}
@@ -64,7 +63,8 @@ function ScoreBar({
       </div>
       <div
         style={{
-          height: 6,
+          height: 4,
+          background: '#1a1a1a',
           borderRadius: 2,
           overflow: 'hidden' as const,
         }}
@@ -91,7 +91,7 @@ function MemberCard({ member, rank }: { member: MemberStats; rank: number }) {
         background: isTop ? '#111' : '#0d0d0d',
         border: `1px solid ${isTop ? '#EE7700' : '#1f1f1f'}`,
         borderRadius: 2,
-        padding: '36px 44px',
+        padding: '28px 44px',
         position: 'relative' as const,
       }}
     >
@@ -130,9 +130,9 @@ function MemberCard({ member, rank }: { member: MemberStats; rank: number }) {
           <div
             style={{
               fontFamily: 'Space Mono, monospace',
-              fontSize: 15,
+              fontSize: 12,
               color: '#f0ede6',
-              maxWidth: 260,
+              maxWidth: 180,
               overflow: 'hidden' as const,
               textOverflow: 'ellipsis' as const,
               whiteSpace: 'nowrap' as const,
@@ -145,7 +145,7 @@ function MemberCard({ member, rank }: { member: MemberStats; rank: number }) {
           <div
             style={{
               fontFamily: 'Bebas Neue, sans-serif',
-              fontSize: 56,
+              fontSize: 36,
               lineHeight: 1,
               color: member.plan_kwaliteit >= 70 ? '#EE7700' : '#f0ede6',
             }}
@@ -178,11 +178,11 @@ function MemberCard({ member, rank }: { member: MemberStats; rank: number }) {
           display: 'flex',
           justifyContent: 'space-between',
           fontFamily: 'Space Mono, monospace',
-          fontSize: 13,
+          fontSize: 10,
           color: '#555',
         }}
       >
-        <span>Volledigheid</span>
+        <span>VOLLEDIGHEID</span>
         <span style={{ color: '#888' }}>{member.volledigheid}%</span>
       </div>
     </div>
@@ -276,42 +276,46 @@ export default function TeamPage() {
   const [error, setError] = useState<string | null>(null);
 
   const loadTeamData = useCallback(async () => {
-    if (!userId) return;
+  if (!userId) return;
 
-    try {
-      const token = await getToken({ template: 'supabase' });
-      const authedSupabase = createClient(
-        process.env.NEXT_PUBLIC_SUPABASE_URL!,
-        process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
-        { global: { headers: { Authorization: `Bearer ${token}` } } }
-      );
-
-      // Check manager access
-      const { data: managerCheck } = await authedSupabase
-        .from('approved_users')
-        .select('is_manager')
-        .eq('user_id', userId)
-        .single();
-
-      if (!managerCheck?.is_manager) {
-        setError('Geen toegang. Dit dashboard is alleen beschikbaar voor managers.');
-        setLoading(false);
-        return;
+  try {
+    const token = await getToken({ template: 'supabase' });
+    const authedSupabase = createClient(
+      process.env.NEXT_PUBLIC_SUPABASE_URL!,
+      process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+      {
+        global: {
+          headers: { Authorization: `Bearer ${token}` },
+        },
       }
+    );
 
-      // Get all approved users
-      const { data: approvedUsers, error: usersError } = await authedSupabase
-        .from('approved_users')
-        .select('user_id, email');
+    // Check manager access
+    const { data: managerCheck } = await authedSupabase
+      .from('approved_users')
+      .select('is_manager')
+      .eq('user_id', userId)
+      .single();
 
-      if (usersError || !approvedUsers) throw usersError;
+    if (!managerCheck?.is_manager) {
+      setError('Geen toegang. Dit dashboard is alleen beschikbaar voor managers.');
+      setLoading(false);
+      return;
+    }
 
-      // Get all canvas answers with scores
-      const { data: answers, error: answersError } = await authedSupabase
-        .from('canvas_answers')
-        .select('user_id, question_id, score, answer');
+    // Get all approved users
+    const { data: approvedUsers, error: usersError } = await authedSupabase
+      .from('approved_users')
+      .select('user_id, email');
 
-      if (answersError) throw answersError;
+    if (usersError || !approvedUsers) throw usersError;
+
+    // Get all canvas answers with scores
+    const { data: answers, error: answersError } = await authedSupabase
+      .from('canvas_answers')
+      .select('user_id, question_id, score, answer');
+
+    if (answersError) throw answersError;
 
       // Aggregate per user
       const stats: MemberStats[] = approvedUsers.map((user) => {
