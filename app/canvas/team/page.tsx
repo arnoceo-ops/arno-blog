@@ -50,7 +50,7 @@ function ScoreBar({
           display: 'flex',
           justifyContent: 'space-between',
           fontFamily: 'Space Mono, monospace',
-          fontSize: 13,
+          fontSize: 16,
           color: '#888',
           marginBottom: 5,
           textTransform: 'uppercase',
@@ -119,7 +119,7 @@ function MemberCard({ member, rank }: { member: MemberStats; rank: number }) {
           <div
             style={{
               fontFamily: 'Bebas Neue, sans-serif',
-              fontSize: 13,
+              fontSize: 16,
               color: '#EE7700',
               letterSpacing: '0.1em',
               marginBottom: 2,
@@ -130,7 +130,7 @@ function MemberCard({ member, rank }: { member: MemberStats; rank: number }) {
           <div
             style={{
               fontFamily: 'Space Mono, monospace',
-              fontSize: 15,
+              fontSize: 16,
               color: '#f0ede6',
               maxWidth: 260,
               overflow: 'hidden' as const,
@@ -155,7 +155,7 @@ function MemberCard({ member, rank }: { member: MemberStats; rank: number }) {
           <div
             style={{
               fontFamily: 'Space Mono, monospace',
-              fontSize: 9,
+              fontSize: 16,
               color: '#555',
               textTransform: 'uppercase' as const,
               letterSpacing: '0.08em',
