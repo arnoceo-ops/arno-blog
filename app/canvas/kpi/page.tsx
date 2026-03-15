@@ -5,7 +5,6 @@ import React, { useState, useEffect } from 'react'
 import { useUser } from '@clerk/nextjs'
 import { useSupabaseClient } from '@/lib/supabase'
 import Link from 'next/link'
-import { usePathname } from 'next/navigation'
 
 // ─── TYPES ────────────────────────────────────────────────────────────
 type KpiId =
@@ -18,35 +17,22 @@ interface KpiDef {
   label: string
   suffix?: string
   prefix?: string
-  invert?: boolean   // lager = beter (verkoopcyclus)
-  redBelow?: number  // % van doel
-  greenAbove?: number
+  invert?: boolean
 }
 
 // ─── KPI CONFIG ───────────────────────────────────────────────────────
 const KPIS: KpiDef[] = [
-  { id: 'kpi_verkoopcyclus',  label: 'Verkoopcyclus',       suffix: ' dgn',  invert: true  },
-  { id: 'kpi_conversieratio', label: '% Target behaald',    suffix: '%'                     },
-  { id: 'kpi_klantaandeel',   label: '% Klantaandeel',      suffix: '%'                     },
-  { id: 'kpi_klantretentie',  label: '% Klantretentie',     suffix: '%'                     },
-  { id: 'kpi_forecast',       label: '% Behaalde Forecast', suffix: '%'                     },
-  { id: 'kpi_ordergrootte',   label: '€ Gem. Ordergrootte', prefix: '€'                     },
-  { id: 'kpi_nieuwe_logos',   label: "# Nieuwe Logo's"                                      },
-  { id: 'kpi_omzet',          label: '€ Omzet',             prefix: '€'                     },
-  { id: 'kpi_winst',          label: '€/% Winst'                                             },
-  { id: 'kpi_referrals',      label: '# Referrals'                                          },
+  { id: 'kpi_verkoopcyclus',  label: 'Verkoopcyclus',       suffix: ' dgn', invert: true },
+  { id: 'kpi_conversieratio', label: '% Target behaald',    suffix: '%' },
+  { id: 'kpi_klantaandeel',   label: '% Klantaandeel',      suffix: '%' },
+  { id: 'kpi_klantretentie',  label: '% Klantretentie',     suffix: '%' },
+  { id: 'kpi_forecast',       label: '% Behaalde Forecast', suffix: '%' },
+  { id: 'kpi_ordergrootte',   label: '€ Gem. Ordergrootte', prefix: '€' },
+  { id: 'kpi_nieuwe_logos',   label: "# Nieuwe Logo's" },
+  { id: 'kpi_omzet',          label: '€ Omzet',             prefix: '€' },
+  { id: 'kpi_winst',          label: '€/% Winst' },
+  { id: 'kpi_referrals',      label: '# Referrals' },
 ]
-
-// ─── STIJL ────────────────────────────────────────────────────────────
-const BEBAS: React.CSSProperties = {
-  fontFamily: 'var(--font-bebas), sans-serif',
-  letterSpacing: '3px',
-  color: '#1a1714',
-}
-const MONO: React.CSSProperties = {
-  fontFamily: 'var(--font-space-mono, monospace)',
-  color: '#1a1714',
-}
 
 // ─── HELPERS ──────────────────────────────────────────────────────────
 function parse(s: string): number | null {
@@ -55,8 +41,7 @@ function parse(s: string): number | null {
   return isNaN(n) ? null : n
 }
 
-function fmt(val: number | null, def: KpiDef): string {
-  if (val === null) return '—'
+function fmt(val: number, def: KpiDef): string {
   const n = Math.round(val).toLocaleString('nl-NL')
   if (def.prefix) return `${def.prefix}${n}`
   if (def.suffix) return `${n}${def.suffix}`
@@ -64,22 +49,15 @@ function fmt(val: number | null, def: KpiDef): string {
 }
 
 function trafficColor(doel: number | null, real: number | null, invert = false): string {
-  if (doel === null || real === null || doel === 0) return '#888'
+  if (doel === null || real === null || doel === 0) return '#333'
   const pct = (real / doel) * 100
-  if (invert) {
-    if (pct <= 90) return '#38a169'   // onder doel = goed
-    if (pct <= 100) return '#dd8800'
-    return '#e53e3e'
-  }
-  if (pct >= 100) return '#38a169'
-  if (pct >= 75) return '#dd8800'
-  return '#e53e3e'
+  if (invert) return pct <= 90 ? '#38a169' : pct <= 100 ? '#dd8800' : '#e53e3e'
+  return pct >= 100 ? '#38a169' : pct >= 75 ? '#dd8800' : '#e53e3e'
 }
 
-function pctLabel(doel: number | null, real: number | null, invert = false): string {
-  if (doel === null || real === null || doel === 0) return ''
-  const pct = Math.round((real / doel) * 100)
-  return `${pct}%`
+function convColor(v: number | null, red: number, green: number): string {
+  if (v === null) return '#333'
+  return v < red ? '#e53e3e' : v > green ? '#38a169' : '#dd8800'
 }
 
 // ─── COMPONENTS ───────────────────────────────────────────────────────
@@ -87,9 +65,9 @@ function pctLabel(doel: number | null, real: number | null, invert = false): str
 function TrafficDot({ color }: { color: string }) {
   return (
     <div style={{
-      width: '14px', height: '14px', borderRadius: '50%',
+      width: '10px', height: '10px', borderRadius: '50%',
       backgroundColor: color, flexShrink: 0,
-      boxShadow: `0 0 8px ${color}99`,
+      boxShadow: color !== '#333' ? `0 0 6px ${color}88` : 'none',
     }} />
   )
 }
@@ -98,52 +76,57 @@ function KpiCard({ def, doel, real }: { def: KpiDef; doel: string; real: string 
   const doelN = parse(doel)
   const realN = parse(real)
   const color = trafficColor(doelN, realN, def.invert)
-  const pct = pctLabel(doelN, realN, def.invert)
-  const hasData = doelN !== null || realN !== null
+  const hasData = doelN !== null && realN !== null
+  const pct = hasData && doelN > 0 ? Math.round((realN! / doelN) * 100) : null
 
   return (
     <div style={{
-      borderTop: '1px solid #e0d8cc',
-      padding: '20px 0 16px',
+      padding: '32px',
+      backgroundColor: '#0a0a0a',
+      border: '1px solid',
+      borderColor: hasData ? (color === '#333' ? '#1e1e1e' : `${color}44`) : '#1e1e1e',
+      minHeight: '180px',
+      display: 'flex',
+      flexDirection: 'column',
+      justifyContent: 'space-between',
     }}>
-      {/* Label + dot */}
-      <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '12px' }}>
-        <TrafficDot color={hasData ? color : '#ccc'} />
-        <span style={{ ...MONO, fontSize: '13px', opacity: 0.55, letterSpacing: '1px', textTransform: 'uppercase' }}>
-          {def.label}
-        </span>
-      </div>
+      <div>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '20px' }}>
+          <TrafficDot color={hasData ? color : '#222'} />
+          <span style={{ color: '#EE7700', fontSize: '10px', letterSpacing: '3px', opacity: 0.6 }}>
+            {def.label.toUpperCase()}
+          </span>
+        </div>
 
-      {/* Doel / Realisatie */}
-      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px', marginBottom: '10px' }}>
-        <div>
-          <div style={{ ...MONO, fontSize: '11px', opacity: 0.35, letterSpacing: '2px', marginBottom: '4px' }}>DOEL</div>
-          <div style={{ ...BEBAS, fontSize: '28px', opacity: doelN !== null ? 1 : 0.2 }}>
-            {doelN !== null ? fmt(doelN, def) : '—'}
+        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
+          <div>
+            <div style={{ color: '#f0ede6', fontSize: '10px', letterSpacing: '2px', opacity: 0.25, marginBottom: '6px' }}>DOEL</div>
+            <div style={{ fontFamily: 'var(--font-bebas), sans-serif', fontSize: '36px', color: '#f0ede6', lineHeight: 1, opacity: doelN !== null ? 1 : 0.15 }}>
+              {doelN !== null ? fmt(doelN, def) : '—'}
+            </div>
+          </div>
+          <div>
+            <div style={{ color: '#f0ede6', fontSize: '10px', letterSpacing: '2px', opacity: 0.25, marginBottom: '6px' }}>REALISATIE</div>
+            <div style={{ fontFamily: 'var(--font-bebas), sans-serif', fontSize: '36px', color: hasData ? color : '#f0ede6', lineHeight: 1, opacity: realN !== null ? 1 : 0.15 }}>
+              {realN !== null ? fmt(realN, def) : '—'}
+            </div>
           </div>
         </div>
-        <div>
-          <div style={{ ...MONO, fontSize: '11px', opacity: 0.35, letterSpacing: '2px', marginBottom: '4px' }}>REALISATIE</div>
-          <div style={{ ...BEBAS, fontSize: '28px', color: hasData ? color : '#1a1714', opacity: realN !== null ? 1 : 0.2 }}>
-            {realN !== null ? fmt(realN, def) : '—'}
-          </div>
-        </div>
       </div>
 
-      {/* Progress bar */}
-      {doelN !== null && realN !== null && doelN > 0 && (
-        <div>
-          <div style={{ height: '3px', backgroundColor: '#e0d8cc', borderRadius: '2px', overflow: 'hidden' }}>
+      {hasData && doelN! > 0 && (
+        <div style={{ marginTop: '20px' }}>
+          <div style={{ width: '100%', height: '1px', backgroundColor: '#1a1a1a', marginBottom: '8px' }}>
             <div style={{
-              height: '100%',
-              width: `${Math.min((realN / doelN) * 100, 100)}%`,
+              height: '1px',
+              width: `${Math.min(pct!, 100)}%`,
               backgroundColor: color,
-              transition: 'width 0.4s ease',
+              transition: 'width 0.8s ease',
             }} />
           </div>
-          <div style={{ ...MONO, fontSize: '11px', marginTop: '5px', color, letterSpacing: '1px' }}>
-            {pct} van doel
-          </div>
+          <span style={{ color, fontSize: '10px', letterSpacing: '2px', opacity: 0.7 }}>
+            {pct}% van doel
+          </span>
         </div>
       )}
     </div>
@@ -153,45 +136,38 @@ function KpiCard({ def, doel, real }: { def: KpiDef; doel: string; real: string 
 function FunnelBar({ label, value, max, color }: { label: string; value: number; max: number; color: string }) {
   const pct = max > 0 ? (value / max) * 100 : 0
   return (
-    <div style={{ marginBottom: '16px' }}>
-      <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '6px' }}>
-        <span style={{ ...MONO, fontSize: '13px', opacity: 0.55, letterSpacing: '1px' }}>{label}</span>
-        <span style={{ ...MONO, fontSize: '13px', fontWeight: 700 }}>{Math.round(value).toLocaleString('nl-NL')}</span>
+    <div style={{ marginBottom: '20px' }}>
+      <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '8px' }}>
+        <span style={{ color: '#f0ede6', fontSize: '10px', letterSpacing: '3px', opacity: 0.4 }}>{label}</span>
+        <span style={{ fontFamily: 'var(--font-bebas), sans-serif', fontSize: '20px', color: '#f0ede6', letterSpacing: '2px' }}>
+          {Math.round(value).toLocaleString('nl-NL')}
+        </span>
       </div>
-      <div style={{ height: '6px', backgroundColor: '#e0d8cc', borderRadius: '3px', overflow: 'hidden' }}>
-        <div style={{ height: '100%', width: `${pct}%`, backgroundColor: color, borderRadius: '3px' }} />
+      <div style={{ height: '2px', backgroundColor: '#1a1a1a' }}>
+        <div style={{ height: '2px', width: `${pct}%`, backgroundColor: color, transition: 'width 0.8s ease' }} />
       </div>
     </div>
   )
 }
 
-function ConversieStap({ from, to, pct, color }: { from: string; to: string; pct: number | null; color: string }) {
+function ConversieRij({ from, to, pct, color }: { from: string; to: string; pct: number | null; color: string }) {
   return (
-    <div style={{ display: 'flex', alignItems: 'center', gap: '12px', padding: '10px 0', borderBottom: '1px solid #e0d8cc' }}>
-      <TrafficDot color={pct !== null ? color : '#ccc'} />
-      <span style={{ ...MONO, fontSize: '13px', opacity: 0.55, flex: 1 }}>{from} → {to}</span>
-      <span style={{ ...BEBAS, fontSize: '24px', color: pct !== null ? color : '#ccc' }}>
+    <div style={{ display: 'flex', alignItems: 'center', gap: '12px', padding: '14px 0', borderBottom: '1px solid #1e1e1e' }}>
+      <TrafficDot color={pct !== null ? color : '#333'} />
+      <span style={{ color: '#f0ede6', fontSize: '10px', letterSpacing: '2px', opacity: 0.35, flex: 1 }}>
+        {from.toUpperCase()} → {to.toUpperCase()}
+      </span>
+      <span style={{ fontFamily: 'var(--font-bebas), sans-serif', fontSize: '32px', color: pct !== null ? color : '#333', letterSpacing: '2px' }}>
         {pct !== null ? `${Math.round(pct)}%` : '—'}
       </span>
     </div>
   )
 }
 
-function SummaryCard({ label, value, sub, color }: { label: string; value: string; sub?: string; color?: string }) {
-  return (
-    <div style={{ borderTop: '3px solid #EE7700', padding: '20px 0', backgroundColor: '#faf7f2' }}>
-      <div style={{ ...MONO, fontSize: '11px', opacity: 0.4, letterSpacing: '2px', marginBottom: '8px' }}>{label}</div>
-      <div style={{ ...BEBAS, fontSize: '48px', color: color || '#1a1714', lineHeight: 1 }}>{value}</div>
-      {sub && <div style={{ ...MONO, fontSize: '12px', opacity: 0.4, marginTop: '6px' }}>{sub}</div>}
-    </div>
-  )
-}
-
-// ─── MAIN PAGE ────────────────────────────────────────────────────────
+// ─── MAIN ─────────────────────────────────────────────────────────────
 export default function KpiDashboardPage() {
   const { user } = useUser()
   const supabase = useSupabaseClient()
-  const pathname = usePathname()
 
   const [targets, setTargets] = useState<Record<string, { doel: string; real: string }>>({})
   const [funnel, setFunnel] = useState({ leads: 0, bezoeken: 0, offertes: 0, orders: 0 })
@@ -212,16 +188,12 @@ export default function KpiDashboardPage() {
 
         data.forEach(r => {
           const key = r.question_id.slice('uitvoering_'.length)
-
-          // KPI targets: kpi_[naam]_doel / kpi_[naam]_real
           if (key.endsWith('_doel') || key.endsWith('_real')) {
             const type = key.endsWith('_doel') ? 'doel' : 'real'
             const base = key.slice(0, key.lastIndexOf('_'))
             if (!t[base]) t[base] = { doel: '', real: '' }
             t[base][type] = r.answer
           }
-
-          // Funnel aantallen
           if (key === 'numbers_leads') leads = parseFloat(r.answer) || 0
           if (key === 'numbers_bezoeken') bezoeken = parseFloat(r.answer) || 0
           if (key === 'numbers_offertes') offertes = parseFloat(r.answer) || 0
@@ -235,100 +207,93 @@ export default function KpiDashboardPage() {
     })()
   }, [user])
 
-  // Conversie percentages
   const conv1 = funnel.leads > 0 ? (funnel.bezoeken / funnel.leads) * 100 : null
   const conv2 = funnel.bezoeken > 0 ? (funnel.offertes / funnel.bezoeken) * 100 : null
   const conv3 = funnel.offertes > 0 ? (funnel.orders / funnel.offertes) * 100 : null
 
-  const convColor = (v: number | null, red: number, green: number) =>
-    v === null ? '#888' : v < red ? '#e53e3e' : v > green ? '#38a169' : '#dd8800'
-
-  // Hoeveel KPIs groen/oranje/rood
   const statusCounts = { groen: 0, oranje: 0, rood: 0, leeg: 0 }
   KPIS.forEach(def => {
     const d = parse(targets[def.id]?.doel || '')
     const r = parse(targets[def.id]?.real || '')
     if (d === null || r === null) { statusCounts.leeg++; return }
-    const color = trafficColor(d, r, def.invert)
-    if (color === '#38a169') statusCounts.groen++
-    else if (color === '#dd8800') statusCounts.oranje++
+    const c = trafficColor(d, r, def.invert)
+    if (c === '#38a169') statusCounts.groen++
+    else if (c === '#dd8800') statusCounts.oranje++
     else statusCounts.rood++
   })
 
   const funnelMax = Math.max(funnel.leads, funnel.bezoeken, funnel.offertes, funnel.orders, 1)
+  const totalConv = funnel.leads > 0 ? ((funnel.orders / funnel.leads) * 100).toFixed(1) : null
 
-  if (!user) return (
-    <div style={{ backgroundColor: '#f5f0e8', minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-      <p style={{ ...MONO, opacity: 0.4 }}>Inloggen vereist</p>
-    </div>
-  )
+  if (!user) return null
 
   return (
-    <main style={{ backgroundColor: '#f5f0e8', minHeight: '100vh', color: '#1a1714' }}>
+    <main style={{
+      backgroundColor: '#0a0a0a', minHeight: '100vh', color: '#f0ede6',
+      fontFamily: 'var(--font-geist-sans), sans-serif', padding: '64px 48px',
+    }}>
 
-      {/* NAV — zelfde stijl als uitvoering/mensen/strategie pages */}
-      <nav style={{
-        display: 'flex', alignItems: 'center', gap: '16px',
-        padding: '24px 48px',
-        fontFamily: 'var(--font-bebas), sans-serif', fontSize: '36px', letterSpacing: '3px',
-        borderBottom: '1px solid #e0d8cc',
-        position: 'sticky', top: 0, zIndex: 100, backgroundColor: '#f5f0e8',
-      }}>
-        <Link href="/canvas" style={{ color: '#1a1714', textDecoration: 'none', opacity: 0.4 }}>
+      {/* TERUG NAV */}
+      <div style={{ marginBottom: '64px' }}>
+        <Link href="/canvas" style={{
+          color: '#f0ede6', fontSize: '11px', letterSpacing: '3px',
+          textDecoration: 'none', opacity: 0.3,
+        }}>
           ← CANVAS
         </Link>
-        <span style={{ flex: 1 }} />
-        {[
-          { href: '/canvas/strategie', label: 'STRATEGIE' },
-          { href: '/canvas/mensen', label: 'MENSEN' },
-          { href: '/canvas/uitvoering', label: 'UITVOERING' },
-          { href: '/canvas/team', label: 'TEAM' },
-          { href: '/canvas/kpi', label: 'KPI' },
-        ].map(({ href, label }) => (
-          <Link key={href} href={href} style={{
-            color: pathname === href ? '#EE7700' : '#1a1714',
-            textDecoration: 'none',
-            opacity: pathname === href ? 1 : 0.4,
-          }}>
-            {label}
-          </Link>
-        ))}
-      </nav>
+      </div>
+
+      {/* HEADER */}
+      <div style={{ marginBottom: '80px' }}>
+        <p style={{ color: '#EE7700', fontSize: '11px', letterSpacing: '4px', marginBottom: '12px', opacity: 0.7 }}>
+          ROYAL DUTCH SALES
+        </p>
+        <h1 style={{ fontFamily: 'var(--font-bebas), sans-serif', fontSize: '96px', letterSpacing: '6px', color: '#f0ede6', margin: '0 0 8px 0', lineHeight: 1 }}>
+          KPI DASHBOARD
+        </h1>
+        <p style={{ color: '#f0ede6', opacity: 0.35, fontSize: '13px', letterSpacing: '1px' }}>
+          {user.firstName} — Doelen vs. realisatie {new Date().getFullYear()}
+        </p>
+      </div>
 
       {loading ? (
-        <div style={{ padding: '80px 48px', ...MONO, opacity: 0.3, letterSpacing: '3px', fontSize: '13px' }}>
-          LADEN...
-        </div>
+        <div style={{ color: '#f0ede6', opacity: 0.2, fontSize: '11px', letterSpacing: '3px' }}>LADEN...</div>
       ) : (
         <>
-          {/* HEADER */}
-          <div style={{ padding: '48px 48px 0' }}>
-            <div style={{ ...BEBAS, fontSize: '64px', lineHeight: 1, marginBottom: '8px' }}>
-              KPI DASHBOARD
+          {/* STATUS SAMENVATTING */}
+          <div style={{ borderTop: '1px solid #1e1e1e', paddingTop: '48px', marginBottom: '80px' }}>
+            <div style={{ display: 'flex', alignItems: 'baseline', gap: '20px', marginBottom: '32px' }}>
+              <span style={{ color: '#EE7700', fontSize: '11px', letterSpacing: '4px' }}>KPI STATUS</span>
             </div>
-            <div style={{ ...MONO, fontSize: '14px', opacity: 0.4, letterSpacing: '1px' }}>
-              Doelen vs. realisatie · Vul je KPI's in via{' '}
-              <Link href="/canvas/uitvoering" style={{ color: '#EE7700', textDecoration: 'none' }}>
-                UITVOERING
-              </Link>
+            <div style={{ display: 'flex', gap: '64px' }}>
+              {[
+                { label: 'GROEN', count: statusCounts.groen, color: '#38a169' },
+                { label: 'ORANJE', count: statusCounts.oranje, color: '#dd8800' },
+                { label: 'ROOD', count: statusCounts.rood, color: '#e53e3e' },
+                { label: 'LEEG', count: statusCounts.leeg, color: '#333' },
+              ].map(({ label, count, color }) => (
+                <div key={label}>
+                  <p style={{ color: '#EE7700', fontSize: '10px', letterSpacing: '3px', marginBottom: '6px', opacity: 0.6 }}>{label}</p>
+                  <p style={{ fontFamily: 'var(--font-bebas), sans-serif', fontSize: '64px', color, lineHeight: 1, letterSpacing: '2px' }}>
+                    {count}
+                  </p>
+                </div>
+              ))}
             </div>
           </div>
 
-          {/* SAMENVATTING */}
-          <div style={{ padding: '32px 48px', display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '2px' }}>
-            <SummaryCard label="GROEN" value={String(statusCounts.groen)} sub="op of boven doel" color="#38a169" />
-            <SummaryCard label="ORANJE" value={String(statusCounts.oranje)} sub="75–99% van doel" color="#dd8800" />
-            <SummaryCard label="ROOD" value={String(statusCounts.rood)} sub="onder 75% van doel" color="#e53e3e" />
-            <SummaryCard label="LEEG" value={String(statusCounts.leeg)} sub="nog niet ingevuld" />
-          </div>
-
-          {/* KPI GRID */}
-          <div style={{ padding: '0 48px 48px', borderTop: '1px solid #e0d8cc', paddingTop: '40px' }}>
-            <div style={{ ...BEBAS, fontSize: '32px', marginBottom: '24px', display: 'flex', alignItems: 'center', gap: '16px' }}>
-              KPI METERS
-              <span style={{ flex: 1, height: '1px', backgroundColor: '#e0d8cc' }} />
+          {/* KPI KAARTEN */}
+          <div style={{ borderTop: '1px solid #1e1e1e', paddingTop: '48px', marginBottom: '80px' }}>
+            <div style={{ display: 'flex', alignItems: 'baseline', gap: '20px', marginBottom: '32px' }}>
+              <span style={{ color: '#EE7700', fontSize: '11px', letterSpacing: '4px' }}>KPI METERS</span>
+              <span style={{ color: '#f0ede6', fontSize: '10px', opacity: 0.2, letterSpacing: '2px' }}>
+                KPI's aanpassen via{' '}
+                <Link href="/canvas/uitvoering" style={{ color: '#EE7700', opacity: 0.6, textDecoration: 'none' }}>
+                  UITVOERING
+                </Link>
+              </span>
             </div>
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(5, 1fr)', gap: '0 48px' }}>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(5, 1fr)', gap: '2px' }}>
               {KPIS.map(def => (
                 <KpiCard
                   key={def.id}
@@ -340,70 +305,42 @@ export default function KpiDashboardPage() {
             </div>
           </div>
 
-          {/* SALES FUNNEL */}
-          <div style={{ padding: '40px 48px 48px', borderTop: '1px solid #e0d8cc' }}>
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '80px' }}>
+          {/* SALES FUNNEL + CONVERSIES */}
+          <div style={{ borderTop: '1px solid #1e1e1e', paddingTop: '48px', marginBottom: '80px' }}>
+            <div style={{ display: 'flex', alignItems: 'baseline', gap: '20px', marginBottom: '48px' }}>
+              <span style={{ color: '#EE7700', fontSize: '11px', letterSpacing: '4px' }}>SALES FUNNEL</span>
+            </div>
 
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '80px' }}>
               {/* Funnel bars */}
               <div>
-                <div style={{ ...BEBAS, fontSize: '32px', marginBottom: '24px', display: 'flex', alignItems: 'center', gap: '16px' }}>
-                  SALES FUNNEL
-                  <span style={{ flex: 1, height: '1px', backgroundColor: '#e0d8cc' }} />
-                </div>
                 <FunnelBar label="LEADS" value={funnel.leads} max={funnelMax} color="#EE7700" />
                 <FunnelBar label="BEZOEKEN" value={funnel.bezoeken} max={funnelMax} color="#dd8800" />
                 <FunnelBar label="OFFERTES" value={funnel.offertes} max={funnelMax} color="#e07000" />
                 <FunnelBar label="ORDERS" value={funnel.orders} max={funnelMax} color="#c05800" />
               </div>
 
-              {/* Conversie stappen */}
+              {/* Conversies */}
               <div>
-                <div style={{ ...BEBAS, fontSize: '32px', marginBottom: '24px', display: 'flex', alignItems: 'center', gap: '16px' }}>
-                  CONVERSIES
-                  <span style={{ flex: 1, height: '1px', backgroundColor: '#e0d8cc' }} />
-                </div>
-                <ConversieStap
-                  from="Leads" to="Bezoeken"
-                  pct={conv1}
-                  color={convColor(conv1, 20, 40)}
-                />
-                <ConversieStap
-                  from="Bezoeken" to="Offertes"
-                  pct={conv2}
-                  color={convColor(conv2, 30, 50)}
-                />
-                <ConversieStap
-                  from="Offertes" to="Orders"
-                  pct={conv3}
-                  color={convColor(conv3, 30, 50)}
-                />
-                {conv1 !== null && conv2 !== null && conv3 !== null && (
-                  <div style={{ marginTop: '24px', padding: '16px', backgroundColor: '#faf7f2', borderLeft: '3px solid #EE7700' }}>
-                    <div style={{ ...MONO, fontSize: '11px', opacity: 0.4, letterSpacing: '2px', marginBottom: '6px' }}>TOTALE CONVERSIE</div>
-                    <div style={{ ...BEBAS, fontSize: '40px', color: '#EE7700' }}>
-                      {((funnel.orders / Math.max(funnel.leads, 1)) * 100).toFixed(1)}%
+                <ConversieRij from="Leads" to="Bezoeken" pct={conv1} color={convColor(conv1, 20, 40)} />
+                <ConversieRij from="Bezoeken" to="Offertes" pct={conv2} color={convColor(conv2, 30, 50)} />
+                <ConversieRij from="Offertes" to="Orders" pct={conv3} color={convColor(conv3, 30, 50)} />
+
+                {totalConv !== null && (
+                  <div style={{ marginTop: '32px', paddingTop: '32px', borderTop: '1px solid #1e1e1e' }}>
+                    <p style={{ color: '#EE7700', fontSize: '10px', letterSpacing: '3px', marginBottom: '8px', opacity: 0.6 }}>
+                      TOTALE CONVERSIE
+                    </p>
+                    <div style={{ fontFamily: 'var(--font-bebas), sans-serif', fontSize: '96px', color: '#EE7700', lineHeight: 1, letterSpacing: '2px' }}>
+                      {totalConv}%
                     </div>
-                    <div style={{ ...MONO, fontSize: '11px', opacity: 0.4, marginTop: '4px' }}>
-                      van lead naar order
-                    </div>
+                    <p style={{ color: '#f0ede6', fontSize: '10px', opacity: 0.25, letterSpacing: '2px', marginTop: '8px' }}>
+                      VAN LEAD NAAR ORDER
+                    </p>
                   </div>
                 )}
               </div>
             </div>
-          </div>
-
-          {/* LINK NAAR UITVOERING */}
-          <div style={{ padding: '0 48px 80px', borderTop: '1px solid #e0d8cc', paddingTop: '40px', textAlign: 'center' }}>
-            <div style={{ ...MONO, fontSize: '13px', opacity: 0.4, marginBottom: '16px', letterSpacing: '1px' }}>
-              KPI's aanpassen? Ga naar het uitvoering canvas.
-            </div>
-            <Link href="/canvas/uitvoering" style={{
-              ...BEBAS, fontSize: '18px', color: '#EE7700', textDecoration: 'none',
-              border: '1px solid #EE7700', padding: '10px 32px', letterSpacing: '3px',
-              display: 'inline-block',
-            }}>
-              → UITVOERING
-            </Link>
           </div>
         </>
       )}
