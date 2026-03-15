@@ -13,7 +13,7 @@ interface PdfProps {
 
 const C = {
   bg: '#0a0a0a', cream: '#f0ede6', orange: '#EE7700', subtle: '#1e1e1e',
-  white: '#ffffff', dark: '#1a1714', mid: '#6b6560', line: '#d4ccc0',
+  white: '#ffffff', stripe: '#f5f3f0', dark: '#3d3935', mid: '#8c8480', line: '#ddd8d0',
 }
 
 const HERO = {
@@ -46,11 +46,8 @@ const s = StyleSheet.create({
   cardBarFill: { height: 1, backgroundColor: C.orange },
   cardPct: { color: C.orange, fontSize: 7, letterSpacing: 1, opacity: 0.5 },
   heroImage: { width: '100%', height: 190, objectFit: 'cover' },
-  heroOverlay: { position: 'absolute', bottom: 0, left: 0, right: 0, padding: '0 28 14 28' },
-  heroTitle: { fontSize: 26, color: C.white, fontFamily: 'Helvetica-Bold' },
-  content: { padding: '16 28 44 28' },
   fieldLabelRow: { flexDirection: 'row', alignItems: 'center', marginBottom: 3 },
-  fieldLabel: { fontSize: 7.5, color: C.dark, fontFamily: 'Helvetica-Bold', letterSpacing: 0.5, marginRight: 8 },
+  fieldLabel: { fontSize: 7.5, color: '#4a4540', fontFamily: 'Helvetica-Bold', letterSpacing: 0.5, marginRight: 8 },
   fieldLabelLine: { flex: 1, height: 0.5, backgroundColor: C.line },
   fieldSub: { fontSize: 7, color: C.mid, marginBottom: 5 },
   fieldValue: { fontSize: 8.5, color: C.dark, lineHeight: 1.6, marginBottom: 12 },
@@ -59,7 +56,7 @@ const s = StyleSheet.create({
   grid3: { flexDirection: 'row', gap: 14 },
   col: { flex: 1 },
   groupLabelRow: { flexDirection: 'row', alignItems: 'center', marginBottom: 2, marginTop: 6 },
-  groupLabel: { fontSize: 7.5, color: C.dark, fontFamily: 'Helvetica-Bold', letterSpacing: 0.5, marginRight: 8 },
+  groupLabel: { fontSize: 7.5, color: '#4a4540', fontFamily: 'Helvetica-Bold', letterSpacing: 0.5, marginRight: 8 },
   groupLabelLine: { flex: 1, height: 0.5, backgroundColor: C.line },
   groupSub: { fontSize: 7, color: C.mid, marginBottom: 6 },
   kvRow: { flexDirection: 'row', justifyContent: 'space-between', paddingVertical: 3, borderBottomWidth: 0.5, borderBottomColor: C.line },
@@ -72,7 +69,7 @@ const s = StyleSheet.create({
   kpiVal: { flex: 1, fontSize: 7.5, color: C.mid, textAlign: 'right' },
   kpiValBold: { flex: 1, fontSize: 7.5, color: C.dark, fontFamily: 'Helvetica-Bold', textAlign: 'right' },
   okrTable: { borderWidth: 0.5, borderColor: C.line, marginBottom: 8 },
-  okrHeader: { backgroundColor: '#f0ede6', padding: '3 8', borderBottomWidth: 0.5, borderBottomColor: C.line },
+  okrHeader: { backgroundColor: '#ede9e4', padding: '3 8', borderBottomWidth: 0.5, borderBottomColor: C.line },
   okrHeaderText: { fontSize: 7, color: C.mid, letterSpacing: 1 },
   okrBody: { flexDirection: 'row' },
   okrCell: { flex: 1, padding: '5 8', borderRightWidth: 0.5, borderRightColor: C.line },
@@ -86,6 +83,8 @@ const s = StyleSheet.create({
   footerLight: { color: C.mid, fontSize: 6, letterSpacing: 1, opacity: 0.6 },
   footerDark: { color: C.cream, fontSize: 6, letterSpacing: 1, opacity: 0.2 },
   footerPage: { color: C.orange, fontSize: 7, letterSpacing: 1, opacity: 0.5 },
+  bw: { padding: '14 28', backgroundColor: '#ffffff' },
+  bs: { padding: '14 28', backgroundColor: '#f5f3f0' },
 })
 
 function get(answers, prefix, id) {
@@ -154,8 +153,9 @@ function StrategiePage1({ answers }) {
   return (
     <Page size="A4" style={s.pageLight}>
       <Hero pageNum={1} />
-      <View style={s.content}>
-        <View style={[s.grid2, { marginBottom: 10 }]}>
+
+      <View style={s.bw}>
+        <View style={s.grid2}>
           <View style={s.col}><Field label="MISSIE" sub="Reden van bestaan" value={g('missie')} /></View>
           <View style={s.col}>
             <GL label="CULTUUR" sub="DNA, kernwaarden en gedrag" />
@@ -169,11 +169,17 @@ function StrategiePage1({ answers }) {
             ))}
           </View>
         </View>
-        <View style={[s.grid3, { marginBottom: 10 }]}>
+      </View>
+
+      <View style={s.bs}>
+        <View style={s.grid3}>
           <View style={s.col}><Field label="WAARDEPROPOSITIE" sub="Welk voordeel bieden we?" value={g('waardepropositie')} /></View>
           <View style={s.col}><Field label="KERNCOMPETENTIES" sub="Waarin verschillen we van anderen?" value={g('kerncompetenties')} /></View>
           <View style={s.col}><Field label="DIENSTVERLENING" sub="Wat kopen klanten van ons?" value={g('dienstverlening')} /></View>
         </View>
+      </View>
+
+      <View style={s.bw}>
         <View style={s.grid3}>
           <View style={s.col}><Field label="ZANDBAK" sub="Marktsegmenten / Niches / Kernklanten" value={g('zandbak')} /></View>
           <View style={s.col}>
@@ -189,11 +195,15 @@ function StrategiePage1({ answers }) {
             ))}
           </View>
         </View>
-        <View style={[s.grid2, { marginTop: 8 }]}>
+      </View>
+
+      <View style={s.bs}>
+        <View style={s.grid2}>
           <View style={s.col}><Field label="LEIDERSCHAP" sub="Welke markt(en) willen we domineren?" value={g('leiderschap_markten')} /></View>
           <View style={s.col}><Field label="WANNEER?" sub="" value={g('leiderschap_wanneer')} /></View>
         </View>
       </View>
+
       <Footer label="STRATEGIE" page="01" />
     </Page>
   )
@@ -204,8 +214,9 @@ function StrategiePage2({ answers }) {
   return (
     <Page size="A4" style={s.pageLight}>
       <Hero pageNum={2} />
-      <View style={s.content}>
-        <View style={[s.grid3, { marginBottom: 10 }]}>
+
+      <View style={s.bw}>
+        <View style={s.grid3}>
           <View style={s.col}><Field label="MERKBELOFTE" sub="Unieke merkbeloftes en garanties" value={g('merkbelofte')} /></View>
           <View style={s.col}><Field label="STRATEGIE IN 1 ZIN" sub="Hoe onderscheiden we ons?" value={g('strategie_1_zin')} /></View>
           <View style={s.col}>
@@ -220,19 +231,32 @@ function StrategiePage2({ answers }) {
             ))}
           </View>
         </View>
-        <View style={[s.grid3, { marginBottom: 10 }]}>
+      </View>
+
+      <View style={s.bs}>
+        <View style={s.grid3}>
           <View style={s.col}><Field label="X-FACTOR" sub="10X meerwaarde" value={g('xfactor')} /></View>
           <View style={s.col}><Field label="WINST PER EENHEID" sub="Economische motor" value={g('winst_per_eenheid')} /></View>
           <View style={s.col}><Field label="MOONSHOTS" sub="+1000%" value={g('moonshots')} /></View>
         </View>
+      </View>
+
+      <View style={s.bw}>
         <Field label="SCHAALBAARHEID" sub="Hoe maken we onze dienstverlening schaalbaar?" value={g('schaalbaarheid')} />
-        <View style={[s.grid3, { marginBottom: 10 }]}>
+      </View>
+
+      <View style={s.bs}>
+        <View style={s.grid3}>
           <View style={s.col}><Field label="REPETERENDE OMZET" sub="Hoe blijven we klanten binden?" value={g('repeterende_omzet')} /></View>
           <View style={s.col}><Field label="KLANTRETENTIE" sub="Hoe leveren we continue waarde?" value={g('klantretentie')} /></View>
           <View style={s.col}><Field label="REFERRALS" sub="Hoe maken we ambassadeurs?" value={g('referrals')} /></View>
         </View>
+      </View>
+
+      <View style={s.bw}>
         <Field label="OMTM" sub="Wat is de belangrijkste prestatie-indicator?" value={g('omtm')} />
       </View>
+
       <Footer label="STRATEGIE" page="02" />
     </Page>
   )
@@ -243,16 +267,23 @@ function MensenPage1({ answers }) {
   return (
     <Page size="A4" style={s.pageLight}>
       <Hero pageNum={3} />
-      <View style={s.content}>
-        <View style={[s.grid2, { marginBottom: 10 }]}>
+
+      <View style={s.bw}>
+        <View style={s.grid2}>
           <View style={s.col}><Field label="AANTREKKINGSKRACHT" sub="Waarom werken mensen voor ons?" value={g('aantrekkingskracht')} /></View>
           <View style={s.col}><Field label="PROFIELEN" sub="Welke salesprofielen hebben we nodig?" value={g('profielen')} /></View>
         </View>
-        <View style={[s.grid3, { marginBottom: 10 }]}>
+      </View>
+
+      <View style={s.bs}>
+        <View style={s.grid3}>
           <View style={s.col}><Field label="WERVINGSKANALEN" sub="Via welke kanalen vinden we toptalent?" value={g('wervingskanalen')} /></View>
           <View style={s.col}><Field label="SELECTIEPROCES" sub="Hoe krijgen we toptalent aan boord?" value={g('selectieproces')} /></View>
           <View style={s.col}><Field label="BEHOUD STERSPELERS" sub="Hoe houden we sterspelers?" value={g('behoud_sterspelers')} /></View>
         </View>
+      </View>
+
+      <View style={s.bw}>
         <GL label="BENODIGDE CAPACITEIT" sub="Hoeveel verkopers hebben we nodig om het jaardoel te halen?" />
         <View style={s.grid2}>
           {['q1','q2','q3','q4'].map(q => (
@@ -275,6 +306,7 @@ function MensenPage1({ answers }) {
           ))}
         </View>
       </View>
+
       <Footer label="MENSEN" page="03" />
     </Page>
   )
@@ -285,14 +317,22 @@ function MensenPage2({ answers }) {
   return (
     <Page size="A4" style={s.pageLight}>
       <Hero pageNum={4} />
-      <View style={s.content}>
-        <View style={[s.grid2, { marginBottom: 10 }]}>
+
+      <View style={s.bw}>
+        <View style={s.grid2}>
           <View style={s.col}><Field label="WERVING EN SELECTIE" sub="Hoeveel tijd van vacature tot eerste werkdag?" value={g('werving_selectie')} /></View>
           <View style={s.col}><Field label="ONBOARDING" sub="Binnen hoeveel maanden realiseert een verkoper 100%?" value={g('onboarding')} /></View>
         </View>
+      </View>
+
+      <View style={s.bs}>
         <Field label="TIJD TOT VOLLEDIG RENDEMENT" sub="Hoeveel tijd van vacature tot 100% doelstelling?" value={g('tijd_rendement')} />
+      </View>
+
+      <View style={s.bw}>
         <Field label="ACTIEPLAN" sub="" value={g('actieplan')} />
       </View>
+
       <Footer label="MENSEN" page="04" />
     </Page>
   )
@@ -303,9 +343,10 @@ function UitvoeringPage1({ answers }) {
   return (
     <Page size="A4" style={s.pageLight}>
       <Hero pageNum={5} />
-      <View style={s.content}>
+
+      <View style={s.bw}>
         <GL label="KWARTAALTHEMA" />
-        <View style={[s.grid2, { marginBottom: 10 }]}>
+        <View style={s.grid2}>
           <View style={s.col}>
             <View style={s.kvRow}><Text style={s.kvLabel}>Kwartaal/Jaar</Text><Text style={s.kvValue}>{g('kwartaal_jaar')}</Text></View>
             <View style={s.kvRow}><Text style={s.kvLabel}>Themanaam</Text><Text style={s.kvValue}>{g('themanaam')}</Text></View>
@@ -315,6 +356,9 @@ function UitvoeringPage1({ answers }) {
             <View style={s.kvRow}><Text style={s.kvLabel}>Cruciale KPI</Text><Text style={s.kvValue}>{g('cruciale_kpi')}</Text></View>
           </View>
         </View>
+      </View>
+
+      <View style={s.bs}>
         <View style={[s.groupLabelRow, { marginBottom: 6 }]}>
           <Text style={s.groupLabel}>DOELSTELLINGEN (WAT)</Text>
           <View style={{ flex: 2, height: 0.5, backgroundColor: C.line, marginHorizontal: 6 }} />
@@ -332,6 +376,9 @@ function UitvoeringPage1({ answers }) {
             </View>
           </View>
         ))}
+      </View>
+
+      <View style={s.bw}>
         <View style={s.grid3}>
           {[
             { key: 'krijgen', label: 'KLANTEN KRIJGEN', sub: 'Effectieve Leadgeneratie' },
@@ -350,6 +397,7 @@ function UitvoeringPage1({ answers }) {
           ))}
         </View>
       </View>
+
       <Footer label="UITVOERING" page="05" />
     </Page>
   )
@@ -360,9 +408,10 @@ function UitvoeringPage2({ answers }) {
   return (
     <Page size="A4" style={s.pageLight}>
       <Hero pageNum={6} />
-      <View style={s.content}>
+
+      <View style={s.bw}>
         <GL label="AANTALLEN & CONVERSIES" />
-        <View style={[s.numbersRow, { marginBottom: 10 }]}>
+        <View style={s.numbersRow}>
           {[['numbers_leads','#LEADS'],['numbers_bezoeken','#BEZOEKEN'],['numbers_offertes','#OFFERTES'],['numbers_orders','#ORDERS'],['numbers_referrals','#REFERRALS']].map(([id,lbl]) => (
             <View key={id} style={s.numberCell}>
               <Text style={s.numberCellLabel}>{lbl}</Text>
@@ -370,6 +419,9 @@ function UitvoeringPage2({ answers }) {
             </View>
           ))}
         </View>
+      </View>
+
+      <View style={s.bs}>
         <GL label="DOELEN EN KEY PERFORMANCE INDICATOREN - DASHBOARD" />
         <View style={s.kpiHeader}>
           <Text style={[s.kpiHeaderText, { flex: 3 }]}>KPI</Text>
@@ -383,13 +435,23 @@ function UitvoeringPage2({ answers }) {
             <Text style={s.kpiValBold}>{g(`${id}_real`) || g(id) || ''}</Text>
           </View>
         ))}
+      </View>
+
+      <View style={s.bw}>
         <Field label="WENSENLIJST" sub="Nieuwe Logo's (Olifanten)" value={g('wensenlijst')} />
+      </View>
+
+      <View style={s.bs}>
         <Field label="VERKOOPPROCES / KLANTREIS" sub="Hoe ziet ons verkoopproces en klantreis er uit?" value={g('verkoopproces')} />
+      </View>
+
+      <View style={s.bw}>
         <View style={s.grid2}>
           <View style={s.col}><Field label="BOUW EEN FEESTJE" sub="Hoe vieren we onze successen?" value={g('feestje')} /></View>
           <View style={s.col}><Field label="BELONING" sub="Hoe belonen we betrokken medewerkers?" value={g('beloning')} /></View>
         </View>
       </View>
+
       <Footer label="UITVOERING" page="06" />
     </Page>
   )
