@@ -230,7 +230,7 @@ export default function KpiDashboardPage() {
   return (
     <main style={{
       backgroundColor: '#0a0a0a', minHeight: '100vh', color: '#f0ede6',
-      fontFamily: 'var(--font-geist-sans), sans-serif', padding: '64px 48px',
+      fontFamily: 'var(--font-geist-sans), sans-serif',
     }}>
 
       {/* TERUG NAV */}
@@ -252,9 +252,9 @@ export default function KpiDashboardPage() {
       </div>
 
       {loading ? (
-        <div style={{ color: '#f0ede6', opacity: 0.2, fontSize: '11px', letterSpacing: '3px' }}>LADEN...</div>
+        <div style={{ padding: '64px 48px', color: '#f0ede6', opacity: 0.2, fontSize: '11px', letterSpacing: '3px' }}>LADEN...</div>
       ) : (
-        <>
+        <div style={{ padding: '64px 48px' }}>
           {/* STATUS SAMENVATTING */}
           <div style={{ borderTop: '1px solid #1e1e1e', paddingTop: '48px', marginBottom: '80px' }}>
             <div style={{ display: 'flex', alignItems: 'baseline', gap: '20px', marginBottom: '32px' }}>
@@ -337,7 +337,7 @@ export default function KpiDashboardPage() {
               </div>
             </div>
           </div>
-        </>
+        </div>
       )}
     </main>
   )
