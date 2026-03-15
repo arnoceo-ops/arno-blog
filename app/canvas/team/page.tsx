@@ -228,7 +228,7 @@ export default function TeamPage() {
   return (
     <div style={{ minHeight: '100vh', background: DARK, color: CREAM }}>
 
-      <nav style={{ position: 'sticky' as const, top: 0, zIndex: 100, background: '#f0ede6', borderBottom: '1px solid #ddd', padding: '0 40px', display: 'flex', alignItems: 'center', height: 103 }}>
+      <nav style={{ position: 'sticky' as const, top: 0, zIndex: 100, background: '#f5f0e8', borderBottom: '1px solid #e0d8cc', padding: '0 40px', display: 'flex', alignItems: 'center', height: 103 }}>
         <Link href="https://canvas.royaldutchsales.com/canvas" style={{ display: 'flex', alignItems: 'center', gap: 12, textDecoration: 'none' }}>
           <span style={{ fontFamily: BN, fontSize: 36, fontWeight: 400, lineHeight: '54px', color: '#1a1714' }}>←</span>
           <span style={{ fontFamily: BN, fontSize: 36, fontWeight: 400, lineHeight: '54px', color: '#1a1714', letterSpacing: '0.05em' }}>CANVAS</span>
