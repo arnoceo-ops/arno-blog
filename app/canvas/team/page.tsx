@@ -57,8 +57,8 @@ function MemberCard({ member, rank }: { member: MemberStats; rank: number }) {
   const kwaliteitLabel = member.plan_kwaliteit >= 70 ? 'STERK' : member.plan_kwaliteit >= 50 ? 'MATIG' : 'ZWAK';
 
   return (
-    <div style={{ background: CARD, border: `0.5px solid ${isTop ? ORANGE : LINE}`, position: 'relative' as const }}>
-      {isTop && <div style={{ position: 'absolute' as const, top: 0, left: 0, right: 0, height: 2, background: ORANGE }} />}
+    <div style={{ background: CARD, border: `0.5px solid ${isTop ? GREY : LINE}`, position: 'relative' as const }}>
+      {isTop && <div style={{ position: 'absolute' as const, top: 0, left: 0, right: 0, height: 2, background: GREY }} />}
 
       {/* Header row */}
       <div style={{ padding: '28px 32px 24px', borderBottom: `1px solid ${LINE2}`, display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
@@ -117,8 +117,8 @@ function TeamAverages({ members }: { members: MemberStats[] }) {
 
   const StatCell = ({ k, lbl, last }: { k: keyof MemberStats; lbl: string; last?: boolean }) => (
     <div style={{ borderRight: last ? 'none' : `1px solid ${LINE2}`, paddingRight: last ? 0 : 48, paddingLeft: 0, marginRight: last ? 0 : 48 }}>
-      <div style={{ fontFamily: G, fontSize: 13, fontWeight: 400, letterSpacing: '0.05em', color: ORANGE, marginBottom: 8, textTransform: 'uppercase' as const }}>{lbl}</div>
-      <div style={{ fontFamily: BN, fontSize: 120, fontWeight: 400, lineHeight: 1, color: CREAM }}>{avg(k)}%</div>
+      <div style={{ fontFamily: G, fontSize: 13, fontWeight: 400, letterSpacing: '0.05em', color: CREAM, marginBottom: 8, textTransform: 'uppercase' as const }}>{lbl}</div>
+      <div style={{ fontFamily: BN, fontSize: 120, fontWeight: 400, lineHeight: 1, color: ORANGE }}>{avg(k)}%</div>
     </div>
   );
 
@@ -193,17 +193,16 @@ export default function TeamPage() {
   return (
     <div style={{ minHeight: '100vh', background: DARK, color: CREAM }}>
 
-      <nav style={{ position: 'sticky' as const, top: 0, zIndex: 100, background: '#f0ede6', borderBottom: '1px solid #ddd', padding: '0 40px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', height: 103 }}>
+      <nav style={{ position: 'sticky' as const, top: 0, zIndex: 100, background: '#f0ede6', borderBottom: '1px solid #ddd', padding: '0 40px', display: 'flex', alignItems: 'center', height: 103 }}>
         <Link href="https://canvas.royaldutchsales.com/canvas" style={{ display: 'flex', alignItems: 'center', gap: 12, textDecoration: 'none' }}>
-          <span style={{ fontFamily: BN, fontSize: 54, fontWeight: 400, lineHeight: '54px', color: 'rgb(26, 23, 20)' }}>←</span>
-          <span style={{ fontFamily: BN, fontSize: 54, fontWeight: 400, lineHeight: '54px', color: 'rgb(26, 23, 20)', letterSpacing: '0.05em' }}>CANVAS</span>
+          <span style={{ fontFamily: BN, fontSize: 54, fontWeight: 400, lineHeight: '54px', color: ORANGE }}>←</span>
+          <span style={{ fontFamily: BN, fontSize: 54, fontWeight: 400, lineHeight: '54px', color: ORANGE, letterSpacing: '0.05em' }}>CANVAS</span>
         </Link>
-        <span style={{ fontFamily: BN, fontSize: 54, fontWeight: 400, lineHeight: '54px', color: ORANGE, letterSpacing: '0.05em' }}>TEAM</span>
       </nav>
 
       {/* Page header */}
       <div style={{ borderBottom: `1px solid ${LINE}`, padding: '48px 40px 40px' }}>
-        <div style={{ fontFamily: G, fontSize: 13, fontWeight: 400, letterSpacing: '0.05em', color: GREY, marginBottom: 8, textTransform: 'uppercase' as const }}>
+        <div style={{ fontFamily: G, fontSize: 13, fontWeight: 400, letterSpacing: '0.05em', color: ORANGE, marginBottom: 8, textTransform: 'uppercase' as const }}>
           ROYAL DUTCH SALES
         </div>
         <h1 style={{ fontFamily: BN, fontSize: 'clamp(48px, 7vw, 96px)' as any, fontWeight: 400, letterSpacing: '0.02em', color: CREAM, margin: 0, lineHeight: 1 }}>
