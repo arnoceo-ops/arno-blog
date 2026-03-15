@@ -5,23 +5,7 @@ import { useAuth } from '@clerk/nextjs';
 import { createClient } from '@supabase/supabase-js';
 import Link from 'next/link';
 
-// Default client for non-authed use (not used for RLS queries)
-const supabase = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL!,
-  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
-);
-
-const SEGMENT_WEIGHTS = {
-  mensen: 0.4,
-  strategie: 0.3,
-  uitvoering: 0.3,
-};
-
-const TOTAL_QUESTIONS = {
-  strategie: 15,
-  mensen: 15,
-  uitvoering: 15,
-};
+const SEGMENT_WEIGHTS = { mensen: 0.4, strategie: 0.3, uitvoering: 0.3 };
 
 interface MemberStats {
   user_id: string;
@@ -34,50 +18,32 @@ interface MemberStats {
   answered: number;
 }
 
-function ScoreBar({
-  label,
-  score,
-  color,
-}: {
-  label: string;
-  score: number;
-  color: string;
-}) {
+function ScoreBar({ name, score }: { name: string; score: number }) {
+  const barColor = score >= 70 ? '#EE7700' : score >= 50 ? '#888' : '#c0392b';
+  const pctColor = score >= 70 ? '#EE7700' : score >= 50 ? '#f0ede6' : '#c0392b';
   return (
-    <div style={{ marginBottom: 6 }}>
-      <div
-        style={{
-          display: 'flex',
-          justifyContent: 'space-between',
-          fontFamily: 'Space Mono, monospace',
-          fontSize: 16,
-          color: '#888',
-          marginBottom: 5,
-          textTransform: 'uppercase',
-          letterSpacing: '0.05em',
-        }}
-      >
-        <span>{label}</span>
-        <span style={{ color: score >= 70 ? '#EE7700' : score >= 50 ? '#ccc' : '#e05' }}>
-          {score}%
-        </span>
+    <div style={{ marginBottom: 20 }}>
+      <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 6 }}>
+        <span style={{
+          fontFamily: 'Bebas Neue, sans-serif',
+          fontSize: 11,
+          letterSpacing: '0.15em',
+          color: '#EE7700',
+        }}>{name}</span>
+        <span style={{
+          fontFamily: 'Bebas Neue, sans-serif',
+          fontSize: 11,
+          letterSpacing: '0.1em',
+          color: pctColor,
+        }}>{score}%</span>
       </div>
-      <div
-        style={{
-          height: 6,
-          borderRadius: 2,
-          overflow: 'hidden' as const,
-        }}
-      >
-        <div
-          style={{
-            height: '100%',
-            width: `${score}%`,
-            background: color,
-            borderRadius: 2,
-            transition: 'width 0.8s ease',
-          }}
-        />
+      <div style={{ height: 2, background: '#1a1a1a' }}>
+        <div style={{
+          height: '100%',
+          width: `${score}%`,
+          background: barColor,
+          transition: 'width 0.8s ease',
+        }} />
       </div>
     </div>
   );
@@ -85,105 +51,95 @@ function ScoreBar({
 
 function MemberCard({ member, rank }: { member: MemberStats; rank: number }) {
   const isTop = rank === 1;
+  const kwaliteitLabel = member.plan_kwaliteit >= 70 ? 'STERK' : member.plan_kwaliteit >= 50 ? 'MATIG' : 'ZWAK';
+
   return (
-    <div
-      style={{
-        background: isTop ? '#111' : '#0d0d0d',
-        border: `1px solid ${isTop ? '#EE7700' : '#1f1f1f'}`,
-        borderRadius: 2,
-        padding: '36px 44px',
-        position: 'relative' as const,
-      }}
-    >
+    <div style={{
+      background: '#0d0d0d',
+      border: `1px solid ${isTop ? '#EE7700' : '#1f1f1f'}`,
+      position: 'relative' as const,
+    }}>
       {isTop && (
-        <div
-          style={{
-            position: 'absolute' as const,
-            top: -1,
-            left: -1,
-            right: -1,
-            height: 2,
-            background: '#EE7700',
-          }}
-        />
+        <div style={{
+          position: 'absolute' as const,
+          top: 0, left: 0, right: 0,
+          height: 2,
+          background: '#EE7700',
+        }} />
       )}
-      <div
-        style={{
-          display: 'flex',
-          justifyContent: 'space-between',
-          alignItems: 'flex-start',
-          marginBottom: 16,
-        }}
-      >
+
+      {/* Card header */}
+      <div style={{
+        padding: '28px 32px 24px',
+        borderBottom: '1px solid #1a1a1a',
+        display: 'flex',
+        justifyContent: 'space-between',
+        alignItems: 'flex-start',
+      }}>
         <div>
-          <div
-            style={{
-              fontFamily: 'Bebas Neue, sans-serif',
-              fontSize: 16,
-              color: '#EE7700',
-              letterSpacing: '0.1em',
-              marginBottom: 2,
-            }}
-          >
-            #{rank}
-          </div>
-          <div
-            style={{
-              fontFamily: 'Space Mono, monospace',
-              fontSize: 16,
-              color: '#f0ede6',
-              maxWidth: 260,
-              overflow: 'hidden' as const,
-              textOverflow: 'ellipsis' as const,
-              whiteSpace: 'nowrap' as const,
-            }}
-          >
-            {member.email}
-          </div>
+          <div style={{
+            fontFamily: 'Bebas Neue, sans-serif',
+            fontSize: 11,
+            letterSpacing: '0.15em',
+            color: '#555',
+            marginBottom: 6,
+          }}>#{rank}</div>
+          <div style={{
+            fontFamily: 'Space Mono, monospace',
+            fontSize: 13,
+            color: '#f0ede6',
+            maxWidth: 240,
+            overflow: 'hidden' as const,
+            textOverflow: 'ellipsis' as const,
+            whiteSpace: 'nowrap' as const,
+          }}>{member.email}</div>
         </div>
         <div style={{ textAlign: 'right' as const }}>
-          <div
-            style={{
-              fontFamily: 'Bebas Neue, sans-serif',
-              fontSize: 56,
-              lineHeight: 1,
-              color: member.plan_kwaliteit >= 70 ? '#EE7700' : '#f0ede6',
-            }}
-          >
-            {member.plan_kwaliteit}%
-          </div>
-          <div
-            style={{
-              fontFamily: 'Space Mono, monospace',
-              fontSize: 16,
-              color: '#555',
-              textTransform: 'uppercase' as const,
-              letterSpacing: '0.08em',
-            }}
-          >
-            Plan Kwaliteit
+          <div style={{
+            fontFamily: 'Bebas Neue, sans-serif',
+            fontSize: 120,
+            lineHeight: 0.85,
+            color: member.plan_kwaliteit >= 70 ? '#EE7700' : '#f0ede6',
+          }}>{member.plan_kwaliteit}%</div>
+          <div style={{
+            fontFamily: 'Bebas Neue, sans-serif',
+            fontSize: 11,
+            letterSpacing: '0.15em',
+            color: '#555',
+            marginTop: 4,
+          }}>PLAN KWALITEIT &nbsp;
+            <span style={{ color: '#EE7700' }}>{kwaliteitLabel}</span>
           </div>
         </div>
       </div>
 
-      <ScoreBar label="Strategie" score={member.strategie_score} color="#EE7700" />
-      <ScoreBar label="Mensen" score={member.mensen_score} color="#c85a00" />
-      <ScoreBar label="Uitvoering" score={member.uitvoering_score} color="#884400" />
+      {/* Scores */}
+      <div style={{ padding: '24px 32px' }}>
+        <ScoreBar name="STRATEGIE" score={member.strategie_score} />
+        <ScoreBar name="MENSEN" score={member.mensen_score} />
+        <ScoreBar name="UITVOERING" score={member.uitvoering_score} />
 
-      <div
-        style={{
-          marginTop: 14,
-          paddingTop: 12,
+        <div style={{
+          marginTop: 8,
+          paddingTop: 16,
           borderTop: '1px solid #1a1a1a',
           display: 'flex',
           justifyContent: 'space-between',
-          fontFamily: 'Space Mono, monospace',
-          fontSize: 16,
-          color: '#555',
-        }}
-      >
-        <span>VOLLEDIGHEID</span>
-        <span style={{ color: '#888' }}>{member.volledigheid}%</span>
+          alignItems: 'center',
+        }}>
+          <span style={{
+            fontFamily: 'Bebas Neue, sans-serif',
+            fontSize: 11,
+            letterSpacing: '0.15em',
+            color: '#555',
+          }}>VOLLEDIGHEID</span>
+          <span style={{
+            fontFamily: 'Bebas Neue, sans-serif',
+            fontSize: 11,
+            letterSpacing: '0.1em',
+            color: '#888',
+          }}>{member.volledigheid}%</span>
+        </div>
       </div>
     </div>
   );
@@ -191,77 +147,54 @@ function MemberCard({ member, rank }: { member: MemberStats; rank: number }) {
 
 function TeamAverages({ members }: { members: MemberStats[] }) {
   if (members.length === 0) return null;
-
   const avg = (key: keyof MemberStats) =>
-    Math.round(
-      members.reduce((sum, m) => sum + (m[key] as number), 0) / members.length
-    );
+    Math.round(members.reduce((s, m) => s + (m[key] as number), 0) / members.length);
 
-  const avgStrategie = avg('strategie_score');
-  const avgMensen = avg('mensen_score');
-  const avgUitvoering = avg('uitvoering_score');
-  const avgKwaliteit = avg('plan_kwaliteit');
-  const avgVolledigheid = avg('volledigheid');
+  const stats = [
+    { key: 'plan_kwaliteit' as const, lbl: 'PLAN KWALITEIT', highlight: true },
+    { key: 'strategie_score' as const, lbl: 'STRATEGIE', highlight: false },
+    { key: 'mensen_score' as const, lbl: 'MENSEN', highlight: false },
+    { key: 'uitvoering_score' as const, lbl: 'UITVOERING', highlight: false },
+    { key: 'volledigheid' as const, lbl: 'VOLLEDIGHEID', highlight: false },
+  ];
 
   return (
-    <div
-      style={{
-        background: '#0a0a0a',
-        border: '1px solid #1f1f1f',
-        borderRadius: 2,
-        padding: '24px 28px',
-        marginBottom: 40,
-      }}
-    >
-      <div
-        style={{
-          fontFamily: 'Bebas Neue, sans-serif',
-          fontSize: 11,
-          letterSpacing: '0.15em',
-          color: '#555',
-          textTransform: 'uppercase' as const,
-          marginBottom: 20,
-        }}
-      >
-        Team Gemiddelde — {members.length} {members.length === 1 ? 'lid' : 'leden'}
+    <div style={{
+      borderBottom: '1px solid #1f1f1f',
+      padding: '40px 40px 48px',
+    }}>
+      <div style={{
+        fontFamily: 'Bebas Neue, sans-serif',
+        fontSize: 11,
+        letterSpacing: '0.15em',
+        color: '#555',
+        marginBottom: 32,
+      }}>
+        TEAM GEMIDDELDE — {members.length} {members.length === 1 ? 'LID' : 'LEDEN'}
       </div>
-      <div
-        style={{
-          display: 'grid',
-          gridTemplateColumns: 'repeat(5, 1fr)',
-          gap: 24,
-        }}
-      >
-        {[
-          { label: 'Plan Kwaliteit', value: avgKwaliteit, highlight: true },
-          { label: 'Strategie', value: avgStrategie, highlight: false },
-          { label: 'Mensen', value: avgMensen, highlight: false },
-          { label: 'Uitvoering', value: avgUitvoering, highlight: false },
-          { label: 'Volledigheid', value: avgVolledigheid, highlight: false },
-        ].map(({ label, value, highlight }) => (
-          <div key={label}>
-            <div
-              style={{
-                fontFamily: 'Bebas Neue, sans-serif',
-                fontSize: 40,
-                lineHeight: 1,
-                color: highlight ? '#EE7700' : '#f0ede6',
-                marginBottom: 4,
-              }}
-            >
-              {value}%
-            </div>
-            <div
-              style={{
-                fontFamily: 'Space Mono, monospace',
-                fontSize: 9,
-                color: '#555',
-                textTransform: 'uppercase' as const,
-                letterSpacing: '0.08em',
-              }}
-            >
-              {label}
-            </div>
+      <div style={{
+        display: 'grid',
+        gridTemplateColumns: 'repeat(5, 1fr)',
+      }}>
+        {stats.map(({ key, lbl, highlight }, i) => (
+          <div key={lbl} style={{
+            borderRight: i < 4 ? '1px solid #1a1a1a' : 'none',
+            paddingRight: i < 4 ? 40 : 0,
+            paddingLeft: i > 0 ? 40 : 0,
+          }}>
+            <div style={{
+              fontFamily: 'Bebas Neue, sans-serif',
+              fontSize: 11,
+              letterSpacing: '0.15em',
+              color: '#EE7700',
+              marginBottom: 8,
+            }}>{lbl}</div>
+            <div style={{
+              fontFamily: 'Bebas Neue, sans-serif',
+              fontSize: 72,
+              lineHeight: 1,
+              color: highlight ? '#EE7700' : '#f0ede6',
+            }}>{avg(key)}%</div>
           </div>
         ))}
       </div>
@@ -277,21 +210,16 @@ export default function TeamPage() {
 
   const loadTeamData = useCallback(async () => {
     if (!userId) return;
-
     try {
       const token = await getToken({ template: 'supabase' });
-      const authedSupabase = createClient(
+      const db = createClient(
         process.env.NEXT_PUBLIC_SUPABASE_URL!,
         process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
         { global: { headers: { Authorization: `Bearer ${token}` } } }
       );
 
-      // Check manager access
-      const { data: managerCheck } = await authedSupabase
-        .from('approved_users')
-        .select('is_manager')
-        .eq('user_id', userId)
-        .single();
+      const { data: managerCheck } = await db
+        .from('approved_users').select('is_manager').eq('user_id', userId).single();
 
       if (!managerCheck?.is_manager) {
         setError('Geen toegang. Dit dashboard is alleen beschikbaar voor managers.');
@@ -299,59 +227,37 @@ export default function TeamPage() {
         return;
       }
 
-      // Get all approved users
-      const { data: approvedUsers, error: usersError } = await authedSupabase
-        .from('approved_users')
-        .select('user_id, email');
+      const { data: approvedUsers, error: ue } = await db
+        .from('approved_users').select('user_id, email');
+      if (ue || !approvedUsers) throw ue;
 
-      if (usersError || !approvedUsers) throw usersError;
+      const { data: answers, error: ae } = await db
+        .from('canvas_answers').select('user_id, question_id, score, answer');
+      if (ae) throw ae;
 
-      // Get all canvas answers with scores
-      const { data: answers, error: answersError } = await authedSupabase
-        .from('canvas_answers')
-        .select('user_id, question_id, score, answer');
-
-      if (answersError) throw answersError;
-
-      // Aggregate per user
       const stats: MemberStats[] = approvedUsers.map((user) => {
-        const userAnswers = answers?.filter((a) => a.user_id === user.user_id) ?? [];
-
-        const segmentScore = (segment: string) => {
-          const segAnswers = userAnswers.filter(
-            (a) => a.question_id.startsWith(segment) && a.score !== null
-          );
-          if (segAnswers.length === 0) return 0;
-          const avg = segAnswers.reduce((s, a) => s + (a.score ?? 0), 0) / segAnswers.length;
-          return Math.round((avg / 5) * 100);
+        const ua = answers?.filter((a) => a.user_id === user.user_id) ?? [];
+        const segScore = (seg: string) => {
+          const sa = ua.filter((a) => a.question_id.startsWith(seg) && a.score !== null);
+          if (!sa.length) return 0;
+          return Math.round((sa.reduce((s, a) => s + (a.score ?? 0), 0) / sa.length / 5) * 100);
         };
-
-        const strategie = segmentScore('strategie');
-        const mensen = segmentScore('mensen');
-        const uitvoering = segmentScore('uitvoering');
-
-        const planKwaliteit = Math.round(
+        const strategie = segScore('strategie');
+        const mensen = segScore('mensen');
+        const uitvoering = segScore('uitvoering');
+        const plan_kwaliteit = Math.round(
           strategie * SEGMENT_WEIGHTS.strategie +
           mensen * SEGMENT_WEIGHTS.mensen +
           uitvoering * SEGMENT_WEIGHTS.uitvoering
         );
-
-        const answered = userAnswers.filter((a) => a.answer && a.answer.trim() !== '').length;
-        const volledigheid = Math.round((answered / 134) * 100);
-
+        const answered = ua.filter((a) => a.answer && a.answer.trim() !== '').length;
         return {
-          user_id: user.user_id,
-          email: user.email,
-          strategie_score: strategie,
-          mensen_score: mensen,
-          uitvoering_score: uitvoering,
-          plan_kwaliteit: planKwaliteit,
-          volledigheid,
-          answered,
+          user_id: user.user_id, email: user.email,
+          strategie_score: strategie, mensen_score: mensen, uitvoering_score: uitvoering,
+          plan_kwaliteit, volledigheid: Math.round((answered / 134) * 100), answered,
         };
       });
 
-      // Sort by plan kwaliteit desc
       stats.sort((a, b) => b.plan_kwaliteit - a.plan_kwaliteit);
       setMembers(stats);
     } catch (err) {
@@ -362,201 +268,105 @@ export default function TeamPage() {
     }
   }, [userId]);
 
-  useEffect(() => {
-    loadTeamData();
-  }, [loadTeamData]);
+  useEffect(() => { loadTeamData(); }, [loadTeamData]);
 
   return (
-    <div
-      style={{
-        minHeight: '100vh',
-        background: '#0a0a0a',
-        color: '#f0ede6',
-      }}
-    >
+    <div style={{ minHeight: '100vh', background: '#0a0a0a', color: '#f0ede6' }}>
+
       {/* Nav */}
-      <nav
-        style={{
-          position: 'sticky' as const,
-          top: 0,
-          zIndex: 100,
-          background: '#0a0a0a',
-          borderBottom: '1px solid #1f1f1f',
-          padding: '0 40px',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'space-between',
-          height: 56,
-        }}
-      >
+      <nav style={{
+        position: 'sticky' as const, top: 0, zIndex: 100,
+        background: '#0a0a0a', borderBottom: '1px solid #1f1f1f',
+        padding: '0 40px', display: 'flex', alignItems: 'center',
+        justifyContent: 'space-between', height: 56,
+      }}>
         <div style={{ display: 'flex', gap: 32, alignItems: 'center' }}>
           {['HOME', 'ARNOBOT', 'BIO', 'BLOG', 'CANVAS', 'SUBSCRIBE'].map((item) => (
-            <Link
-              key={item}
-              href={
-                item === 'HOME' ? '/' :
-                item === 'ARNOBOT' ? '/spar' :
-                item === 'SUBSCRIBE' ? '/subscribe' :
-                `/${item.toLowerCase()}`
-              }
-              style={{
-                fontFamily: 'Bebas Neue, sans-serif',
-                fontSize: 14,
-                letterSpacing: '0.12em',
-                color: item === 'CANVAS' ? '#EE7700' : '#888',
-                textDecoration: 'none',
-              }}
-            >
-              {item}
-            </Link>
+            <Link key={item} href={
+              item === 'HOME' ? '/' : item === 'ARNOBOT' ? '/spar' :
+              item === 'SUBSCRIBE' ? '/subscribe' : `/${item.toLowerCase()}`
+            } style={{
+              fontFamily: 'Bebas Neue, sans-serif', fontSize: 14,
+              letterSpacing: '0.12em',
+              color: item === 'CANVAS' ? '#EE7700' : '#888',
+              textDecoration: 'none',
+            }}>{item}</Link>
           ))}
         </div>
         <div style={{ display: 'flex', gap: 24, alignItems: 'center' }}>
-          {(['STRATEGIE', 'MENSEN', 'UITVOERING'] as const).map((s) => (
-            <Link
-              key={s}
-              href={`/canvas/${s.toLowerCase()}`}
-              style={{
-                fontFamily: 'Bebas Neue, sans-serif',
-                fontSize: 13,
-                letterSpacing: '0.1em',
-                color: '#555',
-                textDecoration: 'none',
-              }}
-            >
-              {s}
-            </Link>
+          {['STRATEGIE', 'MENSEN', 'UITVOERING'].map((s) => (
+            <Link key={s} href={`/canvas/${s.toLowerCase()}`} style={{
+              fontFamily: 'Bebas Neue, sans-serif', fontSize: 13,
+              letterSpacing: '0.1em', color: '#555', textDecoration: 'none',
+            }}>{s}</Link>
           ))}
-          <Link
-            href="/canvas"
-            style={{
-              fontFamily: 'Bebas Neue, sans-serif',
-              fontSize: 13,
-              letterSpacing: '0.1em',
-              color: '#555',
-              textDecoration: 'none',
-            }}
-          >
-            DASHBOARD
-          </Link>
-          <span
-            style={{
-              fontFamily: 'Bebas Neue, sans-serif',
-              fontSize: 13,
-              letterSpacing: '0.1em',
-              color: '#EE7700',
-            }}
-          >
-            TEAM
-          </span>
+          <Link href="/canvas" style={{
+            fontFamily: 'Bebas Neue, sans-serif', fontSize: 13,
+            letterSpacing: '0.1em', color: '#555', textDecoration: 'none',
+          }}>DASHBOARD</Link>
+          <span style={{
+            fontFamily: 'Bebas Neue, sans-serif', fontSize: 13,
+            letterSpacing: '0.1em', color: '#EE7700',
+          }}>TEAM</span>
         </div>
       </nav>
 
-      {/* Header */}
-      <div
-        style={{
-          borderBottom: '1px solid #1f1f1f',
-          padding: '48px 40px 40px',
-        }}
-      >
-        <div
-          style={{
-            fontFamily: 'Bebas Neue, sans-serif',
-            fontSize: 11,
-            letterSpacing: '0.2em',
-            color: '#EE7700',
-            marginBottom: 8,
-          }}
-        >
-          RDS CANVAS
+      {/* Page header */}
+      <div style={{ borderBottom: '1px solid #1f1f1f', padding: '48px 40px 40px' }}>
+        <div style={{
+          fontFamily: 'Bebas Neue, sans-serif', fontSize: 11,
+          letterSpacing: '0.2em', color: '#EE7700', marginBottom: 8,
+        }}>ROYAL DUTCH SALES</div>
+        <h1 style={{
+          fontFamily: 'Bebas Neue, sans-serif',
+          fontSize: 'clamp(48px, 7vw, 96px)',
+          letterSpacing: '0.02em', color: '#f0ede6',
+          margin: 0, lineHeight: 1,
+        }}>TEAM DASHBOARD</h1>
+        <p style={{
+          fontFamily: 'Space Mono, monospace', fontSize: 11,
+          color: '#555', marginTop: 12, letterSpacing: '0.02em',
+        }}>Vergelijk plan kwaliteit en voortgang per teamlid</p>
+      </div>
+
+      {/* Team averages */}
+      {!loading && !error && <TeamAverages members={members} />}
+
+      {/* States */}
+      {loading && (
+        <div style={{
+          fontFamily: 'Space Mono, monospace', fontSize: 11,
+          color: '#555', textAlign: 'center' as const, padding: '80px 0',
+        }}>Laden...</div>
+      )}
+      {error && (
+        <div style={{
+          fontFamily: 'Space Mono, monospace', fontSize: 11,
+          color: '#c0392b', textAlign: 'center' as const, padding: '80px 0',
+        }}>{error}</div>
+      )}
+
+      {/* Member cards */}
+      {!loading && !error && (
+        <div style={{ padding: '40px' }}>
+          {members.length === 0 ? (
+            <div style={{
+              fontFamily: 'Space Mono, monospace', fontSize: 11,
+              color: '#555', textAlign: 'center' as const, padding: '80px 0',
+            }}>Geen teamleden gevonden.</div>
+          ) : (
+            <div style={{
+              display: 'grid',
+              gridTemplateColumns: 'repeat(auto-fill, minmax(560px, 1fr))',
+              gap: 2,
+            }}>
+              {members.map((member, i) => (
+                <MemberCard key={member.user_id} member={member} rank={i + 1} />
+              ))}
+            </div>
+          )}
         </div>
-        <h1
-          style={{
-            fontFamily: 'Bebas Neue, sans-serif',
-            fontSize: 'clamp(40px, 6vw, 72px)',
-            letterSpacing: '0.04em',
-            color: '#f0ede6',
-            margin: 0,
-            lineHeight: 1,
-          }}
-        >
-          TEAM DASHBOARD
-        </h1>
-        <p
-          style={{
-            fontFamily: 'Space Mono, monospace',
-            fontSize: 12,
-            color: '#555',
-            marginTop: 12,
-            letterSpacing: '0.02em',
-          }}
-        >
-          Vergelijk plan kwaliteit en voortgang per teamlid
-        </p>
-      </div>
-
-      {/* Content */}
-      <div style={{ padding: '40px' }}>
-        {loading && (
-          <div
-            style={{
-              fontFamily: 'Space Mono, monospace',
-              fontSize: 12,
-              color: '#555',
-              textAlign: 'center' as const,
-              padding: '80px 0',
-            }}
-          >
-            Laden...
-          </div>
-        )}
-
-        {error && (
-          <div
-            style={{
-              fontFamily: 'Space Mono, monospace',
-              fontSize: 12,
-              color: '#e05',
-              textAlign: 'center' as const,
-              padding: '80px 0',
-            }}
-          >
-            {error}
-          </div>
-        )}
-
-        {!loading && !error && (
-          <>
-            <TeamAverages members={members} />
-
-            {members.length === 0 ? (
-              <div
-                style={{
-                  fontFamily: 'Space Mono, monospace',
-                  fontSize: 12,
-                  color: '#555',
-                  textAlign: 'center' as const,
-                  padding: '80px 0',
-                }}
-              >
-                Geen teamleden gevonden.
-              </div>
-            ) : (
-              <div
-                style={{
-                  display: 'grid',
-                  gridTemplateColumns: 'repeat(auto-fill, minmax(520px, 1fr))',
-                  gap: 16,
-                }}
-              >
-                {members.map((member, i) => (
-                  <MemberCard key={member.user_id} member={member} rank={i + 1} />
-                ))}
-              </div>
-            )}
-          </>
-        )}
-      </div>
+      )}
     </div>
   );
 }
