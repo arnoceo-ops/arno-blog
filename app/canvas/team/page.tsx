@@ -117,8 +117,8 @@ function TeamAverages({ members }: { members: MemberStats[] }) {
 
   const StatCell = ({ k, lbl, last }: { k: keyof MemberStats; lbl: string; last?: boolean }) => (
     <div style={{ borderRight: last ? 'none' : `1px solid ${LINE2}`, paddingRight: last ? 0 : 48, paddingLeft: 0, marginRight: last ? 0 : 48 }}>
-      <div style={{ fontFamily: G, fontSize: 13, fontWeight: 400, letterSpacing: '0.05em', color: ORANGE, marginBottom: 8, textTransform: 'uppercase' as const }}>{lbl}</div>
-      <div style={{ fontFamily: BN, fontSize: 120, fontWeight: 400, lineHeight: 1, color: CREAM }}>{avg(k)}%</div>
+      <div style={{ fontFamily: G, fontSize: 13, fontWeight: 400, letterSpacing: '0.05em', color: CREAM, marginBottom: 8, textTransform: 'uppercase' as const }}>{lbl}</div>
+      <div style={{ fontFamily: BN, fontSize: 120, fontWeight: 400, lineHeight: 1, color: ORANGE }}>{avg(k)}%</div>
     </div>
   );
 
@@ -195,8 +195,8 @@ export default function TeamPage() {
 
       <nav style={{ position: 'sticky' as const, top: 0, zIndex: 100, background: '#f0ede6', borderBottom: '1px solid #ddd', padding: '0 40px', display: 'flex', alignItems: 'center', height: 103 }}>
         <Link href="https://canvas.royaldutchsales.com/canvas" style={{ display: 'flex', alignItems: 'center', gap: 12, textDecoration: 'none' }}>
-          <span style={{ fontFamily: BN, fontSize: 54, fontWeight: 400, lineHeight: '54px', color: '#F7AF2C' }}>←</span>
-          <span style={{ fontFamily: BN, fontSize: 54, fontWeight: 400, lineHeight: '54px', color: '#F7AF2C', letterSpacing: '0.05em' }}>CANVAS</span>
+          <span style={{ fontFamily: BN, fontSize: 54, fontWeight: 400, lineHeight: '54px', color: ORANGE }}>←</span>
+          <span style={{ fontFamily: BN, fontSize: 54, fontWeight: 400, lineHeight: '54px', color: ORANGE, letterSpacing: '0.05em' }}>CANVAS</span>
         </Link>
       </nav>
 
