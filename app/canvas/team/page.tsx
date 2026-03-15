@@ -91,7 +91,7 @@ function MemberCard({ member, rank }: { member: MemberStats; rank: number }) {
         background: isTop ? '#111' : '#0d0d0d',
         border: `1px solid ${isTop ? '#EE7700' : '#1f1f1f'}`,
         borderRadius: 2,
-        padding: '20px 24px',
+        padding: '28px 32px',
         position: 'relative' as const,
       }}
     >
@@ -549,7 +549,7 @@ export default function TeamPage() {
               <div
                 style={{
                   display: 'grid',
-                  gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))',
+                  gridTemplateColumns: 'repeat(auto-fill, minmax(360px, 1fr))',
                   gap: 16,
                 }}
               >
