@@ -45,7 +45,7 @@ function ScoreBar({ name, score }: { name: string; score: number }) {
         </span>
       </div>
       <div style={{ height: 2, background: LINE2 }}>
-        <div style={{ height: '100%', width: `${score}%`, background: barColor, transition: 'width 0.8s ease' }} />
+        <div style={{ height: '100%', width: `${score}%`, background: CREAM, transition: 'width 0.8s ease' }} />
       </div>
     </div>
   );
@@ -57,7 +57,7 @@ function MemberCard({ member, rank }: { member: MemberStats; rank: number }) {
   const kwaliteitLabel = member.plan_kwaliteit >= 70 ? 'STERK' : member.plan_kwaliteit >= 50 ? 'MATIG' : 'ZWAK';
 
   return (
-    <div style={{ background: CARD, border: `1px solid ${isTop ? ORANGE : LINE}`, position: 'relative' as const }}>
+    <div style={{ background: CARD, border: `0.5px solid ${isTop ? ORANGE : LINE}`, position: 'relative' as const }}>
       {isTop && <div style={{ position: 'absolute' as const, top: 0, left: 0, right: 0, height: 2, background: ORANGE }} />}
 
       {/* Header row */}
@@ -69,7 +69,7 @@ function MemberCard({ member, rank }: { member: MemberStats; rank: number }) {
           </div>
         </div>
         <div style={{ textAlign: 'right' as const }}>
-          <div style={{ fontFamily: BN, fontSize: 120, fontWeight: 400, lineHeight: 0.85, color: CREAM }}>
+          <div style={{ fontFamily: BN, fontSize: 72, fontWeight: 400, lineHeight: 0.85, color: CREAM }}>
             {member.plan_kwaliteit}%
           </div>
           <div style={{ marginTop: 6 }}>
@@ -85,9 +85,14 @@ function MemberCard({ member, rank }: { member: MemberStats; rank: number }) {
         <ScoreBar name="MENSEN"     score={member.mensen_score} />
         <ScoreBar name="UITVOERING" score={member.uitvoering_score} />
 
-        <div style={{ marginTop: 8, paddingTop: 16, borderTop: `1px solid ${LINE2}`, display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-          <span style={{ fontFamily: G, fontSize: 18, fontWeight: 400, color: GREY }}>VOLLEDIGHEID</span>
-          <span style={{ fontFamily: G, fontSize: 18, fontWeight: 400, color: GREY }}>{member.volledigheid}%</span>
+        <div style={{ marginTop: 8, paddingTop: 16, borderTop: `1px solid ${LINE2}` }}>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 6 }}>
+            <span style={{ fontFamily: G, fontSize: 18, fontWeight: 400, color: GREY }}>VOLLEDIGHEID</span>
+            <span style={{ fontFamily: G, fontSize: 18, fontWeight: 400, color: GREY }}>{member.volledigheid}%</span>
+          </div>
+          <div style={{ height: 2, background: LINE2 }}>
+            <div style={{ height: '100%', width: `${member.volledigheid}%`, background: CREAM, transition: 'width 0.8s ease' }} />
+          </div>
         </div>
       </div>
     </div>
@@ -188,18 +193,17 @@ export default function TeamPage() {
   return (
     <div style={{ minHeight: '100vh', background: DARK, color: CREAM }}>
 
-      {/* Nav */}
-      <nav style={{ position: 'sticky' as const, top: 0, zIndex: 100, background: '#f0ede6', borderBottom: `1px solid #ddd`, padding: '0 40px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', height: 64 }}>
+      <nav style={{ position: 'sticky' as const, top: 0, zIndex: 100, background: '#f0ede6', borderBottom: '1px solid #ddd', padding: '0 40px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', height: 103 }}>
         <Link href="https://canvas.royaldutchsales.com/canvas" style={{ display: 'flex', alignItems: 'center', gap: 12, textDecoration: 'none' }}>
-          <span style={{ fontFamily: BN, fontSize: 36, fontWeight: 400, color: 'rgb(26, 23, 20)', lineHeight: 1 }}>←</span>
-          <span style={{ fontFamily: BN, fontSize: 36, fontWeight: 400, color: 'rgb(26, 23, 20)', lineHeight: 1, letterSpacing: '0.05em' }}>CANVAS DASHBOARD</span>
+          <span style={{ fontFamily: BN, fontSize: 54, fontWeight: 400, lineHeight: '54px', color: 'rgb(26, 23, 20)' }}>←</span>
+          <span style={{ fontFamily: BN, fontSize: 54, fontWeight: 400, lineHeight: '54px', color: 'rgb(26, 23, 20)', letterSpacing: '0.05em' }}>CANVAS</span>
         </Link>
-        <span style={{ fontFamily: BN, fontSize: 36, fontWeight: 400, color: ORANGE, letterSpacing: '0.05em', lineHeight: 1 }}>TEAM</span>
+        <span style={{ fontFamily: BN, fontSize: 54, fontWeight: 400, lineHeight: '54px', color: ORANGE, letterSpacing: '0.05em' }}>TEAM</span>
       </nav>
 
       {/* Page header */}
       <div style={{ borderBottom: `1px solid ${LINE}`, padding: '48px 40px 40px' }}>
-        <div style={{ fontFamily: G, fontSize: 13, fontWeight: 400, letterSpacing: '0.05em', color: ORANGE, marginBottom: 8, textTransform: 'uppercase' as const }}>
+        <div style={{ fontFamily: G, fontSize: 13, fontWeight: 400, letterSpacing: '0.05em', color: GREY, marginBottom: 8, textTransform: 'uppercase' as const }}>
           ROYAL DUTCH SALES
         </div>
         <h1 style={{ fontFamily: BN, fontSize: 'clamp(48px, 7vw, 96px)' as any, fontWeight: 400, letterSpacing: '0.02em', color: CREAM, margin: 0, lineHeight: 1 }}>
