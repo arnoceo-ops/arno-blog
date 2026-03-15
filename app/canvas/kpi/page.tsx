@@ -234,14 +234,9 @@ export default function KpiDashboardPage() {
     }}>
 
       {/* TERUG NAV */}
-      <div style={{ marginBottom: '64px' }}>
-        <Link href="/canvas" style={{
-          color: '#f0ede6', fontSize: '11px', letterSpacing: '3px',
-          textDecoration: 'none', opacity: 0.3,
-        }}>
-          ← CANVAS
-        </Link>
-      </div>
+      <nav style={{ position: 'sticky' as const, top: 0, zIndex: 100, background: '#f5f0e8', borderBottom: '1px solid #e0d8cc', padding: '0 48px', display: 'flex', alignItems: 'center', height: 103, fontFamily: 'var(--font-bebas), sans-serif', fontSize: 36, letterSpacing: '3px' }}>
+        <Link href="/canvas" style={{ color: '#1a1714', textDecoration: 'none', opacity: 0.4 }}>← CANVAS</Link>
+      </nav>
 
       {/* HEADER */}
       <div style={{ marginBottom: '80px' }}>
