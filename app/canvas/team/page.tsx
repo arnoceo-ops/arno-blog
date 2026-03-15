@@ -91,7 +91,7 @@ function MemberCard({ member, rank }: { member: MemberStats; rank: number }) {
         background: isTop ? '#111' : '#0d0d0d',
         border: `1px solid ${isTop ? '#EE7700' : '#1f1f1f'}`,
         borderRadius: 2,
-        padding: '28px 32px',
+        padding: '36px 44px',
         position: 'relative' as const,
       }}
     >
@@ -145,7 +145,7 @@ function MemberCard({ member, rank }: { member: MemberStats; rank: number }) {
           <div
             style={{
               fontFamily: 'Bebas Neue, sans-serif',
-              fontSize: 36,
+              fontSize: 56,
               lineHeight: 1,
               color: member.plan_kwaliteit >= 70 ? '#EE7700' : '#f0ede6',
             }}
@@ -549,7 +549,7 @@ export default function TeamPage() {
               <div
                 style={{
                   display: 'grid',
-                  gridTemplateColumns: 'repeat(auto-fill, minmax(360px, 1fr))',
+                  gridTemplateColumns: 'repeat(auto-fill, minmax(520px, 1fr))',
                   gap: 16,
                 }}
               >
