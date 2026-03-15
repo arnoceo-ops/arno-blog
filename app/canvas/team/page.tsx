@@ -85,9 +85,9 @@ function MemberCard({ member, rank }: { member: MemberStats; rank: number }) {
           <div style={{ fontFamily: G, fontSize: 11, fontWeight: 400, color: GREY, letterSpacing: '0.08em', marginBottom: 16, textTransform: 'uppercase' as const }}>
             VOORTGANG
           </div>
-          <Row label="Strategie"  value={member.strategie_voortgang}  barColor={CREAM} />
-          <Row label="Mensen"     value={member.mensen_voortgang}     barColor={CREAM} />
-          <Row label="Uitvoering" value={member.uitvoering_voortgang} barColor={CREAM} />
+          <Row label="Strategie"  value={member.strategie_voortgang}  barColor={ORANGE} />
+          <Row label="Mensen"     value={member.mensen_voortgang}     barColor={ORANGE} />
+          <Row label="Uitvoering" value={member.uitvoering_voortgang} barColor={ORANGE} />
           <div style={{ marginTop: 16, paddingTop: 12, borderTop: `1px solid ${LINE2}`, display: 'flex', justifyContent: 'space-between' }}>
             <span style={{ fontFamily: G, fontSize: 11, fontWeight: 400, color: GREY }}>TOTAAL</span>
             <span style={{ fontFamily: G, fontSize: 11, fontWeight: 400, color: CREAM }}>{member.volledigheid}%</span>
