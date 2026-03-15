@@ -230,8 +230,8 @@ export default function TeamPage() {
 
       <nav style={{ position: 'sticky' as const, top: 0, zIndex: 100, background: '#f0ede6', borderBottom: '1px solid #ddd', padding: '0 40px', display: 'flex', alignItems: 'center', height: 103 }}>
         <Link href="https://canvas.royaldutchsales.com/canvas" style={{ display: 'flex', alignItems: 'center', gap: 12, textDecoration: 'none' }}>
-          <span style={{ fontFamily: BN, fontSize: 54, fontWeight: 400, lineHeight: '54px', color: ORANGE }}>←</span>
-          <span style={{ fontFamily: BN, fontSize: 54, fontWeight: 400, lineHeight: '54px', color: ORANGE, letterSpacing: '0.05em' }}>CANVAS</span>
+          <span style={{ fontFamily: BN, fontSize: 36, fontWeight: 400, lineHeight: '36px', color: '#1a1714' }}>←</span>
+          <span style={{ fontFamily: BN, fontSize: 36, fontWeight: 400, lineHeight: '36px', color: '#1a1714', letterSpacing: '0.05em' }}>CANVAS</span>
         </Link>
       </nav>
 
