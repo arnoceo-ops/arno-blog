@@ -17,12 +17,12 @@ const C = {
 }
 
 const HERO = {
-  1: 'https://canvas.royaldutchsales.com/canvas/strategie-hero.png',
-  2: 'https://canvas.royaldutchsales.com/canvas/strategie-hero.png',
-  3: 'https://canvas.royaldutchsales.com/canvas/mensen-hero.png',
-  4: 'https://canvas.royaldutchsales.com/canvas/mensen-hero.png',
-  5: 'https://canvas.royaldutchsales.com/canvas/uitvoering-hero.png',
-  6: 'https://canvas.royaldutchsales.com/canvas/uitvoering-hero.png',
+  1: 'https://canvas.royaldutchsales.com/canvas/pdf/strategie-pag-1.png',
+  2: 'https://canvas.royaldutchsales.com/canvas/pdf/strategie-pag-2.png',
+  3: 'https://canvas.royaldutchsales.com/canvas/pdf/mensen-pag-1.png',
+  4: 'https://canvas.royaldutchsales.com/canvas/pdf/mensen-pag-2.png',
+  5: 'https://canvas.royaldutchsales.com/canvas/pdf/uitvoering-pag-1.png',
+  6: 'https://canvas.royaldutchsales.com/canvas/pdf/uitvoering-pag-2.png',
 }
 
 const s = StyleSheet.create({
@@ -131,13 +131,10 @@ function GL({ label, sub }) {
   )
 }
 
-function Hero({ pageNum, sectionNum, title }) {
+function Hero({ pageNum }) {
   return (
-    <View style={{ position: 'relative', height: 190 }}>
+    <View style={{ height: 190 }}>
       <Image src={HERO[pageNum]} style={s.heroImage} />
-      <View style={[s.heroOverlay, { position: 'absolute' }]}>
-        <Text style={s.heroTitle}>#{sectionNum}. {title}</Text>
-      </View>
     </View>
   )
 }
@@ -156,7 +153,7 @@ function StrategiePage1({ answers }) {
   const g = id => get(answers, 'strategie', id)
   return (
     <Page size="A4" style={s.pageLight}>
-      <Hero pageNum={1} sectionNum="1" title="STRATEGIE" />
+      <Hero pageNum={1} />
       <View style={s.content}>
         <View style={[s.grid2, { marginBottom: 10 }]}>
           <View style={s.col}><Field label="MISSIE" sub="Reden van bestaan" value={g('missie')} /></View>
@@ -206,7 +203,7 @@ function StrategiePage2({ answers }) {
   const g = id => get(answers, 'strategie', id)
   return (
     <Page size="A4" style={s.pageLight}>
-      <Hero pageNum={2} sectionNum="1" title="STRATEGIE" />
+      <Hero pageNum={2} />
       <View style={s.content}>
         <View style={[s.grid3, { marginBottom: 10 }]}>
           <View style={s.col}><Field label="MERKBELOFTE" sub="Unieke merkbeloftes en garanties" value={g('merkbelofte')} /></View>
@@ -245,7 +242,7 @@ function MensenPage1({ answers }) {
   const g = id => get(answers, 'mensen', id)
   return (
     <Page size="A4" style={s.pageLight}>
-      <Hero pageNum={3} sectionNum="2" title="MENSEN" />
+      <Hero pageNum={3} />
       <View style={s.content}>
         <View style={[s.grid2, { marginBottom: 10 }]}>
           <View style={s.col}><Field label="AANTREKKINGSKRACHT" sub="Waarom werken mensen voor ons?" value={g('aantrekkingskracht')} /></View>
@@ -287,7 +284,7 @@ function MensenPage2({ answers }) {
   const g = id => get(answers, 'mensen', id)
   return (
     <Page size="A4" style={s.pageLight}>
-      <Hero pageNum={4} sectionNum="2" title="MENSEN" />
+      <Hero pageNum={4} />
       <View style={s.content}>
         <View style={[s.grid2, { marginBottom: 10 }]}>
           <View style={s.col}><Field label="WERVING EN SELECTIE" sub="Hoeveel tijd van vacature tot eerste werkdag?" value={g('werving_selectie')} /></View>
@@ -305,7 +302,7 @@ function UitvoeringPage1({ answers }) {
   const g = id => get(answers, 'uitvoering', id)
   return (
     <Page size="A4" style={s.pageLight}>
-      <Hero pageNum={5} sectionNum="3" title="UITVOERING" />
+      <Hero pageNum={5} />
       <View style={s.content}>
         <GL label="KWARTAALTHEMA" />
         <View style={[s.grid2, { marginBottom: 10 }]}>
@@ -362,7 +359,7 @@ function UitvoeringPage2({ answers }) {
   const g = id => get(answers, 'uitvoering', id)
   return (
     <Page size="A4" style={s.pageLight}>
-      <Hero pageNum={6} sectionNum="3" title="UITVOERING" />
+      <Hero pageNum={6} />
       <View style={s.content}>
         <GL label="AANTALLEN & CONVERSIES" />
         <View style={[s.numbersRow, { marginBottom: 10 }]}>
