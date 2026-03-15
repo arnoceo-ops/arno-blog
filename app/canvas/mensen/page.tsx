@@ -176,13 +176,17 @@ export default function MensenPage() {
   }, [user])
 
   const save = useCallback(async (id: string, value: string) => {
-    if (!user) return
-    setSaveStatus('OPSLAAN...')
-    const { error } = await supabase.from('canvas_answers').upsert({ user_id: user.id, question_id: `${PREFIX}_${id}`, answer: value }, { onConflict: 'user_id,question_id' })
-    if (error) { console.error('SAVE ERROR:', error.code, error.message); setSaveStatus('FOUT ✗'); return }
-    setSaveStatus('OPGESLAGEN ✓')
-    setTimeout(() => setSaveStatus(''), 2000)
-  }, [user, supabase])
+  if (!user) return
+  setSaveStatus('OPSLAAN...')
+  const isEmpty = !value.trim()
+  const { error } = await supabase.from('canvas_answers').upsert(
+    { user_id: user.id, question_id: `${PREFIX}_${id}`, answer: value, ...(isEmpty ? { score: null } : {}) },
+    { onConflict: 'user_id,question_id' }
+  )
+  if (error) { console.error('SAVE ERROR:', error.code, error.message); setSaveStatus('FOUT ✗'); return }
+  setSaveStatus('OPGESLAGEN ✓')
+  setTimeout(() => setSaveStatus(''), 2000)
+}, [user])
 
   const handleChange = useCallback((id: string, value: string) => setAnswers(prev => ({ ...prev, [id]: value })), [])
   const answersRef = useRef(answers)
