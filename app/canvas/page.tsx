@@ -127,6 +127,7 @@ export default function CanvasPage() {
   const [loading, setLoading] = useState(true)
   const [hovered, setHovered] = useState<string | null>(null)
   const [approved, setApproved] = useState<boolean | null>(null)
+  const [isManager, setIsManager] = useState(false)
 
   const [kwaliteitsScore, setKwaliteitsScore] = useState<number | null>(null)
   const [analysing, setAnalysing] = useState(false)
@@ -143,12 +144,13 @@ export default function CanvasPage() {
       const now = new Date().toISOString()
       const { data } = await supabase
         .from('approved_users')
-        .select('id, expires_at')
+        .select('id, expires_at, is_manager')
         .eq('user_id', user.id)
         .single()
       if (!data) { setApproved(false); return }
       if (data.expires_at && data.expires_at < now) { setApproved(false); return }
       setApproved(true)
+      setIsManager(!!data.is_manager)
     }
     checkApproval()
   }, [user])
@@ -290,10 +292,34 @@ export default function CanvasPage() {
   return (
     <main style={{
       backgroundColor: '#0a0a0a', minHeight: '100vh', color: '#f0ede6',
-      fontFamily: 'var(--font-geist-sans), sans-serif', padding: '64px 48px',
+      fontFamily: 'var(--font-geist-sans), sans-serif',
     }}>
+      {/* NAV */}
+      <nav style={{ position: 'sticky' as const, top: 0, zIndex: 100, background: '#f5f0e8', borderBottom: '1px solid #e0d8cc', padding: '0 40px', display: 'flex', alignItems: 'center', gap: '24px', height: 103, fontFamily: 'Bebas Neue, sans-serif', fontSize: 36, letterSpacing: '3px' }}>
+        {[
+          { href: '/canvas', label: 'CANVAS' },
+          { href: '/canvas/strategie', label: 'STRATEGIE' },
+          { href: '/canvas/mensen', label: 'MENSEN' },
+          { href: '/canvas/uitvoering', label: 'UITVOERING' },
+          { href: '/canvas/kpi', label: "KPI'S" },
+        ].map(({ href, label }) => (
+          <Link key={href} href={href} style={{ fontFamily: 'Bebas Neue, sans-serif', fontSize: 36, letterSpacing: '3px', color: '#1a1714', textDecoration: 'none', opacity: 0.4 }}>
+            {label}
+          </Link>
+        ))}
+        {isManager ? (
+          <Link href="/canvas/team" style={{ fontFamily: 'Bebas Neue, sans-serif', fontSize: 36, letterSpacing: '3px', color: '#1a1714', textDecoration: 'none', opacity: 0.4 }}>
+            TEAM
+          </Link>
+        ) : (
+          <span title="Geen team-account" style={{ fontFamily: 'Bebas Neue, sans-serif', fontSize: 36, letterSpacing: '3px', color: '#1a1714', opacity: 0.15, cursor: 'default' }}>
+            TEAM
+          </span>
+        )}
+      </nav>
+
       {/* HEADER */}
-      <div style={{ marginBottom: '80px' }}>
+      <div style={{ padding: '64px 48px 0', marginBottom: '80px' }}>
         <p style={{ color: '#EE7700', fontSize: '11px', letterSpacing: '4px', marginBottom: '12px', opacity: 0.7 }}>
           ROYAL DUTCH SALES
         </p>
@@ -306,7 +332,7 @@ export default function CanvasPage() {
       </div>
 
       {/* SCORES BLOK */}
-      <div style={{ borderTop: '1px solid #1e1e1e', paddingTop: '48px', marginBottom: '80px' }}>
+      <div style={{ padding: '0 48px', borderTop: '1px solid #1e1e1e', paddingTop: '48px', marginBottom: '80px' }}>
 
         {/* Volledigheid */}
         <div style={{ marginBottom: '48px' }}>
@@ -393,7 +419,7 @@ export default function CanvasPage() {
       </div>
 
       {/* SECTIE KAARTEN */}
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '2px' }}>
+      <div style={{ padding: '0 48px 64px', display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '2px' }}>
         {SECTIONS.map(s => {
           const pct = sectionScore(s.key)
           const isHovered = hovered === s.key
