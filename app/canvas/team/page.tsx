@@ -5,6 +5,7 @@ import { useAuth } from '@clerk/nextjs';
 import { createClient } from '@supabase/supabase-js';
 import Link from 'next/link';
 
+// Default client for non-authed use (not used for RLS queries)
 const supabase = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_URL!,
   process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
@@ -49,9 +50,9 @@ function ScoreBar({
           display: 'flex',
           justifyContent: 'space-between',
           fontFamily: 'Space Mono, monospace',
-          fontSize: 10,
+          fontSize: 13,
           color: '#888',
-          marginBottom: 3,
+          marginBottom: 5,
           textTransform: 'uppercase',
           letterSpacing: '0.05em',
         }}
@@ -63,8 +64,7 @@ function ScoreBar({
       </div>
       <div
         style={{
-          height: 4,
-          background: '#1a1a1a',
+          height: 6,
           borderRadius: 2,
           overflow: 'hidden' as const,
         }}
@@ -130,9 +130,9 @@ function MemberCard({ member, rank }: { member: MemberStats; rank: number }) {
           <div
             style={{
               fontFamily: 'Space Mono, monospace',
-              fontSize: 12,
+              fontSize: 15,
               color: '#f0ede6',
-              maxWidth: 180,
+              maxWidth: 260,
               overflow: 'hidden' as const,
               textOverflow: 'ellipsis' as const,
               whiteSpace: 'nowrap' as const,
@@ -178,7 +178,7 @@ function MemberCard({ member, rank }: { member: MemberStats; rank: number }) {
           display: 'flex',
           justifyContent: 'space-between',
           fontFamily: 'Space Mono, monospace',
-          fontSize: 10,
+          fontSize: 13,
           color: '#555',
         }}
       >
@@ -276,46 +276,42 @@ export default function TeamPage() {
   const [error, setError] = useState<string | null>(null);
 
   const loadTeamData = useCallback(async () => {
-  if (!userId) return;
+    if (!userId) return;
 
-  try {
-    const token = await getToken({ template: 'supabase' });
-    const authedSupabase = createClient(
-      process.env.NEXT_PUBLIC_SUPABASE_URL!,
-      process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
-      {
-        global: {
-          headers: { Authorization: `Bearer ${token}` },
-        },
+    try {
+      const token = await getToken({ template: 'supabase' });
+      const authedSupabase = createClient(
+        process.env.NEXT_PUBLIC_SUPABASE_URL!,
+        process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+        { global: { headers: { Authorization: `Bearer ${token}` } } }
+      );
+
+      // Check manager access
+      const { data: managerCheck } = await authedSupabase
+        .from('approved_users')
+        .select('is_manager')
+        .eq('user_id', userId)
+        .single();
+
+      if (!managerCheck?.is_manager) {
+        setError('Geen toegang. Dit dashboard is alleen beschikbaar voor managers.');
+        setLoading(false);
+        return;
       }
-    );
 
-    // Check manager access
-    const { data: managerCheck } = await authedSupabase
-      .from('approved_users')
-      .select('is_manager')
-      .eq('user_id', userId)
-      .single();
+      // Get all approved users
+      const { data: approvedUsers, error: usersError } = await authedSupabase
+        .from('approved_users')
+        .select('user_id, email');
 
-    if (!managerCheck?.is_manager) {
-      setError('Geen toegang. Dit dashboard is alleen beschikbaar voor managers.');
-      setLoading(false);
-      return;
-    }
+      if (usersError || !approvedUsers) throw usersError;
 
-    // Get all approved users
-    const { data: approvedUsers, error: usersError } = await authedSupabase
-      .from('approved_users')
-      .select('user_id, email');
+      // Get all canvas answers with scores
+      const { data: answers, error: answersError } = await authedSupabase
+        .from('canvas_answers')
+        .select('user_id, question_id, score, answer');
 
-    if (usersError || !approvedUsers) throw usersError;
-
-    // Get all canvas answers with scores
-    const { data: answers, error: answersError } = await authedSupabase
-      .from('canvas_answers')
-      .select('user_id, question_id, score, answer');
-
-    if (answersError) throw answersError;
+      if (answersError) throw answersError;
 
       // Aggregate per user
       const stats: MemberStats[] = approvedUsers.map((user) => {
