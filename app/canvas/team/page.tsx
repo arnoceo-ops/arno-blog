@@ -6,10 +6,10 @@ import { createClient } from '@supabase/supabase-js';
 import Link from 'next/link';
 
 const SEGMENT_WEIGHTS = { mensen: 0.4, strategie: 0.3, uitvoering: 0.3 };
+const SEGMENT_TOTALS  = { strategie: 39, mensen: 13, uitvoering: 44 };
 
 const G  = 'Geist, system-ui, sans-serif';
 const BN = 'Bebas Neue, sans-serif';
-const SM = 'Space Mono, monospace';
 
 const ORANGE = '#EE7700';
 const GREY   = 'rgb(136, 136, 136)';
@@ -22,30 +22,28 @@ const LINE2  = '#1a1a1a';
 interface MemberStats {
   user_id: string;
   email: string;
-  strategie_score: number;
-  mensen_score: number;
-  uitvoering_score: number;
+  // kwaliteit per segment
+  strategie_kwaliteit: number;
+  mensen_kwaliteit: number;
+  uitvoering_kwaliteit: number;
   plan_kwaliteit: number;
+  // voortgang per segment
+  strategie_voortgang: number;
+  mensen_voortgang: number;
+  uitvoering_voortgang: number;
   volledigheid: number;
-  answered: number;
 }
 
-/* ── Score bar inside member card ── */
-function ScoreBar({ name, score }: { name: string; score: number }) {
-  const barColor = score >= 70 ? ORANGE : score >= 50 ? '#888' : '#c0392b';
-  const pctColor = score >= 70 ? ORANGE : score >= 50 ? CREAM  : '#c0392b';
+/* ── Single row: label + bar + percentage ── */
+function Row({ label, value, barColor }: { label: string; value: number; barColor: string }) {
   return (
-    <div style={{ marginBottom: 20 }}>
-      <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 6 }}>
-        <span style={{ fontFamily: G, fontSize: 18, fontWeight: 400, color: GREY }}>
-          {name}
-        </span>
-        <span style={{ fontFamily: G, fontSize: 18, fontWeight: 400, color: CREAM }}>
-          {score}%
-        </span>
+    <div style={{ marginBottom: 14 }}>
+      <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 5 }}>
+        <span style={{ fontFamily: G, fontSize: 13, fontWeight: 400, color: GREY }}>{label}</span>
+        <span style={{ fontFamily: G, fontSize: 13, fontWeight: 400, color: CREAM }}>{value}%</span>
       </div>
       <div style={{ height: 2, background: LINE2 }}>
-        <div style={{ height: '100%', width: `${score}%`, background: CREAM, transition: 'width 0.8s ease' }} />
+        <div style={{ height: '100%', width: `${value}%`, background: barColor, transition: 'width 0.8s ease' }} />
       </div>
     </div>
   );
@@ -60,38 +58,53 @@ function MemberCard({ member, rank }: { member: MemberStats; rank: number }) {
     <div style={{ background: CARD, border: `0.5px solid ${isTop ? GREY : LINE}`, position: 'relative' as const }}>
       {isTop && <div style={{ position: 'absolute' as const, top: 0, left: 0, right: 0, height: 2, background: GREY }} />}
 
-      {/* Header row */}
-      <div style={{ padding: '28px 32px 24px', borderBottom: `1px solid ${LINE2}`, display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
+      {/* Header: email + plan kwaliteit */}
+      <div style={{ padding: '24px 28px 20px', borderBottom: `1px solid ${LINE2}`, display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
         <div>
-          <div style={{ fontFamily: G, fontSize: 18, fontWeight: 400, color: GREY, marginBottom: 6 }}>#{rank}</div>
-          <div style={{ fontFamily: G, fontSize: 13, fontWeight: 400, color: CREAM, maxWidth: 240, overflow: 'hidden' as const, textOverflow: 'ellipsis' as const, whiteSpace: 'nowrap' as const }}>
+          <div style={{ fontFamily: G, fontSize: 11, fontWeight: 400, color: GREY, marginBottom: 4 }}>#{rank}</div>
+          <div style={{ fontFamily: G, fontSize: 13, fontWeight: 400, color: CREAM, maxWidth: 220, overflow: 'hidden' as const, textOverflow: 'ellipsis' as const, whiteSpace: 'nowrap' as const }}>
             {member.email}
           </div>
         </div>
         <div style={{ textAlign: 'right' as const }}>
-          <div style={{ fontFamily: BN, fontSize: 72, fontWeight: 400, lineHeight: 0.85, color: CREAM }}>
+          <div style={{ fontFamily: BN, fontSize: 64, fontWeight: 400, lineHeight: 0.85, color: CREAM }}>
             {member.plan_kwaliteit}%
           </div>
-          <div style={{ marginTop: 6 }}>
-            <span style={{ fontFamily: G, fontSize: 18, fontWeight: 400, color: GREY }}>PLAN KWALITEIT&nbsp;</span>
-            <span style={{ fontFamily: G, fontSize: 18, fontWeight: 400, color: ORANGE }}>{kwaliteitLabel}</span>
+          <div style={{ marginTop: 4 }}>
+            <span style={{ fontFamily: G, fontSize: 11, fontWeight: 400, color: GREY }}>PLAN KWALITEIT&nbsp;</span>
+            <span style={{ fontFamily: G, fontSize: 11, fontWeight: 400, color: ORANGE }}>{kwaliteitLabel}</span>
           </div>
         </div>
       </div>
 
-      {/* Scores */}
-      <div style={{ padding: '24px 32px' }}>
-        <ScoreBar name="STRATEGIE"  score={member.strategie_score} />
-        <ScoreBar name="MENSEN"     score={member.mensen_score} />
-        <ScoreBar name="UITVOERING" score={member.uitvoering_score} />
+      {/* Body: voortgang | kwaliteit */}
+      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 0 }}>
 
-        <div style={{ marginTop: 8, paddingTop: 16, borderTop: `1px solid ${LINE2}` }}>
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 6 }}>
-            <span style={{ fontFamily: G, fontSize: 18, fontWeight: 400, color: GREY }}>VOLLEDIGHEID</span>
-            <span style={{ fontFamily: G, fontSize: 18, fontWeight: 400, color: GREY }}>{member.volledigheid}%</span>
+        {/* Voortgang */}
+        <div style={{ padding: '20px 28px', borderRight: `1px solid ${LINE2}` }}>
+          <div style={{ fontFamily: G, fontSize: 11, fontWeight: 400, color: GREY, letterSpacing: '0.08em', marginBottom: 16, textTransform: 'uppercase' as const }}>
+            VOORTGANG
           </div>
-          <div style={{ height: 2, background: LINE2 }}>
-            <div style={{ height: '100%', width: `${member.volledigheid}%`, background: CREAM, transition: 'width 0.8s ease' }} />
+          <Row label="Strategie"  value={member.strategie_voortgang}  barColor={CREAM} />
+          <Row label="Mensen"     value={member.mensen_voortgang}     barColor={CREAM} />
+          <Row label="Uitvoering" value={member.uitvoering_voortgang} barColor={CREAM} />
+          <div style={{ marginTop: 16, paddingTop: 12, borderTop: `1px solid ${LINE2}`, display: 'flex', justifyContent: 'space-between' }}>
+            <span style={{ fontFamily: G, fontSize: 11, fontWeight: 400, color: GREY }}>TOTAAL</span>
+            <span style={{ fontFamily: G, fontSize: 11, fontWeight: 400, color: CREAM }}>{member.volledigheid}%</span>
+          </div>
+        </div>
+
+        {/* Kwaliteit */}
+        <div style={{ padding: '20px 28px' }}>
+          <div style={{ fontFamily: G, fontSize: 11, fontWeight: 400, color: GREY, letterSpacing: '0.08em', marginBottom: 16, textTransform: 'uppercase' as const }}>
+            KWALITEIT
+          </div>
+          <Row label="Strategie"  value={member.strategie_kwaliteit}  barColor={ORANGE} />
+          <Row label="Mensen"     value={member.mensen_kwaliteit}     barColor={ORANGE} />
+          <Row label="Uitvoering" value={member.uitvoering_kwaliteit} barColor={ORANGE} />
+          <div style={{ marginTop: 16, paddingTop: 12, borderTop: `1px solid ${LINE2}`, display: 'flex', justifyContent: 'space-between' }}>
+            <span style={{ fontFamily: G, fontSize: 11, fontWeight: 400, color: GREY }}>TOTAAL</span>
+            <span style={{ fontFamily: G, fontSize: 11, fontWeight: 400, color: CREAM }}>{member.plan_kwaliteit}%</span>
           </div>
         </div>
       </div>
@@ -110,13 +123,13 @@ function TeamAverages({ members }: { members: MemberStats[] }) {
     { key: 'volledigheid'   as const, lbl: 'VOLLEDIGHEID'   },
   ];
   const row2 = [
-    { key: 'strategie_score' as const, lbl: 'STRATEGIE'  },
-    { key: 'mensen_score'    as const, lbl: 'MENSEN'      },
-    { key: 'uitvoering_score' as const, lbl: 'UITVOERING' },
+    { key: 'strategie_kwaliteit' as const, lbl: 'STRATEGIE'  },
+    { key: 'mensen_kwaliteit'    as const, lbl: 'MENSEN'      },
+    { key: 'uitvoering_kwaliteit' as const, lbl: 'UITVOERING' },
   ];
 
   const StatCell = ({ k, lbl, last, variant = 'secondary' }: { k: keyof MemberStats; lbl: string; last?: boolean; variant?: 'primary' | 'secondary' }) => (
-    <div style={{ borderRight: last ? 'none' : `1px solid ${LINE2}`, paddingRight: last ? 0 : 48, paddingLeft: 0, marginRight: last ? 0 : 48 }}>
+    <div style={{ borderRight: last ? 'none' : `1px solid ${LINE2}`, paddingRight: last ? 0 : 48, marginRight: last ? 0 : 48 }}>
       <div style={{ fontFamily: G, fontSize: 13, fontWeight: 400, letterSpacing: '0.05em', color: variant === 'primary' ? CREAM : GREY, marginBottom: 8, textTransform: 'uppercase' as const }}>{lbl}</div>
       <div style={{ fontFamily: BN, fontSize: 120, fontWeight: 400, lineHeight: 1, color: variant === 'primary' ? ORANGE : CREAM }}>{avg(k)}%</div>
     </div>
@@ -127,13 +140,9 @@ function TeamAverages({ members }: { members: MemberStats[] }) {
       <div style={{ fontFamily: G, fontSize: 13, fontWeight: 400, letterSpacing: '0.05em', color: GREY, marginBottom: 40, textTransform: 'uppercase' as const }}>
         TEAM GEMIDDELDE — {members.length} {members.length === 1 ? 'LID' : 'LEDEN'}
       </div>
-
-      {/* Row 1: plan kwaliteit + volledigheid */}
       <div style={{ display: 'flex', marginBottom: 48 }}>
         {row1.map((s, i) => <StatCell key={s.lbl} k={s.key} lbl={s.lbl} last={i === row1.length - 1} variant="primary" />)}
       </div>
-
-      {/* Row 2: strategie, mensen, uitvoering */}
       <div style={{ display: 'flex' }}>
         {row2.map((s, i) => <StatCell key={s.lbl} k={s.key} lbl={s.lbl} last={i === row2.length - 1} variant="secondary" />)}
       </div>
@@ -145,8 +154,8 @@ function TeamAverages({ members }: { members: MemberStats[] }) {
 export default function TeamPage() {
   const { userId, getToken } = useAuth();
   const [members, setMembers] = useState<MemberStats[]>([]);
-  const [loading, setLoading]   = useState(true);
-  const [error,   setError]     = useState<string | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [error,   setError]   = useState<string | null>(null);
 
   const loadTeamData = useCallback(async () => {
     if (!userId) return;
@@ -169,17 +178,43 @@ export default function TeamPage() {
 
       const stats: MemberStats[] = approvedUsers.map((user) => {
         const ua = answers?.filter((a) => a.user_id === user.user_id) ?? [];
-        const segScore = (seg: string) => {
+
+        // Kwaliteit per segment (ArnoBot scores)
+        const segKwaliteit = (seg: string) => {
           const sa = ua.filter((a) => a.question_id.startsWith(seg) && a.score !== null);
           if (!sa.length) return 0;
           return Math.round((sa.reduce((s, a) => s + (a.score ?? 0), 0) / sa.length / 5) * 100);
         };
-        const strategie   = segScore('strategie');
-        const mensen      = segScore('mensen');
-        const uitvoering  = segScore('uitvoering');
-        const plan_kwaliteit = Math.round(strategie * SEGMENT_WEIGHTS.strategie + mensen * SEGMENT_WEIGHTS.mensen + uitvoering * SEGMENT_WEIGHTS.uitvoering);
+
+        // Voortgang per segment (ingevulde velden / totaal)
+        const segVoortgang = (seg: string) => {
+          const filled = ua.filter((a) => a.question_id.startsWith(seg) && a.answer && a.answer.trim() !== '').length;
+          const total  = SEGMENT_TOTALS[seg as keyof typeof SEGMENT_TOTALS] ?? 1;
+          return Math.round((filled / total) * 100);
+        };
+
+        const strategie_kwaliteit  = segKwaliteit('strategie');
+        const mensen_kwaliteit     = segKwaliteit('mensen');
+        const uitvoering_kwaliteit = segKwaliteit('uitvoering');
+
+        const plan_kwaliteit = Math.round(
+          strategie_kwaliteit  * SEGMENT_WEIGHTS.strategie +
+          mensen_kwaliteit     * SEGMENT_WEIGHTS.mensen +
+          uitvoering_kwaliteit * SEGMENT_WEIGHTS.uitvoering
+        );
+
+        const strategie_voortgang  = segVoortgang('strategie');
+        const mensen_voortgang     = segVoortgang('mensen');
+        const uitvoering_voortgang = segVoortgang('uitvoering');
+
         const answered    = ua.filter((a) => a.answer && a.answer.trim() !== '').length;
-        return { user_id: user.user_id, email: user.email, strategie_score: strategie, mensen_score: mensen, uitvoering_score: uitvoering, plan_kwaliteit, volledigheid: Math.round((answered / 96) * 100), answered };
+        const volledigheid = Math.round((answered / 96) * 100);
+
+        return {
+          user_id: user.user_id, email: user.email,
+          strategie_kwaliteit, mensen_kwaliteit, uitvoering_kwaliteit, plan_kwaliteit,
+          strategie_voortgang, mensen_voortgang, uitvoering_voortgang, volledigheid,
+        };
       });
 
       stats.sort((a, b) => b.plan_kwaliteit - a.plan_kwaliteit);
@@ -200,7 +235,6 @@ export default function TeamPage() {
         </Link>
       </nav>
 
-      {/* Page header */}
       <div style={{ borderBottom: `1px solid ${LINE}`, padding: '48px 40px 40px' }}>
         <div style={{ fontFamily: G, fontSize: 13, fontWeight: 400, letterSpacing: '0.05em', color: ORANGE, marginBottom: 8, textTransform: 'uppercase' as const }}>
           ROYAL DUTCH SALES
@@ -213,20 +247,17 @@ export default function TeamPage() {
         </p>
       </div>
 
-      {/* Team averages */}
       {!loading && !error && <TeamAverages members={members} />}
 
-      {/* States */}
       {loading  && <div style={{ fontFamily: G, fontSize: 13, color: GREY,     textAlign: 'center' as const, padding: '80px 0' }}>Laden...</div>}
       {error    && <div style={{ fontFamily: G, fontSize: 13, color: '#c0392b', textAlign: 'center' as const, padding: '80px 0' }}>{error}</div>}
 
-      {/* Member cards */}
       {!loading && !error && (
         <div style={{ padding: '40px' }}>
           {members.length === 0
             ? <div style={{ fontFamily: G, fontSize: 13, color: GREY, textAlign: 'center' as const, padding: '80px 0' }}>Geen teamleden gevonden.</div>
             : (
-              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(560px, 1fr))', gap: 2 }}>
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(600px, 1fr))', gap: 2 }}>
                 {members.map((member, i) => <MemberCard key={member.user_id} member={member} rank={i + 1} />)}
               </div>
             )
