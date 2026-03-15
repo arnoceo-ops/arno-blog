@@ -1,7 +1,7 @@
 // @ts-nocheck
 'use client'
 
-import { useState, useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import { useUser } from '@clerk/nextjs'
 import { useSupabaseClient } from '@/lib/supabase'
 import { useRouter } from 'next/navigation'
@@ -295,18 +295,22 @@ export default function CanvasPage() {
       fontFamily: 'var(--font-geist-sans), sans-serif',
     }}>
       {/* NAV */}
-      <nav style={{ position: 'sticky' as const, top: 0, zIndex: 100, background: '#f5f0e8', borderBottom: '1px solid #e0d8cc', padding: '0 40px', display: 'flex', alignItems: 'center', gap: '24px', height: 103, fontFamily: 'Bebas Neue, sans-serif', fontSize: 36, letterSpacing: '3px' }}>
+      <nav style={{ position: 'sticky' as const, top: 0, zIndex: 100, background: '#f5f0e8', borderBottom: '1px solid #e0d8cc', padding: '0 40px', display: 'flex', alignItems: 'center', gap: '16px', height: 103, fontFamily: 'Bebas Neue, sans-serif', fontSize: 36, letterSpacing: '3px' }}>
         {[
           { href: '/canvas', label: 'CANVAS' },
           { href: '/canvas/strategie', label: 'STRATEGIE' },
           { href: '/canvas/mensen', label: 'MENSEN' },
           { href: '/canvas/uitvoering', label: 'UITVOERING' },
           { href: '/canvas/kpi', label: "KPI'S" },
-        ].map(({ href, label }) => (
-          <Link key={href} href={href} style={{ fontFamily: 'Bebas Neue, sans-serif', fontSize: 36, letterSpacing: '3px', color: '#1a1714', textDecoration: 'none', opacity: 0.4 }}>
-            {label}
-          </Link>
+        ].map(({ href, label }, i) => (
+          <React.Fragment key={href}>
+            {i > 0 && <span style={{ color: '#1a1714', opacity: 0.2 }}>/</span>}
+            <Link href={href} style={{ fontFamily: 'Bebas Neue, sans-serif', fontSize: 36, letterSpacing: '3px', color: href === '/canvas' ? '#EE7700' : '#1a1714', textDecoration: 'none', opacity: href === '/canvas' ? 1 : 0.4 }}>
+              {label}
+            </Link>
+          </React.Fragment>
         ))}
+        <span style={{ color: '#1a1714', opacity: 0.2 }}>/</span>
         {isManager ? (
           <Link href="/canvas/team" style={{ fontFamily: 'Bebas Neue, sans-serif', fontSize: 36, letterSpacing: '3px', color: '#1a1714', textDecoration: 'none', opacity: 0.4 }}>
             TEAM
