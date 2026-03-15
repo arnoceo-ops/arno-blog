@@ -197,16 +197,6 @@ export default function KpiDashboardPage() {
   const [funnel, setFunnel] = useState({ leads: 0, bezoeken: 0, offertes: 0, orders: 0 })
   const [loading, setLoading] = useState(true)
 
-  const navLink = (href: string, label: string) => (
-    <Link href={href} style={{
-      color: pathname === href ? '#EE7700' : '#1a1714',
-      textDecoration: 'none',
-      opacity: pathname === href ? 1 : 0.4,
-    }}>
-      {label}
-    </Link>
-  )
-
   useEffect(() => {
     if (!user) return
     ;(async () => {
@@ -276,7 +266,7 @@ export default function KpiDashboardPage() {
   return (
     <main style={{ backgroundColor: '#f5f0e8', minHeight: '100vh', color: '#1a1714' }}>
 
-      {/* NAV */}
+      {/* NAV — zelfde stijl als uitvoering/mensen/strategie pages */}
       <nav style={{
         display: 'flex', alignItems: 'center', gap: '16px',
         padding: '24px 48px',
@@ -284,28 +274,10 @@ export default function KpiDashboardPage() {
         borderBottom: '1px solid #e0d8cc',
         position: 'sticky', top: 0, zIndex: 100, backgroundColor: '#f5f0e8',
       }}>
-        {navLink('/', 'HOME')}
-        <span style={{ opacity: 0.15 }}>·</span>
-        {navLink('/arnobot', 'ARNOBOT')}
-        <span style={{ opacity: 0.15 }}>·</span>
-        {navLink('/bio', 'BIO')}
-        <span style={{ opacity: 0.15 }}>·</span>
-        {navLink('/blog', 'BLOG')}
-        <span style={{ opacity: 0.15 }}>·</span>
-        {navLink('/canvas', 'CANVAS')}
-        <span style={{ opacity: 0.15 }}>·</span>
-        {navLink('/subscribe', 'SUBSCRIBE')}
+        <Link href="/canvas" style={{ color: '#1a1714', textDecoration: 'none', opacity: 0.4 }}>
+          ← CANVAS
+        </Link>
         <span style={{ flex: 1 }} />
-        <span style={{ fontSize: '13px', opacity: 0.25, fontFamily: 'var(--font-space-mono, monospace)', letterSpacing: '2px' }}>
-          KPI DASHBOARD
-        </span>
-      </nav>
-
-      {/* CANVAS SUBNAV */}
-      <div style={{
-        display: 'flex', gap: '32px', padding: '16px 48px',
-        borderBottom: '1px solid #e0d8cc', backgroundColor: '#f5f0e8',
-      }}>
         {[
           { href: '/canvas/strategie', label: 'STRATEGIE' },
           { href: '/canvas/mensen', label: 'MENSEN' },
@@ -314,14 +286,14 @@ export default function KpiDashboardPage() {
           { href: '/canvas/kpi', label: 'KPI' },
         ].map(({ href, label }) => (
           <Link key={href} href={href} style={{
-            fontFamily: 'var(--font-bebas), sans-serif', fontSize: '20px', letterSpacing: '3px',
             color: pathname === href ? '#EE7700' : '#1a1714',
-            textDecoration: 'none', opacity: pathname === href ? 1 : 0.4,
+            textDecoration: 'none',
+            opacity: pathname === href ? 1 : 0.4,
           }}>
             {label}
           </Link>
         ))}
-      </div>
+      </nav>
 
       {loading ? (
         <div style={{ padding: '80px 48px', ...MONO, opacity: 0.3, letterSpacing: '3px', fontSize: '13px' }}>
