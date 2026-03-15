@@ -179,7 +179,7 @@ export default function TeamPage() {
         const uitvoering  = segScore('uitvoering');
         const plan_kwaliteit = Math.round(strategie * SEGMENT_WEIGHTS.strategie + mensen * SEGMENT_WEIGHTS.mensen + uitvoering * SEGMENT_WEIGHTS.uitvoering);
         const answered    = ua.filter((a) => a.answer && a.answer.trim() !== '').length;
-        return { user_id: user.user_id, email: user.email, strategie_score: strategie, mensen_score: mensen, uitvoering_score: uitvoering, plan_kwaliteit, volledigheid: Math.round((answered / 134) * 100), answered };
+        return { user_id: user.user_id, email: user.email, strategie_score: strategie, mensen_score: mensen, uitvoering_score: uitvoering, plan_kwaliteit, volledigheid: Math.round((answered / 96) * 100), answered };
       });
 
       stats.sort((a, b) => b.plan_kwaliteit - a.plan_kwaliteit);
