@@ -117,8 +117,8 @@ function TeamAverages({ members }: { members: MemberStats[] }) {
 
   const StatCell = ({ k, lbl, last }: { k: keyof MemberStats; lbl: string; last?: boolean }) => (
     <div style={{ borderRight: last ? 'none' : `1px solid ${LINE2}`, paddingRight: last ? 0 : 48, paddingLeft: 0, marginRight: last ? 0 : 48 }}>
-      <div style={{ fontFamily: G, fontSize: 13, fontWeight: 400, letterSpacing: '0.05em', color: CREAM, marginBottom: 8, textTransform: 'uppercase' as const }}>{lbl}</div>
-      <div style={{ fontFamily: BN, fontSize: 120, fontWeight: 400, lineHeight: 1, color: ORANGE }}>{avg(k)}%</div>
+      <div style={{ fontFamily: G, fontSize: 13, fontWeight: 400, letterSpacing: '0.05em', color: ORANGE, marginBottom: 8, textTransform: 'uppercase' as const }}>{lbl}</div>
+      <div style={{ fontFamily: BN, fontSize: 120, fontWeight: 400, lineHeight: 1, color: CREAM }}>{avg(k)}%</div>
     </div>
   );
 
