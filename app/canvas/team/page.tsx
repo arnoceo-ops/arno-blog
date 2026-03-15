@@ -115,10 +115,10 @@ function TeamAverages({ members }: { members: MemberStats[] }) {
     { key: 'uitvoering_score' as const, lbl: 'UITVOERING' },
   ];
 
-  const StatCell = ({ k, lbl, last }: { k: keyof MemberStats; lbl: string; last?: boolean }) => (
+  const StatCell = ({ k, lbl, last, variant = 'secondary' }: { k: keyof MemberStats; lbl: string; last?: boolean; variant?: 'primary' | 'secondary' }) => (
     <div style={{ borderRight: last ? 'none' : `1px solid ${LINE2}`, paddingRight: last ? 0 : 48, paddingLeft: 0, marginRight: last ? 0 : 48 }}>
-      <div style={{ fontFamily: G, fontSize: 13, fontWeight: 400, letterSpacing: '0.05em', color: CREAM, marginBottom: 8, textTransform: 'uppercase' as const }}>{lbl}</div>
-      <div style={{ fontFamily: BN, fontSize: 120, fontWeight: 400, lineHeight: 1, color: ORANGE }}>{avg(k)}%</div>
+      <div style={{ fontFamily: G, fontSize: 13, fontWeight: 400, letterSpacing: '0.05em', color: variant === 'primary' ? CREAM : GREY, marginBottom: 8, textTransform: 'uppercase' as const }}>{lbl}</div>
+      <div style={{ fontFamily: BN, fontSize: 120, fontWeight: 400, lineHeight: 1, color: variant === 'primary' ? ORANGE : CREAM }}>{avg(k)}%</div>
     </div>
   );
 
@@ -130,12 +130,12 @@ function TeamAverages({ members }: { members: MemberStats[] }) {
 
       {/* Row 1: plan kwaliteit + volledigheid */}
       <div style={{ display: 'flex', marginBottom: 48 }}>
-        {row1.map((s, i) => <StatCell key={s.lbl} k={s.key} lbl={s.lbl} last={i === row1.length - 1} />)}
+        {row1.map((s, i) => <StatCell key={s.lbl} k={s.key} lbl={s.lbl} last={i === row1.length - 1} variant="primary" />)}
       </div>
 
       {/* Row 2: strategie, mensen, uitvoering */}
       <div style={{ display: 'flex' }}>
-        {row2.map((s, i) => <StatCell key={s.lbl} k={s.key} lbl={s.lbl} last={i === row2.length - 1} />)}
+        {row2.map((s, i) => <StatCell key={s.lbl} k={s.key} lbl={s.lbl} last={i === row2.length - 1} variant="secondary" />)}
       </div>
     </div>
   );
