@@ -40,7 +40,7 @@ function ScoreBar({ name, score }: { name: string; score: number }) {
         <span style={{ fontFamily: G, fontSize: 18, fontWeight: 400, color: GREY }}>
           {name}
         </span>
-        <span style={{ fontFamily: G, fontSize: 18, fontWeight: 400, color: GREY }}>
+        <span style={{ fontFamily: G, fontSize: 18, fontWeight: 400, color: CREAM }}>
           {score}%
         </span>
       </div>
@@ -64,7 +64,7 @@ function MemberCard({ member, rank }: { member: MemberStats; rank: number }) {
       <div style={{ padding: '28px 32px 24px', borderBottom: `1px solid ${LINE2}`, display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
         <div>
           <div style={{ fontFamily: G, fontSize: 18, fontWeight: 400, color: GREY, marginBottom: 6 }}>#{rank}</div>
-          <div style={{ fontFamily: SM, fontSize: 13, color: CREAM, maxWidth: 240, overflow: 'hidden' as const, textOverflow: 'ellipsis' as const, whiteSpace: 'nowrap' as const }}>
+          <div style={{ fontFamily: G, fontSize: 13, fontWeight: 400, color: CREAM, maxWidth: 240, overflow: 'hidden' as const, textOverflow: 'ellipsis' as const, whiteSpace: 'nowrap' as const }}>
             {member.email}
           </div>
         </div>
@@ -195,8 +195,8 @@ export default function TeamPage() {
 
       <nav style={{ position: 'sticky' as const, top: 0, zIndex: 100, background: '#f0ede6', borderBottom: '1px solid #ddd', padding: '0 40px', display: 'flex', alignItems: 'center', height: 103 }}>
         <Link href="https://canvas.royaldutchsales.com/canvas" style={{ display: 'flex', alignItems: 'center', gap: 12, textDecoration: 'none' }}>
-          <span style={{ fontFamily: BN, fontSize: 54, fontWeight: 400, lineHeight: '54px', color: ORANGE }}>←</span>
-          <span style={{ fontFamily: BN, fontSize: 54, fontWeight: 400, lineHeight: '54px', color: ORANGE, letterSpacing: '0.05em' }}>CANVAS</span>
+          <span style={{ fontFamily: BN, fontSize: 54, fontWeight: 400, lineHeight: '54px', color: '#F7AF2C' }}>←</span>
+          <span style={{ fontFamily: BN, fontSize: 54, fontWeight: 400, lineHeight: '54px', color: '#F7AF2C', letterSpacing: '0.05em' }}>CANVAS</span>
         </Link>
       </nav>
 
