@@ -144,7 +144,7 @@ Vraag analyse: ${result.questions.slice(0, 5).map(q => q.label + ': ' + q.diagno
       )}
 
       {/* Input */}
-      <div style={{ padding: '16px 28px 20px', display: 'flex', gap: 12 }}>
+      <div style={{ padding: '16px 28px 20px', display: 'flex', gap: 12, alignItems: 'flex-end' }}>
         <input
           value={input}
           onChange={e => setInput(e.target.value)}
@@ -152,6 +152,7 @@ Vraag analyse: ${result.questions.slice(0, 5).map(q => q.label + ': ' + q.diagno
           placeholder="Wat moet ik doen met de divergentie op waardepropositie?"
           style={{
             flex: 1,
+            maxWidth: 600,
             fontFamily: G,
             fontSize: 13,
             color: CREAM,
@@ -334,7 +335,7 @@ function AlignmentScore({
             <div style={{ background: '#0d0d0d', border: `0.5px solid ${LINE}` }}>
               <div style={{ padding: '28px 32px 20px', borderBottom: `1px solid ${LINE2}` }}>
                 <div style={{ fontFamily: BN, fontSize: 56, fontWeight: 400, color: CREAM, letterSpacing: '0.02em', lineHeight: 1 }}>ARNOBOT</div>
-                <div style={{ fontFamily: G, fontSize: 13, fontWeight: 400, color: GREY, marginTop: 6 }}>Advies van ArnoBot</div>
+                <div style={{ fontFamily: G, fontSize: 13, fontWeight: 400, color: GREY, marginTop: 6 }}>ADVIES VAN ARNOBOT</div>
               </div>
               {result.summary && (
                 <div style={{ padding: '20px 32px 24px', borderBottom: `1px solid ${LINE2}` }}>
@@ -348,11 +349,11 @@ function AlignmentScore({
             <div style={{ background: '#0d0d0d', border: `0.5px solid ${LINE}`, display: 'flex', flexDirection: 'column' as const }}>
               <div style={{ padding: '28px 32px 20px', borderBottom: `1px solid ${LINE2}` }}>
                 <div style={{ fontFamily: BN, fontSize: 56, fontWeight: 400, color: CREAM, letterSpacing: '0.02em', lineHeight: 1 }}>ARNOLIVE</div>
-                <div style={{ fontFamily: G, fontSize: 13, fontWeight: 400, color: GREY, marginTop: 6 }}>Advies van ArnoLive</div>
+                <div style={{ fontFamily: G, fontSize: 13, fontWeight: 400, color: GREY, marginTop: 6 }}>ADVIES VAN ARNOLIVE</div>
               </div>
               <div style={{ padding: '20px 32px 24px', borderBottom: `1px solid ${LINE2}` }}>
-                <div style={{ fontFamily: G, fontSize: 13, color: CREAM, lineHeight: 1.6 }}>
-                  Wil je de alignment resultaten live bespreken met Arno? In een strategische sessie vertaalt hij de data naar concrete acties voor jouw team.
+                <div style={{ fontFamily: G, fontSize: 11, fontWeight: 400, color: GREY, letterSpacing: '0.08em', textTransform: 'uppercase' as const }}>
+                  ARNO LIVE IN STELLING BRENGEN?
                 </div>
               </div>
               <div style={{ padding: '16px 32px 20px' }}>
