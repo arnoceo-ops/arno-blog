@@ -149,7 +149,7 @@ Vraag analyse: ${result.questions.slice(0, 5).map(q => q.label + ': ' + q.diagno
           value={input}
           onChange={e => setInput(e.target.value)}
           onKeyDown={e => e.key === 'Enter' && send()}
-          placeholder="Wat moet ik doen met de divergentie op waardepropositie?"
+          placeholder="Wat kan ik doen met de divergentie op waardepropositie?"
           style={{
             flex: 1,
             maxWidth: 600,
@@ -172,8 +172,9 @@ Vraag analyse: ${result.questions.slice(0, 5).map(q => q.label + ': ' + q.diagno
             color: DARK,
             background: thinking ? LINE : ORANGE,
             border: 'none',
-            borderRadius: 4,
-            padding: '12px 28px',
+            borderRadius: 8,
+            padding: '12px 0',
+            width: 200,
             cursor: thinking ? 'not-allowed' : 'pointer',
           }}
         >
@@ -260,8 +261,9 @@ function AlignmentScore({
             color: loading ? GREY : DARK,
             background: loading ? LINE : ORANGE,
             border: 'none',
-            borderRadius: 4,
-            padding: '12px 28px',
+            borderRadius: 8,
+            padding: '12px 0',
+            width: 200,
             marginTop: 20,
             cursor: loading || members.length < 2 ? 'not-allowed' : 'pointer',
             transition: 'all 0.2s ease',
@@ -329,7 +331,7 @@ function AlignmentScore({
           </div>
 
                     {/* ArnoBot + ArnoLive — side by side */}
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 2, margin: '2px 0 0' }}>
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 2, margin: '2px 0 0', maxWidth: '100%' }}>
 
             {/* ArnoBot — A+B */}
             <div style={{ background: '#0d0d0d', border: `0.5px solid ${LINE}` }}>
@@ -359,16 +361,16 @@ function AlignmentScore({
               <div style={{ padding: '16px 32px 20px' }}>
                 <a
                   href="mailto:arno@royaldutchsales.com?subject=ArnoLive%20aanvraag&amp;body=Ik%20wil%20graag%20de%20alignment%20resultaten%20bespreken."
-                  style={{ fontFamily: BN, fontSize: 18, letterSpacing: '0.08em', color: DARK, background: ORANGE, padding: '12px 28px', borderRadius: 4, textDecoration: 'none', display: 'inline-block' }}
+                  style={{ fontFamily: BN, fontSize: 18, letterSpacing: '0.08em', color: DARK, background: ORANGE, padding: '12px 0', borderRadius: 8, width: 200, textDecoration: 'none', display: 'inline-block', textAlign: 'center' as const }}
                 >
-                  BOEK ARNOLIVE →
+                  BOEK ARNOLIVE
                 </a>
               </div>
             </div>
           </div>
 
           {/* Question breakdown */}
-          {result.questions.length > 0 && (
+          {result.questions.length > 0 && (<><div style={{ height: 2, background: '#EE7700', margin: '2px 0' }} />
             <div style={{ padding: '32px 40px 40px' }}>
               <div style={{ fontFamily: G, fontSize: 11, fontWeight: 400, letterSpacing: '0.08em', color: GREY, marginBottom: 24, textTransform: 'uppercase' as const }}>
                 VRAAG ANALYSE — {result.questions.length} VRAGEN GEANALYSEERD
@@ -401,7 +403,7 @@ function AlignmentScore({
                 })}
               </div>
             </div>
-          )}
+          </> )}
         </div>
       )}
     </div>
@@ -588,11 +590,9 @@ export default function TeamPage() {
         </p>
       </div>
 
-      {!loading && !error && <TeamAverages members={members} />}
+      {!loading && !error && <><div style={{ height: 2, background: '#EE7700' }} /><TeamAverages members={members} /></>}
 
-      {!loading && !error && (
-        <AlignmentScore members={members} token={token} />
-      )}
+      {!loading && !error && (<><div style={{ height: 2, background: '#EE7700' }} /><AlignmentScore members={members} token={token} /></>)}
 
       {loading && <div style={{ fontFamily: G, fontSize: 13, color: GREY, textAlign: 'center' as const, padding: '80px 0' }}>Laden...</div>}
       {error   && <div style={{ fontFamily: G, fontSize: 13, color: RED,  textAlign: 'center' as const, padding: '80px 0' }}>{error}</div>}
