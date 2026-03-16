@@ -331,11 +331,11 @@ function AlignmentScore({
           </div>
 
                     {/* ArnoBot + ArnoLive — side by side */}
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 2, maxWidth: 740 }}>
+          <div style={{ padding: '0 40px' }}><div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 2 }}>
 
             {/* ArnoBot — A+B */}
             <div style={{ background: '#0d0d0d', border: `0.5px solid ${LINE}` }}>
-              <div style={{ padding: '28px 40px 20px', borderBottom: `1px solid ${LINE2}` }}>
+              <div style={{ padding: '28px 20px 20px', borderBottom: `1px solid ${LINE2}` }}>
                 <div style={{ fontFamily: BN, fontSize: 56, fontWeight: 400, color: CREAM, letterSpacing: '0.02em', lineHeight: 1 }}>ARNOBOT</div>
                 <div style={{ fontFamily: G, fontSize: 13, fontWeight: 400, color: GREY, marginTop: 6 }}>ADVIES VAN ARNOBOT</div>
               </div>
@@ -349,7 +349,7 @@ function AlignmentScore({
 
             {/* ArnoLive — C */}
             <div style={{ background: '#0d0d0d', border: `0.5px solid ${LINE}`, display: 'flex', flexDirection: 'column' as const }}>
-              <div style={{ padding: '28px 40px 20px', borderBottom: `1px solid ${LINE2}` }}>
+              <div style={{ padding: '28px 20px 20px', borderBottom: `1px solid ${LINE2}` }}>
                 <div style={{ fontFamily: BN, fontSize: 56, fontWeight: 400, color: CREAM, letterSpacing: '0.02em', lineHeight: 1 }}>ARNOLIVE</div>
                 <div style={{ fontFamily: G, fontSize: 13, fontWeight: 400, color: GREY, marginTop: 6 }}>ADVIES VAN ARNOLIVE</div>
               </div>
@@ -367,7 +367,7 @@ function AlignmentScore({
                 </a>
               </div>
             </div>
-          </div>
+          </div></div>
 
           {/* Question breakdown */}
           {result.questions.length > 0 && (<><div style={{ height: 2, background: '#EE7700', margin: '2px 0' }} />
