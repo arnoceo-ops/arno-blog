@@ -172,8 +172,8 @@ export async function POST(req: NextRequest) {
       { global: { headers: { Authorization: `Bearer ${token}` } } }
     );
 
-    // Verify manager
-    const { data: managerCheck } = await db
+    // Verify manager (serviceDb — bypasses RLS so the check always works)
+    const { data: managerCheck } = await serviceDb
       .from('approved_users')
       .select('is_manager')
       .eq('user_id', userId)
