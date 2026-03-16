@@ -188,8 +188,8 @@ Vraag analyse: ${result.questions.slice(0, 5).map(q => q.label + ': ' + q.diagno
 
 
 /* ── PDF Download ── */
-async function downloadAlignmentPDF(result: AlignmentResult) {
-  const { jsPDF } = await import('jspdf');
+function downloadAlignmentPDF(result: AlignmentResult) {
+  import('jspdf').then(({ jsPDF }) => {
   const doc = new jsPDF({ orientation: 'portrait', unit: 'mm', format: 'a4' });
   const W = 210;
   const margin = 20;
@@ -280,6 +280,7 @@ async function downloadAlignmentPDF(result: AlignmentResult) {
   }
 
   doc.save('alignment-rapport.pdf');
+  });
 }
 
 /* ── Alignment Score Section ── */
