@@ -331,7 +331,7 @@ function AlignmentScore({
           </div>
 
                     {/* ArnoBot + ArnoLive — side by side */}
-          <div style={{ padding: '2px 40px 0' }}>
+          <div style={{ padding: '0 40px' }}>
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 2 }}>
 
             {/* ArnoBot — A+B */}
