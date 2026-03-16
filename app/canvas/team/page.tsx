@@ -330,17 +330,17 @@ function AlignmentScore({
             </div>
           </div>
 
-                    {/* ArnoBot + ArnoLive — side by side */}
-          <div style={{ padding: '0 40px' }}><div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 2 }}>
+                     {/* ArnoBot + ArnoLive — side by side */}
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 2 }}>
 
             {/* ArnoBot — A+B */}
             <div style={{ background: '#0d0d0d', border: `0.5px solid ${LINE}` }}>
-              <div style={{ padding: '28px 20px 20px', borderBottom: `1px solid ${LINE2}` }}>
+              <div style={{ padding: '28px 40px 20px', borderBottom: `1px solid ${LINE2}` }}>
                 <div style={{ fontFamily: BN, fontSize: 56, fontWeight: 400, color: CREAM, letterSpacing: '0.02em', lineHeight: 1 }}>ARNOBOT</div>
                 <div style={{ fontFamily: G, fontSize: 13, fontWeight: 400, color: GREY, marginTop: 6 }}>ADVIES VAN ARNOBOT</div>
               </div>
               {result.summary && (
-                <div style={{ padding: '20px 32px 24px', borderBottom: `1px solid ${LINE2}` }}>
+                <div style={{ padding: '20px 40px 24px', borderBottom: `1px solid ${LINE2}` }}>
                   <div style={{ fontFamily: G, fontSize: 13, color: CREAM, lineHeight: 1.6, fontStyle: 'italic' as const }}>{result.summary}</div>
                 </div>
               )}
@@ -349,16 +349,16 @@ function AlignmentScore({
 
             {/* ArnoLive — C */}
             <div style={{ background: '#0d0d0d', border: `0.5px solid ${LINE}`, display: 'flex', flexDirection: 'column' as const }}>
-              <div style={{ padding: '28px 20px 20px', borderBottom: `1px solid ${LINE2}` }}>
+              <div style={{ padding: '28px 40px 20px', borderBottom: `1px solid ${LINE2}` }}>
                 <div style={{ fontFamily: BN, fontSize: 56, fontWeight: 400, color: CREAM, letterSpacing: '0.02em', lineHeight: 1 }}>ARNOLIVE</div>
                 <div style={{ fontFamily: G, fontSize: 13, fontWeight: 400, color: GREY, marginTop: 6 }}>ADVIES VAN ARNOLIVE</div>
               </div>
-              <div style={{ padding: '20px 32px 24px', borderBottom: `1px solid ${LINE2}` }}>
+              <div style={{ padding: '20px 40px 24px', borderBottom: `1px solid ${LINE2}` }}>
                 <div style={{ fontFamily: G, fontSize: 11, fontWeight: 400, color: GREY, letterSpacing: '0.08em', textTransform: 'uppercase' as const }}>
                   ARNO LIVE IN STELLING BRENGEN?
                 </div>
               </div>
-              <div style={{ padding: '16px 32px 20px' }}>
+              <div style={{ padding: '16px 40px 20px' }}>
                 <a
                   href="mailto:arno@royaldutchsales.com?subject=ArnoLive%20aanvraag&amp;body=Ik%20wil%20graag%20de%20alignment%20resultaten%20bespreken."
                   style={{ fontFamily: BN, fontSize: 18, letterSpacing: '0.08em', color: DARK, background: ORANGE, padding: '12px 0', borderRadius: 8, width: 200, textDecoration: 'none', display: 'inline-block', textAlign: 'center' as const }}
@@ -367,7 +367,8 @@ function AlignmentScore({
                 </a>
               </div>
             </div>
-          </div></div>
+          </div>
+
 
           {/* Question breakdown */}
           {result.questions.length > 0 && (<><div style={{ height: 2, background: '#EE7700', margin: '2px 0' }} />
