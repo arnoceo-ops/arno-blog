@@ -186,6 +186,7 @@ Vraag analyse: ${result.questions.slice(0, 5).map(q => q.label + ': ' + q.diagno
 }
 
 
+
 /* ── PDF Download ── */
 async function downloadAlignmentPDF(result: AlignmentResult) {
   const { jsPDF } = await import('jspdf');
