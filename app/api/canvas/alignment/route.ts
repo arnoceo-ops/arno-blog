@@ -267,8 +267,8 @@ ${results.slice(0, 3).map(q => `- ${q.label}: ${q.diagnose}`).join('\n')}
 Geef een diagnose en één concrete aanbeveling. Spreek de manager direct aan met "jouw team".`
       }]
     });
-    const summary = summaryMsg.content.find((b: { type: string }) => b.type === 'text')?.text ?? '';
-
+    const summaryBlock = summaryMsg.content.find((b) => b.type === 'text');
+    const summary = summaryBlock && 'text' in summaryBlock ? summaryBlock.text : '';
     const alignmentResultWithSummary: AlignmentResult = {
       ...alignmentResult,
       summary,
