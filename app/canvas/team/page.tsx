@@ -185,6 +185,102 @@ Vraag analyse: ${result.questions.slice(0, 5).map(q => q.label + ': ' + q.diagno
   );
 }
 
+
+/* ── PDF Download ── */
+async function downloadAlignmentPDF(result: AlignmentResult) {
+  const { jsPDF } = await import('jspdf');
+  const doc = new jsPDF({ orientation: 'portrait', unit: 'mm', format: 'a4' });
+  const W = 210;
+  const margin = 20;
+  let y = 20;
+
+  const addText = (text: string, x: number, size: number, bold = false, color = [240, 237, 230] as [number,number,number]) => {
+    doc.setFontSize(size);
+    doc.setTextColor(...color);
+    doc.text(text, x, y);
+  };
+
+  const newLine = (h = 8) => { y += h; };
+
+  // Background
+  doc.setFillColor(10, 10, 10);
+  doc.rect(0, 0, W, 297, 'F');
+
+  // Title
+  doc.setFontSize(28);
+  doc.setTextColor(240, 237, 230);
+  doc.text('TEAM ALIGNMENT RAPPORT', margin, y);
+  newLine(8);
+  doc.setFontSize(10);
+  doc.setTextColor(136, 136, 136);
+  doc.text(`Gegenereerd op ${new Date(result.calculated_at).toLocaleDateString('nl-NL', { day: 'numeric', month: 'long', year: 'numeric' })}`, margin, y);
+  newLine(14);
+
+  // Overall scores
+  doc.setFontSize(48);
+  doc.setTextColor(238, 119, 0);
+  doc.text(`${result.overall}%`, margin, y);
+  newLine(10);
+  doc.setFontSize(10);
+  doc.setTextColor(136, 136, 136);
+  doc.text(`STRATEGIE: ${result.strategie}%   MENSEN: ${result.mensen}%   UITVOERING: ${result.uitvoering}%`, margin, y);
+  newLine(6);
+  if (result.summary) {
+    doc.setFontSize(9);
+    doc.setTextColor(200, 200, 200);
+    const summaryLines = doc.splitTextToSize(result.summary, W - margin * 2);
+    doc.text(summaryLines, margin, y);
+    y += summaryLines.length * 5;
+  }
+  newLine(10);
+
+  // Orange line
+  doc.setDrawColor(238, 119, 0);
+  doc.setLineWidth(0.5);
+  doc.line(margin, y, W - margin, y);
+  newLine(10);
+
+  // Section: prioriteiten
+  const segments = ['strategie', 'mensen', 'uitvoering'];
+  const segLabels: Record<string, string> = { strategie: 'STRATEGIE', mensen: 'MENSEN', uitvoering: 'UITVOERING' };
+
+  for (const seg of segments) {
+    const segQuestions = [...result.questions]
+      .filter(q => q.segment === seg)
+      .sort((a, b) => a.score - b.score);
+    if (!segQuestions.length) continue;
+
+    if (y > 260) { doc.addPage(); doc.setFillColor(10,10,10); doc.rect(0,0,W,297,'F'); y = 20; }
+
+    doc.setFontSize(16);
+    doc.setTextColor(238, 119, 0);
+    doc.text(segLabels[seg], margin, y);
+    newLine(8);
+
+    for (const q of segQuestions) {
+      if (y > 270) { doc.addPage(); doc.setFillColor(10,10,10); doc.rect(0,0,W,297,'F'); y = 20; }
+      const pct = Math.round(((q.score - 1) / 4) * 100);
+      const r = pct < 45 ? 192 : pct < 70 ? 212 : 46;
+      const g = pct < 45 ? 57 : pct < 70 ? 160 : 204;
+      const b = pct < 45 ? 43 : pct < 70 ? 23 : 113;
+      doc.setFontSize(9);
+      doc.setTextColor(r, g, b);
+      doc.text(`${pct}%`, margin, y);
+      doc.setTextColor(240, 237, 230);
+      const labelLines = doc.splitTextToSize(q.label, W - margin * 2 - 20);
+      doc.text(labelLines, margin + 18, y);
+      y += labelLines.length * 5;
+      doc.setTextColor(136, 136, 136);
+      const diagnoseLines = doc.splitTextToSize(q.diagnose, W - margin * 2 - 18);
+      doc.text(diagnoseLines, margin + 18, y);
+      y += diagnoseLines.length * 5 + 3;
+    }
+    newLine(6);
+  }
+
+  doc.save('alignment-rapport.pdf');
+}
+
 /* ── Alignment Score Section ── */
 function AlignmentScore({
   members,
@@ -370,41 +466,74 @@ function AlignmentScore({
           </div>
 
 
-          {/* Question breakdown */}
-          {result.questions.length > 0 && (<><div style={{ height: 2, background: '#EE7700', margin: '2px 0' }} />
+          {/* Question breakdown — top 5 best + top 5 worst */}
+          {result.questions.length > 0 && (<>
+            <div style={{ height: 2, background: '#EE7700', margin: '2px 0' }} />
             <div style={{ padding: '32px 40px 40px' }}>
-              <div style={{ fontFamily: G, fontSize: 11, fontWeight: 400, letterSpacing: '0.08em', color: GREY, marginBottom: 24, textTransform: 'uppercase' as const }}>
-                VRAAG ANALYSE — {result.questions.length} VRAGEN GEANALYSEERD
+
+              {/* Header + download button */}
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 24 }}>
+                <div style={{ fontFamily: G, fontSize: 11, fontWeight: 400, letterSpacing: '0.08em', color: GREY, textTransform: 'uppercase' as const }}>
+                  VRAAG ANALYSE — {result.questions.length} VRAGEN GEANALYSEERD
+                </div>
+                <button
+                  onClick={() => downloadAlignmentPDF(result)}
+                  style={{ fontFamily: BN, fontSize: 18, letterSpacing: '0.08em', color: DARK, background: ORANGE, border: 'none', borderRadius: 8, padding: '12px 0', width: 200, cursor: 'pointer' }}
+                >
+                  DOWNLOAD PDF
+                </button>
               </div>
-              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(440px, 1fr))', gap: 2 }}>
-                {result.questions.map((q) => {
+
+              {/* Top 5 worst aligned */}
+              <div style={{ fontFamily: G, fontSize: 11, color: GREY, letterSpacing: '0.08em', textTransform: 'uppercase' as const, marginBottom: 12 }}>
+                AANDACHTSPUNTEN — LAAGSTE ALIGNMENT
+              </div>
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(440px, 1fr))', gap: 2, marginBottom: 32 }}>
+                {result.questions.slice(0, 5).map((q) => {
                   const pct = Math.round(((q.score - 1) / 4) * 100);
                   const col = alignColor(pct);
-                  const segLabel = q.segment.toUpperCase();
                   return (
-                    <div
-                      key={q.question_id}
-                      style={{ background: CARD, border: `0.5px solid ${LINE}`, padding: '20px 24px' }}
-                    >
+                    <div key={q.question_id} style={{ background: CARD, border: `0.5px solid ${LINE}`, padding: '20px 24px' }}>
                       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 10 }}>
-                        <div style={{ fontFamily: G, fontSize: 10, color: GREY, letterSpacing: '0.08em' }}>{segLabel}</div>
+                        <div style={{ fontFamily: G, fontSize: 10, color: GREY, letterSpacing: '0.08em' }}>{q.segment.toUpperCase()}</div>
                         <div style={{ fontFamily: BN, fontSize: 28, color: col, lineHeight: 1 }}>{pct}%</div>
                       </div>
-                      <div style={{ fontFamily: G, fontSize: 13, color: CREAM, marginBottom: 8, lineHeight: 1.4 }}>
-                        {q.label}
-                      </div>
+                      <div style={{ fontFamily: G, fontSize: 13, color: CREAM, marginBottom: 8, lineHeight: 1.4 }}>{q.label}</div>
                       <div style={{ height: 2, background: LINE2, marginBottom: 10 }}>
                         <div style={{ height: '100%', width: `${pct}%`, background: col, transition: 'width 0.8s ease' }} />
                       </div>
-                      <div style={{ fontFamily: G, fontSize: 11, color: GREY, fontStyle: 'italic' as const }}>
-                        {q.diagnose}
-                      </div>
+                      <div style={{ fontFamily: G, fontSize: 11, color: GREY, fontStyle: 'italic' as const }}>{q.diagnose}</div>
                     </div>
                   );
                 })}
               </div>
+
+              {/* Top 5 best aligned */}
+              <div style={{ fontFamily: G, fontSize: 11, color: GREY, letterSpacing: '0.08em', textTransform: 'uppercase' as const, marginBottom: 12 }}>
+                STERKSTE ALIGNMENT — GEDEELDE KRACHT
+              </div>
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(440px, 1fr))', gap: 2 }}>
+                {[...result.questions].sort((a, b) => b.score - a.score).slice(0, 5).map((q) => {
+                  const pct = Math.round(((q.score - 1) / 4) * 100);
+                  const col = alignColor(pct);
+                  return (
+                    <div key={q.question_id} style={{ background: CARD, border: `0.5px solid ${LINE}`, padding: '20px 24px' }}>
+                      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 10 }}>
+                        <div style={{ fontFamily: G, fontSize: 10, color: GREY, letterSpacing: '0.08em' }}>{q.segment.toUpperCase()}</div>
+                        <div style={{ fontFamily: BN, fontSize: 28, color: col, lineHeight: 1 }}>{pct}%</div>
+                      </div>
+                      <div style={{ fontFamily: G, fontSize: 13, color: CREAM, marginBottom: 8, lineHeight: 1.4 }}>{q.label}</div>
+                      <div style={{ height: 2, background: LINE2, marginBottom: 10 }}>
+                        <div style={{ height: '100%', width: `${pct}%`, background: col, transition: 'width 0.8s ease' }} />
+                      </div>
+                      <div style={{ fontFamily: G, fontSize: 11, color: GREY, fontStyle: 'italic' as const }}>{q.diagnose}</div>
+                    </div>
+                  );
+                })}
+              </div>
+
             </div>
-          </> )}
+          </>)}
         </div>
       )}
     </div>
