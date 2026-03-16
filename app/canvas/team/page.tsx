@@ -19,19 +19,51 @@ const CARD   = '#0d0d0d';
 const LINE   = '#1f1f1f';
 const LINE2  = '#1a1a1a';
 
+const RED    = '#c0392b';
+const YELLOW = '#d4a017';
+const GREEN  = '#2ecc71';
+
 interface MemberStats {
   user_id: string;
   email: string;
-  // kwaliteit per segment
   strategie_kwaliteit: number;
   mensen_kwaliteit: number;
   uitvoering_kwaliteit: number;
   plan_kwaliteit: number;
-  // voortgang per segment
   strategie_voortgang: number;
   mensen_voortgang: number;
   uitvoering_voortgang: number;
   volledigheid: number;
+}
+
+interface QuestionAlignment {
+  question_id: string;
+  label: string;
+  score: number;
+  diagnose: string;
+  segment: string;
+}
+
+interface AlignmentResult {
+  overall: number;
+  strategie: number;
+  mensen: number;
+  uitvoering: number;
+  questions: QuestionAlignment[];
+  calculated_at: string;
+}
+
+/* ── Alignment colour helper ── */
+function alignColor(pct: number) {
+  if (pct >= 70) return GREEN;
+  if (pct >= 45) return YELLOW;
+  return RED;
+}
+
+function alignLabel(pct: number) {
+  if (pct >= 70) return 'ALIGNED';
+  if (pct >= 45) return 'MATIG';
+  return 'DIVERGENT';
 }
 
 /* ── Single row: label + bar + percentage ── */
@@ -49,6 +81,194 @@ function Row({ label, value, barColor }: { label: string; value: number; barColo
   );
 }
 
+/* ── Alignment Score Section ── */
+function AlignmentScore({
+  members,
+  token,
+}: {
+  members: MemberStats[];
+  token: string | null;
+}) {
+  const [result,    setResult]    = useState<AlignmentResult | null>(null);
+  const [loading,   setLoading]   = useState(false);
+  const [loadingCached, setLoadingCached] = useState(true);
+  const [error,     setError]     = useState<string | null>(null);
+
+  // Load cached result on mount
+  useEffect(() => {
+    if (!token) return;
+    (async () => {
+      try {
+        const res = await fetch('/api/canvas/alignment', {
+          headers: { 'x-supabase-token': token },
+        });
+        const data = await res.json();
+        if (data.cached) setResult(data.cached);
+      } catch { /* no cache */ }
+      finally { setLoadingCached(false); }
+    })();
+  }, [token]);
+
+  const analyse = useCallback(async () => {
+    if (!token || loading) return;
+    setLoading(true);
+    setError(null);
+    try {
+      const res = await fetch('/api/canvas/alignment', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ token }),
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error ?? 'Analyse mislukt');
+      setResult(data);
+    } catch (e: any) {
+      setError(e.message);
+    } finally {
+      setLoading(false);
+    }
+  }, [token, loading]);
+
+  const formatDate = (iso: string) => {
+    const d = new Date(iso);
+    return d.toLocaleDateString('nl-NL', { day: 'numeric', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit' });
+  };
+
+  return (
+    <div style={{ borderBottom: `1px solid ${LINE}` }}>
+
+      {/* Section header */}
+      <div style={{ padding: '40px 40px 32px', borderBottom: `1px solid ${LINE2}`, display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end' }}>
+        <div>
+          <div style={{ fontFamily: G, fontSize: 11, fontWeight: 400, letterSpacing: '0.08em', color: GREY, marginBottom: 8, textTransform: 'uppercase' as const }}>
+            TEAM ALIGNMENT
+          </div>
+          <h2 style={{ fontFamily: BN, fontSize: 'clamp(32px,4vw,56px)' as any, fontWeight: 400, color: CREAM, margin: 0, letterSpacing: '0.02em' }}>
+            ALIGNMENT ANALYSE
+          </h2>
+          {result && (
+            <div style={{ fontFamily: G, fontSize: 11, color: GREY, marginTop: 6 }}>
+              Laatste analyse: {formatDate(result.calculated_at)}
+            </div>
+          )}
+        </div>
+        <button
+          onClick={analyse}
+          disabled={loading || members.length < 2}
+          style={{
+            fontFamily: BN,
+            fontSize: 18,
+            letterSpacing: '0.08em',
+            color: loading ? GREY : DARK,
+            background: loading ? LINE : ORANGE,
+            border: 'none',
+            padding: '12px 28px',
+            cursor: loading || members.length < 2 ? 'not-allowed' : 'pointer',
+            transition: 'all 0.2s ease',
+            opacity: members.length < 2 ? 0.4 : 1,
+          }}
+        >
+          {loading ? 'ANALYSEREN...' : result ? 'HERBEREKEN' : 'ANALYSEER TEAM'}
+        </button>
+      </div>
+
+      {/* Loading state */}
+      {loadingCached && (
+        <div style={{ padding: '48px 40px', fontFamily: G, fontSize: 13, color: GREY }}>Laden...</div>
+      )}
+
+      {/* Error */}
+      {error && (
+        <div style={{ padding: '24px 40px', fontFamily: G, fontSize: 13, color: RED }}>{error}</div>
+      )}
+
+      {/* No result yet */}
+      {!loadingCached && !result && !error && (
+        <div style={{ padding: '48px 40px' }}>
+          <div style={{ fontFamily: G, fontSize: 13, color: GREY, maxWidth: 480 }}>
+            Klik op "Analyseer Team" om de mate van alignment tussen teamleden te berekenen.
+            ArnoBot analyseert de antwoorden per vraag en bepaalt waar het team op één lijn zit
+            en waar de meningen uiteenlopen.
+          </div>
+          {members.length < 2 && (
+            <div style={{ fontFamily: G, fontSize: 12, color: YELLOW, marginTop: 12 }}>
+              ⚠ Minimaal 2 teamleden met ingevulde antwoorden nodig.
+            </div>
+          )}
+        </div>
+      )}
+
+      {/* Result */}
+      {result && !loadingCached && (
+        <div>
+          {/* Overall + segment scores */}
+          <div style={{ padding: '40px 40px 48px', borderBottom: `1px solid ${LINE2}`, display: 'grid', gridTemplateColumns: 'auto 1fr', gap: '0 80px', alignItems: 'center' }}>
+
+            {/* Big score */}
+            <div style={{ textAlign: 'center' as const }}>
+              <div style={{ fontFamily: BN, fontSize: 'clamp(80px,12vw,160px)' as any, fontWeight: 400, lineHeight: 1, color: alignColor(result.overall) }}>
+                {result.overall}%
+              </div>
+              <div style={{ fontFamily: G, fontSize: 11, letterSpacing: '0.12em', color: alignColor(result.overall), marginTop: 4 }}>
+                TEAM {alignLabel(result.overall)}
+              </div>
+            </div>
+
+            {/* Segment bars */}
+            <div style={{ maxWidth: 480 }}>
+              <div style={{ marginBottom: 28 }}>
+                <Row label="STRATEGIE"  value={result.strategie}  barColor={alignColor(result.strategie)} />
+                <Row label="MENSEN"     value={result.mensen}     barColor={alignColor(result.mensen)} />
+                <Row label="UITVOERING" value={result.uitvoering} barColor={alignColor(result.uitvoering)} />
+              </div>
+              <div style={{ fontFamily: G, fontSize: 11, color: GREY, lineHeight: 1.6 }}>
+                Gewogen score (Mensen 40%, Strategie 30%, Uitvoering 30%).
+                Groen ≥70% · Oranje 45–69% · Rood &lt;45%
+              </div>
+            </div>
+          </div>
+
+          {/* Question breakdown */}
+          {result.questions.length > 0 && (
+            <div style={{ padding: '32px 40px 40px' }}>
+              <div style={{ fontFamily: G, fontSize: 11, fontWeight: 400, letterSpacing: '0.08em', color: GREY, marginBottom: 24, textTransform: 'uppercase' as const }}>
+                VRAAG ANALYSE — {result.questions.length} VRAGEN GEANALYSEERD
+              </div>
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(440px, 1fr))', gap: 2 }}>
+                {result.questions.map((q) => {
+                  const pct = Math.round(((q.score - 1) / 4) * 100);
+                  const col = alignColor(pct);
+                  const segLabel = q.segment.toUpperCase();
+                  return (
+                    <div
+                      key={q.question_id}
+                      style={{ background: CARD, border: `0.5px solid ${LINE}`, padding: '20px 24px' }}
+                    >
+                      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 10 }}>
+                        <div style={{ fontFamily: G, fontSize: 10, color: GREY, letterSpacing: '0.08em' }}>{segLabel}</div>
+                        <div style={{ fontFamily: BN, fontSize: 28, color: col, lineHeight: 1 }}>{pct}%</div>
+                      </div>
+                      <div style={{ fontFamily: G, fontSize: 13, color: CREAM, marginBottom: 8, lineHeight: 1.4 }}>
+                        {q.label}
+                      </div>
+                      <div style={{ height: 2, background: LINE2, marginBottom: 10 }}>
+                        <div style={{ height: '100%', width: `${pct}%`, background: col, transition: 'width 0.8s ease' }} />
+                      </div>
+                      <div style={{ fontFamily: G, fontSize: 11, color: GREY, fontStyle: 'italic' as const }}>
+                        {q.diagnose}
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+          )}
+        </div>
+      )}
+    </div>
+  );
+}
+
 /* ── Member card ── */
 function MemberCard({ member, rank }: { member: MemberStats; rank: number }) {
   const isTop = rank === 1;
@@ -58,7 +278,6 @@ function MemberCard({ member, rank }: { member: MemberStats; rank: number }) {
     <div style={{ background: CARD, border: `0.5px solid ${isTop ? GREY : LINE}`, position: 'relative' as const }}>
       {isTop && <div style={{ position: 'absolute' as const, top: 0, left: 0, right: 0, height: 2, background: GREY }} />}
 
-      {/* Header: email + plan kwaliteit */}
       <div style={{ padding: '24px 28px 20px', borderBottom: `1px solid ${LINE2}`, display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
         <div>
           <div style={{ fontFamily: G, fontSize: 11, fontWeight: 400, color: GREY, marginBottom: 4 }}>#{rank}</div>
@@ -77,14 +296,9 @@ function MemberCard({ member, rank }: { member: MemberStats; rank: number }) {
         </div>
       </div>
 
-      {/* Body: voortgang | kwaliteit */}
       <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 0 }}>
-
-        {/* Voortgang */}
         <div style={{ padding: '20px 28px', borderRight: `1px solid ${LINE2}` }}>
-          <div style={{ fontFamily: G, fontSize: 11, fontWeight: 400, color: GREY, letterSpacing: '0.08em', marginBottom: 16, textTransform: 'uppercase' as const }}>
-            VOORTGANG
-          </div>
+          <div style={{ fontFamily: G, fontSize: 11, fontWeight: 400, color: GREY, letterSpacing: '0.08em', marginBottom: 16, textTransform: 'uppercase' as const }}>VOORTGANG</div>
           <Row label="Strategie"  value={member.strategie_voortgang}  barColor={ORANGE} />
           <Row label="Mensen"     value={member.mensen_voortgang}     barColor={ORANGE} />
           <Row label="Uitvoering" value={member.uitvoering_voortgang} barColor={ORANGE} />
@@ -93,12 +307,8 @@ function MemberCard({ member, rank }: { member: MemberStats; rank: number }) {
             <span style={{ fontFamily: G, fontSize: 11, fontWeight: 400, color: CREAM }}>{member.volledigheid}%</span>
           </div>
         </div>
-
-        {/* Kwaliteit */}
         <div style={{ padding: '20px 28px' }}>
-          <div style={{ fontFamily: G, fontSize: 11, fontWeight: 400, color: GREY, letterSpacing: '0.08em', marginBottom: 16, textTransform: 'uppercase' as const }}>
-            KWALITEIT
-          </div>
+          <div style={{ fontFamily: G, fontSize: 11, fontWeight: 400, color: GREY, letterSpacing: '0.08em', marginBottom: 16, textTransform: 'uppercase' as const }}>KWALITEIT</div>
           <Row label="Strategie"  value={member.strategie_kwaliteit}  barColor={ORANGE} />
           <Row label="Mensen"     value={member.mensen_kwaliteit}     barColor={ORANGE} />
           <Row label="Uitvoering" value={member.uitvoering_kwaliteit} barColor={ORANGE} />
@@ -123,9 +333,9 @@ function TeamAverages({ members }: { members: MemberStats[] }) {
     { key: 'volledigheid'   as const, lbl: 'VOLLEDIGHEID'   },
   ];
   const row2 = [
-    { key: 'strategie_kwaliteit' as const, lbl: 'STRATEGIE'  },
-    { key: 'mensen_kwaliteit'    as const, lbl: 'MENSEN'      },
-    { key: 'uitvoering_kwaliteit' as const, lbl: 'UITVOERING' },
+    { key: 'strategie_kwaliteit'  as const, lbl: 'STRATEGIE'  },
+    { key: 'mensen_kwaliteit'     as const, lbl: 'MENSEN'      },
+    { key: 'uitvoering_kwaliteit' as const, lbl: 'UITVOERING'  },
   ];
 
   const StatCell = ({ k, lbl, last, variant = 'secondary' }: { k: keyof MemberStats; lbl: string; last?: boolean; variant?: 'primary' | 'secondary' }) => (
@@ -153,18 +363,21 @@ function TeamAverages({ members }: { members: MemberStats[] }) {
 /* ── Page ── */
 export default function TeamPage() {
   const { userId, getToken } = useAuth();
-  const [members, setMembers] = useState<MemberStats[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [error,   setError]   = useState<string | null>(null);
+  const [members,  setMembers]  = useState<MemberStats[]>([]);
+  const [token,    setToken]    = useState<string | null>(null);
+  const [loading,  setLoading]  = useState(true);
+  const [error,    setError]    = useState<string | null>(null);
 
   const loadTeamData = useCallback(async () => {
     if (!userId) return;
     try {
-      const token = await getToken({ template: 'supabase' });
+      const t = await getToken({ template: 'supabase' });
+      setToken(t);
+
       const db = createClient(
         process.env.NEXT_PUBLIC_SUPABASE_URL!,
         process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
-        { global: { headers: { Authorization: `Bearer ${token}` } } }
+        { global: { headers: { Authorization: `Bearer ${t}` } } }
       );
 
       const { data: managerCheck } = await db.from('approved_users').select('is_manager').eq('user_id', userId).single();
@@ -179,14 +392,12 @@ export default function TeamPage() {
       const stats: MemberStats[] = approvedUsers.map((user) => {
         const ua = answers?.filter((a) => a.user_id === user.user_id) ?? [];
 
-        // Kwaliteit per segment (ArnoBot scores)
         const segKwaliteit = (seg: string) => {
           const sa = ua.filter((a) => a.question_id.startsWith(seg) && a.score !== null);
           if (!sa.length) return 0;
           return Math.round((sa.reduce((s, a) => s + (a.score ?? 0), 0) / sa.length / 5) * 100);
         };
 
-        // Voortgang per segment (ingevulde velden / totaal)
         const segVoortgang = (seg: string) => {
           const filled = ua.filter((a) => a.question_id.startsWith(seg) && a.answer && a.answer.trim() !== '').length;
           const total  = SEGMENT_TOTALS[seg as keyof typeof SEGMENT_TOTALS] ?? 1;
@@ -207,7 +418,7 @@ export default function TeamPage() {
         const mensen_voortgang     = segVoortgang('mensen');
         const uitvoering_voortgang = segVoortgang('uitvoering');
 
-        const answered    = ua.filter((a) => a.answer && a.answer.trim() !== '').length;
+        const answered     = ua.filter((a) => a.answer && a.answer.trim() !== '').length;
         const volledigheid = Math.round((answered / 96) * 100);
 
         return {
@@ -246,11 +457,18 @@ export default function TeamPage() {
 
       {!loading && !error && <TeamAverages members={members} />}
 
-      {loading  && <div style={{ fontFamily: G, fontSize: 13, color: GREY,     textAlign: 'center' as const, padding: '80px 0' }}>Laden...</div>}
-      {error    && <div style={{ fontFamily: G, fontSize: 13, color: '#c0392b', textAlign: 'center' as const, padding: '80px 0' }}>{error}</div>}
+      {!loading && !error && (
+        <AlignmentScore members={members} token={token} />
+      )}
+
+      {loading && <div style={{ fontFamily: G, fontSize: 13, color: GREY, textAlign: 'center' as const, padding: '80px 0' }}>Laden...</div>}
+      {error   && <div style={{ fontFamily: G, fontSize: 13, color: RED,  textAlign: 'center' as const, padding: '80px 0' }}>{error}</div>}
 
       {!loading && !error && (
         <div style={{ padding: '40px' }}>
+          <div style={{ fontFamily: G, fontSize: 11, fontWeight: 400, letterSpacing: '0.08em', color: GREY, marginBottom: 24, textTransform: 'uppercase' as const }}>
+            TEAMLEDEN — GESORTEERD OP PLAN KWALITEIT
+          </div>
           {members.length === 0
             ? <div style={{ fontFamily: G, fontSize: 13, color: GREY, textAlign: 'center' as const, padding: '80px 0' }}>Geen teamleden gevonden.</div>
             : (
