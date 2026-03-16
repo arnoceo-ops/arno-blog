@@ -124,24 +124,26 @@ async function analyseQuestion(questionId: string, answers: string[]): Promise<{
     max_tokens: 200,
     messages: [{
       role: 'user',
-      content: `Je analyseert de mate van alignment binnen een salesteam.
+      content: `Je analyseert de mate van alignment binnen een salesteam. Beoordeel op INHOUDELIJKE overlap — niet op formulering. Verschillende woorden voor hetzelfde concept zijn waardevol en verdienen een hoge score. Het gaat om gedeelde intentie en betekenis, niet om identieke tekst.
 
 Vraag: "${label}"
 
 Antwoorden van ${answers.length} teamleden:
 ${answersText}
 
-Geef een alignment score van 1–5:
-1 = volledig tegenstrijdig, grote meningsverschillen
-2 = weinig overlap, duidelijke divergentie  
-3 = gedeeltelijk aligned, enkele overeenkomsten
-4 = grotendeels aligned, kleine nuanceverschillen
-5 = volledig op één lijn, consistent beeld
+Geef een alignment score van 1–5 op basis van INHOUDELIJKE overeenkomst:
+1 = fundamenteel tegenstrijdig, tegengestelde visies
+2 = weinig inhoudelijke overlap, duidelijk verschillende prioriteiten
+3 = gedeeltelijke overlap, gemeenschappelijke basis maar ook echte verschillen
+4 = sterke inhoudelijke overlap, zelfde richting met eigen nuance — dit is waardevol (1+1=5)
+5 = volledig op één lijn, zelfde intentie en betekenis ook al zijn woorden anders
 
-Geef ook een korte diagnose (max 12 woorden in het Nederlands).
+Belangrijk: score 4 of 5 als teamleden hetzelfde bedoelen maar anders formuleren. Dat is een teken van een sterk team dat vanuit meerdere invalshoeken naar hetzelfde kijkt.
+
+Geef ook een korte diagnose (max 12 woorden in het Nederlands). Bij score 4-5: benoem de gedeelde kracht positief.
 
 Reageer ALLEEN met valid JSON, geen markdown, geen uitleg:
-{"score": 3, "diagnose": "Team zit niet op één lijn over prioriteiten"}`
+{"score": 4, "diagnose": "Team deelt dezelfde visie, verschillende perspectieven verrijken het geheel"}`
     }]
   });
 
