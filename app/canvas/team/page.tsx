@@ -166,12 +166,13 @@ Vraag analyse: ${result.questions.slice(0, 5).map(q => q.label + ': ' + q.diagno
           disabled={thinking || !input.trim()}
           style={{
             fontFamily: BN,
-            fontSize: 16,
+            fontSize: 18,
             letterSpacing: '0.08em',
             color: DARK,
             background: thinking ? LINE : ORANGE,
             border: 'none',
-            padding: '10px 24px',
+            borderRadius: 4,
+            padding: '12px 28px',
             cursor: thinking ? 'not-allowed' : 'pointer',
           }}
         >
@@ -258,6 +259,7 @@ function AlignmentScore({
             color: loading ? GREY : DARK,
             background: loading ? LINE : ORANGE,
             border: 'none',
+            borderRadius: 4,
             padding: '12px 28px',
             marginTop: 20,
             cursor: loading || members.length < 2 ? 'not-allowed' : 'pointer',
@@ -348,13 +350,15 @@ function AlignmentScore({
                 <div style={{ fontFamily: BN, fontSize: 56, fontWeight: 400, color: CREAM, letterSpacing: '0.02em', lineHeight: 1 }}>ARNOLIVE</div>
                 <div style={{ fontFamily: G, fontSize: 13, fontWeight: 400, color: GREY, marginTop: 6 }}>Advies van ArnoLive</div>
               </div>
-              <div style={{ padding: '28px 32px', flex: 1, display: 'flex', flexDirection: 'column' as const, justifyContent: 'space-between' }}>
-                <div style={{ fontFamily: G, fontSize: 13, color: GREY, lineHeight: 1.7, marginBottom: 32 }}>
+              <div style={{ padding: '20px 32px 24px', borderBottom: `1px solid ${LINE2}` }}>
+                <div style={{ fontFamily: G, fontSize: 13, color: CREAM, lineHeight: 1.6 }}>
                   Wil je de alignment resultaten live bespreken met Arno? In een strategische sessie vertaalt hij de data naar concrete acties voor jouw team.
                 </div>
+              </div>
+              <div style={{ padding: '16px 32px 20px' }}>
                 <a
                   href="mailto:arno@royaldutchsales.com?subject=ArnoLive%20aanvraag&amp;body=Ik%20wil%20graag%20de%20alignment%20resultaten%20bespreken."
-                  style={{ fontFamily: BN, fontSize: 24, letterSpacing: '0.06em', color: DARK, background: ORANGE, padding: '16px 32px', textDecoration: 'none', display: 'inline-block', alignSelf: 'flex-start' as const }}
+                  style={{ fontFamily: BN, fontSize: 18, letterSpacing: '0.08em', color: DARK, background: ORANGE, padding: '12px 28px', borderRadius: 4, textDecoration: 'none', display: 'inline-block' }}
                 >
                   BOEK ARNOLIVE →
                 </a>
