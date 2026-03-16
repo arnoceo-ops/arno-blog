@@ -353,7 +353,7 @@ function AlignmentScore({
                   Wil je de alignment resultaten live bespreken met Arno? In een strategische sessie vertaalt hij de data naar concrete acties voor jouw team.
                 </div>
                 <a
-                  href="mailto:arno@royaldutchsales.com?subject=ArnoLive%20aanvraag&body=Ik%20wil%20graag%20de%20alignment%20resultaten%20bespreken."
+                  href="mailto:arno@royaldutchsales.com?subject=ArnoLive%20aanvraag&amp;body=Ik%20wil%20graag%20de%20alignment%20resultaten%20bespreken."
                   style={{ fontFamily: BN, fontSize: 24, letterSpacing: '0.06em', color: DARK, background: ORANGE, padding: '16px 32px', textDecoration: 'none', display: 'inline-block', alignSelf: 'flex-start' as const }}
                 >
                   BOEK ARNOLIVE →
@@ -364,7 +364,7 @@ function AlignmentScore({
               <div style={{ fontFamily: G, fontSize: 12, color: GREY, marginTop: 4 }}>Bespreek de alignment resultaten live met Arno. Strategisch advies op maat.</div>
             </div>
             <a
-              href="mailto:arno@royaldutchsales.com?subject=ArnoLive%20aanvraag&body=Ik%20wil%20graag%20de%20alignment%20resultaten%20bespreken."
+              href="mailto:arno@royaldutchsales.com?subject=ArnoLive%20aanvraag&amp;body=Ik%20wil%20graag%20de%20alignment%20resultaten%20bespreken."
               style={{ fontFamily: BN, fontSize: 18, letterSpacing: '0.08em', color: DARK, background: ORANGE, padding: '12px 28px', textDecoration: 'none', display: 'inline-block' }}
             >
               BOEK ARNOLIVE →
