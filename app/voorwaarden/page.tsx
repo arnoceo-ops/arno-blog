@@ -1,0 +1,198 @@
+import Link from 'next/link'
+
+export default function VoorwaardenPage() {
+  return (
+    <>
+      <style>{`
+        @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Mono:wght@400;700&family=Barlow:wght@400;700&display=swap');
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        body { background: #0a0a0a; color: #f0ede6; font-family: 'Space Mono', monospace; }
+
+        .site-nav {
+          position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+          padding: 16px 40px; display: flex; justify-content: center;
+          border-bottom: 1px solid rgba(255,255,255,0.06);
+          background: rgba(10,10,10,0.9); backdrop-filter: blur(12px);
+        }
+        .nav-links { display: flex; gap: 48px; align-items: center; }
+        .nav-links a {
+          color: #888; text-decoration: none;
+          font-family: 'Bebas Neue', sans-serif;
+          font-size: 22px; letter-spacing: 3px; transition: color 0.2s;
+        }
+        .nav-links a:hover { color: #f0ede6; }
+        .nav-cta { color: #EE7700 !important; }
+
+        .page { padding-top: 80px; min-height: 100vh; }
+
+        .hero {
+          padding: 80px 60px 60px;
+          border-bottom: 3px solid #EE7700;
+        }
+        .hero-title {
+          font-family: 'Bebas Neue', sans-serif;
+          font-size: clamp(48px, 7vw, 96px); line-height: 0.9; color: #f0ede6;
+        }
+        .hero-title span { color: #EE7700; }
+        .hero-meta { font-size: 12px; color: #444; margin-top: 16px; }
+
+        .body { max-width: 760px; margin: 0 auto; padding: 80px 40px 120px; }
+
+        .section { margin-bottom: 56px; }
+        .section-title {
+          font-family: 'Bebas Neue', sans-serif; font-size: 22px;
+          letter-spacing: 2px; color: #EE7700; margin-bottom: 20px;
+        }
+        .section-num {
+          font-family: 'Bebas Neue', sans-serif; font-size: 13px;
+          letter-spacing: 2px; color: #444; margin-bottom: 6px;
+        }
+        p { font-size: 13px; color: #888; line-height: 1.9; margin-bottom: 16px; }
+        strong { color: #f0ede6; }
+        a { color: #EE7700; text-decoration: none; }
+        a:hover { text-decoration: underline; }
+
+        .divider { height: 1px; background: #1a1a1a; margin: 40px 0; }
+
+        .notice {
+          background: #0f0f0f; border-left: 3px solid #EE7700;
+          padding: 20px 24px; margin-bottom: 40px;
+          font-size: 12px; color: #666; line-height: 1.8;
+        }
+
+        footer {
+          background: #050505; padding: 40px 60px;
+          display: flex; justify-content: space-between; align-items: center;
+          border-top: 1px solid #111;
+        }
+        .footer-logo { font-family: 'Bebas Neue', sans-serif; font-size: 24px; color: #EE7700; letter-spacing: 3px; }
+        .footer-copy { font-size: 10px; color: #333; }
+
+        @media (max-width: 600px) {
+          .hero { padding: 60px 24px 40px; }
+          .body { padding: 60px 24px 80px; }
+          footer { padding: 32px 24px; flex-direction: column; gap: 12px; }
+        }
+      `}</style>
+
+      <nav className="site-nav">
+        <div className="nav-links">
+          <Link href="/">HOME</Link>
+          <Link href="/spar">ARNOBOT</Link>
+          <Link href="/bio">BIO</Link>
+          <Link href="/blog">BLOG</Link>
+          <Link href="/canvas">CANVAS</Link>
+          <a href="/#subscribe" className="nav-cta">SUBSCRIBE</a>
+        </div>
+      </nav>
+
+      <div className="page">
+        <div className="hero">
+          <h1 className="hero-title"><span>ALGEMENE</span> VOORWAARDEN</h1>
+          <div className="hero-meta">Versie 1.0 — Januari 2025 · Royal Dutch Sales</div>
+        </div>
+
+        <div className="body">
+          <div className="notice">
+            Deze voorwaarden zijn opgesteld als werkdocument en dienen te worden nagekeken door een juridisch adviseur vóór commerciële inzet.
+          </div>
+
+          <div className="section">
+            <div className="section-num">ARTIKEL 1</div>
+            <div className="section-title">DEFINITIES</div>
+            <p><strong>Royal Dutch Sales</strong> — de eenmanszaak of onderneming van Arno Diepeveen, gevestigd in Nederland, KvK-nummer [invullen], bereikbaar via arno@royaldutchsales.com.</p>
+            <p><strong>RDS Canvas</strong> — het digitale SaaS-platform dat toegankelijk is via royaldutchsales.com/canvas en aanverwante subdomeinen.</p>
+            <p><strong>Gebruiker</strong> — de natuurlijke of rechtspersoon die zich aanmeldt voor en gebruik maakt van RDS Canvas.</p>
+            <p><strong>Abonnement</strong> — de overeenkomst tussen Royal Dutch Sales en de Gebruiker voor toegang tot RDS Canvas tegen de overeengekomen vergoeding.</p>
+          </div>
+
+          <div className="divider" />
+
+          <div className="section">
+            <div className="section-num">ARTIKEL 2</div>
+            <div className="section-title">TOEPASSELIJKHEID</div>
+            <p>Deze algemene voorwaarden zijn van toepassing op alle aanbiedingen, offertes, overeenkomsten en diensten van Royal Dutch Sales, waaronder het gebruik van RDS Canvas.</p>
+            <p>Door gebruik te maken van RDS Canvas of door akkoord te gaan bij aanmelding, aanvaardt de Gebruiker deze voorwaarden.</p>
+          </div>
+
+          <div className="divider" />
+
+          <div className="section">
+            <div className="section-num">ARTIKEL 3</div>
+            <div className="section-title">PROEFPERIODE</div>
+            <p>Nieuwe gebruikers ontvangen een gratis proefperiode van <strong>8 dagen</strong> na activering van hun account. Gedurende deze periode is volledige functionaliteit beschikbaar.</p>
+            <p>Na afloop van de proefperiode wordt de toegang geblokkeerd totdat een betaald abonnement is afgesloten. Er vindt geen automatische afschrijving plaats.</p>
+            <p>Royal Dutch Sales behoudt zich het recht voor de proefperiode zonder opgave van reden te beëindigen of aan te passen.</p>
+          </div>
+
+          <div className="divider" />
+
+          <div className="section">
+            <div className="section-num">ARTIKEL 4</div>
+            <div className="section-title">ABONNEMENT EN BETALING</div>
+            <p>Na de proefperiode kan de Gebruiker een Solo- of Teamabonnement afsluiten. De actuele prijzen staan vermeld op de website.</p>
+            <p>Betaling geschiedt op basis van de overeengekomen betalingstermijn. Bij niet-tijdige betaling behoudt Royal Dutch Sales het recht de toegang te blokkeren.</p>
+            <p>Het abonnement geldt per maand of per jaar, afhankelijk van de gekozen optie, en wordt automatisch verlengd tenzij tijdig opgezegd.</p>
+          </div>
+
+          <div className="divider" />
+
+          <div className="section">
+            <div className="section-num">ARTIKEL 5</div>
+            <div className="section-title">GEBRUIK EN LICENTIE</div>
+            <p>Royal Dutch Sales verleent de Gebruiker een niet-exclusieve, niet-overdraagbare licentie voor het gebruik van RDS Canvas gedurende de looptijd van het abonnement.</p>
+            <p>Het is niet toegestaan RDS Canvas te gebruiken voor onrechtmatige doeleinden, de werking te verstoren, of toegang te verlenen aan derden buiten het afgesproken aantal seats.</p>
+            <p>Teamabonnementen zijn geldig voor maximaal <strong>5 gebruikers</strong>.</p>
+          </div>
+
+          <div className="divider" />
+
+          <div className="section">
+            <div className="section-num">ARTIKEL 6</div>
+            <div className="section-title">INTELLECTUEEL EIGENDOM</div>
+            <p>Alle rechten op RDS Canvas, inclusief de software, vormgeving, teksten en methodologie, berusten bij Royal Dutch Sales.</p>
+            <p>De door de Gebruiker ingevoerde data blijft eigendom van de Gebruiker. Royal Dutch Sales gebruikt deze data uitsluitend voor het leveren van de dienst.</p>
+          </div>
+
+          <div className="divider" />
+
+          <div className="section">
+            <div className="section-num">ARTIKEL 7</div>
+            <div className="section-title">AANSPRAKELIJKHEID</div>
+            <p>Royal Dutch Sales is niet aansprakelijk voor indirecte schade, gevolgschade of gederfde winst als gevolg van het gebruik van RDS Canvas.</p>
+            <p>De aansprakelijkheid van Royal Dutch Sales is in alle gevallen beperkt tot het bedrag dat de Gebruiker in de drie maanden voorafgaand aan de schade heeft betaald.</p>
+          </div>
+
+          <div className="divider" />
+
+          <div className="section">
+            <div className="section-num">ARTIKEL 8</div>
+            <div className="section-title">OPZEGGING</div>
+            <p>De Gebruiker kan het abonnement op elk moment opzeggen via een email aan arno@royaldutchsales.com. De toegang blijft actief tot het einde van de lopende betaalperiode.</p>
+            <p>Royal Dutch Sales kan het abonnement met onmiddellijke ingang beëindigen bij misbruik of overtreding van deze voorwaarden.</p>
+          </div>
+
+          <div className="divider" />
+
+          <div className="section">
+            <div className="section-num">ARTIKEL 9</div>
+            <div className="section-title">TOEPASSELIJK RECHT</div>
+            <p>Op deze voorwaarden is Nederlands recht van toepassing. Geschillen worden voorgelegd aan de bevoegde rechter in het arrondissement waar Royal Dutch Sales is gevestigd.</p>
+          </div>
+
+          <div className="divider" />
+
+          <p style={{ fontSize: 11, color: '#444' }}>
+            Vragen over deze voorwaarden? Mail naar <a href="mailto:arno@royaldutchsales.com">arno@royaldutchsales.com</a>
+          </p>
+
+        </div>
+      </div>
+
+      <footer>
+        <span className="footer-logo">Royal Dutch Sales</span>
+        <span className="footer-copy">© Since 2007 — CC BY-ND 4.0</span>
+      </footer>
+    </>
+  )
+}
