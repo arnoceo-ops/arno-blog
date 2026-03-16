@@ -537,9 +537,6 @@ function AlignmentScore({
               </div>
 
             </div>
-          </>)}
-          <div style={{ height: 2, background: '#EE7700' }} />
-          </>)}
         </div>
       )}
     </div>
