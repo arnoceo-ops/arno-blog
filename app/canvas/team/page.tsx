@@ -471,17 +471,11 @@ function AlignmentScore({
             <div style={{ height: 2, background: '#EE7700', margin: '2px 0' }} />
             <div style={{ padding: '32px 40px 40px' }}>
 
-              {/* Header + download button */}
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 24 }}>
+              {/* Header */}
+              <div style={{ marginBottom: 24 }}>
                 <div style={{ fontFamily: G, fontSize: 11, fontWeight: 400, letterSpacing: '0.08em', color: GREY, textTransform: 'uppercase' as const }}>
                   VRAAG ANALYSE — {result.questions.length} VRAGEN GEANALYSEERD
                 </div>
-                <button
-                  onClick={() => downloadAlignmentPDF(result)}
-                  style={{ fontFamily: BN, fontSize: 18, letterSpacing: '0.08em', color: DARK, background: ORANGE, border: 'none', borderRadius: 8, padding: '12px 0', width: 200, cursor: 'pointer' }}
-                >
-                  DOWNLOAD PDF
-                </button>
               </div>
 
               {/* Top 5 worst aligned */}
@@ -532,7 +526,19 @@ function AlignmentScore({
                 })}
               </div>
 
+              {/* Download button */}
+              <div style={{ marginTop: 32 }}>
+                <button
+                  onClick={() => downloadAlignmentPDF(result)}
+                  style={{ fontFamily: BN, fontSize: 18, letterSpacing: '0.08em', color: DARK, background: ORANGE, border: 'none', borderRadius: 8, padding: '12px 0', width: 200, cursor: 'pointer' }}
+                >
+                  DOWNLOAD PDF
+                </button>
+              </div>
+
             </div>
+          </>)}
+          <div style={{ height: 2, background: '#EE7700' }} />
           </>)}
         </div>
       )}
