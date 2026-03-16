@@ -5,6 +5,12 @@ import Anthropic from '@anthropic-ai/sdk';
 
 const anthropic = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY });
 
+// Service role client — bypasses RLS for manager reads
+const serviceDb = createClient(
+  process.env.NEXT_PUBLIC_SUPABASE_URL!,
+  process.env.SUPABASE_SERVICE_ROLE_KEY!
+);
+
 // Question labels per segment (subset — most important for alignment)
 const QUESTION_LABELS: Record<string, string> = {
   'strategie-1':  'Wat is uw primaire verkoopstrategie?',
@@ -110,8 +116,8 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: 'Geen toegang' }, { status: 403 });
     }
 
-    // Fetch all answers
-    const { data: answers, error: ae } = await db
+    // Fetch all answers (service role — bypasses RLS)
+    const { data: answers, error: ae } = await serviceDb
       .from('canvas_answers')
       .select('user_id, question_id, answer, score');
 
@@ -178,7 +184,7 @@ export async function POST(req: NextRequest) {
     };
 
     // Cache in Supabase (upsert on manager user_id)
-    await db.from('canvas_alignment').upsert({
+    await serviceDb.from('canvas_alignment').upsert({
       user_id: userId,
       result: alignmentResult,
       calculated_at: alignmentResult.calculated_at,
@@ -205,7 +211,7 @@ export async function GET(req: NextRequest) {
       { global: { headers: { Authorization: `Bearer ${token}` } } }
     );
 
-    const { data } = await db
+    const { data } = await serviceDb
       .from('canvas_alignment')
       .select('result, calculated_at')
       .eq('user_id', userId)
