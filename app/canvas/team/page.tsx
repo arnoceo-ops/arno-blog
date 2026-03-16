@@ -51,6 +51,7 @@ interface AlignmentResult {
   uitvoering: number;
   questions: QuestionAlignment[];
   calculated_at: string;
+  summary?: string;
 }
 
 /* ── Alignment colour helper ── */
@@ -76,6 +77,109 @@ function Row({ label, value, barColor }: { label: string; value: number; barColo
       </div>
       <div style={{ height: 2, background: LINE2 }}>
         <div style={{ height: '100%', width: `${value}%`, background: barColor, transition: 'width 0.8s ease' }} />
+      </div>
+    </div>
+  );
+}
+
+
+/* ── ArnoBot Alignment Chat — B ── */
+function AlignmentChat({ result }: { result: AlignmentResult }) {
+  const [messages, setMessages] = useState<{ role: 'user' | 'assistant'; text: string }[]>([]);
+  const [input, setInput] = useState('');
+  const [thinking, setThinking] = useState(false);
+
+  const context = `Team alignment resultaten:
+Overall: ${result.overall}%
+Strategie: ${result.strategie}% | Mensen: ${result.mensen}% | Uitvoering: ${result.uitvoering}%
+Diagnose: ${result.summary ?? ''}
+Vraag analyse: ${result.questions.slice(0, 5).map(q => q.label + ': ' + q.diagnose).join(' | ')}`;
+
+  const send = async () => {
+    if (!input.trim() || thinking) return;
+    const userMsg = input.trim();
+    setInput('');
+    setMessages(prev => [...prev, { role: 'user', text: userMsg }]);
+    setThinking(true);
+    try {
+      const res = await fetch('/api/canvas/alignment-chat', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ message: userMsg, context, history: messages }),
+      });
+      const data = await res.json();
+      setMessages(prev => [...prev, { role: 'assistant', text: data.reply ?? 'Geen antwoord.' }]);
+    } catch {
+      setMessages(prev => [...prev, { role: 'assistant', text: 'Fout bij verbinding met ArnoBot.' }]);
+    } finally {
+      setThinking(false);
+    }
+  };
+
+  return (
+    <div style={{ margin: '2px 40px 2px', background: '#0d0d0d', border: `0.5px solid ${LINE}` }}>
+      <div style={{ padding: '20px 28px 16px', borderBottom: `1px solid ${LINE2}`, display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+        <div>
+          <div style={{ fontFamily: G, fontSize: 10, letterSpacing: '0.1em', color: ORANGE, textTransform: 'uppercase' as const, marginBottom: 4 }}>ARNOBOT</div>
+          <div style={{ fontFamily: BN, fontSize: 22, color: CREAM, letterSpacing: '0.05em' }}>STEL EEN VRAAG OVER DE ALIGNMENT</div>
+        </div>
+      </div>
+
+      {/* Messages */}
+      {messages.length > 0 && (
+        <div style={{ padding: '20px 28px', maxHeight: 320, overflowY: 'auto' as const, display: 'flex', flexDirection: 'column' as const, gap: 12 }}>
+          {messages.map((m, i) => (
+            <div key={i} style={{
+              alignSelf: m.role === 'user' ? 'flex-end' : 'flex-start',
+              maxWidth: '80%',
+              background: m.role === 'user' ? ORANGE : '#1a1a1a',
+              padding: '10px 16px',
+            }}>
+              <div style={{ fontFamily: G, fontSize: 13, color: m.role === 'user' ? DARK : CREAM, lineHeight: 1.5 }}>{m.text}</div>
+            </div>
+          ))}
+          {thinking && (
+            <div style={{ alignSelf: 'flex-start', background: '#1a1a1a', padding: '10px 16px' }}>
+              <div style={{ fontFamily: G, fontSize: 13, color: GREY }}>ArnoBot denkt na...</div>
+            </div>
+          )}
+        </div>
+      )}
+
+      {/* Input */}
+      <div style={{ padding: '16px 28px 20px', display: 'flex', gap: 12 }}>
+        <input
+          value={input}
+          onChange={e => setInput(e.target.value)}
+          onKeyDown={e => e.key === 'Enter' && send()}
+          placeholder="Wat moet ik doen met de divergentie op waardepropositie?"
+          style={{
+            flex: 1,
+            fontFamily: G,
+            fontSize: 13,
+            color: CREAM,
+            background: '#111',
+            border: `1px solid ${LINE}`,
+            padding: '10px 16px',
+            outline: 'none',
+          }}
+        />
+        <button
+          onClick={send}
+          disabled={thinking || !input.trim()}
+          style={{
+            fontFamily: BN,
+            fontSize: 16,
+            letterSpacing: '0.08em',
+            color: DARK,
+            background: thinking ? LINE : ORANGE,
+            border: 'none',
+            padding: '10px 24px',
+            cursor: thinking ? 'not-allowed' : 'pointer',
+          }}
+        >
+          STUUR
+        </button>
       </div>
     </div>
   );
@@ -226,6 +330,31 @@ function AlignmentScore({
                 Groen ≥70% · Oranje 45–69% · Rood &lt;45%
               </div>
             </div>
+          </div>
+
+          {/* ArnoBot Summary — A */}
+          {result.summary && (
+            <div style={{ margin: '0 40px', padding: '24px 28px', background: '#111', borderLeft: `3px solid ${ORANGE}`, borderBottom: `1px solid ${LINE2}` }}>
+              <div style={{ fontFamily: G, fontSize: 10, letterSpacing: '0.1em', color: ORANGE, marginBottom: 10, textTransform: 'uppercase' as const }}>ARNOBOT — ALIGNMENT DIAGNOSE</div>
+              <div style={{ fontFamily: G, fontSize: 14, color: CREAM, lineHeight: 1.6, fontStyle: 'italic' as const }}>{result.summary}</div>
+            </div>
+          )}
+
+          {/* ArnoBot Chat — B */}
+          <AlignmentChat result={result} />
+
+          {/* ArnoLive CTA — C */}
+          <div style={{ margin: '0 40px 0', padding: '28px', background: '#0d0d0d', border: `0.5px solid ${LINE}`, display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+            <div>
+              <div style={{ fontFamily: BN, fontSize: 28, color: CREAM, letterSpacing: '0.05em' }}>ARNOLIVE</div>
+              <div style={{ fontFamily: G, fontSize: 12, color: GREY, marginTop: 4 }}>Bespreek de alignment resultaten live met Arno. Strategisch advies op maat.</div>
+            </div>
+            <a
+              href="mailto:arno@royaldutchsales.com?subject=ArnoLive%20aanvraag&body=Ik%20wil%20graag%20de%20alignment%20resultaten%20bespreken."
+              style={{ fontFamily: BN, fontSize: 18, letterSpacing: '0.08em', color: DARK, background: ORANGE, padding: '12px 28px', textDecoration: 'none', display: 'inline-block' }}
+            >
+              BOEK ARNOLIVE →
+            </a>
           </div>
 
           {/* Question breakdown */}

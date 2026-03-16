@@ -113,6 +113,7 @@ interface AlignmentResult {
   uitvoering: number;
   questions: QuestionAlignment[];
   calculated_at: string;
+  summary?: string;
 }
 
 async function analyseQuestion(questionId: string, answers: string[]): Promise<{ score: number; diagnose: string }> {
@@ -216,7 +217,7 @@ export async function POST(req: NextRequest) {
       const chunkResults = await Promise.all(
         chunk.map(async (qid) => {
           const { score, diagnose } = await analyseQuestion(qid, byQuestion[qid]);
-          const segment = qid.split('-')[0];
+          const segment = qid.split('_')[0];
           return {
             question_id: qid,
             label: QUESTION_LABELS[qid],
@@ -249,14 +250,38 @@ export async function POST(req: NextRequest) {
       calculated_at: new Date().toISOString(),
     };
 
+    // Generate ArnoBot summary
+    const summaryMsg = await anthropic.messages.create({
+      model: 'claude-sonnet-4-20250514',
+      max_tokens: 400,
+      messages: [{
+        role: 'user',
+        content: `Je bent ArnoBot — een provocerende, ongefilterde sales coach van Royal Dutch Sales. Schrijf een korte maar krachtige analyse van de team alignment resultaten hieronder. Wees direct, eerlijk, en gebruik de taal van een ervaren sales strateeg. Geen wollige taal. Max 60 woorden. Nederlands.
+
+Overall alignment: ${overall}%
+Strategie: ${strategie}% | Mensen: ${mensen}% | Uitvoering: ${uitvoering}%
+
+Top divergente vragen:
+${results.slice(0, 3).map(q => `- ${q.label}: ${q.diagnose}`).join('\n')}
+
+Geef een diagnose en één concrete aanbeveling. Spreek de manager direct aan met "jouw team".`
+      }]
+    });
+    const summary = summaryMsg.content.find((b: { type: string }) => b.type === 'text')?.text ?? '';
+
+    const alignmentResultWithSummary: AlignmentResult = {
+      ...alignmentResult,
+      summary,
+    };
+
     // Cache in Supabase (upsert on manager user_id)
     await serviceDb.from('canvas_alignment').upsert({
       user_id: userId,
-      result: alignmentResult,
-      calculated_at: alignmentResult.calculated_at,
+      result: alignmentResultWithSummary,
+      calculated_at: alignmentResultWithSummary.calculated_at,
     }, { onConflict: 'user_id' });
 
-    return NextResponse.json(alignmentResult);
+    return NextResponse.json(alignmentResultWithSummary);
   } catch (err) {
     console.error('Alignment error:', err);
     return NextResponse.json({ error: 'Analyse mislukt' }, { status: 500 });
