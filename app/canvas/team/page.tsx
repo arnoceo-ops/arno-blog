@@ -331,7 +331,8 @@ function AlignmentScore({
           </div>
 
                     {/* ArnoBot + ArnoLive — side by side */}
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 2, margin: '2px 0 0', maxWidth: '100%' }}>
+          <div style={{ padding: '2px 40px 0' }}>
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 2 }}>
 
             {/* ArnoBot — A+B */}
             <div style={{ background: '#0d0d0d', border: `0.5px solid ${LINE}` }}>
@@ -367,6 +368,7 @@ function AlignmentScore({
                 </a>
               </div>
             </div>
+          </div>
           </div>
 
           {/* Question breakdown */}
@@ -590,7 +592,7 @@ export default function TeamPage() {
         </p>
       </div>
 
-      {!loading && !error && <><div style={{ height: 2, background: '#EE7700' }} /><TeamAverages members={members} /></>}
+      {!loading && !error && <TeamAverages members={members} />}
 
       {!loading && !error && (<><div style={{ height: 2, background: '#EE7700' }} /><AlignmentScore members={members} token={token} /></>)}
 
