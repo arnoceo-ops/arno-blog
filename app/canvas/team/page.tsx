@@ -2,7 +2,7 @@
 
 import { useEffect, useState, useCallback } from 'react';
 import { useAuth } from '@clerk/nextjs';
-import { createClient } from '@supabase/supabase-js';
+
 import Link from 'next/link';
 
 const SEGMENT_WEIGHTS = { mensen: 0.4, strategie: 0.3, uitvoering: 0.3 };
@@ -374,32 +374,26 @@ export default function TeamPage() {
       const t = await getToken({ template: 'supabase' });
       setToken(t);
 
-      const db = createClient(
-        process.env.NEXT_PUBLIC_SUPABASE_URL!,
-        process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
-        { global: { headers: { Authorization: `Bearer ${t}` } } }
-      );
+      const res = await fetch('/api/canvas/team');
+      if (!res.ok) {
+        const data = await res.json();
+        setError(data.error ?? 'Geen toegang. Dit dashboard is alleen beschikbaar voor managers.');
+        setLoading(false);
+        return;
+      }
+      const { approvedUsers, answers } = await res.json();
 
-      const { data: managerCheck } = await db.from('approved_users').select('is_manager').eq('user_id', userId).single();
-      if (!managerCheck?.is_manager) { setError('Geen toegang. Dit dashboard is alleen beschikbaar voor managers.'); setLoading(false); return; }
-
-      const { data: approvedUsers, error: ue } = await db.from('approved_users').select('user_id, email');
-      if (ue || !approvedUsers) throw ue;
-
-      const { data: answers, error: ae } = await db.from('canvas_answers').select('user_id, question_id, score, answer');
-      if (ae) throw ae;
-
-      const stats: MemberStats[] = approvedUsers.map((user) => {
-        const ua = answers?.filter((a) => a.user_id === user.user_id) ?? [];
+      const stats: MemberStats[] = approvedUsers.map((user: { user_id: string; email: string }) => {
+        const ua = answers?.filter((a: { user_id: string }) => a.user_id === user.user_id) ?? [];
 
         const segKwaliteit = (seg: string) => {
-          const sa = ua.filter((a) => a.question_id.startsWith(seg) && a.score !== null);
+          const sa = ua.filter((a: { question_id: string; score: number | null }) => a.question_id.startsWith(seg) && a.score !== null);
           if (!sa.length) return 0;
-          return Math.round((sa.reduce((s, a) => s + (a.score ?? 0), 0) / sa.length / 5) * 100);
+          return Math.round((sa.reduce((s: number, a: { score: number }) => s + (a.score ?? 0), 0) / sa.length / 5) * 100);
         };
 
         const segVoortgang = (seg: string) => {
-          const filled = ua.filter((a) => a.question_id.startsWith(seg) && a.answer && a.answer.trim() !== '').length;
+          const filled = ua.filter((a: { question_id: string; answer: string }) => a.question_id.startsWith(seg) && a.answer && a.answer.trim() !== '').length;
           const total  = SEGMENT_TOTALS[seg as keyof typeof SEGMENT_TOTALS] ?? 1;
           return Math.round((filled / total) * 100);
         };
@@ -418,7 +412,7 @@ export default function TeamPage() {
         const mensen_voortgang     = segVoortgang('mensen');
         const uitvoering_voortgang = segVoortgang('uitvoering');
 
-        const answered     = ua.filter((a) => a.answer && a.answer.trim() !== '').length;
+        const answered     = ua.filter((a: { answer: string }) => a.answer && a.answer.trim() !== '').length;
         const volledigheid = Math.round((answered / 96) * 100);
 
         return {
@@ -428,7 +422,7 @@ export default function TeamPage() {
         };
       });
 
-      stats.sort((a, b) => b.plan_kwaliteit - a.plan_kwaliteit);
+      stats.sort((a: MemberStats, b: MemberStats) => b.plan_kwaliteit - a.plan_kwaliteit);
       setMembers(stats);
     } catch (err) { console.error(err); setError('Fout bij laden teamdata.'); }
     finally { setLoading(false); }
