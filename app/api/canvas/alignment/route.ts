@@ -121,7 +121,7 @@ async function analyseQuestion(questionId: string, answers: string[]): Promise<{
   const answersText = answers.map((a, i) => `Lid ${i + 1}: "${a}"`).join('\n');
 
   const msg = await anthropic.messages.create({
-    model: 'claude-sonnet-4-20250514',
+    model: 'claude-sonnet-4-5',
     max_tokens: 200,
     messages: [{
       role: 'user',
