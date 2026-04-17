@@ -1,4 +1,10 @@
 {
+  "crons": [
+    {
+      "path": "/api/cron/arnobot-logs",
+      "schedule": "0 8 * * 1"
+    }
+  ],
   "redirects": [
     {
       "source": "/",
