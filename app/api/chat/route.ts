@@ -21,10 +21,16 @@ export async function OPTIONS(req: NextRequest) {
   return new NextResponse(null, { status: 204, headers: corsHeaders(origin) })
 }
 import Anthropic from '@anthropic-ai/sdk'
+import { createClient } from '@supabase/supabase-js'
 import { readFileSync } from 'fs'
 import { join } from 'path'
 
 const client = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY })
+
+const supabase = createClient(
+  process.env.NEXT_PUBLIC_SUPABASE_URL!,
+  process.env.SUPABASE_SERVICE_ROLE_KEY!
+)
 
 function searchChunks(chunks: string[], query: string, topN = 6): string[] {
   const queryWords = query.toLowerCase().split(/\s+/).filter(w => w.length > 3)
@@ -101,6 +107,10 @@ ${context}`,
     })
 
     const answer = response.content[0].type === 'text' ? response.content[0].text : ''
+
+    const ip = req.headers.get('x-forwarded-for')?.split(',')[0]?.trim() || null
+    supabase.from('arnobot_blog_logs').insert({ question, answer, ip }).then()
+
     const origin = req.headers.get('origin')
     return NextResponse.json({ answer }, { headers: corsHeaders(origin) })
   } catch (err) {
