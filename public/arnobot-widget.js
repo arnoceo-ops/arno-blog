@@ -85,7 +85,7 @@
     '#arnobot-textarea:focus{background:#fafafa;}',
     '#arnobot-send{',
     '  background:#EE7700;color:#fff;',
-    '  font-family:"Bebas Neue",sans-serif;font-size:17px;letter-spacing:2px;',
+    '  font-family:"Bebas Neue",sans-serif;font-size:28px;letter-spacing:2px;',
     '  padding:0 24px;border:none;cursor:pointer;',
     '  transition:background .15s;white-space:nowrap;min-width:100px;',
     '}',
