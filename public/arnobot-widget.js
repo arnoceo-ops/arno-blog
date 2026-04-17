@@ -18,7 +18,7 @@
     '#arnobot-widget{',
     '  font-family:"Space Mono",monospace;',
     '  background:#0a0a0a;color:#f0ede6;',
-    '  max-width:760px;width:100%;',
+    '  max-width:100%;width:100%;',
     '  border:1px solid #1e1e1e;',
     '  display:flex;flex-direction:column;',
     '  min-height:480px;max-height:680px;',
