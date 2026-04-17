@@ -60,4 +60,21 @@ const outPath = join(__dirname, '..', 'public', 'arnobot-logo.png');
 writeFileSync(outPath, screenshot);
 console.log('Logo opgeslagen:', outPath);
 
+// SalesCanvas logo
+const html2 = html.replace(
+  '<div class="logo"><span class="arno">ARNO</span><span class="bot">BOT</span></div>',
+  '<div class="logo"><span class="bot">SALES</span><span class="arno">CANVAS</span></div>'
+);
+
+await page.setViewport({ width: 1200, height: 200, deviceScaleFactor: 3 });
+await page.setContent(html2, { waitUntil: 'load', timeout: 60000 });
+await new Promise(r => setTimeout(r, 3000));
+
+const el2 = await page.$('.logo');
+const screenshot2 = await el2.screenshot({ omitBackground: true });
+
+const outPath2 = join(__dirname, '..', 'public', 'salescanvas-logo.png');
+writeFileSync(outPath2, screenshot2);
+console.log('Logo opgeslagen:', outPath2);
+
 await browser.close();
