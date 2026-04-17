@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 110" width="480" height="110">
+  <defs>
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@900&display=swap');
+    </style>
+  </defs>
+  <text
+    x="0" y="98"
+    font-family="'Barlow Condensed', Impact, Arial Narrow, sans-serif"
+    font-weight="900"
+    font-size="108"
+    fill="#333333"
+    letter-spacing="-2"
+  >ARNO</text>
+  <text
+    x="258" y="98"
+    font-family="'Barlow Condensed', Impact, Arial Narrow, sans-serif"
+    font-weight="900"
+    font-size="108"
+    fill="#EE7700"
+    letter-spacing="-2"
+  >BOT</text>
+</svg>
