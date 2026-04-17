@@ -36,7 +36,7 @@
     '}',
     '#arnobot-header-text{}',
     '#arnobot-name{font-family:"Bebas Neue",sans-serif;font-size:28px;letter-spacing:3px;color:rgb(51,51,51);line-height:1;}',
-    '#arnobot-status{font-size:10px;letter-spacing:2px;color:#999;margin-top:2px;}',
+    '#arnobot-status{font-size:10px;letter-spacing:2px;color:rgb(51,51,51);margin-top:2px;}',
     '#arnobot-messages{',
     '  flex:1;padding:0;',
     '  display:flex;flex-direction:column;',
