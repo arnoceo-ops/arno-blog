@@ -13,7 +13,7 @@
   ];
 
   var CSS = [
-    '@import url("https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Open+Sans:wght@400;700&display=swap");',
+    '@import url("https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Open+Sans:wght@400;700&family=Playfair+Display:ital@0;1&display=swap");',
     '#arnobot-widget*{box-sizing:border-box;margin:0;padding:0}',
     '#arnobot-widget{',
     '  font-family:"Open Sans",sans-serif;',
@@ -55,7 +55,7 @@
     '@keyframes abpulse{0%,100%{opacity:.2;transform:scale(.8)}50%{opacity:1;transform:scale(1)}}',
     '.ab-loading-text{font-size:10px;letter-spacing:2px;color:#bbb;text-transform:uppercase;}',
     '#arnobot-openers{padding:20px 28px 0;border-bottom:1px solid #f0f0f0;}',
-    '.ab-openers-label{font-family:"Open Sans",sans-serif;font-size:15px;font-weight:400;letter-spacing:0;color:rgb(51,51,51);display:block;margin-bottom:16px;line-height:1.5;}',
+    '.ab-openers-label{font-family:"Playfair Display",serif;font-size:15px;font-weight:400;letter-spacing:0;color:rgb(51,51,51);display:block;margin-bottom:16px;line-height:1.6;}',
     '.ab-openers-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:2px;margin-bottom:2px;}',
     '@media(max-width:480px){.ab-openers-grid{grid-template-columns:1fr}}',
     '.ab-opener{',
