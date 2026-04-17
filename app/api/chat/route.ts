@@ -1,4 +1,25 @@
 import { NextRequest, NextResponse } from 'next/server'
+
+const ALLOWED_ORIGINS = [
+  'https://royaldutchsales.com',
+  'https://www.royaldutchsales.com',
+  'https://arno.blog',
+  'https://www.arno.blog',
+]
+
+function corsHeaders(origin: string | null): Record<string, string> {
+  const allowed = origin && ALLOWED_ORIGINS.includes(origin) ? origin : ALLOWED_ORIGINS[0]
+  return {
+    'Access-Control-Allow-Origin': allowed,
+    'Access-Control-Allow-Methods': 'POST, OPTIONS',
+    'Access-Control-Allow-Headers': 'Content-Type',
+  }
+}
+
+export async function OPTIONS(req: NextRequest) {
+  const origin = req.headers.get('origin')
+  return new NextResponse(null, { status: 204, headers: corsHeaders(origin) })
+}
 import Anthropic from '@anthropic-ai/sdk'
 import { readFileSync } from 'fs'
 import { join } from 'path'
@@ -79,10 +100,12 @@ ${context}`,
     })
 
     const answer = response.content[0].type === 'text' ? response.content[0].text : ''
-    return NextResponse.json({ answer })
+    const origin = req.headers.get('origin')
+    return NextResponse.json({ answer }, { headers: corsHeaders(origin) })
   } catch (err) {
     const msg = err instanceof Error ? err.message : String(err)
     console.error('Chat error:', msg)
-    return NextResponse.json({ error: msg }, { status: 500 })
+    const origin = req.headers.get('origin')
+    return NextResponse.json({ error: msg }, { status: 500, headers: corsHeaders(origin) })
   }
 }
