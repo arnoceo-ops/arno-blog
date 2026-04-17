@@ -91,6 +91,7 @@
     '}',
     '#arnobot-send:hover{background:#ff8800;}',
     '#arnobot-send:disabled{background:#f0f0f0;color:#ccc;cursor:not-allowed;}',
+    '@media(max-width:480px){#arnobot-send{min-width:72px;padding:0 10px;font-size:18px;}}',
     '#arnobot-hint{font-size:9px;letter-spacing:2px;color:rgb(51,51,51);text-transform:uppercase;margin-top:6px;text-align:center;}',
     '#arnobot-actions{padding:16px 28px;display:flex;gap:10px;border-top:1px solid #f0f0f0;}',
     '.ab-action{',
