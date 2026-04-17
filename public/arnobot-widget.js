@@ -21,7 +21,6 @@
     '  max-width:100%;width:100%;',
     '  border:1px solid #e5e5e5;',
     '  display:flex;flex-direction:column;',
-    '  min-height:480px;max-height:680px;',
     '}',
     '#arnobot-header{',
     '  background:#fff;border-bottom:2px solid #EE7700;',
@@ -39,13 +38,9 @@
     '#arnobot-name{font-family:"Bebas Neue",sans-serif;font-size:20px;letter-spacing:3px;color:rgb(51,51,51);line-height:1;}',
     '#arnobot-status{font-size:10px;letter-spacing:2px;color:#999;margin-top:2px;}',
     '#arnobot-messages{',
-    '  flex:1;overflow-y:auto;padding:0;',
+    '  flex:1;padding:0;',
     '  display:flex;flex-direction:column;',
-    '  scrollbar-width:thin;scrollbar-color:#ddd #fff;',
     '}',
-    '#arnobot-messages::-webkit-scrollbar{width:4px}',
-    '#arnobot-messages::-webkit-scrollbar-track{background:#fff}',
-    '#arnobot-messages::-webkit-scrollbar-thumb{background:#ddd}',
     '.ab-msg{padding:24px 28px;border-bottom:1px solid #f0f0f0;display:flex;gap:20px;align-items:flex-start;}',
     '.ab-msg-label{font-family:"Bebas Neue",sans-serif;font-size:11px;letter-spacing:3px;white-space:nowrap;padding-top:3px;min-width:56px;}',
     '.ab-msg-label.user{color:#bbb}',
@@ -236,7 +231,7 @@
     el.className = 'ab-msg';
     el.innerHTML = '<span class="ab-msg-label user">JIJ</span><span class="ab-msg-text user">' + escapeHtml(text) + '</span>';
     this.$messages.appendChild(el);
-    this._scrollBottom();
+    this._scrollTo(el);
   };
 
   ArnoBot.prototype._addArnoMsg = function (text) {
@@ -244,7 +239,7 @@
     el.className = 'ab-msg';
     el.innerHTML = '<span class="ab-msg-label arno">ARNO</span><span class="ab-msg-text arno">' + escapeHtml(text) + '</span>';
     this.$messages.appendChild(el);
-    this._scrollBottom();
+    this._scrollTo(el);
   };
 
   ArnoBot.prototype._setLoading = function (on) {
@@ -259,7 +254,7 @@
       el.className = 'ab-loading';
       el.innerHTML = '<div class="ab-dots"><div class="ab-dot"></div><div class="ab-dot"></div><div class="ab-dot"></div></div><span class="ab-loading-text">Arno denkt na</span>';
       this.$messages.appendChild(el);
-      this._scrollBottom();
+      this._scrollTo(el);
     }
   };
 
@@ -284,7 +279,6 @@
     });
 
     this.container.insertBefore(el, this.container.querySelector('#arnobot-input-area'));
-    this._scrollBottom();
   };
 
   ArnoBot.prototype._reset = function () {
@@ -299,8 +293,8 @@
     if (existing) existing.remove();
   };
 
-  ArnoBot.prototype._scrollBottom = function () {
-    this.$messages.scrollTop = this.$messages.scrollHeight;
+  ArnoBot.prototype._scrollTo = function (el) {
+    el.scrollIntoView({ behavior: 'smooth', block: 'start' });
   };
 
   // ── Init ──────────────────────────────────────────────────────────────────────
