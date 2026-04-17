@@ -148,7 +148,7 @@
       '</div>',
       '<div id="arnobot-messages"></div>',
       '<div id="arnobot-openers">',
-      '  <span class="ab-openers-label">Kies een vraag (of stel een andere) over sales, strategie of mindset.<br>Geen corporate taal. Gewoon Arno: direct en ongefilterd.</span>',
+      '',
       '  <div class="ab-openers-grid">' + this.openers.map(function (q) {
         return '<button class="ab-opener">' + escapeHtml(q) + '</button>';
       }).join('') + '</div>',
@@ -158,7 +158,7 @@
       '    <textarea id="arnobot-textarea" rows="1" placeholder="Stel je vraag aan Arno..."></textarea>',
       '    <button id="arnobot-send" disabled>VRAAG &rarr;</button>',
       '  </div>',
-      '  <p id="arnobot-hint">Enter = sturen &nbsp;&middot;&nbsp; Shift+Enter = nieuwe regel</p>',
+      '',
       '</div>',
     ].join('');
 
