@@ -55,7 +55,7 @@
     '@keyframes abpulse{0%,100%{opacity:.2;transform:scale(.8)}50%{opacity:1;transform:scale(1)}}',
     '.ab-loading-text{font-size:10px;letter-spacing:2px;color:#bbb;text-transform:uppercase;}',
     '#arnobot-openers{padding:20px 28px 0;border-bottom:1px solid #f0f0f0;}',
-    '.ab-openers-label{font-family:"Playfair Display",serif;font-size:15px;font-weight:400;letter-spacing:0;color:rgb(51,51,51);display:block;margin-bottom:16px;line-height:1.6;}',
+    '.ab-openers-label{font-family:"Open Sans",sans-serif;font-size:24px;font-weight:400;letter-spacing:0;color:rgb(51,51,51);display:block;margin-bottom:16px;line-height:1.4;}',
     '.ab-openers-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:2px;margin-bottom:2px;}',
     '@media(max-width:480px){.ab-openers-grid{grid-template-columns:1fr}}',
     '.ab-opener{',
@@ -77,7 +77,7 @@
     '#arnobot-input-row.active{border-color:#EE7700;box-shadow:0 0 0 2px rgba(238,119,0,.1);}',
     '#arnobot-textarea{',
     '  flex:1;background:#fff;border:none;color:rgb(51,51,51);',
-    '  font-family:"Open Sans",sans-serif;font-size:14px;',
+    '  font-family:"Open Sans",sans-serif;font-size:15px;',
     '  padding:12px 16px;outline:none;resize:none;',
     '  min-height:44px;max-height:44px;line-height:1.5;',
     '}',
@@ -148,7 +148,7 @@
       '</div>',
       '<div id="arnobot-messages"></div>',
       '<div id="arnobot-openers">',
-      '  <span class="ab-openers-label">Kies een vraag over sales, strategie of mindset.<br>Geen vaagtaal. Gewoon Arno: direct en ongefilterd.</span>',
+      '  <span class="ab-openers-label">Kies een vraag over sales, strategie of mindset. Geen vaagtaal. Gewoon Arno: direct en ongefilterd.</span>',
       '  <div class="ab-openers-grid">' + this.openers.map(function (q) {
         return '<button class="ab-opener">' + escapeHtml(q) + '</button>';
       }).join('') + '</div>',
