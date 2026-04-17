@@ -155,7 +155,7 @@
       '<div id="arnobot-input-area">',
       '  <div id="arnobot-input-row">',
       '    <textarea id="arnobot-textarea" rows="1" placeholder="Stel je vraag aan Arno..."></textarea>',
-      '    <button id="arnobot-send" disabled>GO &rarr;</button>',
+      '    <button id="arnobot-send" disabled>VRAAG &rarr;</button>',
       '  </div>',
       '  <p id="arnobot-hint">Enter = sturen &nbsp;&middot;&nbsp; Shift+Enter = nieuwe regel</p>',
       '</div>',
