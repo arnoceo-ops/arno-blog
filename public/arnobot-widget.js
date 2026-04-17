@@ -4,12 +4,12 @@
   var API_URL = 'https://www.royaldutchsales.com/api/chat';
 
   var DEFAULT_OPENERS = [
-    'Hoe bouw ik een salesteam dat zichzelf verkoopt?',
-    'Wat is het verschil tussen een goede en een geweldige verkoper?',
-    'Hoe kom ik aan nieuwe klanten zonder cold calling?',
-    'Wat doe ik als mijn pipeline opdroogt?',
-    'Hoe zorg ik dat klanten bij me blijven?',
-    'Wanneer stop ik met een klant die nooit koopt?',
+    'Mijn salesteam haalt structureel de targets niet. Waar ligt dat aan?',
+    'Wat onderscheidt een winnende salesorganisatie van een gemiddelde?',
+    'Hoe bouw ik een commerciële strategie die de markt op z\'n kop zet?',
+    'Mijn pipeline ziet er goed uit maar de conversie klopt niet. Oorzaken?',
+    'Mijn beste verkoper vertrekt. Hoe had ik dat kunnen voorkomen?',
+    'Wat is de route naar marktleider op een termijn van mx. 24 maanden?',
   ];
 
   var CSS = [
