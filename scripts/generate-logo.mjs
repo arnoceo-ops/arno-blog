@@ -5,7 +5,8 @@ import { fileURLToPath } from 'url';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
-const html = `<!DOCTYPE html>
+async function generateLogo(page, text, outFile) {
+  const html = `<!DOCTYPE html>
 <html>
 <head>
   <meta charset="utf-8">
@@ -13,68 +14,49 @@ const html = `<!DOCTYPE html>
   <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@900&display=swap" rel="stylesheet">
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
-    body {
-      background: transparent;
-      display: inline-block;
-      padding: 0;
-    }
+    body { background: transparent; display: inline-block; }
     .logo {
       font-family: 'Barlow Condensed', sans-serif;
       font-weight: 900;
-      font-size: 108px;
+      font-size: 300px;
       line-height: 1;
-      letter-spacing: -1px;
+      letter-spacing: -2px;
       white-space: nowrap;
     }
-    .arno { color: #333333; }
-    .bot  { color: #EE7700; }
+    .dark   { color: #333333; }
+    .orange { color: #EE7700; }
   </style>
 </head>
 <body>
-  <div class="logo"><span class="arno">ARNO</span><span class="bot">BOT</span></div>
+  <div class="logo">${text}</div>
 </body>
 </html>`;
+
+  await page.setViewport({ width: 3000, height: 400, deviceScaleFactor: 4 });
+  await page.setContent(html, { waitUntil: 'load', timeout: 60000 });
+  await new Promise(r => setTimeout(r, 3000));
+
+  const el = await page.$('.logo');
+  const screenshot = await el.screenshot({ omitBackground: true });
+
+  const outPath = join(__dirname, '..', 'public', outFile);
+  writeFileSync(outPath, screenshot);
+  console.log('Logo opgeslagen:', outPath);
+}
 
 const browser = await puppeteer.launch();
 const page = await browser.newPage();
 
-await page.setContent(html, { waitUntil: 'load', timeout: 60000 });
-await new Promise(r => setTimeout(r, 3000));
-
-const element = await page.$('.logo');
-const clip = await element.boundingBox();
-
-await page.setViewport({
-  width: Math.ceil(clip.width) + 20,
-  height: Math.ceil(clip.height) + 20,
-  deviceScaleFactor: 3,
-});
-
-await page.setContent(html, { waitUntil: 'load', timeout: 60000 });
-await new Promise(r => setTimeout(r, 3000));
-
-const el = await page.$('.logo');
-const screenshot = await el.screenshot({ omitBackground: true });
-
-const outPath = join(__dirname, '..', 'public', 'arnobot-logo.png');
-writeFileSync(outPath, screenshot);
-console.log('Logo opgeslagen:', outPath);
-
-// SalesCanvas logo
-const html2 = html.replace(
-  '<div class="logo"><span class="arno">ARNO</span><span class="bot">BOT</span></div>',
-  '<div class="logo"><span class="bot">SALES</span><span class="arno">CANVAS</span></div>'
+await generateLogo(
+  page,
+  '<span class="dark">ARNO</span><span class="orange">BOT</span>',
+  'arnobot-logo.png'
 );
 
-await page.setViewport({ width: 1200, height: 200, deviceScaleFactor: 3 });
-await page.setContent(html2, { waitUntil: 'load', timeout: 60000 });
-await new Promise(r => setTimeout(r, 3000));
-
-const el2 = await page.$('.logo');
-const screenshot2 = await el2.screenshot({ omitBackground: true });
-
-const outPath2 = join(__dirname, '..', 'public', 'salescanvas-logo.png');
-writeFileSync(outPath2, screenshot2);
-console.log('Logo opgeslagen:', outPath2);
+await generateLogo(
+  page,
+  '<span class="orange">SALES</span><span class="dark">CANVAS</span>',
+  'salescanvas-logo.png'
+);
 
 await browser.close();
