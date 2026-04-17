@@ -55,7 +55,7 @@
     '@keyframes abpulse{0%,100%{opacity:.2;transform:scale(.8)}50%{opacity:1;transform:scale(1)}}',
     '.ab-loading-text{font-size:10px;letter-spacing:2px;color:#bbb;text-transform:uppercase;}',
     '#arnobot-openers{padding:20px 28px 0;border-bottom:1px solid #f0f0f0;}',
-    '.ab-openers-label{font-size:15px;font-weight:700;letter-spacing:0;color:rgb(51,51,51);display:block;margin-bottom:16px;line-height:1.5;}',
+    '.ab-openers-label{font-family:"Open Sans",sans-serif;font-size:15px;font-weight:400;letter-spacing:0;color:rgb(51,51,51);display:block;margin-bottom:16px;line-height:1.5;}',
     '.ab-openers-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:2px;margin-bottom:2px;}',
     '@media(max-width:480px){.ab-openers-grid{grid-template-columns:1fr}}',
     '.ab-opener{',
@@ -148,7 +148,7 @@
       '</div>',
       '<div id="arnobot-messages"></div>',
       '<div id="arnobot-openers">',
-      '',
+      '  <span class="ab-openers-label">Kies een vraag over sales, strategie of mindset.<br>Geen vaagtaal. Gewoon Arno: direct en ongefilterd.</span>',
       '  <div class="ab-openers-grid">' + this.openers.map(function (q) {
         return '<button class="ab-opener">' + escapeHtml(q) + '</button>';
       }).join('') + '</div>',
