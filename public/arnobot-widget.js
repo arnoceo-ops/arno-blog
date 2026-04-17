@@ -25,7 +25,7 @@
     '#arnobot-header{',
     '  background:#fff;border-bottom:2px solid #EE7700;',
     '  padding:20px 28px;',
-    '  display:flex;align-items:flex-start;gap:16px;',
+    '  display:flex;align-items:center;gap:16px;',
     '  flex-shrink:0;',
     '}',
     '#arnobot-avatar{',
