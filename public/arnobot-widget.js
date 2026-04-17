@@ -53,7 +53,7 @@
     '.ab-dot:nth-child(2){animation-delay:.2s}',
     '.ab-dot:nth-child(3){animation-delay:.4s}',
     '@keyframes abpulse{0%,100%{opacity:.2;transform:scale(.8)}50%{opacity:1;transform:scale(1)}}',
-    '.ab-loading-text{font-size:10px;letter-spacing:2px;color:#bbb;text-transform:uppercase;}',
+    '.ab-loading-text{font-size:12px;letter-spacing:2px;color:#bbb;text-transform:uppercase;}',
     '#arnobot-openers{padding:20px 28px 0;border-bottom:1px solid #f0f0f0;}',
     '.ab-openers-label{font-family:"Open Sans",sans-serif;font-size:24px;font-weight:400;letter-spacing:0;color:rgb(51,51,51);display:block;margin-bottom:16px;line-height:1.4;}',
     '.ab-openers-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:2px;margin-bottom:2px;}',
@@ -273,18 +273,13 @@
 
     var el = document.createElement('div');
     el.id = 'arnobot-actions';
-    el.innerHTML = [
-      '<button class="ab-action primary">&#8593; Vervolgvraag stellen</button>',
-      '<button class="ab-action secondary">&#8592; Nieuwe sessie</button>',
-    ].join('');
+    el.innerHTML = '<button class="ab-action secondary">&#8592; Nieuwe sessie</button>';
 
-    el.querySelector('.ab-action.primary').addEventListener('click', function () {
-      el.remove();
-      self.$textarea.focus();
-    });
     el.querySelector('.ab-action.secondary').addEventListener('click', function () {
       self._reset();
     });
+
+    self.$textarea.placeholder = 'Stel een vervolgvraag...';
 
     this.container.insertBefore(el, this.container.querySelector('#arnobot-input-area'));
   };
@@ -297,6 +292,7 @@
     this.$textarea.value = '';
     this.$send.disabled = true;
     this.$openers.style.display = '';
+    this.$textarea.placeholder = 'Stel je vraag aan Arno...';
     var existing = this.container.querySelector('#arnobot-actions');
     if (existing) existing.remove();
   };
