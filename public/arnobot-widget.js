@@ -1,7 +1,7 @@
 (function () {
   'use strict';
 
-  var API_URL = 'https://arno.blog/api/chat';
+  var API_URL = 'https://royaldutchsales.com/api/chat';
 
   var DEFAULT_OPENERS = [
     'Hoe bouw ik een salesteam dat zichzelf verkoopt?',
