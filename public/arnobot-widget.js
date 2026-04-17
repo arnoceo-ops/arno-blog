@@ -70,7 +70,7 @@
     '  flex-shrink:0;',
     '  display:flex;flex-direction:column;align-items:center;',
     '}',
-    '#arnobot-input-area>*{width:100%;max-width:450px;}',
+    '#arnobot-input-area>*{width:100%;max-width:600px;}',
     '#arnobot-input-row{',
     '  display:flex;gap:0;border:1.5px solid #ddd;transition:border-color .2s;',
     '}',
