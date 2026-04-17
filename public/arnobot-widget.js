@@ -117,6 +117,11 @@
       .replace(/"/g, '&quot;');
   }
 
+  function renderText(str) {
+    return escapeHtml(str)
+      .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+  }
+
   function ArnoBot(container, opts) {
     opts = opts || {};
     this.container = container;
@@ -237,7 +242,7 @@
   ArnoBot.prototype._addArnoMsg = function (text) {
     var el = document.createElement('div');
     el.className = 'ab-msg';
-    el.innerHTML = '<span class="ab-msg-label arno">ARNO</span><span class="ab-msg-text arno">' + escapeHtml(text) + '</span>';
+    el.innerHTML = '<span class="ab-msg-label arno">ARNO</span><span class="ab-msg-text arno">' + renderText(text) + '</span>';
     this.$messages.appendChild(el);
     this._scrollTo(el);
   };
