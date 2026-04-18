@@ -122,8 +122,9 @@
 
   function renderText(str) {
     return escapeHtml(str)
-      .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
-      .replace(/\*(.*?)\*/g, '<em>$1</em>');
+      .replace(/\[([^\]]+)\]\((https?:\/\/[^\s)]+)\)/g, '<a href="$2" target="_blank" rel="noopener noreferrer" style="color:#EE7700;text-decoration:underline">$1</a>')
+      .replace(/_(.*?)_/g, '<em>$1</em>')
+      .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
   }
 
   function ArnoBot(container, opts) {
