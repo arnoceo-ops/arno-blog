@@ -3,9 +3,9 @@
 import { useState, useRef, useEffect } from 'react'
 import Link from 'next/link'
 
-function renderContent(text: string): React.ReactNode[] {
+function renderContent(text: string) {
   const tokenRe = /\[([^\]]+)\]\((https?:\/\/[^)]+)\)|_([^_]+)_|\*\*([^*]+)\*\*/g
-  const result: React.ReactNode[] = []
+  const result: (string | JSX.Element)[] = []
   let last = 0
   let match: RegExpExecArray | null
   let key = 0
