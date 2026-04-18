@@ -4,6 +4,14 @@ import { getRelevantChunks, formatChunksForPrompt } from '@/lib/rag'
 
 const client = new Anthropic()
 
+function removeAccents(text: string): string {
+  return text
+    .replace(/[éèêë]/g, 'e').replace(/[áàâä]/g, 'a').replace(/[óòôö]/g, 'o')
+    .replace(/[íìîï]/g, 'i').replace(/[úùûü]/g, 'u')
+    .replace(/[ÉÈÊË]/g, 'E').replace(/[ÁÀÂÄ]/g, 'A').replace(/[ÓÒÔÖ]/g, 'O')
+    .replace(/[ÍÌÎÏ]/g, 'I').replace(/[ÚÙÛÜ]/g, 'U')
+}
+
 export async function POST(req: NextRequest) {
   try {
     const { label, sub, answer, mode, questionId } = await req.json()
@@ -15,7 +23,7 @@ export async function POST(req: NextRequest) {
       }
 
       const scoreMessage = await client.messages.create({
-        model: 'claude-sonnet-4-5',
+        model: 'claude-sonnet-4-6',
         max_tokens: 150,
         messages: [
           {
@@ -58,7 +66,7 @@ Schaal:
     const context = formatChunksForPrompt(relevant)
 
     const message = await client.messages.create({
-      model: 'claude-sonnet-4-5',
+      model: 'claude-sonnet-4-6',
       max_tokens: 400,
       system: `Je bent ArnoBot — de ongefiltreerde, provocerende AI van Royal Dutch Sales. Je bent gebaseerd op Arno Diepeveen: sales strateeg, auteur, en iemand die al 20 jaar middelmatigheid in salesorganisaties benoemt zonder er omheen te draaien.
 
@@ -69,7 +77,7 @@ Jouw beoordelingscriteria zijn DIEPGANG, CONCRETIE en CREATIVITEIT/UNICITEIT. On
 HOE JE REAGEERT:
 
 Bij een ZWAK antwoord (vaag, oppervlakkig, clichématig, of toont dat iemand het concept niet begrijpt):
-- Wees prikkelend en direct. Zinnen als "Ga er een nachtje over slapen." of "Is dit écht het beste wat je hebt?" zijn acceptabel.
+- Wees prikkelend en direct.
 - Als iemand een concept duidelijk niet begrijpt (bijv. OMTM, zandbak, xfactor), leg het dan kort en scherp uit in Arno's stijl — niet als Wikipedia maar als iemand die je wakker schudt.
 - Eindig met een concrete uitdaging of vraag die dwingt tot nadenken.
 
@@ -89,6 +97,7 @@ TOON:
 - Geen corporate taal, geen zachte coachtaal
 - Max 4 zinnen
 - Altijd in het Nederlands
+- Schrijf geen woorden met een accent aigu of accent grave. Geen "écht", "dát", "dít", "zó" — gebruik gewone letters.
 - Gebruik de context uit Arno's blogs waar relevant
 
 CONTEXT UIT DE BLOGS VAN ARNO (elk fragment heeft een [Bron: TITEL] label — gebruik die blogtitel als je erop baseert):
@@ -113,7 +122,7 @@ Beoordeel dit antwoord op diepgang, concretie en creativiteit/uniciteit. Is het 
       .map(block => block.text)
       .join('')
 
-    return NextResponse.json({ feedback })
+    return NextResponse.json({ feedback: removeAccents(feedback) })
   } catch (error) {
     console.error('ArnoBot error:', error)
     return NextResponse.json(

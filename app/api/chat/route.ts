@@ -26,6 +26,14 @@ import { getRelevantChunks, formatChunksForPrompt } from '@/lib/rag'
 
 const client = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY })
 
+function removeAccents(text: string): string {
+  return text
+    .replace(/[éèêë]/g, 'e').replace(/[áàâä]/g, 'a').replace(/[óòôö]/g, 'o')
+    .replace(/[íìîï]/g, 'i').replace(/[úùûü]/g, 'u')
+    .replace(/[ÉÈÊË]/g, 'E').replace(/[ÁÀÂÄ]/g, 'A').replace(/[ÓÒÔÖ]/g, 'O')
+    .replace(/[ÍÌÎÏ]/g, 'I').replace(/[ÚÙÛÜ]/g, 'U')
+}
+
 const supabase = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_URL!,
   process.env.SUPABASE_SERVICE_ROLE_KEY!
@@ -69,7 +77,7 @@ ${context}`,
     supabase.from('arnobot_blog_logs').insert({ question, answer, ip }).then()
 
     const origin = req.headers.get('origin')
-    return NextResponse.json({ answer }, { headers: corsHeaders(origin) })
+    return NextResponse.json({ answer: removeAccents(answer) }, { headers: corsHeaders(origin) })
   } catch (err) {
     const msg = err instanceof Error ? err.message : String(err)
     console.error('Chat error:', msg)
