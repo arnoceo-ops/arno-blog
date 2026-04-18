@@ -1,49 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server'
 import Anthropic from '@anthropic-ai/sdk'
-import { readFileSync } from 'fs'
-import { join } from 'path'
+import { getRelevantChunks, formatChunksForPrompt } from '@/lib/rag'
 
 const client = new Anthropic()
-
-// ── RAG: kennisbank ───────────────────────────────────────────────────
-let cachedChunks: string[] | null = null
-
-function getChunks(): string[] {
-  if (cachedChunks) return cachedChunks
-  const filePath = join(process.cwd(), 'data', 'chief_sales_updates.txt')
-  const text = readFileSync(filePath, 'utf-8')
-  const words = text.split(/\s+/)
-  const chunks: string[] = []
-  const chunkSize = 400
-  const overlap = 50
-  let i = 0
-  while (i < words.length) {
-    chunks.push(words.slice(i, i + chunkSize).join(' '))
-    i += chunkSize - overlap
-  }
-  cachedChunks = chunks
-  return chunks
-}
-
-function searchChunks(chunks: string[], query: string, topN = 4): string[] {
-  const queryWords = query.toLowerCase().split(/\s+/).filter(w => w.length > 3)
-  const scored = chunks.map(chunk => {
-    const lower = chunk.toLowerCase()
-    let score = 0
-    for (const word of queryWords) {
-      const escaped = word.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
-      const count = (lower.match(new RegExp(escaped, 'g')) || []).length
-      score += count
-    }
-    return { chunk, score }
-  })
-  return scored
-    .sort((a, b) => b.score - a.score)
-    .slice(0, topN)
-    .filter(s => s.score > 0)
-    .map(s => s.chunk)
-}
-// ─────────────────────────────────────────────────────────────────────
 
 export async function POST(req: NextRequest) {
   try {
@@ -94,12 +53,9 @@ Schaal:
     }
 
     // RAG: zoek relevante chunks op basis van vraag + antwoord
-    const chunks = getChunks()
     const query = `${label} ${sub} ${answer}`
-    const relevant = searchChunks(chunks, query)
-    const context = relevant.length > 0
-      ? relevant.join('\n\n---\n\n')
-      : ''
+    const relevant = await getRelevantChunks(query, 4)
+    const context = formatChunksForPrompt(relevant)
 
     const message = await client.messages.create({
       model: 'claude-sonnet-4-5',
@@ -135,7 +91,8 @@ TOON:
 - Altijd in het Nederlands
 - Gebruik de context uit Arno's blogs waar relevant
 
-${context ? `CONTEXT UIT DE BLOGS VAN ARNO:\n${context}` : ''}`,
+CONTEXT UIT DE BLOGS VAN ARNO (elk fragment heeft een [Bron: TITEL] label — gebruik die blogtitel als je erop baseert):
+${context}`,
 
       messages: [
         {
