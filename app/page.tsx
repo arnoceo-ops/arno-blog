@@ -125,17 +125,16 @@ export default async function Home() {
 
         /* ── SUBSCRIBE ── */
         .subscribe-section {
-          background: #111; color: #f0ede6; padding: 80px 60px;
+          background: #111; color: #f0ede6;
           display: grid; grid-template-columns: 1fr 1fr;
           border-top: 3px solid #EE7700;
         }
-        .subscribe-form-col {
-          padding: 80px 60px 80px 0; border-right: 1px solid #333;
-          display: flex; flex-direction: column; gap: 12px;
-          justify-content: flex-start; align-items: flex-end;
-          padding-top: calc(80px + clamp(40px, 4vw, 64px) * 2.1 + 37px);
+        .subscribe-text-col {
+          padding: 80px 60px; display: flex; flex-direction: column; gap: 16px;
+          border-right: 1px solid #333; justify-content: center;
         }
-        .subscribe-text-col { padding: 80px 0 80px 60px; display: flex; flex-direction: column; gap: 16px; }
+        .subscribe-photo-col { overflow: hidden; min-height: 500px; }
+        .subscribe-photo-col img { width: 100%; height: 100%; object-fit: cover; object-position: top center; display: block; }
         .subscribe-title {
           font-family: 'Bebas Neue', sans-serif;
           font-size: clamp(40px, 4vw, 64px);
@@ -143,23 +142,16 @@ export default async function Home() {
         }
         .subscribe-title .black { color: #f0ede6; }
         .subscribe-title .orange { color: #EE7700; }
-        .subscribe-input {
-          background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.12);
-          color: #f0ede6; font-family: 'Space Mono', monospace;
-          font-size: 13px; padding: 14px 18px; outline: none;
-          width: 380px; max-width: 100%;
-        }
-        .subscribe-input::placeholder { color: #555; }
+        .subscribe-body { font-size: 15px; line-height: 2; color: #888; margin-bottom: 8px; max-width: 420px; }
+        .subscribe-body em { font-style: normal; font-weight: 700; color: #f0ede6; }
         .subscribe-btn {
+          display: block; text-decoration: none; text-align: center;
           background: #EE7700; color: #0a0a0a;
           font-family: 'Bebas Neue', sans-serif;
           font-size: 24px; letter-spacing: 3px; text-transform: uppercase;
-          padding: 14px 18px; border: none; cursor: pointer;
-          width: 380px; max-width: 100%; transition: background 0.2s;
+          padding: 14px 18px; width: 380px; max-width: 100%; transition: background 0.2s; margin-top: 8px;
         }
         .subscribe-btn:hover { background: #ff8800; }
-        .subscribe-body { font-size: 15px; line-height: 2; color: #888; margin-bottom: 8px; max-width: 420px; }
-        .subscribe-body em { font-style: normal; font-weight: 700; color: #f0ede6; }
 
         /* ── FOOTER ── */
         footer {
@@ -201,6 +193,7 @@ export default async function Home() {
           <Link href="/bio">BIO</Link>
           <Link href="/blog">BLOG</Link>
           <Link href="/spar">BOT</Link>
+          <a href="https://salescanvas.app" target="_blank" rel="noopener noreferrer">CANVAS</a>
           <a href="https://arno.blog/subscribe" className="nav-cta">SUBSCRIBE</a>
         </div>
       </nav>
@@ -235,15 +228,12 @@ export default async function Home() {
           <p className="canvas-body">
             De meeste verkopers weten niet waarom ze winnen. En al helemaal niet waarom ze verliezen. Het RDS Canvas legt het bloot. Geen excuses, geen flaterende spiegel. Goed verkopen is geen talent — het is een systeem. Brutaal eerlijk, zonder ruimte voor zelfbedrog.
           </p>
-          <Link href="https://canvas.royaldutchsales.com" className="canvas-link">GO GO CANVAS →</Link>
+          <a href="https://salescanvas.app" target="_blank" rel="noopener noreferrer" className="canvas-link">GO GO CANVAS →</a>
         </div>
       </section>
 
       {/* SUBSCRIBE */}
       <section className="subscribe-section" id="subscribe">
-        <div className="subscribe-form-col">
-          <a href="https://arno.blog/subscribe" target="_blank" rel="noopener noreferrer" className="subscribe-btn" style={{display:'block', textAlign:'center', textDecoration:'none'}}>SUBSCRIBE →</a>
-        </div>
         <div className="subscribe-text-col">
           <h2 className="subscribe-title">
             <span className="black">Chief Sales</span><br />
@@ -252,6 +242,10 @@ export default async function Home() {
           <p className="subscribe-body">
             Abonneer je op de Chief Sales Updates, <em>formerly known as Royal Dutch Updates.</em> Bijna iedere vrijdag, bij het wakker worden: food for thought and food for action. Het grootste risico is dat je meer gaat verkopen. Als je er iets mee doet dan, hè? Het is niks waard of miljoenen. Hoe dan ook, <em>priceless.</em>
           </p>
+          <a href="https://arno.blog/subscribe" target="_blank" rel="noopener noreferrer" className="subscribe-btn">SUBSCRIBE →</a>
+        </div>
+        <div className="subscribe-photo-col">
+          <img src="/cyborg.jpg" alt="Arno Diepeveen" />
         </div>
       </section>
 
@@ -273,6 +267,7 @@ export default async function Home() {
             <li><Link href="/bio">Bio</Link></li>
             <li><Link href="/blog">Blog</Link></li>
             <li><Link href="/spar">Bot</Link></li>
+            <li><a href="https://salescanvas.app" target="_blank" rel="noopener noreferrer">Canvas</a></li>
             <li><a href="https://arno.blog/subscribe">Subscribe</a></li>
           </ul>
         </div>
