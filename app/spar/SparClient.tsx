@@ -5,7 +5,8 @@ import Link from 'next/link'
 
 function renderContent(text: string) {
   return text
-    .replace(/\[([^\]]+)\]\((https?:\/\/[^)]+)\)/g, '<a href="$2" target="_blank" rel="noopener noreferrer" style="color:#EE7700;text-decoration:underline">$1</a>')
+    .replace(/\[([^\]]+)\]\s*\((https?:\/\/[^\s)]+)\)/g, '<a href="$2" target="_blank" rel="noopener noreferrer" style="color:#EE7700;text-decoration:underline">$1</a>')
+    .replace(/(?<!\()(https?:\/\/[^\s<"]+)/g, (url, _, offset, str) => str[offset - 1] === '"' ? url : `<a href="${url}" target="_blank" rel="noopener noreferrer" style="color:#EE7700;text-decoration:underline">${url}</a>`)
     .replace(/_([^_\n]+)_/g, '<em>$1</em>')
     .replace(/\*\*([^*\n]+)\*\*/g, '<strong>$1</strong>')
 }
