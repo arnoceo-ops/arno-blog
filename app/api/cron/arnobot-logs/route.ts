@@ -44,7 +44,7 @@ export async function GET(req: NextRequest) {
 
   await resend.emails.send({
     from: 'ArnoBot <noreply@royaldutchsales.com>',
-    to: 'arno@royaldutchsales.com',
+    to: ['arno@royaldutchsales.com', 'arnodiepeveen@gmail.com'],
     subject: `ArnoBot logs — week van ${dateStr}`,
     text: `${data.length} vragen deze week. Zie bijlage.`,
     attachments: [
