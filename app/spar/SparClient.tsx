@@ -4,24 +4,10 @@ import React, { useState, useRef, useEffect } from 'react'
 import Link from 'next/link'
 
 function renderContent(text: string) {
-  const tokenRe = /\[([^\]]+)\]\((https?:\/\/[^)]+)\)|_([^_]+)_|\*\*([^*]+)\*\*/g
-  const result: (string | React.ReactElement)[] = []
-  let last = 0
-  let match: RegExpExecArray | null
-  let key = 0
-  while ((match = tokenRe.exec(text)) !== null) {
-    if (match.index > last) result.push(text.slice(last, match.index))
-    if (match[1] != null) {
-      result.push(<a key={key++} href={match[2]} target="_blank" rel="noopener noreferrer" style={{ color: '#EE7700', textDecoration: 'underline' }}>{match[1]}</a>)
-    } else if (match[3] != null) {
-      result.push(<em key={key++}>{match[3]}</em>)
-    } else if (match[4] != null) {
-      result.push(<strong key={key++}>{match[4]}</strong>)
-    }
-    last = match.index + match[0].length
-  }
-  if (last < text.length) result.push(text.slice(last))
-  return result
+  return text
+    .replace(/\[([^\]]+)\]\((https?:\/\/[^)]+)\)/g, '<a href="$2" target="_blank" rel="noopener noreferrer" style="color:#EE7700;text-decoration:underline">$1</a>')
+    .replace(/_([^_\n]+)_/g, '<em>$1</em>')
+    .replace(/\*\*([^*\n]+)\*\*/g, '<strong>$1</strong>')
 }
 
 interface Message {
@@ -395,7 +381,7 @@ export default function SparClient({ taglineTitle, taglineSub, openers }: Props)
               <div key={i}>
                 <div className="msg-arno">
                   <span className="msg-arno-label">ARNO</span>
-                  <span className="msg-arno-text">{renderContent(msg.content)}</span>
+                  <span className="msg-arno-text" dangerouslySetInnerHTML={{ __html: renderContent(msg.content) }} />
                 </div>
                 {i === messages.length - 1 && !loading && (
                   <div className="msg-actions">
