@@ -121,7 +121,7 @@ async function analyseQuestion(questionId: string, answers: string[]): Promise<{
   const answersText = answers.map((a, i) => `Lid ${i + 1}: "${a}"`).join('\n');
 
   const msg = await anthropic.messages.create({
-    model: 'claude-sonnet-4-5',
+    model: 'claude-sonnet-4-6',
     max_tokens: 200,
     messages: [{
       role: 'user',
@@ -252,7 +252,7 @@ export async function POST(req: NextRequest) {
 
     // Generate ArnoBot summary
     const summaryMsg = await anthropic.messages.create({
-      model: 'claude-sonnet-4-20250514',
+      model: 'claude-sonnet-4-6',
       max_tokens: 400,
       messages: [{
         role: 'user',
