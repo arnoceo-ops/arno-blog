@@ -131,10 +131,10 @@ export default async function Home() {
         }
         .subscribe-text-col {
           padding: 80px 60px; display: flex; flex-direction: column; gap: 16px;
-          border-right: 1px solid #333; justify-content: center;
+          border-right: 1px solid #333;
         }
-        .subscribe-photo-col { overflow: hidden; min-height: 500px; }
-        .subscribe-photo-col img { width: 100%; height: 100%; object-fit: cover; object-position: top center; display: block; }
+        .subscribe-photo-col { overflow: hidden; display: flex; }
+        .subscribe-photo-col img { width: 100%; object-fit: cover; object-position: top center; display: block; flex: 1; }
         .subscribe-title {
           font-family: 'Bebas Neue', sans-serif;
           font-size: clamp(40px, 4vw, 64px);
