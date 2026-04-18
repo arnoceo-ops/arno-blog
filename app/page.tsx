@@ -1,5 +1,6 @@
 import { client } from '@/sanity/client'
 import Link from 'next/link'
+import FeedblitzForm from '@/app/components/FeedblitzForm'
 
 interface Post {
   _id: string
@@ -198,11 +199,10 @@ export default async function Home() {
       {/* NAV — homepage: geen HOME */}
       <nav className="site-nav">
         <div className="nav-links">
-          <Link href="/spar">ARNOBOT</Link>
           <Link href="/bio">BIO</Link>
           <Link href="/blog">BLOG</Link>
-          <Link href="https://canvas.royaldutchsales.com">CANVAS</Link>
-          <a href="#subscribe" className="nav-cta">SUBSCRIBE</a>
+          <Link href="/spar">BOT</Link>
+          <a href="https://arno.blog/subscribe" className="nav-cta">SUBSCRIBE</a>
         </div>
       </nav>
 
@@ -243,9 +243,7 @@ export default async function Home() {
       {/* SUBSCRIBE */}
       <section className="subscribe-section" id="subscribe">
         <div className="subscribe-form-col">
-          <input className="subscribe-input" type="text" placeholder="Naam" />
-          <input className="subscribe-input" type="email" placeholder="Email" />
-          <button className="subscribe-btn">SUBSCRIBE</button>
+          <FeedblitzForm />
         </div>
         <div className="subscribe-text-col">
           <h2 className="subscribe-title">
@@ -273,11 +271,10 @@ export default async function Home() {
         <div className="footer-col">
           <h4>Navigatie</h4>
           <ul className="footer-links">
-            <li><Link href="/blog">Blog</Link></li>
             <li><Link href="/bio">Bio</Link></li>
+            <li><Link href="/blog">Blog</Link></li>
             <li><Link href="/spar">Bot</Link></li>
-           <li><Link href="https://canvas.royaldutchsales.com">Canvas</Link></li>
-            <li><a href="#subscribe">Subscribe</a></li>
+            <li><a href="https://arno.blog/subscribe">Subscribe</a></li>
           </ul>
         </div>
         <div className="footer-col">
