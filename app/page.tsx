@@ -130,9 +130,10 @@ export default async function Home() {
           border-top: 3px solid #EE7700;
         }
         .subscribe-text-col {
-          padding: 80px 60px; display: flex; flex-direction: column; gap: 16px;
-          border-right: 1px solid #333;
+          padding: 80px 60px; border-right: 1px solid #333;
+          display: flex; align-items: flex-start; justify-content: flex-end;
         }
+        .subscribe-text-inner { max-width: 480px; width: 100%; display: flex; flex-direction: column; gap: 16px; }
         .subscribe-photo-col { padding: 80px 60px; overflow: hidden; }
         .subscribe-photo-col img { width: 100%; height: 100%; object-fit: cover; object-position: top center; display: block; }
         .subscribe-title {
@@ -235,14 +236,16 @@ export default async function Home() {
       {/* SUBSCRIBE */}
       <section className="subscribe-section" id="subscribe">
         <div className="subscribe-text-col">
-          <h2 className="subscribe-title">
-            <span className="black">Chief Sales</span><br />
-            <span className="orange">Updates</span>
-          </h2>
-          <p className="subscribe-body">
-            Abonneer je op de Chief Sales Updates, <em>formerly known as Royal Dutch Updates.</em> Bijna iedere vrijdag, bij het wakker worden: food for thought and food for action. Het grootste risico is dat je meer gaat verkopen. Als je er iets mee doet dan, hè? Het is niks waard of miljoenen. Hoe dan ook, <em>priceless.</em>
-          </p>
-          <a href="https://arno.blog/subscribe" target="_blank" rel="noopener noreferrer" className="subscribe-btn">SUBSCRIBE →</a>
+          <div className="subscribe-text-inner">
+            <h2 className="subscribe-title">
+              <span className="black">Chief Sales</span><br />
+              <span className="orange">Updates</span>
+            </h2>
+            <p className="subscribe-body">
+              Abonneer je op de Chief Sales Updates, <em>formerly known as Royal Dutch Updates.</em> Bijna iedere vrijdag, bij het wakker worden: food for thought and food for action. Het grootste risico is dat je meer gaat verkopen. Als je er iets mee doet dan, hè? Het is niks waard of miljoenen. Hoe dan ook, <em>priceless.</em>
+            </p>
+            <a href="https://arno.blog/subscribe" target="_blank" rel="noopener noreferrer" className="subscribe-btn">SUBSCRIBE →</a>
+          </div>
         </div>
         <div className="subscribe-photo-col">
           <img src="/cyborg.jpg" alt="Arno Diepeveen" />
