@@ -1,6 +1,5 @@
 import { client } from '@/sanity/client'
 import Link from 'next/link'
-import FeedblitzForm from '@/app/components/FeedblitzForm'
 
 interface Post {
   _id: string
@@ -243,7 +242,7 @@ export default async function Home() {
       {/* SUBSCRIBE */}
       <section className="subscribe-section" id="subscribe">
         <div className="subscribe-form-col">
-          <FeedblitzForm />
+          <a href="https://arno.blog/subscribe" target="_blank" rel="noopener noreferrer" className="subscribe-btn" style={{display:'block', textAlign:'center', textDecoration:'none'}}>SUBSCRIBE →</a>
         </div>
         <div className="subscribe-text-col">
           <h2 className="subscribe-title">
