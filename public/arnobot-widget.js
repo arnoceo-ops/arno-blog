@@ -150,7 +150,7 @@
       '</div>',
       '<div id="arnobot-messages"></div>',
       '<div id="arnobot-openers">',
-      '  <span class="ab-openers-label">Kies een vraag over sales, strategie of mindset of stel je eigen vraag hieronder. Geen corporate vaagtaal. Gewoon Arno: direct en ongefilterd.</span>',
+      '  <span class="ab-openers-label">Kies een vraag over sales, strategie of mindset <span style="color:#EE7700">of stel je eigen vraag hieronder.</span> Geen corporate vaagtaal. Gewoon Arno: direct en ongefilterd.</span>',
       '  <div class="ab-openers-grid">' + this.openers.map(function (q) {
         return '<button class="ab-opener">' + escapeHtml(q) + '</button>';
       }).join('') + '</div>',
