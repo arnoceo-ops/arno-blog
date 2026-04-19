@@ -133,9 +133,9 @@ export default async function Home() {
           padding: 80px 60px; border-right: 1px solid #333;
           display: flex; align-items: flex-start; justify-content: flex-end;
         }
-        .subscribe-text-inner { max-width: 480px; width: 100%; display: flex; flex-direction: column; gap: 16px; }
-        .subscribe-photo-col { padding: 80px 60px; overflow: hidden; }
-        .subscribe-photo-col img { width: 100%; height: 100%; object-fit: cover; object-position: top center; display: block; }
+        .subscribe-text-inner { max-width: 480px; width: 100%; display: flex; flex-direction: column; gap: 16px; text-align: right; }
+        .subscribe-photo-col { padding: 80px 60px; }
+        .subscribe-photo-col img { width: 100%; height: auto; display: block; }
         .subscribe-title {
           font-family: 'Bebas Neue', sans-serif;
           font-size: clamp(40px, 4vw, 64px);
@@ -143,10 +143,10 @@ export default async function Home() {
         }
         .subscribe-title .black { color: #f0ede6; }
         .subscribe-title .orange { color: #EE7700; }
-        .subscribe-body { font-size: 15px; line-height: 2; color: #888; margin-bottom: 8px; max-width: 420px; }
+        .subscribe-body { font-size: 15px; line-height: 2; color: #888; margin-bottom: 8px; }
         .subscribe-body em { font-style: normal; font-weight: 700; color: #f0ede6; }
         .subscribe-btn {
-          display: block; text-decoration: none; text-align: center;
+          display: block; text-decoration: none; text-align: center; align-self: flex-end;
           background: #EE7700; color: #0a0a0a;
           font-family: 'Bebas Neue', sans-serif;
           font-size: 24px; letter-spacing: 3px; text-transform: uppercase;
