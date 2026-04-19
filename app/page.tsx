@@ -247,7 +247,7 @@ export default async function Home() {
             <a href="https://arno.blog/subscribe" target="_blank" rel="noopener noreferrer" className="subscribe-btn">SUBSCRIBE →</a>
           </div>
         </div>
-        <div style={{padding:'80px 60px'}}>
+        <div className="canvas-right">
           <img src="/cyborg.jpg" alt="Arno Diepeveen" style={{display:'block', width:'100%', height:'auto'}} />
         </div>
       </section>
