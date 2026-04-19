@@ -186,6 +186,30 @@ export default async function Home() {
           grid-column: span 3; border-top: 1px solid #ddd; padding-top: 32px;
           display: flex; justify-content: space-between; color: #aaa; font-size: 10px;
         }
+
+        /* ── MOBILE ── */
+        @media (max-width: 768px) {
+          .site-nav { padding: 12px 20px; }
+          .nav-links { gap: 20px; }
+          .nav-links a { font-size: 17px; letter-spacing: 2px; }
+
+          .hero-content { padding: 0 0 48px 24px; }
+
+          .canvas-section { grid-template-columns: 1fr; }
+          .canvas-left { padding: 48px 24px; border-right: none; border-bottom: 1px solid #ddd; justify-content: flex-start; }
+          .canvas-quote { border-right: none; border-left: 4px solid #EE7700; padding-right: 0; padding-left: 24px; text-align: left; }
+          .canvas-right { padding: 40px 24px; }
+          .canvas-link { width: 100%; }
+
+          .subscribe-section { grid-template-columns: 1fr; }
+          .subscribe-text-col { padding: 48px 24px; border-right: none; border-bottom: 1px solid #333; justify-content: flex-start; }
+          .subscribe-text-inner { text-align: left; }
+          .subscribe-btn { align-self: stretch; width: 100%; }
+          .subscribe-photo-col img { width: calc(100% - 48px); margin: 40px 24px; }
+
+          footer { grid-template-columns: 1fr; padding: 40px 24px; gap: 32px; }
+          .footer-bottom { grid-column: span 1; flex-direction: column; gap: 8px; }
+        }
       `}</style>
 
       {/* NAV — homepage: geen HOME */}
