@@ -134,8 +134,8 @@ export default async function Home() {
           display: flex; align-items: flex-start; justify-content: flex-end;
         }
         .subscribe-text-inner { max-width: 480px; width: 100%; display: flex; flex-direction: column; gap: 16px; text-align: right; }
-        .subscribe-photo-col { padding: 80px 60px; }
-        .subscribe-photo-col img { width: 100%; height: auto; display: block; }
+        .subscribe-photo-col { }
+        .subscribe-photo-col img { display: block; width: calc(100% - 120px); height: auto; margin: 80px 60px; }
         .subscribe-title {
           font-family: 'Bebas Neue', sans-serif;
           font-size: clamp(40px, 4vw, 64px);
