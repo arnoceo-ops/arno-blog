@@ -248,7 +248,7 @@ export default async function Home() {
           </div>
         </div>
         <div className="canvas-right">
-          <img src="/cyborg.jpg" alt="Arno Diepeveen" style={{display:'block', width:'100%', height:'auto'}} />
+          <img src="/cyborg.jpg" alt="Arno Diepeveen" style={{display:'block', width:'380px', maxWidth:'100%', height:'auto'}} />
         </div>
       </section>
 
