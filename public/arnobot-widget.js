@@ -102,6 +102,11 @@
     '.ab-action.primary:hover{background:#EE7700;color:#fff;}',
     '.ab-action.secondary{color:#ccc;border-color:#e5e5e5;}',
     '.ab-action.secondary:hover{color:#999;border-color:#ccc;}',
+    '.ab-hint{padding:12px 28px;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:#EE7700;border-bottom:1px solid #f0f0f0;}',
+    '.ab-cta{padding:20px 28px;border-bottom:1px solid #f0f0f0;}',
+    '.ab-cta p{font-size:13px;color:#888;margin-bottom:12px;}',
+    '.ab-cta-btn{display:inline-block;background:#EE7700;color:#fff;font-family:"Bebas Neue",sans-serif;font-size:18px;letter-spacing:2px;padding:10px 24px;text-decoration:none;transition:background .15s;}',
+    '.ab-cta-btn:hover{background:#ff8800;}',
   ].join('\n');
 
   function injectStyles() {
@@ -224,8 +229,15 @@
       .then(function (res) { return res.json(); })
       .then(function (data) {
         self._setLoading(false);
+        if (data.blocked) {
+          self._addCta('Toch proberen, hè? 😂');
+          self._setBlocked();
+          return;
+        }
         var answer = data.answer || 'Er ging iets mis. Probeer opnieuw.';
         self._addArnoMsg(answer);
+        if (data.hint === 'last_chance') self._addHint('Lekker bezig. Je hebt nog één kans om echt tot de kern te komen.');
+        if (data.hint === 'salescanvas') self._addCta('Als je echt de diepte in wilt, doe dan een free trial.');
         self.history.push({ role: 'user', content: question });
         self.history.push({ role: 'assistant', content: answer });
         self._showActions();
@@ -266,6 +278,29 @@
       this.$messages.appendChild(el);
       this._scrollTo(el);
     }
+  };
+
+  ArnoBot.prototype._addHint = function (text) {
+    var el = document.createElement('div');
+    el.className = 'ab-hint';
+    el.textContent = text;
+    this.$messages.appendChild(el);
+    this._scrollTo(el);
+  };
+
+  ArnoBot.prototype._addCta = function (text) {
+    var el = document.createElement('div');
+    el.className = 'ab-cta';
+    el.innerHTML = '<p>' + escapeHtml(text) + '</p><a href="https://salescanvas.app" target="_blank" rel="noopener noreferrer" class="ab-cta-btn">&rarr; Probeer SalesCanvas gratis</a>';
+    this.$messages.appendChild(el);
+    this._scrollTo(el);
+  };
+
+  ArnoBot.prototype._setBlocked = function () {
+    this.loading = false;
+    this.$textarea.disabled = true;
+    this.$send.disabled = true;
+    this.$textarea.placeholder = '';
   };
 
   ArnoBot.prototype._showActions = function () {
