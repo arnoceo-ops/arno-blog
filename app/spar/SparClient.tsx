@@ -429,9 +429,9 @@ export default function SparClient({ taglineTitle, taglineSub, openers }: Props)
                 )}
                 {(msg.hint === 'salescanvas' || msg.hint === 'blocked') && (
                   <div className="msg-cta">
-                    <p>{msg.hint === 'blocked' ? 'Toch proberen, hè? 😂' : 'Als je echt de diepte in wilt, doe dan een free trial.'}</p>
+                    <p>{msg.hint === 'blocked' ? 'Toch proberen, hè? 😂' : <>Als je echt de diepte in wilt, doe dan een free trial op <a href="https://salescanvas.app" target="_blank" rel="noopener noreferrer" style={{color:'#EE7700'}}>salescanvas.app</a></>}</p>
                     <a href="https://salescanvas.app" target="_blank" rel="noopener noreferrer" className="msg-cta-btn">
-                      GA NAAR SALESCANVAS.APP
+                      SALESCANVAS
                     </a>
                   </div>
                 )}

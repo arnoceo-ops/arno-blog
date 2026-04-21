@@ -237,7 +237,7 @@
         var answer = data.answer || 'Er ging iets mis. Probeer opnieuw.';
         self._addArnoMsg(answer);
         if (data.hint === 'last_chance') self._addHint('Lekker bezig. Je hebt nog één kans om echt tot de kern te komen.');
-        if (data.hint === 'salescanvas') self._addCta('Als je echt de diepte in wilt, doe dan een free trial.');
+        if (data.hint === 'salescanvas') self._addCta('Als je echt de diepte in wilt, doe dan een free trial op salescanvas.app');
         self.history.push({ role: 'user', content: question });
         self.history.push({ role: 'assistant', content: answer });
         self._showActions();
@@ -291,7 +291,8 @@
   ArnoBot.prototype._addCta = function (text) {
     var el = document.createElement('div');
     el.className = 'ab-cta';
-    el.innerHTML = '<p>' + escapeHtml(text) + '</p><a href="https://salescanvas.app" target="_blank" rel="noopener noreferrer" class="ab-cta-btn">GA NAAR SALESCANVAS.APP</a>';
+    var linked = text.replace('salescanvas.app', '<a href="https://salescanvas.app" target="_blank" rel="noopener noreferrer" style="color:#EE7700;text-decoration:underline">salescanvas.app</a>');
+    el.innerHTML = '<p>' + linked + '</p><a href="https://salescanvas.app" target="_blank" rel="noopener noreferrer" class="ab-cta-btn">SALESCANVAS</a>';
     this.$messages.appendChild(el);
     this._scrollTo(el);
   };
