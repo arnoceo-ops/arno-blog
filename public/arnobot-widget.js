@@ -304,6 +304,8 @@
     this.$textarea.placeholder = '';
     var actions = this.container.querySelector('#arnobot-actions');
     if (actions) actions.style.display = 'none';
+    var inputArea = this.container.querySelector('#arnobot-input-area');
+    if (inputArea) inputArea.style.display = 'none';
   };
 
   ArnoBot.prototype._showActions = function () {

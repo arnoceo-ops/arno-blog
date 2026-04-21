@@ -364,7 +364,7 @@ export default function SparClient({ taglineTitle, taglineSub, openers }: Props)
           </div>
         </div>
 
-        <div className="spar-input-area">
+        {!blocked && <div className="spar-input-area">
           <span className="spar-input-label">
             {started ? '↓ Volgende vraag — ga door' : '↓ Stel je vraag — geen filter, geen bullshit'}
           </span>
@@ -393,7 +393,7 @@ export default function SparClient({ taglineTitle, taglineSub, openers }: Props)
             </button>
           </div>
           <p className="spar-hint">Enter = sturen — Shift+Enter = nieuwe regel</p>
-        </div>
+        </div>}
 
         {!started && (
           <div className="spar-openers">
