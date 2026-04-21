@@ -74,7 +74,7 @@ ${context}`,
     const answer = response.content[0].type === 'text' ? response.content[0].text : ''
 
     const ip = req.headers.get('x-forwarded-for')?.split(',')[0]?.trim() || null
-    supabase.from('arnobot_blog_logs').insert({ question, answer, ip }).then()
+    await supabase.from('arnobot_blog_logs').insert({ question, answer, ip })
 
     const origin = req.headers.get('origin')
     return NextResponse.json({ answer: removeAccents(answer) }, { headers: corsHeaders(origin) })
