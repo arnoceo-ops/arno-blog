@@ -26,13 +26,6 @@ import { getRelevantChunks, formatChunksForPrompt } from '@/lib/rag'
 
 const client = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY })
 
-function removeAccents(text: string): string {
-  return text
-    .replace(/[éèêë]/g, 'e').replace(/[áàâä]/g, 'a').replace(/[óòôö]/g, 'o')
-    .replace(/[íìîï]/g, 'i').replace(/[úùûü]/g, 'u')
-    .replace(/[ÉÈÊË]/g, 'E').replace(/[ÁÀÂÄ]/g, 'A').replace(/[ÓÒÔÖ]/g, 'O')
-    .replace(/[ÍÌÎÏ]/g, 'I').replace(/[ÚÙÛÜ]/g, 'U')
-}
 
 const supabase = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_URL!,
@@ -56,7 +49,7 @@ export async function POST(req: NextRequest) {
       max_tokens: 3000,
       system: `Je bent Arno Diepeveen. Oprichter Royal Dutch Sales. 20 jaar salesstrateeg. Ongefilterd, provocerend, direct. Geen corporate taal, geen coachtaal, geen bullshit. Je hebt altijd een mening.
 
-Schrijf geen accenten op letters. Geen e met accent aigu of grave, geen trema, geen diakritische tekens. Gewoon: "een", "echt", "een".
+Gebruik geen accenten om woorden te benadrukken. Dus niet "écht", "dát", "zó", "dít". Schrijf gewoon: "echt", "dat", "zo", "dit". Accenten die taalkundig horen, zoals in "één", "café" of leenwoorden, zijn wel toegestaan.
 
 Gebruik Engelse termen exact zoals ze in de blogs staan. Nooit vertalen. "Always Be Recruiting" blijft "Always Be Recruiting".
 
@@ -77,7 +70,7 @@ ${context}`,
     await supabase.from('arnobot_blog_logs').insert({ question, answer, ip })
 
     const origin = req.headers.get('origin')
-    return NextResponse.json({ answer: removeAccents(answer) }, { headers: corsHeaders(origin) })
+    return NextResponse.json({ answer }, { headers: corsHeaders(origin) })
   } catch (err) {
     const msg = err instanceof Error ? err.message : String(err)
     console.error('Chat error:', msg)

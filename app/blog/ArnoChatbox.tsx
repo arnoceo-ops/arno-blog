@@ -2,6 +2,17 @@
 
 import { useState, useRef, useEffect } from 'react'
 
+function renderMarkdown(text: string) {
+  const parts = text.split(/(\*\*[^*]+\*\*|_[^_]+_|\*[^*]+\*)/g)
+  return parts.map((part, i) => {
+    if (part.startsWith('**') && part.endsWith('**'))
+      return <strong key={i}>{part.slice(2, -2)}</strong>
+    if ((part.startsWith('_') && part.endsWith('_')) || (part.startsWith('*') && part.endsWith('*')))
+      return <em key={i}>{part.slice(1, -1)}</em>
+    return part
+  })
+}
+
 interface Message {
   role: 'user' | 'arno'
   content: string
@@ -78,7 +89,7 @@ export default function ArnoChatbox() {
           {messages.map((msg, i) => (
             <div key={i} className={msg.role === 'user' ? 'chat-msg-user' : 'chat-msg-arno'}>
               {msg.role === 'arno' && <strong>— Arno</strong>}
-              {msg.content}
+              {msg.role === 'arno' ? renderMarkdown(msg.content) : msg.content}
             </div>
           ))}
           {loading && <div className="chat-loading">Arno denkt na...</div>}
