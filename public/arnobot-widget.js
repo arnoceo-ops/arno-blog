@@ -302,6 +302,8 @@
     this.$textarea.disabled = true;
     this.$send.disabled = true;
     this.$textarea.placeholder = '';
+    var actions = this.container.querySelector('#arnobot-actions');
+    if (actions) actions.style.display = 'none';
   };
 
   ArnoBot.prototype._showActions = function () {

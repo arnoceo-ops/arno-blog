@@ -435,7 +435,7 @@ export default function SparClient({ taglineTitle, taglineSub, openers }: Props)
                     </a>
                   </div>
                 )}
-                {i === messages.length - 1 && !loading && !blocked && msg.content && (
+                {i === messages.length - 1 && !loading && !blocked && msg.hint !== 'blocked' && msg.content && (
                   <div className="msg-actions">
                     <button className="msg-action-btn primary" onClick={triggerBlink}>
                       ↑ Vervolgvraag stellen
