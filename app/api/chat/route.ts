@@ -48,11 +48,11 @@ export async function POST(req: NextRequest) {
         .gte('created_at', since)
 
       const n = count ?? 0
-      if (n >= 4) {
+      if (n >= 3) {
         return NextResponse.json({ blocked: true }, { headers: corsHeaders(origin) })
       }
-      if (n === 2) hint = 'last_chance'
-      if (n === 3) hint = 'salescanvas'
+      if (n === 1) hint = 'last_chance'
+      if (n === 2) hint = 'salescanvas'
     }
 
     const relevant = await getRelevantChunks(question, 10)

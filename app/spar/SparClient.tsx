@@ -93,7 +93,7 @@ export default function SparClient({ taglineTitle, taglineSub, openers }: Props)
   return (
     <>
       <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Mono:wght@400;700&family=Barlow:wght@400;700&family=Barlow+Condensed:wght@300;600;900&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Mono:wght@400;700&family=Barlow:wght@400;700&family=Barlow+Condensed:wght@300;600;900&family=Open+Sans:wght@400;700&display=swap');
         * { box-sizing: border-box; margin: 0; padding: 0; }
         html, body { height: 100%; }
         body { background: #0a0a0a; color: #f0ede6; font-family: 'Space Mono', monospace; }
@@ -316,7 +316,7 @@ export default function SparClient({ taglineTitle, taglineSub, openers }: Props)
         /* HINT / CTA BLOKKEN */
         .msg-hint {
           padding: 16px 0 16px 120px;
-          font-size: 12px; letter-spacing: 2px; text-transform: uppercase;
+          font-family: 'Open Sans', sans-serif; font-size: 15px;
           color: #EE7700; border-bottom: 1px solid #141414;
           animation: fadein 0.4s ease;
         }
@@ -326,7 +326,7 @@ export default function SparClient({ taglineTitle, taglineSub, openers }: Props)
           animation: fadein 0.4s ease;
         }
         .msg-cta p {
-          font-size: 13px; letter-spacing: 1px; color: #888; margin-bottom: 14px;
+          font-family: 'Open Sans', sans-serif; font-size: 15px; color: #888; margin-bottom: 14px;
         }
         .msg-cta-btn {
           display: inline-block;

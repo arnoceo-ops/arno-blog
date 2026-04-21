@@ -102,9 +102,9 @@
     '.ab-action.primary:hover{background:#EE7700;color:#fff;}',
     '.ab-action.secondary{color:#ccc;border-color:#e5e5e5;}',
     '.ab-action.secondary:hover{color:#999;border-color:#ccc;}',
-    '.ab-hint{padding:12px 28px;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:#EE7700;border-bottom:1px solid #f0f0f0;}',
+    '.ab-hint{padding:12px 28px;font-family:"Open Sans",sans-serif;font-size:15px;color:#EE7700;border-bottom:1px solid #f0f0f0;}',
     '.ab-cta{padding:20px 28px;border-bottom:1px solid #f0f0f0;}',
-    '.ab-cta p{font-size:13px;color:#888;margin-bottom:12px;}',
+    '.ab-cta p{font-family:"Open Sans",sans-serif;font-size:15px;color:#888;margin-bottom:12px;}',
     '.ab-cta-btn{display:inline-block;background:#EE7700;color:#fff;font-family:"Bebas Neue",sans-serif;font-size:18px;letter-spacing:2px;padding:10px 24px;text-decoration:none;transition:background .15s;}',
     '.ab-cta-btn:hover{background:#ff8800;}',
   ].join('\n');
