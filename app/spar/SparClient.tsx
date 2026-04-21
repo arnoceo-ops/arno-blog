@@ -14,6 +14,7 @@ function renderContent(text: string) {
 interface Message {
   role: 'user' | 'arno'
   content: string
+  hint?: string | null
 }
 
 interface Props {
@@ -29,6 +30,7 @@ export default function SparClient({ taglineTitle, taglineSub, openers }: Props)
   const [history, setHistory] = useState<{role: string, content: string}[]>([])
   const [started, setStarted] = useState(false)
   const [blinkGlow, setBlinkGlow] = useState(false)
+  const [blocked, setBlocked] = useState(false)
   const bottomRef = useRef<HTMLDivElement>(null)
   const inputRef = useRef<HTMLTextAreaElement>(null)
 
@@ -42,6 +44,7 @@ export default function SparClient({ taglineTitle, taglineSub, openers }: Props)
     setHistory([])
     setInput('')
     setBlinkGlow(false)
+    setBlocked(false)
     window.scrollTo({ top: 0, behavior: 'smooth' })
   }
 
@@ -52,7 +55,7 @@ export default function SparClient({ taglineTitle, taglineSub, openers }: Props)
   }
 
   async function ask(question: string) {
-    if (!question.trim() || loading) return
+    if (!question.trim() || loading || blocked) return
     setStarted(true)
     setMessages(prev => [...prev, { role: 'user', content: question }])
     setInput('')
@@ -65,8 +68,15 @@ export default function SparClient({ taglineTitle, taglineSub, openers }: Props)
         body: JSON.stringify({ question, history })
       })
       const data = await res.json()
+
+      if (data.blocked) {
+        setBlocked(true)
+        setMessages(prev => [...prev, { role: 'arno', content: '', hint: 'blocked' }])
+        return
+      }
+
       const answer = data.answer || 'Geen antwoord ontvangen.'
-      setMessages(prev => [...prev, { role: 'arno', content: answer }])
+      setMessages(prev => [...prev, { role: 'arno', content: answer, hint: data.hint ?? null }])
       setHistory(prev => [
         ...prev,
         { role: 'user', content: question },
@@ -302,6 +312,31 @@ export default function SparClient({ taglineTitle, taglineSub, openers }: Props)
         .msg-action-btn.secondary:hover {
           border-color: #555; color: #888;
         }
+
+        /* HINT / CTA BLOKKEN */
+        .msg-hint {
+          padding: 16px 0 16px 120px;
+          font-size: 12px; letter-spacing: 2px; text-transform: uppercase;
+          color: #EE7700; border-bottom: 1px solid #141414;
+          animation: fadein 0.4s ease;
+        }
+        .msg-cta {
+          padding: 24px 0 24px 120px;
+          border-bottom: 1px solid #141414;
+          animation: fadein 0.4s ease;
+        }
+        .msg-cta p {
+          font-size: 13px; letter-spacing: 1px; color: #888; margin-bottom: 14px;
+        }
+        .msg-cta-btn {
+          display: inline-block;
+          background: #EE7700; color: #0a0a0a;
+          font-family: 'Bebas Neue', sans-serif;
+          font-size: 18px; letter-spacing: 3px;
+          padding: 12px 28px; text-decoration: none;
+          transition: background 0.2s;
+        }
+        .msg-cta-btn:hover { background: #ff8800; }
       `}</style>
 
       <nav className="site-nav">
@@ -344,14 +379,14 @@ export default function SparClient({ taglineTitle, taglineSub, openers }: Props)
                   ask(input)
                 }
               }}
-              placeholder="Tsja, stel eens een goeie vraag..."
-              disabled={loading}
+              placeholder={blocked ? 'Kom morgen terug.' : 'Tsja, stel eens een goeie vraag...'}
+              disabled={loading || blocked}
               rows={2}
             />
             <button
               className="spar-send"
               onClick={() => ask(input)}
-              disabled={loading || !input.trim()}
+              disabled={loading || blocked || !input.trim()}
             >
               {loading ? '...' : 'SPAR →'}
             </button>
@@ -380,11 +415,26 @@ export default function SparClient({ taglineTitle, taglineSub, openers }: Props)
               </div>
             ) : (
               <div key={i}>
-                <div className="msg-arno">
-                  <span className="msg-arno-label">ARNO</span>
-                  <span className="msg-arno-text" dangerouslySetInnerHTML={{ __html: renderContent(msg.content) }} />
-                </div>
-                {i === messages.length - 1 && !loading && (
+                {msg.content && (
+                  <div className="msg-arno">
+                    <span className="msg-arno-label">ARNO</span>
+                    <span className="msg-arno-text" dangerouslySetInnerHTML={{ __html: renderContent(msg.content) }} />
+                  </div>
+                )}
+                {msg.hint === 'last_chance' && (
+                  <div className="msg-hint">
+                    Lekker bezig. Je hebt nog één kans om echt tot de kern te komen.
+                  </div>
+                )}
+                {(msg.hint === 'salescanvas' || msg.hint === 'blocked') && (
+                  <div className="msg-cta">
+                    <p>{msg.hint === 'blocked' ? 'Toch proberen, hè? 😂' : 'Als je echt de diepte in wilt, doe dan een free trial.'}</p>
+                    <a href="https://salescanvas.app" target="_blank" rel="noopener noreferrer" className="msg-cta-btn">
+                      → Probeer SalesCanvas gratis
+                    </a>
+                  </div>
+                )}
+                {i === messages.length - 1 && !loading && !blocked && msg.content && (
                   <div className="msg-actions">
                     <button className="msg-action-btn primary" onClick={triggerBlink}>
                       ↑ Vervolgvraag stellen

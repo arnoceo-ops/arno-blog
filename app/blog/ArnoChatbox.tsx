@@ -2,20 +2,10 @@
 
 import { useState, useRef, useEffect } from 'react'
 
-function renderMarkdown(text: string) {
-  const parts = text.split(/(\*\*[^*]+\*\*|_[^_]+_|\*[^*]+\*)/g)
-  return parts.map((part, i) => {
-    if (part.startsWith('**') && part.endsWith('**'))
-      return <strong key={i}>{part.slice(2, -2)}</strong>
-    if ((part.startsWith('_') && part.endsWith('_')) || (part.startsWith('*') && part.endsWith('*')))
-      return <em key={i}>{part.slice(1, -1)}</em>
-    return part
-  })
-}
-
 interface Message {
   role: 'user' | 'arno'
   content: string
+  hint?: string | null
 }
 
 const STARTERS = [
@@ -27,10 +17,43 @@ const STARTERS = [
   'Hoe bouw ik een winnend sales team?',
 ]
 
+function renderMarkdown(text: string) {
+  const parts = text.split(/(\*\*[^*]+\*\*|_[^_]+_|\*[^*]+\*)/g)
+  return parts.map((part, i) => {
+    if (part.startsWith('**') && part.endsWith('**'))
+      return <strong key={i}>{part.slice(2, -2)}</strong>
+    if ((part.startsWith('_') && part.endsWith('_')) || (part.startsWith('*') && part.endsWith('*')))
+      return <em key={i}>{part.slice(1, -1)}</em>
+    return part
+  })
+}
+
+function HintBlock({ hint }: { hint: string }) {
+  if (hint === 'last_chance') {
+    return (
+      <div className="chat-hint">
+        Lekker bezig. Je hebt nog één kans om echt tot de kern te komen.
+      </div>
+    )
+  }
+  if (hint === 'salescanvas' || hint === 'blocked') {
+    return (
+      <div className="chat-cta">
+        <p>{hint === 'blocked' ? 'Toch proberen, hè? 😂' : 'Als je echt de diepte in wilt, doe dan een free trial.'}</p>
+        <a href="https://salescanvas.app" target="_blank" rel="noopener noreferrer" className="chat-cta-btn">
+          → Probeer SalesCanvas gratis
+        </a>
+      </div>
+    )
+  }
+  return null
+}
+
 export default function ArnoChatbox() {
   const [messages, setMessages] = useState<Message[]>([])
   const [input, setInput] = useState('')
   const [loading, setLoading] = useState(false)
+  const [blocked, setBlocked] = useState(false)
   const [history, setHistory] = useState<{role: string, content: string}[]>([])
   const bottomRef = useRef<HTMLDivElement>(null)
 
@@ -39,7 +62,7 @@ export default function ArnoChatbox() {
   }, [messages, loading])
 
   async function ask(question: string) {
-    if (!question.trim() || loading) return
+    if (!question.trim() || loading || blocked) return
 
     setMessages(prev => [...prev, { role: 'user', content: question }])
     setInput('')
@@ -52,9 +75,15 @@ export default function ArnoChatbox() {
         body: JSON.stringify({ question, history })
       })
       const data = await res.json()
-      const answer = data.answer || 'Geen antwoord ontvangen.'
 
-      setMessages(prev => [...prev, { role: 'arno', content: answer }])
+      if (data.blocked) {
+        setBlocked(true)
+        setMessages(prev => [...prev, { role: 'arno', content: '', hint: 'blocked' }])
+        return
+      }
+
+      const answer = data.answer || 'Geen antwoord ontvangen.'
+      setMessages(prev => [...prev, { role: 'arno', content: answer, hint: data.hint ?? null }])
       setHistory(prev => [
         ...prev,
         { role: 'user', content: question },
@@ -87,9 +116,12 @@ export default function ArnoChatbox() {
       {messages.length > 0 && (
         <div className="chat-messages">
           {messages.map((msg, i) => (
-            <div key={i} className={msg.role === 'user' ? 'chat-msg-user' : 'chat-msg-arno'}>
-              {msg.role === 'arno' && <strong>— Arno</strong>}
-              {msg.role === 'arno' ? renderMarkdown(msg.content) : msg.content}
+            <div key={i}>
+              <div className={msg.role === 'user' ? 'chat-msg-user' : 'chat-msg-arno'}>
+                {msg.role === 'arno' && msg.content && <strong>— Arno</strong>}
+                {msg.role === 'arno' ? renderMarkdown(msg.content) : msg.content}
+              </div>
+              {msg.hint && <HintBlock hint={msg.hint} />}
             </div>
           ))}
           {loading && <div className="chat-loading">Arno denkt na...</div>}
@@ -103,13 +135,13 @@ export default function ArnoChatbox() {
           value={input}
           onChange={e => setInput(e.target.value)}
           onKeyDown={e => e.key === 'Enter' && ask(input)}
-          placeholder="Stel Arno een vraag over sales, strategie of mindset..."
-          disabled={loading}
+          placeholder={blocked ? 'Kom morgen terug.' : 'Stel Arno een vraag over sales, strategie of mindset...'}
+          disabled={loading || blocked}
         />
         <button
           className="chat-send"
           onClick={() => ask(input)}
-          disabled={loading}
+          disabled={loading || blocked}
         >
           {loading ? '...' : 'VRAAG →'}
         </button>

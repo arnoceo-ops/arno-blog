@@ -26,7 +26,6 @@ import { getRelevantChunks, formatChunksForPrompt } from '@/lib/rag'
 
 const client = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY })
 
-
 const supabase = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_URL!,
   process.env.SUPABASE_SERVICE_ROLE_KEY!
@@ -35,6 +34,26 @@ const supabase = createClient(
 export async function POST(req: NextRequest) {
   try {
     const { question, history } = await req.json()
+    const origin = req.headers.get('origin')
+    const ip = req.headers.get('x-forwarded-for')?.split(',')[0]?.trim() || null
+
+    // Check IP question count over last 24 hours
+    let hint: string | null = null
+    if (ip) {
+      const since = new Date(Date.now() - 24 * 60 * 60 * 1000).toISOString()
+      const { count } = await supabase
+        .from('arnobot_blog_logs')
+        .select('*', { count: 'exact', head: true })
+        .eq('ip', ip)
+        .gte('created_at', since)
+
+      const n = count ?? 0
+      if (n >= 4) {
+        return NextResponse.json({ blocked: true }, { headers: corsHeaders(origin) })
+      }
+      if (n === 2) hint = 'last_chance'
+      if (n === 3) hint = 'salescanvas'
+    }
 
     const relevant = await getRelevantChunks(question, 10)
     const context = formatChunksForPrompt(relevant)
@@ -66,11 +85,9 @@ ${context}`,
 
     const answer = response.content[0].type === 'text' ? response.content[0].text : ''
 
-    const ip = req.headers.get('x-forwarded-for')?.split(',')[0]?.trim() || null
     await supabase.from('arnobot_blog_logs').insert({ question, answer, ip })
 
-    const origin = req.headers.get('origin')
-    return NextResponse.json({ answer }, { headers: corsHeaders(origin) })
+    return NextResponse.json({ answer, hint }, { headers: corsHeaders(origin) })
   } catch (err) {
     const msg = err instanceof Error ? err.message : String(err)
     console.error('Chat error:', msg)
