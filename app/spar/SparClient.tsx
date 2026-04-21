@@ -379,7 +379,7 @@ export default function SparClient({ taglineTitle, taglineSub, openers }: Props)
                   ask(input)
                 }
               }}
-              placeholder={blocked ? 'Kom morgen terug.' : 'Tsja, stel eens een goeie vraag...'}
+              placeholder="Tsja, stel eens een goeie vraag..."
               disabled={loading || blocked}
               rows={2}
             />
