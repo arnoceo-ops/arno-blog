@@ -334,6 +334,7 @@ export default function SparClient({ taglineTitle, taglineSub, openers }: Props)
           font-family: 'Bebas Neue', sans-serif;
           font-size: 18px; letter-spacing: 3px;
           padding: 12px 28px; text-decoration: none;
+          border-radius: 999px;
           transition: background 0.2s;
         }
         .msg-cta-btn:hover { background: #ff8800; }
@@ -430,7 +431,7 @@ export default function SparClient({ taglineTitle, taglineSub, openers }: Props)
                   <div className="msg-cta">
                     <p>{msg.hint === 'blocked' ? 'Toch proberen, hè? 😂' : 'Als je echt de diepte in wilt, doe dan een free trial.'}</p>
                     <a href="https://salescanvas.app" target="_blank" rel="noopener noreferrer" className="msg-cta-btn">
-                      → Probeer SalesCanvas gratis
+                      GA NAAR SALESCANVAS.APP
                     </a>
                   </div>
                 )}

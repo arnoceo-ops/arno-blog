@@ -105,7 +105,7 @@
     '.ab-hint{padding:12px 28px;font-size:15px;color:#EE7700;border-bottom:1px solid #f0f0f0;}',
     '.ab-cta{padding:20px 28px;border-bottom:1px solid #f0f0f0;}',
     '.ab-cta p{font-size:15px;color:#888;margin-bottom:12px;}',
-    '.ab-cta-btn{display:inline-block;background:#EE7700;color:#fff;font-family:"Bebas Neue",sans-serif;font-size:18px;letter-spacing:2px;padding:10px 24px;text-decoration:none;transition:background .15s;}',
+    '.ab-cta-btn{display:inline-block;background:#EE7700;color:#fff;font-family:"Bebas Neue",sans-serif;font-size:18px;letter-spacing:2px;padding:10px 28px;text-decoration:none;border-radius:999px;transition:background .15s;}',
     '.ab-cta-btn:hover{background:#ff8800;}',
   ].join('\n');
 
@@ -291,7 +291,7 @@
   ArnoBot.prototype._addCta = function (text) {
     var el = document.createElement('div');
     el.className = 'ab-cta';
-    el.innerHTML = '<p>' + escapeHtml(text) + '</p><a href="https://salescanvas.app" target="_blank" rel="noopener noreferrer" class="ab-cta-btn">&rarr; Probeer SalesCanvas gratis</a>';
+    el.innerHTML = '<p>' + escapeHtml(text) + '</p><a href="https://salescanvas.app" target="_blank" rel="noopener noreferrer" class="ab-cta-btn">GA NAAR SALESCANVAS.APP</a>';
     this.$messages.appendChild(el);
     this._scrollTo(el);
   };
