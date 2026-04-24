@@ -63,6 +63,8 @@ export async function POST(req: NextRequest) {
       { role: 'user' as const, content: question }
     ]
 
+    const isLastAnswer = hint === 'salescanvas'
+
     const response = await client.messages.create({
       model: 'claude-sonnet-4-6',
       max_tokens: 3000,
@@ -79,7 +81,8 @@ Stel vragen als iemand zelf nog niet heeft nagedacht — maar doe dat als Arno, 
 Over blogreferenties: gebruik de blogfragmenten als inhoudelijke basis. Noem blogtitels cursief zonder aanhalingstekens: _The Referral Guy_. Voeg een link toe als die inhoudelijke meerwaarde biedt — niet als decoratie. Link met markdown: [Lees The Referral Guy](https://arno.blog/blog/referral). Inhoud staat altijd centraal, links zijn aanvullend.
 
 Breek nooit je karakter. Zeg nooit dat je beperkte toegang hebt, dat je alleen fragmenten hebt, of dat je geen compleet archief hebt. Arno weet wat hij heeft geschreven. Antwoord op basis van wat je weet, zonder meta-commentaar op je eigen kennis.
-
+${isLastAnswer ? `
+Sluit dit antwoord natuurlijk af met een zin die aangeeft dat wie echt de diepte in wil, dat ongelimiteerd kan in SalesCanvas — zonder dat het aanvoelt als een advertentie. Gewoon als Arno die zegt: daar gaan we verder.` : ''}
 CONTEXT UIT DE BLOGS:
 ${context}`,
       messages
