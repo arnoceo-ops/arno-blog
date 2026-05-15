@@ -39,7 +39,8 @@ export async function POST(req: NextRequest) {
 
     // Check IP question count over last 24 hours
     let hint: string | null = null
-    if (ip) {
+    const limitEnabled = process.env.ARNOBOT_LIMIT_ENABLED === 'true'
+    if (limitEnabled && ip) {
       const since = new Date(Date.now() - 24 * 60 * 60 * 1000).toISOString()
       const { count } = await supabase
         .from('arnobot_blog_logs')
