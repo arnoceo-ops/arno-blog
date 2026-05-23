@@ -1,9 +1,6 @@
-import { auth } from '@clerk/nextjs/server'
 import { redirect } from 'next/navigation'
 import { createClient } from '@supabase/supabase-js'
 import PrintButton from './PrintButton'
-
-const ADMIN_USER_ID = process.env.NEXT_PUBLIC_ADMIN_USER_ID
 
 type LogRow = {
   id: string
@@ -17,12 +14,14 @@ type LogRow = {
 export default async function ArnoBotAdminPage({
   searchParams,
 }: {
-  searchParams: Promise<{ date?: string }>
+  searchParams: Promise<{ date?: string; key?: string }>
 }) {
-  const { userId } = await auth()
-  if (!userId || userId !== ADMIN_USER_ID) redirect('/')
-
   const params = await searchParams
+
+  if (!params.key || params.key !== process.env.ARNOBOT_ADMIN_KEY) {
+    redirect('/')
+  }
+
   const date = params.date || new Date().toISOString().slice(0, 10)
 
   const supabase = createClient(
@@ -63,6 +62,7 @@ export default async function ArnoBotAdminPage({
           <h1 style={{ fontSize: '48px', fontWeight: 700, margin: 0 }}>Export</h1>
         </div>
         <form method="GET" style={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
+          <input type="hidden" name="key" value={params.key} />
           <input
             type="date"
             name="date"
@@ -76,9 +76,7 @@ export default async function ArnoBotAdminPage({
             Laad
           </button>
         </form>
-        {sessionList.length > 0 && (
-          <PrintButton />
-        )}
+        {sessionList.length > 0 && <PrintButton />}
       </div>
 
       {sessionList.length === 0 ? (
