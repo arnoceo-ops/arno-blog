@@ -33,14 +33,16 @@ type Props = {
 export function ArnoBotPdfDocument({ sessions, dateRange }: Props) {
   return (
     <Document>
-      <Page size="A4" style={styles.page}>
-        <View style={styles.header}>
-          <Text style={styles.headerLabel}>ARNOBOT — ROYAL DUTCH SALES</Text>
-          <Text style={styles.headerTitle}>Gesprekken export</Text>
-          <Text style={styles.headerDate}>{dateRange}</Text>
-        </View>
-        {sessions.map(([sessionId, messages], idx) => (
-          <View key={sessionId} style={styles.session} wrap={false}>
+      {sessions.map(([sessionId, messages], idx) => (
+        <Page key={sessionId} size="A4" style={styles.page}>
+          {idx === 0 && (
+            <View style={styles.header}>
+              <Text style={styles.headerLabel}>ARNOBOT — ROYAL DUTCH SALES</Text>
+              <Text style={styles.headerTitle}>Gesprekken export</Text>
+              <Text style={styles.headerDate}>{dateRange}</Text>
+            </View>
+          )}
+          <View style={styles.session}>
             <View style={styles.sessionHeader}>
               <Text style={styles.sessionLabel}>SESSIE {idx + 1} — {messages[0].ip}</Text>
               <Text style={styles.sessionTime}>
@@ -48,15 +50,15 @@ export function ArnoBotPdfDocument({ sessions, dateRange }: Props) {
               </Text>
             </View>
             {messages.map((msg) => (
-              <View key={msg.id} style={styles.message}>
+              <View key={msg.id} style={styles.message} wrap={false}>
                 <Text style={styles.question}>{msg.question}</Text>
                 <Text style={styles.answer}>{msg.answer}</Text>
                 <Text style={styles.timestamp}>{new Date(msg.created_at).toLocaleTimeString('nl-NL')}</Text>
               </View>
             ))}
           </View>
-        ))}
-      </Page>
+        </Page>
+      ))}
     </Document>
   )
 }
