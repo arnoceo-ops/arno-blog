@@ -19,8 +19,7 @@ export default async function ArnoBotAdminPage({
 }) {
   const cookieStore = await cookies()
   const token = cookieStore.get('arnobot_admin')?.value
-  const expected = `${process.env.ARNOBOT_ADMIN_USER}:${process.env.ARNOBOT_ADMIN_PASS}`
-  if (!token || token !== expected) redirect('/spar/admin/login')
+  if (!token || token !== process.env.ARNOBOT_ADMIN_KEY) redirect('/spar/admin/login')
 
   const params = await searchParams
   const today = new Date().toISOString().slice(0, 10)

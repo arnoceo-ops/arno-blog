@@ -5,7 +5,6 @@ import { useRouter } from 'next/navigation'
 
 export default function AdminLoginPage() {
   const router = useRouter()
-  const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
@@ -17,7 +16,7 @@ export default function AdminLoginPage() {
     const res = await fetch('/api/arnobot-admin-login', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ username, password }),
+      body: JSON.stringify({ password }),
     })
     if (res.ok) {
       router.push('/spar/admin')
@@ -33,14 +32,6 @@ export default function AdminLoginPage() {
         <p style={{ color: '#EE7700', fontSize: '11px', letterSpacing: '4px', marginBottom: '12px' }}>ARNOBOT</p>
         <h1 style={{ color: '#f0ede6', fontSize: '48px', fontWeight: 700, margin: '0 0 40px 0', letterSpacing: '-1px' }}>Admin</h1>
         <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
-          <input
-            type="text"
-            placeholder="Gebruikersnaam"
-            value={username}
-            onChange={e => setUsername(e.target.value)}
-            required
-            style={{ background: '#111', border: '1px solid #222', color: '#f0ede6', padding: '14px 16px', fontSize: '14px', outline: 'none' }}
-          />
           <input
             type="password"
             placeholder="Wachtwoord"
