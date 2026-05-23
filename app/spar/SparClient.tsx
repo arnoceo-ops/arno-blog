@@ -32,7 +32,7 @@ export default function SparClient({ taglineTitle, taglineSub, openers }: Props)
   const [started, setStarted] = useState(false)
   const [blinkGlow, setBlinkGlow] = useState(false)
   const [blocked, setBlocked] = useState(false)
-  const [sessionId, setSessionId] = useState<string>('')
+  const sessionIdRef = useRef<string>('')
   const bottomRef = useRef<HTMLDivElement>(null)
   const inputRef = useRef<HTMLTextAreaElement>(null)
 
@@ -67,7 +67,7 @@ export default function SparClient({ taglineTitle, taglineSub, openers }: Props)
       const res = await fetch('/api/chat', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ question, history, sessionId })
+        body: JSON.stringify({ question, history, sessionId: sessionIdRef.current })
       })
       const data = await res.json()
 
@@ -77,7 +77,7 @@ export default function SparClient({ taglineTitle, taglineSub, openers }: Props)
         return
       }
 
-      if (data.sessionId && !sessionId) setSessionId(data.sessionId)
+      if (data.sessionId && !sessionIdRef.current) sessionIdRef.current = data.sessionId
       const answer = data.answer || 'Geen antwoord ontvangen.'
       setMessages(prev => [...prev, { role: 'arno', content: answer, hint: data.hint ?? null }])
       setHistory(prev => [
