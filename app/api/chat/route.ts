@@ -33,7 +33,8 @@ const supabase = createClient(
 
 export async function POST(req: NextRequest) {
   try {
-    const { question, history, sessionId } = await req.json()
+    const { question, history, sessionId: clientSessionId } = await req.json()
+    const sessionId = clientSessionId || crypto.randomUUID()
     const origin = req.headers.get('origin')
     const ip = req.headers.get('x-forwarded-for')?.split(',')[0]?.trim() || null
 
@@ -95,7 +96,7 @@ ${context}`,
 
     await supabase.from('arnobot_blog_logs').insert({ question, answer, ip, session_id: sessionId })
 
-    return NextResponse.json({ answer, hint }, { headers: corsHeaders(origin) })
+    return NextResponse.json({ answer, hint, sessionId }, { headers: corsHeaders(origin) })
   } catch (err) {
     const msg = err instanceof Error ? err.message : String(err)
     console.error('Chat error:', msg)
