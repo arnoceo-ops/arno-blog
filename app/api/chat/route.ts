@@ -33,7 +33,7 @@ const supabase = createClient(
 
 export async function POST(req: NextRequest) {
   try {
-    const { question, history } = await req.json()
+    const { question, history, sessionId } = await req.json()
     const origin = req.headers.get('origin')
     const ip = req.headers.get('x-forwarded-for')?.split(',')[0]?.trim() || null
 
@@ -93,7 +93,7 @@ ${context}`,
 
     const answer = response.content[0].type === 'text' ? response.content[0].text : ''
 
-    await supabase.from('arnobot_blog_logs').insert({ question, answer, ip })
+    await supabase.from('arnobot_blog_logs').insert({ question, answer, ip, session_id: sessionId })
 
     return NextResponse.json({ answer, hint }, { headers: corsHeaders(origin) })
   } catch (err) {

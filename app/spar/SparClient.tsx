@@ -32,6 +32,7 @@ export default function SparClient({ taglineTitle, taglineSub, openers }: Props)
   const [started, setStarted] = useState(false)
   const [blinkGlow, setBlinkGlow] = useState(false)
   const [blocked, setBlocked] = useState(false)
+  const [sessionId] = useState(() => crypto.randomUUID())
   const bottomRef = useRef<HTMLDivElement>(null)
   const inputRef = useRef<HTMLTextAreaElement>(null)
 
@@ -66,7 +67,7 @@ export default function SparClient({ taglineTitle, taglineSub, openers }: Props)
       const res = await fetch('/api/chat', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ question, history })
+        body: JSON.stringify({ question, history, sessionId })
       })
       const data = await res.json()
 
