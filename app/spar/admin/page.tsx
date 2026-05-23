@@ -1,6 +1,7 @@
 import { redirect } from 'next/navigation'
+import { cookies } from 'next/headers'
 import { createClient } from '@supabase/supabase-js'
-import PrintButton from './PrintButton'
+import DownloadPdfButton from './DownloadPdfButton'
 
 type LogRow = {
   id: string
@@ -14,15 +15,17 @@ type LogRow = {
 export default async function ArnoBotAdminPage({
   searchParams,
 }: {
-  searchParams: Promise<{ date?: string; key?: string }>
+  searchParams: Promise<{ from?: string; to?: string }>
 }) {
+  const cookieStore = await cookies()
+  const token = cookieStore.get('arnobot_admin')?.value
+  const expected = `${process.env.ARNOBOT_ADMIN_USER}:${process.env.ARNOBOT_ADMIN_PASS}`
+  if (!token || token !== expected) redirect('/spar/admin/login')
+
   const params = await searchParams
-
-  if (!params.key || params.key !== process.env.ARNOBOT_ADMIN_KEY) {
-    redirect('/')
-  }
-
-  const date = params.date || new Date().toISOString().slice(0, 10)
+  const today = new Date().toISOString().slice(0, 10)
+  const from = params.from || today
+  const to = params.to || today
 
   const supabase = createClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
@@ -32,77 +35,74 @@ export default async function ArnoBotAdminPage({
   const { data } = await supabase
     .from('arnobot_blog_logs')
     .select('*')
-    .like('session_id', `%-${date}`)
+    .gte('created_at', `${from}T00:00:00`)
+    .lte('created_at', `${to}T23:59:59`)
     .order('created_at', { ascending: true })
 
   const rows: LogRow[] = data || []
 
   const sessions: Record<string, LogRow[]> = {}
   for (const row of rows) {
-    if (!sessions[row.session_id]) sessions[row.session_id] = []
-    sessions[row.session_id].push(row)
+    const key = row.session_id || row.ip || 'onbekend'
+    if (!sessions[key]) sessions[key] = []
+    sessions[key].push(row)
   }
-
   const sessionList = Object.entries(sessions)
+  const dateRange = from === to ? from : `${from} t/m ${to}`
 
   return (
-    <>
-      <style>{`
-        @media print {
-          .no-print { display: none !important; }
-          body { background: white; color: black; }
-          .session-block { page-break-inside: avoid; }
-        }
-        body { background: #0a0a0a; color: #f0ede6; font-family: sans-serif; padding: 48px; }
-      `}</style>
+    <main style={{ background: '#0a0a0a', minHeight: '100vh', color: '#f0ede6', fontFamily: 'sans-serif', padding: '48px' }}>
+      <div style={{ marginBottom: '40px' }}>
+        <p style={{ color: '#EE7700', fontSize: '11px', letterSpacing: '4px', marginBottom: '8px' }}>ARNOBOT — ROYAL DUTCH SALES</p>
+        <h1 style={{ fontSize: '48px', fontWeight: 700, margin: '0 0 32px 0', letterSpacing: '-1px' }}>Gesprekken</h1>
 
-      <div className="no-print" style={{ marginBottom: '40px', display: 'flex', gap: '24px', alignItems: 'flex-end', flexWrap: 'wrap' }}>
-        <div>
-          <p style={{ color: '#EE7700', fontSize: '11px', letterSpacing: '3px', marginBottom: '8px' }}>ARNOBOT GESPREKKEN</p>
-          <h1 style={{ fontSize: '48px', fontWeight: 700, margin: 0 }}>Export</h1>
-        </div>
-        <form method="GET" style={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
-          <input type="hidden" name="key" value={params.key} />
-          <input
-            type="date"
-            name="date"
-            defaultValue={date}
-            style={{ background: '#111', border: '1px solid #333', color: '#f0ede6', padding: '10px 14px', fontSize: '14px' }}
-          />
-          <button
-            type="submit"
-            style={{ background: '#EE7700', color: '#000', border: 'none', padding: '10px 20px', fontWeight: 700, cursor: 'pointer', fontSize: '14px' }}
-          >
-            Laad
+        <form method="GET" style={{ display: 'flex', gap: '12px', alignItems: 'center', flexWrap: 'wrap' }}>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
+            <label style={{ fontSize: '10px', letterSpacing: '2px', color: '#EE7700', opacity: 0.7 }}>VAN</label>
+            <input type="date" name="from" defaultValue={from}
+              style={{ background: '#111', border: '1px solid #222', color: '#f0ede6', padding: '10px 14px', fontSize: '14px' }} />
+          </div>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
+            <label style={{ fontSize: '10px', letterSpacing: '2px', color: '#EE7700', opacity: 0.7 }}>TOT EN MET</label>
+            <input type="date" name="to" defaultValue={to}
+              style={{ background: '#111', border: '1px solid #222', color: '#f0ede6', padding: '10px 14px', fontSize: '14px' }} />
+          </div>
+          <button type="submit"
+            style={{ background: '#EE7700', color: '#000', border: 'none', padding: '10px 24px', fontWeight: 700, cursor: 'pointer', fontSize: '14px', alignSelf: 'flex-end' }}>
+            LAAD
           </button>
+          {sessionList.length > 0 && (
+            <div style={{ alignSelf: 'flex-end' }}>
+              <DownloadPdfButton sessions={sessionList} dateRange={dateRange} />
+            </div>
+          )}
         </form>
-        {sessionList.length > 0 && <PrintButton />}
       </div>
 
       {sessionList.length === 0 ? (
-        <p style={{ opacity: 0.4 }}>Geen gesprekken gevonden voor {date}.</p>
+        <p style={{ opacity: 0.4 }}>Geen gesprekken gevonden voor {dateRange}.</p>
       ) : (
         <div>
-          <p className="no-print" style={{ opacity: 0.4, fontSize: '13px', marginBottom: '32px' }}>
+          <p style={{ opacity: 0.4, fontSize: '13px', marginBottom: '32px' }}>
             {sessionList.length} sessie{sessionList.length !== 1 ? 's' : ''} — {rows.length} berichten
           </p>
           {sessionList.map(([sessionId, messages], idx) => (
-            <div key={sessionId} className="session-block" style={{ marginBottom: '64px', borderTop: '2px solid #EE7700', paddingTop: '24px' }}>
+            <div key={sessionId} style={{ marginBottom: '56px', borderTop: '2px solid #EE7700', paddingTop: '20px' }}>
               <p style={{ fontSize: '11px', letterSpacing: '2px', color: '#EE7700', marginBottom: '4px', opacity: 0.7 }}>
                 SESSIE {idx + 1} — {messages[0].ip}
               </p>
-              <p style={{ fontSize: '11px', opacity: 0.3, marginBottom: '32px' }}>
+              <p style={{ fontSize: '11px', opacity: 0.3, marginBottom: '28px' }}>
                 {new Date(messages[0].created_at).toLocaleTimeString('nl-NL')} – {new Date(messages[messages.length - 1].created_at).toLocaleTimeString('nl-NL')}
               </p>
               {messages.map((msg) => (
-                <div key={msg.id} style={{ marginBottom: '32px' }}>
+                <div key={msg.id} style={{ marginBottom: '28px' }}>
                   <p style={{ fontWeight: 700, fontSize: '15px', marginBottom: '8px', color: '#f0ede6' }}>
                     {msg.question}
                   </p>
                   <p style={{ fontSize: '14px', lineHeight: 1.8, color: '#aaa', whiteSpace: 'pre-wrap' }}>
                     {msg.answer}
                   </p>
-                  <p style={{ fontSize: '11px', opacity: 0.25, marginTop: '8px' }}>
+                  <p style={{ fontSize: '11px', opacity: 0.25, marginTop: '6px' }}>
                     {new Date(msg.created_at).toLocaleTimeString('nl-NL')}
                   </p>
                 </div>
@@ -111,6 +111,6 @@ export default async function ArnoBotAdminPage({
           ))}
         </div>
       )}
-    </>
+    </main>
   )
 }
