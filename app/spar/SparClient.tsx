@@ -37,6 +37,10 @@ export default function SparClient({ taglineTitle, taglineSub, openers }: Props)
   const inputRef = useRef<HTMLTextAreaElement>(null)
 
   useEffect(() => {
+    sessionIdRef.current = `${Date.now().toString(36)}-${Math.random().toString(36).slice(2)}`
+  }, [])
+
+  useEffect(() => {
     bottomRef.current?.scrollIntoView({ behavior: 'smooth' })
   }, [messages, loading])
 
@@ -77,7 +81,6 @@ export default function SparClient({ taglineTitle, taglineSub, openers }: Props)
         return
       }
 
-      if (data.sessionId && !sessionIdRef.current) sessionIdRef.current = data.sessionId
       const answer = data.answer || 'Geen antwoord ontvangen.'
       setMessages(prev => [...prev, { role: 'arno', content: answer, hint: data.hint ?? null }])
       setHistory(prev => [
