@@ -9,7 +9,7 @@ const styles = StyleSheet.create({
   session: { marginBottom: 40 },
   sessionHeader: { borderTopWidth: 2, borderTopColor: '#EE7700', paddingTop: 12, marginBottom: 20 },
   sessionLabel: { fontSize: 8, letterSpacing: 2, color: '#EE7700', marginBottom: 4 },
-  sessionTime: { fontSize: 8, color: '#aaa' },
+  sessionMeta: { fontSize: 8, color: '#aaa' },
   message: { marginBottom: 20 },
   question: { fontSize: 12, fontFamily: 'Helvetica-Bold', color: '#0a0a0a', marginBottom: 8 },
   answer: { fontSize: 10, color: '#444', lineHeight: 1.7 },
@@ -33,32 +33,32 @@ type Props = {
 export function ArnoBotPdfDocument({ sessions, dateRange }: Props) {
   return (
     <Document>
-      {sessions.map(([sessionId, messages], idx) => (
-        <Page key={sessionId} size="A4" style={styles.page}>
-          {idx === 0 && (
-            <View style={styles.header}>
-              <Text style={styles.headerLabel}>ARNOBOT — ROYAL DUTCH SALES</Text>
-              <Text style={styles.headerTitle}>Gesprekken export</Text>
-              <Text style={styles.headerDate}>{dateRange}</Text>
-            </View>
-          )}
-          <View style={styles.session}>
+      <Page size="A4" style={styles.page}>
+        <View style={styles.header}>
+          <Text style={styles.headerLabel}>ARNOBOT — ROYAL DUTCH SALES</Text>
+          <Text style={styles.headerTitle}>Gesprekken export</Text>
+          <Text style={styles.headerDate}>{dateRange}</Text>
+        </View>
+        {sessions.map(([sessionId, messages], idx) => (
+          <View key={sessionId} style={styles.session} break={idx > 0}>
             <View style={styles.sessionHeader}>
-              <Text style={styles.sessionLabel}>SESSIE {idx + 1} — {messages[0].ip}</Text>
-              <Text style={styles.sessionTime}>
+              <Text style={styles.sessionLabel}>
+                SESSIE {idx + 1} — {messages[0].ip} — {messages.length} {messages.length === 1 ? 'vraag & antwoord' : 'vragen & antwoorden'}
+              </Text>
+              <Text style={styles.sessionMeta}>
                 {new Date(messages[0].created_at).toLocaleTimeString('nl-NL')} – {new Date(messages[messages.length - 1].created_at).toLocaleTimeString('nl-NL')}
               </Text>
             </View>
             {messages.map((msg) => (
-              <View key={msg.id} style={styles.message} wrap={false}>
+              <View key={msg.id} style={styles.message}>
                 <Text style={styles.question}>{msg.question}</Text>
                 <Text style={styles.answer}>{msg.answer}</Text>
                 <Text style={styles.timestamp}>{new Date(msg.created_at).toLocaleTimeString('nl-NL')}</Text>
               </View>
             ))}
           </View>
-        </Page>
-      ))}
+        ))}
+      </Page>
     </Document>
   )
 }

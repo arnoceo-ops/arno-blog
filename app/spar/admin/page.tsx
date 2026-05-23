@@ -51,6 +51,7 @@ export default async function ArnoBotAdminPage({
 
   return (
     <main style={{ background: '#0a0a0a', minHeight: '100vh', color: '#f0ede6', fontFamily: 'sans-serif', padding: '48px' }}>
+    <div style={{ maxWidth: '800px', margin: '0 auto' }}>
       <div style={{ marginBottom: '40px' }}>
         <p style={{ color: '#EE7700', fontSize: '11px', letterSpacing: '4px', marginBottom: '8px' }}>ARNOBOT — ROYAL DUTCH SALES</p>
         <h1 style={{ fontSize: '48px', fontWeight: 700, margin: '0 0 32px 0', letterSpacing: '-1px' }}>Gesprekken</h1>
@@ -110,6 +111,7 @@ export default async function ArnoBotAdminPage({
           ))}
         </div>
       )}
+    </div>
     </main>
   )
 }
