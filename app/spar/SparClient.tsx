@@ -32,13 +32,8 @@ export default function SparClient({ taglineTitle, taglineSub, openers }: Props)
   const [started, setStarted] = useState(false)
   const [blinkGlow, setBlinkGlow] = useState(false)
   const [blocked, setBlocked] = useState(false)
-  const sessionIdRef = useRef<string>('')
   const bottomRef = useRef<HTMLDivElement>(null)
   const inputRef = useRef<HTMLTextAreaElement>(null)
-
-  useEffect(() => {
-    sessionIdRef.current = `${Date.now().toString(36)}-${Math.random().toString(36).slice(2)}`
-  }, [])
 
   useEffect(() => {
     bottomRef.current?.scrollIntoView({ behavior: 'smooth' })
@@ -71,7 +66,7 @@ export default function SparClient({ taglineTitle, taglineSub, openers }: Props)
       const res = await fetch('/api/chat', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ question, history, sessionId: sessionIdRef.current })
+        body: JSON.stringify({ question, history })
       })
       const data = await res.json()
 

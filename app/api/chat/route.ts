@@ -33,9 +33,9 @@ const supabase = createClient(
 
 export async function POST(req: NextRequest) {
   try {
-    const { question, history, sessionId: clientSessionId } = await req.json()
-    const sessionId = clientSessionId || crypto.randomUUID()
+    const { question, history } = await req.json()
     const origin = req.headers.get('origin')
+    const sessionId = req.cookies.get('arnobot_session')?.value || crypto.randomUUID()
     const ip = req.headers.get('x-forwarded-for')?.split(',')[0]?.trim() || null
 
     // Check IP question count over last 24 hours
@@ -96,7 +96,11 @@ ${context}`,
 
     await supabase.from('arnobot_blog_logs').insert({ question, answer, ip, session_id: sessionId })
 
-    return NextResponse.json({ answer, hint, sessionId }, { headers: corsHeaders(origin) })
+    const res = NextResponse.json({ answer, hint }, { headers: corsHeaders(origin) })
+    if (!req.cookies.get('arnobot_session')) {
+      res.cookies.set('arnobot_session', sessionId, { httpOnly: true, sameSite: 'lax', maxAge: 60 * 60 * 24 })
+    }
+    return res
   } catch (err) {
     const msg = err instanceof Error ? err.message : String(err)
     console.error('Chat error:', msg)
