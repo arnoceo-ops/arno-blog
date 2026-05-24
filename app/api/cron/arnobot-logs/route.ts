@@ -9,6 +9,15 @@ const supabase = createClient(
 
 const resend = new Resend(process.env.RESEND_API_KEY)
 
+const PREDEFINED_OPENERS = [
+  'Mijn salesteam haalt structureel de targets niet. Waar ligt dat aan?',
+  'Wat onderscheidt een winnende salesorganisatie van een gemiddelde?',
+  "Hoe bouw ik een commerciële strategie die de markt op z'n kop zet?",
+  'Mijn pipeline ziet er goed uit maar de conversie klopt niet. Oorzaken?',
+  'Mijn beste verkoper vertrekt. Hoe had ik dat kunnen voorkomen?',
+  'Wat is de route naar marktleider op een termijn van max. 24 maanden?',
+]
+
 export async function GET(req: NextRequest) {
   const secret = req.headers.get('authorization')
   if (secret !== `Bearer ${process.env.CRON_SECRET}`) {
@@ -20,40 +29,82 @@ export async function GET(req: NextRequest) {
 
   const { data, error } = await supabase
     .from('arnobot_blog_logs')
-    .select('created_at, question, answer, ip')
+    .select('created_at, question, session_id, ip')
     .gte('created_at', since.toISOString())
-    .order('created_at', { ascending: false })
+    .order('created_at', { ascending: true })
 
   if (error) {
     return NextResponse.json({ error: error.message }, { status: 500 })
   }
 
+  const fromDate = since.toLocaleDateString('nl-NL', { timeZone: 'Europe/Amsterdam' })
+  const toDate = new Date().toLocaleDateString('nl-NL', { timeZone: 'Europe/Amsterdam' })
+
   if (!data || data.length === 0) {
+    await resend.emails.send({
+      from: 'ArnoBot <noreply@royaldutchsales.com>',
+      to: ['arno@royaldutchsales.com', 'arnodiepeveen@gmail.com'],
+      subject: `ArnoBot weekoverzicht — geen gesprekken`,
+      text: `Geen ArnoBot-gesprekken in de week van ${fromDate} t/m ${toDate}.`,
+    })
     return NextResponse.json({ ok: true, message: 'Geen logs deze week' })
   }
 
-  const header = 'Datum,Vraag,Antwoord,IP\n'
-  const rows = data.map(row => {
-    const datum = new Date(row.created_at).toLocaleString('nl-NL', { timeZone: 'Europe/Amsterdam' })
-    const escape = (s: string) => `"${(s || '').replace(/"/g, '""')}"`
-    return [escape(datum), escape(row.question), escape(row.answer), escape(row.ip || '')].join(',')
-  })
-  const csv = header + rows.join('\n')
+  const uniqueSessions = new Set(data.map(r => r.session_id || r.ip || 'onbekend'))
+  const sessionCount = uniqueSessions.size
 
-  const dateStr = new Date().toISOString().slice(0, 10)
+  const predefinedCounts: Record<string, number> = {}
+  for (const opener of PREDEFINED_OPENERS) predefinedCounts[opener] = 0
+
+  let predefinedTotal = 0
+  let customTotal = 0
+  const customFreq: Record<string, number> = {}
+
+  for (const row of data) {
+    if (PREDEFINED_OPENERS.includes(row.question)) {
+      predefinedCounts[row.question]++
+      predefinedTotal++
+    } else {
+      customTotal++
+      customFreq[row.question] = (customFreq[row.question] || 0) + 1
+    }
+  }
+
+  const predefinedLines = PREDEFINED_OPENERS
+    .filter(q => predefinedCounts[q] > 0)
+    .map(q => `  • ${predefinedCounts[q]}× "${q}"`)
+    .join('\n')
+
+  const customLines = Object.entries(customFreq)
+    .sort((a, b) => b[1] - a[1])
+    .map(([q, n]) => `  • ${n > 1 ? n + '× ' : ''}"${q}"`)
+    .join('\n')
+
+  const pct = (n: number) => Math.round((n / data.length) * 100)
+
+  const text = `ARNOBOT — WEEKOVERZICHT
+${fromDate} t/m ${toDate}
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Sessies (gesprekken)   ${sessionCount}
+Vragen totaal          ${data.length}
+Voorgedefinieerd       ${predefinedTotal} (${pct(predefinedTotal)}%)
+Eigen vragen           ${customTotal} (${pct(customTotal)}%)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+VOORGEDEFINIEERDE VRAGEN
+${predefinedLines || '  (geen)'}
+
+EIGEN VRAGEN
+${customLines || '  (geen)'}
+`
 
   await resend.emails.send({
     from: 'ArnoBot <noreply@royaldutchsales.com>',
     to: ['arno@royaldutchsales.com', 'arnodiepeveen@gmail.com'],
-    subject: `ArnoBot logs — week van ${dateStr}`,
-    text: `${data.length} vragen deze week. Zie bijlage.`,
-    attachments: [
-      {
-        filename: `arnobot-logs-${dateStr}.csv`,
-        content: Buffer.from(csv, 'utf-8'),
-      },
-    ],
+    subject: `ArnoBot weekoverzicht — ${sessionCount} sessies, ${data.length} vragen`,
+    text,
   })
 
-  return NextResponse.json({ ok: true, count: data.length })
+  return NextResponse.json({ ok: true, sessions: sessionCount, questions: data.length })
 }
