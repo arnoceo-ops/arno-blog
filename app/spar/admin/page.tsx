@@ -53,7 +53,7 @@ export default async function ArnoBotAdminPage({
     <main style={{ background: '#0a0a0a', minHeight: '100vh', color: '#f0ede6', fontFamily: 'sans-serif', padding: '48px' }}>
     <div style={{ maxWidth: '800px', margin: '0 auto' }}>
       <div style={{ marginBottom: '40px' }}>
-        <p style={{ color: '#EE7700', fontSize: '11px', letterSpacing: '4px', marginBottom: '8px' }}>ARNOBOT — ROYAL DUTCH SALES</p>
+        <p style={{ color: '#EE7700', fontSize: '16px', letterSpacing: '4px', marginBottom: '8px' }}>ARNOBOT — ROYAL DUTCH SALES</p>
         <h1 style={{ fontSize: '48px', fontWeight: 700, margin: '0 0 32px 0', letterSpacing: '-1px' }}>Gesprekken</h1>
 
         <form method="GET" style={{ display: 'flex', gap: '12px', alignItems: 'center', flexWrap: 'wrap' }}>
@@ -96,10 +96,10 @@ export default async function ArnoBotAdminPage({
               </p>
               {messages.map((msg) => (
                 <div key={msg.id} style={{ marginBottom: '28px' }}>
-                  <p style={{ fontWeight: 700, fontSize: '15px', marginBottom: '8px', color: '#f0ede6' }}>
+                  <p style={{ fontWeight: 700, fontSize: '16px', marginBottom: '8px', color: '#f0ede6' }}>
                     {msg.question}
                   </p>
-                  <p style={{ fontSize: '14px', lineHeight: 1.8, color: '#aaa', whiteSpace: 'pre-wrap' }}>
+                  <p style={{ fontSize: '16px', lineHeight: 1.8, color: '#aaa', whiteSpace: 'pre-wrap' }}>
                     {msg.answer}
                   </p>
                   <p style={{ fontSize: '11px', opacity: 0.25, marginTop: '6px' }}>
