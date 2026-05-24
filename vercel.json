@@ -3,6 +3,10 @@
     {
       "path": "/api/cron/arnobot-logs",
       "schedule": "5 3 * * 1"
+    },
+    {
+      "path": "/api/cron/arnobot-blog-ideeen",
+      "schedule": "5 5 * * 1"
     }
   ],
   "redirects": [
