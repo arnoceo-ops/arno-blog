@@ -58,14 +58,14 @@ export default async function ArnoBotAdminPage({
 
         <form method="GET" style={{ display: 'flex', gap: '12px', alignItems: 'center', flexWrap: 'wrap' }}>
           <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
-            <label style={{ fontSize: '10px', letterSpacing: '2px', color: '#EE7700', opacity: 0.7 }}>VAN</label>
+            <label style={{ fontSize: '16px', letterSpacing: '2px', color: '#EE7700', opacity: 0.7 }}>VAN</label>
             <input type="date" name="from" defaultValue={from}
-              style={{ background: '#111', border: '1px solid #222', color: '#f0ede6', padding: '10px 14px', fontSize: '14px' }} />
+              style={{ background: '#111', border: '1px solid #222', color: '#f0ede6', padding: '10px 14px', fontSize: '16px' }} />
           </div>
           <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
-            <label style={{ fontSize: '10px', letterSpacing: '2px', color: '#EE7700', opacity: 0.7 }}>TOT EN MET</label>
+            <label style={{ fontSize: '16px', letterSpacing: '2px', color: '#EE7700', opacity: 0.7 }}>TOT EN MET</label>
             <input type="date" name="to" defaultValue={to}
-              style={{ background: '#111', border: '1px solid #222', color: '#f0ede6', padding: '10px 14px', fontSize: '14px' }} />
+              style={{ background: '#111', border: '1px solid #222', color: '#f0ede6', padding: '10px 14px', fontSize: '16px' }} />
           </div>
           <button type="submit"
             style={{ background: '#EE7700', color: '#000', border: 'none', padding: '10px 24px', fontWeight: 700, cursor: 'pointer', fontSize: '14px', alignSelf: 'flex-end' }}>
@@ -83,15 +83,15 @@ export default async function ArnoBotAdminPage({
         <p style={{ opacity: 0.4 }}>Geen gesprekken gevonden voor {dateRange}.</p>
       ) : (
         <div>
-          <p style={{ opacity: 0.4, fontSize: '13px', marginBottom: '32px' }}>
+          <p style={{ opacity: 0.4, fontSize: '16px', marginBottom: '32px' }}>
             {sessionList.length} sessie{sessionList.length !== 1 ? 's' : ''} — {rows.length} berichten
           </p>
           {sessionList.map(([sessionId, messages], idx) => (
             <div key={sessionId} style={{ marginBottom: '56px', borderTop: '2px solid #EE7700', paddingTop: '20px' }}>
-              <p style={{ fontSize: '11px', letterSpacing: '2px', color: '#EE7700', marginBottom: '4px', opacity: 0.7 }}>
+              <p style={{ fontSize: '16px', letterSpacing: '2px', color: '#EE7700', marginBottom: '4px', opacity: 0.7 }}>
                 SESSIE {idx + 1} — {messages[0].ip}
               </p>
-              <p style={{ fontSize: '11px', opacity: 0.3, marginBottom: '28px' }}>
+              <p style={{ fontSize: '16px', opacity: 0.3, marginBottom: '28px' }}>
                 {new Date(messages[0].created_at).toLocaleTimeString('nl-NL')} – {new Date(messages[messages.length - 1].created_at).toLocaleTimeString('nl-NL')}
               </p>
               {messages.map((msg) => (
