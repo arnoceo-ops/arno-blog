@@ -65,8 +65,9 @@ ${logSummary}
 
 Schrijf een beknopt rapport in het Nederlands met:
 1. **Terugkerende thema's** — welke onderwerpen of vragen kwamen meerdere keren terug?
-2. **Blog-ideeën** — 3 concrete blogartikel-ideeën gebaseerd op deze vragen (met werktitel)
+2. **Blog-ideeën** — 3 concrete blogartikel-ideeën gebaseerd op deze vragen (met werktitel en de exacte vraag die het idee triggerde)
 3. **Gaps** — onderwerpen waar bezoekers naar vragen maar die nog niet goed gedekt zijn op het blog
+4. **Update-kandidaten** — bestaande blogartikel-titels die verouderd of incompleet zijn op basis van wat bezoekers vragen (noem concrete onderwerpen zoals "closing", "pipeline", "recruitment" — geen fictieve titels verzinnen)
 
 Kort en to-the-point. Geen inleiding, direct de analyse.`,
     }],
