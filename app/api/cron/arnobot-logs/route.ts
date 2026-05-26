@@ -99,12 +99,14 @@ EIGEN VRAGEN
 ${customLines || '  (geen)'}
 `
 
-  await resend.emails.send({
+  const { data: mailData, error: mailError } = await resend.emails.send({
     from: 'ArnoBot <info@salescanvas.app>',
     to: ['arnodiepeveen@gmail.com'],
     subject: `ArnoBot weekoverzicht — ${sessionCount} sessies, ${data.length} vragen`,
     text,
   })
 
-  return NextResponse.json({ ok: true, sessions: sessionCount, questions: data.length })
+  if (mailError) return NextResponse.json({ error: mailError }, { status: 500 })
+
+  return NextResponse.json({ ok: true, sessions: sessionCount, questions: data.length, mailId: mailData?.id })
 }
