@@ -1,3 +1,5 @@
+export const maxDuration = 120
+
 import { NextRequest, NextResponse } from 'next/server'
 import { createClient } from '@supabase/supabase-js'
 import { Resend } from 'resend'
@@ -44,7 +46,8 @@ export async function GET(req: NextRequest) {
 
   const logSummary = data.map(row => {
     const datum = new Date(row.created_at).toLocaleString('nl-NL', { timeZone: 'Europe/Amsterdam' })
-    return `[${datum}]\nVraag: ${row.question}\nAntwoord: ${row.answer}`
+    const antwoord = (row.answer || '').slice(0, 300)
+    return `[${datum}]\nVraag: ${row.question}\nAntwoord: ${antwoord}…`
   }).join('\n\n')
 
   const aiResponse = await anthropic.messages.create({
