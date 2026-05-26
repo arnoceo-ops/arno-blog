@@ -6,7 +6,7 @@
     },
     {
       "path": "/api/cron/arnobot-blog-ideeen",
-      "schedule": "5 5 * * 1"
+      "schedule": "5 3 * * 1"
     }
   ],
   "redirects": [
