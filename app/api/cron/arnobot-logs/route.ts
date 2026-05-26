@@ -43,7 +43,7 @@ export async function GET(req: NextRequest) {
   if (!data || data.length === 0) {
     await resend.emails.send({
       from: 'ArnoBot <noreply@royaldutchsales.com>',
-      to: ['arno@royaldutchsales.com', 'arnodiepeveen@gmail.com'],
+      to: ['arnodiepeveen@gmail.com'],
       subject: `ArnoBot weekoverzicht — geen gesprekken`,
       text: `Geen ArnoBot-gesprekken in de week van ${fromDate} t/m ${toDate}.`,
     })
@@ -101,7 +101,7 @@ ${customLines || '  (geen)'}
 
   await resend.emails.send({
     from: 'ArnoBot <noreply@royaldutchsales.com>',
-    to: ['arno@royaldutchsales.com', 'arnodiepeveen@gmail.com'],
+    to: ['arnodiepeveen@gmail.com'],
     subject: `ArnoBot weekoverzicht — ${sessionCount} sessies, ${data.length} vragen`,
     text,
   })

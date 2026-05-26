@@ -37,7 +37,7 @@ export async function GET(req: NextRequest) {
   if (!data || data.length === 0) {
     await resend.emails.send({
       from: 'ArnoBot <noreply@royaldutchsales.com>',
-      to: ['arno@royaldutchsales.com', 'arnodiepeveen@gmail.com'],
+      to: ['arnodiepeveen@gmail.com'],
       subject: `ArnoBot blog-ideeën — week van ${dateStr}`,
       text: 'Geen blog-bezoekers deze week die de ArnoBot hebben gebruikt.',
     })
@@ -90,7 +90,7 @@ ${analyse.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>').replace(/\n/g, '<br>'
 
   await resend.emails.send({
     from: 'ArnoBot <noreply@royaldutchsales.com>',
-    to: ['arno@royaldutchsales.com', 'arnodiepeveen@gmail.com'],
+    to: ['arnodiepeveen@gmail.com'],
     subject: `ArnoBot blog-ideeën — week van ${dateStr}`,
     html,
     attachments: [
