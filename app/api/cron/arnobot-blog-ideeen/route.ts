@@ -1,6 +1,6 @@
-export const maxDuration = 120
-
 import { NextRequest, NextResponse } from 'next/server'
+
+export const maxDuration = 120
 import { createClient } from '@supabase/supabase-js'
 import { Resend } from 'resend'
 import Anthropic from '@anthropic-ai/sdk'
@@ -27,6 +27,7 @@ export async function GET(req: NextRequest) {
     .select('created_at, question, answer')
     .gte('created_at', since.toISOString())
     .order('created_at', { ascending: false })
+    .limit(30)
 
   if (error) {
     return NextResponse.json({ error: error.message }, { status: 500 })
@@ -52,7 +53,7 @@ export async function GET(req: NextRequest) {
 
   const aiResponse = await anthropic.messages.create({
     model: 'claude-sonnet-4-6',
-    max_tokens: 2048,
+    max_tokens: 1024,
     messages: [{
       role: 'user',
       content: `Je bent een content-strateeg voor arno.blog, het blog van Arno Diepeveen over B2B sales en commerciële strategie. Analyseer deze vragen die bezoekers deze week aan de ArnoBot hebben gesteld.
