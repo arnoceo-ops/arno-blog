@@ -11,9 +11,9 @@ const supabase = createClient(
 )
 
 const resend = new Resend(process.env.RESEND_API_KEY)
-const anthropic = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY })
 
 export async function GET(req: NextRequest) {
+  const anthropic = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY })
   const cronAuth = req.headers.get('authorization')
   if (cronAuth !== `Bearer ${process.env.CRON_SECRET}`) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
@@ -51,7 +51,9 @@ export async function GET(req: NextRequest) {
     return `[${datum}]\nVraag: ${row.question}\nAntwoord: ${antwoord}…`
   }).join('\n\n')
 
-  const aiResponse = await anthropic.messages.create({
+  let aiResponse
+  try {
+    aiResponse = await anthropic.messages.create({
     model: 'claude-sonnet-4-6',
     max_tokens: 1024,
     messages: [{
@@ -68,7 +70,11 @@ Schrijf een beknopt rapport in het Nederlands met:
 
 Kort en to-the-point. Geen inleiding, direct de analyse.`,
     }],
-  })
+    })
+  } catch (err: unknown) {
+    const msg = err instanceof Error ? err.message : String(err)
+    return NextResponse.json({ error: 'Claude API fout', detail: msg }, { status: 500 })
+  }
 
   const analyse = aiResponse.content[0].type === 'text' ? aiResponse.content[0].text : 'Analyse mislukt.'
 
