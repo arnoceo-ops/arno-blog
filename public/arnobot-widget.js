@@ -36,7 +36,7 @@
     '}',
     '#arnobot-header-text{}',
     '#arnobot-name{font-family:"Bebas Neue",sans-serif;font-size:28px;letter-spacing:3px;color:rgb(51,51,51);line-height:1;}',
-    '#arnobot-status{font-size:10px;letter-spacing:2px;color:rgb(51,51,51);margin-top:2px;}',
+    '#arnobot-status{font-size:10px;letter-spacing:2px;color:#EE7700;margin-top:2px;}',
     '#arnobot-messages{',
     '  flex:1;padding:0;',
     '  display:flex;flex-direction:column;',
@@ -55,16 +55,17 @@
     '@keyframes abpulse{0%,100%{opacity:.2;transform:scale(.8)}50%{opacity:1;transform:scale(1)}}',
     '.ab-loading-text{font-size:12px;letter-spacing:2px;color:#bbb;text-transform:uppercase;}',
     '#arnobot-openers{padding:20px 28px 0;border-bottom:1px solid #f0f0f0;}',
-    '.ab-openers-label{font-family:"Open Sans",sans-serif;font-size:20px;font-weight:400;letter-spacing:0;color:rgb(51,51,51);display:block;margin-bottom:16px;line-height:1.4;}',
+    '.ab-openers-label{font-family:"Open Sans",sans-serif;font-size:17px;font-weight:700;letter-spacing:0;color:rgb(51,51,51);display:block;margin-bottom:6px;line-height:1.4;}',
+    '.ab-openers-sub{font-family:"Open Sans",sans-serif;font-size:14px;font-weight:400;color:#888;display:block;margin-bottom:16px;line-height:1.5;}',
     '.ab-openers-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:2px;margin-bottom:2px;}',
     '@media(max-width:480px){.ab-openers-grid{grid-template-columns:1fr}}',
     '.ab-opener{',
-    '  background:#f7f7f7;border:none;color:rgb(51,51,51);',
+    '  background:#f7f7f7;border:none;border-left:3px solid transparent;color:rgb(51,51,51);',
     '  font-family:"Open Sans",sans-serif;font-size:15px;',
     '  padding:16px 18px;cursor:pointer;text-align:left;line-height:1.4;',
     '  transition:all .15s;',
     '}',
-    '.ab-opener:hover{background:#EE7700;color:#fff;}',
+    '.ab-opener:hover{background:#EE7700;color:#fff;border-left-color:#cc6600;}',
     '#arnobot-input-area{',
     '  padding:16px 20px;background:#fff;border-top:1px solid #f0f0f0;',
     '  flex-shrink:0;',
@@ -150,19 +151,20 @@
       '  <div id="arnobot-avatar">AB</div>',
       '  <div id="arnobot-header-text">',
       '    <div id="arnobot-name">ARNOBOT</div>',
-      '    <div id="arnobot-status">ONLINE &middot; 20 JAAR CHIEF SALES UPDATES</div>',
+      '    <div id="arnobot-status">ONLINE &middot; DIRECTE ANTWOORDEN OP SALESVRAGEN</div>',
       '  </div>',
       '</div>',
       '<div id="arnobot-messages"></div>',
       '<div id="arnobot-openers">',
-      '  <span class="ab-openers-label">Kies een vraag over sales, strategie of mindset <span style="color:#EE7700">of stel je eigen vraag eronder.</span> Geen corporate vaagtaal. Gewoon Arno: direct en ongefilterd.</span>',
+      '  <span class="ab-openers-label">Geen corporate vaagtaal. Gewoon Arno: direct en ongefilterd.</span>',
+      '  <span class="ab-openers-sub">Kies een vraag hieronder — <span style="color:#EE7700">of stel je eigen vraag onderaan.</span></span>',
       '  <div class="ab-openers-grid">' + this.openers.map(function (q) {
         return '<button class="ab-opener">' + escapeHtml(q) + '</button>';
       }).join('') + '</div>',
       '</div>',
       '<div id="arnobot-input-area">',
       '  <div id="arnobot-input-row">',
-      '    <textarea id="arnobot-textarea" rows="1" placeholder="Stel je vraag aan Arno..."></textarea>',
+      '    <textarea id="arnobot-textarea" rows="1" placeholder="Jouw eigen vraag aan Arno..."></textarea>',
       '    <button id="arnobot-send" disabled>VRAAG &rarr;</button>',
       '  </div>',
       '',
@@ -230,14 +232,14 @@
       .then(function (data) {
         self._setLoading(false);
         if (data.blocked) {
-          self._addCta('Toch proberen, hè? 😂');
+          self._addCta('Je hebt alles eruit geperst. Wil je dit echt verder uitdiepen? Plan een vrijblijvend gesprek met Arno — geen verplichtingen, geen script.');
           self._setBlocked();
           return;
         }
         var answer = data.answer || 'Er ging iets mis. Probeer opnieuw.';
         self._addArnoMsg(answer);
         if (data.hint === 'last_chance') self._addHint('Lekker bezig. Je hebt nog één kans om echt tot de kern te komen.');
-        if (data.hint === 'salescanvas') self._addCta('Als je echt de diepte in wilt, doe dan een free trial op salescanvas.app');
+        if (data.hint === 'salescanvas') self._addCta('Wil je dit verder uitdiepen met Arno zelf? Plan een vrijblijvend gesprek — hij kijkt met je mee.');
         self.history.push({ role: 'user', content: question });
         self.history.push({ role: 'assistant', content: answer });
         self._showActions();
@@ -291,8 +293,7 @@
   ArnoBot.prototype._addCta = function (text) {
     var el = document.createElement('div');
     el.className = 'ab-cta';
-    var linked = text.replace('salescanvas.app', '<a href="https://salescanvas.app" target="_blank" rel="noopener noreferrer" style="color:#EE7700;text-decoration:underline">salescanvas.app</a>');
-    el.innerHTML = '<p>' + linked + '</p><a href="https://salescanvas.app" target="_blank" rel="noopener noreferrer" class="ab-cta-btn">SALESCANVAS</a>';
+    el.innerHTML = '<p>' + text + '</p><a href="https://cal.com/royaldutchsales/arnolive" target="_blank" rel="noopener noreferrer" class="ab-cta-btn">PLAN EEN GESPREK &rarr;</a>';
     this.$messages.appendChild(el);
     this._scrollTo(el);
   };
@@ -315,8 +316,11 @@
 
     var el = document.createElement('div');
     el.id = 'arnobot-actions';
-    el.innerHTML = '<button class="ab-action secondary">&#8592; Nieuwe sessie</button>';
+    el.innerHTML = '<button class="ab-action primary">&#8593; Vervolgvraag stellen</button><button class="ab-action secondary">&#8592; Nieuwe sessie</button>';
 
+    el.querySelector('.ab-action.primary').addEventListener('click', function () {
+      self.$textarea.focus();
+    });
     el.querySelector('.ab-action.secondary').addEventListener('click', function () {
       self._reset();
     });
@@ -334,7 +338,7 @@
     this.$textarea.value = '';
     this.$send.disabled = true;
     this.$openers.style.display = '';
-    this.$textarea.placeholder = 'Stel je vraag aan Arno...';
+    this.$textarea.placeholder = 'Jouw eigen vraag aan Arno...';
     var existing = this.container.querySelector('#arnobot-actions');
     if (existing) existing.remove();
   };
