@@ -293,7 +293,7 @@
   ArnoBot.prototype._addCta = function (text) {
     var el = document.createElement('div');
     el.className = 'ab-cta';
-    el.innerHTML = '<p>' + text + '</p><a href="https://cal.com/royaldutchsales/arnolive" target="_blank" rel="noopener noreferrer" class="ab-cta-btn">PLAN EEN GESPREK &rarr;</a>';
+    el.innerHTML = '<p>' + text + '</p><a href="https://arno.to/arnolive" target="_blank" rel="noopener noreferrer" class="ab-cta-btn">PLAN EEN GESPREK &rarr;</a>';
     this.$messages.appendChild(el);
     this._scrollTo(el);
   };
