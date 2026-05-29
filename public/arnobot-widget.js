@@ -238,7 +238,7 @@
         }
         var answer = data.answer || 'Er ging iets mis. Probeer opnieuw.';
         self._addArnoMsg(answer);
-        if (data.hint === 'last_chance') self._addHint('Nog één vraag over in deze sessie. Stel de vraag die er echt toe doet.');
+        if (data.hint === 'last_chance') self._addHint('Je hebt nog één vraag over in deze sessie. Waar wil je op uitkomen?');
         if (data.hint === 'salescanvas') {
           self._addCta('Meer vragen dan antwoorden? Plan een gesprek met Arno: niet de bot, maar Arno zelf.');
           self._setBlocked();
