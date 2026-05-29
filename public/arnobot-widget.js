@@ -8,8 +8,8 @@
     'Wat onderscheidt een winnende salesorganisatie van een gemiddelde?',
     'Hoe bouw ik een commerciële strategie die de markt op z\'n kop zet?',
     'Mijn pipeline ziet er goed uit maar de conversie klopt niet. Oorzaken?',
-    'Mijn beste verkoper vertrekt. Hoe had ik dat kunnen voorkomen?',
-    'Wat is de route naar marktleider op een termijn van max. 24 maanden?',
+    'Hoe haal en houd ik structureel topverkopers binnen?',
+    'Ik heb superblije klanten, maar referrals? Ho maar. En nu?',
   ];
 
   var CSS = [
