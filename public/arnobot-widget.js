@@ -232,15 +232,15 @@
       .then(function (data) {
         self._setLoading(false);
         if (data.blocked) {
-          self._addCta('Meer vragen dan antwoorden? Plan een gesprek met Arno — niet de bot, maar Arno zelf.');
+          self._addCta('Meer vragen dan antwoorden? Plan een gesprek met Arno: niet de bot, maar Arno zelf.');
           self._setBlocked();
           return;
         }
         var answer = data.answer || 'Er ging iets mis. Probeer opnieuw.';
         self._addArnoMsg(answer);
-        if (data.hint === 'last_chance') self._addHint('Lekker bezig. Je hebt nog één kans om echt tot de kern te komen.');
+        if (data.hint === 'last_chance') self._addHint('Nog één vraag over in deze sessie. Stel de vraag die er echt toe doet.');
         if (data.hint === 'salescanvas') {
-          self._addCta('Meer vragen dan antwoorden? Plan een gesprek met Arno — niet de bot, maar Arno zelf.');
+          self._addCta('Meer vragen dan antwoorden? Plan een gesprek met Arno: niet de bot, maar Arno zelf.');
           self._setBlocked();
         }
         self.history.push({ role: 'user', content: question });
@@ -290,7 +290,6 @@
     el.className = 'ab-hint';
     el.textContent = text;
     this.$messages.appendChild(el);
-    this._scrollTo(el);
   };
 
   ArnoBot.prototype._addCta = function (text) {
