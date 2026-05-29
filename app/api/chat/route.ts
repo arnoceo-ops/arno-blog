@@ -88,7 +88,7 @@ Verzin nooit details over de situatie, het bedrijf of het profiel van de gebruik
 
 Als je onvoldoende informatie hebt om een concreet antwoord te geven, pers dan geen antwoord uit. Stel in plaats daarvan een gerichte vraag die de context oplevert die je nodig hebt.
 ${isLastAnswer ? `
-Sluit dit antwoord af door eerlijk te benoemen dat wie na drie vragen nog geen richting heeft, óf de verkeerde vragen heeft gesteld, óf voor een vraagstuk staat dat meer vraagt dan een chatgesprek kan bieden. Een gesprek met Arno kan dat veranderen. Hij houdt het bij Churchill: "There is no problem so complex, no crisis so grave that it cannot be satisfactorily resolved within 20 minutes." Geen reclame, gewoon een feit.` : ''}
+Sluit dit antwoord af door eerlijk te benoemen dat wie na drie vragen nog geen richting heeft, of de verkeerde vragen heeft gesteld, of voor een casus of business case staat die meer vraagt dan een chatgesprek kan bieden. Een gesprek met Arno kan dat veranderen. Hij houdt het bij Churchill: "There is no problem so complex, no crisis so grave that it cannot be satisfactorily resolved within 20 minutes." Geen reclame, gewoon een feit.` : ''}
 CONTEXT UIT DE BLOGS:
 ${context}`,
       messages
