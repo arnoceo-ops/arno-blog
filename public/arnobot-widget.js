@@ -232,17 +232,20 @@
       .then(function (data) {
         self._setLoading(false);
         if (data.blocked) {
-          self._addCta('Je hebt alles eruit geperst. Wil je dit echt verder uitdiepen? Plan een vrijblijvend gesprek met Arno — geen verplichtingen, geen script.');
+          self._addCta('Meer vragen dan antwoorden? Plan een gesprek met Arno — niet de bot, maar Arno zelf.');
           self._setBlocked();
           return;
         }
         var answer = data.answer || 'Er ging iets mis. Probeer opnieuw.';
         self._addArnoMsg(answer);
         if (data.hint === 'last_chance') self._addHint('Lekker bezig. Je hebt nog één kans om echt tot de kern te komen.');
-        if (data.hint === 'salescanvas') self._addCta('Wil je dit verder uitdiepen met Arno zelf? Plan een vrijblijvend gesprek — hij kijkt met je mee.');
+        if (data.hint === 'salescanvas') {
+          self._addCta('Meer vragen dan antwoorden? Plan een gesprek met Arno — niet de bot, maar Arno zelf.');
+          self._setBlocked();
+        }
         self.history.push({ role: 'user', content: question });
         self.history.push({ role: 'assistant', content: answer });
-        self._showActions();
+        if (data.hint !== 'salescanvas') self._showActions();
       })
       .catch(function () {
         self._setLoading(false);
