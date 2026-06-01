@@ -42,7 +42,7 @@ export async function POST(req: NextRequest) {
     let hint: string | null = null
     const limitEnabled = process.env.ARNOBOT_LIMIT_ENABLED === 'true'
     if (limitEnabled && ip) {
-      const since = new Date(Date.now() - 24 * 60 * 60 * 1000).toISOString()
+      const since = new Date(Date.now() - 48 * 60 * 60 * 1000).toISOString()
       const { count } = await supabase
         .from('arnobot_blog_logs')
         .select('*', { count: 'exact', head: true })
@@ -50,11 +50,11 @@ export async function POST(req: NextRequest) {
         .gte('created_at', since)
 
       const n = count ?? 0
-      if (n >= 3) {
+      if (n >= 4) {
         return NextResponse.json({ blocked: true }, { headers: corsHeaders(origin) })
       }
-      if (n === 1) hint = 'last_chance'
-      if (n === 2) hint = 'salescanvas'
+      if (n === 2) hint = 'last_chance'
+      if (n === 3) hint = 'salescanvas'
     }
 
     const relevant = await getRelevantChunks(question, 10)

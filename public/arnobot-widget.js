@@ -105,9 +105,18 @@
     '.ab-action.secondary:hover{color:#999;border-color:#ccc;}',
     '.ab-hint{padding:12px 28px;font-size:15px;color:#EE7700;border-bottom:1px solid #f0f0f0;}',
     '.ab-cta{padding:20px 28px;border-bottom:1px solid #f0f0f0;}',
-    '.ab-cta p{font-size:15px;color:#888;margin-bottom:12px;}',
-    '.ab-cta-btn{display:inline-block;background:#EE7700;color:#fff;font-family:"Bebas Neue",sans-serif;font-size:18px;letter-spacing:2px;padding:10px 28px;text-decoration:none;border-radius:999px;transition:background .15s;}',
-    '.ab-cta-btn:hover{background:#ff8800;}',
+    '.ab-cta-heading{font-size:15px;font-weight:700;color:#333;margin:0 0 16px 0;}',
+    '.ab-cta-cards{display:grid;grid-template-columns:1fr 1fr;gap:12px;}',
+    '@media(max-width:520px){.ab-cta-cards{grid-template-columns:1fr}}',
+    '.ab-cta-card{padding:20px;border:1px solid #e5e5e5;display:flex;flex-direction:column;gap:10px;}',
+    '.ab-cta-card--primary{border-color:#EE7700;}',
+    '.ab-cta-card-title{font-family:"Bebas Neue",sans-serif;font-size:20px;letter-spacing:2px;color:#333;}',
+    '.ab-cta-card--primary .ab-cta-card-title{color:#EE7700;}',
+    '.ab-cta-card-body{font-size:13px;color:#888;line-height:1.5;flex:1;}',
+    '.ab-cta-btn--primary{display:block;background:#EE7700;color:#fff;font-family:"Bebas Neue",sans-serif;font-size:16px;letter-spacing:2px;padding:10px 16px;text-decoration:none;text-align:center;transition:background .15s;}',
+    '.ab-cta-btn--primary:hover{background:#ff8800;}',
+    '.ab-cta-btn--secondary{display:block;background:none;color:#EE7700;border:1.5px solid #EE7700;font-family:"Bebas Neue",sans-serif;font-size:16px;letter-spacing:2px;padding:10px 16px;text-decoration:none;text-align:center;transition:all .15s;}',
+    '.ab-cta-btn--secondary:hover{background:#EE7700;color:#fff;}',
   ].join('\n');
 
   function injectStyles() {
@@ -232,7 +241,7 @@
       .then(function (data) {
         self._setLoading(false);
         if (data.blocked) {
-          self._addCta('Meer vragen dan antwoorden? Plan een gesprek met Arno: niet de bot, maar Arno zelf.');
+          self._addCta('Je bent door je vragen heen. Wat nu?');
           self._setBlocked();
           return;
         }
@@ -240,7 +249,7 @@
         self._addArnoMsg(answer);
         if (data.hint === 'last_chance') self._addHint('Je hebt nog één vraag over in deze sessie. Waar wil je op uitkomen?');
         if (data.hint === 'salescanvas') {
-          self._addCta('Meer vragen dan antwoorden? Plan een gesprek met Arno: niet de bot, maar Arno zelf.');
+          self._addCta('Je bent door je vragen heen. Wat nu?');
           self._setBlocked();
         }
         self.history.push({ role: 'user', content: question });
@@ -295,7 +304,21 @@
   ArnoBot.prototype._addCta = function (text) {
     var el = document.createElement('div');
     el.className = 'ab-cta';
-    el.innerHTML = '<p>' + text + '</p><a href="https://arno.to/arnolive" target="_blank" rel="noopener noreferrer" class="ab-cta-btn">PLAN EEN GESPREK &rarr;</a>';
+    el.innerHTML = [
+      '<p class="ab-cta-heading">' + text + '</p>',
+      '<div class="ab-cta-cards">',
+      '<div class="ab-cta-card ab-cta-card--primary">',
+      '<div class="ab-cta-card-title">PRAAT MET ARNO</div>',
+      '<div class="ab-cta-card-body">Niet de bot. Arno zelf. 30 minuten, gratis, geen verplichtingen.</div>',
+      '<a href="https://arno.to/arnolive" target="_blank" rel="noopener noreferrer" class="ab-cta-btn--primary">PLAN EEN GRATIS GESPREK &rarr;</a>',
+      '</div>',
+      '<div class="ab-cta-card ab-cta-card--secondary">',
+      '<div class="ab-cta-card-title">ARNOBOT UNLIMITED</div>',
+      '<div class="ab-cta-card-body">Oneindig doorvragen. Tot je een ons weegt. Geen limiet, 24/7.</div>',
+      '<a href="#" class="ab-cta-btn--secondary">ABONNEER &rarr;</a>',
+      '</div>',
+      '</div>',
+    ].join('');
     this.$messages.appendChild(el);
     this._scrollTo(el);
   };
