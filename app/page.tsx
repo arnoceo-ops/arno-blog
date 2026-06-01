@@ -50,6 +50,13 @@ export default async function Home() {
         }
         .nav-links a:hover { color: #f0ede6; }
         .nav-cta { color: #EE7700 !important; }
+        .nav-item { display: flex; flex-direction: column; align-items: center; gap: 2px; }
+        .nav-sub {
+          font-family: 'Space Mono', monospace; font-size: 9px;
+          letter-spacing: 2px; color: #444; text-decoration: none;
+          text-transform: uppercase; transition: color 0.2s;
+        }
+        .nav-sub:hover { color: #EE7700 !important; }
 
         /* ── HERO ── */
         .hero {
@@ -217,8 +224,10 @@ export default async function Home() {
       <nav className="site-nav">
         <div className="nav-links">
           <Link href="/bio">ARNO</Link>
-          <Link href="/bot">BOT</Link>
-          <a href="https://royaldutchsales.com/arnobot" target="_blank" rel="noopener noreferrer">ARNOBOT</a>
+          <div className="nav-item">
+            <Link href="/bot">BOT</Link>
+            <a href="https://royaldutchsales.com/arnobot" target="_blank" rel="noopener noreferrer" className="nav-sub">ARNOBOT</a>
+          </div>
           <a href="https://salescanvas.app" target="_blank" rel="noopener noreferrer">CANVAS</a>
           <a href="https://arno.blog/subscribe" className="nav-cta">SUBSCRIBE</a>
         </div>
@@ -295,6 +304,7 @@ export default async function Home() {
           <ul className="footer-links">
             <li><Link href="/bio">Arno</Link></li>
             <li><Link href="/bot">Bot</Link></li>
+            <li><a href="https://royaldutchsales.com/arnobot" target="_blank" rel="noopener noreferrer">ArnoBot</a></li>
             <li><a href="https://salescanvas.app" target="_blank" rel="noopener noreferrer">Canvas</a></li>
             <li><a href="https://arno.blog/subscribe">Subscribe</a></li>
           </ul>
