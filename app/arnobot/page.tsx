@@ -173,7 +173,7 @@ export default function ArnoBotLandingPage() {
         <div className="nav-links">
           <Link href="/">HOME</Link>
           <Link href="/bio">ARNO</Link>
-          <a href="https://www.royaldutchsales.com/arnobot" target="_blank" rel="noopener noreferrer" className="nav-active">BOT</a>
+          <a href="https://www.royaldutchsales.com/arnobot" className="nav-active">BOT</a>
           <a href="https://salescanvas.app" target="_blank" rel="noopener noreferrer">CANVAS</a>
           <a href="https://arno.blog/subscribe" className="nav-cta">SUBSCRIBE</a>
         </div>
@@ -240,25 +240,23 @@ export default function ArnoBotLandingPage() {
       <section className="subscribe-section">
         <div className="subscribe-text-col">
           <div className="subscribe-text-inner">
-            <span style={{fontSize:'14px', letterSpacing:'4px', color:'#555', fontFamily:"'Bebas Neue', sans-serif"}}>MAANDELIJKS</span>
-            <div className="pricing-price">€97<span>/maand</span></div>
+            <span style={{fontSize:'24px', letterSpacing:'4px', color:'#EE7700', fontFamily:"'Bebas Neue', sans-serif"}}>PER MAAND</span>
+            <div className="pricing-price">€97</div>
             <p className="subscribe-body">
-              Minder dan een kwartier consultancy.<br />
-              Maar dan wel <em>onbeperkt.</em><br />
-              Altijd opzegbaar.
+              Je 24/7 sales coach. Altijd en direct beschikbaar.<br />
+              <em>Priceless, als je er iets mee doet.</em>
             </p>
-            <a href="https://royaldutchsales.com/arnobot?plan=monthly" target="_blank" rel="noopener noreferrer" className="subscribe-btn-dark">START NU →</a>
+            <a href="https://royaldutchsales.com/arnobot?plan=monthly" className="subscribe-btn-dark">START NU →</a>
           </div>
         </div>
         <div className="canvas-right" style={{background: '#111'}}>
-          <span className="pricing-badge">BESTE DEAL</span>
-          <span style={{fontSize:'14px', letterSpacing:'4px', color:'#555', fontFamily:"'Bebas Neue', sans-serif"}}>JAARLIJKS</span>
-          <div className="pricing-price">€777<span>/jaar</span></div>
+          <span style={{fontSize:'24px', letterSpacing:'4px', color:'#EE7700', fontFamily:"'Bebas Neue', sans-serif"}}>PER JAAR</span>
+          <div className="pricing-price">€777</div>
           <p className="subscribe-body">
             €64,75 per maand.<br />
             <em>Bespaar €387 ten opzichte van maandelijks.</em>
           </p>
-          <a href="https://royaldutchsales.com/arnobot?plan=yearly" target="_blank" rel="noopener noreferrer" className="subscribe-btn">START NU →</a>
+          <a href="https://royaldutchsales.com/arnobot?plan=yearly" className="subscribe-btn" style={{alignSelf:'flex-start', width:'380px'}}>START NU →</a>
         </div>
       </section>
 
