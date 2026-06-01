@@ -215,8 +215,7 @@ export default async function Home() {
       {/* NAV — homepage: geen HOME */}
       <nav className="site-nav">
         <div className="nav-links">
-          <Link href="/bio">BIO</Link>
-          <Link href="/blog">BLOG</Link>
+          <Link href="/bio">ARNO</Link>
           <Link href="/spar">BOT</Link>
           <a href="https://salescanvas.app" target="_blank" rel="noopener noreferrer">CANVAS</a>
           <a href="https://arno.blog/subscribe" className="nav-cta">SUBSCRIBE</a>
@@ -293,8 +292,7 @@ export default async function Home() {
         <div className="footer-col">
           <h4>Navigatie</h4>
           <ul className="footer-links">
-            <li><Link href="/bio">Bio</Link></li>
-            <li><Link href="/blog">Blog</Link></li>
+            <li><Link href="/bio">Arno</Link></li>
             <li><Link href="/spar">Bot</Link></li>
             <li><a href="https://salescanvas.app" target="_blank" rel="noopener noreferrer">Canvas</a></li>
             <li><a href="https://arno.blog/subscribe">Subscribe</a></li>

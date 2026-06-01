@@ -6,14 +6,18 @@ const isPublicRoute = createRouteMatcher([
 ])
 
 export default clerkMiddleware(async (auth, req) => {
-  if (!isPublicRoute(req) && req.nextUrl.pathname.startsWith('/canvas')) {
+  const path = req.nextUrl.pathname
+  if (!isPublicRoute(req) && path.startsWith('/canvas')) {
     await auth.protect()
   }
-  if (req.nextUrl.pathname.startsWith('/blog')) {
+  if (path.startsWith('/blog')) {
+    await auth.protect()
+  }
+  if (path.startsWith('/spar') && !path.startsWith('/spar/admin')) {
     await auth.protect()
   }
 })
 
 export const config = {
-  matcher: ['/((?!_next|.*\\.|api/cron|spar).*)'],
+  matcher: ['/((?!_next|.*\\.|api/cron).*)'],
 }
