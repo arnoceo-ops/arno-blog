@@ -218,7 +218,7 @@ export default async function Home() {
         <div className="nav-links">
           <Link href="/bio">ARNO</Link>
           <Link href="/bot">BOT</Link>
-          <Link href="/arnobot">ARNOBOT</Link>
+          <a href="https://royaldutchsales.com/arnobot" target="_blank" rel="noopener noreferrer">ARNOBOT</a>
           <a href="https://salescanvas.app" target="_blank" rel="noopener noreferrer">CANVAS</a>
           <a href="https://arno.blog/subscribe" className="nav-cta">SUBSCRIBE</a>
         </div>
@@ -268,7 +268,7 @@ export default async function Home() {
             <p className="subscribe-body">
               19 jaar blogs. 369.000 woorden. Alles over sales, strategie en mindset — nu beschikbaar als directe gesprekspartner. Geen chatbot-gedoe, geen corporate taal. Gewoon Arno, ongefilterd en zonder omwegen.
             </p>
-            <Link href="/arnobot" className="subscribe-btn">STEL JE VRAAG →</Link>
+            <a href="https://royaldutchsales.com/arnobot" target="_blank" rel="noopener noreferrer" className="subscribe-btn">STEL JE VRAAG →</a>
           </div>
         </div>
         <div className="canvas-right">
