@@ -118,7 +118,7 @@ export default async function Home() {
           font-family: 'Bebas Neue', sans-serif;
           font-size: 24px; letter-spacing: 3px; text-transform: uppercase;
           margin-top: 16px; background: #0a0a0a;
-          padding: 14px 18px; border: none;
+          padding: 14px 18px; border: none; border-radius: 999px;
           width: 380px; max-width: 100%; text-align: center; transition: background 0.2s;
         }
         .canvas-link:hover { background: #1a1a1a; }
@@ -151,6 +151,7 @@ export default async function Home() {
           font-family: 'Bebas Neue', sans-serif;
           font-size: 24px; letter-spacing: 3px; text-transform: uppercase;
           padding: 14px 18px; width: 380px; max-width: 100%; transition: background 0.2s; margin-top: 8px;
+          border-radius: 999px;
         }
         .subscribe-btn:hover { background: #ff8800; }
 
@@ -217,6 +218,7 @@ export default async function Home() {
         <div className="nav-links">
           <Link href="/bio">ARNO</Link>
           <Link href="/bot">BOT</Link>
+          <Link href="/arnobot">ARNOBOT</Link>
           <a href="https://salescanvas.app" target="_blank" rel="noopener noreferrer">CANVAS</a>
           <a href="https://arno.blog/subscribe" className="nav-cta">SUBSCRIBE</a>
         </div>
@@ -235,7 +237,7 @@ export default async function Home() {
         </div>
       </section>
 
-      {/* RDS CANVAS */}
+      {/* SALESCANVAS */}
       <section className="canvas-section">
         <div className="canvas-left">
           <div className="canvas-left-inner">
@@ -248,32 +250,31 @@ export default async function Home() {
           </div>
         </div>
         <div className="canvas-right">
-          <h2 className="canvas-title">RDS 🚀<br /><span style={{color:'#EE7700'}}>Canvas</span></h2>
+          <h2 className="canvas-title">SALES<span style={{color:'#EE7700'}}>CANVAS.</span></h2>
           <p className="canvas-body">
-            De meeste verkopers weten niet waarom ze winnen. En al helemaal niet waarom ze verliezen. Het RDS Canvas legt het bloot. Geen excuses, geen flaterende spiegel. Goed verkopen is geen talent — het is een systeem. Brutaal eerlijk, zonder ruimte voor zelfbedrog.
+            De meeste bazen weten niet waarom ze winnen. En al helemaal niet waarom ze verliezen. Sales Canvas legt het bloot. Geen excuses, geen flaterende spiegel. Goed verkopen is geen talent; het is een systeem. Brutaal eerlijk, zonder ruimte voor zelfbedrog. Bewijst zichzelf in 30 dagen gratis.
           </p>
           <a href="https://salescanvas.app" target="_blank" rel="noopener noreferrer" className="canvas-link">GO GO CANVAS →</a>
         </div>
       </section>
 
-      {/* SUBSCRIBE */}
-      <section className="subscribe-section" id="subscribe">
+      {/* ARNOBOT */}
+      <section className="subscribe-section" style={{background: '#0a0a0a'}}>
         <div className="subscribe-text-col">
           <div className="subscribe-text-inner">
             <h2 className="subscribe-title">
-              <span className="black">Chief Sales</span><br />
-              <span className="orange">Updates</span>
+              <span className="black">ARNO</span><span className="orange">BOT.</span>
             </h2>
             <p className="subscribe-body">
-              Abonneer je op de Chief Sales Updates, <em>formerly known as Royal Dutch Updates.</em> Bijna iedere vrijdag, bij het wakker worden: food for thought and food for action. Het grootste risico is dat je meer gaat verkopen. Als je er iets mee doet dan, hè? Het is niks waard of miljoenen. Hoe dan ook, <em>priceless.</em>
+              19 jaar blogs. 369.000 woorden. Alles over sales, strategie en mindset — nu beschikbaar als directe gesprekspartner. Geen chatbot-gedoe, geen corporate taal. Gewoon Arno, ongefilterd en zonder omwegen.
             </p>
-            <a href="https://arno.blog/subscribe" target="_blank" rel="noopener noreferrer" className="subscribe-btn">SUBSCRIBE →</a>
+            <Link href="/arnobot" className="subscribe-btn">STEL JE VRAAG →</Link>
           </div>
         </div>
         <div className="canvas-right">
-          <Link href="/bot">
-            <img src="/cyborg.jpg" alt="Arno Diepeveen" style={{display:'block', width:'380px', maxWidth:'100%', height:'auto', cursor:'pointer'}} />
-          </Link>
+          <a href="https://arno.blog/bot" target="_blank" rel="noopener noreferrer">
+            <img src="/cyborg.jpg" alt="ArnoBot" style={{display: 'block', width: '380px', maxWidth: '100%', height: 'auto'}} />
+          </a>
         </div>
       </section>
 
