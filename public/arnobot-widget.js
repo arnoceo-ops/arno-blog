@@ -315,7 +315,7 @@
       '<div class="ab-cta-card ab-cta-card--secondary">',
       '<div class="ab-cta-card-title">ARNOBOT UNLIMITED</div>',
       '<div class="ab-cta-card-body">Oneindig doorvragen. Tot je een ons weegt. Geen limiet, 24/7.</div>',
-      '<a href="#" class="ab-cta-btn--secondary">ABONNEER &rarr;</a>',
+      '<a href="https://royaldutchsales.com/arnobot" target="_blank" class="ab-cta-btn--secondary">ABONNEER &rarr;</a>',
       '</div>',
       '</div>',
     ].join('');
