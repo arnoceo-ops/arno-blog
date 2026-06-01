@@ -193,23 +193,51 @@ export default function ArnoBotLandingPage() {
           </div>
         </div>
         <div className="canvas-right" style={{background: '#0a0a0a'}}>
-          <p style={{fontSize:'11px', letterSpacing:'4px', textTransform:'uppercase', color:'#EE7700', fontFamily:"'Space Mono', monospace"}}>De propositie</p>
-          <h2 style={{fontFamily:"'Barlow Condensed', sans-serif", fontSize:'clamp(28px, 3vw, 44px)', fontWeight:600, color:'#f0ede6', lineHeight:1.15, textTransform:'uppercase', letterSpacing:'1px'}}>
-            Één advies kan je<br />tonnen opleveren.<br /><span style={{color:'#EE7700'}}>€97 per maand.</span>
-          </h2>
-          <p className="subscribe-body">
-            Dat is minder dan een kwartier consultancy. Maar je krijgt er geen kwartier voor terug — je krijgt er onbeperkt toegang voor. 19 jaar sales-expertise, direct beschikbaar. Elke vraag. Elke dag.
-          </p>
+          <div style={{maxWidth:'480px'}}>
+            <p style={{fontSize:'11px', letterSpacing:'4px', textTransform:'uppercase', color:'#EE7700', fontFamily:"'Space Mono', monospace", marginBottom:'16px'}}>De propositie</p>
+            <h2 style={{fontFamily:"'Barlow Condensed', sans-serif", fontSize:'clamp(28px, 3vw, 44px)', fontWeight:600, color:'#f0ede6', lineHeight:1.15, textTransform:'uppercase', letterSpacing:'1px', marginBottom:'20px'}}>
+              Één advies kan je<br />tonnen opleveren.<br /><span style={{color:'#EE7700'}}>€97 per maand.</span>
+            </h2>
+            <p className="subscribe-body">
+              Dat is minder dan een kwartier consultancy. Maar je krijgt er geen kwartier voor terug — je krijgt er onbeperkt toegang voor. 19 jaar sales-expertise, direct beschikbaar. Elke vraag. Elke dag.
+            </p>
+          </div>
         </div>
       </section>
 
-      {/* FEATURES — light, zelfde als canvas-section */}
+      {/* PRICING + FEATURES */}
       <section className="canvas-section">
         <div className="canvas-left">
-          <div className="canvas-left-inner">
-            <div className="canvas-quote">
-              WAT JE<br /><em>KRIJGT.</em>
+          <div className="canvas-left-inner" style={{display:'flex', flexDirection:'column'}}>
+
+            {/* PER MAAND */}
+            <div style={{display:'flex', flexDirection:'column', alignItems:'flex-end', gap:'14px', paddingBottom:'48px', borderBottom:'1px solid #ddd'}}>
+              <span style={{fontSize:'13px', letterSpacing:'5px', textTransform:'uppercase', color:'#EE7700', fontFamily:"'Bebas Neue', sans-serif"}}>Per maand</span>
+              <div style={{fontFamily:"'Bebas Neue', sans-serif", fontSize:'clamp(64px, 7vw, 104px)', lineHeight:0.85, color:'#0a0a0a', letterSpacing:'-2px'}}>€97</div>
+              <a href="https://royaldutchsales.com/arnobot?plan=monthly" style={{
+                display:'inline-block', textDecoration:'none', textAlign:'center',
+                background:'#0a0a0a', color:'#888',
+                fontFamily:"'Bebas Neue', sans-serif",
+                fontSize:'15px', letterSpacing:'3px',
+                padding:'9px 22px', borderRadius:'999px',
+                transition:'color 0.2s'
+              }}>Start nu →</a>
             </div>
+
+            {/* PER JAAR */}
+            <div style={{display:'flex', flexDirection:'column', alignItems:'flex-end', gap:'14px', paddingTop:'48px'}}>
+              <span style={{fontSize:'13px', letterSpacing:'5px', textTransform:'uppercase', color:'#EE7700', fontFamily:"'Bebas Neue', sans-serif"}}>Per jaar</span>
+              <div style={{fontFamily:"'Bebas Neue', sans-serif", fontSize:'clamp(64px, 7vw, 104px)', lineHeight:0.85, color:'#0a0a0a', letterSpacing:'-2px'}}>€777</div>
+              <a href="https://royaldutchsales.com/arnobot?plan=yearly" style={{
+                display:'inline-block', textDecoration:'none', textAlign:'center',
+                background:'#EE7700', color:'#0a0a0a',
+                fontFamily:"'Bebas Neue', sans-serif",
+                fontSize:'15px', letterSpacing:'3px',
+                padding:'9px 22px', borderRadius:'999px',
+                transition:'opacity 0.2s'
+              }}>Start nu →</a>
+            </div>
+
           </div>
         </div>
         <div className="canvas-right">
@@ -233,30 +261,6 @@ export default function ArnoBotLandingPage() {
             <span className="feature-arrow">→</span>
             <span className="feature-text">Direct antwoord<small>Geen corporate taal. Geen omwegen. Gewoon Arno.</small></span>
           </div>
-        </div>
-      </section>
-
-      {/* PRICING — dark, twee kolommen */}
-      <section className="subscribe-section">
-        <div className="subscribe-text-col">
-          <div className="subscribe-text-inner">
-            <span style={{fontSize:'24px', letterSpacing:'4px', color:'#EE7700', fontFamily:"'Bebas Neue', sans-serif"}}>PER MAAND</span>
-            <div className="pricing-price">€97</div>
-            <p className="subscribe-body">
-              Je 24/7 sales coach. Altijd en direct beschikbaar.<br />
-              <em>Priceless, als je er iets mee doet.</em>
-            </p>
-            <a href="https://royaldutchsales.com/arnobot?plan=monthly" className="subscribe-btn-dark">START NU →</a>
-          </div>
-        </div>
-        <div className="canvas-right" style={{background: '#111'}}>
-          <span style={{fontSize:'24px', letterSpacing:'4px', color:'#EE7700', fontFamily:"'Bebas Neue', sans-serif"}}>PER JAAR</span>
-          <div className="pricing-price">€777</div>
-          <p className="subscribe-body">
-            €64,75 per maand.<br />
-            <em>Bespaar €387 ten opzichte van maandelijks.</em>
-          </p>
-          <a href="https://royaldutchsales.com/arnobot?plan=yearly" className="subscribe-btn" style={{alignSelf:'flex-start', width:'380px'}}>START NU →</a>
         </div>
       </section>
 
