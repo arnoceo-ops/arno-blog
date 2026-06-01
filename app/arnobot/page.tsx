@@ -255,11 +255,11 @@ export default function ArnoBotLandingPage() {
           </div>
           <div className="feature-item">
             <span className="feature-arrow">→</span>
-            <span className="feature-text">19 jaar blogarchief<small>Gefundeerd op 369.000+ woorden aan sales-inzichten.</small></span>
+            <span className="feature-text">Direct antwoord<small>Geen corporate taal. Geen omwegen. Gewoon Arno.</small></span>
           </div>
           <div className="feature-item">
             <span className="feature-arrow">→</span>
-            <span className="feature-text">Direct antwoord<small>Geen corporate taal. Geen omwegen. Gewoon Arno.</small></span>
+            <span className="feature-text">Upgradable naar Arno zelf<small>Niet de bot maar Arno in persoon.</small></span>
           </div>
         </div>
       </section>
