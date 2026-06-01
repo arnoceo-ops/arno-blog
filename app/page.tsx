@@ -224,7 +224,10 @@ export default async function Home() {
       <nav className="site-nav">
         <div className="nav-links">
           <Link href="/bio">ARNO</Link>
-          <Link href="/bot">BOT</Link>
+          <div className="nav-item">
+            <Link href="/bot">BOT</Link>
+            <a href="https://royaldutchsales.com/arnobot" target="_blank" rel="noopener noreferrer" className="nav-sub">ARNOBOT</a>
+          </div>
           <a href="https://salescanvas.app" target="_blank" rel="noopener noreferrer">CANVAS</a>
           <a href="https://arno.blog/subscribe" className="nav-cta">SUBSCRIBE</a>
         </div>
@@ -300,7 +303,8 @@ export default async function Home() {
           <h4>Navigatie</h4>
           <ul className="footer-links">
             <li><Link href="/bio">Arno</Link></li>
-            <li><a href="https://royaldutchsales.com/arnobot" target="_blank" rel="noopener noreferrer">Bot</a></li>
+            <li><Link href="/bot">Bot</Link></li>
+            <li><a href="https://royaldutchsales.com/arnobot" target="_blank" rel="noopener noreferrer">ArnoBot</a></li>
             <li><a href="https://salescanvas.app" target="_blank" rel="noopener noreferrer">Canvas</a></li>
             <li><a href="https://arno.blog/subscribe">Subscribe</a></li>
           </ul>
