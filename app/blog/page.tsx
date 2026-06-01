@@ -115,7 +115,7 @@ export default async function BlogPage() {
           <Link href="/">HOME</Link>
           <Link href="/bio">BIO</Link>
           <Link href="/blog" className="nav-active">BLOG</Link>
-          <Link href="/spar">BOT</Link>
+          <Link href="/bot">BOT</Link>
           <a href="https://salescanvas.app" target="_blank" rel="noopener noreferrer">CANVAS</a>
           <a href="https://arno.blog/subscribe" className="nav-cta">SUBSCRIBE</a>
         </div>

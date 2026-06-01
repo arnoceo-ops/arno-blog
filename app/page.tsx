@@ -216,7 +216,7 @@ export default async function Home() {
       <nav className="site-nav">
         <div className="nav-links">
           <Link href="/bio">ARNO</Link>
-          <Link href="/spar">BOT</Link>
+          <Link href="/bot">BOT</Link>
           <a href="https://salescanvas.app" target="_blank" rel="noopener noreferrer">CANVAS</a>
           <a href="https://arno.blog/subscribe" className="nav-cta">SUBSCRIBE</a>
         </div>
@@ -271,7 +271,7 @@ export default async function Home() {
           </div>
         </div>
         <div className="canvas-right">
-          <Link href="/spar">
+          <Link href="/bot">
             <img src="/cyborg.jpg" alt="Arno Diepeveen" style={{display:'block', width:'380px', maxWidth:'100%', height:'auto', cursor:'pointer'}} />
           </Link>
         </div>
@@ -293,7 +293,7 @@ export default async function Home() {
           <h4>Navigatie</h4>
           <ul className="footer-links">
             <li><Link href="/bio">Arno</Link></li>
-            <li><Link href="/spar">Bot</Link></li>
+            <li><Link href="/bot">Bot</Link></li>
             <li><a href="https://salescanvas.app" target="_blank" rel="noopener noreferrer">Canvas</a></li>
             <li><a href="https://arno.blog/subscribe">Subscribe</a></li>
           </ul>

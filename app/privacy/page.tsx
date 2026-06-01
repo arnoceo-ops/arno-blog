@@ -80,7 +80,7 @@ export default function PrivacyPage() {
       <nav className="site-nav">
         <div className="nav-links">
           <Link href="/">HOME</Link>
-          <Link href="/spar">ARNOBOT</Link>
+          <Link href="/bot">ARNOBOT</Link>
           <Link href="/bio">BIO</Link>
           <Link href="/blog">BLOG</Link>
           <Link href="/canvas">CANVAS</Link>

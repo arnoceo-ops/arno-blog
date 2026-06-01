@@ -77,7 +77,7 @@ export default async function BioPage() {
           <Link href="/">HOME</Link>
           <Link href="/bio" className="nav-active">BIO</Link>
           <Link href="/blog">BLOG</Link>
-          <Link href="/spar">BOT</Link>
+          <Link href="/bot">BOT</Link>
           <a href="https://salescanvas.app" target="_blank" rel="noopener noreferrer">CANVAS</a>
           <a href="https://arno.blog/subscribe" className="nav-cta">SUBSCRIBE</a>
         </div>

@@ -344,7 +344,7 @@ export default function SparClient({ taglineTitle, taglineSub, openers }: Props)
       <nav className="site-nav">
         <div className="nav-links">
           <Link href="/">HOME</Link>
-          <Link href="/spar" className="nav-active">ARNOBOT</Link>
+          <Link href="/bot" className="nav-active">ARNOBOT</Link>
           <Link href="/bio">BIO</Link>
           <Link href="/blog">BLOG</Link>
           <a href="https://salescanvas.app" target="_blank" rel="noopener noreferrer">CANVAS</a>

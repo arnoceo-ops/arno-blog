@@ -13,7 +13,7 @@ export default clerkMiddleware(async (auth, req) => {
   if (path.startsWith('/blog')) {
     await auth.protect()
   }
-  if (path.startsWith('/spar') && !path.startsWith('/spar/admin')) {
+  if (path.startsWith('/bot') && !path.startsWith('/bot/admin')) {
     await auth.protect()
   }
 })
