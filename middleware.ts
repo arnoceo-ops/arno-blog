@@ -10,12 +10,6 @@ export default clerkMiddleware(async (auth, req) => {
   if (!isPublicRoute(req) && path.startsWith('/canvas')) {
     await auth.protect()
   }
-  if (path.startsWith('/blog')) {
-    await auth.protect()
-  }
-  if (path.startsWith('/bot') && !path.startsWith('/bot/admin')) {
-    await auth.protect()
-  }
 })
 
 export const config = {

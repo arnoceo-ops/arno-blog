@@ -2,6 +2,8 @@ import { client } from '@/sanity/client'
 import { PortableText } from '@portabletext/react'
 import imageUrlBuilder from '@sanity/image-url'
 import Link from 'next/link'
+import { cookies } from 'next/headers'
+import { redirect } from 'next/navigation'
 
 const builder = imageUrlBuilder(client)
 function urlFor(source: unknown) {
@@ -97,6 +99,10 @@ const portableTextComponents = {
 }
 
 export default async function PostPage({ params }: { params: Promise<{ slug: string }> }) {
+  const cookieStore = await cookies()
+  const token = cookieStore.get('arnobot_admin')?.value
+  if (!token || token !== process.env.ARNOBOT_ADMIN_KEY) redirect('/bot/admin/login')
+
   const { slug } = await params
   const [post, { prev, next }] = await Promise.all([
     getPost(slug),

@@ -1,5 +1,7 @@
 import { client } from '@/sanity/client'
 import Link from 'next/link'
+import { cookies } from 'next/headers'
+import { redirect } from 'next/navigation'
 
 interface Post {
   _id: string
@@ -27,6 +29,10 @@ async function getPosts(): Promise<Post[]> {
 }
 
 export default async function BlogPage() {
+  const cookieStore = await cookies()
+  const token = cookieStore.get('arnobot_admin')?.value
+  if (!token || token !== process.env.ARNOBOT_ADMIN_KEY) redirect('/bot/admin/login')
+
   const posts = await getPosts()
 
   const byYear: Record<string, Post[]> = {}
