@@ -216,11 +216,9 @@ export default function ArnoBotLandingPage() {
       {/* NAV */}
       <nav className="site-nav">
         <div className="nav-links">
+          <Link href="/">HOME</Link>
           <Link href="/bio">ARNO</Link>
-          <div className="nav-item">
-            <Link href="/bot">BOT</Link>
-            <Link href="/arnobot" className="nav-sub nav-active">ARNOBOT</Link>
-          </div>
+          <a href="https://www.royaldutchsales.com/arnobot" target="_blank" rel="noopener noreferrer" className="nav-active">BOT</a>
           <a href="https://salescanvas.app" target="_blank" rel="noopener noreferrer">CANVAS</a>
           <a href="https://arno.blog/subscribe" className="nav-cta">SUBSCRIBE</a>
         </div>

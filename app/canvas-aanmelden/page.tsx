@@ -200,11 +200,10 @@ export default function CanvasAanmeldenPage() {
       <nav className="site-nav">
         <div className="nav-links">
           <Link href="/">HOME</Link>
-          <Link href="/bot">ARNOBOT</Link>
-          <Link href="/bio">BIO</Link>
-          <Link href="/blog">BLOG</Link>
-          <Link href="/canvas" className="nav-active">CANVAS</Link>
-          <a href="/#subscribe" className="nav-cta">SUBSCRIBE</a>
+          <Link href="/bio">ARNO</Link>
+          <a href="https://www.royaldutchsales.com/arnobot" target="_blank" rel="noopener noreferrer">BOT</a>
+          <a href="https://salescanvas.app" target="_blank" rel="noopener noreferrer" className="nav-active">CANVAS</a>
+          <a href="https://arno.blog/subscribe" className="nav-cta">SUBSCRIBE</a>
         </div>
       </nav>
 
