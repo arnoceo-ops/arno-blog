@@ -15,7 +15,7 @@ type LogRow = {
 export default async function ArnoBotAdminPage({
   searchParams,
 }: {
-  searchParams: Promise<{ from?: string; to?: string }>
+  searchParams: Promise<{ from?: string; to?: string; sort?: string }>
 }) {
   const cookieStore = await cookies()
   const token = cookieStore.get('arnobot_admin')?.value
@@ -25,6 +25,7 @@ export default async function ArnoBotAdminPage({
   const today = new Date().toISOString().slice(0, 10)
   const from = params.from || today
   const to = params.to || today
+  const sort = params.sort || 'date_desc'
 
   const supabase = createClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
@@ -46,7 +47,13 @@ export default async function ArnoBotAdminPage({
     if (!sessions[key]) sessions[key] = []
     sessions[key].push(row)
   }
-  const sessionList = Object.entries(sessions)
+
+  let sessionList = Object.entries(sessions)
+  if (sort === 'date_desc') sessionList.sort((a, b) => b[1][0].created_at.localeCompare(a[1][0].created_at))
+  if (sort === 'date_asc')  sessionList.sort((a, b) => a[1][0].created_at.localeCompare(b[1][0].created_at))
+  if (sort === 'count_desc') sessionList.sort((a, b) => b[1].length - a[1].length)
+  if (sort === 'count_asc')  sessionList.sort((a, b) => a[1].length - b[1].length)
+
   const dateRange = from === to ? from : `${from} t/m ${to}`
 
   return (
@@ -66,6 +73,16 @@ export default async function ArnoBotAdminPage({
             <label style={{ fontSize: '16px', letterSpacing: '2px', color: '#EE7700', opacity: 0.7 }}>TOT EN MET</label>
             <input type="date" name="to" defaultValue={to}
               style={{ background: '#111', border: '1px solid #222', color: '#f0ede6', padding: '10px 14px', fontSize: '16px' }} />
+          </div>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
+            <label style={{ fontSize: '16px', letterSpacing: '2px', color: '#EE7700', opacity: 0.7 }}>SORTERING</label>
+            <select name="sort" defaultValue={sort}
+              style={{ background: '#111', border: '1px solid #222', color: '#f0ede6', padding: '10px 14px', fontSize: '16px' }}>
+              <option value="date_desc">Nieuwste eerst</option>
+              <option value="date_asc">Oudste eerst</option>
+              <option value="count_desc">Meeste vragen eerst</option>
+              <option value="count_asc">Minste vragen eerst</option>
+            </select>
           </div>
           <button type="submit"
             style={{ background: '#EE7700', color: '#000', border: 'none', padding: '10px 24px', fontWeight: 700, cursor: 'pointer', fontSize: '14px', alignSelf: 'flex-end' }}>
