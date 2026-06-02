@@ -243,9 +243,6 @@ export default function ArnoBotLandingPage() {
         </div>
         <div className="canvas-right">
           <div style={{maxWidth:'480px', width:'100%'}}>
-            <p className="canvas-body">
-              ArnoBot is geen generieke AI, maar verbindt zich met jouw profiel, ervaring, vaardigheden en doelen. Daardoor krijg je gericht antwoord op je commerciële vragen.
-            </p>
             <div className="feature-item">
               <span className="feature-arrow">→</span>
               <span className="feature-text">Met jouw profiel als uitgangspunt<small>Je geeft aan in welke markt je actief bent, wat je verkoopt, wat je targets zijn en wie je ideale klant is. ArnoBot begrijpt direct wie je bent en wat je nodig hebt.</small></span>
