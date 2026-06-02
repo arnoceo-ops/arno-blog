@@ -29,11 +29,11 @@ export async function POST(req: NextRequest) {
   try {
     const response = await anthropic.messages.create({
       model: 'claude-haiku-4-5-20251001',
-      max_tokens: 600,
+      max_tokens: 150,
       system: 'Je bent Arno Diepeveen. Oprichter Royal Dutch Sales. Direct, ongefilterd, geen bullshit. Geen corporate taal. Geen accenten op woorden voor nadruk.',
       messages: [{
         role: 'user',
-        content: `Schrijf een terugblik op dit coachingsgesprek in 2-3 alinea's. Wat werd er besproken, wat waren de kernpunten, en wat is de belangrijkste takeaway. Schrijf in eerste persoon, vanuit mijn perspectief als Arno. Geen opsommingen — lopende tekst.\n\n${conversationText}`
+        content: `Schrijf een terugblik op dit gesprek in maximaal 2-3 zinnen. Wat was de kern en wat is de ene concrete takeaway. Geen inleiding, geen opsomming — direct de essentie, in eerste persoon als Arno.\n\n${conversationText}`
       }]
     })
     summary = response.content[0].type === 'text' ? response.content[0].text : ''
