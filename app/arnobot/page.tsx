@@ -235,7 +235,7 @@ export default function ArnoBotLandingPage() {
           <div className="canvas-left-inner">
             <div className="canvas-quote">
               Jij bent de Man.<br />
-              Wij zijn de machine.<br />
+              Wij de machine.<br />
               Samen zijn we<br />
               <em>onoverwinnelijk.</em>
             </div>
