@@ -211,12 +211,12 @@ export default function ArnoBotLandingPage() {
 
       {/* INTRO */}
       <section className="subscribe-section" style={{background: '#0a0a0a', paddingTop: '80px'}}>
-        {/* LEFT: foto — zelfde aanpak als homepage */}
-        <div className="canvas-right" style={{background: '#0a0a0a', borderRight: '1px solid #1a1a1a'}}>
+        {/* LEFT: foto — zelfde class-structuur als homepage */}
+        <div className="subscribe-text-col">
           <img src="/cyborg.jpg" alt="ArnoBot" style={{display: 'block', width: '380px', maxWidth: '100%', height: 'auto'}} />
         </div>
         {/* RIGHT: propositie */}
-        <div className="canvas-right" style={{background: '#0a0a0a', justifyContent: 'center'}}>
+        <div className="canvas-right">
           <div style={{maxWidth:'480px'}}>
             <p style={{fontSize:'13px', letterSpacing:'4px', textTransform:'uppercase', color:'#EE7700', fontFamily:"'Space Mono', monospace", marginBottom:'16px'}}>ArnoBot Unlimited</p>
             <h2 style={{fontFamily:"'Barlow Condensed', sans-serif", fontSize:'clamp(32px, 3.5vw, 52px)', fontWeight:600, color:'#f0ede6', lineHeight:1.1, textTransform:'uppercase', letterSpacing:'1px', marginBottom:'20px'}}>
