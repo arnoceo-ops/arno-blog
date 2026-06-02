@@ -127,13 +127,13 @@ export default function BotProfielPage() {
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Mono:wght@400;700&display=swap');
         * { box-sizing: border-box; margin: 0; padding: 0; }
-        body { background: #0a0a0a; color: #f0ede6; font-family: 'Space Mono', monospace; }
+        body { background: #0a0a0a; color: #f0ede6; font-family: 'Space Mono', monospace; font-size: 15px; font-weight: 700; line-height: 30px; }
         textarea, input {
           background: #111; color: #f0ede6; border: 1.5px solid #333;
           border-radius: 4px; font-family: 'Space Mono', monospace;
-          font-size: 15px; padding: 12px 16px; width: 100%;
+          font-size: 15px; font-weight: 700; padding: 12px 16px; width: 100%;
           box-sizing: border-box; outline: none; resize: vertical;
-          transition: border-color 0.15s; line-height: 1.6;
+          transition: border-color 0.15s; line-height: 30px;
         }
         textarea:focus, input:focus { border-color: #EE7700; }
         textarea::placeholder, input::placeholder { color: #444; }
@@ -163,7 +163,7 @@ export default function BotProfielPage() {
           </div>
 
           <Block nr="01" title="Wie ben je?">
-            <p style={{ fontSize: 13, color: '#666', marginBottom: 12 }}>Wat is je rol?</p>
+            <p style={{ fontSize: 15, fontWeight: 700, lineHeight: '30px', color: '#666', marginBottom: 12 }}>Wat is je rol?</p>
             <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8 }}>
               {ROL_OPTIONS.map(o => (
                 <Chip key={o} label={o} selected={answers.rol === o} onClick={() => set('rol', o)} />
@@ -172,7 +172,7 @@ export default function BotProfielPage() {
           </Block>
 
           <Block nr="02" title="Jouw markt">
-            <p style={{ fontSize: 13, color: '#666', marginBottom: 12 }}>In welke markt ben je actief? <span style={{ color: '#444' }}>(meerdere antwoorden mogelijk)</span></p>
+            <p style={{ fontSize: 15, fontWeight: 700, lineHeight: '30px', color: '#666', marginBottom: 12 }}>In welke markt ben je actief? <span style={{ color: '#444' }}>(meerdere antwoorden mogelijk)</span></p>
             <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8 }}>
               {MARKT_OPTIONS.map(o => (
                 <Chip key={o} label={o} selected={answers.markt.includes(o)} onClick={() => toggleMarkt(o)} />
@@ -181,7 +181,7 @@ export default function BotProfielPage() {
           </Block>
 
           <Block nr="03" title="Wat verkoop je?">
-            <p style={{ fontSize: 13, color: '#666', marginBottom: 12 }}>Omschrijf kort wat je verkoopt</p>
+            <p style={{ fontSize: 15, fontWeight: 700, lineHeight: '30px', color: '#666', marginBottom: 12 }}>Omschrijf kort wat je verkoopt</p>
             <textarea
               value={answers.wat_verkoop_je}
               onChange={e => set('wat_verkoop_je', e.target.value)}
@@ -191,7 +191,7 @@ export default function BotProfielPage() {
           </Block>
 
           <Block nr="04" title="Jouw ideale klant">
-            <p style={{ fontSize: 13, color: '#666', marginBottom: 12 }}>Wie is jouw ideale klant?</p>
+            <p style={{ fontSize: 15, fontWeight: 700, lineHeight: '30px', color: '#666', marginBottom: 12 }}>Wie is jouw ideale klant?</p>
             <textarea
               value={answers.ideale_klant}
               onChange={e => set('ideale_klant', e.target.value)}
@@ -201,7 +201,7 @@ export default function BotProfielPage() {
           </Block>
 
           <Block nr="05" title="Toon van ArnoBot">
-            <p style={{ fontSize: 13, color: '#666', marginBottom: 12 }}>Hoe wil je dat ArnoBot je benadert?</p>
+            <p style={{ fontSize: 15, fontWeight: 700, lineHeight: '30px', color: '#666', marginBottom: 12 }}>Hoe wil je dat ArnoBot je benadert?</p>
             <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8 }}>
               {TOON_OPTIONS.map(o => (
                 <Chip key={o} label={o} selected={answers.toon === o} onClick={() => set('toon', o)} />
@@ -210,7 +210,7 @@ export default function BotProfielPage() {
           </Block>
 
           <Block nr="06" title="Jouw grootste uitdaging">
-            <p style={{ fontSize: 13, color: '#666', marginBottom: 12 }}>Wat houdt jou nu het meest bezig in je saleswerk?</p>
+            <p style={{ fontSize: 15, fontWeight: 700, lineHeight: '30px', color: '#666', marginBottom: 12 }}>Wat houdt jou nu het meest bezig in je saleswerk?</p>
             <textarea
               value={answers.uitdaging}
               onChange={e => set('uitdaging', e.target.value)}
@@ -219,7 +219,7 @@ export default function BotProfielPage() {
             />
           </Block>
 
-          {error && <p style={{ color: '#c0392b', fontSize: 13, marginBottom: 16 }}>{error}</p>}
+          {error && <p style={{ color: '#c0392b', fontSize: 15, fontWeight: 700, lineHeight: '30px', marginBottom: 16 }}>{error}</p>}
 
           <button
             type="button"
