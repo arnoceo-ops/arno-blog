@@ -7,7 +7,7 @@ export default function ArnoBotLandingPage() {
         @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Mono:wght@400;700&family=Barlow+Condensed:wght@300;600;900&display=swap');
 
         * { box-sizing: border-box; margin: 0; padding: 0; }
-        body { background: #0a0a0a; color: #f0ede6; font-family: 'Space Mono', monospace; }
+        body { background: #1a1a1a; color: #f0ede6; font-family: 'Space Mono', monospace; }
 
         /* ── NAV ── */
         .site-nav {
@@ -39,7 +39,7 @@ export default function ArnoBotLandingPage() {
         .canvas-quote {
           font-family: 'Bebas Neue', sans-serif;
           font-size: clamp(40px, 4vw, 64px);
-          line-height: 1.05; color: #0a0a0a;
+          line-height: 1.05; color: #1a1a1a;
           border-right: 4px solid #EE7700; padding-right: 32px;
           text-align: right;
         }
@@ -51,7 +51,7 @@ export default function ArnoBotLandingPage() {
         .canvas-title {
           font-family: 'Bebas Neue', sans-serif;
           font-size: clamp(40px, 4vw, 64px);
-          line-height: 1.05; color: #0a0a0a; letter-spacing: 1px;
+          line-height: 1.05; color: #1a1a1a; letter-spacing: 1px;
         }
         .canvas-body { font-size: 15px; line-height: 2; color: #555; max-width: 420px; }
         .canvas-link {
@@ -66,7 +66,7 @@ export default function ArnoBotLandingPage() {
 
         /* ── SUBSCRIBE (dark sections) ── */
         .subscribe-section {
-          background: #111; color: #f0ede6;
+          background: #1a1a1a; color: #f0ede6;
           display: grid; grid-template-columns: 1fr 1fr;
           border-top: 3px solid #EE7700;
         }
@@ -158,7 +158,7 @@ export default function ArnoBotLandingPage() {
         .feature-text {
           font-family: 'Barlow Condensed', sans-serif;
           font-size: 22px; font-weight: 600;
-          color: #0a0a0a; letter-spacing: 0.5px;
+          color: #1a1a1a; letter-spacing: 0.5px;
           text-transform: uppercase; line-height: 1.2;
         }
         .feature-text small {
@@ -216,7 +216,7 @@ export default function ArnoBotLandingPage() {
           <img src="/cyborg.jpg" alt="ArnoBot" style={{display:'block', width:'380px', maxWidth:'100%', height:'auto'}} />
         </div>
         {/* RIGHT: propositie */}
-        <div className="canvas-right" style={{background:'#0a0a0a', justifyContent:'center'}}>
+        <div className="canvas-right" style={{background:'#1a1a1a', justifyContent:'center'}}>
           <div style={{maxWidth:'480px'}}>
             <p style={{fontSize:'13px', letterSpacing:'4px', textTransform:'uppercase', color:'#EE7700', fontFamily:"'Space Mono', monospace", marginBottom:'16px'}}>ArnoBot Unlimited</p>
             <h2 style={{fontFamily:"'Barlow Condensed', sans-serif", fontSize:'clamp(32px, 3.5vw, 52px)', fontWeight:600, color:'#f0ede6', lineHeight:1.1, textTransform:'uppercase', letterSpacing:'1px', marginBottom:'20px'}}>
@@ -242,21 +242,23 @@ export default function ArnoBotLandingPage() {
           </div>
         </div>
         <div className="canvas-right">
-          <h2 className="canvas-title">GROEIT <span style={{color:'#EE7700'}}>MET JOU.</span></h2>
-          <p className="canvas-body">
-            ArnoBot Unlimited is geen statische chatbot. Het bouwt een persoonlijk profiel op — gebaseerd op alles wat jij deelt en alles wat jij vraagt.
-          </p>
-          <div className="feature-item">
-            <span className="feature-arrow">→</span>
-            <span className="feature-text">Jouw profiel<small>Branche, situatie, doelen — het systeem onthoudt wat jij deelt.</small></span>
-          </div>
-          <div className="feature-item">
-            <span className="feature-arrow">→</span>
-            <span className="feature-text">Arno's archief<small>19 jaar sales-expertise als kennisbank. Elke vraag beantwoord vanuit bewezen inzichten.</small></span>
-          </div>
-          <div className="feature-item" style={{borderBottom:'none'}}>
-            <span className="feature-arrow">→</span>
-            <span className="feature-text">Gecombineerd<small>Jouw context + Arno's kennis = advies dat met elke sessie scherper wordt.</small></span>
+          <div style={{maxWidth:'480px', width:'100%'}}>
+            <h2 className="canvas-title">GROEIT <span style={{color:'#EE7700'}}>MET JOU.</span></h2>
+            <p className="canvas-body">
+              ArnoBot Unlimited is geen statische chatbot. Het bouwt een persoonlijk profiel op — gebaseerd op alles wat jij deelt en alles wat jij vraagt.
+            </p>
+            <div className="feature-item">
+              <span className="feature-arrow">→</span>
+              <span className="feature-text">Jouw profiel<small>Branche, situatie, doelen — het systeem onthoudt wat jij deelt.</small></span>
+            </div>
+            <div className="feature-item">
+              <span className="feature-arrow">→</span>
+              <span className="feature-text">Arno's archief<small>19 jaar sales-expertise als kennisbank. Elke vraag beantwoord vanuit bewezen inzichten.</small></span>
+            </div>
+            <div className="feature-item" style={{borderBottom:'none'}}>
+              <span className="feature-arrow">→</span>
+              <span className="feature-text">Gecombineerd<small>Jouw context + Arno's kennis = advies dat met elke sessie scherper wordt.</small></span>
+            </div>
           </div>
         </div>
       </section>
@@ -266,7 +268,7 @@ export default function ArnoBotLandingPage() {
         {/* LEFT: PER MAAND */}
         <div className="subscribe-text-col">
           <div className="subscribe-text-inner">
-            <span style={{fontSize:'13px', letterSpacing:'5px', textTransform:'uppercase', color:'#EE7700', fontFamily:"'Bebas Neue', sans-serif"}}>Per maand</span>
+            <span style={{fontSize:'13px', letterSpacing:'2px', textTransform:'uppercase', color:'#EE7700', fontFamily:"'Space Mono', monospace"}}>Per maand</span>
             <div style={{display:'flex', alignItems:'baseline', gap:'8px', justifyContent:'flex-end'}}>
               <span style={{fontFamily:"'Bebas Neue', sans-serif", fontSize:'clamp(28px, 3vw, 44px)', color:'#666', letterSpacing:0}}>€</span>
               <span style={{fontFamily:"'Bebas Neue', sans-serif", fontSize:'clamp(64px, 7vw, 104px)', color:'#f0ede6', letterSpacing:'-2px', lineHeight:0.9}}>97</span>
@@ -276,24 +278,26 @@ export default function ArnoBotLandingPage() {
               background:'#EE7700', color:'#0a0a0a', fontFamily:"'Bebas Neue', sans-serif",
               fontSize:'20px', letterSpacing:'3px', padding:'12px 40px', borderRadius:'999px',
               transition:'background 0.2s', marginTop:'8px'
-            }}>GO →</a>
-            <span style={{fontSize:'11px', color:'#555', fontFamily:"'Space Mono', monospace"}}>Niet goed na 8 dagen? Geld terug.</span>
+            }}>GO</a>
+            <span style={{fontSize:'13px', color:'#888', fontFamily:"'Space Mono', monospace"}}>Niet goed na 8 dagen? Geld terug.</span>
           </div>
         </div>
         {/* RIGHT: PER JAAR */}
-        <div className="canvas-right" style={{justifyContent:'center', gap:'20px'}}>
-          <span style={{fontSize:'13px', letterSpacing:'5px', textTransform:'uppercase', color:'#EE7700', fontFamily:"'Bebas Neue', sans-serif"}}>Per jaar</span>
-          <div style={{display:'flex', alignItems:'baseline', gap:'8px'}}>
-            <span style={{fontFamily:"'Bebas Neue', sans-serif", fontSize:'clamp(28px, 3vw, 44px)', color:'#666', letterSpacing:0}}>€</span>
-            <span style={{fontFamily:"'Bebas Neue', sans-serif", fontSize:'clamp(64px, 7vw, 104px)', color:'#f0ede6', letterSpacing:'-2px', lineHeight:0.9}}>777</span>
+        <div className="canvas-right" style={{justifyContent:'center'}}>
+          <div style={{maxWidth:'480px', width:'100%', display:'flex', flexDirection:'column', gap:'20px'}}>
+            <span style={{fontSize:'13px', letterSpacing:'2px', textTransform:'uppercase', color:'#EE7700', fontFamily:"'Space Mono', monospace"}}>Per jaar</span>
+            <div style={{display:'flex', alignItems:'baseline', gap:'8px'}}>
+              <span style={{fontFamily:"'Bebas Neue', sans-serif", fontSize:'clamp(28px, 3vw, 44px)', color:'#666', letterSpacing:0}}>€</span>
+              <span style={{fontFamily:"'Bebas Neue', sans-serif", fontSize:'clamp(64px, 7vw, 104px)', color:'#f0ede6', letterSpacing:'-2px', lineHeight:0.9}}>777</span>
+            </div>
+            <a href="https://royaldutchsales.com/arnobot?plan=yearly" style={{
+              display:'inline-block', textDecoration:'none', textAlign:'center', alignSelf:'flex-start',
+              background:'#EE7700', color:'#0a0a0a', fontFamily:"'Bebas Neue', sans-serif",
+              fontSize:'20px', letterSpacing:'3px', padding:'12px 40px', borderRadius:'999px',
+              transition:'background 0.2s'
+            }}>GO</a>
+            <span style={{fontSize:'13px', color:'#888', fontFamily:"'Space Mono', monospace"}}>Niet goed na 8 dagen? Geld terug.</span>
           </div>
-          <a href="https://royaldutchsales.com/arnobot?plan=yearly" style={{
-            display:'inline-block', textDecoration:'none', textAlign:'center', alignSelf:'flex-start',
-            background:'#EE7700', color:'#0a0a0a', fontFamily:"'Bebas Neue', sans-serif",
-            fontSize:'20px', letterSpacing:'3px', padding:'12px 40px', borderRadius:'999px',
-            transition:'background 0.2s', marginTop:'8px'
-          }}>GO →</a>
-          <span style={{fontSize:'11px', color:'#555', fontFamily:"'Space Mono', monospace"}}>Niet goed na 8 dagen? Geld terug.</span>
         </div>
       </section>
 
@@ -302,31 +306,33 @@ export default function ArnoBotLandingPage() {
         <div className="canvas-left">
           <div className="canvas-left-inner">
             <div className="feature-item" style={{flexDirection:'row-reverse'}}>
-              <span className="feature-arrow">→</span>
+              <span className="feature-arrow">←</span>
               <span className="feature-text" style={{textAlign:'right'}}>Onbeperkt vragen stellen<small>Geen limiet. Geen wachttijd.</small></span>
             </div>
             <div className="feature-item" style={{flexDirection:'row-reverse'}}>
-              <span className="feature-arrow">→</span>
+              <span className="feature-arrow">←</span>
               <span className="feature-text" style={{textAlign:'right'}}>Sessiehistorie<small>Al je gesprekken bewaard en doorzoekbaar.</small></span>
             </div>
             <div className="feature-item" style={{flexDirection:'row-reverse'}}>
-              <span className="feature-arrow">→</span>
+              <span className="feature-arrow">←</span>
               <span className="feature-text" style={{textAlign:'right'}}>PDF export<small>Exporteer elk gesprek als document.</small></span>
             </div>
           </div>
         </div>
         <div className="canvas-right">
-          <div className="feature-item">
-            <span className="feature-arrow">→</span>
-            <span className="feature-text">Onthoudt jouw sessies<small>Werkt op basis van jouw persoonlijke profiel.</small></span>
-          </div>
-          <div className="feature-item">
-            <span className="feature-arrow">→</span>
-            <span className="feature-text">Verwijzingen naar blogs<small>Elk antwoord onderbouwd met Arno's eigen artikelen.</small></span>
-          </div>
-          <div className="feature-item">
-            <span className="feature-arrow">→</span>
-            <span className="feature-text">Overleg met Arno<small>Niet de bot maar Arno in persoon.</small></span>
+          <div style={{maxWidth:'480px', width:'100%'}}>
+            <div className="feature-item">
+              <span className="feature-arrow">→</span>
+              <span className="feature-text">Onthoudt jouw sessies<small>Werkt op basis van jouw persoonlijke profiel.</small></span>
+            </div>
+            <div className="feature-item">
+              <span className="feature-arrow">→</span>
+              <span className="feature-text">Verwijzingen naar blogs<small>Elk antwoord onderbouwd met Arno's eigen artikelen.</small></span>
+            </div>
+            <div className="feature-item">
+              <span className="feature-arrow">→</span>
+              <span className="feature-text">Overleg met Arno<small>Niet de bot maar Arno in persoon.</small></span>
+            </div>
           </div>
         </div>
       </section>
@@ -341,10 +347,12 @@ export default function ArnoBotLandingPage() {
           </div>
         </div>
         <div className="canvas-right">
-          <h2 className="canvas-title">ARNO <span style={{color:'#EE7700'}}>LIVE.</span></h2>
-          <p className="canvas-body">
-            Niet alleen de bot. Arno zelf. Persoonlijke online consultancy over jouw specifieke situatie. Voor als je er echt iets mee wil doen.
-          </p>
+          <div style={{maxWidth:'480px', width:'100%'}}>
+            <h2 className="canvas-title">ARNO <span style={{color:'#EE7700'}}>LIVE.</span></h2>
+            <p className="canvas-body">
+              Niet alleen de bot. Arno zelf. Persoonlijke online consultancy over jouw specifieke situatie. Voor als je er echt iets mee wil doen.
+            </p>
+          </div>
         </div>
       </section>
 
