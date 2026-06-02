@@ -211,8 +211,10 @@ export default function ArnoBotLandingPage() {
 
       {/* INTRO */}
       <section className="subscribe-section" style={{background: '#0a0a0a', paddingTop: '80px'}}>
-        {/* LEFT: foto — full-bleed via background-image */}
-        <div style={{backgroundImage:"url('/cyborg.jpg')", backgroundSize:'cover', backgroundPosition:'center 10%', minHeight:'460px'}} />
+        {/* LEFT: foto — zelfde als homepage: img in padded kolom */}
+        <div className="subscribe-text-col">
+          <img src="/cyborg.jpg" alt="ArnoBot" style={{display:'block', width:'380px', maxWidth:'100%', height:'auto'}} />
+        </div>
         {/* RIGHT: propositie */}
         <div className="canvas-right" style={{background:'#0a0a0a', justifyContent:'center'}}>
           <div style={{maxWidth:'480px'}}>
@@ -299,17 +301,17 @@ export default function ArnoBotLandingPage() {
       <section className="canvas-section">
         <div className="canvas-left">
           <div className="canvas-left-inner">
-            <div style={{padding:'20px 0', borderBottom:'1px solid #ddd', textAlign:'right'}}>
-              <div style={{fontFamily:"'Barlow Condensed', sans-serif", fontSize:'22px', fontWeight:600, color:'#0a0a0a', textTransform:'uppercase', letterSpacing:'0.5px', lineHeight:1.2}}>Onbeperkt vragen stellen</div>
-              <small style={{display:'block', fontFamily:"'Space Mono', monospace", fontSize:'13px', letterSpacing:'0.5px', color:'#888', fontWeight:400, marginTop:'4px'}}>Geen limiet. Geen wachttijd.</small>
+            <div className="feature-item" style={{flexDirection:'row-reverse'}}>
+              <span className="feature-arrow">→</span>
+              <span className="feature-text" style={{textAlign:'right'}}>Onbeperkt vragen stellen<small>Geen limiet. Geen wachttijd.</small></span>
             </div>
-            <div style={{padding:'20px 0', borderBottom:'1px solid #ddd', textAlign:'right'}}>
-              <div style={{fontFamily:"'Barlow Condensed', sans-serif", fontSize:'22px', fontWeight:600, color:'#0a0a0a', textTransform:'uppercase', letterSpacing:'0.5px', lineHeight:1.2}}>Sessiehistorie</div>
-              <small style={{display:'block', fontFamily:"'Space Mono', monospace", fontSize:'13px', letterSpacing:'0.5px', color:'#888', fontWeight:400, marginTop:'4px'}}>Al je gesprekken bewaard en doorzoekbaar.</small>
+            <div className="feature-item" style={{flexDirection:'row-reverse'}}>
+              <span className="feature-arrow">→</span>
+              <span className="feature-text" style={{textAlign:'right'}}>Sessiehistorie<small>Al je gesprekken bewaard en doorzoekbaar.</small></span>
             </div>
-            <div style={{padding:'20px 0', textAlign:'right'}}>
-              <div style={{fontFamily:"'Barlow Condensed', sans-serif", fontSize:'22px', fontWeight:600, color:'#0a0a0a', textTransform:'uppercase', letterSpacing:'0.5px', lineHeight:1.2}}>PDF export</div>
-              <small style={{display:'block', fontFamily:"'Space Mono', monospace", fontSize:'13px', letterSpacing:'0.5px', color:'#888', fontWeight:400, marginTop:'4px'}}>Exporteer elk gesprek als document.</small>
+            <div className="feature-item" style={{flexDirection:'row-reverse'}}>
+              <span className="feature-arrow">→</span>
+              <span className="feature-text" style={{textAlign:'right'}}>PDF export<small>Exporteer elk gesprek als document.</small></span>
             </div>
           </div>
         </div>
