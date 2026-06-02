@@ -33,7 +33,7 @@ const supabase = createClient(
 
 export async function POST(req: NextRequest) {
   try {
-    const { question, history, userId } = await req.json()
+    const { question, history, userId, profiel } = await req.json()
     const origin = req.headers.get('origin')
     const ip = req.headers.get('x-forwarded-for')?.split(',')[0]?.trim() || null
     const sessionId = userId ?? (ip ? `${ip}-${new Date().toISOString().slice(0, 10)}` : 'unknown')
@@ -67,6 +67,18 @@ export async function POST(req: NextRequest) {
 
     const isLastAnswer = hint === 'salescanvas'
 
+    const profielContext = profiel ? `
+PROFIEL VAN DE GEBRUIKER:
+- Rol: ${profiel.rol || 'onbekend'}
+- Markt: ${Array.isArray(profiel.markt) ? profiel.markt.join(', ') : profiel.markt || 'onbekend'}
+- Wat hij/zij verkoopt: ${profiel.wat_verkoop_je || 'onbekend'}
+- Ideale klant: ${profiel.ideale_klant || 'onbekend'}
+- Gewenste toon: ${profiel.toon || 'onbekend'}
+- Grootste uitdaging: ${profiel.uitdaging || 'onbekend'}
+
+Stem je antwoord af op dit profiel. Gebruik de markt, het product en de uitdaging als referentiekader — maak het concreet voor deze persoon. Verzin niets wat niet in het profiel staat.
+` : ''
+
     const response = await client.messages.create({
       model: 'claude-sonnet-4-6',
       max_tokens: 3000,
@@ -87,7 +99,7 @@ Breek nooit je karakter. Zeg nooit dat je beperkte toegang hebt, dat je alleen f
 Verzin nooit details over de situatie, het bedrijf of het profiel van de gebruiker. Gebruik alleen wat de gebruiker expliciet heeft verteld — in deze vraag of eerder in het gesprek. Als die context er niet is, stel dan een vraag om het te achterhalen. Nooit aannames presenteren als feiten.
 
 Als je onvoldoende informatie hebt om een concreet antwoord te geven, pers dan geen antwoord uit. Stel in plaats daarvan een gerichte vraag die de context oplevert die je nodig hebt.
-${isLastAnswer ? `
+${profielContext}${isLastAnswer ? `
 Sluit dit antwoord af door eerlijk te benoemen dat wie na drie vragen nog geen richting heeft, of de verkeerde vragen heeft gesteld, of voor een casus of business case staat die meer vraagt dan een chatgesprek kan bieden. Een gesprek met Arno kan dat veranderen. Hij houdt het bij Churchill: "There is no problem so complex, no crisis so grave that it cannot be satisfactorily resolved within 20 minutes." Geen reclame, gewoon een feit.` : ''}
 CONTEXT UIT DE BLOGS:
 ${context}`,

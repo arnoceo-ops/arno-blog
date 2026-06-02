@@ -1,0 +1,245 @@
+'use client'
+
+import { useState, useEffect } from 'react'
+import { useRouter } from 'next/navigation'
+import { useUser } from '@clerk/nextjs'
+import Link from 'next/link'
+
+type Answers = {
+  rol: string
+  markt: string[]
+  wat_verkoop_je: string
+  ideale_klant: string
+  toon: string
+  uitdaging: string
+}
+
+const empty: Answers = {
+  rol: '',
+  markt: [],
+  wat_verkoop_je: '',
+  ideale_klant: '',
+  toon: '',
+  uitdaging: '',
+}
+
+const ROL_OPTIONS = ['Salesperson', 'Account Manager', 'Sales Manager', 'CEO / Founder / DGA', 'ZZP\'er', 'Anders']
+const MARKT_OPTIONS = ['B2B MKB', 'B2B Enterprise', 'B2C', 'Overheid']
+const TOON_OPTIONS = ['Direct en confronterend', 'Vragend en reflectief', 'Motiverend en positief', 'Wissel maar af']
+
+function Chip({ label, selected, onClick }: { label: string; selected: boolean; onClick: () => void }) {
+  return (
+    <button
+      type="button"
+      onClick={onClick}
+      style={{
+        padding: '8px 18px',
+        border: selected ? '2px solid #EE7700' : '1.5px solid #333',
+        background: selected ? 'rgba(238,119,0,0.12)' : '#111',
+        color: selected ? '#EE7700' : '#888',
+        fontFamily: "'Space Mono', monospace",
+        fontSize: 13,
+        fontWeight: selected ? 700 : 400,
+        cursor: 'pointer',
+        borderRadius: 4,
+        transition: 'all 0.15s',
+      }}
+    >
+      {label}
+    </button>
+  )
+}
+
+function Block({ nr, title, children }: { nr: string; title: string; children: React.ReactNode }) {
+  return (
+    <div style={{ marginBottom: 48, borderBottom: '1px solid #1a1a1a', paddingBottom: 40 }}>
+      <div style={{ display: 'flex', alignItems: 'baseline', gap: 12, marginBottom: 20 }}>
+        <span style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 13, letterSpacing: 4, color: '#EE7700' }}>{nr}</span>
+        <h3 style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 28, color: '#f0ede6', margin: 0, letterSpacing: 1 }}>{title}</h3>
+      </div>
+      {children}
+    </div>
+  )
+}
+
+export default function BotProfielPage() {
+  const { user } = useUser()
+  const router = useRouter()
+  const [answers, setAnswers] = useState<Answers>(empty)
+  const [saving, setSaving] = useState(false)
+  const [error, setError] = useState('')
+  const [isFirstTime, setIsFirstTime] = useState(false)
+
+  const firstName = user?.firstName || 'daar'
+
+  useEffect(() => {
+    fetch('/api/bot/profiel')
+      .then(r => r.ok ? r.json() : null)
+      .then(data => {
+        if (data?.profiel) {
+          setAnswers(prev => ({ ...prev, ...data.profiel }))
+        } else {
+          setIsFirstTime(true)
+        }
+      })
+      .catch(() => {})
+  }, [])
+
+  function set(key: keyof Answers, val: string) {
+    setAnswers(prev => ({ ...prev, [key]: val }))
+  }
+
+  function toggleMarkt(val: string) {
+    setAnswers(prev => ({
+      ...prev,
+      markt: prev.markt.includes(val) ? prev.markt.filter(v => v !== val) : [...prev.markt, val]
+    }))
+  }
+
+  const allFilled =
+    answers.rol &&
+    answers.markt.length > 0 &&
+    answers.wat_verkoop_je.trim().length > 2 &&
+    answers.ideale_klant.trim().length > 2 &&
+    answers.toon &&
+    answers.uitdaging.trim().length > 2
+
+  async function handleSubmit() {
+    if (!allFilled) return
+    setSaving(true)
+    setError('')
+    try {
+      const res = await fetch('/api/bot/profiel', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ profiel: answers }),
+      })
+      if (!res.ok) throw new Error('Opslaan mislukt')
+      router.push('/bot')
+    } catch {
+      setError('Er ging iets mis. Probeer het opnieuw.')
+      setSaving(false)
+    }
+  }
+
+  return (
+    <>
+      <style>{`
+        @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Mono:wght@400;700&display=swap');
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { background: #0a0a0a; color: #f0ede6; font-family: 'Space Mono', monospace; }
+        textarea, input {
+          background: #111; color: #f0ede6; border: 1.5px solid #333;
+          border-radius: 4px; font-family: 'Space Mono', monospace;
+          font-size: 13px; padding: 12px 16px; width: 100%;
+          box-sizing: border-box; outline: none; resize: vertical;
+          transition: border-color 0.15s; line-height: 1.6;
+        }
+        textarea:focus, input:focus { border-color: #EE7700; }
+        textarea::placeholder, input::placeholder { color: #444; }
+      `}</style>
+
+      <nav style={{ position: 'fixed', top: 0, left: 0, right: 0, zIndex: 100, padding: '16px 40px', display: 'flex', justifyContent: 'center', borderBottom: '1px solid rgba(255,255,255,0.06)', background: 'rgba(10,10,10,0.95)', backdropFilter: 'blur(12px)' }}>
+        <div style={{ display: 'flex', gap: 48, alignItems: 'center' }}>
+          <Link href="/" style={{ color: '#888', textDecoration: 'none', fontFamily: "'Bebas Neue', sans-serif", fontSize: 22, letterSpacing: 3 }}>HOME</Link>
+          <a href="https://www.royaldutchsales.com/arnobot" style={{ color: '#EE7700', textDecoration: 'none', fontFamily: "'Bebas Neue', sans-serif", fontSize: 22, letterSpacing: 3 }}>BOT</a>
+        </div>
+      </nav>
+
+      <div style={{ minHeight: '100vh', paddingTop: 80, paddingBottom: 80 }}>
+        <div style={{ maxWidth: 680, margin: '0 auto', padding: '60px 24px 0' }}>
+
+          <div style={{ borderBottom: '3px solid #EE7700', paddingBottom: 32, marginBottom: 48 }}>
+            <p style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 14, letterSpacing: 6, color: '#EE7700', marginBottom: 8 }}>
+              {isFirstTime ? 'WELKOM' : 'JOUW PROFIEL'}
+            </p>
+            <h1 style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 44, color: '#f0ede6', lineHeight: 1.05, letterSpacing: 1, marginBottom: 24 }}>
+              {isFirstTime ? `Goed dat je er bent, ${firstName}.` : 'Profiel aanpassen'}
+            </h1>
+            <div style={{ borderLeft: '4px solid #EE7700', paddingLeft: 20, color: '#888', fontSize: 14, lineHeight: 1.8 }}>
+              <p style={{ color: '#f0ede6', fontWeight: 700, marginBottom: 8 }}>ArnoBot stemt zijn coaching af op jouw situatie.</p>
+              <p>Hoe meer hij weet over wie jij bent, wat je verkoopt en waar je mee worstelt, hoe gerichter zijn advies. Dit invullen kost je twee minuten.</p>
+            </div>
+          </div>
+
+          <Block nr="01" title="Wie ben je?">
+            <p style={{ fontSize: 13, color: '#666', marginBottom: 12 }}>Wat is je rol?</p>
+            <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8 }}>
+              {ROL_OPTIONS.map(o => (
+                <Chip key={o} label={o} selected={answers.rol === o} onClick={() => set('rol', o)} />
+              ))}
+            </div>
+          </Block>
+
+          <Block nr="02" title="Jouw markt">
+            <p style={{ fontSize: 13, color: '#666', marginBottom: 12 }}>In welke markt ben je actief? <span style={{ color: '#444' }}>(meerdere antwoorden mogelijk)</span></p>
+            <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8 }}>
+              {MARKT_OPTIONS.map(o => (
+                <Chip key={o} label={o} selected={answers.markt.includes(o)} onClick={() => toggleMarkt(o)} />
+              ))}
+            </div>
+          </Block>
+
+          <Block nr="03" title="Wat verkoop je?">
+            <p style={{ fontSize: 13, color: '#666', marginBottom: 12 }}>Omschrijf kort wat je verkoopt</p>
+            <textarea
+              value={answers.wat_verkoop_je}
+              onChange={e => set('wat_verkoop_je', e.target.value)}
+              placeholder="Bijv: Software voor HR-teams bij scale-ups, jaarcontracten van €15k–€40k..."
+              rows={3}
+            />
+          </Block>
+
+          <Block nr="04" title="Jouw ideale klant">
+            <p style={{ fontSize: 13, color: '#666', marginBottom: 12 }}>Wie is jouw ideale klant?</p>
+            <textarea
+              value={answers.ideale_klant}
+              onChange={e => set('ideale_klant', e.target.value)}
+              placeholder="Bijv: CFO's bij productiebedrijven met 50–200 medewerkers, beslissen op cijfers..."
+              rows={3}
+            />
+          </Block>
+
+          <Block nr="05" title="Toon van ArnoBot">
+            <p style={{ fontSize: 13, color: '#666', marginBottom: 12 }}>Hoe wil je dat ArnoBot je benadert?</p>
+            <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8 }}>
+              {TOON_OPTIONS.map(o => (
+                <Chip key={o} label={o} selected={answers.toon === o} onClick={() => set('toon', o)} />
+              ))}
+            </div>
+          </Block>
+
+          <Block nr="06" title="Jouw grootste uitdaging">
+            <p style={{ fontSize: 13, color: '#666', marginBottom: 12 }}>Wat houdt jou nu het meest bezig in je saleswerk?</p>
+            <textarea
+              value={answers.uitdaging}
+              onChange={e => set('uitdaging', e.target.value)}
+              placeholder="Bijv: Mijn conversie in het tweede gesprek is te laag, ik verlies deals op prijs..."
+              rows={3}
+            />
+          </Block>
+
+          {error && <p style={{ color: '#c0392b', fontSize: 13, marginBottom: 16 }}>{error}</p>}
+
+          <button
+            type="button"
+            onClick={handleSubmit}
+            disabled={!allFilled || saving}
+            style={{
+              width: '100%', padding: 16,
+              background: allFilled ? '#EE7700' : '#1a1a1a',
+              color: allFilled ? '#0a0a0a' : '#333',
+              border: 'none', borderRadius: 999,
+              fontFamily: "'Bebas Neue', sans-serif",
+              fontSize: 22, letterSpacing: 3,
+              cursor: allFilled ? 'pointer' : 'not-allowed',
+              transition: 'background 0.2s',
+            }}
+          >
+            {saving ? 'Bezig...' : isFirstTime ? 'START ARNOBOT →' : 'PROFIEL OPSLAAN →'}
+          </button>
+        </div>
+      </div>
+    </>
+  )
+}

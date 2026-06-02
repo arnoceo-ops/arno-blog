@@ -5,7 +5,7 @@ const isPublicRoute = createRouteMatcher([
   '/api/canvas/aanmelden(.*)',
 ])
 
-const isProtectedBot = createRouteMatcher(['/bot'])
+const isProtectedBot = createRouteMatcher(['/bot', '/bot/profiel'])
 
 export default clerkMiddleware(async (auth, req) => {
   const path = req.nextUrl.pathname

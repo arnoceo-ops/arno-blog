@@ -20,12 +20,13 @@ interface Message {
 
 interface Props {
   userId: string
+  profiel: Record<string, unknown>
   taglineTitle: string
   taglineSub: string
   openers: string[]
 }
 
-export default function SparClient({ userId, taglineTitle, taglineSub, openers }: Props) {
+export default function SparClient({ userId, profiel, taglineTitle, taglineSub, openers }: Props) {
   const [messages, setMessages] = useState<Message[]>([])
   const [input, setInput] = useState('')
   const [loading, setLoading] = useState(false)
@@ -67,7 +68,7 @@ export default function SparClient({ userId, taglineTitle, taglineSub, openers }
       const res = await fetch('/api/chat', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ question, history, userId })
+        body: JSON.stringify({ question, history, userId, profiel })
       })
       const data = await res.json()
 
