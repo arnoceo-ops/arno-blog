@@ -23,7 +23,7 @@ const empty: Answers = {
   uitdaging: '',
 }
 
-const ROL_OPTIONS = ['Inside Sales', 'AE New Business', 'AM Farmer', 'Key Account Manager', 'Sales Team Lead', 'Sales Manager/Director', 'VP of Sales', "ZZP'er", 'CEO/DGA', 'Anders']
+const ROL_OPTIONS = ['Inside Sales', 'AE New Business', 'AM Farmer', 'Key Account Manager', 'Sales Manager/Director', 'VP of Sales', "ZZP'er", 'CEO/DGA', 'Anders']
 const MARKT_OPTIONS = ['B2B MKB', 'B2B Enterprise', 'B2C', 'Overheid']
 const TOON_OPTIONS = ['Direct en confronterend', 'Vragend en reflectief', 'Motiverend en positief', 'Wissel maar af']
 
