@@ -263,7 +263,7 @@ export default function ArnoBotLandingPage() {
           </div>
           <div className="feature-item">
             <span className="feature-arrow">→</span>
-            <span className="feature-text">Overleg met Arno<small>Niet de bot maar Arno in persoon. Binnenkort beschikbaar →</small></span>
+            <span className="feature-text">Overleg met Arno<small>Niet de bot maar Arno in persoon.</small></span>
           </div>
         </div>
       </section>
