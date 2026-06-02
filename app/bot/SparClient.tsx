@@ -185,7 +185,7 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
         .spar-send:hover { background: #ff8800; }
         .spar-send:disabled { background: #333; color: #666; cursor: not-allowed; }
         .spar-hint {
-          font-size: 10px; letter-spacing: 2px; color: #555;
+          font-size: 10px; letter-spacing: 2px; color: #fff;
           text-transform: uppercase; margin-top: 8px; padding-bottom: 28px;
           width: 100%; max-width: 812px; text-align: center;
         }
