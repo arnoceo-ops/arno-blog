@@ -179,19 +179,13 @@ export default function ArnoBotLandingPage() {
         </div>
       </nav>
 
-      {/* INTRO — dark, zelfde als ARNOBOT-sectie op homepage */}
+      {/* INTRO */}
       <section className="subscribe-section" style={{background: '#0a0a0a', paddingTop: '80px'}}>
-        <div className="subscribe-text-col">
-          <div className="subscribe-text-inner">
-            <span style={{fontSize:'11px', letterSpacing:'4px', textTransform:'uppercase', color:'#EE7700', fontFamily:"'Space Mono', monospace"}}>ArnoBot Unlimited</span>
-            <h1 className="subscribe-title">
-              <span className="black">ARNO</span><span className="orange">BOT.</span>
-            </h1>
-            <p className="subscribe-body">
-              19 jaar blogs. 369.000 woorden. Alles over sales, strategie en mindset — nu beschikbaar als directe gesprekspartner.
-            </p>
-          </div>
+        {/* LEFT: foto */}
+        <div style={{overflow:'hidden', minHeight:'480px'}}>
+          <img src="/cyborg.jpg" alt="ArnoBot" style={{width:'100%', height:'100%', objectFit:'cover', objectPosition:'center 15%', display:'block'}} />
         </div>
+        {/* RIGHT: propositie */}
         <div className="canvas-right" style={{background: '#0a0a0a'}}>
           <div style={{maxWidth:'480px'}}>
             <p style={{fontSize:'11px', letterSpacing:'4px', textTransform:'uppercase', color:'#EE7700', fontFamily:"'Space Mono', monospace", marginBottom:'16px'}}>De propositie</p>
