@@ -275,7 +275,7 @@ export default function ArnoBotLandingPage() {
             <a href="https://royaldutchsales.com/arnobot?plan=monthly" style={{
               display:'inline-block', textDecoration:'none', textAlign:'center',
               background:'#EE7700', color:'#1a1a1a', fontFamily:"'Bebas Neue', sans-serif",
-              fontSize:'20px', letterSpacing:'3px', padding:'12px 40px', borderRadius:'999px',
+              fontSize:'20px', letterSpacing:'3px', padding:'12px 0', width:'150px', borderRadius:'999px',
               transition:'background 0.2s'
             }}>GO</a>
             <a href="https://royaldutchsales.com/arnobot?plan=trial" style={{
@@ -295,7 +295,7 @@ export default function ArnoBotLandingPage() {
             <a href="https://royaldutchsales.com/arnobot?plan=yearly" style={{
               display:'inline-block', textDecoration:'none', textAlign:'center',
               background:'#EE7700', color:'#1a1a1a', fontFamily:"'Bebas Neue', sans-serif",
-              fontSize:'20px', letterSpacing:'3px', padding:'12px 40px', borderRadius:'999px',
+              fontSize:'20px', letterSpacing:'3px', padding:'12px 0', width:'150px', borderRadius:'999px',
               transition:'background 0.2s'
             }}>GO</a>
             <a href="https://royaldutchsales.com/arnobot?plan=trial" style={{
