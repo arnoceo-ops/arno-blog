@@ -275,7 +275,7 @@ export default function ArnoBotLandingPage() {
               background:'#EE7700', color:'#1a1a1a', fontFamily:"'Bebas Neue', sans-serif",
               fontSize:'20px', letterSpacing:'3px', padding:'12px 0', width:'150px', borderRadius:'999px',
               transition:'background 0.2s'
-            }}>START</a>
+            }}>START NU.</a>
             <a href="https://royaldutchsales.com/arnobot?plan=trial" style={{
               fontSize:'13px', color:'#888', fontFamily:"'Space Mono', monospace",
               textDecoration:'none', letterSpacing:'1px'
@@ -296,7 +296,7 @@ export default function ArnoBotLandingPage() {
               background:'#EE7700', color:'#1a1a1a', fontFamily:"'Bebas Neue', sans-serif",
               fontSize:'20px', letterSpacing:'3px', padding:'12px 0', width:'150px', borderRadius:'999px',
               transition:'background 0.2s'
-            }}>START</a>
+            }}>START NU.</a>
             <a href="https://royaldutchsales.com/arnobot?plan=trial" style={{
               fontSize:'13px', color:'#888', fontFamily:"'Space Mono', monospace",
               textDecoration:'none', letterSpacing:'1px'
