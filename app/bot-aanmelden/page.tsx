@@ -145,14 +145,14 @@ export default function BotAanmeldenPage() {
                   type="submit"
                   disabled={loading}
                   style={{
-                    width: '100%', padding: '16px', background: '#EE7700',
+                    padding: '12px 32px', background: '#EE7700',
                     color: '#0a0a0a', border: 'none', borderRadius: 999,
-                    fontFamily: "'Bebas Neue', sans-serif", fontSize: 22, letterSpacing: 3,
+                    fontFamily: "'Bebas Neue', sans-serif", fontSize: 18, letterSpacing: 2,
                     cursor: loading ? 'not-allowed' : 'pointer',
                     opacity: loading ? 0.7 : 1, transition: 'opacity 0.2s',
                   }}
                 >
-                  {loading ? 'BEZIG...' : 'START MIJN GRATIS TRIAL →'}
+                  {loading ? 'Bezig...' : 'Start free trial →'}
                 </button>
                 <p style={{ fontSize: 13, color: '#444', textAlign: 'center', marginTop: 16, lineHeight: '22px', letterSpacing: 1 }}>
                   GEEN KLEINE LETTERTJES. WEL EEN GROOT PLAN.
