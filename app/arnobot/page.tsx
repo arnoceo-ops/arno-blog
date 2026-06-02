@@ -229,47 +229,83 @@ export default function ArnoBotLandingPage() {
         </div>
       </section>
 
+      {/* PERSOONLIJK PROFIEL — uitleg tussen propositie en pricing */}
+      <section className="canvas-section">
+        <div className="canvas-left">
+          <div className="canvas-left-inner">
+            <div className="canvas-quote">
+              "Hoe vaker je<br />
+              het gebruikt,<br />
+              hoe beter het<br />
+              <em>jou kent.</em>"
+            </div>
+          </div>
+        </div>
+        <div className="canvas-right">
+          <h2 className="canvas-title">GROEIT <span style={{color:'#EE7700'}}>MET JOU.</span></h2>
+          <p className="canvas-body">
+            ArnoBot Unlimited is geen statische chatbot. Het bouwt een persoonlijk profiel op — gebaseerd op alles wat jij deelt en alles wat jij vraagt.
+          </p>
+          <div className="feature-item">
+            <span className="feature-arrow">→</span>
+            <span className="feature-text">Jouw profiel<small>Branche, situatie, doelen — het systeem onthoudt wat jij deelt.</small></span>
+          </div>
+          <div className="feature-item">
+            <span className="feature-arrow">→</span>
+            <span className="feature-text">Arno's archief<small>19 jaar sales-expertise als kennisbank. Elke vraag beantwoord vanuit bewezen inzichten.</small></span>
+          </div>
+          <div className="feature-item" style={{borderBottom:'none'}}>
+            <span className="feature-arrow">→</span>
+            <span className="feature-text">Gecombineerd<small>Jouw context + Arno's kennis = advies dat met elke sessie scherper wordt.</small></span>
+          </div>
+        </div>
+      </section>
+
       {/* PRICING + FEATURES */}
       <section className="canvas-section">
         <div className="canvas-left">
-          <div className="canvas-left-inner" style={{display:'flex', flexDirection:'column'}}>
+          <div className="canvas-left-inner">
 
-            {/* PER MAAND */}
-            <div style={{display:'flex', flexDirection:'column', alignItems:'flex-end', gap:'14px', paddingBottom:'48px', borderBottom:'1px solid #ddd'}}>
-              <span style={{fontSize:'13px', letterSpacing:'5px', textTransform:'uppercase', color:'#EE7700', fontFamily:"'Bebas Neue', sans-serif"}}>Per maand</span>
-              <div style={{display:'flex', alignItems:'baseline', gap:'6px'}}>
-                <span style={{fontFamily:"'Bebas Neue', sans-serif", fontSize:'clamp(28px, 3vw, 44px)', color:'#bbb', letterSpacing:0}}>€</span>
-                <span style={{fontFamily:"'Bebas Neue', sans-serif", fontSize:'clamp(64px, 7vw, 104px)', color:'#444', letterSpacing:'-2px', lineHeight:0.9}}>97</span>
+            {/* PER MAAND + PER JAAR naast elkaar */}
+            <div style={{display:'flex', flexDirection:'row', width:'100%', border:'1px solid #ccc'}}>
+
+              {/* PER MAAND */}
+              <div style={{flex:1, display:'flex', flexDirection:'column', alignItems:'center', gap:'12px', padding:'32px 16px', borderRight:'1px solid #ccc'}}>
+                <span style={{fontSize:'11px', letterSpacing:'5px', textTransform:'uppercase', color:'#EE7700', fontFamily:"'Bebas Neue', sans-serif"}}>Per maand</span>
+                <div style={{display:'flex', alignItems:'baseline', gap:'4px'}}>
+                  <span style={{fontFamily:"'Bebas Neue', sans-serif", fontSize:'clamp(20px, 2vw, 30px)', color:'#bbb', letterSpacing:0}}>€</span>
+                  <span style={{fontFamily:"'Bebas Neue', sans-serif", fontSize:'clamp(48px, 5vw, 76px)', color:'#333', letterSpacing:'-1px', lineHeight:0.9}}>97</span>
+                </div>
+                <a href="https://royaldutchsales.com/arnobot?plan=monthly" style={{
+                  display:'block', textDecoration:'none', textAlign:'center', width:'100%',
+                  background:'#EE7700', color:'#0a0a0a',
+                  fontFamily:"'Bebas Neue', sans-serif",
+                  fontSize:'16px', letterSpacing:'3px',
+                  padding:'10px 0', borderRadius:'999px',
+                  transition:'opacity 0.2s'
+                }}>GO →</a>
+                <span style={{fontSize:'10px', color:'#aaa', fontFamily:"'Space Mono', monospace", textAlign:'center', lineHeight:1.6}}>Niet goed na<br />8 dagen? Geld terug.</span>
               </div>
-              <a href="https://royaldutchsales.com/arnobot?plan=monthly" style={{
-                display:'inline-block', textDecoration:'none', textAlign:'center',
-                background:'#EE7700', color:'#0a0a0a',
-                fontFamily:"'Bebas Neue', sans-serif",
-                fontSize:'18px', letterSpacing:'3px',
-                padding:'12px 32px', borderRadius:'999px',
-                transition:'opacity 0.2s'
-              }}>GO →</a>
-              <span style={{fontSize:'12px', color:'#999', letterSpacing:'0.5px', fontFamily:"'Space Mono', monospace"}}>Niet goed na 8 dagen? Geld terug.</span>
-            </div>
 
-            {/* PER JAAR */}
-            <div style={{display:'flex', flexDirection:'column', alignItems:'flex-end', gap:'14px', paddingTop:'48px'}}>
-              <span style={{fontSize:'13px', letterSpacing:'5px', textTransform:'uppercase', color:'#EE7700', fontFamily:"'Bebas Neue', sans-serif"}}>Per jaar</span>
-              <div style={{display:'flex', alignItems:'baseline', gap:'6px'}}>
-                <span style={{fontFamily:"'Bebas Neue', sans-serif", fontSize:'clamp(28px, 3vw, 44px)', color:'#bbb', letterSpacing:0}}>€</span>
-                <span style={{fontFamily:"'Bebas Neue', sans-serif", fontSize:'clamp(64px, 7vw, 104px)', color:'#444', letterSpacing:'-2px', lineHeight:0.9}}>777</span>
+              {/* PER JAAR */}
+              <div style={{flex:1, display:'flex', flexDirection:'column', alignItems:'center', gap:'12px', padding:'32px 16px'}}>
+                <span style={{fontSize:'11px', letterSpacing:'5px', textTransform:'uppercase', color:'#EE7700', fontFamily:"'Bebas Neue', sans-serif"}}>Per jaar</span>
+                <div style={{display:'flex', alignItems:'baseline', gap:'4px'}}>
+                  <span style={{fontFamily:"'Bebas Neue', sans-serif", fontSize:'clamp(20px, 2vw, 30px)', color:'#bbb', letterSpacing:0}}>€</span>
+                  <span style={{fontFamily:"'Bebas Neue', sans-serif", fontSize:'clamp(48px, 5vw, 76px)', color:'#333', letterSpacing:'-1px', lineHeight:0.9}}>777</span>
+                </div>
+                <a href="https://royaldutchsales.com/arnobot?plan=yearly" style={{
+                  display:'block', textDecoration:'none', textAlign:'center', width:'100%',
+                  background:'#EE7700', color:'#0a0a0a',
+                  fontFamily:"'Bebas Neue', sans-serif",
+                  fontSize:'16px', letterSpacing:'3px',
+                  padding:'10px 0', borderRadius:'999px',
+                  transition:'opacity 0.2s'
+                }}>GO →</a>
+                <span style={{fontSize:'10px', color:'#aaa', fontFamily:"'Space Mono', monospace", textAlign:'center', lineHeight:1.6}}>Niet goed na<br />8 dagen? Geld terug.</span>
               </div>
-              <a href="https://royaldutchsales.com/arnobot?plan=yearly" style={{
-                display:'inline-block', textDecoration:'none', textAlign:'center',
-                background:'#EE7700', color:'#0a0a0a',
-                fontFamily:"'Bebas Neue', sans-serif",
-                fontSize:'18px', letterSpacing:'3px',
-                padding:'12px 32px', borderRadius:'999px',
-                transition:'opacity 0.2s'
-              }}>GO →</a>
-              <span style={{fontSize:'12px', color:'#999', letterSpacing:'0.5px', fontFamily:"'Space Mono', monospace"}}>Niet goed na 8 dagen? Geld terug.</span>
-            </div>
 
+            </div>
           </div>
         </div>
         <div className="canvas-right">
