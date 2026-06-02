@@ -369,7 +369,7 @@ export default function ArnoBotLandingPage() {
         </div>
         <div className="canvas-right" style={{background:'#1a1a1a'}}>
           <div style={{maxWidth:'540px', width:'100%'}}>
-            <h2 className="canvas-title" style={{color:'#f0ede6'}}>ARNO<span style={{color:'#EE7700'}}>BOT.</span></h2>
+            <h2 className="canvas-title" style={{color:'#f0ede6'}}>ARNO <span style={{color:'#EE7700'}}>LIVE.</span></h2>
             <p className="canvas-body" style={{color:'#888'}}>
               Niet alleen de bot. Arno zelf. Persoonlijke online coaching op basis van jouw specifieke situatie. Voor als je nog harder vooruit wilt.
             </p>
