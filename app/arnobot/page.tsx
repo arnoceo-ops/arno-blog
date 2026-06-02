@@ -220,7 +220,7 @@ export default function ArnoBotLandingPage() {
           <div style={{maxWidth:'480px'}}>
             <p style={{fontSize:'13px', letterSpacing:'4px', textTransform:'uppercase', color:'#EE7700', fontFamily:"'Space Mono', monospace", marginBottom:'16px'}}>ArnoBot Unlimited</p>
             <h2 style={{fontFamily:"'Barlow Condensed', sans-serif", fontSize:'clamp(32px, 3.5vw, 52px)', fontWeight:600, color:'#f0ede6', lineHeight:1.1, textTransform:'uppercase', letterSpacing:'1px', marginBottom:'20px'}}>
-              Jouw Personal Sales Coach<br /><span style={{color:'#EE7700'}}>voor 97 euro per maand.</span>
+              Jouw Personal Sales Coach<br /><span style={{color:'#EE7700'}}>voor €97 p/m</span>
             </h2>
             <p className="subscribe-body">
               Dat is minder dan een kwartier consultancy. Maar je krijgt er geen kwartier voor terug — je krijgt er onbeperkt toegang voor. 19 jaar sales-expertise, direct beschikbaar. Elke vraag. Elke dag.
@@ -309,7 +309,7 @@ export default function ArnoBotLandingPage() {
           <span style={{fontFamily:"'Space Mono', monospace", fontSize:'13px', color:'#888', letterSpacing:'0.5px'}}>
             Wil je je hele salesteam uitrusten met ArnoBot als persoonlijke coach?
           </span>
-          <a href="mailto:arnodiepeveen@gmail.com" style={{
+          <a href="mailto:arno@royaldutchsales.com" style={{
             fontFamily:"'Bebas Neue', sans-serif", fontSize:'18px', letterSpacing:'3px',
             color:'#EE7700', textDecoration:'none', textTransform:'uppercase', whiteSpace:'nowrap'
           }}>Neem contact op →</a>
