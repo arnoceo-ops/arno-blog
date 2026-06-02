@@ -244,19 +244,19 @@ export default function ArnoBotLandingPage() {
         <div className="canvas-right">
           <div style={{maxWidth:'480px', width:'100%'}}>
             <p className="canvas-body">
-              ArnoBot Unlimited is geen generieke AI waar je elke keer alles uit moet wekken. Je start met een profiel: wat voor type verkoper ben je, in welke markt opereer je, wat verkoop je, wat is je target, je gemiddelde ordergrootte, werk je al met referrals — en wat zijn je doelen voor dit jaar. Van daaruit geeft ArnoBot gericht antwoord. Niet standaard. Op jou.
+              ArnoBot is geen generieke AI, maar verbindt zich met jouw profiel, ervaring, vaardigheden en doelen. Daardoor krijg je gericht antwoord op je commerciële vragen.
             </p>
             <div className="feature-item">
               <span className="feature-arrow">→</span>
-              <span className="feature-text">Jouw profiel<small>Type verkoper, markt, product, target, ordergrootte, referrals, jaardoelen — ArnoBot snapt direct wie jij bent en wat jij nodig hebt.</small></span>
+              <span className="feature-text">Jouw profiel als uitgangspunt<small>Je geeft aan in welke markt je actief bent, wat je verkoopt, wat je targets zijn en wie je ideale klant is. ArnoBot begrijpt direct wie je bent en wat je nodig hebt.</small></span>
             </div>
             <div className="feature-item">
               <span className="feature-arrow">→</span>
-              <span className="feature-text">Sessiehistorie<small>Elk gesprek wordt bewaard. ArnoBot bouwt over tijd een beeld op van hoe jij verkoopt — en waar je winst ligt.</small></span>
+              <span className="feature-text">Jouw persoonlijke salesarchief<small>Elk gesprek wordt opgeslagen en blijft voor je beschikbaar. Hoe meer gesprekken je met ArnoBot voert, hoe beter het inzicht krijgt in jouw manier van verkopen en waar jouw grootste kansen liggen.</small></span>
             </div>
             <div className="feature-item" style={{borderBottom:'none'}}>
               <span className="feature-arrow">→</span>
-              <span className="feature-text">Patroonherkenning<small>ArnoBot haalt patronen uit jouw geschiedenis die strakker en sterker zijn dan iedere sales coach kan bedenken.</small></span>
+              <span className="feature-text">Jouw patronen<small>ArnoBot herkent steeds beter jouw patronen, werkwijze en voorkeuren. Daardoor worden de adviezen steeds persoonlijker, relevanter en effectiever.</small></span>
             </div>
           </div>
         </div>
