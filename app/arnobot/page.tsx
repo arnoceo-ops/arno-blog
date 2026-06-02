@@ -220,7 +220,7 @@ export default function ArnoBotLandingPage() {
           <div style={{maxWidth:'480px'}}>
             <p style={{fontSize:'13px', letterSpacing:'4px', textTransform:'uppercase', color:'#EE7700', fontFamily:"'Space Mono', monospace", marginBottom:'16px'}}>ArnoBot Unlimited</p>
             <h2 style={{fontFamily:"'Barlow Condensed', sans-serif", fontSize:'clamp(32px, 3.5vw, 52px)', fontWeight:600, color:'#f0ede6', lineHeight:1.1, textTransform:'uppercase', letterSpacing:'1px', marginBottom:'20px'}}>
-              Één advies kan je<br />goud opleveren.<br /><span style={{color:'#EE7700'}}>€97 per maand.</span>
+              Jouw Personal Sales Coach<br /><span style={{color:'#EE7700'}}>voor 97 euro per maand.</span>
             </h2>
             <p className="subscribe-body">
               Dat is minder dan een kwartier consultancy. Maar je krijgt er geen kwartier voor terug — je krijgt er onbeperkt toegang voor. 19 jaar sales-expertise, direct beschikbaar. Elke vraag. Elke dag.
@@ -265,8 +265,8 @@ export default function ArnoBotLandingPage() {
       {/* PRICING — donkere sectie, één prijs per kolom */}
       <section className="subscribe-section">
         {/* LEFT: PER MAAND */}
-        <div className="subscribe-text-col" style={{justifyContent:'center'}}>
-          <div style={{maxWidth:'480px', width:'100%', display:'flex', flexDirection:'column', alignItems:'center', gap:'20px', textAlign:'center'}}>
+        <div style={{padding:'80px 60px', borderRight:'1px solid #333', display:'flex', alignItems:'center', justifyContent:'center'}}>
+          <div style={{display:'flex', flexDirection:'column', alignItems:'center', gap:'20px', textAlign:'center'}}>
             <span style={{fontSize:'13px', letterSpacing:'2px', textTransform:'uppercase', color:'#EE7700', fontFamily:"'Space Mono', monospace"}}>Per maand</span>
             <div style={{display:'flex', alignItems:'baseline', gap:'8px'}}>
               <span style={{fontFamily:"'Bebas Neue', sans-serif", fontSize:'clamp(28px, 3vw, 44px)', color:'#666', letterSpacing:0}}>€</span>
@@ -278,15 +278,15 @@ export default function ArnoBotLandingPage() {
               fontSize:'20px', letterSpacing:'3px', padding:'12px 40px', borderRadius:'999px',
               transition:'background 0.2s'
             }}>GO</a>
-<a href="https://royaldutchsales.com/arnobot?plan=trial" style={{
-              fontSize:'12px', color:'#666', fontFamily:"'Space Mono', monospace",
-              textDecoration:'underline', letterSpacing:'0.5px'
-            }}>3 dagen proberen — creditcard vereist</a>
+            <a href="https://royaldutchsales.com/arnobot?plan=trial" style={{
+              fontSize:'12px', color:'#888', fontFamily:"'Space Mono', monospace",
+              textDecoration:'none', letterSpacing:'1px'
+            }}>3 dagen Free Trial</a>
           </div>
         </div>
         {/* RIGHT: PER JAAR */}
-        <div className="canvas-right" style={{justifyContent:'center', alignItems:'center'}}>
-          <div style={{maxWidth:'480px', width:'100%', display:'flex', flexDirection:'column', alignItems:'center', gap:'20px', textAlign:'center'}}>
+        <div style={{padding:'80px 60px', display:'flex', alignItems:'center', justifyContent:'center'}}>
+          <div style={{display:'flex', flexDirection:'column', alignItems:'center', gap:'20px', textAlign:'center'}}>
             <span style={{fontSize:'13px', letterSpacing:'2px', textTransform:'uppercase', color:'#EE7700', fontFamily:"'Space Mono', monospace"}}>Per jaar</span>
             <div style={{display:'flex', alignItems:'baseline', gap:'8px'}}>
               <span style={{fontFamily:"'Bebas Neue', sans-serif", fontSize:'clamp(28px, 3vw, 44px)', color:'#666', letterSpacing:0}}>€</span>
@@ -298,11 +298,21 @@ export default function ArnoBotLandingPage() {
               fontSize:'20px', letterSpacing:'3px', padding:'12px 40px', borderRadius:'999px',
               transition:'background 0.2s'
             }}>GO</a>
-<a href="https://royaldutchsales.com/arnobot?plan=trial" style={{
-              fontSize:'12px', color:'#666', fontFamily:"'Space Mono', monospace",
-              textDecoration:'underline', letterSpacing:'0.5px'
-            }}>3 dagen proberen — creditcard vereist</a>
+            <a href="https://royaldutchsales.com/arnobot?plan=trial" style={{
+              fontSize:'12px', color:'#888', fontFamily:"'Space Mono', monospace",
+              textDecoration:'none', letterSpacing:'1px'
+            }}>3 dagen Free Trial</a>
           </div>
+        </div>
+        {/* TEAMS — full-width strip */}
+        <div style={{gridColumn:'1 / -1', borderTop:'1px solid #333', padding:'28px 60px', display:'flex', alignItems:'center', justifyContent:'center', gap:'32px', flexWrap:'wrap'}}>
+          <span style={{fontFamily:"'Space Mono', monospace", fontSize:'13px', color:'#888', letterSpacing:'0.5px'}}>
+            Wil je je hele salesteam uitrusten met ArnoBot als persoonlijke coach?
+          </span>
+          <a href="mailto:arnodiepeveen@gmail.com" style={{
+            fontFamily:"'Bebas Neue', sans-serif", fontSize:'18px', letterSpacing:'3px',
+            color:'#EE7700', textDecoration:'none', textTransform:'uppercase', whiteSpace:'nowrap'
+          }}>Neem contact op →</a>
         </div>
       </section>
 
