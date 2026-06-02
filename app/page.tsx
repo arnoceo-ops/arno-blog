@@ -1,5 +1,6 @@
 import { client } from '@/sanity/client'
 import Link from 'next/link'
+import { SignedIn, SignedOut } from '@clerk/nextjs'
 
 interface Post {
   _id: string
@@ -50,6 +51,11 @@ export default async function Home() {
         }
         .nav-links a:hover { color: #f0ede6; }
         .nav-cta { color: #EE7700 !important; }
+        .nav-btn {
+          color: #888 !important; border: 1.5px solid #333; border-radius: 999px;
+          padding: 6px 20px; transition: border-color 0.2s, color 0.2s;
+        }
+        .nav-btn:hover { color: #f0ede6 !important; border-color: #888; }
         .nav-item { display: flex; flex-direction: column; align-items: center; gap: 2px; }
         .nav-sub {
           font-family: 'Space Mono', monospace; font-size: 9px;
@@ -227,6 +233,12 @@ export default async function Home() {
           <a href="https://www.royaldutchsales.com/arnobot">BOT</a>
           <a href="https://salescanvas.app" target="_blank" rel="noopener noreferrer">CANVAS</a>
           <a href="https://arno.blog/subscribe" target="_blank" rel="noopener noreferrer" className="nav-cta">SUBSCRIBE</a>
+          <SignedOut>
+            <Link href="/sign-in" className="nav-btn">INLOGGEN</Link>
+          </SignedOut>
+          <SignedIn>
+            <Link href="/bot" className="nav-btn">MIJN BOT</Link>
+          </SignedIn>
         </div>
       </nav>
 
