@@ -341,7 +341,7 @@ export default function ArnoBotLandingPage() {
             </div>
             <div className="feature-item">
               <span className="feature-arrow">→</span>
-              <span className="feature-text">Duik dieper in de materie.<small>Verwijzing naar blogs, boeken en video's.</small></span>
+              <span className="feature-text">Verdiep je expertise.<small>Verwijzing naar blogs, boeken en video's.</small></span>
             </div>
             <div className="feature-item" style={{borderBottom:'none'}}>
               <span className="feature-arrow">→</span>
