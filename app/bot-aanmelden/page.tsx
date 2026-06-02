@@ -5,18 +5,29 @@ import Link from 'next/link'
 
 export default function BotAanmeldenPage() {
   const [form, setForm] = useState({ naam: '', email: '', telefoon: '', linkedin: '' })
+  const [emailPlaceholder, setEmailPlaceholder] = useState('naam@bedrijf.nl')
   const [submitted, setSubmitted] = useState(false)
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
+
+  const QUICK_CHECK = ['gmail.com','hotmail.com','outlook.com','yahoo.com','live.com','icloud.com','me.com','msn.com','protonmail.com','proton.me','gmx.com','gmx.net','ziggo.nl','kpnmail.nl','xs4all.nl']
+
+  function handleEmailBlur() {
+    const domain = form.email.split('@')[1]?.toLowerCase()
+    if (domain && QUICK_CHECK.includes(domain)) {
+      setForm(prev => ({ ...prev, email: '' }))
+      setEmailPlaceholder('Voer je zakelijke e-mailadres in.')
+    }
+  }
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault()
     setLoading(true)
     setError('')
     const domain = form.email.split('@')[1]?.toLowerCase()
-    const quickCheck = ['gmail.com','hotmail.com','outlook.com','yahoo.com','live.com','icloud.com','me.com','msn.com','protonmail.com','proton.me','gmx.com','gmx.net','ziggo.nl','kpnmail.nl','xs4all.nl']
-    if (!domain || quickCheck.includes(domain)) {
-      setError('Gebruik je zakelijke e-mailadres.')
+    if (!domain || QUICK_CHECK.includes(domain)) {
+      setForm(prev => ({ ...prev, email: '' }))
+      setEmailPlaceholder('Voer je zakelijke e-mailadres in.')
       setLoading(false)
       return
     }
@@ -96,7 +107,7 @@ export default function BotAanmeldenPage() {
                     <input
                       className="field-input"
                       type="text"
-                      placeholder="Jan de Vries"
+                      placeholder="Voornaam Achternaam"
                       value={form.naam}
                       onChange={e => setForm({ ...form, naam: e.target.value })}
                       required
@@ -107,9 +118,10 @@ export default function BotAanmeldenPage() {
                     <input
                       className="field-input"
                       type="email"
-                      placeholder="jan@bedrijf.nl"
+                      placeholder={emailPlaceholder}
                       value={form.email}
-                      onChange={e => setForm({ ...form, email: e.target.value })}
+                      onChange={e => { setForm({ ...form, email: e.target.value }); setEmailPlaceholder('naam@bedrijf.nl') }}
+                      onBlur={handleEmailBlur}
                       required
                     />
                   </div>
