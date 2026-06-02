@@ -131,7 +131,7 @@ export default function BotProfielPage() {
         textarea, input {
           background: #111; color: #f0ede6; border: 1.5px solid #333;
           border-radius: 4px; font-family: 'Space Mono', monospace;
-          font-size: 13px; padding: 12px 16px; width: 100%;
+          font-size: 15px; padding: 12px 16px; width: 100%;
           box-sizing: border-box; outline: none; resize: vertical;
           transition: border-color 0.15s; line-height: 1.6;
         }
@@ -156,7 +156,7 @@ export default function BotProfielPage() {
             <h1 style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 44, color: '#f0ede6', lineHeight: 1.05, letterSpacing: 1, marginBottom: 24 }}>
               {isFirstTime ? `Goed dat je er bent, ${firstName}.` : 'Profiel aanpassen'}
             </h1>
-            <div style={{ borderLeft: '4px solid #EE7700', paddingLeft: 20, color: '#888', fontSize: 14, lineHeight: 1.8 }}>
+            <div style={{ borderLeft: '4px solid #EE7700', paddingLeft: 20, color: '#888', fontSize: 15, lineHeight: '30px' }}>
               <p style={{ color: '#f0ede6', fontWeight: 700, marginBottom: 8 }}>ArnoBot stemt zijn coaching af op jouw situatie.</p>
               <p>Hoe meer hij weet over wie jij bent, wat je verkoopt en waar je mee worstelt, hoe gerichter zijn advies. Dit invullen kost je twee minuten.</p>
             </div>
