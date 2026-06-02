@@ -181,16 +181,16 @@ export default function ArnoBotLandingPage() {
 
       {/* INTRO */}
       <section className="subscribe-section" style={{background: '#0a0a0a', paddingTop: '80px'}}>
-        {/* LEFT: foto */}
-        <div style={{overflow:'hidden', minHeight:'480px'}}>
-          <img src="/cyborg.jpg" alt="ArnoBot" style={{width:'100%', height:'100%', objectFit:'cover', objectPosition:'center 15%', display:'block'}} />
+        {/* LEFT: foto — vult de grid-cel zonder minHeight te pushen */}
+        <div style={{overflow:'hidden', position:'relative', minHeight:'360px'}}>
+          <img src="/cyborg.jpg" alt="ArnoBot" style={{position:'absolute', inset:0, width:'100%', height:'100%', objectFit:'cover', objectPosition:'center 25%', display:'block'}} />
         </div>
         {/* RIGHT: propositie */}
         <div className="canvas-right" style={{background: '#0a0a0a'}}>
           <div style={{maxWidth:'480px'}}>
-            <p style={{fontSize:'11px', letterSpacing:'4px', textTransform:'uppercase', color:'#EE7700', fontFamily:"'Space Mono', monospace", marginBottom:'16px'}}>De propositie</p>
+            <p style={{fontSize:'15px', letterSpacing:'4px', textTransform:'uppercase', color:'#EE7700', fontFamily:"'Space Mono', monospace", marginBottom:'16px'}}>ArnoBot Unlimited</p>
             <h2 style={{fontFamily:"'Barlow Condensed', sans-serif", fontSize:'clamp(28px, 3vw, 44px)', fontWeight:600, color:'#f0ede6', lineHeight:1.15, textTransform:'uppercase', letterSpacing:'1px', marginBottom:'20px'}}>
-              Één advies kan je<br />tonnen opleveren.<br /><span style={{color:'#EE7700'}}>€97 per maand.</span>
+              Één advies kan je<br />goud opleveren.<br /><span style={{color:'#EE7700'}}>€97 per maand.</span>
             </h2>
             <p className="subscribe-body">
               Dat is minder dan een kwartier consultancy. Maar je krijgt er geen kwartier voor terug — je krijgt er onbeperkt toegang voor. 19 jaar sales-expertise, direct beschikbaar. Elke vraag. Elke dag.
@@ -208,7 +208,7 @@ export default function ArnoBotLandingPage() {
             <div style={{display:'flex', flexDirection:'column', alignItems:'flex-end', gap:'14px', paddingBottom:'48px', borderBottom:'1px solid #ddd'}}>
               <span style={{fontSize:'13px', letterSpacing:'5px', textTransform:'uppercase', color:'#EE7700', fontFamily:"'Bebas Neue', sans-serif"}}>Per maand</span>
               <div style={{fontFamily:"'Bebas Neue', sans-serif", fontSize:'clamp(64px, 7vw, 104px)', lineHeight:0.85, color:'#444', letterSpacing:'-2px'}}>
-                <span style={{fontSize:'0.42em', color:'#bbb', verticalAlign:'middle', letterSpacing:0}}>€</span>97
+                <span style={{fontSize:'0.42em', color:'#bbb', verticalAlign:'text-bottom', letterSpacing:0}}>€ </span>97
               </div>
               <a href="https://royaldutchsales.com/arnobot?plan=monthly" style={{
                 display:'inline-block', textDecoration:'none', textAlign:'center',
@@ -217,14 +217,15 @@ export default function ArnoBotLandingPage() {
                 fontSize:'15px', letterSpacing:'3px',
                 padding:'9px 22px', borderRadius:'999px',
                 transition:'opacity 0.2s'
-              }}>DEZE →</a>
+              }}>GO →</a>
+              <span style={{fontSize:'10px', color:'#aaa', letterSpacing:'1px', fontFamily:"'Space Mono', monospace"}}>Niet goed na 8 dagen? Geld terug.</span>
             </div>
 
             {/* PER JAAR */}
             <div style={{display:'flex', flexDirection:'column', alignItems:'flex-end', gap:'14px', paddingTop:'48px'}}>
               <span style={{fontSize:'13px', letterSpacing:'5px', textTransform:'uppercase', color:'#EE7700', fontFamily:"'Bebas Neue', sans-serif"}}>Per jaar</span>
               <div style={{fontFamily:"'Bebas Neue', sans-serif", fontSize:'clamp(64px, 7vw, 104px)', lineHeight:0.85, color:'#444', letterSpacing:'-2px'}}>
-                <span style={{fontSize:'0.42em', color:'#bbb', verticalAlign:'middle', letterSpacing:0}}>€</span>777
+                <span style={{fontSize:'0.42em', color:'#bbb', verticalAlign:'text-bottom', letterSpacing:0}}>€ </span>777
               </div>
               <a href="https://royaldutchsales.com/arnobot?plan=yearly" style={{
                 display:'inline-block', textDecoration:'none', textAlign:'center',
@@ -233,7 +234,8 @@ export default function ArnoBotLandingPage() {
                 fontSize:'15px', letterSpacing:'3px',
                 padding:'9px 22px', borderRadius:'999px',
                 transition:'opacity 0.2s'
-              }}>NEE, DEZE →</a>
+              }}>GO →</a>
+              <span style={{fontSize:'10px', color:'#aaa', letterSpacing:'1px', fontFamily:"'Space Mono', monospace"}}>Niet goed na 8 dagen? Geld terug.</span>
             </div>
 
           </div>
@@ -253,11 +255,15 @@ export default function ArnoBotLandingPage() {
           </div>
           <div className="feature-item">
             <span className="feature-arrow">→</span>
-            <span className="feature-text">24/7 beschikbaar<small>Je persoonlijke sales coach: 10x meer voor 10x minder.</small></span>
+            <span className="feature-text">Onthoudt jouw sessies<small>Werkt op basis van jouw persoonlijke profiel.</small></span>
           </div>
           <div className="feature-item">
             <span className="feature-arrow">→</span>
-            <span className="feature-text">Upgradable naar Arno zelf<small>Niet de bot maar Arno in persoon.</small></span>
+            <span className="feature-text">Verwijzingen naar blogs<small>Elk antwoord onderbouwd met Arno's eigen artikelen.</small></span>
+          </div>
+          <div className="feature-item">
+            <span className="feature-arrow">→</span>
+            <span className="feature-text">Overleg met Arno<small>Niet de bot maar Arno in persoon. Binnenkort beschikbaar →</small></span>
           </div>
         </div>
       </section>
