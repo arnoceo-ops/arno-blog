@@ -286,7 +286,7 @@ export default function ArnoBotLandingPage() {
             <span style={{fontFamily:"'Bebas Neue', sans-serif", fontSize:'clamp(64px, 7vw, 104px)', color:'#f0ede6', letterSpacing:'-2px', lineHeight:0.9}}>777</span>
           </div>
           <a href="https://royaldutchsales.com/arnobot?plan=yearly" style={{
-            display:'inline-block', textDecoration:'none', textAlign:'center',
+            display:'inline-block', textDecoration:'none', textAlign:'center', alignSelf:'flex-start',
             background:'#EE7700', color:'#0a0a0a', fontFamily:"'Bebas Neue', sans-serif",
             fontSize:'20px', letterSpacing:'3px', padding:'12px 40px', borderRadius:'999px',
             transition:'background 0.2s', marginTop:'8px'
