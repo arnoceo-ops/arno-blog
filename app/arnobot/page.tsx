@@ -252,11 +252,11 @@ export default function ArnoBotLandingPage() {
             </div>
             <div className="feature-item">
               <span className="feature-arrow">→</span>
-              <span className="feature-text">Jouw persoonlijke salesarchief<small>Elk gesprek wordt opgeslagen en blijft voor je beschikbaar. Hoe meer gesprekken je met ArnoBot voert, hoe beter het inzicht krijgt in jouw manier van verkopen en waar jouw grootste kansen liggen.</small></span>
+              <span className="feature-text">Jouw persoonlijke salesarchief<small>Elk gesprek wordt opgeslagen en blijft voor je beschikbaar. Hoe meer gesprekken je met ArnoBot voert, hoe scherper het inzicht in jouw manier van verkopen en waar jouw grootste kansen liggen.</small></span>
             </div>
             <div className="feature-item" style={{borderBottom:'none'}}>
               <span className="feature-arrow">→</span>
-              <span className="feature-text">Jouw patronen<small>ArnoBot herkent steeds beter jouw patronen, werkwijze en voorkeuren. Daardoor worden de adviezen steeds persoonlijker, relevanter en effectiever.</small></span>
+              <span className="feature-text">Jouw patronen<small>ArnoBot herkent steeds beter jouw patronen, werkwijze en voorkeuren. Daardoor worden de adviezen steeds persoonlijker, relevanter en effectiever. Je ontsluit je maximale groeipotentie.</small></span>
             </div>
           </div>
         </div>
