@@ -211,12 +211,10 @@ export default function ArnoBotLandingPage() {
 
       {/* INTRO */}
       <section className="subscribe-section" style={{background: '#0a0a0a', paddingTop: '80px'}}>
-        {/* LEFT: foto — zelfde class-structuur als homepage */}
-        <div className="subscribe-text-col">
-          <img src="/cyborg.jpg" alt="ArnoBot" style={{display: 'block', width: '380px', maxWidth: '100%', height: 'auto'}} />
-        </div>
+        {/* LEFT: foto — full-bleed via background-image */}
+        <div style={{backgroundImage:"url('/cyborg.jpg')", backgroundSize:'cover', backgroundPosition:'center 20%', minHeight:'460px'}} />
         {/* RIGHT: propositie */}
-        <div className="canvas-right">
+        <div className="canvas-right" style={{background:'#0a0a0a', justifyContent:'center'}}>
           <div style={{maxWidth:'480px'}}>
             <p style={{fontSize:'13px', letterSpacing:'4px', textTransform:'uppercase', color:'#EE7700', fontFamily:"'Space Mono', monospace", marginBottom:'16px'}}>ArnoBot Unlimited</p>
             <h2 style={{fontFamily:"'Barlow Condensed', sans-serif", fontSize:'clamp(32px, 3.5vw, 52px)', fontWeight:600, color:'#f0ede6', lineHeight:1.1, textTransform:'uppercase', letterSpacing:'1px', marginBottom:'20px'}}>
@@ -261,66 +259,58 @@ export default function ArnoBotLandingPage() {
         </div>
       </section>
 
-      {/* PRICING + FEATURES */}
+      {/* PRICING — donkere sectie, één prijs per kolom */}
+      <section className="subscribe-section">
+        {/* LEFT: PER MAAND */}
+        <div className="subscribe-text-col">
+          <div className="subscribe-text-inner">
+            <span style={{fontSize:'13px', letterSpacing:'5px', textTransform:'uppercase', color:'#EE7700', fontFamily:"'Bebas Neue', sans-serif"}}>Per maand</span>
+            <div style={{display:'flex', alignItems:'baseline', gap:'8px', justifyContent:'flex-end'}}>
+              <span style={{fontFamily:"'Bebas Neue', sans-serif", fontSize:'clamp(28px, 3vw, 44px)', color:'#666', letterSpacing:0}}>€</span>
+              <span style={{fontFamily:"'Bebas Neue', sans-serif", fontSize:'clamp(64px, 7vw, 104px)', color:'#f0ede6', letterSpacing:'-2px', lineHeight:0.9}}>97</span>
+            </div>
+            <a href="https://royaldutchsales.com/arnobot?plan=monthly" className="subscribe-btn">GO →</a>
+            <span style={{fontSize:'11px', color:'#555', fontFamily:"'Space Mono', monospace"}}>Niet goed na 8 dagen? Geld terug.</span>
+          </div>
+        </div>
+        {/* RIGHT: PER JAAR */}
+        <div className="canvas-right" style={{justifyContent:'center', gap:'20px'}}>
+          <span style={{fontSize:'13px', letterSpacing:'5px', textTransform:'uppercase', color:'#EE7700', fontFamily:"'Bebas Neue', sans-serif"}}>Per jaar</span>
+          <div style={{display:'flex', alignItems:'baseline', gap:'8px'}}>
+            <span style={{fontFamily:"'Bebas Neue', sans-serif", fontSize:'clamp(28px, 3vw, 44px)', color:'#666', letterSpacing:0}}>€</span>
+            <span style={{fontFamily:"'Bebas Neue', sans-serif", fontSize:'clamp(64px, 7vw, 104px)', color:'#f0ede6', letterSpacing:'-2px', lineHeight:0.9}}>777</span>
+          </div>
+          <a href="https://royaldutchsales.com/arnobot?plan=yearly" style={{
+            display:'block', textDecoration:'none', textAlign:'center',
+            background:'#EE7700', color:'#0a0a0a',
+            fontFamily:"'Bebas Neue', sans-serif",
+            fontSize:'24px', letterSpacing:'3px', textTransform:'uppercase',
+            padding:'14px 18px', width:'380px', maxWidth:'100%',
+            borderRadius:'999px', transition:'background 0.2s', marginTop:'8px'
+          }}>GO →</a>
+          <span style={{fontSize:'11px', color:'#555', fontFamily:"'Space Mono', monospace"}}>Niet goed na 8 dagen? Geld terug.</span>
+        </div>
+      </section>
+
+      {/* FEATURES — lichte sectie, 3 per kolom */}
       <section className="canvas-section">
         <div className="canvas-left">
           <div className="canvas-left-inner">
-
-            {/* PER MAAND + PER JAAR naast elkaar */}
-            <div style={{display:'flex', flexDirection:'row', width:'100%', border:'1px solid #ccc'}}>
-
-              {/* PER MAAND */}
-              <div style={{flex:1, display:'flex', flexDirection:'column', alignItems:'center', gap:'12px', padding:'32px 16px', borderRight:'1px solid #ccc'}}>
-                <span style={{fontSize:'11px', letterSpacing:'5px', textTransform:'uppercase', color:'#EE7700', fontFamily:"'Bebas Neue', sans-serif"}}>Per maand</span>
-                <div style={{display:'flex', alignItems:'baseline', gap:'4px'}}>
-                  <span style={{fontFamily:"'Bebas Neue', sans-serif", fontSize:'clamp(20px, 2vw, 30px)', color:'#bbb', letterSpacing:0}}>€</span>
-                  <span style={{fontFamily:"'Bebas Neue', sans-serif", fontSize:'clamp(48px, 5vw, 76px)', color:'#333', letterSpacing:'-1px', lineHeight:0.9}}>97</span>
-                </div>
-                <a href="https://royaldutchsales.com/arnobot?plan=monthly" style={{
-                  display:'block', textDecoration:'none', textAlign:'center', width:'100%',
-                  background:'#EE7700', color:'#0a0a0a',
-                  fontFamily:"'Bebas Neue', sans-serif",
-                  fontSize:'16px', letterSpacing:'3px',
-                  padding:'10px 0', borderRadius:'999px',
-                  transition:'opacity 0.2s'
-                }}>GO →</a>
-                <span style={{fontSize:'10px', color:'#aaa', fontFamily:"'Space Mono', monospace", textAlign:'center', lineHeight:1.6}}>Niet goed na<br />8 dagen? Geld terug.</span>
-              </div>
-
-              {/* PER JAAR */}
-              <div style={{flex:1, display:'flex', flexDirection:'column', alignItems:'center', gap:'12px', padding:'32px 16px'}}>
-                <span style={{fontSize:'11px', letterSpacing:'5px', textTransform:'uppercase', color:'#EE7700', fontFamily:"'Bebas Neue', sans-serif"}}>Per jaar</span>
-                <div style={{display:'flex', alignItems:'baseline', gap:'4px'}}>
-                  <span style={{fontFamily:"'Bebas Neue', sans-serif", fontSize:'clamp(20px, 2vw, 30px)', color:'#bbb', letterSpacing:0}}>€</span>
-                  <span style={{fontFamily:"'Bebas Neue', sans-serif", fontSize:'clamp(48px, 5vw, 76px)', color:'#333', letterSpacing:'-1px', lineHeight:0.9}}>777</span>
-                </div>
-                <a href="https://royaldutchsales.com/arnobot?plan=yearly" style={{
-                  display:'block', textDecoration:'none', textAlign:'center', width:'100%',
-                  background:'#EE7700', color:'#0a0a0a',
-                  fontFamily:"'Bebas Neue', sans-serif",
-                  fontSize:'16px', letterSpacing:'3px',
-                  padding:'10px 0', borderRadius:'999px',
-                  transition:'opacity 0.2s'
-                }}>GO →</a>
-                <span style={{fontSize:'10px', color:'#aaa', fontFamily:"'Space Mono', monospace", textAlign:'center', lineHeight:1.6}}>Niet goed na<br />8 dagen? Geld terug.</span>
-              </div>
-
+            <div className="feature-item">
+              <span className="feature-arrow">→</span>
+              <span className="feature-text">Onbeperkt vragen stellen<small>Geen limiet. Geen wachttijd.</small></span>
+            </div>
+            <div className="feature-item">
+              <span className="feature-arrow">→</span>
+              <span className="feature-text">Sessiehistorie<small>Al je gesprekken bewaard en doorzoekbaar.</small></span>
+            </div>
+            <div className="feature-item">
+              <span className="feature-arrow">→</span>
+              <span className="feature-text">PDF export<small>Exporteer elk gesprek als document.</small></span>
             </div>
           </div>
         </div>
         <div className="canvas-right">
-          <div className="feature-item">
-            <span className="feature-arrow">→</span>
-            <span className="feature-text">Onbeperkt vragen stellen<small>Geen limiet. Geen wachttijd.</small></span>
-          </div>
-          <div className="feature-item">
-            <span className="feature-arrow">→</span>
-            <span className="feature-text">Sessiehistorie<small>Al je gesprekken bewaard en doorzoekbaar.</small></span>
-          </div>
-          <div className="feature-item">
-            <span className="feature-arrow">→</span>
-            <span className="feature-text">PDF export<small>Exporteer elk gesprek als document.</small></span>
-          </div>
           <div className="feature-item">
             <span className="feature-arrow">→</span>
             <span className="feature-text">Onthoudt jouw sessies<small>Werkt op basis van jouw persoonlijke profiel.</small></span>
