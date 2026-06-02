@@ -267,7 +267,7 @@ export default function ArnoBotLandingPage() {
         {/* LEFT: PER MAAND — zelfde kolom als subscribe-text-col */}
         <div className="subscribe-text-col" style={{alignItems:'center', padding:'80px 60px'}}>
           <div style={{display:'flex', flexDirection:'column', alignItems:'center', gap:'20px', textAlign:'center'}}>
-            <div style={{background:'transparent', fontFamily:"'Bebas Neue', sans-serif", fontSize:'15px', letterSpacing:'4px', padding:'5px 18px', borderRadius:'999px', visibility:'hidden'}}>4 maanden gratis</div>
+            <div style={{background:'transparent', fontFamily:"'Bebas Neue', sans-serif", fontSize:'16px', letterSpacing:'4px', padding:'6px 18px', visibility:'hidden'}}>4 maanden gratis</div>
             <span style={{fontSize:'28px', letterSpacing:'3px', textTransform:'uppercase', color:'#EE7700', fontFamily:"'Bebas Neue', sans-serif"}}>Per maand</span>
             <div style={{display:'flex', alignItems:'baseline', gap:'8px'}}>
               <span style={{fontFamily:"'Bebas Neue', sans-serif", fontSize:'clamp(28px, 3vw, 44px)', color:'#666', letterSpacing:0}}>€</span>
@@ -288,7 +288,7 @@ export default function ArnoBotLandingPage() {
         {/* RIGHT: PER JAAR — zelfde kolom als canvas-right */}
         <div className="canvas-right" style={{background:'#1a1a1a', justifyContent:'center', alignItems:'flex-start', padding:'80px 60px'}}>
           <div style={{display:'flex', flexDirection:'column', alignItems:'center', gap:'20px', textAlign:'center'}}>
-            <div style={{background:'#EE7700', color:'#1a1a1a', fontFamily:"'Bebas Neue', sans-serif", fontSize:'15px', letterSpacing:'4px', textTransform:'uppercase', padding:'5px 18px', borderRadius:'999px', display:'inline-block'}}>4 maanden gratis</div>
+            <div style={{background:'#f0ede6', color:'#1a1a1a', fontFamily:"'Bebas Neue', sans-serif", fontSize:'16px', letterSpacing:'4px', textTransform:'uppercase', padding:'6px 18px', display:'inline-block'}}>4 maanden gratis</div>
             <span style={{fontSize:'28px', letterSpacing:'3px', textTransform:'uppercase', color:'#EE7700', fontFamily:"'Bebas Neue', sans-serif"}}>Per jaar</span>
             <div style={{display:'flex', alignItems:'baseline', gap:'8px'}}>
               <span style={{fontFamily:"'Bebas Neue', sans-serif", fontSize:'clamp(28px, 3vw, 44px)', color:'#666', letterSpacing:0}}>€</span>
