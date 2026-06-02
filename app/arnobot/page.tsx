@@ -35,7 +35,7 @@ export default function ArnoBotLandingPage() {
           padding: 80px 60px; border-right: 1px solid #ddd; display: flex;
           align-items: flex-start; justify-content: flex-end;
         }
-        .canvas-left-inner { max-width: 480px; width: 100%; }
+        .canvas-left-inner { max-width: 540px; width: 100%; }
         .canvas-quote {
           font-family: 'Bebas Neue', sans-serif;
           font-size: clamp(40px, 4vw, 64px);
@@ -74,7 +74,7 @@ export default function ArnoBotLandingPage() {
           padding: 80px 60px; border-right: 1px solid #333;
           display: flex; align-items: flex-start; justify-content: flex-end;
         }
-        .subscribe-text-inner { max-width: 480px; width: 100%; display: flex; flex-direction: column; gap: 16px; text-align: right; }
+        .subscribe-text-inner { max-width: 540px; width: 100%; display: flex; flex-direction: column; gap: 16px; text-align: right; }
         .subscribe-title {
           font-family: 'Bebas Neue', sans-serif;
           font-size: clamp(40px, 4vw, 64px);
@@ -217,7 +217,7 @@ export default function ArnoBotLandingPage() {
         </div>
         {/* RIGHT: propositie */}
         <div className="canvas-right" style={{background:'#1a1a1a', justifyContent:'center'}}>
-          <div style={{maxWidth:'480px'}}>
+          <div style={{maxWidth:'540px'}}>
             <p style={{fontSize:'13px', letterSpacing:'4px', textTransform:'uppercase', color:'#EE7700', fontFamily:"'Space Mono', monospace", marginBottom:'16px'}}>ArnoBot Unlimited</p>
             <h2 style={{fontFamily:"'Barlow Condensed', sans-serif", fontSize:'clamp(32px, 3.5vw, 52px)', fontWeight:600, color:'#f0ede6', lineHeight:1.1, textTransform:'uppercase', letterSpacing:'1px', marginBottom:'20px'}}>
               Jouw Personal Sales<br />Coach <span style={{color:'#EE7700'}}>voor €97 p/m</span>
@@ -242,7 +242,7 @@ export default function ArnoBotLandingPage() {
           </div>
         </div>
         <div className="canvas-right">
-          <div style={{maxWidth:'480px', width:'100%'}}>
+          <div style={{maxWidth:'540px', width:'100%'}}>
             <div className="feature-item" style={{paddingTop:'0'}}>
               <span className="feature-arrow">→</span>
               <span className="feature-text">Met jouw profiel als uitgangspunt<small>Je geeft aan in welke markt je actief bent, wat je verkoopt, wat je targets zijn en wie je ideale klant is. ArnoBot begrijpt direct wie je bent en wat je nodig hebt.</small></span>
@@ -334,7 +334,7 @@ export default function ArnoBotLandingPage() {
           </div>
         </div>
         <div className="canvas-right">
-          <div style={{maxWidth:'480px', width:'100%'}}>
+          <div style={{maxWidth:'540px', width:'100%'}}>
             <div className="feature-item">
               <span className="feature-arrow">→</span>
               <span className="feature-text">Personal Training<small>Krijg een trainingsschema op maat.</small></span>
@@ -361,7 +361,7 @@ export default function ArnoBotLandingPage() {
           </div>
         </div>
         <div className="canvas-right" style={{background:'#1a1a1a'}}>
-          <div style={{maxWidth:'480px', width:'100%'}}>
+          <div style={{maxWidth:'540px', width:'100%'}}>
             <h2 className="canvas-title" style={{color:'#f0ede6'}}>ARNO<span style={{color:'#EE7700'}}>BOT.</span></h2>
             <p className="canvas-body" style={{color:'#888'}}>
               Niet alleen de bot. Arno zelf. Persoonlijke online coaching op basis van jouw specifieke situatie. Voor als je nog harder vooruit wilt.
