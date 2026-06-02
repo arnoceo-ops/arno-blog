@@ -133,7 +133,7 @@ export default function ArnoBotLandingPage() {
         }
         .feature-text small {
           display: block; font-family: 'Space Mono', monospace;
-          font-size: 11px; letter-spacing: 2px; color: #888;
+          font-size: 13px; letter-spacing: 0.5px; color: #888;
           font-weight: 400; text-transform: none; margin-top: 4px;
         }
 
@@ -181,15 +181,15 @@ export default function ArnoBotLandingPage() {
 
       {/* INTRO */}
       <section className="subscribe-section" style={{background: '#0a0a0a', paddingTop: '80px'}}>
-        {/* LEFT: foto — vult de grid-cel zonder minHeight te pushen */}
-        <div style={{overflow:'hidden', position:'relative', minHeight:'360px'}}>
-          <img src="/cyborg.jpg" alt="ArnoBot" style={{position:'absolute', inset:0, width:'100%', height:'100%', objectFit:'cover', objectPosition:'center 25%', display:'block'}} />
+        {/* LEFT: foto — zelfde aanpak als homepage */}
+        <div className="canvas-right" style={{background: '#0a0a0a', borderRight: '1px solid #222', justifyContent: 'center', alignItems: 'center'}}>
+          <img src="/cyborg.jpg" alt="ArnoBot" style={{display: 'block', width: '100%', maxWidth: '420px', height: 'auto'}} />
         </div>
         {/* RIGHT: propositie */}
-        <div className="canvas-right" style={{background: '#0a0a0a'}}>
+        <div className="canvas-right" style={{background: '#0a0a0a', justifyContent: 'center'}}>
           <div style={{maxWidth:'480px'}}>
-            <p style={{fontSize:'15px', letterSpacing:'4px', textTransform:'uppercase', color:'#EE7700', fontFamily:"'Space Mono', monospace", marginBottom:'16px'}}>ArnoBot Unlimited</p>
-            <h2 style={{fontFamily:"'Barlow Condensed', sans-serif", fontSize:'clamp(28px, 3vw, 44px)', fontWeight:600, color:'#f0ede6', lineHeight:1.15, textTransform:'uppercase', letterSpacing:'1px', marginBottom:'20px'}}>
+            <p style={{fontSize:'13px', letterSpacing:'4px', textTransform:'uppercase', color:'#EE7700', fontFamily:"'Space Mono', monospace", marginBottom:'16px'}}>ArnoBot Unlimited</p>
+            <h2 style={{fontFamily:"'Barlow Condensed', sans-serif", fontSize:'clamp(32px, 3.5vw, 52px)', fontWeight:600, color:'#f0ede6', lineHeight:1.1, textTransform:'uppercase', letterSpacing:'1px', marginBottom:'20px'}}>
               Één advies kan je<br />goud opleveren.<br /><span style={{color:'#EE7700'}}>€97 per maand.</span>
             </h2>
             <p className="subscribe-body">
@@ -207,35 +207,37 @@ export default function ArnoBotLandingPage() {
             {/* PER MAAND */}
             <div style={{display:'flex', flexDirection:'column', alignItems:'flex-end', gap:'14px', paddingBottom:'48px', borderBottom:'1px solid #ddd'}}>
               <span style={{fontSize:'13px', letterSpacing:'5px', textTransform:'uppercase', color:'#EE7700', fontFamily:"'Bebas Neue', sans-serif"}}>Per maand</span>
-              <div style={{fontFamily:"'Bebas Neue', sans-serif", fontSize:'clamp(64px, 7vw, 104px)', lineHeight:0.85, color:'#444', letterSpacing:'-2px'}}>
-                <span style={{fontSize:'0.42em', color:'#bbb', verticalAlign:'text-bottom', letterSpacing:0}}>€ </span>97
+              <div style={{display:'flex', alignItems:'baseline', gap:'6px'}}>
+                <span style={{fontFamily:"'Bebas Neue', sans-serif", fontSize:'clamp(28px, 3vw, 44px)', color:'#bbb', letterSpacing:0}}>€</span>
+                <span style={{fontFamily:"'Bebas Neue', sans-serif", fontSize:'clamp(64px, 7vw, 104px)', color:'#444', letterSpacing:'-2px', lineHeight:0.9}}>97</span>
               </div>
               <a href="https://royaldutchsales.com/arnobot?plan=monthly" style={{
                 display:'inline-block', textDecoration:'none', textAlign:'center',
                 background:'#EE7700', color:'#0a0a0a',
                 fontFamily:"'Bebas Neue', sans-serif",
-                fontSize:'15px', letterSpacing:'3px',
-                padding:'9px 22px', borderRadius:'999px',
+                fontSize:'18px', letterSpacing:'3px',
+                padding:'12px 32px', borderRadius:'999px',
                 transition:'opacity 0.2s'
               }}>GO →</a>
-              <span style={{fontSize:'10px', color:'#aaa', letterSpacing:'1px', fontFamily:"'Space Mono', monospace"}}>Niet goed na 8 dagen? Geld terug.</span>
+              <span style={{fontSize:'12px', color:'#999', letterSpacing:'0.5px', fontFamily:"'Space Mono', monospace"}}>Niet goed na 8 dagen? Geld terug.</span>
             </div>
 
             {/* PER JAAR */}
             <div style={{display:'flex', flexDirection:'column', alignItems:'flex-end', gap:'14px', paddingTop:'48px'}}>
               <span style={{fontSize:'13px', letterSpacing:'5px', textTransform:'uppercase', color:'#EE7700', fontFamily:"'Bebas Neue', sans-serif"}}>Per jaar</span>
-              <div style={{fontFamily:"'Bebas Neue', sans-serif", fontSize:'clamp(64px, 7vw, 104px)', lineHeight:0.85, color:'#444', letterSpacing:'-2px'}}>
-                <span style={{fontSize:'0.42em', color:'#bbb', verticalAlign:'text-bottom', letterSpacing:0}}>€ </span>777
+              <div style={{display:'flex', alignItems:'baseline', gap:'6px'}}>
+                <span style={{fontFamily:"'Bebas Neue', sans-serif", fontSize:'clamp(28px, 3vw, 44px)', color:'#bbb', letterSpacing:0}}>€</span>
+                <span style={{fontFamily:"'Bebas Neue', sans-serif", fontSize:'clamp(64px, 7vw, 104px)', color:'#444', letterSpacing:'-2px', lineHeight:0.9}}>777</span>
               </div>
               <a href="https://royaldutchsales.com/arnobot?plan=yearly" style={{
                 display:'inline-block', textDecoration:'none', textAlign:'center',
                 background:'#EE7700', color:'#0a0a0a',
                 fontFamily:"'Bebas Neue', sans-serif",
-                fontSize:'15px', letterSpacing:'3px',
-                padding:'9px 22px', borderRadius:'999px',
+                fontSize:'18px', letterSpacing:'3px',
+                padding:'12px 32px', borderRadius:'999px',
                 transition:'opacity 0.2s'
               }}>GO →</a>
-              <span style={{fontSize:'10px', color:'#aaa', letterSpacing:'1px', fontFamily:"'Space Mono', monospace"}}>Niet goed na 8 dagen? Geld terug.</span>
+              <span style={{fontSize:'12px', color:'#999', letterSpacing:'0.5px', fontFamily:"'Space Mono', monospace"}}>Niet goed na 8 dagen? Geld terug.</span>
             </div>
 
           </div>
