@@ -166,11 +166,13 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
           border: none;
           color: #f0ede6;
           font-family: 'Space Mono', monospace;
-          font-size: 15px; font-weight: 400; padding: 14px 18px; outline: none;
-          resize: none; min-height: 48px; max-height: 48px;
+          font-size: 15px; font-weight: 400;
+          padding: 13px 18px; outline: none;
+          resize: none; overflow: hidden;
+          min-height: 55px; max-height: 55px;
           line-height: 29px;
         }
-        .spar-textarea::placeholder { color: #aaa; font-style: normal; font-size: 15px; font-weight: 400; line-height: 29px; }
+        .spar-textarea::placeholder { color: #aaa; font-style: normal; font-size: 15px; font-weight: 400; }
         .spar-textarea:focus { background: #161616; }
         .spar-send {
           background: #EE7700; color: #0a0a0a;
@@ -178,11 +180,12 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
           font-size: 20px; letter-spacing: 3px;
           padding: 0 32px; border: none; cursor: pointer;
           transition: background 0.2s; white-space: nowrap; min-width: 120px;
+          min-height: 55px;
         }
         .spar-send:hover { background: #ff8800; }
-        .spar-send:disabled { background: #1a1a1a; color: #2a2a2a; cursor: not-allowed; }
+        .spar-send:disabled { background: #333; color: #666; cursor: not-allowed; }
         .spar-hint {
-          font-size: 10px; letter-spacing: 2px; color: #2a2a2a;
+          font-size: 10px; letter-spacing: 2px; color: #555;
           text-transform: uppercase; margin-top: 8px; padding-bottom: 28px;
           width: 100%; max-width: 812px; text-align: center;
         }
