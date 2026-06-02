@@ -23,7 +23,7 @@ const empty: Answers = {
   uitdaging: '',
 }
 
-const ROL_OPTIONS = ['Salesperson', 'Account Manager', 'Sales Manager', 'CEO / Founder / DGA', 'ZZP\'er', 'Anders']
+const ROL_OPTIONS = ['Inside Sales', 'AE New Business', 'AM Farmer', 'Key Account Manager', 'Sales Team Lead', 'Sales Manager/Director', 'VP of Sales', "ZZP'er", 'CEO/DGA', 'Anders']
 const MARKT_OPTIONS = ['B2B MKB', 'B2B Enterprise', 'B2C', 'Overheid']
 const TOON_OPTIONS = ['Direct en confronterend', 'Vragend en reflectief', 'Motiverend en positief', 'Wissel maar af']
 
@@ -66,6 +66,7 @@ export default function BotProfielPage() {
   const { user } = useUser()
   const router = useRouter()
   const [answers, setAnswers] = useState<Answers>(empty)
+  const [rolAnders, setRolAnders] = useState('')
   const [saving, setSaving] = useState(false)
   const [error, setError] = useState('')
   const [isFirstTime, setIsFirstTime] = useState(false)
@@ -96,8 +97,10 @@ export default function BotProfielPage() {
     }))
   }
 
+  const rolIngevuld = answers.rol && (answers.rol !== 'Anders' || rolAnders.trim().length > 1)
+
   const allFilled =
-    answers.rol &&
+    rolIngevuld &&
     answers.markt.length > 0 &&
     answers.wat_verkoop_je.trim().length > 2 &&
     answers.ideale_klant.trim().length > 2 &&
@@ -112,7 +115,7 @@ export default function BotProfielPage() {
       const res = await fetch('/api/bot/profiel', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ profiel: answers }),
+        body: JSON.stringify({ profiel: { ...answers, rol: answers.rol === 'Anders' ? rolAnders.trim() : answers.rol } }),
       })
       if (!res.ok) throw new Error('Opslaan mislukt')
       router.push('/bot')
@@ -169,6 +172,14 @@ export default function BotProfielPage() {
                 <Chip key={o} label={o} selected={answers.rol === o} onClick={() => set('rol', o)} />
               ))}
             </div>
+            {answers.rol === 'Anders' && (
+              <input
+                value={rolAnders}
+                onChange={e => setRolAnders(e.target.value)}
+                placeholder="Jouw rol..."
+                style={{ marginTop: 12 }}
+              />
+            )}
           </Block>
 
           <Block nr="02" title="Jouw markt">
