@@ -72,6 +72,11 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
       })
       const data = await res.json()
 
+      if (!res.ok) {
+        setMessages(prev => [...prev, { role: 'arno', content: `Fout: ${data.error || res.status}` }])
+        return
+      }
+
       if (data.blocked) {
         setBlocked(true)
         setMessages(prev => [...prev, { role: 'arno', content: '', hint: 'blocked' }])
