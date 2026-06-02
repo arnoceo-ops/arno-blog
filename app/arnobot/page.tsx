@@ -103,20 +103,50 @@ export default function ArnoBotLandingPage() {
         }
         .subscribe-btn-dark:hover { background: #222; color: #f0ede6; }
 
-        /* ── PRICING BADGE ── */
-        .pricing-badge {
-          display: inline-block; font-size: 10px; letter-spacing: 3px;
-          text-transform: uppercase; color: #EE7700;
-          font-family: 'Space Mono', monospace;
-          border: 1px solid #EE7700; padding: 4px 12px;
-          align-self: flex-start; border-radius: 999px; margin-bottom: 8px;
+        /* ── PRICING CARDS (naast elkaar) ── */
+        .pricing-pair {
+          display: flex; flex-direction: row; width: 100%;
+          border: 1px solid #ccc;
         }
-        .pricing-price {
+        .pricing-card {
+          flex: 1; display: flex; flex-direction: column;
+          align-items: center; gap: 12px; padding: 28px 16px;
+        }
+        .pricing-card + .pricing-card { border-left: 1px solid #ccc; }
+        .pricing-label {
+          font-size: 11px; letter-spacing: 5px; text-transform: uppercase;
+          color: #EE7700; font-family: 'Bebas Neue', sans-serif;
+        }
+        .pricing-amount {
+          display: flex; align-items: baseline; gap: 4px;
+        }
+        .pricing-euro {
           font-family: 'Bebas Neue', sans-serif;
-          font-size: clamp(60px, 7vw, 100px);
-          line-height: 0.9; color: #f0ede6; letter-spacing: -1px;
+          font-size: clamp(20px, 2vw, 32px); color: #bbb; letter-spacing: 0;
         }
-        .pricing-price span { font-size: clamp(20px, 2.5vw, 32px); color: #555; letter-spacing: 0; }
+        .pricing-number {
+          font-family: 'Bebas Neue', sans-serif;
+          font-size: clamp(52px, 5vw, 80px); color: #333;
+          letter-spacing: -1px; line-height: 0.9;
+        }
+        .pricing-btn {
+          display: block; text-decoration: none; text-align: center; width: 100%;
+          background: #EE7700; color: #0a0a0a;
+          font-family: 'Bebas Neue', sans-serif;
+          font-size: 17px; letter-spacing: 3px;
+          padding: 11px 0; border-radius: 999px;
+          transition: opacity 0.2s;
+        }
+        .pricing-btn:hover { opacity: 0.85; }
+        .pricing-guarantee {
+          font-size: 10px; color: #aaa; letter-spacing: 0.5px;
+          font-family: 'Space Mono', monospace; text-align: center;
+        }
+
+        @media (max-width: 768px) {
+          .pricing-pair { flex-direction: column; }
+          .pricing-card + .pricing-card { border-left: none; border-top: 1px solid #ccc; }
+        }
 
         /* ── FEATURE LIST ── */
         .feature-item {
@@ -182,8 +212,8 @@ export default function ArnoBotLandingPage() {
       {/* INTRO */}
       <section className="subscribe-section" style={{background: '#0a0a0a', paddingTop: '80px'}}>
         {/* LEFT: foto — zelfde aanpak als homepage */}
-        <div className="canvas-right" style={{background: '#0a0a0a', borderRight: '1px solid #222', justifyContent: 'center', alignItems: 'center'}}>
-          <img src="/cyborg.jpg" alt="ArnoBot" style={{display: 'block', width: '100%', maxWidth: '420px', height: 'auto'}} />
+        <div className="canvas-right" style={{background: '#0a0a0a', borderRight: '1px solid #1a1a1a'}}>
+          <img src="/cyborg.jpg" alt="ArnoBot" style={{display: 'block', width: '380px', maxWidth: '100%', height: 'auto'}} />
         </div>
         {/* RIGHT: propositie */}
         <div className="canvas-right" style={{background: '#0a0a0a', justifyContent: 'center'}}>
