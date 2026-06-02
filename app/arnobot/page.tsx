@@ -223,7 +223,7 @@ export default function ArnoBotLandingPage() {
               Jouw Personal Sales<br />Coach <span style={{color:'#EE7700'}}>voor €97 p/m</span>
             </h2>
             <p className="subscribe-body">
-              Dat is het equivalent van een kwartier consultancy. Wat jij hiervoor krijgt, is 24/7 toegang tot Arno's brein: 40 jaar sales leadership, 30 jaar bedrijven bouwen en 20 jaar sales blogs schrijven.
+              Dat is het equivalent van een kwartier consultancy. Wat jij hiervoor krijgt, is 24/7 toegang tot Arno's brein: 40 jaar sales leadership, 30 jaar bedrijven bouwen en 20 jaar sales blogs schrijven. Wat het je oplevert? Sales mastery. Verkopen in jouw unieke kracht. Crushing targets. Als je er iets mee doet, tenminste.
             </p>
           </div>
         </div>
@@ -345,7 +345,7 @@ export default function ArnoBotLandingPage() {
             </div>
             <div className="feature-item">
               <span className="feature-arrow">→</span>
-              <span className="feature-text">Overleg met Arno<small>Niet de bot, maar Arno in persoon.</small></span>
+              <span className="feature-text">Overleg met Arno<small>Niet de bot, maar Arno in persoon. *</small></span>
             </div>
           </div>
         </div>
