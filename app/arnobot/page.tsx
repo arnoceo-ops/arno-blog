@@ -354,7 +354,7 @@ export default function ArnoBotLandingPage() {
       {/* COMING SOON — donker */}
       <section className="canvas-section" style={{background:'#0a0a0a', borderTop:'3px solid #EE7700'}}>
         <div className="canvas-left" style={{borderRight:'1px solid #333'}}>
-          <div className="canvas-left-inner">
+          <div className="canvas-left-inner" style={{display:'flex', justifyContent:'flex-end'}}>
             <div style={{fontFamily:"'Bebas Neue', sans-serif", fontSize:'14px', letterSpacing:'6px', color:'#555', border:'2px dashed #333', padding:'8px 20px', display:'inline-block'}}>
               BINNENKORT
             </div>
