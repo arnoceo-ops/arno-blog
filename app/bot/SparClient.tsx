@@ -397,17 +397,6 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
           <p className="spar-hint">Enter = sturen — Shift+Enter = nieuwe regel</p>
         </div>}
 
-        {!started && (
-          <div className="spar-openers">
-              <div className="openers-grid">
-              {openers.map((q, i) => (
-                <button key={i} className="opener-btn" onClick={() => ask(q)}>
-                  {q}
-                </button>
-              ))}
-            </div>
-          </div>
-        )}
 
         <div className="spar-conversation">
           {messages.map((msg, i) => (
