@@ -278,9 +278,9 @@ export default function ArnoBotLandingPage() {
               background:'#EE7700', color:'#1a1a1a', fontFamily:"'Bebas Neue', sans-serif",
               fontSize:'20px', letterSpacing:'3px', padding:'12px 0', width:'150px', borderRadius:'999px',
               transition:'background 0.2s'
-            }}>GO</a>
+            }}>START</a>
             <a href="https://royaldutchsales.com/arnobot?plan=trial" style={{
-              fontSize:'12px', color:'#888', fontFamily:"'Space Mono', monospace",
+              fontSize:'13px', color:'#888', fontFamily:"'Space Mono', monospace",
               textDecoration:'none', letterSpacing:'1px'
             }}>3 dagen Free Trial</a>
           </div>
@@ -288,7 +288,7 @@ export default function ArnoBotLandingPage() {
         {/* RIGHT: PER JAAR — zelfde kolom als canvas-right */}
         <div className="canvas-right" style={{background:'#1a1a1a', justifyContent:'center', alignItems:'flex-start', padding:'80px 60px'}}>
           <div style={{display:'flex', flexDirection:'column', alignItems:'center', gap:'20px', textAlign:'center'}}>
-            <div style={{border:'2px solid #EE7700', padding:'10px 28px', fontFamily:"'Bebas Neue', sans-serif", fontSize:'24px', letterSpacing:'4px', color:'#EE7700', textTransform:'uppercase'}}>4 maanden gratis.</div>
+            <div style={{border:'2px solid rgb(240,237,230)', padding:'10px 28px', fontFamily:"'Bebas Neue', sans-serif", fontSize:'24px', letterSpacing:'4px', color:'#EE7700', textTransform:'uppercase'}}>4 maanden gratis.</div>
             <span style={{fontSize:'28px', letterSpacing:'3px', textTransform:'uppercase', color:'#EE7700', fontFamily:"'Bebas Neue', sans-serif"}}>Per jaar</span>
             <div style={{display:'flex', alignItems:'baseline', gap:'8px'}}>
               <span style={{fontFamily:"'Bebas Neue', sans-serif", fontSize:'clamp(28px, 3vw, 44px)', color:'#666', letterSpacing:0}}>€</span>
@@ -299,9 +299,9 @@ export default function ArnoBotLandingPage() {
               background:'#EE7700', color:'#1a1a1a', fontFamily:"'Bebas Neue', sans-serif",
               fontSize:'20px', letterSpacing:'3px', padding:'12px 0', width:'150px', borderRadius:'999px',
               transition:'background 0.2s'
-            }}>GO</a>
+            }}>START</a>
             <a href="https://royaldutchsales.com/arnobot?plan=trial" style={{
-              fontSize:'12px', color:'#888', fontFamily:"'Space Mono', monospace",
+              fontSize:'13px', color:'#888', fontFamily:"'Space Mono', monospace",
               textDecoration:'none', letterSpacing:'1px'
             }}>3 dagen Free Trial</a>
           </div>
