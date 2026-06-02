@@ -33,15 +33,15 @@ const supabase = createClient(
 
 export async function POST(req: NextRequest) {
   try {
-    const { question, history } = await req.json()
+    const { question, history, userId } = await req.json()
     const origin = req.headers.get('origin')
     const ip = req.headers.get('x-forwarded-for')?.split(',')[0]?.trim() || null
-    const sessionId = ip ? `${ip}-${new Date().toISOString().slice(0, 10)}` : 'unknown'
+    const sessionId = userId ?? (ip ? `${ip}-${new Date().toISOString().slice(0, 10)}` : 'unknown')
 
-    // Check IP question count over last 24 hours
+    // Abonnees (userId aanwezig) krijgen geen limiet
     let hint: string | null = null
     const limitEnabled = process.env.ARNOBOT_LIMIT_ENABLED === 'true'
-    if (limitEnabled && ip) {
+    if (limitEnabled && ip && !userId) {
       const since = new Date(Date.now() - 48 * 60 * 60 * 1000).toISOString()
       const { count } = await supabase
         .from('arnobot_blog_logs')
@@ -96,7 +96,7 @@ ${context}`,
 
     const answer = response.content[0].type === 'text' ? response.content[0].text : ''
 
-    await supabase.from('arnobot_blog_logs').insert({ question, answer, ip, session_id: sessionId })
+    await supabase.from('arnobot_blog_logs').insert({ question, answer, ip, session_id: sessionId, user_id: userId ?? null })
 
     return NextResponse.json({ answer, hint }, { headers: corsHeaders(origin) })
   } catch (err) {
