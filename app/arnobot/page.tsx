@@ -321,15 +321,15 @@ export default function ArnoBotLandingPage() {
           <div className="canvas-left-inner">
             <div className="feature-item" style={{flexDirection:'row-reverse'}}>
               <span className="feature-arrow">←</span>
-              <span className="feature-text" style={{textAlign:'right'}}>Onbeperkt vragen stellen<small>Geen limiet. Geen wachttijd.</small></span>
+              <span className="feature-text" style={{textAlign:'right'}}>Unlimited sales coaching<small>24/7 beschikbaar. Geen limiet. Geen wachttijd.</small></span>
             </div>
             <div className="feature-item" style={{flexDirection:'row-reverse'}}>
               <span className="feature-arrow">←</span>
-              <span className="feature-text" style={{textAlign:'right'}}>Sessiehistorie<small>Al je gesprekken bewaard en doorzoekbaar.</small></span>
+              <span className="feature-text" style={{textAlign:'right'}}>Jouw sales archief<small>Alles wordt bewaard en is doorzoekbaar.</small></span>
             </div>
             <div className="feature-item" style={{flexDirection:'row-reverse'}}>
               <span className="feature-arrow">←</span>
-              <span className="feature-text" style={{textAlign:'right'}}>PDF export<small>Exporteer elk gesprek als document.</small></span>
+              <span className="feature-text" style={{textAlign:'right'}}>PDF Export<small>Exporteer per gesprek, per onderwerp. Wat je wilt.</small></span>
             </div>
           </div>
         </div>
@@ -337,15 +337,15 @@ export default function ArnoBotLandingPage() {
           <div style={{maxWidth:'480px', width:'100%'}}>
             <div className="feature-item">
               <span className="feature-arrow">→</span>
-              <span className="feature-text">Onthoudt jouw sessies<small>Werkt op basis van jouw persoonlijke profiel.</small></span>
+              <span className="feature-text">High Performance Planning<small>Adviezen van ArnoBot als Personal Trainer.</small></span>
             </div>
             <div className="feature-item">
               <span className="feature-arrow">→</span>
-              <span className="feature-text">Verwijzingen naar blogs<small>Elk antwoord onderbouwd met Arno's eigen artikelen.</small></span>
+              <span className="feature-text">Duik dieper in de materie.<small>Verwijzing naar blogs, boeken en video's.</small></span>
             </div>
             <div className="feature-item">
               <span className="feature-arrow">→</span>
-              <span className="feature-text">Overleg met Arno<small>Niet de bot maar Arno in persoon.</small></span>
+              <span className="feature-text">Overleg met Arno<small>Niet de bot, maar Arno in persoon *<br /><br />* Een half uur per kwartaal gratis bij een jaarabonnement.</small></span>
             </div>
           </div>
         </div>
