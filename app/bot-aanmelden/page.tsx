@@ -24,7 +24,7 @@ export default function BotAanmeldenPage() {
           </h1>
           <div style={{ borderLeft: '4px solid #EE7700', paddingLeft: 20, marginBottom: 40 }}>
             <p style={{ fontSize: 14, lineHeight: 1.9, color: '#888' }}>
-              ArnoBot Unlimited geeft je onbeperkt toegang tot 20 jaar saleskennis van Arno Diepeveen — direct, ongefilterd, afgestemd op jouw situatie.
+              ArnoBot Unlimited geeft je onbeperkt toegang tot 40 jaar saleskennis van Arno Diepeveen — direct, ongefilterd, afgestemd op jouw situatie.
             </p>
           </div>
           <a
