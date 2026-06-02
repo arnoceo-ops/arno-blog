@@ -11,7 +11,7 @@ const isPublicRoute = createRouteMatcher([
   '/sign-up(.*)',
 ])
 
-const isProtectedBot = createRouteMatcher(['/bot', '/bot/profiel', '/bot/account'])
+const isProtectedBot = createRouteMatcher(['/bot', '/bot/profiel', '/bot/account', '/bot/geschiedenis'])
 
 export default clerkMiddleware(async (auth, req) => {
   const path = req.nextUrl.pathname

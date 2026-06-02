@@ -34,6 +34,8 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
   const [started, setStarted] = useState(false)
   const [blocked, setBlocked] = useState(false)
   const [sessionId, setSessionId] = useState('')
+  const [synthesisLoading, setSynthesisLoading] = useState(false)
+  const [showClose, setShowClose] = useState(false)
   const bottomRef = useRef<HTMLDivElement>(null)
   const inputRef = useRef<HTMLTextAreaElement>(null)
 
@@ -61,6 +63,17 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
     bottomRef.current?.scrollIntoView({ behavior: 'smooth' })
   }, [messages, loading])
 
+  function pickTopic(text: string) {
+    setInput(text)
+    setTimeout(() => {
+      if (inputRef.current) {
+        inputRef.current.focus()
+        inputRef.current.style.height = 'auto'
+        inputRef.current.style.height = Math.min(inputRef.current.scrollHeight, 120) + 'px'
+      }
+    }, 0)
+  }
+
   function reset() {
     const newId = crypto.randomUUID()
     sessionStorage.setItem('arnobot_session', newId)
@@ -70,8 +83,39 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
     setHistory([])
     setInput('')
     setBlocked(false)
+    setShowClose(false)
     window.scrollTo({ top: 0, behavior: 'smooth' })
     setTimeout(() => inputRef.current?.focus(), 150)
+  }
+
+  async function handleNieuw() {
+    if (messages.length === 0 || showClose) {
+      reset()
+      return
+    }
+    setSynthesisLoading(true)
+    try {
+      const res = await fetch('/api/bot/session-end', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ sessionId, messages })
+      })
+      const data = await res.json()
+      if (data.summary) {
+        setMessages(prev => [...prev, {
+          role: 'arno',
+          content: `**Terugblik op dit gesprek**\n\n${data.summary}`,
+          hint: null
+        }])
+        setShowClose(true)
+      } else {
+        reset()
+      }
+    } catch {
+      reset()
+    } finally {
+      setSynthesisLoading(false)
+    }
   }
 
   async function ask(question: string) {
@@ -385,12 +429,44 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
           transition: background 0.2s;
         }
         .msg-cta-btn:hover { background: #ff8800; }
+
+        /* EMPTY STATE */
+        .empty-state {
+          flex: 1;
+          display: flex; flex-direction: column;
+          justify-content: center;
+          padding: 48px 0 32px;
+          animation: fadein 0.5s ease;
+        }
+        .empty-label {
+          font-size: 11px; letter-spacing: 4px; text-transform: uppercase;
+          color: #333; margin-bottom: 20px;
+        }
+        .empty-topics {
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          gap: 2px;
+        }
+        @media (max-width: 600px) { .empty-topics { grid-template-columns: 1fr; } }
+        .topic-btn {
+          background: #0f0f0f; border: none; color: #555;
+          font-family: 'Space Mono', monospace;
+          font-size: 13px; font-weight: 400; letter-spacing: 0;
+          padding: 20px 24px; cursor: pointer; text-align: left;
+          line-height: 1.6; transition: all 0.15s;
+          border-left: 2px solid transparent;
+        }
+        .topic-btn:hover {
+          background: #141414; color: #f0ede6;
+          border-left-color: #EE7700;
+        }
       `}</style>
 
       <nav className="site-nav">
         <div className="nav-links">
           <Link href="/">HOME</Link>
           <span style={{ color: '#EE7700', fontFamily: "'Bebas Neue', sans-serif", fontSize: 22, letterSpacing: 3 }}>BOT</span>
+          <Link href="/bot/geschiedenis">GESCHIEDENIS</Link>
           <Link href="/bot/account">ACCOUNT</Link>
         </div>
       </nav>
@@ -437,8 +513,13 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
               {loading ? '...' : 'VRAAG →'}
             </button>
             {started && (
-              <button className="spar-reset" onClick={reset} title="Nieuwe sessie">
-                NIEUW
+              <button
+                className="spar-reset"
+                onClick={handleNieuw}
+                disabled={synthesisLoading}
+                title={showClose ? 'Nieuwe sessie starten' : 'Sluiten en samenvatten'}
+              >
+                {synthesisLoading ? '...' : showClose ? 'SLUITEN' : 'NIEUW'}
               </button>
             )}
           </div>
@@ -447,6 +528,25 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
 
 
         <div className="spar-conversation">
+          {messages.length === 0 && !loading && (
+            <div className="empty-state">
+              <p className="empty-label">Waar wil je het over hebben?</p>
+              <div className="empty-topics">
+                {[
+                  'Hoe bouw ik een pipeline die consistent vult?',
+                  'Ik verlies deals in de eindfase — wat doe ik fout?',
+                  'Hoe coach ik een salesteam dat underperformt?',
+                  'Wat is jouw kijk op cold outreach in dit tijdperk?',
+                  'Hoe verhoog ik mijn gemiddelde dealwaarde?',
+                  'Mijn prospect zegt "te duur" — hoe reageer ik?',
+                ].map(topic => (
+                  <button key={topic} className="topic-btn" onClick={() => pickTopic(topic)}>
+                    {topic}
+                  </button>
+                ))}
+              </div>
+            </div>
+          )}
           {messages.map((msg, i) => (
             msg.role === 'user' ? (
               <div key={i} className="msg-user">
