@@ -469,7 +469,7 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
         <div className="nav-links">
           <Link href="/">HOME</Link>
           <span style={{ color: '#EE7700', fontFamily: "'Bebas Neue', sans-serif", fontSize: 22, letterSpacing: 3 }}>BOT</span>
-          <Link href="/bot/geschiedenis">GESCHIEDENIS</Link>
+          <Link href="/bot/geschiedenis">ARCHIEF</Link>
           <Link href="/bot/account">ACCOUNT</Link>
         </div>
       </nav>
