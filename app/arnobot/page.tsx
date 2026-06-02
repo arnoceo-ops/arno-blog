@@ -329,7 +329,7 @@ export default function ArnoBotLandingPage() {
             </div>
             <div className="feature-item" style={{flexDirection:'row-reverse'}}>
               <span className="feature-arrow">←</span>
-              <span className="feature-text" style={{textAlign:'right'}}>PDF Export<small>Exporteer per gesprek, per onderwerp. Wat je wilt.</small></span>
+              <span className="feature-text" style={{textAlign:'right'}}>PDF Export<small>Sorteer en exporteer wat je wilt.</small></span>
             </div>
           </div>
         </div>
@@ -337,7 +337,7 @@ export default function ArnoBotLandingPage() {
           <div style={{maxWidth:'480px', width:'100%'}}>
             <div className="feature-item">
               <span className="feature-arrow">→</span>
-              <span className="feature-text">High Performance Planning<small>Adviezen van ArnoBot als Personal Trainer.</small></span>
+              <span className="feature-text">Personal Training<small>Krijg een trainingsschema op maat.</small></span>
             </div>
             <div className="feature-item">
               <span className="feature-arrow">→</span>
@@ -345,27 +345,28 @@ export default function ArnoBotLandingPage() {
             </div>
             <div className="feature-item">
               <span className="feature-arrow">→</span>
-              <span className="feature-text">Overleg met Arno<small>Niet de bot, maar Arno in persoon *<br /><br />* Een half uur per kwartaal gratis bij een jaarabonnement.</small></span>
+              <span className="feature-text">Overleg met Arno<small>Niet de bot, maar Arno in persoon.</small></span>
             </div>
           </div>
         </div>
       </section>
 
-      {/* COMING SOON — light, dimmed */}
-      <section className="canvas-section" style={{opacity: 0.6}}>
-        <div className="canvas-left">
+      {/* COMING SOON — donker */}
+      <section className="canvas-section" style={{background:'#0a0a0a', borderTop:'3px solid #EE7700'}}>
+        <div className="canvas-left" style={{borderRight:'1px solid #333'}}>
           <div className="canvas-left-inner">
-            <div style={{fontFamily:"'Bebas Neue', sans-serif", fontSize:'14px', letterSpacing:'6px', color:'#aaa', border:'2px dashed #ccc', padding:'8px 20px', display:'inline-block'}}>
+            <div style={{fontFamily:"'Bebas Neue', sans-serif", fontSize:'14px', letterSpacing:'6px', color:'#555', border:'2px dashed #333', padding:'8px 20px', display:'inline-block'}}>
               BINNENKORT
             </div>
           </div>
         </div>
-        <div className="canvas-right">
+        <div className="canvas-right" style={{background:'#1a1a1a'}}>
           <div style={{maxWidth:'480px', width:'100%'}}>
-            <h2 className="canvas-title">ARNO<span style={{color:'#EE7700'}}>BOT.</span></h2>
-            <p className="canvas-body">
+            <h2 className="canvas-title" style={{color:'#f0ede6'}}>ARNO<span style={{color:'#EE7700'}}>BOT.</span></h2>
+            <p className="canvas-body" style={{color:'#888'}}>
               Niet alleen de bot. Arno zelf. Persoonlijke online coaching op basis van jouw specifieke situatie. Voor als je nog harder vooruit wilt.
             </p>
+            <p style={{fontFamily:"'Space Mono', monospace", fontSize:'12px', color:'#555', letterSpacing:'0.5px', marginTop:'8px'}}>* Een half uur per kwartaal gratis bij een jaarabonnement.</p>
           </div>
         </div>
       </section>
