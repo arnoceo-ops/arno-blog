@@ -62,6 +62,7 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
     setStarted(true)
     setMessages(prev => [...prev, { role: 'user', content: question }])
     setInput('')
+    if (inputRef.current) { inputRef.current.style.height = '55px' }
     setLoading(true)
 
     try {
@@ -174,8 +175,9 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
           font-size: 15px; font-weight: 400;
           padding: 13px 18px; outline: none;
           resize: none; overflow: hidden;
-          min-height: 55px; max-height: 55px;
+          min-height: 55px;
           line-height: 29px;
+          display: block;
         }
         .spar-textarea::placeholder { color: #aaa; font-style: normal; font-size: 15px; font-weight: 400; }
         .spar-textarea:focus { background: #161616; }
@@ -354,7 +356,7 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
       <nav className="site-nav">
         <div className="nav-links">
           <Link href="/">HOME</Link>
-          <span className="nav-active">BOT</span>
+          <span style={{ color: '#EE7700', fontFamily: "'Bebas Neue', sans-serif", fontSize: 22, letterSpacing: 3 }}>BOT</span>
           <Link href="/bot/account">ACCOUNT</Link>
         </div>
       </nav>
@@ -381,7 +383,11 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
               ref={inputRef}
               className="spar-textarea"
               value={input}
-              onChange={e => setInput(e.target.value)}
+              onChange={e => {
+                setInput(e.target.value)
+                e.target.style.height = 'auto'
+                e.target.style.height = e.target.scrollHeight + 'px'
+              }}
               onKeyDown={e => {
                 if (e.key === 'Enter' && !e.shiftKey) {
                   e.preventDefault()
@@ -390,7 +396,7 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
               }}
               placeholder="Stel je vraag"
               disabled={loading || blocked}
-              rows={2}
+              rows={1}
             />
             <button
               className="spar-send"
