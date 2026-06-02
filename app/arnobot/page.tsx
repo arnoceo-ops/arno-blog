@@ -343,9 +343,16 @@ export default function ArnoBotLandingPage() {
               <span className="feature-arrow">→</span>
               <span className="feature-text">Duik dieper in de materie.<small>Verwijzing naar blogs, boeken en video's.</small></span>
             </div>
-            <div className="feature-item">
+            <div className="feature-item" style={{borderBottom:'none'}}>
               <span className="feature-arrow">→</span>
               <span className="feature-text">Overleg met Arno<small>Niet de bot, maar Arno in persoon. *</small></span>
+            </div>
+            <div style={{paddingTop:'28px'}}>
+              <a href="https://royaldutchsales.com/arnobot?plan=yearly" style={{
+                display:'inline-block', textDecoration:'none', textAlign:'center',
+                background:'#EE7700', color:'#1a1a1a', fontFamily:"'Bebas Neue', sans-serif",
+                fontSize:'20px', letterSpacing:'3px', padding:'12px 0', width:'150px', borderRadius:'999px'
+              }}>START NU.</a>
             </div>
           </div>
         </div>
