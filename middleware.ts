@@ -1,4 +1,4 @@
-import { clerkMiddleware, createRouteMatcher } from '@clerk/nextjs/server'
+import { clerkMiddleware, createRouteMatcher, clerkClient } from '@clerk/nextjs/server'
 import { createClient } from '@supabase/supabase-js'
 import { NextResponse } from 'next/server'
 
@@ -6,6 +6,9 @@ const isPublicRoute = createRouteMatcher([
   '/canvas-aanmelden(.*)',
   '/api/canvas/aanmelden(.*)',
   '/bot-aanmelden(.*)',
+  '/api/bot/aanmelden(.*)',
+  '/sign-in(.*)',
+  '/sign-up(.*)',
 ])
 
 const isProtectedBot = createRouteMatcher(['/bot', '/bot/profiel'])
@@ -27,14 +30,37 @@ export default clerkMiddleware(async (auth, req) => {
       process.env.SUPABASE_SERVICE_ROLE_KEY!
     )
 
-    const { data: user, error } = await supabase
+    let { data: user } = await supabase
       .from('approved_users')
       .select('is_active, paid_at, expires_at, trial_start')
       .eq('user_id', userId)
       .single()
 
-    if (error) {
-      console.error('Middleware Supabase error:', error.message, '| userId:', userId)
+    // Pending gebruiker: eerste keer inloggen na trial aanmelding
+    if (!user) {
+      try {
+        const client = await clerkClient()
+        const clerkUser = await client.users.getUser(userId)
+        const email = clerkUser.emailAddresses[0]?.emailAddress
+        if (email) {
+          const { data: pending } = await supabase
+            .from('approved_users')
+            .select('is_active, paid_at, expires_at, trial_start')
+            .eq('email', email)
+            .like('user_id', 'pending_%')
+            .single()
+
+          if (pending) {
+            await supabase
+              .from('approved_users')
+              .update({ user_id: userId })
+              .eq('email', email)
+            user = pending
+          }
+        }
+      } catch (e) {
+        console.error('Pending user lookup failed:', e)
+      }
     }
 
     if (!user || user.is_active === false) {
