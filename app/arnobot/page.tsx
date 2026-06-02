@@ -223,7 +223,7 @@ export default function ArnoBotLandingPage() {
               Jouw Personal Sales<br />Coach <span style={{color:'#EE7700'}}>voor €97 p/m</span>
             </h2>
             <p className="subscribe-body">
-              Dat is een kwartier consultancy. Alleen jij krijgt onmetelijk veel meer: 24/7 toegang tot Arno's brein met 40 jaar sales thought leadership en 369.000 woorden blogs.
+              Dat is het equivalent van een kwartier consultancy. Wat jij ervoor krijgt is 24/7 toegang tot Arno's brein: 40 jaar sales thought leadership en 369.000 woorden aan onversneden sales blogs.
             </p>
           </div>
         </div>
@@ -248,15 +248,15 @@ export default function ArnoBotLandingPage() {
             </p>
             <div className="feature-item">
               <span className="feature-arrow">→</span>
-              <span className="feature-text">Jouw profiel als uitgangspunt<small>Je geeft aan in welke markt je actief bent, wat je verkoopt, wat je targets zijn en wie je ideale klant is. ArnoBot begrijpt direct wie je bent en wat je nodig hebt.</small></span>
+              <span className="feature-text">Met jouw profiel als uitgangspunt<small>Je geeft aan in welke markt je actief bent, wat je verkoopt, wat je targets zijn en wie je ideale klant is. ArnoBot begrijpt direct wie je bent en wat je nodig hebt.</small></span>
             </div>
             <div className="feature-item">
               <span className="feature-arrow">→</span>
-              <span className="feature-text">Jouw persoonlijke salesarchief<small>Elk gesprek wordt opgeslagen en blijft voor je beschikbaar. Hoe meer gesprekken je met ArnoBot voert, hoe scherper het inzicht in jouw manier van verkopen en waar jouw grootste kansen liggen.</small></span>
+              <span className="feature-text">en jouw persoonlijke salesarchief<small>Elk gesprek wordt opgeslagen en blijft voor je beschikbaar. Hoe meer gesprekken je met ArnoBot voert, hoe scherper het inzicht in jouw manier van verkopen en waar jouw grootste kansen liggen.</small></span>
             </div>
             <div className="feature-item" style={{borderBottom:'none'}}>
               <span className="feature-arrow">→</span>
-              <span className="feature-text">Jouw patronen<small>ArnoBot herkent steeds beter jouw patronen, werkwijze en voorkeuren. Daardoor worden de adviezen steeds persoonlijker, relevanter en effectiever. Je ontsluit je maximale groeipotentie.</small></span>
+              <span className="feature-text">naar maximale performance<small>ArnoBot herkent steeds beter jouw patronen, werkwijze en voorkeuren. Daardoor worden de adviezen steeds persoonlijker, relevanter en effectiever. Je ontsluit je maximale groeipotentie.</small></span>
             </div>
           </div>
         </div>
