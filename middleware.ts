@@ -2,11 +2,6 @@ import { clerkMiddleware, createRouteMatcher } from '@clerk/nextjs/server'
 import { createClient } from '@supabase/supabase-js'
 import { NextResponse } from 'next/server'
 
-const supabase = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL!,
-  process.env.SUPABASE_SERVICE_ROLE_KEY!
-)
-
 const isPublicRoute = createRouteMatcher([
   '/canvas-aanmelden(.*)',
   '/api/canvas/aanmelden(.*)',
@@ -27,11 +22,20 @@ export default clerkMiddleware(async (auth, req) => {
     const { userId } = await auth()
     if (!userId) return NextResponse.next()
 
-    const { data: user } = await supabase
+    const supabase = createClient(
+      process.env.NEXT_PUBLIC_SUPABASE_URL!,
+      process.env.SUPABASE_SERVICE_ROLE_KEY!
+    )
+
+    const { data: user, error } = await supabase
       .from('approved_users')
       .select('is_active, paid_at, expires_at, trial_start')
       .eq('user_id', userId)
       .single()
+
+    if (error) {
+      console.error('Middleware Supabase error:', error.message, '| userId:', userId)
+    }
 
     if (!user || user.is_active === false) {
       return NextResponse.redirect(new URL('/bot-aanmelden', req.url))
