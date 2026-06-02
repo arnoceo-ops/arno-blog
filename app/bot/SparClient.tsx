@@ -186,7 +186,7 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
 
         /* SPAR LAYOUT */
         .spar-page {
-          min-height: 100vh; padding-top: 80px; padding-bottom: 110px;
+          min-height: 100vh; padding-top: 80px;
           display: flex; flex-direction: column;
         }
 
@@ -208,17 +208,21 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
         .spar-tagline p { font-size: 15px; line-height: 1.9; color: #aaa; }
         .spar-tagline strong { font-weight: 700; color: #f0ede6; font-family: 'Barlow', sans-serif; font-size: 26px; letter-spacing: 0.5px; display: block; margin-bottom: 6px; }
 
-        /* INPUT — STICKY ONDERAAN */
+        /* INPUT — BOVEN BIJ NIEUW GESPREK, STICKY-ONDER BIJ ACTIEF */
         .spar-input-area {
+          background: #0a0a0a;
+          padding: 40px 60px 0;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+        }
+        .spar-input-area.active {
           position: fixed;
           bottom: 0; left: 0; right: 0;
           background: rgba(10,10,10,0.97);
           border-top: 2px solid #EE7700;
           padding: 16px 60px;
           z-index: 50;
-          display: flex;
-          flex-direction: column;
-          align-items: center;
         }
         .spar-input-label {
           font-family: 'Bebas Neue', sans-serif;
@@ -432,33 +436,32 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
 
         /* EMPTY STATE */
         .empty-state {
-          flex: 1;
           display: flex; flex-direction: column;
-          justify-content: center;
-          padding: 48px 0 32px;
+          padding: 0;
           animation: fadein 0.5s ease;
         }
         .empty-label {
-          font-size: 11px; letter-spacing: 4px; text-transform: uppercase;
-          color: #333; margin-bottom: 20px;
+          font-size: 10px; letter-spacing: 4px; text-transform: uppercase;
+          color: #333; padding: 32px 0 20px; display: block;
         }
         .empty-topics {
           display: grid;
-          grid-template-columns: 1fr 1fr;
+          grid-template-columns: repeat(3, 1fr);
+          width: 100%;
           gap: 2px;
+          margin-bottom: 2px;
         }
-        @media (max-width: 600px) { .empty-topics { grid-template-columns: 1fr; } }
+        @media (max-width: 700px) { .empty-topics { grid-template-columns: repeat(2, 1fr); } }
+        @media (max-width: 480px) { .empty-topics { grid-template-columns: 1fr; } }
         .topic-btn {
-          background: #0f0f0f; border: none; color: #555;
-          font-family: 'Space Mono', monospace;
-          font-size: 13px; font-weight: 400; letter-spacing: 0;
-          padding: 20px 24px; cursor: pointer; text-align: left;
-          line-height: 1.6; transition: all 0.15s;
-          border-left: 2px solid transparent;
+          background: #111; border: none; color: #888;
+          font-family: 'Bebas Neue', sans-serif;
+          font-size: clamp(20px, 1.8vw, 28px); letter-spacing: 1.5px;
+          padding: 32px 28px; cursor: pointer; text-align: left;
+          line-height: 1.25; transition: all 0.15s;
         }
         .topic-btn:hover {
-          background: #141414; color: #f0ede6;
-          border-left-color: #EE7700;
+          background: #EE7700; color: #0a0a0a;
         }
       `}</style>
 
@@ -471,7 +474,7 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
         </div>
       </nav>
 
-      <div className="spar-page">
+      <div className="spar-page" style={started ? { paddingBottom: 110 } : {}}>
         <div className="spar-hero">
           <h1 className="spar-title">
             ARNO<br /><span>BOT.</span>
@@ -484,7 +487,7 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
           </div>
         </div>
 
-        {!blocked && <div className="spar-input-area">
+        {!blocked && <div className={`spar-input-area${started ? ' active' : ''}`}>
           <div className={`spar-input-row${started ? ' active-glow' : ''}`}>
             <textarea
               ref={inputRef}
@@ -533,15 +536,15 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
               <p className="empty-label">Waar wil je het over hebben?</p>
               <div className="empty-topics">
                 {[
-                  'Hoe bouw ik een pipeline die consistent vult?',
-                  'Ik verlies deals in de eindfase — wat doe ik fout?',
-                  'Hoe coach ik een salesteam dat underperformt?',
-                  'Wat is jouw kijk op cold outreach in dit tijdperk?',
-                  'Hoe verhoog ik mijn gemiddelde dealwaarde?',
-                  'Mijn prospect zegt "te duur" — hoe reageer ik?',
-                ].map(topic => (
-                  <button key={topic} className="topic-btn" onClick={() => pickTopic(topic)}>
-                    {topic}
+                  { label: 'Pipeline opbouwen', prompt: 'Hoe bouw ik een pipeline die consistent vult?' },
+                  { label: 'Deal sluiten', prompt: 'Ik verlies deals in de eindfase — wat doe ik fout?' },
+                  { label: 'Team coachen', prompt: 'Hoe coach ik een salesteam dat underperformt?' },
+                  { label: 'Cold outreach', prompt: 'Wat is jouw kijk op cold outreach in dit tijdperk?' },
+                  { label: 'Dealwaarde verhogen', prompt: 'Hoe verhoog ik mijn gemiddelde dealwaarde?' },
+                  { label: '"Te duur" bezwaar', prompt: 'Mijn prospect zegt "te duur" — hoe reageer ik?' },
+                ].map(({ label, prompt }) => (
+                  <button key={label} className="topic-btn" onClick={() => pickTopic(prompt)}>
+                    {label}
                   </button>
                 ))}
               </div>
