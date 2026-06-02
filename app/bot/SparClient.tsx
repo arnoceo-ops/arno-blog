@@ -32,29 +32,46 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
   const [loading, setLoading] = useState(false)
   const [history, setHistory] = useState<{role: string, content: string}[]>([])
   const [started, setStarted] = useState(false)
-  const [blinkGlow, setBlinkGlow] = useState(false)
   const [blocked, setBlocked] = useState(false)
+  const [sessionId, setSessionId] = useState('')
   const bottomRef = useRef<HTMLDivElement>(null)
   const inputRef = useRef<HTMLTextAreaElement>(null)
+
+  useEffect(() => {
+    const existing = sessionStorage.getItem('arnobot_session')
+    const id = existing || crypto.randomUUID()
+    if (!existing) sessionStorage.setItem('arnobot_session', id)
+    setSessionId(id)
+
+    if (existing) {
+      fetch(`/api/bot/session?sessionId=${existing}`)
+        .then(r => r.json())
+        .then(data => {
+          if (data.messages?.length > 0) {
+            setMessages(data.messages)
+            setHistory(data.history)
+            setStarted(true)
+          }
+        })
+        .catch(() => {})
+    }
+  }, [])
 
   useEffect(() => {
     bottomRef.current?.scrollIntoView({ behavior: 'smooth' })
   }, [messages, loading])
 
   function reset() {
+    const newId = crypto.randomUUID()
+    sessionStorage.setItem('arnobot_session', newId)
+    setSessionId(newId)
     setStarted(false)
     setMessages([])
     setHistory([])
     setInput('')
-    setBlinkGlow(false)
     setBlocked(false)
     window.scrollTo({ top: 0, behavior: 'smooth' })
-  }
-
-  function triggerBlink() {
-    setBlinkGlow(true)
-    setTimeout(() => setBlinkGlow(false), 1800)
-    setTimeout(() => inputRef.current?.focus(), 100)
+    setTimeout(() => inputRef.current?.focus(), 150)
   }
 
   async function ask(question: string) {
@@ -69,7 +86,7 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
       const res = await fetch('/api/chat', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ question, history, userId, profiel })
+        body: JSON.stringify({ question, history, userId, profiel, sessionId })
       })
       const data = await res.json()
 
@@ -125,7 +142,7 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
 
         /* SPAR LAYOUT */
         .spar-page {
-          min-height: 100vh; padding-top: 80px;
+          min-height: 100vh; padding-top: 80px; padding-bottom: 110px;
           display: flex; flex-direction: column;
         }
 
@@ -147,19 +164,23 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
         .spar-tagline p { font-size: 15px; line-height: 1.9; color: #aaa; }
         .spar-tagline strong { font-weight: 700; color: #f0ede6; font-family: 'Barlow', sans-serif; font-size: 26px; letter-spacing: 0.5px; display: block; margin-bottom: 6px; }
 
-        /* INPUT — PROMINENT BOVENAAN */
+        /* INPUT — STICKY ONDERAAN */
         .spar-input-area {
-          background: #0a0a0a;
-          padding: 28px 60px 0;
+          position: fixed;
+          bottom: 0; left: 0; right: 0;
+          background: rgba(10,10,10,0.97);
+          border-top: 2px solid #EE7700;
+          padding: 16px 60px;
+          z-index: 50;
           display: flex;
           flex-direction: column;
           align-items: center;
         }
         .spar-input-label {
           font-family: 'Bebas Neue', sans-serif;
-          font-size: clamp(36px, 4vw, 56px); letter-spacing: 2px; text-transform: uppercase;
-          color: #f0ede6; margin-bottom: 16px; display: block; line-height: 1;
-          width: 100%; max-width: 812px; text-align: center;
+          font-size: 14px; letter-spacing: 3px; text-transform: uppercase;
+          color: #444; margin-bottom: 10px; display: block; line-height: 1;
+          width: 100%; max-width: 812px;
         }
         .spar-input-row {
           display: flex; gap: 0;
@@ -191,10 +212,19 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
         }
         .spar-send:hover { background: #ff8800; }
         .spar-send:disabled { background: #333; color: #666; cursor: not-allowed; }
+        .spar-reset {
+          background: #111; color: #555;
+          font-family: 'Bebas Neue', sans-serif;
+          font-size: 18px; letter-spacing: 3px;
+          padding: 0 24px; border: none; border-left: 1px solid #2a2a2a; cursor: pointer;
+          transition: all 0.2s; white-space: nowrap;
+          min-height: 55px;
+        }
+        .spar-reset:hover { background: #1a1a1a; color: #f0ede6; }
         .spar-hint {
-          font-size: 10px; letter-spacing: 2px; color: #fff;
-          text-transform: uppercase; margin-top: 8px; padding-bottom: 28px;
-          width: 100%; max-width: 812px; text-align: center;
+          font-size: 10px; letter-spacing: 2px; color: #555;
+          text-transform: uppercase; margin-top: 8px;
+          width: 100%; max-width: 812px;
         }
 
         /* OPENERS */
@@ -230,8 +260,12 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
 
         /* GESPREK */
         .spar-conversation {
-          flex: 1; padding: 0 60px;
+          flex: 1;
           display: flex; flex-direction: column; gap: 0;
+          max-width: 812px;
+          width: 100%;
+          margin: 0 auto;
+          padding: 0 20px;
         }
 
         .msg-user {
@@ -375,10 +409,7 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
         </div>
 
         {!blocked && <div className="spar-input-area">
-          <span className="spar-input-label">
-            {started ? '↓ Volgende vraag — ga door' : '↓ Stel je vraag — geen filter, geen bullshit'}
-          </span>
-          <div className={`spar-input-row${started ? (blinkGlow ? ' blink-glow' : ' active-glow') : ''}`}>
+          <div className={`spar-input-row${started ? ' active-glow' : ''}`}>
             <textarea
               ref={inputRef}
               className="spar-textarea"
@@ -386,7 +417,7 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
               onChange={e => {
                 setInput(e.target.value)
                 e.target.style.height = 'auto'
-                e.target.style.height = e.target.scrollHeight + 'px'
+                e.target.style.height = Math.min(e.target.scrollHeight, 120) + 'px'
               }}
               onKeyDown={e => {
                 if (e.key === 'Enter' && !e.shiftKey) {
@@ -405,6 +436,11 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
             >
               {loading ? '...' : 'VRAAG →'}
             </button>
+            {started && (
+              <button className="spar-reset" onClick={reset} title="Nieuwe sessie">
+                NIEUW
+              </button>
+            )}
           </div>
           <p className="spar-hint">Enter = sturen — Shift+Enter = nieuwe regel</p>
         </div>}
@@ -436,16 +472,6 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
                     <a href="https://salescanvas.app" target="_blank" rel="noopener noreferrer" className="msg-cta-btn">
                       SALESCANVAS
                     </a>
-                  </div>
-                )}
-                {i === messages.length - 1 && !loading && !blocked && msg.hint !== 'blocked' && msg.content && (
-                  <div className="msg-actions">
-                    <button className="msg-action-btn primary" onClick={triggerBlink}>
-                      ↑ Vervolgvraag stellen
-                    </button>
-                    <button className="msg-action-btn secondary" onClick={reset}>
-                      ← Nieuwe sessie
-                    </button>
                   </div>
                 )}
               </div>

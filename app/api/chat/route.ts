@@ -33,10 +33,10 @@ const supabase = createClient(
 
 export async function POST(req: NextRequest) {
   try {
-    const { question, history, userId, profiel } = await req.json()
+    const { question, history, userId, profiel, sessionId: clientSessionId } = await req.json()
     const origin = req.headers.get('origin')
     const ip = req.headers.get('x-forwarded-for')?.split(',')[0]?.trim() || null
-    const sessionId = userId ?? (ip ? `${ip}-${new Date().toISOString().slice(0, 10)}` : 'unknown')
+    const sessionId = clientSessionId ?? userId ?? (ip ? `${ip}-${new Date().toISOString().slice(0, 10)}` : 'unknown')
 
     // Abonnees (userId aanwezig) krijgen geen limiet
     let hint: string | null = null
