@@ -267,7 +267,7 @@ export default function ArnoBotLandingPage() {
         {/* LEFT: PER MAAND — zelfde kolom als subscribe-text-col */}
         <div className="subscribe-text-col" style={{alignItems:'center', padding:'80px 60px'}}>
           <div style={{display:'flex', flexDirection:'column', alignItems:'center', gap:'20px', textAlign:'center'}}>
-            <span style={{fontSize:'13px', letterSpacing:'2px', textTransform:'uppercase', color:'#EE7700', fontFamily:"'Space Mono', monospace"}}>Per maand</span>
+            <span style={{fontSize:'28px', letterSpacing:'3px', textTransform:'uppercase', color:'#EE7700', fontFamily:"'Bebas Neue', sans-serif"}}>Per maand</span>
             <div style={{display:'flex', alignItems:'baseline', gap:'8px'}}>
               <span style={{fontFamily:"'Bebas Neue', sans-serif", fontSize:'clamp(28px, 3vw, 44px)', color:'#666', letterSpacing:0}}>€</span>
               <span style={{fontFamily:"'Bebas Neue', sans-serif", fontSize:'clamp(64px, 7vw, 104px)', color:'#f0ede6', letterSpacing:'-2px', lineHeight:0.9}}>97</span>
@@ -287,7 +287,7 @@ export default function ArnoBotLandingPage() {
         {/* RIGHT: PER JAAR — zelfde kolom als canvas-right */}
         <div className="canvas-right" style={{background:'#1a1a1a', justifyContent:'center', alignItems:'flex-start', padding:'80px 60px'}}>
           <div style={{display:'flex', flexDirection:'column', alignItems:'center', gap:'20px', textAlign:'center'}}>
-            <span style={{fontSize:'13px', letterSpacing:'2px', textTransform:'uppercase', color:'#EE7700', fontFamily:"'Space Mono', monospace"}}>Per jaar</span>
+            <span style={{fontSize:'28px', letterSpacing:'3px', textTransform:'uppercase', color:'#EE7700', fontFamily:"'Bebas Neue', sans-serif"}}>Per jaar</span>
             <div style={{display:'flex', alignItems:'baseline', gap:'8px'}}>
               <span style={{fontFamily:"'Bebas Neue', sans-serif", fontSize:'clamp(28px, 3vw, 44px)', color:'#666', letterSpacing:0}}>€</span>
               <span style={{fontFamily:"'Bebas Neue', sans-serif", fontSize:'clamp(64px, 7vw, 104px)', color:'#f0ede6', letterSpacing:'-2px', lineHeight:0.9}}>777</span>
