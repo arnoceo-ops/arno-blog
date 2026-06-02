@@ -1,6 +1,6 @@
 import { client } from '@/sanity/client'
 import Link from 'next/link'
-import { SignedIn, SignedOut } from '@clerk/nextjs'
+import { auth } from '@clerk/nextjs/server'
 
 interface Post {
   _id: string
@@ -28,6 +28,7 @@ async function getPosts(): Promise<Post[]> {
 }
 
 export default async function Home() {
+  const { userId } = await auth()
   return (
     <>
       <style>{`
@@ -233,12 +234,10 @@ export default async function Home() {
           <a href="https://www.royaldutchsales.com/arnobot">BOT</a>
           <a href="https://salescanvas.app" target="_blank" rel="noopener noreferrer">CANVAS</a>
           <a href="https://arno.blog/subscribe" target="_blank" rel="noopener noreferrer" className="nav-cta">SUBSCRIBE</a>
-          <SignedOut>
-            <Link href="/sign-in" className="nav-btn">INLOGGEN</Link>
-          </SignedOut>
-          <SignedIn>
-            <Link href="/bot" className="nav-btn">MIJN BOT</Link>
-          </SignedIn>
+          {userId
+            ? <Link href="/bot" className="nav-btn">MIJN BOT</Link>
+            : <Link href="/sign-in" className="nav-btn">INLOGGEN</Link>
+          }
         </div>
       </nav>
 
