@@ -10,17 +10,22 @@ const serviceDb = createClient(
 )
 
 const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+const BLOCKED_DOMAINS = ['gmail.com','hotmail.com','outlook.com','yahoo.com','live.com','icloud.com','me.com','msn.com','protonmail.com','proton.me']
 
 export async function POST(req: Request) {
   try {
-    const { naam, email, telefoon } = await req.json()
+    const { naam, email, telefoon, linkedin } = await req.json()
     const voornaam = (naam || '').split(' ')[0]
 
-    if (!naam || !email) {
-      return NextResponse.json({ error: 'Naam en e-mailadres zijn verplicht' }, { status: 400 })
+    if (!naam || !email || !linkedin) {
+      return NextResponse.json({ error: 'Naam, e-mailadres en LinkedIn zijn verplicht' }, { status: 400 })
     }
     if (!emailRegex.test(email)) {
       return NextResponse.json({ error: 'Ongeldig e-mailadres' }, { status: 400 })
+    }
+    const domain = email.split('@')[1]?.toLowerCase()
+    if (!domain || BLOCKED_DOMAINS.includes(domain)) {
+      return NextResponse.json({ error: 'Gebruik je zakelijke e-mailadres.' }, { status: 400 })
     }
 
     const { error: dbError } = await serviceDb
@@ -30,6 +35,7 @@ export async function POST(req: Request) {
         email,
         full_name: naam,
         telefoon: telefoon || null,
+        linkedin: linkedin || null,
         trial_start: new Date().toISOString(),
         is_active: true,
       })
@@ -97,6 +103,7 @@ export async function POST(req: Request) {
             <tr><td style="padding: 8px 0; color: #777; width: 100px;">Naam</td><td style="padding: 8px 0;"><strong>${naam}</strong></td></tr>
             <tr><td style="padding: 8px 0; color: #777;">Email</td><td style="padding: 8px 0;"><a href="mailto:${email}" style="color: #EE7700;">${email}</a></td></tr>
             <tr><td style="padding: 8px 0; color: #777;">Telefoon</td><td style="padding: 8px 0;">${telefoon || '—'}</td></tr>
+            <tr><td style="padding: 8px 0; color: #777;">LinkedIn</td><td style="padding: 8px 0;"><a href="${linkedin}" style="color: #EE7700;">${linkedin}</a></td></tr>
             <tr><td style="padding: 8px 0; color: #777;">Trial start</td><td style="padding: 8px 0;">${new Date().toLocaleDateString('nl-NL')}</td></tr>
           </table>
         </div>

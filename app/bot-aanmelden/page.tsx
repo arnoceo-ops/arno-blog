@@ -4,15 +4,23 @@ import { useState } from 'react'
 import Link from 'next/link'
 
 export default function BotAanmeldenPage() {
-  const [form, setForm] = useState({ naam: '', email: '', telefoon: '' })
+  const [form, setForm] = useState({ naam: '', email: '', telefoon: '', linkedin: '' })
   const [submitted, setSubmitted] = useState(false)
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
+
+  const BLOCKED_DOMAINS = ['gmail.com','hotmail.com','outlook.com','yahoo.com','live.com','icloud.com','me.com','msn.com','protonmail.com','proton.me']
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault()
     setLoading(true)
     setError('')
+    const domain = form.email.split('@')[1]?.toLowerCase()
+    if (!domain || BLOCKED_DOMAINS.includes(domain)) {
+      setError('Gebruik je zakelijke e-mailadres.')
+      setLoading(false)
+      return
+    }
     try {
       const res = await fetch('/api/bot/aanmelden', {
         method: 'POST',
@@ -116,6 +124,17 @@ export default function BotAanmeldenPage() {
                       placeholder="+31 6 12345678"
                       value={form.telefoon}
                       onChange={e => setForm({ ...form, telefoon: e.target.value })}
+                    />
+                  </div>
+                  <div>
+                    <label style={{ display: 'block', fontFamily: "'Bebas Neue', sans-serif", fontSize: 18, letterSpacing: 3, color: '#888', marginBottom: 8 }}>LINKEDIN</label>
+                    <input
+                      className="field-input"
+                      type="url"
+                      placeholder="https://linkedin.com/in/jouwprofiel"
+                      value={form.linkedin}
+                      onChange={e => setForm({ ...form, linkedin: e.target.value })}
+                      required
                     />
                   </div>
                 </div>
