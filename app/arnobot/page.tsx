@@ -305,7 +305,7 @@ export default function ArnoBotLandingPage() {
           </div>
         </div>
         {/* TEAMS — full-width strip */}
-        <div style={{gridColumn:'1 / -1', borderTop:'1px solid #333', padding:'28px 60px', display:'flex', alignItems:'center', justifyContent:'center', gap:'32px', flexWrap:'wrap'}}>
+        <div style={{gridColumn:'1 / -1', borderTop:'1px solid #333', padding:'28px 60px', display:'flex', flexDirection:'column', alignItems:'center', justifyContent:'center', gap:'16px', textAlign:'center'}}>
           <span style={{fontFamily:"'Space Mono', monospace", fontSize:'13px', color:'#888', letterSpacing:'0.5px'}}>
             Wil je je hele salesteam uitrusten met ArnoBot als persoonlijke coach?
           </span>
