@@ -9,8 +9,9 @@ const serviceDb = createClient(
   process.env.SUPABASE_SERVICE_ROLE_KEY!
 )
 
+// eslint-disable-next-line @typescript-eslint/no-require-imports
+const disposableDomains: string[] = require('disposable-email-domains')
 const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
-const BLOCKED_DOMAINS = ['gmail.com','hotmail.com','outlook.com','yahoo.com','live.com','icloud.com','me.com','msn.com','protonmail.com','proton.me']
 
 export async function POST(req: Request) {
   try {
@@ -24,7 +25,7 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: 'Ongeldig e-mailadres' }, { status: 400 })
     }
     const domain = email.split('@')[1]?.toLowerCase()
-    if (!domain || BLOCKED_DOMAINS.includes(domain)) {
+    if (!domain || disposableDomains.includes(domain)) {
       return NextResponse.json({ error: 'Gebruik je zakelijke e-mailadres.' }, { status: 400 })
     }
 

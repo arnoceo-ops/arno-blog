@@ -9,14 +9,13 @@ export default function BotAanmeldenPage() {
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
 
-  const BLOCKED_DOMAINS = ['gmail.com','hotmail.com','outlook.com','yahoo.com','live.com','icloud.com','me.com','msn.com','protonmail.com','proton.me']
-
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault()
     setLoading(true)
     setError('')
     const domain = form.email.split('@')[1]?.toLowerCase()
-    if (!domain || BLOCKED_DOMAINS.includes(domain)) {
+    const quickCheck = ['gmail.com','hotmail.com','outlook.com','yahoo.com','live.com','icloud.com','me.com','msn.com','protonmail.com','proton.me','gmx.com','gmx.net','ziggo.nl','kpnmail.nl','xs4all.nl']
+    if (!domain || quickCheck.includes(domain)) {
       setError('Gebruik je zakelijke e-mailadres.')
       setLoading(false)
       return

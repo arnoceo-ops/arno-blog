@@ -16,6 +16,7 @@
     "@sanity/image-url": "^1.2.0",
     "@sanity/vision": "^4.22.0",
     "@supabase/supabase-js": "^2.99.1",
+    "disposable-email-domains": "^1.0.62",
     "jspdf": "^4.2.0",
     "next": "16.1.6",
     "next-sanity": "^11.6.12",
