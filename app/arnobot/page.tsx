@@ -220,7 +220,7 @@ export default function ArnoBotLandingPage() {
           <div style={{maxWidth:'480px'}}>
             <p style={{fontSize:'13px', letterSpacing:'4px', textTransform:'uppercase', color:'#EE7700', fontFamily:"'Space Mono', monospace", marginBottom:'16px'}}>ArnoBot Unlimited</p>
             <h2 style={{fontFamily:"'Barlow Condensed', sans-serif", fontSize:'clamp(32px, 3.5vw, 52px)', fontWeight:600, color:'#f0ede6', lineHeight:1.1, textTransform:'uppercase', letterSpacing:'1px', marginBottom:'20px'}}>
-              Jouw Personal Sales Coach<br /><span style={{color:'#EE7700'}}>voor €97 p/m</span>
+              Jouw Personal Sales<br />Coach <span style={{color:'#EE7700'}}>voor €97 p/m</span>
             </h2>
             <p className="subscribe-body">
               Dat is een kwartier consultancy. Alleen jij krijgt onmetelijk veel meer: 24/7 toegang tot Arno's brein met 40 jaar sales thought leadership en 369.000 woorden blogs.
