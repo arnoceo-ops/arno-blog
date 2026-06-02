@@ -234,16 +234,16 @@ export default function ArnoBotLandingPage() {
         <div className="canvas-left">
           <div className="canvas-left-inner">
             <div className="canvas-quote">
-              "Hoe meer je<br />
-              het gebruikt,<br />
-              hoe beter het<br />
-              <em>je kent.</em>"
+              Jij bent de Man.<br />
+              Wij zijn de machine.<br />
+              Samen zijn we<br />
+              <em>onoverwinnelijk.</em>
             </div>
           </div>
         </div>
         <div className="canvas-right">
           <div style={{maxWidth:'480px', width:'100%'}}>
-            <div className="feature-item">
+            <div className="feature-item" style={{paddingTop:'0'}}>
               <span className="feature-arrow">→</span>
               <span className="feature-text">Met jouw profiel als uitgangspunt<small>Je geeft aan in welke markt je actief bent, wat je verkoopt, wat je targets zijn en wie je ideale klant is. ArnoBot begrijpt direct wie je bent en wat je nodig hebt.</small></span>
             </div>
