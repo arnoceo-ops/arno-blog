@@ -166,11 +166,11 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
           border: none;
           color: #f0ede6;
           font-family: 'Space Mono', monospace;
-          font-size: 13px; padding: 14px 18px; outline: none;
+          font-size: 15px; font-weight: 400; padding: 14px 18px; outline: none;
           resize: none; min-height: 48px; max-height: 48px;
-          line-height: 1.5;
+          line-height: 29px;
         }
-        .spar-textarea::placeholder { color: #555; font-style: normal; font-size: 12px; }
+        .spar-textarea::placeholder { color: #aaa; font-style: normal; font-size: 15px; font-weight: 400; line-height: 29px; }
         .spar-textarea:focus { background: #161616; }
         .spar-send {
           background: #EE7700; color: #0a0a0a;
@@ -380,7 +380,7 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
                   ask(input)
                 }
               }}
-              placeholder="Tsja, stel eens een goeie vraag..."
+              placeholder="Stel je vraag"
               disabled={loading || blocked}
               rows={2}
             />
@@ -389,7 +389,7 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
               onClick={() => ask(input)}
               disabled={loading || blocked || !input.trim()}
             >
-              {loading ? '...' : 'SPAR →'}
+              {loading ? '...' : 'VRAAG →'}
             </button>
           </div>
           <p className="spar-hint">Enter = sturen — Shift+Enter = nieuwe regel</p>
