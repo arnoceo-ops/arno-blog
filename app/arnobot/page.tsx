@@ -278,8 +278,7 @@ export default function ArnoBotLandingPage() {
               fontSize:'20px', letterSpacing:'3px', padding:'12px 40px', borderRadius:'999px',
               transition:'background 0.2s'
             }}>GO</a>
-            <span style={{fontSize:'13px', color:'#888', fontFamily:"'Space Mono', monospace"}}>8 dagen geld terug.</span>
-            <a href="https://royaldutchsales.com/arnobot?plan=trial" style={{
+<a href="https://royaldutchsales.com/arnobot?plan=trial" style={{
               fontSize:'12px', color:'#666', fontFamily:"'Space Mono', monospace",
               textDecoration:'underline', letterSpacing:'0.5px'
             }}>3 dagen proberen — creditcard vereist</a>
@@ -299,8 +298,7 @@ export default function ArnoBotLandingPage() {
               fontSize:'20px', letterSpacing:'3px', padding:'12px 40px', borderRadius:'999px',
               transition:'background 0.2s'
             }}>GO</a>
-            <span style={{fontSize:'13px', color:'#888', fontFamily:"'Space Mono', monospace"}}>8 dagen geld terug.</span>
-            <a href="https://royaldutchsales.com/arnobot?plan=trial" style={{
+<a href="https://royaldutchsales.com/arnobot?plan=trial" style={{
               fontSize:'12px', color:'#666', fontFamily:"'Space Mono', monospace",
               textDecoration:'underline', letterSpacing:'0.5px'
             }}>3 dagen proberen — creditcard vereist</a>
