@@ -264,9 +264,9 @@ export default function ArnoBotLandingPage() {
 
       {/* PRICING — donkere sectie, één prijs per kolom */}
       <section className="subscribe-section">
-        {/* LEFT: PER MAAND */}
-        <div style={{padding:'80px 60px', borderRight:'1px solid #333', display:'flex', alignItems:'center', justifyContent:'center'}}>
-          <div style={{display:'flex', flexDirection:'column', alignItems:'center', gap:'20px', textAlign:'center'}}>
+        {/* LEFT: PER MAAND — zelfde kolom als subscribe-text-col */}
+        <div className="subscribe-text-col" style={{alignItems:'center'}}>
+          <div style={{maxWidth:'480px', width:'100%', display:'flex', flexDirection:'column', alignItems:'center', gap:'20px', textAlign:'center'}}>
             <span style={{fontSize:'13px', letterSpacing:'2px', textTransform:'uppercase', color:'#EE7700', fontFamily:"'Space Mono', monospace"}}>Per maand</span>
             <div style={{display:'flex', alignItems:'baseline', gap:'8px'}}>
               <span style={{fontFamily:"'Bebas Neue', sans-serif", fontSize:'clamp(28px, 3vw, 44px)', color:'#666', letterSpacing:0}}>€</span>
@@ -284,9 +284,9 @@ export default function ArnoBotLandingPage() {
             }}>3 dagen Free Trial</a>
           </div>
         </div>
-        {/* RIGHT: PER JAAR */}
-        <div style={{padding:'80px 60px', display:'flex', alignItems:'center', justifyContent:'center'}}>
-          <div style={{display:'flex', flexDirection:'column', alignItems:'center', gap:'20px', textAlign:'center'}}>
+        {/* RIGHT: PER JAAR — zelfde kolom als canvas-right */}
+        <div className="canvas-right" style={{background:'#1a1a1a', justifyContent:'center', alignItems:'flex-start'}}>
+          <div style={{maxWidth:'480px', width:'100%', display:'flex', flexDirection:'column', alignItems:'center', gap:'20px', textAlign:'center'}}>
             <span style={{fontSize:'13px', letterSpacing:'2px', textTransform:'uppercase', color:'#EE7700', fontFamily:"'Space Mono', monospace"}}>Per jaar</span>
             <div style={{display:'flex', alignItems:'baseline', gap:'8px'}}>
               <span style={{fontFamily:"'Bebas Neue', sans-serif", fontSize:'clamp(28px, 3vw, 44px)', color:'#666', letterSpacing:0}}>€</span>
