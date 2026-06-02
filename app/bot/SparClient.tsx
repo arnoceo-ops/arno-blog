@@ -346,11 +346,8 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
       <nav className="site-nav">
         <div className="nav-links">
           <Link href="/">HOME</Link>
-          <Link href="/bio">ARNO</Link>
-          <a href="https://www.royaldutchsales.com/arnobot" className="nav-active">BOT</a>
-          <a href="https://salescanvas.app" target="_blank" rel="noopener noreferrer">CANVAS</a>
-          <a href="https://arno.blog/subscribe" target="_blank" rel="noopener noreferrer" className="nav-cta">SUBSCRIBE</a>
-          <Link href="/bot/account" style={{ color: '#888', textDecoration: 'none', fontFamily: "'Bebas Neue', sans-serif", fontSize: 22, letterSpacing: 3 }}>ACCOUNT</Link>
+          <span className="nav-active">BOT</span>
+          <Link href="/bot/account">ACCOUNT</Link>
         </div>
       </nav>
 
