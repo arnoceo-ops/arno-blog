@@ -223,7 +223,7 @@ export default function ArnoBotLandingPage() {
               Jouw Personal Sales<br />Coach <span style={{color:'#EE7700'}}>voor €97 p/m</span>
             </h2>
             <p className="subscribe-body">
-              Dat is het equivalent van een kwartier consultancy. Wat jij hiervoor krijgt, is 24/7 toegang tot Arno's brein: 40 jaar sales leadership, 30 jaar bedrijven bouwen en 20 jaar sales blog schrijven.
+              Dat is het equivalent van een kwartier consultancy. Wat jij hiervoor krijgt, is 24/7 toegang tot Arno's brein: 40 jaar sales leadership, 30 jaar bedrijven bouwen en 20 jaar sales blogs schrijven.
             </p>
           </div>
         </div>
