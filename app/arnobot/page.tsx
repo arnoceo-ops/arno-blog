@@ -362,9 +362,9 @@ export default function ArnoBotLandingPage() {
         </div>
         <div className="canvas-right">
           <div style={{maxWidth:'480px', width:'100%'}}>
-            <h2 className="canvas-title">ARNO <span style={{color:'#EE7700'}}>LIVE.</span></h2>
+            <h2 className="canvas-title">ARNO<span style={{color:'#EE7700'}}>BOT.</span></h2>
             <p className="canvas-body">
-              Niet alleen de bot. Arno zelf. Persoonlijke online consultancy over jouw specifieke situatie. Voor als je er echt iets mee wil doen.
+              Niet alleen de bot. Arno zelf. Persoonlijke online coaching op basis van jouw specifieke situatie. Voor als je nog harder vooruit wilt.
             </p>
           </div>
         </div>
