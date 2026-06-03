@@ -197,56 +197,75 @@ export default function GeschiedenisPage() {
           <div key={session.session_id} style={{ borderTop: '1px solid #1a1a1a', animation: 'fadein 0.3s ease' }}>
 
             {/* Klikbare header */}
-            <div style={{ display: 'flex', alignItems: 'flex-start', gap: 8 }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 16, padding: '28px 0', position: 'relative' }}>
+              {deleteConfirmId === session.session_id && (
+                <span style={{ position: 'absolute', top: 8, left: 40, fontSize: 10, letterSpacing: 2, color: '#ff4444', fontFamily: "'Bebas Neue', sans-serif", whiteSpace: 'nowrap' }}>
+                  NOGMAALS KLIKKEN OM TE VERWIJDEREN
+                </span>
+              )}
+              {/* Delete vakje */}
+              <button
+                onClick={() => deleteSession(session.session_id)}
+                disabled={deletingId === session.session_id}
+                title="Verwijder gesprek"
+                style={{
+                  flexShrink: 0,
+                  width: 32, height: 32,
+                  border: `2px solid ${deleteConfirmId === session.session_id ? '#ff4444' : '#333'}`,
+                  background: deleteConfirmId === session.session_id ? 'rgba(255,68,68,0.1)' : 'none',
+                  cursor: 'pointer',
+                  display: 'flex', alignItems: 'center', justifyContent: 'center',
+                  fontFamily: "'Bebas Neue', sans-serif",
+                  fontSize: 18, letterSpacing: 0,
+                  color: deleteConfirmId === session.session_id ? '#ff4444' : '#555',
+                  transition: 'all 0.15s',
+                }}
+                onMouseEnter={e => {
+                  if (deleteConfirmId !== session.session_id) {
+                    (e.currentTarget as HTMLButtonElement).style.borderColor = '#888'
+                    ;(e.currentTarget as HTMLButtonElement).style.color = '#f0ede6'
+                  }
+                }}
+                onMouseLeave={e => {
+                  if (deleteConfirmId !== session.session_id) {
+                    (e.currentTarget as HTMLButtonElement).style.borderColor = '#333'
+                    ;(e.currentTarget as HTMLButtonElement).style.color = '#555'
+                  }
+                }}
+              >
+                {deletingId === session.session_id ? '…' : deleteConfirmId === session.session_id ? '✓' : '×'}
+              </button>
+
+              {/* Sessie-info (klikbaar voor expand) */}
               <button
                 onClick={() => toggleSession(session.session_id)}
                 style={{
                   flex: 1, background: 'none', border: 'none', cursor: 'pointer',
-                  padding: '28px 0', display: 'flex', alignItems: 'flex-start',
-                  gap: 24, textAlign: 'left',
+                  display: 'flex', alignItems: 'center',
+                  gap: 24, textAlign: 'left', padding: 0,
                 }}
               >
-                <span style={{ color: '#666', fontSize: 11, letterSpacing: 2, textTransform: 'uppercase', whiteSpace: 'nowrap', paddingTop: 4, minWidth: 120 }}>
+                <span style={{ color: '#888', fontSize: 12, letterSpacing: 2, textTransform: 'uppercase', whiteSpace: 'nowrap', minWidth: 120, fontFamily: "'Space Mono', monospace" }}>
                   {formatDate(session.created_at)}
                 </span>
                 <div style={{ flex: 1 }}>
-                  <p style={{ color: '#f0ede6', fontSize: 15, fontFamily: "'Space Mono', monospace", fontWeight: 700, lineHeight: 1.5, marginBottom: session.summary ? 8 : 0 }}>
+                  <p style={{ color: '#f0ede6', fontSize: 15, fontFamily: "'Space Mono', monospace", fontWeight: 700, lineHeight: 1.5, marginBottom: session.summary ? 6 : 0 }}>
                     {session.title}
                   </p>
                   {session.summary && (
-                    <p style={{ color: '#555', fontSize: 13, lineHeight: 1.8, display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}>
+                    <p style={{ color: '#666', fontSize: 13, lineHeight: 1.8, display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}>
                       {session.summary}
                     </p>
                   )}
                 </div>
-                <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: 8, paddingTop: 2 }}>
-                  <span style={{ color: '#666', fontSize: 10, letterSpacing: 2, textTransform: 'uppercase', whiteSpace: 'nowrap' }}>
+                <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: 6, flexShrink: 0 }}>
+                  <span style={{ color: '#888', fontSize: 11, letterSpacing: 2, textTransform: 'uppercase', whiteSpace: 'nowrap', fontFamily: "'Space Mono', monospace" }}>
                     {session.message_count} {session.message_count === 1 ? 'vraag' : 'vragen'}
                   </span>
-                  <span style={{ color: expanded === session.session_id ? '#EE7700' : '#666', fontSize: 18, fontFamily: "'Bebas Neue', sans-serif", letterSpacing: 2 }}>
+                  <span style={{ color: expanded === session.session_id ? '#EE7700' : '#888', fontSize: 18, fontFamily: "'Bebas Neue', sans-serif", letterSpacing: 2 }}>
                     {expanded === session.session_id ? '↑ SLUITEN' : '↓ OPEN'}
                   </span>
                 </div>
-              </button>
-              <button
-                onClick={() => deleteSession(session.session_id)}
-                disabled={deletingId === session.session_id}
-                style={{
-                  background: 'none', border: 'none', cursor: 'pointer',
-                  padding: '28px 0 28px 8px', alignSelf: 'flex-start',
-                  fontFamily: "'Bebas Neue', sans-serif",
-                  fontSize: 13, letterSpacing: 2,
-                  color: deleteConfirmId === session.session_id ? '#ff4444' : '#444',
-                  whiteSpace: 'nowrap', transition: 'color 0.15s',
-                }}
-                onMouseEnter={e => { if (deleteConfirmId !== session.session_id) (e.currentTarget as HTMLButtonElement).style.color = '#888' }}
-                onMouseLeave={e => { if (deleteConfirmId !== session.session_id) (e.currentTarget as HTMLButtonElement).style.color = '#444' }}
-              >
-                {deletingId === session.session_id
-                  ? '...'
-                  : deleteConfirmId === session.session_id
-                  ? 'BEVESTIG ×'
-                  : '×'}
               </button>
             </div>
 
@@ -258,7 +277,7 @@ export default function GeschiedenisPage() {
                 {session.summary && (
                   <div style={{ background: '#0f0f0f', borderLeft: '3px solid #EE7700', padding: '20px 24px', marginBottom: 32 }}>
                     <p style={{ color: '#EE7700', fontSize: 11, letterSpacing: 4, textTransform: 'uppercase', marginBottom: 12 }}>SYNTHESE</p>
-                    <p style={{ color: '#888', fontSize: 14, lineHeight: 1.9 }}>{session.summary}</p>
+                    <p style={{ color: '#d0cdc6', fontSize: 16, fontFamily: "'Space Mono', monospace", lineHeight: 1.9 }}>{session.summary}</p>
                   </div>
                 )}
 

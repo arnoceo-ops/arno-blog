@@ -476,8 +476,8 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
         }
         .msg-user-label {
           font-family: 'Bebas Neue', sans-serif;
-          font-size: 13px; letter-spacing: 3px;
-          color: #333; white-space: nowrap; padding-top: 4px; min-width: 80px;
+          font-size: 18px; letter-spacing: 3px;
+          color: #555; white-space: nowrap; padding-top: 2px; min-width: 80px;
         }
         .msg-user-text {
           font-size: 26px; line-height: 1.5; color: #f0ede6;
@@ -490,8 +490,8 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
         }
         .msg-arno-label {
           font-family: 'Bebas Neue', sans-serif;
-          font-size: 13px; letter-spacing: 3px;
-          color: #EE7700; white-space: nowrap; padding-top: 4px; min-width: 80px;
+          font-size: 18px; letter-spacing: 3px;
+          color: #EE7700; white-space: nowrap; padding-top: 2px; min-width: 80px;
         }
         .msg-arno-text {
           font-size: 16px; line-height: 1.9; color: #d0cdc6;
