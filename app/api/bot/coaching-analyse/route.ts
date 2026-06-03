@@ -1,5 +1,5 @@
 import { auth } from '@clerk/nextjs/server'
-import { NextResponse } from 'next/server'
+import { NextRequest, NextResponse } from 'next/server'
 import { createClient } from '@supabase/supabase-js'
 import Anthropic from '@anthropic-ai/sdk'
 
@@ -9,19 +9,28 @@ const supabase = createClient(
 )
 const anthropic = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY! })
 
-export async function POST() {
+export async function POST(req: NextRequest) {
   const { userId } = await auth()
   if (!userId) return NextResponse.json({ error: 'Niet ingelogd' }, { status: 401 })
 
+  const body = await req.json().catch(() => ({}))
+  const sessionIds: string[] | undefined = body.sessionIds
+
   const { data } = await supabase
     .from('arnobot_blog_sessions')
-    .select('title, summary, message_count, created_at')
+    .select('title, summary, message_count, created_at, session_id')
     .eq('user_id', userId)
     .order('created_at', { ascending: false })
     .limit(50)
 
-  const sessions = data ?? []
-  if (sessions.length < 5) {
+  let sessions = data ?? []
+
+  if (sessionIds && sessionIds.length > 0) {
+    sessions = sessions.filter(s => sessionIds.includes(s.session_id))
+  }
+
+  const minRequired = sessionIds ? 3 : 5
+  if (sessions.length < minRequired) {
     return NextResponse.json({ error: 'te_weinig', count: sessions.length }, { status: 400 })
   }
 
@@ -42,5 +51,17 @@ export async function POST() {
   })
 
   const analyse = response.content[0].type === 'text' ? response.content[0].text : ''
-  return NextResponse.json({ analyse, count: sessions.length })
+
+  const { data: saved } = await supabase
+    .from('arnobot_analyses')
+    .insert({
+      user_id: userId,
+      analyse,
+      session_count: sessions.length,
+      session_ids: sessions.map(s => s.session_id),
+    })
+    .select('id, created_at')
+    .single()
+
+  return NextResponse.json({ analyse, count: sessions.length, id: saved?.id, created_at: saved?.created_at })
 }

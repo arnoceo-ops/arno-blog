@@ -18,6 +18,13 @@ interface ConvMessage {
   content: string
 }
 
+interface SavedAnalyse {
+  id: string
+  created_at: string
+  analyse: string
+  session_count: number
+}
+
 function renderContent(text: string) {
   return text
     .replace(/\*\*([^*\n]+)\*\*/g, '<strong>$1</strong>')
@@ -25,27 +32,40 @@ function renderContent(text: string) {
 }
 
 function formatDate(iso: string) {
-  const d = new Date(iso)
-  return d.toLocaleDateString('nl-NL', { day: 'numeric', month: 'long', year: 'numeric' })
+  return new Date(iso).toLocaleDateString('nl-NL', { day: 'numeric', month: 'long', year: 'numeric' })
 }
+
+function formatDateShort(iso: string) {
+  return new Date(iso).toLocaleDateString('nl-NL', { day: 'numeric', month: 'short', year: 'numeric' })
+}
+
+type Sort = 'newest' | 'oldest' | 'most'
 
 export default function GeschiedenisPage() {
   const [sessions, setSessions] = useState<Session[]>([])
   const [loading, setLoading] = useState(true)
   const [search, setSearch] = useState('')
+  const [sort, setSort] = useState<Sort>('newest')
   const [expanded, setExpanded] = useState<string | null>(null)
   const [convMessages, setConvMessages] = useState<ConvMessage[]>([])
   const [convLoading, setConvLoading] = useState(false)
   const [selected, setSelected] = useState<Set<string>>(new Set())
   const [deleting, setDeleting] = useState(false)
-  const [analyse, setAnalyse] = useState<string | null>(null)
   const [analyseLoading, setAnalyseLoading] = useState(false)
+  const [activeAnalyse, setActiveAnalyse] = useState<string | null>(null)
+  const [savedAnalyses, setSavedAnalyses] = useState<SavedAnalyse[]>([])
+  const [analyseHistorieOpen, setAnalyseHistorieOpen] = useState(false)
+  const [expandedAnalyse, setExpandedAnalyse] = useState<string | null>(null)
 
   useEffect(() => {
     fetch('/api/bot/sessions')
       .then(r => r.json())
       .then(data => setSessions(data.sessions ?? []))
       .finally(() => setLoading(false))
+    fetch('/api/bot/coaching-analyses')
+      .then(r => r.json())
+      .then(data => setSavedAnalyses(data.analyses ?? []))
+      .catch(() => {})
   }, [])
 
   const filtered = sessions.filter(s =>
@@ -53,6 +73,12 @@ export default function GeschiedenisPage() {
     s.title?.toLowerCase().includes(search.toLowerCase()) ||
     s.summary?.toLowerCase().includes(search.toLowerCase())
   )
+
+  const sorted = [...filtered].sort((a, b) => {
+    if (sort === 'oldest') return new Date(a.created_at).getTime() - new Date(b.created_at).getTime()
+    if (sort === 'most') return b.message_count - a.message_count
+    return new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
+  })
 
   function toggleSelect(sessionId: string) {
     setSelected(prev => {
@@ -97,7 +123,41 @@ export default function GeschiedenisPage() {
     setConvLoading(false)
   }
 
+  async function runAnalyse() {
+    const useSelection = selected.size >= 3
+    if (!useSelection && sessions.length < 5) return
+    setAnalyseLoading(true)
+    setActiveAnalyse(null)
+    try {
+      const body = useSelection ? { sessionIds: [...selected] } : {}
+      const res = await fetch('/api/bot/coaching-analyse', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(body),
+      })
+      const data = await res.json()
+      if (data.analyse) {
+        setActiveAnalyse(data.analyse)
+        if (data.id) {
+          setSavedAnalyses(prev => [{
+            id: data.id,
+            created_at: data.created_at,
+            analyse: data.analyse,
+            session_count: data.count,
+          }, ...prev])
+        }
+      }
+    } catch {}
+    setAnalyseLoading(false)
+  }
+
   const hasSelected = selected.size > 0
+  const canAnalyse = selected.size >= 3 || sessions.length >= 5
+  const analyseLabel = selected.size >= 3
+    ? `ANALYSEER SELECTIE (${selected.size}) →`
+    : sessions.length >= 5
+    ? `ANALYSEER ALLE ${sessions.length} GESPREKKEN →`
+    : null
 
   return (
     <>
@@ -108,12 +168,20 @@ export default function GeschiedenisPage() {
         @keyframes fadein { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
         @keyframes slideup { from { opacity: 0; transform: translateY(100%); } to { opacity: 1; transform: translateY(0); } }
 
+        .sort-btn {
+          background: #111; border: none; color: #444;
+          font-family: 'Bebas Neue', sans-serif;
+          font-size: 15px; letter-spacing: 3px;
+          padding: 9px 20px; cursor: pointer; transition: all 0.15s;
+        }
+        .sort-btn:hover { color: #888; }
+        .sort-btn.active { background: #1a1a1a; color: #f0ede6; }
+
         .delete-bar {
           position: fixed; bottom: 0; left: 0; right: 0; z-index: 200;
           background: #0a0a0a; border-top: 2px solid #EE7700;
           padding: 20px 40px;
           display: flex; align-items: center; justify-content: space-between;
-          gap: 24;
           animation: slideup 0.2s ease;
         }
         .delete-bar-count {
@@ -145,8 +213,28 @@ export default function GeschiedenisPage() {
           transition: all 0.12s; color: transparent;
         }
         .session-checkbox:hover { border-color: #666; }
-        .session-checkbox.checked {
-          border-color: #EE7700; background: #EE7700; color: #0a0a0a;
+        .session-checkbox.checked { border-color: #EE7700; background: #EE7700; color: #0a0a0a; }
+
+        .analyse-item {
+          border-top: 1px solid #1a1a1a; padding: 20px 0;
+          animation: fadein 0.3s ease;
+        }
+        .analyse-item-header {
+          display: flex; align-items: center; justify-content: space-between;
+          cursor: pointer; gap: 16px;
+        }
+        .analyse-item-meta {
+          font-family: 'Bebas Neue', sans-serif; font-size: 14px;
+          letter-spacing: 2px; color: #555;
+        }
+        .analyse-item-preview {
+          color: #444; font-size: 13px; line-height: 1.7;
+          margin-top: 12px; white-space: pre-wrap;
+          display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
+        }
+        .analyse-item-full {
+          color: #d0cdc6; font-size: 14px; line-height: 1.9;
+          margin-top: 12px; white-space: pre-wrap;
         }
       `}</style>
 
@@ -162,48 +250,80 @@ export default function GeschiedenisPage() {
       <div style={{ maxWidth: 812, margin: '0 auto', padding: `120px 20px ${hasSelected ? 100 : 80}px` }}>
 
         <p style={{ color: '#EE7700', fontSize: 13, letterSpacing: 4, marginBottom: 8 }}>ARNOBOT</p>
-        <h1 style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 64, letterSpacing: 3, lineHeight: 1, marginBottom: 40 }}>GESPREKKEN</h1>
+        <h1 style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 64, letterSpacing: 3, lineHeight: 1, marginBottom: 48 }}>GESPREKKEN</h1>
 
-        {sessions.length >= 5 && (
+        {/* ANALYSE SECTIE */}
+        {canAnalyse && (
           <div style={{ marginBottom: 48, borderBottom: '1px solid #1a1a1a', paddingBottom: 48 }}>
-            {!analyse ? (
-              <button
-                onClick={async () => {
-                  setAnalyseLoading(true)
-                  try {
-                    const res = await fetch('/api/bot/coaching-analyse', { method: 'POST' })
-                    const data = await res.json()
-                    if (data.analyse) setAnalyse(data.analyse)
-                  } catch {}
-                  setAnalyseLoading(false)
-                }}
-                disabled={analyseLoading}
-                style={{
-                  background: 'none', border: '1px solid #EE7700', cursor: 'pointer',
-                  fontFamily: "'Bebas Neue', sans-serif", fontSize: 18, letterSpacing: 3,
-                  color: '#EE7700', padding: '12px 28px', transition: 'all 0.2s',
-                }}
-                onMouseEnter={e => { (e.currentTarget as HTMLButtonElement).style.background = '#EE7700'; (e.currentTarget as HTMLButtonElement).style.color = '#141414' }}
-                onMouseLeave={e => { (e.currentTarget as HTMLButtonElement).style.background = 'none'; (e.currentTarget as HTMLButtonElement).style.color = '#EE7700' }}
-              >
-                {analyseLoading ? 'ANALYSEREN...' : `ANALYSEER MIJN ${sessions.length} GESPREKKEN →`}
-              </button>
-            ) : (
-              <div>
+
+            {/* Actieve analyse */}
+            {activeAnalyse ? (
+              <div style={{ marginBottom: 32 }}>
                 <p style={{ color: '#EE7700', fontSize: 11, letterSpacing: 4, textTransform: 'uppercase', marginBottom: 16 }}>PATROONANALYSE</p>
-                <p style={{ color: '#d0cdc6', fontSize: 15, lineHeight: 1.9, fontFamily: "'Space Mono', monospace", whiteSpace: 'pre-wrap', marginBottom: 24 }}>{analyse}</p>
+                <p style={{ color: '#d0cdc6', fontSize: 15, lineHeight: 1.9, fontFamily: "'Space Mono', monospace", whiteSpace: 'pre-wrap', marginBottom: 20 }}>{activeAnalyse}</p>
                 <button
-                  onClick={() => setAnalyse(null)}
+                  onClick={() => setActiveAnalyse(null)}
                   style={{ background: 'none', border: 'none', cursor: 'pointer', fontFamily: "'Bebas Neue', sans-serif", fontSize: 13, letterSpacing: 3, color: '#444' }}
                 >
                   × VERBERG
                 </button>
               </div>
+            ) : (
+              <button
+                onClick={runAnalyse}
+                disabled={analyseLoading}
+                style={{
+                  background: 'none', border: '1px solid #EE7700', cursor: 'pointer',
+                  fontFamily: "'Bebas Neue', sans-serif", fontSize: 18, letterSpacing: 3,
+                  color: '#EE7700', padding: '12px 28px', transition: 'all 0.2s', marginBottom: 24,
+                  display: 'block',
+                }}
+                onMouseEnter={e => { (e.currentTarget as HTMLButtonElement).style.background = '#EE7700'; (e.currentTarget as HTMLButtonElement).style.color = '#141414' }}
+                onMouseLeave={e => { (e.currentTarget as HTMLButtonElement).style.background = 'none'; (e.currentTarget as HTMLButtonElement).style.color = '#EE7700' }}
+              >
+                {analyseLoading ? 'ANALYSEREN...' : analyseLabel}
+              </button>
+            )}
+
+            {/* Analyse-historie */}
+            {savedAnalyses.length > 0 && (
+              <div>
+                <button
+                  onClick={() => setAnalyseHistorieOpen(o => !o)}
+                  style={{ background: 'none', border: 'none', cursor: 'pointer', fontFamily: "'Bebas Neue', sans-serif", fontSize: 13, letterSpacing: 3, color: '#444', padding: 0, display: 'flex', alignItems: 'center', gap: 10 }}
+                >
+                  {analyseHistorieOpen ? '↑' : '↓'} EERDERE ANALYSES ({savedAnalyses.length})
+                </button>
+                {analyseHistorieOpen && (
+                  <div style={{ marginTop: 16 }}>
+                    {savedAnalyses.map(a => (
+                      <div key={a.id} className="analyse-item">
+                        <div
+                          className="analyse-item-header"
+                          onClick={() => setExpandedAnalyse(expandedAnalyse === a.id ? null : a.id)}
+                        >
+                          <span className="analyse-item-meta">
+                            {formatDateShort(a.created_at)} · {a.session_count} {a.session_count === 1 ? 'GESPREK' : 'GESPREKKEN'}
+                          </span>
+                          <span style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 14, letterSpacing: 2, color: '#444' }}>
+                            {expandedAnalyse === a.id ? '↑' : '↓'}
+                          </span>
+                        </div>
+                        {expandedAnalyse === a.id ? (
+                          <p className="analyse-item-full">{a.analyse}</p>
+                        ) : (
+                          <p className="analyse-item-preview">{a.analyse}</p>
+                        )}
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </div>
             )}
           </div>
         )}
 
-        {/* Zoekbalk */}
+        {/* Zoekbalk + sortering */}
         <div style={{ marginBottom: 40, borderBottom: '1px solid #1a1a1a', paddingBottom: 40 }}>
           <input
             type="text"
@@ -214,17 +334,29 @@ export default function GeschiedenisPage() {
               width: '100%', background: '#111', border: '1px solid #2a2a2a',
               color: '#f0ede6', fontFamily: "'Space Mono', monospace",
               fontSize: 14, padding: '12px 16px', outline: 'none', letterSpacing: 1,
+              marginBottom: 16,
             }}
             onFocus={e => (e.target.style.borderColor = '#EE7700')}
             onBlur={e => (e.target.style.borderColor = '#2a2a2a')}
           />
+          <div style={{ display: 'flex', gap: 2 }}>
+            {(['newest', 'oldest', 'most'] as Sort[]).map(s => (
+              <button
+                key={s}
+                className={`sort-btn${sort === s ? ' active' : ''}`}
+                onClick={() => setSort(s)}
+              >
+                {s === 'newest' ? 'NIEUWSTE' : s === 'oldest' ? 'OUDSTE' : 'MEESTE VRAGEN'}
+              </button>
+            ))}
+          </div>
         </div>
 
         {loading && (
           <p style={{ color: '#333', fontSize: 12, letterSpacing: 3, textTransform: 'uppercase' }}>Laden...</p>
         )}
 
-        {!loading && filtered.length === 0 && (
+        {!loading && sorted.length === 0 && (
           <div style={{ padding: '48px 0', textAlign: 'center' }}>
             <p style={{ color: '#333', fontSize: 13, letterSpacing: 3, textTransform: 'uppercase', marginBottom: 16 }}>
               {search ? 'Geen gesprekken gevonden' : 'Nog geen gesprekken'}
@@ -238,22 +370,20 @@ export default function GeschiedenisPage() {
         )}
 
         {/* Sessie-lijst */}
-        {filtered.map(session => {
+        {sorted.map(session => {
           const isSelected = selected.has(session.session_id)
           return (
             <div key={session.session_id} style={{ borderTop: '1px solid #1a1a1a', animation: 'fadein 0.3s ease' }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: 16, padding: '28px 0' }}>
 
-                {/* Checkbox */}
                 <button
                   className={`session-checkbox${isSelected ? ' checked' : ''}`}
                   onClick={() => toggleSelect(session.session_id)}
-                  title={isSelected ? 'Deselecteer' : 'Selecteer voor verwijdering'}
+                  title={isSelected ? 'Deselecteer' : 'Selecteer'}
                 >
                   {isSelected ? '✓' : ''}
                 </button>
 
-                {/* Sessie-info */}
                 <button
                   onClick={() => toggleSession(session.session_id)}
                   style={{
@@ -285,10 +415,8 @@ export default function GeschiedenisPage() {
                 </button>
               </div>
 
-              {/* Uitgevouwen inhoud */}
               {expanded === session.session_id && (
                 <div style={{ paddingBottom: 40, animation: 'fadein 0.3s ease' }}>
-
                   {session.summary && (
                     <div style={{ background: '#0f0f0f', borderLeft: '3px solid #EE7700', padding: '20px 24px', marginBottom: 32 }}>
                       <p style={{ color: '#EE7700', fontSize: 11, letterSpacing: 4, textTransform: 'uppercase', marginBottom: 12 }}>SYNTHESE</p>
@@ -332,7 +460,7 @@ export default function GeschiedenisPage() {
                   <div style={{ marginTop: 24, paddingTop: 24, borderTop: '1px solid #111' }}>
                     <Link
                       href="/bot"
-                      style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 16, letterSpacing: 3, color: '#444', textDecoration: 'none', transition: 'color 0.2s' }}
+                      style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 16, letterSpacing: 3, color: '#444', textDecoration: 'none' }}
                       onMouseOver={e => (e.currentTarget.style.color = '#EE7700')}
                       onMouseOut={e => (e.currentTarget.style.color = '#444')}
                     >
@@ -345,7 +473,7 @@ export default function GeschiedenisPage() {
           )
         })}
 
-        {filtered.length > 0 && (
+        {sorted.length > 0 && (
           <div style={{ borderTop: '1px solid #1a1a1a', paddingTop: 40, marginTop: 0 }}>
             <Link href="/bot" style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 18, letterSpacing: 3, color: '#EE7700', textDecoration: 'none' }}>
               ← TERUG NAAR DE BOT
