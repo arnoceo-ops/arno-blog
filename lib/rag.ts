@@ -22,23 +22,54 @@ async function getEmbedding(text: string): Promise<number[]> {
   return json.data[0].embedding
 }
 
-export type RagChunk = { content: string; source: string | null; url: string | null }
+async function rerankChunks(
+  query: string,
+  chunks: { content: string; context: string | null; source: string | null; url: string | null }[],
+  topN: number
+): Promise<{ content: string; context: string | null; source: string | null; url: string | null }[]> {
+  try {
+    const res = await fetch('https://api.voyageai.com/v1/rerank', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${process.env.VOYAGE_API_KEY}`,
+      },
+      body: JSON.stringify({
+        query,
+        documents: chunks.map(c => c.context ? `${c.context}\n\n${c.content}` : c.content),
+        model: 'rerank-2',
+        top_k: topN,
+      }),
+    })
+    if (!res.ok) throw new Error(`Rerank API error: ${await res.text()}`)
+    const data = await res.json()
+    return data.results.map((r: { index: number }) => chunks[r.index])
+  } catch (e) {
+    console.error('[RAG] Rerank mislukt, gebruik vector volgorde:', e)
+    return chunks.slice(0, topN)
+  }
+}
 
-export async function getRelevantChunks(query: string, topN = 6): Promise<RagChunk[]> {
+export type RagChunk = { content: string; context: string | null; source: string | null; url: string | null }
+
+export async function getRelevantChunks(query: string, topN = 15): Promise<RagChunk[]> {
   const queryEmbedding = await getEmbedding(query)
 
+  // Haal 30 kandidaten op voor reranking
   const { data, error } = await supabase.rpc('match_blog_chunks', {
     query_embedding: queryEmbedding,
-    match_count: topN,
+    match_count: 30,
   })
 
   if (error) throw new Error(`Supabase RAG error: ${error.message}`)
 
-  return (data as { content: string; source: string | null; url: string | null; similarity: number }[]).map(row => ({
-    content: row.content,
-    source: row.source ?? null,
-    url: row.url ?? null,
-  }))
+  const candidates = (data as { content: string; context: string | null; source: string | null; url: string | null; similarity: number }[])
+    .map(row => ({ content: row.content, context: row.context ?? null, source: row.source ?? null, url: row.url ?? null }))
+
+  if (candidates.length === 0) return []
+
+  // Rerank naar top N
+  return rerankChunks(query, candidates, topN)
 }
 
 export function formatChunksForPrompt(chunks: RagChunk[]): string {
@@ -50,7 +81,9 @@ export function formatChunksForPrompt(chunks: RagChunk[]): string {
           ? `[Bron: ${c.source} | URL: ${c.url}]`
           : `[Bron: ${c.source}]`
         : null
-      return label ? `${label}\n${c.content}` : c.content
+      const contextLine = c.context ? `[Context: ${c.context}]` : null
+      const header = [label, contextLine].filter(Boolean).join('\n')
+      return header ? `${header}\n${c.content}` : c.content
     })
     .join('\n\n---\n\n')
 }
