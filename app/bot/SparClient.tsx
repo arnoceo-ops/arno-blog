@@ -59,18 +59,18 @@ const VRAGEN_OPERATIONEEL = [
 ]
 
 const VRAGEN_ORGANISATORISCH = [
-  'Ik wil een topverkoper aannemen maar iedereen zegt dat hij moeilijk in de omgang is. Doe ik het of niet?',
-  'Hoe weet ik tijdens een sollicitatiegesprek of iemand echt honger heeft of alleen maar goed kan praten?',
-  'Mijn team presteert gemiddeld. Ligt dat aan de mensen of aan mij als leider?',
-  'Hoe weet ik of iemand slecht presteert door gebrek aan talent of door gebrek aan richting?',
-  'Wanneer is iemand een investering en wanneer is hij een kostenpost die ik meesleep?',
-  'Ik wil iemand ontslaan maar twijfel. Wat zegt die twijfel over mij?',
-  'Hoe bouw ik een salesteam dat ook zonder mij blijft presteren?',
-  'Mijn beste mensen vertrekken naar concurrenten. Wat bied ik ze niet wat zij wel bieden?',
-  'Wanneer investeer ik in de ontwikkeling van iemand en wanneer verspil ik mijn tijd?',
-  'Hoe zorg ik dat mijn nieuwe topverkoper over twee jaar nog steeds topverkoper is?',
-  'Mijn team accepteert middelmatigheid. Hoe doorbreek ik dat zonder iedereen kwijt te raken?',
-  'Wanneer is een bonussysteem motiverend en wanneer ondermijnt het precies wat ik wil bouwen?',
+  'Ik heb al zes maanden een vacature openstaan en niemand is goed genoeg. Wanneer is mijn standaard terecht en wanneer is het een excuus om niet te kiezen?',
+  'Hoe weet ik tijdens een sollicitatiegesprek of iemand echt honger heeft of alleen maar zichzelf goed verkoopt?',
+  'Mijn team presteert gemiddeld en ik doe alles om het beter te maken. Wat als ik het verkeerde team heb gebouwd?',
+  'Ik coach mijn mensen al maanden maar er verandert niets. Wanneer is het hun probleem en wanneer is het het mijne?',
+  'Wanneer is iemand een investering die tijd nodig heeft, en wanneer is hij gewoon een kostenpost die ik meesleep?',
+  'Ik wil iemand ontslaan maar twijfel al weken. Wat zegt die twijfel eigenlijk over mij?',
+  'Mijn beste mensen vertrekken naar concurrenten. Wat bied ik ze niet wat die concurrent wel biedt?',
+  'Ik betaal mijn verkopers goed maar ze zijn niet hongerig. Hoe koop je precies wat je niet wil?',
+  'Mijn team kan de huidige fase aan, maar niet de volgende. Bouw ik om ze heen of vervang ik ze?',
+  'Mijn team accepteert middelmatigheid als norm. Hoe verander ik die norm zonder iedereen tegen me te krijgen?',
+  'Wat is het verschil tussen iemand die loyaal is aan het bedrijf en iemand die gewoon nergens anders naartoe kan?',
+  'Wanneer is een bonussysteem een motor en wanneer is het een pleister op een cultuurprobleem?',
 ]
 
 export default function SparClient({ userId, profiel, taglineTitle, taglineSub, openers }: Props) {
