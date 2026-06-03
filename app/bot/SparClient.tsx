@@ -68,6 +68,7 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
   const [sessionId, setSessionId] = useState('')
   const [showSluiten, setShowSluiten] = useState(false)
   const [synthesisLoading, setSynthesisLoading] = useState(false)
+  const [synthesisMessageCount, setSynthesisMessageCount] = useState(0)
   const isStrategischProfiel = STRATEGISCH_ROLLEN.includes((profiel?.rol as string) ?? '')
   const [openerModus, setOpenerModus] = useState<'strategisch' | 'operationeel'>(
     isStrategischProfiel ? 'strategisch' : 'operationeel'
@@ -122,13 +123,14 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
     setBlocked(false)
     setShowSluiten(false)
     setSynthesisLoading(false)
+    setSynthesisMessageCount(0)
     window.scrollTo({ top: 0, behavior: 'smooth' })
     setTimeout(() => inputRef.current?.focus(), 150)
   }
 
   async function handleNieuw() {
-    // Na synthese: SLUITEN knop cleant alles
-    if (showSluiten) {
+    // Na synthese zonder nieuwe berichten: gewoon sluiten
+    if (showSluiten && messages.length <= synthesisMessageCount) {
       reset()
       return
     }
@@ -136,6 +138,7 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
       reset()
       return
     }
+    if (showSluiten) setShowSluiten(false)
     setSynthesisLoading(true)
     try {
       const res = await fetch('/api/bot/session-end', {
@@ -145,12 +148,13 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
       })
       const data = await res.json()
       if (data.summary) {
+        const newCount = messages.length + 1
         setMessages(prev => [...prev, {
           role: 'arno',
           content: `**Terugblik op dit gesprek**\n\n${data.summary}`,
           hint: null
         }])
-        // Zet al een nieuwe sessie in storage zodat hard refresh clean start geeft
+        setSynthesisMessageCount(newCount)
         const newId = crypto.randomUUID()
         sessionStorage.setItem('arnobot_session', newId)
         setSessionId(newId)
@@ -578,11 +582,11 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
             </button>
             {started && (
               <button
-                className={`spar-reset${showSluiten ? ' sluiten' : ''}`}
+                className={`spar-reset${showSluiten && messages.length <= synthesisMessageCount ? ' sluiten' : ''}`}
                 onClick={handleNieuw}
                 disabled={synthesisLoading}
               >
-                {synthesisLoading ? '...' : showSluiten ? 'SLUITEN' : 'NIEUW'}
+                {synthesisLoading ? '...' : (showSluiten && messages.length <= synthesisMessageCount) ? 'SLUITEN' : 'NIEUW'}
               </button>
             )}
           </div>
