@@ -4,6 +4,7 @@ import { useState } from 'react'
 import { useUser, useClerk } from '@clerk/nextjs'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
+import BotNav from '../BotNav'
 
 export default function AccountPage() {
   const { user, isLoaded } = useUser()
@@ -75,13 +76,7 @@ export default function AccountPage() {
         input:focus { border-color: #EE7700; }
       `}</style>
 
-      <nav style={{ position: 'fixed', top: 0, left: 0, right: 0, zIndex: 100, padding: '16px 40px', display: 'flex', justifyContent: 'center', borderBottom: '1px solid rgba(255,255,255,0.06)', background: 'rgba(10,10,10,0.95)', backdropFilter: 'blur(12px)' }}>
-        <div style={{ display: 'flex', gap: 48, alignItems: 'center' }}>
-          <Link href="/" style={{ color: '#888', textDecoration: 'none', fontFamily: "'Bebas Neue', sans-serif", fontSize: 22, letterSpacing: 3 }}>HOME</Link>
-          <Link href="/bot" style={{ color: '#888', textDecoration: 'none', fontFamily: "'Bebas Neue', sans-serif", fontSize: 22, letterSpacing: 3 }}>BOT</Link>
-          <span style={{ color: '#EE7700', fontFamily: "'Bebas Neue', sans-serif", fontSize: 22, letterSpacing: 3 }}>ACCOUNT</span>
-        </div>
-      </nav>
+      <BotNav active="account" />
 
       <div style={{ maxWidth: 720, margin: '0 auto', padding: '120px 48px 80px' }}>
 
