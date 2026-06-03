@@ -436,7 +436,7 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
         /* INPUT — BOVEN BIJ NIEUW GESPREK, STICKY-ONDER BIJ ACTIEF */
         .spar-input-area {
           background: #141414;
-          padding: clamp(24px,4vw,40px) clamp(20px,5vw,60px) 0;
+          padding: clamp(24px,4vw,40px) clamp(20px,5vw,60px) clamp(32px,5vw,56px);
           display: flex;
           flex-direction: column;
           align-items: center;
@@ -526,7 +526,7 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
         .spar-questions-label {
           font-family: 'Barlow', sans-serif;
           font-size: 26px; font-weight: 700; color: rgb(240, 237, 230);
-          display: block; margin-top: 48px; margin-bottom: 12px; text-align: center; width: 100%;
+          display: block; margin-top: clamp(56px,8vw,80px); margin-bottom: 12px; text-align: center; width: 100%;
         }
         .spar-questions-sub {
           font-family: 'Space Mono', monospace;
@@ -546,7 +546,8 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
 
         /* OPENERS */
         .spar-openers {
-          padding: clamp(40px,6vw,72px) 20px 0;
+          padding: clamp(56px,8vw,96px) 20px 0;
+          border-top: 1px solid #1a1a1a;
           border-bottom: 1px solid #1a1a1a;
           display: flex; flex-direction: column; align-items: center;
         }
