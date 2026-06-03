@@ -442,16 +442,16 @@ export default function GeschiedenisPage() {
           )
         })}
 
-        {/* Toon meer sessies */}
-        {hasMore && (
+        {/* Toon meer / minder sessies */}
+        {!search && sorted.length > 5 && (
           <div style={{ borderTop: '1px solid #1a1a1a', padding: '28px 0', textAlign: 'center' }}>
             <button
-              onClick={() => setShowAllSessions(true)}
+              onClick={() => setShowAllSessions(v => !v)}
               style={{ background: 'none', border: '1px solid #333', cursor: 'pointer', fontFamily: "'Bebas Neue', sans-serif", fontSize: 16, letterSpacing: 3, color: 'rgb(136,136,136)', padding: '11px 32px', borderRadius: 999, transition: 'all 0.15s' }}
               onMouseEnter={e => { (e.currentTarget as HTMLButtonElement).style.borderColor = '#EE7700'; (e.currentTarget as HTMLButtonElement).style.color = '#EE7700' }}
               onMouseLeave={e => { (e.currentTarget as HTMLButtonElement).style.borderColor = '#333'; (e.currentTarget as HTMLButtonElement).style.color = 'rgb(136,136,136)' }}
             >
-              TOON ALLE {sorted.length} GESPREKKEN ↓
+              {showAllSessions ? `TOON MINDER ↑` : `TOON ALLE ${sorted.length} GESPREKKEN ↓`}
             </button>
           </div>
         )}
