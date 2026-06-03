@@ -292,18 +292,7 @@ export default function GeschiedenisPage() {
             onFocus={e => (e.target.style.borderColor = '#EE7700')}
             onBlur={e => (e.target.style.borderColor = '#2a2a2a')}
           />
-          <div className="sort-row" style={{ display: 'flex', gap: 2, justifyContent: 'space-between' }}>
-            <div style={{ display: 'flex', gap: 2 }}>
-              {(['newest', 'oldest', 'most', 'least'] as Sort[]).map(s => (
-                <button
-                  key={s}
-                  className={`sort-btn${sort === s ? ' active' : ''}`}
-                  onClick={() => setSort(s)}
-                >
-                  {s === 'newest' ? 'NIEUWSTE' : s === 'oldest' ? 'OUDSTE' : s === 'most' ? 'MEESTE VRAGEN' : 'MINSTE VRAGEN'}
-                </button>
-              ))}
-            </div>
+          <div className="sort-row" style={{ display: 'flex', gap: 2, justifyContent: 'space-between', alignItems: 'center' }}>
             {sorted.length > 0 && (
               <button
                 className="sort-btn"
@@ -318,6 +307,17 @@ export default function GeschiedenisPage() {
                 {selected.size === sorted.length ? 'DESELECTEER ALLES' : 'SELECTEER ALLES'}
               </button>
             )}
+            <div style={{ display: 'flex', gap: 2, marginLeft: 'auto' }}>
+              {(['newest', 'oldest', 'most', 'least'] as Sort[]).map(s => (
+                <button
+                  key={s}
+                  className={`sort-btn${sort === s ? ' active' : ''}`}
+                  onClick={() => setSort(s)}
+                >
+                  {s === 'newest' ? 'NIEUWSTE' : s === 'oldest' ? 'OUDSTE' : s === 'most' ? 'MEESTE VRAGEN' : 'MINSTE VRAGEN'}
+                </button>
+              ))}
+            </div>
           </div>
         </div>
 
