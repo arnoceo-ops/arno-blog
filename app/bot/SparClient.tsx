@@ -34,8 +34,8 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
   const [started, setStarted] = useState(false)
   const [blocked, setBlocked] = useState(false)
   const [sessionId, setSessionId] = useState('')
+  const [showSluiten, setShowSluiten] = useState(false)
   const [synthesisLoading, setSynthesisLoading] = useState(false)
-  const [showClose, setShowClose] = useState(false)
   const bottomRef = useRef<HTMLDivElement>(null)
   const inputRef = useRef<HTMLTextAreaElement>(null)
 
@@ -82,14 +82,21 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
     setMessages([])
     setHistory([])
     setInput('')
+    setLoading(false)
     setBlocked(false)
-    setShowClose(false)
+    setShowSluiten(false)
+    setSynthesisLoading(false)
     window.scrollTo({ top: 0, behavior: 'smooth' })
     setTimeout(() => inputRef.current?.focus(), 150)
   }
 
   async function handleNieuw() {
-    if (messages.length === 0 || showClose) {
+    // Na synthese: SLUITEN knop cleant alles
+    if (showSluiten) {
+      reset()
+      return
+    }
+    if (messages.length === 0) {
       reset()
       return
     }
@@ -107,7 +114,11 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
           content: `**Terugblik op dit gesprek**\n\n${data.summary}`,
           hint: null
         }])
-        setShowClose(true)
+        // Zet al een nieuwe sessie in storage zodat hard refresh clean start geeft
+        const newId = crypto.randomUUID()
+        sessionStorage.setItem('arnobot_session', newId)
+        setSessionId(newId)
+        setShowSluiten(true)
       } else {
         reset()
       }
@@ -269,6 +280,8 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
           min-height: 55px;
         }
         .spar-reset:hover { background: #1a1a1a; color: #f0ede6; }
+        .spar-reset.sluiten { background: #EE7700; color: #0a0a0a; border-left-color: #EE7700; }
+        .spar-reset.sluiten:hover { background: #ff8800; }
         .spar-hint {
           font-size: 10px; letter-spacing: 2px; color: #555;
           text-transform: uppercase; margin-top: 8px;
@@ -517,12 +530,11 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
             </button>
             {started && (
               <button
-                className="spar-reset"
+                className={`spar-reset${showSluiten ? ' sluiten' : ''}`}
                 onClick={handleNieuw}
                 disabled={synthesisLoading}
-                title={showClose ? 'Nieuwe sessie starten' : 'Sluiten en samenvatten'}
               >
-                {synthesisLoading ? '...' : showClose ? 'SLUITEN' : 'NIEUW'}
+                {synthesisLoading ? '...' : showSluiten ? 'SLUITEN' : 'NIEUW'}
               </button>
             )}
           </div>
