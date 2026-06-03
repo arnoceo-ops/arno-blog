@@ -84,6 +84,7 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
   const [showSluiten, setShowSluiten] = useState(false)
   const [synthesisLoading, setSynthesisLoading] = useState(false)
   const [synthesisMessageCount, setSynthesisMessageCount] = useState(0)
+  const [verfijnen, setVerfijnen] = useState(false)
   const isStrategischProfiel = STRATEGISCH_ROLLEN.includes((profiel?.rol as string) ?? '')
   const [openerModus, setOpenerModus] = useState<'strategisch' | 'operationeel' | 'organisatorisch'>(
     isStrategischProfiel ? 'strategisch' : 'operationeel'
@@ -353,6 +354,16 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
           font-size: 26px; font-weight: 700; color: rgb(240, 237, 230);
           display: block; margin-top: 48px; margin-bottom: 20px; text-align: center; width: 100%;
         }
+        .verfijn-btn {
+          background: none; border: none; cursor: pointer;
+          font-family: 'Bebas Neue', sans-serif;
+          font-size: 13px; letter-spacing: 3px;
+          color: #EE7700; padding: 6px 0 0; text-align: center;
+          width: 100%; max-width: 812px;
+          transition: opacity 0.15s;
+        }
+        .verfijn-btn:hover { opacity: 0.75; }
+        .verfijn-btn:disabled { color: #555; cursor: not-allowed; }
 
         /* OPENERS */
         .spar-openers {
@@ -619,6 +630,36 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
               </button>
             )}
           </div>
+          {input.trim().length > 5 && (
+            <button
+              className="verfijn-btn"
+              disabled={verfijnen || loading}
+              onClick={async () => {
+                setVerfijnen(true)
+                try {
+                  const res = await fetch('/api/bot/verfijn', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ vraag: input, profiel })
+                  })
+                  const data = await res.json()
+                  if (data.verfijnd) {
+                    setInput(data.verfijnd)
+                    setTimeout(() => {
+                      if (inputRef.current) {
+                        inputRef.current.style.height = 'auto'
+                        inputRef.current.style.height = Math.min(inputRef.current.scrollHeight, 120) + 'px'
+                        inputRef.current.focus()
+                      }
+                    }, 0)
+                  }
+                } catch {}
+                finally { setVerfijnen(false) }
+              }}
+            >
+              {verfijnen ? '...' : '↑ VERFIJN MIJN VRAAG'}
+            </button>
+          )}
         </div>}
 
         {!started && !loading && (
