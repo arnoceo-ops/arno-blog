@@ -2,6 +2,7 @@
 
 import React, { useState, useRef, useEffect } from 'react'
 import Link from 'next/link'
+import { useIsMobile } from '@/hooks/useBreakpoint'
 
 function formatLastDate(iso: string | null): string {
   if (!iso) return ''
@@ -86,6 +87,8 @@ const VRAGEN_ORGANISATORISCH = [
 ]
 
 export default function SparClient({ userId, profiel, taglineTitle, taglineSub, openers, resumeSessionId }: Props) {
+  const isMobile = useIsMobile()
+  const [menuOpen, setMenuOpen] = useState(false)
   const [messages, setMessages] = useState<Message[]>([])
   const [input, setInput] = useState('')
   const [loading, setLoading] = useState(false)
@@ -297,7 +300,7 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
                 /* NAV */
         .site-nav {
           position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-          padding: 16px 40px; display: flex; justify-content: center;
+          padding: 0 40px; height: 64px; display: flex; justify-content: center; align-items: center;
           border-bottom: 1px solid rgba(255,255,255,0.06);
           background: rgba(10,10,10,0.95); backdrop-filter: blur(12px);
         }
@@ -310,17 +313,49 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
         .nav-active { color: #EE7700 !important; }
         .nav-cta { color: #EE7700 !important; }
 
+        /* MOBILE NAV */
+        .mob-nav {
+          position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+          height: 56px; padding: 0 20px;
+          display: flex; align-items: center; justify-content: space-between;
+          border-bottom: 1px solid rgba(255,255,255,0.06);
+          background: rgba(10,10,10,0.97); backdrop-filter: blur(12px);
+        }
+        .mob-nav-logo {
+          font-family: 'Bebas Neue', sans-serif; font-size: 22px; letter-spacing: 3px;
+          color: #f0ede6; text-decoration: none;
+        }
+        .mob-nav-logo span { color: #EE7700; }
+        .mob-hamburger {
+          background: none; border: none; cursor: pointer;
+          display: flex; flex-direction: column; gap: 5px; padding: 8px;
+        }
+        .mob-hamburger span { display: block; width: 22px; height: 2px; background: #f0ede6; transition: all 0.2s; }
+        .mob-menu {
+          position: fixed; top: 56px; left: 0; right: 0; z-index: 99;
+          background: #0a0a0a; border-bottom: 1px solid rgba(255,255,255,0.06);
+          padding: 24px 20px; display: flex; flex-direction: column; gap: 24px;
+        }
+        .mob-menu a, .mob-menu span {
+          font-family: 'Bebas Neue', sans-serif; font-size: 28px; letter-spacing: 3px;
+          text-decoration: none;
+        }
+        .mob-menu a { color: #888; }
+        .mob-menu a:hover { color: #f0ede6; }
+        .mob-menu .active { color: #EE7700; }
+
         /* SPAR LAYOUT */
         .spar-page {
-          min-height: 100vh; padding-top: 80px;
+          min-height: 100vh; padding-top: 64px;
           display: flex; flex-direction: column;
         }
 
         /* HERO */
         .spar-hero {
-          padding: 80px 60px 60px;
+          padding: clamp(32px,6vw,80px) clamp(20px,5vw,60px) clamp(28px,4vw,60px);
           border-bottom: 3px solid #EE7700;
           display: flex; justify-content: space-between; align-items: flex-end;
+          flex-wrap: wrap; gap: 24px;
         }
         .spar-title {
           font-family: 'Bebas Neue', sans-serif;
@@ -331,13 +366,16 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
         .spar-tagline {
           text-align: right; padding-bottom: 8px; max-width: 520px;
         }
-        .spar-tagline p { font-size: 15px; line-height: 1.9; color: #aaa; }
+        .spar-tagline p { font-size: 15px; line-height: 1.9; color: #888; }
         .spar-tagline strong { font-weight: 700; color: #f0ede6; font-family: 'Barlow', sans-serif; font-size: 26px; letter-spacing: 0.5px; display: block; margin-bottom: 6px; }
+        @media (max-width: 600px) {
+          .spar-tagline { text-align: left; max-width: 100%; }
+        }
 
         /* INPUT — BOVEN BIJ NIEUW GESPREK, STICKY-ONDER BIJ ACTIEF */
         .spar-input-area {
           background: #141414;
-          padding: 40px 60px 0;
+          padding: clamp(24px,4vw,40px) clamp(20px,5vw,60px) 0;
           display: flex;
           flex-direction: column;
           align-items: center;
@@ -347,7 +385,7 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
           bottom: 0; left: 0; right: 0;
           background: rgba(10,10,10,0.97);
           border-top: 2px solid #EE7700;
-          padding: 16px 60px;
+          padding: 12px clamp(16px,4vw,60px);
           z-index: 50;
         }
         .spar-input-label {
@@ -415,7 +453,7 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
         }
         .spar-questions-sub {
           font-family: 'Space Mono', monospace;
-          font-size: 15px; font-weight: 400; color: rgb(170, 170, 170);
+          font-size: 15px; font-weight: 400; color: #888;
           display: block; margin-bottom: 40px; text-align: center; width: 100%;
         }
         .verfijn-btn {
@@ -431,7 +469,7 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
 
         /* OPENERS */
         .spar-openers {
-          padding: 72px 20px 0;
+          padding: clamp(40px,6vw,72px) 20px 0;
           border-bottom: 1px solid #1a1a1a;
           display: flex; flex-direction: column; align-items: center;
         }
@@ -486,27 +524,27 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
         }
 
         .msg-user {
-          padding: 40px 0; border-bottom: 1px solid #141414;
-          display: flex; gap: 40px; align-items: flex-start;
+          padding: clamp(24px,4vw,40px) 0; border-bottom: 1px solid #141414;
+          display: flex; gap: clamp(16px,3vw,40px); align-items: flex-start;
         }
         .msg-user-label {
           font-family: 'Bebas Neue', sans-serif;
           font-size: 18px; letter-spacing: 3px;
-          color: #555; white-space: nowrap; padding-top: 2px; min-width: 80px;
+          color: #555; white-space: nowrap; padding-top: 2px; min-width: 48px;
         }
         .msg-user-text {
-          font-size: 26px; line-height: 1.5; color: #f0ede6;
+          font-size: clamp(18px,3vw,26px); line-height: 1.5; color: #f0ede6;
           font-family: 'Bebas Neue', sans-serif; letter-spacing: 0.5px;
         }
 
         .msg-arno {
-          padding: 40px 0; border-bottom: 1px solid #141414;
-          display: flex; gap: 40px; align-items: flex-start;
+          padding: clamp(24px,4vw,40px) 0; border-bottom: 1px solid #141414;
+          display: flex; gap: clamp(16px,3vw,40px); align-items: flex-start;
         }
         .msg-arno-label {
           font-family: 'Bebas Neue', sans-serif;
           font-size: 18px; letter-spacing: 3px;
-          color: #EE7700; white-space: nowrap; padding-top: 2px; min-width: 80px;
+          color: #EE7700; white-space: nowrap; padding-top: 2px; min-width: 48px;
         }
         .msg-arno-text {
           font-size: 16px; line-height: 1.9; color: #d0cdc6;
@@ -514,7 +552,7 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
         }
 
         .msg-loading {
-          padding: 40px 0 40px 120px;
+          padding: clamp(24px,4vw,40px) 0 clamp(24px,4vw,40px) 64px;
           display: flex; align-items: center; gap: 16px;
         }
         .loading-dots { display: flex; gap: 6px; }
@@ -676,15 +714,38 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
         .archief-btn:hover { color: #f0ede6; background: #1a1a1a; }
       `}</style>
 
-      <nav className="site-nav">
-        <div className="nav-links">
-          <Link href="/">HOME</Link>
-          <span style={{ color: '#EE7700', fontFamily: "'Bebas Neue', sans-serif", fontSize: 22, letterSpacing: 3 }}>BOT</span>
-          <Link href="/bot/geschiedenis">ARCHIEF</Link>
-          <Link href="/bot/coaching">COACHING</Link>
-          <Link href="/bot/account">ACCOUNT</Link>
-        </div>
-      </nav>
+      {isMobile ? (
+        <>
+          <nav className="mob-nav">
+            <Link href="/" className="mob-nav-logo">ARNO<span>BOT.</span></Link>
+            <button className="mob-hamburger" onClick={() => setMenuOpen(o => !o)} aria-label="Menu">
+              {menuOpen
+                ? <span style={{ fontSize: 22, fontFamily: "'Bebas Neue', sans-serif", color: '#EE7700', lineHeight: 1 }}>✕</span>
+                : <><span /><span /><span /></>
+              }
+            </button>
+          </nav>
+          {menuOpen && (
+            <div className="mob-menu" onClick={() => setMenuOpen(false)}>
+              <Link href="/">HOME</Link>
+              <span className="active">BOT</span>
+              <Link href="/bot/geschiedenis">ARCHIEF</Link>
+              <Link href="/bot/coaching">COACHING</Link>
+              <Link href="/bot/account">ACCOUNT</Link>
+            </div>
+          )}
+        </>
+      ) : (
+        <nav className="site-nav">
+          <div className="nav-links">
+            <Link href="/">HOME</Link>
+            <span style={{ color: '#EE7700', fontFamily: "'Bebas Neue', sans-serif", fontSize: 22, letterSpacing: 3 }}>BOT</span>
+            <Link href="/bot/geschiedenis">ARCHIEF</Link>
+            <Link href="/bot/coaching">COACHING</Link>
+            <Link href="/bot/account">ACCOUNT</Link>
+          </div>
+        </nav>
+      )}
 
       <div className="spar-page" style={started ? { paddingBottom: 110 } : {}}>
         <div className="spar-hero">
@@ -703,7 +764,7 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
           {!started && !loading && (
             <>
               <span className="spar-input-intro">begin een gesprek</span>
-              <span style={{ fontFamily: "'Space Mono', monospace", fontSize: 15, color: '#555', display: 'block', textAlign: 'center', width: '100%', maxWidth: 812, marginBottom: 12 }}>hoe meer relevante info, hoe beter de output</span>
+              <span style={{ fontFamily: "'Space Mono', monospace", fontSize: 15, color: '#888', display: 'block', textAlign: 'center', width: '100%', maxWidth: 812, marginBottom: 12 }}>hoe meer relevante info, hoe beter de output</span>
             </>
           )}
           <div className={`spar-input-row${started ? ' active-glow' : ''}`}>

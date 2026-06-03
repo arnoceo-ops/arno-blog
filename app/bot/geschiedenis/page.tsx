@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
+import BotNav from '../BotNav'
 
 interface Session {
   id: string
@@ -169,6 +170,13 @@ export default function GeschiedenisPage() {
         @keyframes fadein { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
         @keyframes slideup { from { opacity: 0; transform: translateY(100%); } to { opacity: 1; transform: translateY(0); } }
 
+        @media (max-width: 600px) {
+          .sort-row { flex-wrap: wrap; }
+          .delete-bar { padding: 16px 20px; }
+          .delete-bar-count { font-size: 16px; }
+          .delete-bar-btn { font-size: 16px; padding: 12px 20px; }
+        }
+
         .sort-btn {
           background: #111; border: none; color: #444;
           font-family: 'Bebas Neue', sans-serif;
@@ -239,17 +247,9 @@ export default function GeschiedenisPage() {
         }
       `}</style>
 
-      <nav style={{ position: 'fixed', top: 0, left: 0, right: 0, zIndex: 100, padding: '16px 40px', display: 'flex', justifyContent: 'center', borderBottom: '1px solid rgba(255,255,255,0.06)', background: 'rgba(10,10,10,0.95)', backdropFilter: 'blur(12px)' }}>
-        <div style={{ display: 'flex', gap: 48, alignItems: 'center' }}>
-          <Link href="/" style={{ color: '#888', textDecoration: 'none', fontFamily: "'Bebas Neue', sans-serif", fontSize: 22, letterSpacing: 3 }}>HOME</Link>
-          <Link href="/bot" style={{ color: '#888', textDecoration: 'none', fontFamily: "'Bebas Neue', sans-serif", fontSize: 22, letterSpacing: 3 }}>BOT</Link>
-          <span style={{ color: '#EE7700', fontFamily: "'Bebas Neue', sans-serif", fontSize: 22, letterSpacing: 3 }}>ARCHIEF</span>
-          <Link href="/bot/coaching" style={{ color: '#888', textDecoration: 'none', fontFamily: "'Bebas Neue', sans-serif", fontSize: 22, letterSpacing: 3 }}>COACHING</Link>
-          <Link href="/bot/account" style={{ color: '#888', textDecoration: 'none', fontFamily: "'Bebas Neue', sans-serif", fontSize: 22, letterSpacing: 3 }}>ACCOUNT</Link>
-        </div>
-      </nav>
+      <BotNav active="archief" />
 
-      <div style={{ maxWidth: 812, margin: '0 auto', padding: `120px 20px ${hasSelected ? 100 : 80}px` }}>
+      <div style={{ maxWidth: 812, margin: '0 auto', padding: `clamp(80px,12vw,120px) clamp(16px,4vw,20px) ${hasSelected ? 100 : 80}px` }}>
 
         <p style={{ color: '#EE7700', fontSize: 13, letterSpacing: 4, marginBottom: 8 }}>ARNOBOT</p>
         <h1 style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 64, letterSpacing: 3, lineHeight: 1, marginBottom: 48 }}>GESPREKKEN</h1>
@@ -341,7 +341,7 @@ export default function GeschiedenisPage() {
             onFocus={e => (e.target.style.borderColor = '#EE7700')}
             onBlur={e => (e.target.style.borderColor = '#2a2a2a')}
           />
-          <div style={{ display: 'flex', gap: 2, justifyContent: 'space-between' }}>
+          <div className="sort-row" style={{ display: 'flex', gap: 2, justifyContent: 'space-between' }}>
             <div style={{ display: 'flex', gap: 2 }}>
               {(['newest', 'oldest', 'most', 'least'] as Sort[]).map(s => (
                 <button
