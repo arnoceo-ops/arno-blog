@@ -321,8 +321,14 @@ export default function GeschiedenisPage() {
           </div>
         </div>
 
+        {!loading && sorted.length > 0 && (
+          <p style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 16, letterSpacing: 2, color: 'rgb(136,136,136)', marginBottom: 8 }}>
+            Selecteer minimaal 3 gesprekken voor een analyse.
+          </p>
+        )}
+
         {loading && (
-          <p style={{ color: '#333', fontSize: 12, letterSpacing: 3, textTransform: 'uppercase' }}>Laden...</p>
+          <p style={{ color: 'rgb(136,136,136)', fontSize: 12, letterSpacing: 3, textTransform: 'uppercase' }}>Laden...</p>
         )}
 
         {!loading && sorted.length === 0 && (
@@ -527,7 +533,7 @@ export default function GeschiedenisPage() {
             <button className="delete-bar-cancel" onClick={() => setSelected(new Set())}>
               ANNULEER
             </button>
-            {selected.size >= 3 ? (
+            {selected.size >= 3 && (
               <button
                 className="delete-bar-outline"
                 onClick={() => runAnalyse([...selected])}
@@ -535,8 +541,6 @@ export default function GeschiedenisPage() {
               >
                 {analyseLoading ? 'ANALYSEREN...' : 'ANALYSEER →'}
               </button>
-            ) : (
-              <div className="delete-bar-placeholder">MIN. 3</div>
             )}
             <button className="delete-bar-btn" onClick={deleteSelected} disabled={deleting}>
               {deleting ? 'VERWIJDEREN...' : 'VERWIJDER →'}
