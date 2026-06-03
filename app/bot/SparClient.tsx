@@ -338,7 +338,7 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
         .spar-reset.sluiten { background: #EE7700; color: #141414; border-left-color: #EE7700; }
         .spar-reset.sluiten:hover { background: #ff8800; }
         .spar-hint {
-          font-size: 10px; letter-spacing: 2px; color: #555;
+          font-size: 10px; letter-spacing: 2px; color: rgb(20, 20, 20);
           text-transform: uppercase; margin-top: 8px;
           width: 100%; max-width: 812px;
         }
