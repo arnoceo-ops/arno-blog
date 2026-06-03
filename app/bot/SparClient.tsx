@@ -112,8 +112,6 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
   )
   const [recording, setRecording] = useState(false)
   const [speechSupported, setSpeechSupported] = useState(false)
-  const [uitdaging, setUitdaging] = useState<string | null>(null)
-  const [uitdagingVisible, setUitdagingVisible] = useState(false)
   const recognitionRef = useRef<any>(null)
   const bottomRef = useRef<HTMLDivElement>(null)
   const inputRef = useRef<HTMLTextAreaElement>(null)
@@ -192,28 +190,11 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
         })
         .catch(() => {})
 
-      // Dagelijkse uitdaging: check localStorage, genereer als nieuw
-      const today = new Date().toISOString().slice(0, 10)
-      const cacheKey = `arnobot_uitdaging_${today}`
-      const hiddenKey = 'arnobot_uitdaging_hidden'
-      const cached = localStorage.getItem(cacheKey)
-      const hidden = localStorage.getItem(hiddenKey) === today
-      if (!hidden) {
-        if (cached) {
-          setUitdaging(cached)
-          setUitdagingVisible(true)
-        } else {
-          fetch('/api/bot/uitdaging')
-            .then(r => r.json())
-            .then(data => {
-              if (data.uitdaging) {
-                localStorage.setItem(cacheKey, data.uitdaging)
-                setUitdaging(data.uitdaging)
-                setUitdagingVisible(true)
-              }
-            })
-            .catch(() => {})
-        }
+      // Pre-fill vanuit coaching pagina
+      const prefill = localStorage.getItem('arnobot_prefill')
+      if (prefill) {
+        pickTopic(prefill)
+        localStorage.removeItem('arnobot_prefill')
       }
     }
   }, [])
@@ -831,36 +812,6 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
       )}
 
       <div className="spar-page" style={started ? { paddingBottom: 110 } : {}}>
-
-        {/* Dagelijkse uitdaging */}
-        {uitdagingVisible && uitdaging && !started && (
-          <div style={{
-            borderBottom: '1px solid #1a1a1a',
-            padding: 'clamp(16px,3vw,24px) clamp(20px,5vw,60px)',
-            display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', gap: 20,
-          }}>
-            <div style={{ flex: 1 }}>
-              <span style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 11, letterSpacing: 4, color: '#EE7700', display: 'block', marginBottom: 8 }}>UITDAGING VAN VANDAAG</span>
-              <p style={{ fontFamily: "'Space Mono', monospace", fontSize: 14, lineHeight: 1.8, color: '#d0cdc6', maxWidth: 640 }}>{uitdaging}</p>
-              <button
-                onClick={() => { pickTopic(uitdaging); setUitdagingVisible(false) }}
-                style={{ marginTop: 12, background: 'none', border: 'none', cursor: 'pointer', fontFamily: "'Bebas Neue', sans-serif", fontSize: 15, letterSpacing: 3, color: '#EE7700', padding: 0 }}
-              >
-                GEBRUIK DEZE VRAAG →
-              </button>
-            </div>
-            <button
-              onClick={() => {
-                setUitdagingVisible(false)
-                localStorage.setItem('arnobot_uitdaging_hidden', new Date().toISOString().slice(0, 10))
-              }}
-              style={{ background: 'none', border: 'none', cursor: 'pointer', fontFamily: "'Bebas Neue', sans-serif", fontSize: 18, color: '#333', flexShrink: 0, padding: 4 }}
-              title="Verberg uitdaging"
-            >
-              ✕
-            </button>
-          </div>
-        )}
 
         <div className="spar-hero">
           <h1 className="spar-title">

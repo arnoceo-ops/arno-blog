@@ -55,6 +55,7 @@ export default function CoachingClient({ userId }: Props) {
   const [shareFormOpen, setShareFormOpen] = useState(false)
   const [analyses, setAnalyses] = useState<SavedAnalyse[]>([])
   const [expandedAnalyse, setExpandedAnalyse] = useState<string | null>(null)
+  const [uitdaging, setUitdaging] = useState<string | null>(null)
 
   async function shareWithCoach() {
     if (!coachEmail.includes('@')) return
@@ -98,6 +99,24 @@ export default function CoachingClient({ userId }: Props) {
       .then(r => r.json())
       .then(data => setAnalyses(data.analyses ?? []))
       .catch(() => {})
+
+    // Dagelijkse uitdaging — max 1x per 24 uur
+    const today = new Date().toISOString().slice(0, 10)
+    const cacheKey = `arnobot_uitdaging_${today}`
+    const cached = localStorage.getItem(cacheKey)
+    if (cached) {
+      setUitdaging(cached)
+    } else {
+      fetch('/api/bot/uitdaging')
+        .then(r => r.json())
+        .then(data => {
+          if (data.uitdaging) {
+            localStorage.setItem(cacheKey, data.uitdaging)
+            setUitdaging(data.uitdaging)
+          }
+        })
+        .catch(() => {})
+    }
   }, [])
 
   async function generate() {
@@ -215,6 +234,24 @@ export default function CoachingClient({ userId }: Props) {
       `}</style>
 
       <BotNav active="coaching" />
+
+      {uitdaging && (
+        <div className="no-print" style={{ borderBottom: '2px solid #EE7700', background: '#0d0d0d', padding: 'clamp(20px,4vw,32px) clamp(20px,6vw,60px)' }}>
+          <div style={{ maxWidth: 812, margin: '0 auto', display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', gap: 32, flexWrap: 'wrap' }}>
+            <div style={{ flex: 1, minWidth: 260 }}>
+              <span style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 11, letterSpacing: 4, color: '#EE7700', display: 'block', marginBottom: 12 }}>UITDAGING VAN VANDAAG</span>
+              <p style={{ fontFamily: "'Space Mono', monospace", fontSize: 15, lineHeight: 1.9, color: '#d0cdc6', maxWidth: 600, marginBottom: 20 }}>{uitdaging}</p>
+              <Link
+                href="/bot"
+                onClick={() => localStorage.setItem('arnobot_prefill', uitdaging)}
+                style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 16, letterSpacing: 3, color: '#EE7700', textDecoration: 'none' }}
+              >
+                GEBRUIK DEZE VRAAG →
+              </Link>
+            </div>
+          </div>
+        </div>
+      )}
 
       <div style={{ maxWidth: 812, margin: '0 auto', padding: 'clamp(80px,12vw,120px) clamp(16px,4vw,20px) 80px' }}>
 
