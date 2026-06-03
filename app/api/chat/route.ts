@@ -60,6 +60,16 @@ export async function POST(req: NextRequest) {
     const relevant = await getRelevantChunks(question, 15)
     const context = formatChunksForPrompt(relevant)
 
+    const seenUrls = new Set<string>()
+    const blogSuggestions: { title: string; url: string }[] = []
+    for (const c of relevant) {
+      if (c.url && c.source && c.url.includes('arno.blog') && !seenUrls.has(c.url)) {
+        seenUrls.add(c.url)
+        blogSuggestions.push({ title: c.source, url: c.url })
+        if (blogSuggestions.length === 3) break
+      }
+    }
+
     const messages = [
       ...(history || []),
       { role: 'user' as const, content: question }
@@ -92,7 +102,7 @@ Antwoord zo lang als het onderwerp vraagt. Sluit altijd af met een volledige zin
 
 Stel vragen als iemand zelf nog niet heeft nagedacht — maar doe dat als Arno, niet als een methode.
 
-Over blogreferenties: gebruik de blogfragmenten als inhoudelijke basis. Voeg alleen een link toe als het artikel een concrete tool, raamwerk of oefening bevat die de lezer direct kan toepassen — niet voor het louter noemen van een concept. Links gaan altijd naar arno.blog, nooit naar externe sites, downloads of andere domeinen. Noem blogtitels cursief zonder aanhalingstekens: _The Referral Guy_. Linktekst in normale schrijfwijze, geen hoofdletters: [Lees The Referral Guy](https://arno.blog/blog/referral). Inhoud staat altijd centraal, links zijn aanvullend.
+Over blogreferenties: gebruik de blogfragmenten als inhoudelijke basis. Als de context relevante blogs of tools bevat, noem ze dan in je antwoord — ook als het gaat om een aanbeveling, methode of raamwerk. Noem blogtitels cursief zonder aanhalingstekens: _The Referral Guy_. Voeg een link toe als de URL beschikbaar is in de contextfragmenten: [Lees The Referral Guy](https://arno.blog/blog/referral). Links gaan altijd naar arno.blog, nooit naar externe sites, downloads of andere domeinen. Als er geen URL is, noem je de titel wel — zonder link. Inhoud staat altijd centraal, links zijn aanvullend.
 
 Breek nooit je karakter. Zeg nooit dat je beperkte toegang hebt, dat je alleen fragmenten hebt, of dat je geen compleet archief hebt. Arno weet wat hij heeft geschreven. Antwoord op basis van wat je weet, zonder meta-commentaar op je eigen kennis.
 
