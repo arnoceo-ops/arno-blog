@@ -13,7 +13,7 @@ async function getSparPage() {
   return await client.fetch(`*[_type == "sparPage"][0]`, {}, { next: { revalidate: 0 } })
 }
 
-export default async function BotPage() {
+export default async function BotPage({ searchParams }: { searchParams: Promise<{ resume?: string }> }) {
   const { userId } = await auth()
   if (!userId) redirect('/sign-in')
 
@@ -26,6 +26,7 @@ export default async function BotPage() {
   if (!profileRow) redirect('/bot/profiel')
 
   const spar = await getSparPage()
+  const { resume } = await searchParams
   return (
     <SparClient
       userId={userId}
@@ -33,6 +34,7 @@ export default async function BotPage() {
       taglineTitle={spar?.taglineTitle ?? '19 jaar blogs. 369.000 woorden.'}
       taglineSub={spar?.taglineSub ?? 'Stel je vraag over sales, strategie of mindset.\nGeen bullshit. Geen corporate taal.\nGewoon Arno — direct en ongefilterd.'}
       openers={spar?.openers ?? []}
+      resumeSessionId={resume}
     />
   )
 }

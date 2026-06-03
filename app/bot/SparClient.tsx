@@ -35,6 +35,7 @@ interface Props {
   taglineTitle: string
   taglineSub: string
   openers: string[]
+  resumeSessionId?: string
 }
 
 const STRATEGISCH_ROLLEN = ['Sales Manager/Director', 'VP of Sales', 'CEO/DGA']
@@ -84,7 +85,7 @@ const VRAGEN_ORGANISATORISCH = [
   'Wanneer is een bonussysteem een motor en wanneer is het een pleister op een cultuurprobleem?',
 ]
 
-export default function SparClient({ userId, profiel, taglineTitle, taglineSub, openers }: Props) {
+export default function SparClient({ userId, profiel, taglineTitle, taglineSub, openers, resumeSessionId }: Props) {
   const [messages, setMessages] = useState<Message[]>([])
   const [input, setInput] = useState('')
   const [loading, setLoading] = useState(false)
@@ -107,13 +108,10 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
   const inputRef = useRef<HTMLTextAreaElement>(null)
 
   useEffect(() => {
-    const existing = sessionStorage.getItem('arnobot_session')
-    const id = existing || crypto.randomUUID()
-    if (!existing) sessionStorage.setItem('arnobot_session', id)
-    setSessionId(id)
-
-    if (existing) {
-      fetch(`/api/bot/session?sessionId=${existing}`)
+    if (resumeSessionId) {
+      sessionStorage.setItem('arnobot_session', resumeSessionId)
+      setSessionId(resumeSessionId)
+      fetch(`/api/bot/session?sessionId=${resumeSessionId}`)
         .then(r => r.json())
         .then(data => {
           if (data.messages?.length > 0) {
@@ -123,6 +121,24 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
           }
         })
         .catch(() => {})
+    } else {
+      const existing = sessionStorage.getItem('arnobot_session')
+      const id = existing || crypto.randomUUID()
+      if (!existing) sessionStorage.setItem('arnobot_session', id)
+      setSessionId(id)
+
+      if (existing) {
+        fetch(`/api/bot/session?sessionId=${existing}`)
+          .then(r => r.json())
+          .then(data => {
+            if (data.messages?.length > 0) {
+              setMessages(data.messages)
+              setHistory(data.history)
+              setStarted(true)
+            }
+          })
+          .catch(() => {})
+      }
     }
 
     if (userId) {

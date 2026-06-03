@@ -476,7 +476,7 @@ export default function GeschiedenisPage() {
 
                   <div style={{ marginTop: 24, paddingTop: 24, borderTop: '1px solid #111' }}>
                     <Link
-                      href="/bot"
+                      href={`/bot?resume=${session.session_id}`}
                       style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 16, letterSpacing: 3, color: '#444', textDecoration: 'none' }}
                       onMouseOver={e => (e.currentTarget.style.color = '#EE7700')}
                       onMouseOut={e => (e.currentTarget.style.color = '#444')}
