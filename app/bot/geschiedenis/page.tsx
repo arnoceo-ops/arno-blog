@@ -55,8 +55,8 @@ export default function GeschiedenisPage() {
   const [analyseLoading, setAnalyseLoading] = useState(false)
   const [activeAnalyse, setActiveAnalyse] = useState<string | null>(null)
   const [savedAnalyses, setSavedAnalyses] = useState<SavedAnalyse[]>([])
-  const [analyseHistorieOpen, setAnalyseHistorieOpen] = useState(false)
   const [expandedAnalyse, setExpandedAnalyse] = useState<string | null>(null)
+  const [showAllSessions, setShowAllSessions] = useState(false)
 
   useEffect(() => {
     fetch('/api/bot/sessions')
@@ -154,8 +154,8 @@ export default function GeschiedenisPage() {
   }
 
   const hasSelected = selected.size > 0
-  const canAnalyse = sessions.length >= 5
-  const analyseLabel = sessions.length >= 5 ? `ANALYSEER ALLE ${sessions.length} GESPREKKEN →` : null
+  const visibleSessions = search ? sorted : sorted.slice(0, showAllSessions ? sorted.length : 5)
+  const hasMore = !search && !showAllSessions && sorted.length > 5
 
   return (
     <>
@@ -192,38 +192,38 @@ export default function GeschiedenisPage() {
         }
         .delete-bar-count {
           font-family: 'Bebas Neue', sans-serif;
-          font-size: 22px; letter-spacing: 3px; color: #EE7700;
+          font-size: 18px; letter-spacing: 3px; color: #EE7700;
         }
         .delete-bar-actions { display: flex; gap: 12px; align-items: center; }
         .delete-bar-cancel {
           background: none; border: 1px solid #EE7700; cursor: pointer;
           font-family: 'Bebas Neue', sans-serif;
-          font-size: 20px; letter-spacing: 3px; color: rgb(136,136,136);
-          transition: all 0.15s; padding: 14px 0;
-          width: 310px; text-align: center; border-radius: 999px;
+          font-size: 16px; letter-spacing: 3px; color: rgb(136,136,136);
+          transition: all 0.15s; padding: 11px 0;
+          width: 240px; text-align: center; border-radius: 999px;
         }
         .delete-bar-cancel:hover { border-color: #EE7700; color: #EE7700; }
         .delete-bar-btn {
           background: #EE7700; border: 1px solid #EE7700; cursor: pointer;
           font-family: 'Bebas Neue', sans-serif;
-          font-size: 20px; letter-spacing: 3px; color: #0a0a0a;
-          padding: 14px 0; transition: background 0.15s;
-          width: 310px; text-align: center; border-radius: 999px;
+          font-size: 16px; letter-spacing: 3px; color: #0a0a0a;
+          padding: 11px 0; transition: background 0.15s;
+          width: 240px; text-align: center; border-radius: 999px;
         }
         .delete-bar-btn:hover { background: #ff8800; border-color: #ff8800; }
         .delete-bar-btn:disabled { background: #333; border-color: #333; color: #555; cursor: not-allowed; }
         .delete-bar-placeholder {
-          width: 310px; padding: 14px 0; text-align: center;
+          width: 240px; padding: 11px 0; text-align: center;
           font-family: 'Bebas Neue', sans-serif;
-          font-size: 20px; letter-spacing: 3px; color: rgb(136,136,136);
+          font-size: 16px; letter-spacing: 3px; color: rgb(136,136,136);
           border: 1px solid #333; border-radius: 999px;
         }
         .delete-bar-outline {
           background: none; border: 1px solid #EE7700; cursor: pointer;
           font-family: 'Bebas Neue', sans-serif;
-          font-size: 20px; letter-spacing: 3px; color: #EE7700;
-          padding: 14px 0; transition: all 0.15s;
-          width: 310px; text-align: center; border-radius: 999px;
+          font-size: 16px; letter-spacing: 3px; color: #EE7700;
+          padding: 11px 0; transition: all 0.15s;
+          width: 240px; text-align: center; border-radius: 999px;
         }
         .delete-bar-outline:hover { background: #EE7700; color: #0a0a0a; }
         .delete-bar-outline:disabled { border-color: #333; color: #444; cursor: not-allowed; }
@@ -267,62 +267,6 @@ export default function GeschiedenisPage() {
 
         <p style={{ color: '#EE7700', fontSize: 13, letterSpacing: 4, marginBottom: 8 }}>ARNOBOT</p>
         <h1 style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 64, letterSpacing: 3, lineHeight: 1, marginBottom: 48 }}>GESPREKKEN</h1>
-
-        {/* ANALYSE SECTIE */}
-        {(activeAnalyse || savedAnalyses.length > 0) && (
-          <div style={{ marginBottom: 48, borderBottom: '1px solid #1a1a1a', paddingBottom: 48 }}>
-
-            {/* Actieve analyse */}
-            {activeAnalyse && (
-              <div style={{ marginBottom: 32 }}>
-                <p style={{ color: '#EE7700', fontSize: 11, letterSpacing: 4, textTransform: 'uppercase', marginBottom: 16 }}>PATROONANALYSE</p>
-                <p style={{ color: '#d0cdc6', fontSize: 16, lineHeight: 1.9, fontFamily: "'Space Mono', monospace", whiteSpace: 'pre-wrap', marginBottom: 20 }}>{activeAnalyse}</p>
-                <button
-                  onClick={() => setActiveAnalyse(null)}
-                  style={{ background: 'none', border: 'none', cursor: 'pointer', fontFamily: "'Bebas Neue', sans-serif", fontSize: 13, letterSpacing: 3, color: 'rgb(136,136,136)' }}
-                >
-                  × VERBERG
-                </button>
-              </div>
-            )}
-
-            {/* Analyse-historie */}
-            {savedAnalyses.length > 0 && (
-              <div>
-                <button
-                  onClick={() => setAnalyseHistorieOpen(o => !o)}
-                  style={{ background: 'none', border: 'none', cursor: 'pointer', fontFamily: "'Bebas Neue', sans-serif", fontSize: 13, letterSpacing: 3, color: 'rgb(136,136,136)', padding: 0, display: 'flex', alignItems: 'center', gap: 10 }}
-                >
-                  {analyseHistorieOpen ? '↑' : '↓'} EERDERE ANALYSES ({savedAnalyses.length})
-                </button>
-                {analyseHistorieOpen && (
-                  <div style={{ marginTop: 16 }}>
-                    {savedAnalyses.map(a => (
-                      <div key={a.id} className="analyse-item">
-                        <div
-                          className="analyse-item-header"
-                          onClick={() => setExpandedAnalyse(expandedAnalyse === a.id ? null : a.id)}
-                        >
-                          <span className="analyse-item-meta">
-                            {formatDateShort(a.created_at)} · {a.session_count} {a.session_count === 1 ? 'GESPREK' : 'GESPREKKEN'}
-                          </span>
-                          <span style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 18, letterSpacing: 2, color: expandedAnalyse === a.id ? '#EE7700' : 'rgb(136,136,136)', whiteSpace: 'nowrap' }}>
-                            {expandedAnalyse === a.id ? '↑ SLUITEN' : '↓ OPEN'}
-                          </span>
-                        </div>
-                        {expandedAnalyse === a.id ? (
-                          <p className="analyse-item-full">{a.analyse_text}</p>
-                        ) : (
-                          <p className="analyse-item-preview">{a.analyse_text}</p>
-                        )}
-                      </div>
-                    ))}
-                  </div>
-                )}
-              </div>
-            )}
-          </div>
-        )}
 
         {/* Zoekbalk + sortering */}
         <div style={{ marginBottom: 40, borderBottom: '1px solid #1a1a1a', paddingBottom: 40 }}>
@@ -387,7 +331,7 @@ export default function GeschiedenisPage() {
         )}
 
         {/* Sessie-lijst */}
-        {sorted.map(session => {
+        {visibleSessions.map(session => {
           const isSelected = selected.has(session.session_id)
           return (
             <div key={session.session_id} style={{ borderTop: '1px solid #1a1a1a', animation: 'fadein 0.3s ease' }}>
@@ -490,8 +434,63 @@ export default function GeschiedenisPage() {
           )
         })}
 
+        {/* Toon meer sessies */}
+        {hasMore && (
+          <div style={{ borderTop: '1px solid #1a1a1a', padding: '28px 0', textAlign: 'center' }}>
+            <button
+              onClick={() => setShowAllSessions(true)}
+              style={{ background: 'none', border: '1px solid #333', cursor: 'pointer', fontFamily: "'Bebas Neue', sans-serif", fontSize: 16, letterSpacing: 3, color: 'rgb(136,136,136)', padding: '11px 32px', borderRadius: 999, transition: 'all 0.15s' }}
+              onMouseEnter={e => { (e.currentTarget as HTMLButtonElement).style.borderColor = '#EE7700'; (e.currentTarget as HTMLButtonElement).style.color = '#EE7700' }}
+              onMouseLeave={e => { (e.currentTarget as HTMLButtonElement).style.borderColor = '#333'; (e.currentTarget as HTMLButtonElement).style.color = 'rgb(136,136,136)' }}
+            >
+              TOON ALLE {sorted.length} GESPREKKEN ↓
+            </button>
+          </div>
+        )}
+
+        {/* Analyses sectie */}
+        {(activeAnalyse || savedAnalyses.length > 0) && (
+          <div style={{ borderTop: '1px solid #1a1a1a', paddingTop: 40, marginTop: 16 }}>
+            <p style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 13, letterSpacing: 4, color: '#EE7700', marginBottom: 24 }}>
+              ANALYSES {savedAnalyses.length > 0 ? `(${savedAnalyses.length})` : ''}
+            </p>
+
+            {activeAnalyse && (
+              <div style={{ marginBottom: 28, background: '#0f0f0f', borderLeft: '3px solid #EE7700', padding: '20px 24px' }}>
+                <p style={{ color: '#EE7700', fontSize: 11, letterSpacing: 4, textTransform: 'uppercase', marginBottom: 12 }}>NIEUW GEGENEREERD</p>
+                <p style={{ color: '#d0cdc6', fontSize: 16, lineHeight: 1.9, fontFamily: "'Space Mono', monospace", whiteSpace: 'pre-wrap', marginBottom: 16 }}>{activeAnalyse}</p>
+                <button
+                  onClick={() => setActiveAnalyse(null)}
+                  style={{ background: 'none', border: 'none', cursor: 'pointer', fontFamily: "'Bebas Neue', sans-serif", fontSize: 13, letterSpacing: 3, color: 'rgb(136,136,136)', padding: 0 }}
+                >
+                  × VERBERG
+                </button>
+              </div>
+            )}
+
+            {savedAnalyses.map(a => (
+              <div key={a.id} className="analyse-item">
+                <div
+                  className="analyse-item-header"
+                  onClick={() => setExpandedAnalyse(expandedAnalyse === a.id ? null : a.id)}
+                >
+                  <span className="analyse-item-meta">
+                    {formatDateShort(a.created_at)} · {a.session_count} {a.session_count === 1 ? 'GESPREK' : 'GESPREKKEN'}
+                  </span>
+                  <span style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 18, letterSpacing: 2, color: expandedAnalyse === a.id ? '#EE7700' : 'rgb(136,136,136)', whiteSpace: 'nowrap' }}>
+                    {expandedAnalyse === a.id ? '↑ SLUITEN' : '↓ OPEN'}
+                  </span>
+                </div>
+                {expandedAnalyse === a.id && (
+                  <p className="analyse-item-full">{a.analyse_text}</p>
+                )}
+              </div>
+            ))}
+          </div>
+        )}
+
         {sorted.length > 0 && (
-          <div style={{ borderTop: '1px solid #1a1a1a', paddingTop: 40, marginTop: 0 }}>
+          <div style={{ borderTop: '1px solid #1a1a1a', paddingTop: 40, marginTop: 40 }}>
             <Link href="/bot" style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 18, letterSpacing: 3, color: '#EE7700', textDecoration: 'none' }}>
               ← TERUG NAAR DE BOT
             </Link>
