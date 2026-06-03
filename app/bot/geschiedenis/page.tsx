@@ -206,7 +206,7 @@ export default function GeschiedenisPage() {
                   gap: 24, textAlign: 'left',
                 }}
               >
-                <span style={{ color: '#333', fontSize: 11, letterSpacing: 2, textTransform: 'uppercase', whiteSpace: 'nowrap', paddingTop: 4, minWidth: 120 }}>
+                <span style={{ color: '#666', fontSize: 11, letterSpacing: 2, textTransform: 'uppercase', whiteSpace: 'nowrap', paddingTop: 4, minWidth: 120 }}>
                   {formatDate(session.created_at)}
                 </span>
                 <div style={{ flex: 1 }}>
@@ -220,10 +220,10 @@ export default function GeschiedenisPage() {
                   )}
                 </div>
                 <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: 8, paddingTop: 2 }}>
-                  <span style={{ color: '#333', fontSize: 10, letterSpacing: 2, textTransform: 'uppercase', whiteSpace: 'nowrap' }}>
+                  <span style={{ color: '#666', fontSize: 10, letterSpacing: 2, textTransform: 'uppercase', whiteSpace: 'nowrap' }}>
                     {session.message_count} {session.message_count === 1 ? 'vraag' : 'vragen'}
                   </span>
-                  <span style={{ color: expanded === session.session_id ? '#EE7700' : '#333', fontSize: 18, fontFamily: "'Bebas Neue', sans-serif", letterSpacing: 2 }}>
+                  <span style={{ color: expanded === session.session_id ? '#EE7700' : '#666', fontSize: 18, fontFamily: "'Bebas Neue', sans-serif", letterSpacing: 2 }}>
                     {expanded === session.session_id ? '↑ SLUITEN' : '↓ OPEN'}
                   </span>
                 </div>
