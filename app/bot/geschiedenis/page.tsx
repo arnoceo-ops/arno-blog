@@ -57,6 +57,8 @@ export default function GeschiedenisPage() {
   const [savedAnalyses, setSavedAnalyses] = useState<SavedAnalyse[]>([])
   const [expandedAnalyse, setExpandedAnalyse] = useState<string | null>(null)
   const [showAllSessions, setShowAllSessions] = useState(false)
+  const [selectedAnalyses, setSelectedAnalyses] = useState<Set<string>>(new Set())
+  const [deletingAnalyse, setDeletingAnalyse] = useState(false)
 
   useEffect(() => {
     fetch('/api/bot/sessions')
@@ -106,6 +108,38 @@ export default function GeschiedenisPage() {
       setSelected(new Set())
     } catch {}
     setDeleting(false)
+  }
+
+  function getAnalyseTitle(text: string): string {
+    const clean = text.replace(/\n/g, ' ').trim()
+    if (clean.length <= 80) return clean
+    const cut = clean.slice(0, 77)
+    const lastSpace = cut.lastIndexOf(' ')
+    return (lastSpace > 40 ? cut.slice(0, lastSpace) : cut) + '...'
+  }
+
+  function toggleSelectAnalyse(id: string) {
+    setSelectedAnalyses(prev => {
+      const next = new Set(prev)
+      if (next.has(id)) next.delete(id)
+      else next.add(id)
+      return next
+    })
+  }
+
+  async function deleteSelectedAnalyses() {
+    if (selectedAnalyses.size === 0 || deletingAnalyse) return
+    setDeletingAnalyse(true)
+    try {
+      await fetch('/api/bot/analyse', {
+        method: 'DELETE',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ ids: [...selectedAnalyses] }),
+      })
+      setSavedAnalyses(prev => prev.filter(a => !selectedAnalyses.has(a.id)))
+      setSelectedAnalyses(new Set())
+    } catch {}
+    setDeletingAnalyse(false)
   }
 
   async function toggleSession(sessionId: string) {
@@ -451,9 +485,8 @@ export default function GeschiedenisPage() {
         {/* Analyses sectie */}
         {(activeAnalyse || savedAnalyses.length > 0) && (
           <div style={{ borderTop: '1px solid #1a1a1a', paddingTop: 40, marginTop: 16 }}>
-            <p style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 13, letterSpacing: 4, color: '#EE7700', marginBottom: 24 }}>
-              ANALYSES {savedAnalyses.length > 0 ? `(${savedAnalyses.length})` : ''}
-            </p>
+            <p style={{ color: '#EE7700', fontSize: 13, letterSpacing: 4, marginBottom: 8 }}>ARNOBOT</p>
+            <h2 style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 64, letterSpacing: 3, lineHeight: 1, marginBottom: 48 }}>ANALYSES</h2>
 
             {activeAnalyse && (
               <div style={{ marginBottom: 28, background: '#0f0f0f', borderLeft: '3px solid #EE7700', padding: '20px 24px' }}>
@@ -468,24 +501,48 @@ export default function GeschiedenisPage() {
               </div>
             )}
 
-            {savedAnalyses.map(a => (
-              <div key={a.id} className="analyse-item">
-                <div
-                  className="analyse-item-header"
-                  onClick={() => setExpandedAnalyse(expandedAnalyse === a.id ? null : a.id)}
-                >
-                  <span className="analyse-item-meta">
-                    {formatDateShort(a.created_at)} · {a.session_count} {a.session_count === 1 ? 'GESPREK' : 'GESPREKKEN'}
-                  </span>
-                  <span style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 18, letterSpacing: 2, color: expandedAnalyse === a.id ? '#EE7700' : 'rgb(136,136,136)', whiteSpace: 'nowrap' }}>
-                    {expandedAnalyse === a.id ? '↑ SLUITEN' : '↓ OPEN'}
-                  </span>
+            {savedAnalyses.map(a => {
+              const isAnalyseSelected = selectedAnalyses.has(a.id)
+              return (
+                <div key={a.id} style={{ borderTop: '1px solid #1a1a1a', animation: 'fadein 0.3s ease' }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: 16, padding: '28px 0' }}>
+                    <button
+                      className={`session-checkbox${isAnalyseSelected ? ' checked' : ''}`}
+                      onClick={() => toggleSelectAnalyse(a.id)}
+                      title={isAnalyseSelected ? 'Deselecteer' : 'Selecteer'}
+                    >
+                      {isAnalyseSelected ? '✓' : ''}
+                    </button>
+                    <button
+                      onClick={() => setExpandedAnalyse(expandedAnalyse === a.id ? null : a.id)}
+                      style={{ flex: 1, background: 'none', border: 'none', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 24, textAlign: 'left', padding: 0 }}
+                    >
+                      <span style={{ color: '#888', fontSize: 11, letterSpacing: 2, textTransform: 'uppercase', whiteSpace: 'nowrap', minWidth: 120, fontFamily: "'Space Mono', monospace" }}>
+                        {formatDate(a.created_at)}
+                      </span>
+                      <div style={{ flex: 1 }}>
+                        <p style={{ color: '#f0ede6', fontSize: 20, fontFamily: "'Bebas Neue', sans-serif", letterSpacing: 1, lineHeight: 1.4 }}>
+                          {getAnalyseTitle(a.analyse_text)}
+                        </p>
+                      </div>
+                      <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: 6, flexShrink: 0 }}>
+                        <span style={{ color: '#888', fontSize: 11, letterSpacing: 2, textTransform: 'uppercase', whiteSpace: 'nowrap', fontFamily: "'Space Mono', monospace" }}>
+                          {a.session_count} {a.session_count === 1 ? 'GESPREK' : 'GESPREKKEN'}
+                        </span>
+                        <span style={{ color: expandedAnalyse === a.id ? '#EE7700' : '#888', fontSize: 18, fontFamily: "'Bebas Neue', sans-serif", letterSpacing: 2 }}>
+                          {expandedAnalyse === a.id ? '↑ SLUITEN' : '↓ OPEN'}
+                        </span>
+                      </div>
+                    </button>
+                  </div>
+                  {expandedAnalyse === a.id && (
+                    <div style={{ paddingBottom: 40, animation: 'fadein 0.3s ease' }}>
+                      <p className="analyse-item-full">{a.analyse_text}</p>
+                    </div>
+                  )}
                 </div>
-                {expandedAnalyse === a.id && (
-                  <p className="analyse-item-full">{a.analyse_text}</p>
-                )}
-              </div>
-            ))}
+              )
+            })}
           </div>
         )}
 
@@ -498,7 +555,7 @@ export default function GeschiedenisPage() {
         )}
       </div>
 
-      {/* Sticky delete-balk */}
+      {/* Sticky balk — gesprekken */}
       {hasSelected && (
         <div className="delete-bar">
           <span className="delete-bar-count">
@@ -521,6 +578,23 @@ export default function GeschiedenisPage() {
             )}
             <button className="delete-bar-btn" onClick={deleteSelected} disabled={deleting}>
               {deleting ? 'VERWIJDEREN...' : `VERWIJDER ${selected.size === 1 ? 'GESPREK' : `${selected.size} GESPREKKEN`} →`}
+            </button>
+          </div>
+        </div>
+      )}
+
+      {/* Sticky balk — analyses */}
+      {selectedAnalyses.size > 0 && !hasSelected && (
+        <div className="delete-bar">
+          <span className="delete-bar-count">
+            {selectedAnalyses.size} {selectedAnalyses.size === 1 ? 'ANALYSE' : 'ANALYSES'} GESELECTEERD
+          </span>
+          <div className="delete-bar-actions">
+            <button className="delete-bar-cancel" onClick={() => setSelectedAnalyses(new Set())}>
+              ANNULEER
+            </button>
+            <button className="delete-bar-btn" onClick={deleteSelectedAnalyses} disabled={deletingAnalyse}>
+              {deletingAnalyse ? 'VERWIJDEREN...' : `VERWIJDER ${selectedAnalyses.size === 1 ? 'ANALYSE' : `${selectedAnalyses.size} ANALYSES`} →`}
             </button>
           </div>
         </div>
