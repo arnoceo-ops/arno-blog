@@ -120,7 +120,7 @@ ${context}`,
 
     await supabase.from('arnobot_blog_logs').insert({ question, answer, ip, session_id: sessionId, user_id: userId ?? null })
 
-    return NextResponse.json({ answer, hint }, { headers: corsHeaders(origin) })
+    return NextResponse.json({ answer, hint, blogs: blogSuggestions }, { headers: corsHeaders(origin) })
   } catch (err) {
     const msg = err instanceof Error ? err.message : String(err)
     console.error('Chat error:', msg)

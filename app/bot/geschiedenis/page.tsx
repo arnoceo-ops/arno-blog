@@ -37,6 +37,8 @@ export default function GeschiedenisPage() {
   const [convLoading, setConvLoading] = useState(false)
   const [deletingId, setDeletingId] = useState<string | null>(null)
   const [deleteConfirmId, setDeleteConfirmId] = useState<string | null>(null)
+  const [analyse, setAnalyse] = useState<string | null>(null)
+  const [analyseLoading, setAnalyseLoading] = useState(false)
 
   useEffect(() => {
     fetch('/api/bot/sessions')
@@ -109,6 +111,49 @@ export default function GeschiedenisPage() {
 
         <p style={{ color: '#EE7700', fontSize: 13, letterSpacing: 4, marginBottom: 8 }}>ARNOBOT</p>
         <h1 style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 64, letterSpacing: 3, lineHeight: 1, marginBottom: 40 }}>GESPREKKEN</h1>
+
+        {sessions.length >= 5 && (
+          <div style={{ marginBottom: 48, borderBottom: '1px solid #1a1a1a', paddingBottom: 48 }}>
+            {!analyse ? (
+              <button
+                onClick={async () => {
+                  setAnalyseLoading(true)
+                  try {
+                    const res = await fetch('/api/bot/coaching-analyse', { method: 'POST' })
+                    const data = await res.json()
+                    if (data.analyse) setAnalyse(data.analyse)
+                  } catch {}
+                  setAnalyseLoading(false)
+                }}
+                disabled={analyseLoading}
+                style={{
+                  background: 'none', border: '1px solid #EE7700', cursor: 'pointer',
+                  fontFamily: "'Bebas Neue', sans-serif", fontSize: 18, letterSpacing: 3,
+                  color: '#EE7700', padding: '12px 28px', transition: 'all 0.2s',
+                }}
+                onMouseEnter={e => { (e.currentTarget as HTMLButtonElement).style.background = '#EE7700'; (e.currentTarget as HTMLButtonElement).style.color = '#141414' }}
+                onMouseLeave={e => { (e.currentTarget as HTMLButtonElement).style.background = 'none'; (e.currentTarget as HTMLButtonElement).style.color = '#EE7700' }}
+              >
+                {analyseLoading ? 'ANALYSEREN...' : `ANALYSEER MIJN ${sessions.length} GESPREKKEN →`}
+              </button>
+            ) : (
+              <div>
+                <p style={{ color: '#EE7700', fontSize: 11, letterSpacing: 4, textTransform: 'uppercase', marginBottom: 16 }}>PATROONANALYSE</p>
+                <p style={{ color: '#d0cdc6', fontSize: 15, lineHeight: 1.9, fontFamily: "'Space Mono', monospace", whiteSpace: 'pre-wrap', marginBottom: 24 }}>{analyse}</p>
+                <button
+                  onClick={() => setAnalyse(null)}
+                  style={{
+                    background: 'none', border: 'none', cursor: 'pointer',
+                    fontFamily: "'Bebas Neue', sans-serif", fontSize: 13, letterSpacing: 3,
+                    color: '#444',
+                  }}
+                >
+                  × VERBERG
+                </button>
+              </div>
+            )}
+          </div>
+        )}
 
         {/* Zoekbalk */}
         <div style={{ marginBottom: 40, borderBottom: '1px solid #1a1a1a', paddingBottom: 40 }}>

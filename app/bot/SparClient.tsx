@@ -3,6 +3,17 @@
 import React, { useState, useRef, useEffect } from 'react'
 import Link from 'next/link'
 
+function formatLastDate(iso: string | null): string {
+  if (!iso) return ''
+  const d = new Date(iso)
+  const now = new Date()
+  const diffDays = Math.floor((now.getTime() - d.getTime()) / (1000 * 60 * 60 * 24))
+  if (diffDays === 0) return 'vandaag'
+  if (diffDays === 1) return 'gisteren'
+  if (diffDays < 7) return `${diffDays} dagen geleden`
+  return d.toLocaleDateString('nl-NL', { day: 'numeric', month: 'short' })
+}
+
 function renderContent(text: string) {
   return text
     .replace(/\[([^\]]+)\]\s*\((https?:\/\/[^\s)]+)\)/g, '<a href="$2" target="_blank" rel="noopener noreferrer" style="color:#EE7700;text-decoration:underline">$1</a>')
@@ -86,6 +97,8 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
   const [synthesisMessageCount, setSynthesisMessageCount] = useState(0)
   const [verfijnen, setVerfijnen] = useState(false)
   const [resizeInput, setResizeInput] = useState(false)
+  const [suggestedBlogs, setSuggestedBlogs] = useState<{title: string, url: string}[]>([])
+  const [voortgang, setVoortgang] = useState<{count: number, lastDate: string | null} | null>(null)
   const isStrategischProfiel = STRATEGISCH_ROLLEN.includes((profiel?.rol as string) ?? '')
   const [openerModus, setOpenerModus] = useState<'strategisch' | 'operationeel' | 'organisatorisch'>(
     isStrategischProfiel ? 'strategisch' : 'operationeel'
@@ -107,6 +120,18 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
             setMessages(data.messages)
             setHistory(data.history)
             setStarted(true)
+          }
+        })
+        .catch(() => {})
+    }
+
+    if (userId) {
+      fetch('/api/bot/sessions')
+        .then(r => r.json())
+        .then(data => {
+          const sessions = data.sessions ?? []
+          if (sessions.length > 0) {
+            setVoortgang({ count: sessions.length, lastDate: sessions[0]?.created_at ?? null })
           }
         })
         .catch(() => {})
@@ -150,6 +175,7 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
     setShowSluiten(false)
     setSynthesisLoading(false)
     setSynthesisMessageCount(0)
+    setSuggestedBlogs([])
     window.scrollTo({ top: 0, behavior: 'smooth' })
     setTimeout(() => inputRef.current?.focus(), 150)
   }
@@ -185,6 +211,12 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
         sessionStorage.setItem('arnobot_session', newId)
         setSessionId(newId)
         setShowSluiten(true)
+        if (userId) {
+          setVoortgang(prev => prev
+            ? { count: prev.count + 1, lastDate: new Date().toISOString() }
+            : { count: 1, lastDate: new Date().toISOString() }
+          )
+        }
       } else {
         reset()
       }
@@ -224,6 +256,13 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
 
       const answer = data.answer || 'Geen antwoord ontvangen.'
       setMessages(prev => [...prev, { role: 'arno', content: answer, hint: data.hint ?? null }])
+      if (data.blogs?.length) {
+        setSuggestedBlogs(prev => {
+          const combined = [...prev, ...(data.blogs as {title: string, url: string}[])]
+          const seen = new Set<string>()
+          return combined.filter(b => seen.has(b.url) ? false : (seen.add(b.url), true)).slice(0, 5)
+        })
+      }
       setHistory(prev => [
         ...prev,
         { role: 'user', content: question },
@@ -580,6 +619,31 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
         .topic-btn:hover {
           background: #EE7700; color: #141414;
         }
+
+        /* BLOG SUGGESTIES NA GESPREK */
+        .blog-suggestions {
+          padding: 32px 0 48px;
+          border-top: 1px solid #1a1a1a;
+          animation: fadein 0.5s ease;
+        }
+        .blog-suggestions-label {
+          font-family: 'Bebas Neue', sans-serif;
+          font-size: 12px; letter-spacing: 4px; text-transform: uppercase;
+          color: #444; display: block; margin-bottom: 20px;
+        }
+        .blog-suggestion-item {
+          display: block; color: #EE7700; text-decoration: none;
+          font-family: 'Space Mono', monospace;
+          font-size: 13px; line-height: 2.2; font-style: italic;
+        }
+        .blog-suggestion-item:hover { text-decoration: underline; }
+
+        /* VOORTGANG BAR */
+        .voortgang-bar {
+          text-align: center; padding: 48px 0 40px;
+          color: #2a2a2a; font-family: 'Bebas Neue', sans-serif;
+          font-size: 13px; letter-spacing: 3px;
+        }
       `}</style>
 
       <nav className="site-nav">
@@ -695,6 +759,12 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
                 <button key={i} className="opener-btn" onClick={() => ask(q)}>{q}</button>
               ))}
             </div>
+            {voortgang && (
+              <div className="voortgang-bar">
+                {voortgang.count} {voortgang.count === 1 ? 'GESPREK' : 'GESPREKKEN'}
+                {voortgang.lastDate ? ` · LAATSTE: ${formatLastDate(voortgang.lastDate).toUpperCase()}` : ''}
+              </div>
+            )}
           </div>
         )}
 
@@ -737,6 +807,16 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
                 <div className="loading-dot" />
               </div>
               <span className="loading-text">Arno denkt na</span>
+            </div>
+          )}
+          {showSluiten && messages.length <= synthesisMessageCount && suggestedBlogs.length > 0 && (
+            <div className="blog-suggestions">
+              <span className="blog-suggestions-label">Verder lezen</span>
+              {suggestedBlogs.slice(0, 3).map((b, i) => (
+                <a key={i} href={b.url} target="_blank" rel="noopener noreferrer" className="blog-suggestion-item">
+                  {b.title} →
+                </a>
+              ))}
             </div>
           )}
           <div ref={bottomRef} />
