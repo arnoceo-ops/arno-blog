@@ -1,0 +1,241 @@
+'use client'
+
+import { useState, useEffect } from 'react'
+import Link from 'next/link'
+
+interface CoachingDoc {
+  focus: string
+  blinde_vlekken: string
+  ontwikkelpunten: string[]
+  voortgang: string
+  opdracht: string
+  blogs: { title: string; url: string }[]
+  conversation_count: number
+  updated_at?: string
+}
+
+interface Props {
+  userId: string
+}
+
+function formatDate(iso: string) {
+  return new Date(iso).toLocaleDateString('nl-NL', { day: 'numeric', month: 'long', year: 'numeric' })
+}
+
+export default function CoachingClient({ userId }: Props) {
+  const [doc, setDoc] = useState<CoachingDoc | null>(null)
+  const [loading, setLoading] = useState(true)
+  const [generating, setGenerating] = useState(false)
+  const [error, setError] = useState<string | null>(null)
+
+  useEffect(() => {
+    fetch('/api/bot/coaching')
+      .then(r => r.json())
+      .then(data => setDoc(data.coaching))
+      .finally(() => setLoading(false))
+  }, [])
+
+  async function generate() {
+    setGenerating(true)
+    setError(null)
+    try {
+      const res = await fetch('/api/bot/coaching', { method: 'POST' })
+      const data = await res.json()
+      if (data.error === 'te_weinig') {
+        setError(`Je hebt ${data.count} gesprekken. Minimaal 5 nodig.`)
+      } else if (data.coaching) {
+        setDoc({ ...data.coaching, updated_at: new Date().toISOString() })
+      }
+    } catch {
+      setError('Er ging iets mis. Probeer opnieuw.')
+    }
+    setGenerating(false)
+  }
+
+  return (
+    <>
+      <style>{`
+        @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Mono:wght@400;700&family=Barlow:wght@400;700&display=swap');
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { background: #0a0a0a; color: #f0ede6; font-family: 'Space Mono', monospace; }
+        @keyframes fadein { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes pulse { 0%,100% { opacity: 0.4; } 50% { opacity: 1; } }
+
+        .coaching-section {
+          padding: 48px 0;
+          border-top: 1px solid #1a1a1a;
+          animation: fadein 0.4s ease;
+        }
+        .coaching-label {
+          font-family: 'Bebas Neue', sans-serif;
+          font-size: 11px; letter-spacing: 4px; color: #EE7700;
+          text-transform: uppercase; display: block; margin-bottom: 16px;
+        }
+        .coaching-body {
+          color: #d0cdc6; font-size: 15px; line-height: 1.9;
+          font-family: 'Space Mono', monospace; white-space: pre-wrap;
+        }
+        .ontwikkelpunt {
+          display: flex; gap: 20px; align-items: flex-start;
+          padding: 20px 0; border-bottom: 1px solid #141414;
+        }
+        .ontwikkelpunt:last-child { border-bottom: none; }
+        .ontwikkelpunt-nr {
+          font-family: 'Bebas Neue', sans-serif;
+          font-size: 32px; color: #EE7700; line-height: 1;
+          min-width: 32px; padding-top: 2px;
+        }
+        .ontwikkelpunt-text {
+          font-size: 18px; line-height: 1.6; color: #f0ede6;
+          font-family: 'Barlow', sans-serif; font-weight: 700;
+        }
+        .opdracht-box {
+          background: #111; border-left: 3px solid #EE7700;
+          padding: 24px 28px; margin-top: 0;
+        }
+        .opdracht-label {
+          font-family: 'Bebas Neue', sans-serif;
+          font-size: 11px; letter-spacing: 4px; color: #EE7700;
+          display: block; margin-bottom: 12px;
+        }
+        .opdracht-text {
+          color: #f0ede6; font-size: 17px; line-height: 1.7;
+          font-family: 'Barlow', sans-serif; font-weight: 700;
+        }
+        .blog-item {
+          display: block; color: #888; text-decoration: none;
+          font-family: 'Bebas Neue', sans-serif;
+          font-size: 22px; letter-spacing: 1.5px; line-height: 1;
+          padding: 14px 20px; border-left: 3px solid #1a1a1a;
+          margin-bottom: 2px; transition: all 0.15s;
+        }
+        .blog-item:hover { color: #f0ede6; border-left-color: #EE7700; background: #111; }
+        .generate-btn {
+          background: none; border: 1px solid #EE7700; cursor: pointer;
+          font-family: 'Bebas Neue', sans-serif;
+          font-size: 18px; letter-spacing: 3px;
+          color: #EE7700; padding: 12px 28px; transition: all 0.2s;
+        }
+        .generate-btn:hover:not(:disabled) { background: #EE7700; color: #0a0a0a; }
+        .generate-btn:disabled { border-color: #333; color: #444; cursor: not-allowed; }
+        .loading-dot {
+          width: 8px; height: 8px; background: #EE7700; border-radius: 50%;
+          animation: pulse 1.2s ease-in-out infinite; display: inline-block; margin: 0 3px;
+        }
+        .loading-dot:nth-child(2) { animation-delay: 0.2s; }
+        .loading-dot:nth-child(3) { animation-delay: 0.4s; }
+      `}</style>
+
+      <nav style={{ position: 'fixed', top: 0, left: 0, right: 0, zIndex: 100, padding: '16px 40px', display: 'flex', justifyContent: 'center', borderBottom: '1px solid rgba(255,255,255,0.06)', background: 'rgba(10,10,10,0.95)', backdropFilter: 'blur(12px)' }}>
+        <div style={{ display: 'flex', gap: 48, alignItems: 'center' }}>
+          <Link href="/" style={{ color: '#888', textDecoration: 'none', fontFamily: "'Bebas Neue', sans-serif", fontSize: 22, letterSpacing: 3 }}>HOME</Link>
+          <Link href="/bot" style={{ color: '#888', textDecoration: 'none', fontFamily: "'Bebas Neue', sans-serif", fontSize: 22, letterSpacing: 3 }}>BOT</Link>
+          <Link href="/bot/geschiedenis" style={{ color: '#888', textDecoration: 'none', fontFamily: "'Bebas Neue', sans-serif", fontSize: 22, letterSpacing: 3 }}>ARCHIEF</Link>
+          <span style={{ color: '#EE7700', fontFamily: "'Bebas Neue', sans-serif", fontSize: 22, letterSpacing: 3 }}>COACHING</span>
+          <Link href="/bot/account" style={{ color: '#888', textDecoration: 'none', fontFamily: "'Bebas Neue', sans-serif", fontSize: 22, letterSpacing: 3 }}>ACCOUNT</Link>
+        </div>
+      </nav>
+
+      <div style={{ maxWidth: 812, margin: '0 auto', padding: '120px 20px 80px' }}>
+
+        <p style={{ color: '#EE7700', fontSize: 13, letterSpacing: 4, marginBottom: 8 }}>ARNOBOT</p>
+        <h1 style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 64, letterSpacing: 3, lineHeight: 1, marginBottom: 16 }}>COACHING</h1>
+
+        {/* Header met meta + knop */}
+        <div style={{ display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between', marginBottom: 48, paddingBottom: 48, borderBottom: '1px solid #1a1a1a', flexWrap: 'wrap', gap: 20 }}>
+          <div>
+            {doc?.updated_at && (
+              <p style={{ color: '#444', fontSize: 12, letterSpacing: 2, fontFamily: "'Bebas Neue', sans-serif", marginBottom: 4 }}>
+                GEGENEREERD OP {formatDate(doc.updated_at)} · {doc.conversation_count} GESPREKKEN
+              </p>
+            )}
+            {!doc && !loading && (
+              <p style={{ color: '#555', fontSize: 13, lineHeight: 1.8, maxWidth: 480 }}>
+                Op basis van je gesprekken maakt Arno een persoonlijk coachingsdocument. Wat je focust, wat je vermijdt, en wat je concreet moet aanpakken.
+              </p>
+            )}
+            {error && <p style={{ color: '#ff6644', fontSize: 13, letterSpacing: 1, marginTop: 8 }}>{error}</p>}
+          </div>
+          <button className="generate-btn" onClick={generate} disabled={generating || loading}>
+            {generating ? (
+              <span>
+                <span className="loading-dot" />
+                <span className="loading-dot" />
+                <span className="loading-dot" />
+              </span>
+            ) : doc ? 'VERNIEUW COACHING →' : 'GENEREER COACHING →'}
+          </button>
+        </div>
+
+        {loading && (
+          <p style={{ color: '#333', fontSize: 12, letterSpacing: 3, textTransform: 'uppercase' }}>Laden...</p>
+        )}
+
+        {doc && (
+          <div style={{ animation: 'fadein 0.5s ease' }}>
+
+            {/* Focus */}
+            <div className="coaching-section" style={{ borderTop: 'none', paddingTop: 0 }}>
+              <span className="coaching-label">Waar jij op focust</span>
+              <p className="coaching-body">{doc.focus}</p>
+            </div>
+
+            {/* Blinde vlekken */}
+            <div className="coaching-section">
+              <span className="coaching-label">Blinde vlekken</span>
+              <p className="coaching-body">{doc.blinde_vlekken}</p>
+            </div>
+
+            {/* Ontwikkelpunten */}
+            <div className="coaching-section">
+              <span className="coaching-label">Jouw 3 ontwikkelpunten</span>
+              <div style={{ marginTop: 8 }}>
+                {doc.ontwikkelpunten.map((p, i) => (
+                  <div key={i} className="ontwikkelpunt">
+                    <span className="ontwikkelpunt-nr">{i + 1}</span>
+                    <span className="ontwikkelpunt-text">{p}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Opdracht van de week */}
+            <div className="coaching-section">
+              <div className="opdracht-box">
+                <span className="opdracht-label">Opdracht voor deze week</span>
+                <p className="opdracht-text">{doc.opdracht}</p>
+              </div>
+            </div>
+
+            {/* Voortgang */}
+            <div className="coaching-section">
+              <span className="coaching-label">Jouw voortgang</span>
+              <p className="coaching-body">{doc.voortgang}</p>
+            </div>
+
+            {/* Aanbevolen blogs */}
+            {doc.blogs.length > 0 && (
+              <div className="coaching-section">
+                <span className="coaching-label">Verdieping</span>
+                <div style={{ marginTop: 8 }}>
+                  {doc.blogs.map((b, i) => (
+                    <a key={i} href={b.url} target="_blank" rel="noopener noreferrer" className="blog-item">
+                      {b.title}
+                    </a>
+                  ))}
+                </div>
+              </div>
+            )}
+
+          </div>
+        )}
+
+        <div style={{ borderTop: '1px solid #1a1a1a', paddingTop: 40, marginTop: doc ? 48 : 0 }}>
+          <Link href="/bot" style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 18, letterSpacing: 3, color: '#EE7700', textDecoration: 'none' }}>
+            ← TERUG NAAR DE BOT
+          </Link>
+        </div>
+      </div>
+    </>
+  )
+}
