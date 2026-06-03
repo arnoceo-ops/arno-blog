@@ -149,13 +149,18 @@ export async function POST(req: Request) {
     </html>
   `
 
-  await resend.emails.send({
+  const sendResult = await resend.emails.send({
     from: 'ArnoBot <info@royaldutchsales.com>',
     to: coachEmail,
-    replyTo: d.email || undefined,
+    reply_to: d.email || undefined,
     subject: `[COACHING] ${d.naam} — ${d.stats.sessionCount} gesprekken`,
     html,
   })
+
+  if (sendResult.error) {
+    console.error('Resend error:', sendResult.error)
+    return NextResponse.json({ error: sendResult.error.message }, { status: 500 })
+  }
 
   return NextResponse.json({ ok: true })
 }

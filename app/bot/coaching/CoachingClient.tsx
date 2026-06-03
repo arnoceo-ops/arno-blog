@@ -42,15 +42,23 @@ export default function CoachingClient({ userId }: Props) {
   async function shareWithCoach() {
     if (!coachEmail.includes('@')) return
     setSharing(true)
+    setError(null)
     try {
-      await fetch('/api/bot/share-overview', {
+      const res = await fetch('/api/bot/share-overview', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ coachEmail }),
       })
-      setShared(true)
-      setShareFormOpen(false)
-    } catch {}
+      const data = await res.json()
+      if (!res.ok || data.error) {
+        setError(data.error || 'Versturen mislukt. Probeer opnieuw.')
+      } else {
+        setShared(true)
+        setShareFormOpen(false)
+      }
+    } catch {
+      setError('Versturen mislukt. Controleer het e-mailadres.')
+    }
     setSharing(false)
   }
 
@@ -311,6 +319,7 @@ export default function CoachingClient({ userId }: Props) {
               </p>
             ) : shareFormOpen ? (
               <div style={{ display: 'flex', flexDirection: 'column', gap: 10, alignItems: 'flex-end' }}>
+                {error && <p style={{ color: '#ff6644', fontSize: 12, letterSpacing: 1 }}>{error}</p>}
                 <input
                   type="email"
                   placeholder="e-mailadres van coach / manager"
