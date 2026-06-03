@@ -229,10 +229,10 @@ export default function GeschiedenisPage() {
         .delete-bar-outline:disabled { border-color: #333; color: #444; cursor: not-allowed; }
 
         .session-checkbox {
-          flex-shrink: 0; width: 32px; height: 32px;
+          flex-shrink: 0; width: 22px; height: 22px;
           border: 2px solid #333; background: none;
           cursor: pointer; display: flex; align-items: center; justify-content: center;
-          font-family: 'Bebas Neue', sans-serif; font-size: 20px;
+          font-family: 'Bebas Neue', sans-serif; font-size: 14px;
           transition: all 0.12s; color: transparent;
         }
         .session-checkbox:hover { border-color: #666; }
@@ -248,15 +248,15 @@ export default function GeschiedenisPage() {
         }
         .analyse-item-meta {
           font-family: 'Bebas Neue', sans-serif; font-size: 14px;
-          letter-spacing: 2px; color: #555;
+          letter-spacing: 2px; color: rgb(136,136,136);
         }
         .analyse-item-preview {
-          color: #444; font-size: 13px; line-height: 1.7;
+          color: #666; font-size: 16px; line-height: 1.7;
           margin-top: 12px; white-space: pre-wrap;
           display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
         }
         .analyse-item-full {
-          color: #d0cdc6; font-size: 14px; line-height: 1.9;
+          color: #d0cdc6; font-size: 16px; line-height: 1.9;
           margin-top: 12px; white-space: pre-wrap;
         }
       `}</style>
@@ -269,14 +269,14 @@ export default function GeschiedenisPage() {
         <h1 style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 64, letterSpacing: 3, lineHeight: 1, marginBottom: 48 }}>GESPREKKEN</h1>
 
         {/* ANALYSE SECTIE */}
-        {canAnalyse && (
+        {(activeAnalyse || savedAnalyses.length > 0) && (
           <div style={{ marginBottom: 48, borderBottom: '1px solid #1a1a1a', paddingBottom: 48 }}>
 
             {/* Actieve analyse */}
-            {activeAnalyse ? (
+            {activeAnalyse && (
               <div style={{ marginBottom: 32 }}>
                 <p style={{ color: '#EE7700', fontSize: 11, letterSpacing: 4, textTransform: 'uppercase', marginBottom: 16 }}>PATROONANALYSE</p>
-                <p style={{ color: '#d0cdc6', fontSize: 15, lineHeight: 1.9, fontFamily: "'Space Mono', monospace", whiteSpace: 'pre-wrap', marginBottom: 20 }}>{activeAnalyse}</p>
+                <p style={{ color: '#d0cdc6', fontSize: 16, lineHeight: 1.9, fontFamily: "'Space Mono', monospace", whiteSpace: 'pre-wrap', marginBottom: 20 }}>{activeAnalyse}</p>
                 <button
                   onClick={() => setActiveAnalyse(null)}
                   style={{ background: 'none', border: 'none', cursor: 'pointer', fontFamily: "'Bebas Neue', sans-serif", fontSize: 13, letterSpacing: 3, color: '#444' }}
@@ -284,21 +284,6 @@ export default function GeschiedenisPage() {
                   × VERBERG
                 </button>
               </div>
-            ) : (
-              <button
-                onClick={() => runAnalyse()}
-                disabled={analyseLoading}
-                style={{
-                  background: 'none', border: '1px solid #EE7700', cursor: 'pointer',
-                  fontFamily: "'Bebas Neue', sans-serif", fontSize: 18, letterSpacing: 3,
-                  color: '#EE7700', padding: '12px 28px', transition: 'all 0.2s', marginBottom: 24, borderRadius: '999px',
-                  display: 'block',
-                }}
-                onMouseEnter={e => { (e.currentTarget as HTMLButtonElement).style.background = '#EE7700'; (e.currentTarget as HTMLButtonElement).style.color = '#141414' }}
-                onMouseLeave={e => { (e.currentTarget as HTMLButtonElement).style.background = 'none'; (e.currentTarget as HTMLButtonElement).style.color = '#EE7700' }}
-              >
-                {analyseLoading ? 'ANALYSEREN...' : analyseLabel}
-              </button>
             )}
 
             {/* Analyse-historie */}
@@ -306,7 +291,7 @@ export default function GeschiedenisPage() {
               <div>
                 <button
                   onClick={() => setAnalyseHistorieOpen(o => !o)}
-                  style={{ background: 'none', border: 'none', cursor: 'pointer', fontFamily: "'Bebas Neue', sans-serif", fontSize: 13, letterSpacing: 3, color: '#444', padding: 0, display: 'flex', alignItems: 'center', gap: 10 }}
+                  style={{ background: 'none', border: 'none', cursor: 'pointer', fontFamily: "'Bebas Neue', sans-serif", fontSize: 13, letterSpacing: 3, color: 'rgb(136,136,136)', padding: 0, display: 'flex', alignItems: 'center', gap: 10 }}
                 >
                   {analyseHistorieOpen ? '↑' : '↓'} EERDERE ANALYSES ({savedAnalyses.length})
                 </button>
@@ -321,7 +306,7 @@ export default function GeschiedenisPage() {
                           <span className="analyse-item-meta">
                             {formatDateShort(a.created_at)} · {a.session_count} {a.session_count === 1 ? 'GESPREK' : 'GESPREKKEN'}
                           </span>
-                          <span style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 14, letterSpacing: 2, color: '#444' }}>
+                          <span style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 14, letterSpacing: 2, color: 'rgb(136,136,136)' }}>
                             {expandedAnalyse === a.id ? '↑' : '↓'}
                           </span>
                         </div>
@@ -427,7 +412,7 @@ export default function GeschiedenisPage() {
                     {formatDate(session.created_at)}
                   </span>
                   <div style={{ flex: 1 }}>
-                    <p style={{ color: '#f0ede6', fontSize: 15, fontFamily: "'Space Mono', monospace", fontWeight: 700, lineHeight: 1.5, marginBottom: session.summary ? 6 : 0 }}>
+                    <p style={{ color: '#f0ede6', fontSize: 20, fontFamily: "'Bebas Neue', sans-serif", letterSpacing: 1, lineHeight: 1.4, marginBottom: session.summary ? 6 : 0 }}>
                       {session.title}
                     </p>
                     {session.summary && (
@@ -479,11 +464,11 @@ export default function GeschiedenisPage() {
                   )}
                   {convMessages.map((msg, i) => (
                     <div key={i} style={{ padding: '24px 0', borderTop: '1px solid #111', display: 'flex', gap: 32, alignItems: 'flex-start' }}>
-                      <span style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 12, letterSpacing: 3, color: msg.role === 'user' ? '#333' : '#EE7700', whiteSpace: 'nowrap', paddingTop: 3, minWidth: 60 }}>
+                      <span style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 18, letterSpacing: 3, color: msg.role === 'user' ? 'rgb(136,136,136)' : '#EE7700', whiteSpace: 'nowrap', paddingTop: 3, minWidth: 60 }}>
                         {msg.role === 'user' ? 'JIJ' : 'ARNO'}
                       </span>
                       <span
-                        style={{ fontSize: msg.role === 'user' ? 18 : 14, lineHeight: msg.role === 'user' ? 1.5 : 1.9, color: msg.role === 'user' ? '#f0ede6' : '#888', fontFamily: msg.role === 'user' ? "'Bebas Neue', sans-serif" : "'Space Mono', monospace", letterSpacing: msg.role === 'user' ? 0.5 : 0, whiteSpace: 'pre-wrap' }}
+                        style={{ fontSize: msg.role === 'user' ? 16 : 14, lineHeight: msg.role === 'user' ? 1.6 : 1.9, color: msg.role === 'user' ? '#f0ede6' : '#888', fontFamily: msg.role === 'user' ? "'Space Mono', monospace" : "'Space Mono', monospace", fontWeight: msg.role === 'user' ? 600 : 400, letterSpacing: 0, whiteSpace: 'pre-wrap' }}
                         dangerouslySetInnerHTML={{ __html: renderContent(msg.content) }}
                       />
                     </div>
@@ -492,9 +477,9 @@ export default function GeschiedenisPage() {
                   <div style={{ marginTop: 24, paddingTop: 24, borderTop: '1px solid #111' }}>
                     <Link
                       href={`/bot?resume=${session.session_id}`}
-                      style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 16, letterSpacing: 3, color: '#444', textDecoration: 'none' }}
+                      style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 18, letterSpacing: 3, color: 'rgb(136,136,136)', textDecoration: 'none' }}
                       onMouseOver={e => (e.currentTarget.style.color = '#EE7700')}
-                      onMouseOut={e => (e.currentTarget.style.color = '#444')}
+                      onMouseOut={e => (e.currentTarget.style.color = 'rgb(136,136,136)')}
                     >
                       ← Vervolg dit gesprek met ArnoBot.
                     </Link>
