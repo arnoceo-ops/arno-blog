@@ -36,12 +36,20 @@ export default function CoachingClient({ userId }: Props) {
   const [stats, setStats] = useState<Stats | null>(null)
   const [sharing, setSharing] = useState(false)
   const [shared, setShared] = useState(false)
+  const [coachEmail, setCoachEmail] = useState('')
+  const [shareFormOpen, setShareFormOpen] = useState(false)
 
   async function shareWithCoach() {
+    if (!coachEmail.includes('@')) return
     setSharing(true)
     try {
-      await fetch('/api/bot/share-overview', { method: 'POST' })
+      await fetch('/api/bot/share-overview', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ coachEmail }),
+      })
       setShared(true)
+      setShareFormOpen(false)
     } catch {}
     setSharing(false)
   }
@@ -294,24 +302,55 @@ export default function CoachingClient({ userId }: Props) {
           <Link href="/bot" style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 18, letterSpacing: 3, color: '#EE7700', textDecoration: 'none' }}>
             ← TERUG NAAR DE BOT
           </Link>
-          <div>
+          <div className="no-print">
             {shared ? (
               <p style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 16, letterSpacing: 3, color: '#EE7700' }}>
-                ✓ VERSTUURD NAAR COACH
+                ✓ VERSTUURD NAAR {coachEmail.toUpperCase()}
               </p>
+            ) : shareFormOpen ? (
+              <div style={{ display: 'flex', flexDirection: 'column', gap: 10, alignItems: 'flex-end' }}>
+                <input
+                  type="email"
+                  placeholder="e-mailadres van je coach"
+                  value={coachEmail}
+                  onChange={e => setCoachEmail(e.target.value)}
+                  onKeyDown={e => e.key === 'Enter' && shareWithCoach()}
+                  style={{
+                    background: '#111', border: '1px solid #333', color: '#f0ede6',
+                    fontFamily: "'Space Mono', monospace", fontSize: 13, letterSpacing: 1,
+                    padding: '10px 14px', outline: 'none', width: 280,
+                  }}
+                  onFocus={e => (e.target.style.borderColor = '#EE7700')}
+                  onBlur={e => (e.target.style.borderColor = '#333')}
+                  autoFocus
+                />
+                <div style={{ display: 'flex', gap: 8 }}>
+                  <button
+                    className="pdf-btn"
+                    onClick={() => setShareFormOpen(false)}
+                    style={{ fontSize: 14, padding: '10px 20px' }}
+                  >
+                    ANNULEER
+                  </button>
+                  <button
+                    className="generate-btn"
+                    onClick={shareWithCoach}
+                    disabled={sharing || !coachEmail.includes('@')}
+                    style={{ fontSize: 14, padding: '10px 20px' }}
+                  >
+                    {sharing ? 'VERSTUREN...' : 'VERSTUUR →'}
+                  </button>
+                </div>
+              </div>
             ) : (
               <button
-                className="generate-btn no-print"
-                onClick={shareWithCoach}
-                disabled={sharing}
+                className="generate-btn"
+                onClick={() => setShareFormOpen(true)}
                 style={{ fontSize: 16 }}
               >
-                {sharing ? 'VERSTUREN...' : 'DEEL MET COACH →'}
+                DEEL MET COACH →
               </button>
             )}
-            <p style={{ fontFamily: "'Space Mono', monospace", fontSize: 11, color: '#444', marginTop: 8, textAlign: 'right' }}>
-              stuurt je overzicht naar arnodiepeveen@gmail.com
-            </p>
           </div>
         </div>
       </div>

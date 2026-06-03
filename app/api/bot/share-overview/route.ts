@@ -56,9 +56,12 @@ export async function GET() {
   return NextResponse.json(data)
 }
 
-export async function POST() {
+export async function POST(req: Request) {
   const { userId } = await auth()
   if (!userId) return NextResponse.json({ error: 'Niet ingelogd' }, { status: 401 })
+
+  const body = await req.json().catch(() => ({}))
+  const coachEmail: string = body.coachEmail || COACH_EMAIL
 
   const d = await getUserData(userId)
   const coaching = d.coaching?.coaching_data as Record<string, unknown> | null
@@ -148,7 +151,7 @@ export async function POST() {
 
   await resend.emails.send({
     from: 'ArnoBot <info@royaldutchsales.com>',
-    to: COACH_EMAIL,
+    to: coachEmail,
     replyTo: d.email || undefined,
     subject: `[COACHING] ${d.naam} — ${d.stats.sessionCount} gesprekken`,
     html,
