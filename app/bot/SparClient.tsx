@@ -550,17 +550,17 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
                 const isStrategisch = ['Sales Manager/Director', 'VP of Sales', 'CEO/DGA'].includes(rol)
                 if (isStrategisch) return [
                   'Mijn salesteam haalt structureel de targets niet. Waar ligt het écht aan?',
+                  'Wat onderscheidt een winnende salesorganisatie van een gemiddelde?',
                   'Wanneer is een salesstrategie echt een strategie en niet een wensenlijst?',
+                  'Hoe verkoop ik intern mijn strategie aan de board?',
+                  'Hoe bouw ik een commerciële strategie die de markt overspoelt?',
+                  'Mijn pipeline ziet er goed uit maar de conversie klopt niet. Waarom?',
                   'Hoe stop ik met managen en begin ik met leiden?',
                   'Mijn beste verkoper vertrekt. Hoe had ik dat kunnen voorkomen?',
+                  'Hoe zorg ik dat mijn mensen briljant worden in plaats van aardig?',
                   'Hoe creëer ik een cultuur waarin excellentie de norm is?',
+                  'Wat is de grootste mindset-fout aka mindfuck van salesbazen?',
                   'Wat moet ik anders doen om over een jaar marktleider te zijn?',
-                  'Ik betaal mijn verkopers goed. Waarom presteren ze dan nog steeds ondermaats?',
-                  'Hoe weet ik of mijn salesmanager het probleem is of de oplossing?',
-                  'Mijn team verkoopt op prijs in plaats van waarde. Hoe stop ik dat?',
-                  'We groeien maar de marges dalen. Waar gaat het structureel mis?',
-                  'Ik heb een salesproces maar niemand volgt het. Wat doe ik fout als leider?',
-                  'Hoe bouw ik een salesorganisatie die ook zonder mij blijft draaien?',
                 ]
                 return [
                   'Ik verlies deals in de laatste fase. Wat doe ik structureel fout?',
