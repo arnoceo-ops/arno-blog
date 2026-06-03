@@ -208,7 +208,7 @@ export default function GeschiedenisPage() {
           font-family: 'Bebas Neue', sans-serif;
           font-size: 16px; letter-spacing: 3px; color: rgb(136,136,136);
           transition: all 0.15s; padding: 11px 0;
-          width: 240px; text-align: center; border-radius: 999px;
+          width: 180px; text-align: center; border-radius: 999px;
         }
         .delete-bar-cancel:hover { border-color: #EE7700; color: #EE7700; }
         .delete-bar-btn {
@@ -216,12 +216,12 @@ export default function GeschiedenisPage() {
           font-family: 'Bebas Neue', sans-serif;
           font-size: 16px; letter-spacing: 3px; color: #0a0a0a;
           padding: 11px 0; transition: background 0.15s;
-          width: 240px; text-align: center; border-radius: 999px;
+          width: 180px; text-align: center; border-radius: 999px;
         }
         .delete-bar-btn:hover { background: #ff8800; border-color: #ff8800; }
         .delete-bar-btn:disabled { background: #333; border-color: #333; color: #555; cursor: not-allowed; }
         .delete-bar-placeholder {
-          width: 240px; padding: 11px 0; text-align: center;
+          width: 180px; padding: 11px 0; text-align: center;
           font-family: 'Bebas Neue', sans-serif;
           font-size: 16px; letter-spacing: 3px; color: rgb(136,136,136);
           border: 1px solid #333; border-radius: 999px;
@@ -231,7 +231,7 @@ export default function GeschiedenisPage() {
           font-family: 'Bebas Neue', sans-serif;
           font-size: 16px; letter-spacing: 3px; color: #EE7700;
           padding: 11px 0; transition: all 0.15s;
-          width: 240px; text-align: center; border-radius: 999px;
+          width: 180px; text-align: center; border-radius: 999px;
         }
         .delete-bar-outline:hover { background: #EE7700; color: #0a0a0a; }
         .delete-bar-outline:disabled { border-color: #333; color: #444; cursor: not-allowed; }
@@ -533,13 +533,13 @@ export default function GeschiedenisPage() {
                 onClick={() => runAnalyse([...selected])}
                 disabled={analyseLoading}
               >
-                {analyseLoading ? 'ANALYSEREN...' : `ANALYSEER SELECTIE (${selected.size}) →`}
+                {analyseLoading ? 'ANALYSEREN...' : 'ANALYSEER →'}
               </button>
             ) : (
-              <div className="delete-bar-placeholder">MIN. 3 VOOR ANALYSE</div>
+              <div className="delete-bar-placeholder">MIN. 3</div>
             )}
             <button className="delete-bar-btn" onClick={deleteSelected} disabled={deleting}>
-              {deleting ? 'VERWIJDEREN...' : `VERWIJDER ${selected.size === 1 ? 'GESPREK' : `${selected.size} GESPREKKEN`} →`}
+              {deleting ? 'VERWIJDEREN...' : 'VERWIJDER →'}
             </button>
           </div>
         </div>
