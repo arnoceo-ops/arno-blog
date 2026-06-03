@@ -338,7 +338,7 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
         .spar-reset.sluiten { background: #EE7700; color: #141414; border-left-color: #EE7700; }
         .spar-reset.sluiten:hover { background: #ff8800; }
         .spar-hint {
-          font-size: 10px; letter-spacing: 2px; color: rgb(20, 20, 20);
+          font-size: 10px; letter-spacing: 2px; color: rgb(240, 237, 230);
           text-transform: uppercase; margin-top: 8px;
           width: 100%; max-width: 812px;
         }
@@ -347,6 +347,9 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
         .spar-openers {
           padding: 0 60px 0;
           border-bottom: 1px solid #1a1a1a;
+        }
+        .spar-toggle-bar {
+          display: flex; justify-content: center; padding: 32px 60px 0; gap: 2px;
         }
         .opener-toggle {
           display: flex; gap: 2px; padding: 32px 0 2px;
@@ -567,6 +570,23 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
           </div>
         </div>
 
+        {!started && !loading && (
+          <div className="spar-toggle-bar">
+            <button
+              className={`toggle-btn${openerModus === 'operationeel' ? ' active' : ''}`}
+              onClick={() => setOpenerModus('operationeel')}
+            >OPERATIONEEL</button>
+            <button
+              className={`toggle-btn${openerModus === 'strategisch' ? ' active' : ''}`}
+              onClick={() => setOpenerModus('strategisch')}
+            >STRATEGISCH</button>
+            <button
+              className={`toggle-btn${openerModus === 'organisatorisch' ? ' active' : ''}`}
+              onClick={() => setOpenerModus('organisatorisch')}
+            >ORGANISATORISCH</button>
+          </div>
+        )}
+
         {!blocked && <div className={`spar-input-area${started ? ' active' : ''}`}>
           <div className={`spar-input-row${started ? ' active-glow' : ''}`}>
             <textarea
@@ -608,23 +628,8 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
           <p className="spar-hint">Enter = sturen — Shift+Enter = nieuwe regel</p>
         </div>}
 
-
         {!started && !loading && (
           <div className="spar-openers">
-            <div className="opener-toggle">
-              <button
-                className={`toggle-btn${openerModus === 'operationeel' ? ' active' : ''}`}
-                onClick={() => setOpenerModus('operationeel')}
-              >OPERATIONEEL</button>
-              <button
-                className={`toggle-btn${openerModus === 'strategisch' ? ' active' : ''}`}
-                onClick={() => setOpenerModus('strategisch')}
-              >STRATEGISCH</button>
-              <button
-                className={`toggle-btn${openerModus === 'organisatorisch' ? ' active' : ''}`}
-                onClick={() => setOpenerModus('organisatorisch')}
-              >ORGANISATORISCH</button>
-            </div>
             <div className="openers-grid">
               {(openerModus === 'strategisch' ? VRAGEN_STRATEGISCH : openerModus === 'organisatorisch' ? VRAGEN_ORGANISATORISCH : VRAGEN_OPERATIONEEL).map((q, i) => (
                 <button key={i} className="opener-btn" onClick={() => ask(q)}>{q}</button>
