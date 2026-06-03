@@ -496,7 +496,7 @@ export default function GeschiedenisPage() {
                       onMouseOver={e => (e.currentTarget.style.color = '#EE7700')}
                       onMouseOut={e => (e.currentTarget.style.color = '#444')}
                     >
-                      ← VERDER PRATEN IN DE BOT
+                      ← Vervolg dit gesprek met ArnoBot.
                     </Link>
                   </div>
                 </div>
