@@ -352,7 +352,12 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
         .spar-questions-label {
           font-family: 'Barlow', sans-serif;
           font-size: 26px; font-weight: 700; color: rgb(240, 237, 230);
-          display: block; margin-top: 48px; margin-bottom: 20px; text-align: center; width: 100%;
+          display: block; margin-top: 48px; margin-bottom: 12px; text-align: center; width: 100%;
+        }
+        .spar-questions-sub {
+          font-family: 'Barlow', sans-serif;
+          font-size: 16px; font-weight: 400; color: #666;
+          display: block; margin-bottom: 40px; text-align: center; width: 100%;
         }
         .verfijn-btn {
           background: none; border: none; cursor: pointer;
@@ -679,7 +684,8 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
                 onClick={() => setOpenerModus('organisatorisch')}
               >ORGANISATORISCH</button>
             </div>
-            <span className="spar-questions-label">en selecteer een van de vragen</span>
+            <span className="spar-questions-label">en selecteer een van de onderstaande vragen</span>
+            <span className="spar-questions-sub">als het je bezighoudt, dan hè? waarom zou je er anders antwoord op willen hebben?</span>
             <div className="openers-grid">
               {(openerModus === 'strategisch' ? VRAGEN_STRATEGISCH : openerModus === 'organisatorisch' ? VRAGEN_ORGANISATORISCH : VRAGEN_OPERATIONEEL).map((q, i) => (
                 <button key={i} className="opener-btn" onClick={() => ask(q)}>{q}</button>
