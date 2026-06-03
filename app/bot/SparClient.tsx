@@ -555,6 +555,12 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
                   'Mijn beste verkoper vertrekt. Hoe had ik dat kunnen voorkomen?',
                   'Hoe creëer ik een cultuur waarin excellentie de norm is?',
                   'Wat moet ik anders doen om over een jaar marktleider te zijn?',
+                  'Ik betaal mijn verkopers goed. Waarom presteren ze dan nog steeds ondermaats?',
+                  'Hoe weet ik of mijn salesmanager het probleem is of de oplossing?',
+                  'Mijn team verkoopt op prijs in plaats van waarde. Hoe stop ik dat?',
+                  'We groeien maar de marges dalen. Waar gaat het structureel mis?',
+                  'Ik heb een salesproces maar niemand volgt het. Wat doe ik fout als leider?',
+                  'Hoe bouw ik een salesorganisatie die ook zonder mij blijft draaien?',
                 ]
                 return [
                   'Ik verlies deals in de laatste fase. Wat doe ik structureel fout?',
@@ -563,6 +569,12 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
                   'Wanneer is cold outreach gewoon hard werken en wanneer is het tijdverspilling?',
                   'Mijn deal staat al weken stil. Wat doe ik verkeerd?',
                   'Hoe verhoog ik mijn dealwaarde zonder meteen in korting te schieten?',
+                  'Mijn offertes worden nooit afgewezen maar ook nooit getekend. Wat is er mis?',
+                  'Hoe voer ik een gesprek over budget zonder de deal te verliezen?',
+                  'Ik krijg veel eerste gesprekken maar bijna geen tweede. Wat doe ik verkeerd?',
+                  'Mijn klant zegt "we denken erover na." Hoe breek ik die stilte?',
+                  'Hoe onderscheid ik me als er tien concurrenten hetzelfde aanbieden?',
+                  'Wanneer is het slim om een deal los te laten en wanneer is dat gewoon opgeven?',
                 ]
               })().map((q, i) => (
                 <button key={i} className="opener-btn" onClick={() => ask(q)}>{q}</button>
