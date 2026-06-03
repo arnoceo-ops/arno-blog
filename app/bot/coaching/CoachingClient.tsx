@@ -311,7 +311,7 @@ export default function CoachingClient({ userId }: Props) {
               <div style={{ display: 'flex', flexDirection: 'column', gap: 10, alignItems: 'flex-end' }}>
                 <input
                   type="email"
-                  placeholder="e-mailadres van je coach"
+                  placeholder="e-mailadres van coach / manager"
                   value={coachEmail}
                   onChange={e => setCoachEmail(e.target.value)}
                   onKeyDown={e => e.key === 'Enter' && shareWithCoach()}
@@ -348,7 +348,7 @@ export default function CoachingClient({ userId }: Props) {
                 onClick={() => setShareFormOpen(true)}
                 style={{ fontSize: 16 }}
               >
-                DEEL MET COACH →
+                DEEL OVERZICHT →
               </button>
             )}
           </div>
