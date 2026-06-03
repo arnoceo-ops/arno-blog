@@ -420,7 +420,7 @@ export default function GeschiedenisPage() {
                         {msg.role === 'user' ? 'JIJ' : 'ARNO'}
                       </span>
                       <span
-                        style={{ fontSize: msg.role === 'user' ? 16 : 14, lineHeight: msg.role === 'user' ? 1.6 : 1.9, color: msg.role === 'user' ? '#f0ede6' : '#888', fontFamily: msg.role === 'user' ? "'Space Mono', monospace" : "'Space Mono', monospace", fontWeight: msg.role === 'user' ? 600 : 400, letterSpacing: 0, whiteSpace: 'pre-wrap' }}
+                        style={{ fontSize: msg.role === 'user' ? 16 : 14, lineHeight: msg.role === 'user' ? 1.6 : 1.9, color: msg.role === 'user' ? '#f0ede6' : '#888', fontFamily: msg.role === 'user' ? "'Space Mono', monospace" : "'Space Mono', monospace", fontWeight: 400, letterSpacing: 0, whiteSpace: 'pre-wrap' }}
                         dangerouslySetInnerHTML={{ __html: renderContent(msg.content) }}
                       />
                     </div>
