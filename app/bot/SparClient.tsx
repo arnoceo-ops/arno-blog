@@ -85,6 +85,7 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
   const [synthesisLoading, setSynthesisLoading] = useState(false)
   const [synthesisMessageCount, setSynthesisMessageCount] = useState(0)
   const [verfijnen, setVerfijnen] = useState(false)
+  const [resizeInput, setResizeInput] = useState(false)
   const isStrategischProfiel = STRATEGISCH_ROLLEN.includes((profiel?.rol as string) ?? '')
   const [openerModus, setOpenerModus] = useState<'strategisch' | 'operationeel' | 'organisatorisch'>(
     isStrategischProfiel ? 'strategisch' : 'operationeel'
@@ -115,6 +116,15 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
   useEffect(() => {
     bottomRef.current?.scrollIntoView({ behavior: 'smooth' })
   }, [messages, loading])
+
+  useEffect(() => {
+    if (resizeInput && inputRef.current) {
+      inputRef.current.style.height = 'auto'
+      inputRef.current.style.height = Math.min(inputRef.current.scrollHeight, 120) + 'px'
+      inputRef.current.focus()
+      setResizeInput(false)
+    }
+  }, [resizeInput, input])
 
   function pickTopic(text: string) {
     setInput(text)
@@ -650,13 +660,7 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
                   const data = await res.json()
                   if (data.verfijnd) {
                     setInput(data.verfijnd)
-                    setTimeout(() => {
-                      if (inputRef.current) {
-                        inputRef.current.style.height = 'auto'
-                        inputRef.current.style.height = Math.min(inputRef.current.scrollHeight, 120) + 'px'
-                        inputRef.current.focus()
-                      }
-                    }, 0)
+                    setResizeInput(true)
                   }
                 } catch {}
                 finally { setVerfijnen(false) }
