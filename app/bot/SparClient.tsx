@@ -438,9 +438,14 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
         .openers-grid {
           display: grid;
           grid-template-columns: repeat(2, 1fr);
-          width: 100%; max-width: 812px;
+          width: 100%; max-width: 1218px;
           gap: 2px;
           margin-bottom: 2px;
+        }
+        .openers-grid-line {
+          width: 100%; max-width: 1218px;
+          border-top: 2px solid #EE7700;
+          margin-bottom: 0;
         }
         @media (max-width: 560px) { .openers-grid { grid-template-columns: 1fr; } }
         .opener-btn {
@@ -754,6 +759,7 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
             </div>
             <span className="spar-questions-label">en selecteer een van de onderstaande vragen</span>
             <span className="spar-questions-sub">als het je bezighoudt, dan hè? waarom zou je er anders antwoord op willen hebben?</span>
+            <div className="openers-grid-line" />
             <div className="openers-grid">
               {(openerModus === 'strategisch' ? VRAGEN_STRATEGISCH : openerModus === 'organisatorisch' ? VRAGEN_ORGANISATORISCH : VRAGEN_OPERATIONEEL).map((q, i) => (
                 <button key={i} className="opener-btn" onClick={() => ask(q)}>{q}</button>
