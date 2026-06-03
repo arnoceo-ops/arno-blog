@@ -107,8 +107,40 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
   const [openerModus, setOpenerModus] = useState<'strategisch' | 'operationeel' | 'organisatorisch'>(
     isStrategischProfiel ? 'strategisch' : 'operationeel'
   )
+  const [recording, setRecording] = useState(false)
+  const [speechSupported, setSpeechSupported] = useState(false)
+  const recognitionRef = useRef<any>(null)
   const bottomRef = useRef<HTMLDivElement>(null)
   const inputRef = useRef<HTMLTextAreaElement>(null)
+
+  useEffect(() => {
+    const SR = (window as any).SpeechRecognition || (window as any).webkitSpeechRecognition
+    if (SR) setSpeechSupported(true)
+  }, [])
+
+  function toggleRecording() {
+    const SR = (window as any).SpeechRecognition || (window as any).webkitSpeechRecognition
+    if (!SR) return
+    if (recording) {
+      recognitionRef.current?.stop()
+      setRecording(false)
+      return
+    }
+    const rec = new SR()
+    rec.lang = 'nl-NL'
+    rec.continuous = false
+    rec.interimResults = true
+    rec.onresult = (e: any) => {
+      const transcript = Array.from(e.results as any[]).map((r: any) => r[0].transcript).join('')
+      setInput(transcript)
+      setResizeInput(true)
+    }
+    rec.onend = () => setRecording(false)
+    rec.onerror = () => setRecording(false)
+    recognitionRef.current = rec
+    rec.start()
+    setRecording(true)
+  }
 
   useEffect(() => {
     if (resumeSessionId) {
@@ -414,6 +446,22 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
         }
         .spar-textarea::placeholder { color: #aaa; font-style: normal; font-size: 15px; font-weight: 400; }
         .spar-textarea:focus { background: #161616; }
+        .spar-mic {
+          background: #111; color: #555;
+          font-size: 20px; border: none; border-left: 1px solid #2a2a2a;
+          padding: 0 18px; cursor: pointer; transition: all 0.2s;
+          min-height: 55px; display: flex; align-items: center; justify-content: center;
+        }
+        .spar-mic:hover { color: #f0ede6; background: #1a1a1a; }
+        .spar-mic.recording {
+          color: #EE7700; background: #1a1a1a;
+          animation: micpulse 1s ease-in-out infinite;
+        }
+        @keyframes micpulse {
+          0%, 100% { color: #EE7700; }
+          50% { color: #ff4400; }
+        }
+
         .spar-send {
           background: #EE7700; color: #141414;
           font-family: 'Bebas Neue', sans-serif;
@@ -787,6 +835,16 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
               disabled={loading || blocked}
               rows={1}
             />
+            {speechSupported && (
+              <button
+                className={`spar-mic${recording ? ' recording' : ''}`}
+                onClick={toggleRecording}
+                disabled={loading || blocked}
+                title={recording ? 'Stop opname' : 'Spreek je vraag in'}
+              >
+                {recording ? '⏹' : '🎤'}
+              </button>
+            )}
             <button
               className="spar-send"
               onClick={() => ask(input)}
