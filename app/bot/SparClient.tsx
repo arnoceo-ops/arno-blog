@@ -26,6 +26,38 @@ interface Props {
   openers: string[]
 }
 
+const STRATEGISCH_ROLLEN = ['Sales Manager/Director', 'VP of Sales', 'CEO/DGA']
+
+const VRAGEN_STRATEGISCH = [
+  'Mijn salesteam haalt structureel de targets niet. Waar ligt het écht aan?',
+  'Wat onderscheidt een winnende salesorganisatie van een gemiddelde?',
+  'Wanneer is een salesstrategie echt een strategie en niet een wensenlijst?',
+  'Hoe verkoop ik intern mijn strategie aan de board?',
+  'Hoe bouw ik een commerciële strategie die de markt overspoelt?',
+  'Mijn pipeline ziet er goed uit maar de conversie klopt niet. Waarom?',
+  'Hoe stop ik met managen en begin ik met leiden?',
+  'Mijn beste verkoper vertrekt. Hoe had ik dat kunnen voorkomen?',
+  'Hoe zorg ik dat mijn mensen briljant worden in plaats van aardig?',
+  'Hoe creëer ik een cultuur waarin excellentie de norm is?',
+  'Wat is de grootste mindset-fout aka mindfuck van salesbazen?',
+  'Wat moet ik anders doen om over een jaar marktleider te zijn?',
+]
+
+const VRAGEN_OPERATIONEEL = [
+  'Ik werk keihard maar mijn pipeline blijft leeg. Waar gaat mijn energie naartoe?',
+  'Mijn prospect zegt "te duur" — maar is dat de echte reden of geef ik hem een excuus?',
+  'Wanneer is een eerste gesprek een investering en wanneer is het gewoon tijdverspilling?',
+  'Ik presenteer goed, mijn offerte klopt, en toch tekent niemand. Wat zie ik niet?',
+  'Mijn prospect was enthousiast. Tot ik de offerte stuurde. Wat ging er mis?',
+  'Hoe verkoop ik op waarde als mijn klant alleen wil praten over prijs?',
+  'Hoe weet ik of ik een deal aan het closen ben of aan het redden?',
+  'Wat is de grootste mindfuck van verkopers die structureel underperformen?',
+  'Hoe onderscheid ik me als ik objectief gezien hetzelfde verkoop als mijn concurrent?',
+  'Mijn deal is al drie maanden "bijna rond". Wat klopt er niet?',
+  'Wanneer is cold outreach gewoon doorzetten en wanneer is het jezelf voor de gek houden?',
+  'Wanneer stop ik met verkopen en begin ik echt te overtuigen — en wat is het verschil?',
+]
+
 export default function SparClient({ userId, profiel, taglineTitle, taglineSub, openers }: Props) {
   const [messages, setMessages] = useState<Message[]>([])
   const [input, setInput] = useState('')
@@ -36,6 +68,10 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
   const [sessionId, setSessionId] = useState('')
   const [showSluiten, setShowSluiten] = useState(false)
   const [synthesisLoading, setSynthesisLoading] = useState(false)
+  const isStrategischProfiel = STRATEGISCH_ROLLEN.includes((profiel?.rol as string) ?? '')
+  const [openerModus, setOpenerModus] = useState<'strategisch' | 'operationeel'>(
+    isStrategischProfiel ? 'strategisch' : 'operationeel'
+  )
   const bottomRef = useRef<HTMLDivElement>(null)
   const inputRef = useRef<HTMLTextAreaElement>(null)
 
@@ -293,6 +329,18 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
           padding: 0 60px 0;
           border-bottom: 1px solid #1a1a1a;
         }
+        .opener-toggle {
+          display: flex; gap: 2px; padding: 32px 0 2px;
+        }
+        .toggle-btn {
+          background: #111; border: none; color: #444;
+          font-family: 'Bebas Neue', sans-serif;
+          font-size: 16px; letter-spacing: 3px;
+          padding: 10px 24px; cursor: pointer;
+          transition: all 0.15s;
+        }
+        .toggle-btn:hover { color: #888; }
+        .toggle-btn.active { background: #EE7700; color: #0a0a0a; }
         .openers-label {
           font-size: 10px; letter-spacing: 4px; text-transform: uppercase;
           color: #333; padding: 32px 0 20px; display: block;
@@ -544,39 +592,18 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
 
         {!started && !loading && (
           <div className="spar-openers">
+            <div className="opener-toggle">
+              <button
+                className={`toggle-btn${openerModus === 'operationeel' ? ' active' : ''}`}
+                onClick={() => setOpenerModus('operationeel')}
+              >OPERATIONEEL</button>
+              <button
+                className={`toggle-btn${openerModus === 'strategisch' ? ' active' : ''}`}
+                onClick={() => setOpenerModus('strategisch')}
+              >STRATEGISCH</button>
+            </div>
             <div className="openers-grid">
-              {((): string[] => {
-                const rol = (profiel?.rol as string) ?? ''
-                const isStrategisch = ['Sales Manager/Director', 'VP of Sales', 'CEO/DGA'].includes(rol)
-                if (isStrategisch) return [
-                  'Mijn salesteam haalt structureel de targets niet. Waar ligt het écht aan?',
-                  'Wat onderscheidt een winnende salesorganisatie van een gemiddelde?',
-                  'Wanneer is een salesstrategie echt een strategie en niet een wensenlijst?',
-                  'Hoe verkoop ik intern mijn strategie aan de board?',
-                  'Hoe bouw ik een commerciële strategie die de markt overspoelt?',
-                  'Mijn pipeline ziet er goed uit maar de conversie klopt niet. Waarom?',
-                  'Hoe stop ik met managen en begin ik met leiden?',
-                  'Mijn beste verkoper vertrekt. Hoe had ik dat kunnen voorkomen?',
-                  'Hoe zorg ik dat mijn mensen briljant worden in plaats van aardig?',
-                  'Hoe creëer ik een cultuur waarin excellentie de norm is?',
-                  'Wat is de grootste mindset-fout aka mindfuck van salesbazen?',
-                  'Wat moet ik anders doen om over een jaar marktleider te zijn?',
-                ]
-                return [
-                  'Ik werk keihard maar mijn pipeline blijft leeg. Waar gaat mijn energie naartoe?',
-                  'Mijn prospect zegt "te duur" — maar is dat de echte reden of geef ik hem een excuus?',
-                  'Wanneer is een eerste gesprek een investering en wanneer is het gewoon tijdverspilling?',
-                  'Ik presenteer goed, mijn offerte klopt, en toch tekent niemand. Wat zie ik niet?',
-                  'Mijn prospect was enthousiast. Tot ik de offerte stuurde. Wat ging er mis?',
-                  'Hoe verkoop ik op waarde als mijn klant alleen wil praten over prijs?',
-                  'Hoe weet ik of ik een deal aan het closen ben of aan het redden?',
-                  'Wat is de grootste mindfuck van verkopers die structureel underperformen?',
-                  'Hoe onderscheid ik me als ik objectief gezien hetzelfde verkoop als mijn concurrent?',
-                  'Mijn deal is al drie maanden "bijna rond". Wat klopt er niet?',
-                  'Wanneer is cold outreach gewoon doorzetten en wanneer is het jezelf voor de gek houden?',
-                  'Wanneer stop ik met verkopen en begin ik echt te overtuigen — en wat is het verschil?',
-                ]
-              })().map((q, i) => (
+              {(openerModus === 'strategisch' ? VRAGEN_STRATEGISCH : VRAGEN_OPERATIONEEL).map((q, i) => (
                 <button key={i} className="opener-btn" onClick={() => ask(q)}>{q}</button>
               ))}
             </div>
