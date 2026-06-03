@@ -139,7 +139,7 @@ export default function CoachingClient({ userId }: Props) {
   return (
     <>
       <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Mono:wght@400;700&family=Barlow:wght@400;700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Mono:wght@400;700&display=swap');
         * { box-sizing: border-box; margin: 0; padding: 0; }
         body { background: #0a0a0a; color: #f0ede6; font-family: 'Space Mono', monospace; }
         @keyframes fadein { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
@@ -156,7 +156,7 @@ export default function CoachingClient({ userId }: Props) {
           text-transform: uppercase; display: block; margin-bottom: 16px;
         }
         .coaching-body {
-          color: #d0cdc6; font-size: 15px; line-height: 1.9;
+          color: #f0ede6; font-size: 15px; line-height: 1.9;
           font-family: 'Space Mono', monospace; white-space: pre-wrap;
         }
         .ontwikkelpunt {
@@ -171,7 +171,7 @@ export default function CoachingClient({ userId }: Props) {
         }
         .ontwikkelpunt-text {
           font-size: 18px; line-height: 1.6; color: #f0ede6;
-          font-family: 'Barlow', sans-serif; font-weight: 700;
+          font-family: 'Space Mono', monospace; font-weight: 400;
         }
         .opdracht-box {
           background: #111; border-left: 3px solid #EE7700;
@@ -183,8 +183,8 @@ export default function CoachingClient({ userId }: Props) {
           display: block; margin-bottom: 12px;
         }
         .opdracht-text {
-          color: #f0ede6; font-size: 17px; line-height: 1.7;
-          font-family: 'Barlow', sans-serif; font-weight: 700;
+          color: #f0ede6; font-size: 15px; line-height: 1.9;
+          font-family: 'Space Mono', monospace; font-weight: 400;
         }
         .blog-item {
           display: block; color: #888; text-decoration: none;
@@ -213,7 +213,7 @@ export default function CoachingClient({ userId }: Props) {
         .pdf-btn:hover { border-color: #666; color: #888; }
         .stat-block { text-align: center; }
         .stat-number { font-family: 'Bebas Neue', sans-serif; font-size: 56px; color: #EE7700; line-height: 1; }
-        .stat-label { font-family: 'Bebas Neue', sans-serif; font-size: 12px; letter-spacing: 4px; color: #444; margin-top: 4px; }
+        .stat-label { font-family: 'Bebas Neue', sans-serif; font-size: 12px; letter-spacing: 4px; color: rgb(136,136,136); margin-top: 4px; }
         @media print {
           body { background: #fff !important; color: #000 !important; }
           .no-print { display: none !important; }
@@ -260,7 +260,7 @@ export default function CoachingClient({ userId }: Props) {
         <div style={{ display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between', marginBottom: 48, paddingBottom: 48, borderBottom: '1px solid #1a1a1a', flexWrap: 'wrap', gap: 20 }}>
           <div>
             {doc?.updated_at && (
-              <p style={{ color: '#444', fontSize: 12, letterSpacing: 2, fontFamily: "'Bebas Neue', sans-serif", marginBottom: 4 }}>
+              <p style={{ color: 'rgb(136,136,136)', fontSize: 12, letterSpacing: 2, fontFamily: "'Bebas Neue', sans-serif", marginBottom: 4 }}>
                 GEGENEREERD OP {formatDate(doc.updated_at)} · {doc.conversation_count} GESPREKKEN
               </p>
             )}
@@ -290,7 +290,7 @@ export default function CoachingClient({ userId }: Props) {
         </div>
 
         {loading && (
-          <p style={{ color: '#333', fontSize: 12, letterSpacing: 3, textTransform: 'uppercase' }}>Laden...</p>
+          <p style={{ color: 'rgb(136,136,136)', fontSize: 12, letterSpacing: 3, textTransform: 'uppercase' }}>Laden...</p>
         )}
 
         {doc && (
@@ -381,13 +381,13 @@ export default function CoachingClient({ userId }: Props) {
                     {formatDate(a.created_at)}
                   </span>
                   <div style={{ flex: 1 }}>
-                    <p style={{ color: '#f0ede6', fontSize: 18, fontFamily: "'Bebas Neue', sans-serif", letterSpacing: 1, lineHeight: 1.4 }}>
+                    <p style={{ color: '#f0ede6', fontSize: 20, fontFamily: "'Bebas Neue', sans-serif", letterSpacing: 1, lineHeight: 1.4 }}>
                       {getAnalyseTitle(a.analyse_text)}
                     </p>
                   </div>
                   <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: 4, flexShrink: 0 }}>
                     <span style={{ color: '#888', fontSize: 11, letterSpacing: 2, textTransform: 'uppercase', whiteSpace: 'nowrap', fontFamily: "'Space Mono', monospace" }}>
-                      {a.session_count} {a.session_count === 1 ? 'gesprek' : 'gesprekken'}
+                      {a.session_count} {a.session_count === 1 ? 'GESPREK' : 'GESPREKKEN'}
                     </span>
                     <span style={{ color: expandedAnalyse === a.id ? '#EE7700' : '#888', fontSize: 16, fontFamily: "'Bebas Neue', sans-serif", letterSpacing: 2 }}>
                       {expandedAnalyse === a.id ? '↑ SLUITEN' : '↓ OPEN'}
