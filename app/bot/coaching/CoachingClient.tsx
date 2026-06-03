@@ -34,6 +34,17 @@ export default function CoachingClient({ userId }: Props) {
   const [generating, setGenerating] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const [stats, setStats] = useState<Stats | null>(null)
+  const [sharing, setSharing] = useState(false)
+  const [shared, setShared] = useState(false)
+
+  async function shareWithCoach() {
+    setSharing(true)
+    try {
+      await fetch('/api/bot/share-overview', { method: 'POST' })
+      setShared(true)
+    } catch {}
+    setSharing(false)
+  }
 
   useEffect(() => {
     fetch('/api/bot/coaching')
@@ -279,10 +290,29 @@ export default function CoachingClient({ userId }: Props) {
           </div>
         )}
 
-        <div className="no-print" style={{ borderTop: '1px solid #1a1a1a', paddingTop: 40, marginTop: doc ? 48 : 0 }}>
+        <div className="no-print" style={{ borderTop: '1px solid #1a1a1a', paddingTop: 40, marginTop: doc ? 48 : 0, display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: 20 }}>
           <Link href="/bot" style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 18, letterSpacing: 3, color: '#EE7700', textDecoration: 'none' }}>
             ← TERUG NAAR DE BOT
           </Link>
+          <div>
+            {shared ? (
+              <p style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 16, letterSpacing: 3, color: '#EE7700' }}>
+                ✓ VERSTUURD NAAR COACH
+              </p>
+            ) : (
+              <button
+                className="generate-btn no-print"
+                onClick={shareWithCoach}
+                disabled={sharing}
+                style={{ fontSize: 16 }}
+              >
+                {sharing ? 'VERSTUREN...' : 'DEEL MET COACH →'}
+              </button>
+            )}
+            <p style={{ fontFamily: "'Space Mono', monospace", fontSize: 11, color: '#444', marginTop: 8, textAlign: 'right' }}>
+              stuurt je overzicht naar arnodiepeveen@gmail.com
+            </p>
+          </div>
         </div>
       </div>
     </>
