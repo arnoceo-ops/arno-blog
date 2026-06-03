@@ -34,6 +34,28 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: 'te_weinig', count: sessions.length }, { status: 400 })
   }
 
+  // Dedup: check of deze exacte selectie al is geanalyseerd
+  const idsKey = sessions.map(s => s.session_id).sort().join(',')
+  const { data: existingAnalyses } = await supabase
+    .from('arnobot_analyses')
+    .select('id, analyse_text, created_at, session_count, session_ids')
+    .eq('user_id', userId)
+
+  const duplicate = existingAnalyses?.find(a => {
+    if (!Array.isArray(a.session_ids)) return false
+    return (a.session_ids as string[]).slice().sort().join(',') === idsKey
+  })
+
+  if (duplicate) {
+    return NextResponse.json({
+      duplicate: true,
+      analyse: duplicate.analyse_text,
+      id: duplicate.id,
+      created_at: duplicate.created_at,
+      count: duplicate.session_count,
+    })
+  }
+
   const sessiesText = sessions
     .map((s, i) =>
       `Gesprek ${i + 1} (${new Date(s.created_at).toLocaleDateString('nl-NL')}): ${s.title}${s.summary ? `\nSamenvatting: ${s.summary}` : ''}`

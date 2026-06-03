@@ -136,7 +136,9 @@ export default function GeschiedenisPage() {
         body: JSON.stringify(body),
       })
       const data = await res.json()
-      if (data.analyse) {
+      if (data.duplicate) {
+        setActiveAnalyse(`⟳ Deze selectie is al eerder geanalyseerd (${formatDateShort(data.created_at)}):\n\n${data.analyse}`)
+      } else if (data.analyse) {
         setActiveAnalyse(data.analyse)
         if (data.id) {
           setSavedAnalyses(prev => [{
