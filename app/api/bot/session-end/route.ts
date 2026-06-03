@@ -76,7 +76,7 @@ export async function POST(req: NextRequest) {
             title: c.source.replace(/\s*\([^)]+\)\s*$/, ''),
             url: c.url,
           })
-          if (blogSuggestions.length === 2) break
+          if (blogSuggestions.length >= 2) break
         }
       }
     } catch (e) {
