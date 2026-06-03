@@ -630,11 +630,19 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
           color: #444; display: block; margin-bottom: 20px;
         }
         .blog-suggestion-item {
-          display: block; color: #EE7700; text-decoration: none;
-          font-family: 'Space Mono', monospace;
-          font-size: 13px; line-height: 2.2; font-style: italic;
+          display: block; color: #888; text-decoration: none;
+          font-family: 'Bebas Neue', sans-serif;
+          font-size: 22px; letter-spacing: 1.5px;
+          line-height: 1; padding: 14px 20px;
+          border-left: 3px solid #1a1a1a;
+          margin-bottom: 2px;
+          transition: all 0.15s;
         }
-        .blog-suggestion-item:hover { text-decoration: underline; }
+        .blog-suggestion-item:hover {
+          color: #f0ede6;
+          border-left-color: #EE7700;
+          background: #111;
+        }
 
         /* VOORTGANG BAR */
         .voortgang-bar {
@@ -812,7 +820,7 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
               <span className="blog-suggestions-label">Verder lezen</span>
               {suggestedBlogs.slice(0, 3).map((b, i) => (
                 <a key={i} href={b.url} target="_blank" rel="noopener noreferrer" className="blog-suggestion-item">
-                  {b.title} →
+                  {b.title.replace(/\s*\([^)]+\)\s*$/, '')}
                 </a>
               ))}
             </div>
