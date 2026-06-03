@@ -43,16 +43,35 @@ export async function POST(req: NextRequest) {
     console.error('Synthesis error:', e)
   }
 
-  // Blog-suggesties op basis van synthese — alleen als synthese beschikbaar is
+  // Blog-suggesties: eerst inline geciteerde blogs uit de berichten halen
   type BlogSuggestion = { title: string; url: string }
   const blogSuggestions: BlogSuggestion[] = []
-  if (summary) {
+
+  const mdLinkRegex = /\[([^\]]+)\]\((https?:\/\/[^\s)]+)\)/g
+  const seenUrls = new Set<string>()
+  for (const msg of messages as { role: string; content: string }[]) {
+    if (msg.role !== 'arno') continue
+    let match
+    const re = new RegExp(mdLinkRegex.source, 'g')
+    while ((match = re.exec(msg.content)) !== null) {
+      const [, text, url] = match
+      if (url.includes('arno.blog') && !seenUrls.has(url)) {
+        seenUrls.add(url)
+        const title = text.length > 60 ? text.slice(0, 57) + '...' : text
+        blogSuggestions.push({ title, url })
+        if (blogSuggestions.length >= 3) break
+      }
+    }
+    if (blogSuggestions.length >= 3) break
+  }
+
+  // Fallback: RAG op de synthese als er geen inline links zijn
+  if (blogSuggestions.length === 0 && summary) {
     try {
       const chunks = await getRelevantChunks(summary, 10)
-      const seen = new Set<string>()
       for (const c of chunks) {
-        if (c.url && c.source && c.url.includes('arno.blog') && !seen.has(c.url)) {
-          seen.add(c.url)
+        if (c.url && c.source && c.url.includes('arno.blog') && !seenUrls.has(c.url)) {
+          seenUrls.add(c.url)
           blogSuggestions.push({
             title: c.source.replace(/\s*\([^)]+\)\s*$/, ''),
             url: c.url,

@@ -17,7 +17,10 @@ function formatLastDate(iso: string | null): string {
 
 function renderContent(text: string) {
   return text
-    .replace(/\[([^\]]+)\]\s*\((https?:\/\/[^\s)]+)\)/g, '<a href="$2" target="_blank" rel="noopener noreferrer" style="color:#EE7700;text-decoration:underline">$1</a>')
+    .replace(/\[([^\]]+)\]\s*\((https?:\/\/[^\s)]+)\)/g, (_, linkText, url) => {
+      const display = linkText.length > 52 ? linkText.slice(0, 49) + '...' : linkText
+      return `<a href="${url}" target="_blank" rel="noopener noreferrer" style="color:#EE7700;text-decoration:underline">${display}</a>`
+    })
     .replace(/(?<!\()(https?:\/\/[^\s<"]+)/g, (url, _, offset, str) => str[offset - 1] === '"' ? url : `<a href="${url}" target="_blank" rel="noopener noreferrer" style="color:#EE7700;text-decoration:underline">${url}</a>`)
     .replace(/\*\*([^*\n]+)\*\*/g, '<strong>$1</strong>')
     .replace(/\*([^*\n]+)\*/g, '<em>$1</em>')
