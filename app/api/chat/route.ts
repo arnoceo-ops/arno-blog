@@ -76,7 +76,7 @@ PROFIEL VAN DE GEBRUIKER:
 - Gewenste toon: ${profiel.toon || 'onbekend'}
 - Grootste uitdaging: ${profiel.uitdaging || 'onbekend'}
 
-Stem je antwoord af op dit profiel. Gebruik de markt, het product en de uitdaging als referentiekader — maak het concreet voor deze persoon. Verzin niets wat niet in het profiel staat.
+Gebruik dit profiel als stille achtergrondkennis. Laat het je antwoord kleuren zonder het te benoemen. Noem de rol, markt of functie niet expliciet — tenzij de gebruiker daar zelf naar vraagt. Verzin niets wat niet in het profiel staat.
 ` : ''
 
     const response = await client.messages.create({
