@@ -236,11 +236,11 @@ export default function GeschiedenisPage() {
                   padding: '28px 0 28px 8px', alignSelf: 'flex-start',
                   fontFamily: "'Bebas Neue', sans-serif",
                   fontSize: 13, letterSpacing: 2,
-                  color: deleteConfirmId === session.session_id ? '#ff4444' : '#2a2a2a',
+                  color: deleteConfirmId === session.session_id ? '#ff4444' : '#444',
                   whiteSpace: 'nowrap', transition: 'color 0.15s',
                 }}
-                onMouseEnter={e => { if (deleteConfirmId !== session.session_id) (e.currentTarget as HTMLButtonElement).style.color = '#555' }}
-                onMouseLeave={e => { if (deleteConfirmId !== session.session_id) (e.currentTarget as HTMLButtonElement).style.color = '#2a2a2a' }}
+                onMouseEnter={e => { if (deleteConfirmId !== session.session_id) (e.currentTarget as HTMLButtonElement).style.color = '#888' }}
+                onMouseLeave={e => { if (deleteConfirmId !== session.session_id) (e.currentTarget as HTMLButtonElement).style.color = '#444' }}
               >
                 {deletingId === session.session_id
                   ? '...'
