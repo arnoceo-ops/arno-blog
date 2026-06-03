@@ -701,7 +701,10 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
 
         {!blocked && <div className={`spar-input-area${started ? ' active' : ''}`}>
           {!started && !loading && (
-            <span className="spar-input-intro">begin een gesprek</span>
+            <>
+              <span className="spar-input-intro">begin een gesprek</span>
+              <span style={{ fontFamily: "'Space Mono', monospace", fontSize: 15, color: '#555', display: 'block', textAlign: 'center', width: '100%', maxWidth: 812, marginBottom: 12 }}>hoe meer relevante info, hoe beter de output</span>
+            </>
           )}
           <div className={`spar-input-row${started ? ' active-glow' : ''}`}>
             <textarea
