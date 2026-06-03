@@ -184,7 +184,7 @@ export default function GeschiedenisPage() {
           position: fixed; bottom: 0; left: 0; right: 0; z-index: 200;
           background: #0a0a0a; border-top: 2px solid #EE7700;
           padding: 20px 40px;
-          display: flex; align-items: center; justify-content: space-between;
+          display: flex; align-items: center; justify-content: center; gap: 24px;
           animation: slideup 0.2s ease;
         }
         .delete-bar-count {
