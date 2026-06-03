@@ -193,12 +193,12 @@ export default function GeschiedenisPage() {
         }
         .delete-bar-actions { display: flex; gap: 12px; align-items: center; }
         .delete-bar-cancel {
-          background: none; border: none; cursor: pointer;
+          background: none; border: 1px solid #333; cursor: pointer;
           font-family: 'Bebas Neue', sans-serif;
-          font-size: 18px; letter-spacing: 3px; color: #444;
-          transition: color 0.15s; padding: 12px 0;
+          font-size: 20px; letter-spacing: 3px; color: #444;
+          transition: all 0.15s; padding: 14px 36px;
         }
-        .delete-bar-cancel:hover { color: #888; }
+        .delete-bar-cancel:hover { border-color: #666; color: #888; }
         .delete-bar-btn {
           background: #EE7700; border: none; cursor: pointer;
           font-family: 'Bebas Neue', sans-serif;
