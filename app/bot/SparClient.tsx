@@ -365,8 +365,8 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
           display: block; margin-top: 48px; margin-bottom: 12px; text-align: center; width: 100%;
         }
         .spar-questions-sub {
-          font-family: 'Barlow', sans-serif;
-          font-size: 16px; font-weight: 400; color: #666;
+          font-family: 'Space Mono', monospace;
+          font-size: 15px; font-weight: 400; color: #666;
           display: block; margin-bottom: 40px; text-align: center; width: 100%;
         }
         .verfijn-btn {
