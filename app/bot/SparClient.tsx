@@ -339,14 +339,14 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
         .spar-reset.sluiten:hover { background: #ff8800; }
         .spar-input-intro {
           font-family: 'Barlow', sans-serif;
-          font-size: 18px; color: #888;
+          font-size: 26px; font-weight: 700; color: rgb(240, 237, 230);
           width: 100%; max-width: 812px;
-          display: block; margin-bottom: 16px;
+          display: block; margin-bottom: 16px; text-align: center;
         }
         .spar-discipline-label {
           font-family: 'Barlow', sans-serif;
-          font-size: 26px; color: #f0ede6;
-          display: block; margin-bottom: 16px;
+          font-size: 26px; font-weight: 700; color: rgb(240, 237, 230);
+          display: block; margin-bottom: 16px; text-align: center; width: 100%;
         }
 
         /* OPENERS */
@@ -355,7 +355,7 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
           border-bottom: 1px solid #1a1a1a;
         }
         .opener-toggle {
-          display: flex; gap: 2px; margin-bottom: 2px;
+          display: flex; gap: 2px; margin-bottom: 2px; justify-content: center;
         }
         .toggle-btn {
           background: #111; border: none; color: #444;
@@ -575,7 +575,7 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
 
         {!blocked && <div className={`spar-input-area${started ? ' active' : ''}`}>
           {!started && !loading && (
-            <span className="spar-input-intro">stel je vraag of begin een gesprek</span>
+            <span className="spar-input-intro">begin een gesprek</span>
           )}
           <div className={`spar-input-row${started ? ' active-glow' : ''}`}>
             <textarea
