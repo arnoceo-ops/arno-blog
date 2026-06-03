@@ -289,7 +289,7 @@ export default function GeschiedenisPage() {
                 style={{
                   background: 'none', border: '1px solid #EE7700', cursor: 'pointer',
                   fontFamily: "'Bebas Neue', sans-serif", fontSize: 18, letterSpacing: 3,
-                  color: '#EE7700', padding: '12px 28px', transition: 'all 0.2s', marginBottom: 24,
+                  color: '#EE7700', padding: '12px 28px', transition: 'all 0.2s', marginBottom: 24, borderRadius: '999px',
                   display: 'block',
                 }}
                 onMouseEnter={e => { (e.currentTarget as HTMLButtonElement).style.background = '#EE7700'; (e.currentTarget as HTMLButtonElement).style.color = '#141414' }}
