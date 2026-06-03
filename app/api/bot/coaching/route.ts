@@ -27,23 +27,41 @@ export async function POST(req: NextRequest) {
   const { userId } = await auth()
   if (!userId) return NextResponse.json({ error: 'Niet ingelogd' }, { status: 401 })
 
-  const { data: sessionsData } = await supabase
-    .from('arnobot_blog_sessions')
-    .select('title, summary, message_count, created_at')
-    .eq('user_id', userId)
-    .order('created_at', { ascending: true })
-    .limit(100)
+  const [sessionsRes, analysesRes] = await Promise.all([
+    supabase
+      .from('arnobot_blog_sessions')
+      .select('title, summary, message_count, created_at')
+      .eq('user_id', userId)
+      .order('created_at', { ascending: true })
+      .limit(100),
+    supabase
+      .from('arnobot_analyses')
+      .select('analyse_text, created_at, session_count')
+      .eq('user_id', userId)
+      .order('created_at', { ascending: false })
+      .limit(10),
+  ])
 
-  const sessions = sessionsData ?? []
+  const sessions = sessionsRes.data ?? []
   if (sessions.length < 5) {
     return NextResponse.json({ error: 'te_weinig', count: sessions.length }, { status: 400 })
   }
+
+  const analyses = analysesRes.data ?? []
 
   const sessiesText = sessions
     .map((s, i) =>
       `Gesprek ${i + 1} (${new Date(s.created_at).toLocaleDateString('nl-NL')}, ${s.message_count} vragen): ${s.title}${s.summary ? `\nSamenvatting: ${s.summary}` : ''}`
     )
     .join('\n\n')
+
+  const analysesText = analyses.length > 0
+    ? '\n\nEERDERE PATROONANALYSES (meest recent eerst):\n' + analyses
+        .map((a, i) =>
+          `Analyse ${i + 1} (${new Date(a.created_at).toLocaleDateString('nl-NL')}, ${a.session_count} gesprekken):\n${a.analyse_text}`
+        )
+        .join('\n\n')
+    : ''
 
   const response = await anthropic.messages.create({
     model: 'claude-sonnet-4-6',
@@ -64,7 +82,7 @@ Return ALLEEN een JSON-object — geen uitleg, geen markdown eromheen:
 }`,
     messages: [{
       role: 'user',
-      content: `Analyseer deze ${sessions.length} gesprekken en schrijf een coachingsdocument:\n\n${sessiesText}`
+      content: `Analyseer deze ${sessions.length} gesprekken${analyses.length > 0 ? ` en ${analyses.length} eerder gemaakte patroonanalyses` : ''} en schrijf een coachingsdocument:\n\nGESPREKKEN:\n${sessiesText}${analysesText}`
     }]
   })
 

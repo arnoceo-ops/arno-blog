@@ -20,12 +20,27 @@ interface Stats {
   totalQuestions: number
 }
 
+interface SavedAnalyse {
+  id: string
+  created_at: string
+  analyse_text: string
+  session_count: number
+}
+
 interface Props {
   userId: string
 }
 
 function formatDate(iso: string) {
   return new Date(iso).toLocaleDateString('nl-NL', { day: 'numeric', month: 'long', year: 'numeric' })
+}
+
+function getAnalyseTitle(text: string): string {
+  const clean = text.replace(/\n/g, ' ').trim()
+  if (clean.length <= 80) return clean
+  const cut = clean.slice(0, 77)
+  const lastSpace = cut.lastIndexOf(' ')
+  return (lastSpace > 40 ? cut.slice(0, lastSpace) : cut) + '...'
 }
 
 export default function CoachingClient({ userId }: Props) {
@@ -38,6 +53,8 @@ export default function CoachingClient({ userId }: Props) {
   const [shared, setShared] = useState(false)
   const [coachEmail, setCoachEmail] = useState('')
   const [shareFormOpen, setShareFormOpen] = useState(false)
+  const [analyses, setAnalyses] = useState<SavedAnalyse[]>([])
+  const [expandedAnalyse, setExpandedAnalyse] = useState<string | null>(null)
 
   async function shareWithCoach() {
     if (!coachEmail.includes('@')) return
@@ -76,6 +93,10 @@ export default function CoachingClient({ userId }: Props) {
           totalQuestions: sessions.reduce((sum: number, s: { message_count?: number }) => sum + (s.message_count || 0), 0),
         })
       })
+      .catch(() => {})
+    fetch('/api/bot/coaching-analyses')
+      .then(r => r.json())
+      .then(data => setAnalyses(data.analyses ?? []))
       .catch(() => {})
   }, [])
 
@@ -305,6 +326,46 @@ export default function CoachingClient({ userId }: Props) {
               </div>
             )}
 
+          </div>
+        )}
+
+        {/* Patroonanalyses */}
+        {analyses.length > 0 && (
+          <div className="coaching-section no-print">
+            <span className="coaching-label">Patroonanalyses</span>
+            <p style={{ color: 'rgb(136,136,136)', fontSize: 13, lineHeight: 1.7, marginBottom: 24 }}>
+              {analyses.length} {analyses.length === 1 ? 'analyse' : 'analyses'} — gebruikt als extra context bij het genereren van dit document.
+            </p>
+            {analyses.map(a => (
+              <div key={a.id} style={{ borderTop: '1px solid #1a1a1a' }}>
+                <button
+                  onClick={() => setExpandedAnalyse(expandedAnalyse === a.id ? null : a.id)}
+                  style={{ width: '100%', background: 'none', border: 'none', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 24, textAlign: 'left', padding: '20px 0' }}
+                >
+                  <span style={{ color: '#888', fontSize: 11, letterSpacing: 2, textTransform: 'uppercase', whiteSpace: 'nowrap', minWidth: 120, fontFamily: "'Space Mono', monospace" }}>
+                    {formatDate(a.created_at)}
+                  </span>
+                  <div style={{ flex: 1 }}>
+                    <p style={{ color: '#f0ede6', fontSize: 18, fontFamily: "'Bebas Neue', sans-serif", letterSpacing: 1, lineHeight: 1.4 }}>
+                      {getAnalyseTitle(a.analyse_text)}
+                    </p>
+                  </div>
+                  <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: 4, flexShrink: 0 }}>
+                    <span style={{ color: '#888', fontSize: 11, letterSpacing: 2, textTransform: 'uppercase', whiteSpace: 'nowrap', fontFamily: "'Space Mono', monospace" }}>
+                      {a.session_count} {a.session_count === 1 ? 'gesprek' : 'gesprekken'}
+                    </span>
+                    <span style={{ color: expandedAnalyse === a.id ? '#EE7700' : '#888', fontSize: 16, fontFamily: "'Bebas Neue', sans-serif", letterSpacing: 2 }}>
+                      {expandedAnalyse === a.id ? '↑ SLUITEN' : '↓ OPEN'}
+                    </span>
+                  </div>
+                </button>
+                {expandedAnalyse === a.id && (
+                  <p style={{ color: '#d0cdc6', fontSize: 15, lineHeight: 1.9, fontFamily: "'Space Mono', monospace", whiteSpace: 'pre-wrap', paddingBottom: 28 }}>
+                    {a.analyse_text}
+                  </p>
+                )}
+              </div>
+            ))}
           </div>
         )}
 
