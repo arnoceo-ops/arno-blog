@@ -322,7 +322,7 @@ export default function GeschiedenisPage() {
         </div>
 
         {!loading && sorted.length > 0 && (
-          <p style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 16, letterSpacing: 2, color: 'rgb(136,136,136)', marginBottom: 8 }}>
+          <p style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 15, letterSpacing: 2, color: 'rgb(240,237,230)', marginBottom: 8 }}>
             Selecteer minimaal 3 gesprekken voor een analyse.
           </p>
         )}
