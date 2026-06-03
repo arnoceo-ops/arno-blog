@@ -152,7 +152,7 @@ export async function POST(req: Request) {
   const sendResult = await resend.emails.send({
     from: 'ArnoBot <info@royaldutchsales.com>',
     to: coachEmail,
-    reply_to: d.email || undefined,
+    replyTo: d.email || undefined,
     subject: `[COACHING] ${d.naam} — ${d.stats.sessionCount} gesprekken`,
     html,
   })
