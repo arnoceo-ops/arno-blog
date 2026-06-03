@@ -439,8 +439,6 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
         .spar-input-row {
           display: flex; gap: 0;
           border: 2px solid #EE7700;
-          border-radius: 999px;
-          overflow: hidden;
           width: 100%; max-width: 812px;
         }
         .spar-textarea {
