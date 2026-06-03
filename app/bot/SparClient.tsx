@@ -530,38 +530,36 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
         </div>}
 
 
-        <div className="spar-conversation">
-          {messages.length === 0 && !loading && (
-            <div className="empty-state">
-              <p className="empty-label">Waar wil je het over hebben?</p>
-              <div className="empty-topics">
-                {((): { label: string; prompt: string }[] => {
-                  const rol = (profiel?.rol as string) ?? ''
-                  const isStrategisch = ['Sales Manager/Director', 'VP of Sales', 'CEO/DGA'].includes(rol)
-                  if (isStrategisch) return [
-                    { label: 'Salesteam aansturen', prompt: 'Hoe stuur ik mijn salesteam aan zodat ze consistent targets halen?' },
-                    { label: 'Topverkopers aannemen', prompt: 'Hoe herken en trek ik echt goede verkopers aan?' },
-                    { label: 'Strategie bouwen', prompt: 'Hoe bouw ik een commerciële strategie die de markt op zijn kop zet?' },
-                    { label: 'Underperformers', prompt: 'Hoe ga ik om met verkopers die structureel underperformen?' },
-                    { label: 'Pipeline reviews', prompt: 'Hoe doe ik een pipeline review die echt iets oplevert?' },
-                    { label: 'Salescultuur', prompt: 'Wat is nodig om een winnende salescultuur te bouwen?' },
-                  ]
-                  return [
-                    { label: 'Pipeline opbouwen', prompt: 'Hoe bouw ik een pipeline die consistent vult?' },
-                    { label: 'Deal sluiten', prompt: 'Ik verlies deals in de eindfase — wat doe ik fout?' },
-                    { label: 'Cold outreach', prompt: 'Wat is jouw kijk op cold outreach in dit tijdperk?' },
-                    { label: 'Dealwaarde verhogen', prompt: 'Hoe verhoog ik mijn gemiddelde dealwaarde?' },
-                    { label: '"Te duur" bezwaar', prompt: 'Mijn prospect zegt "te duur" — hoe reageer ik?' },
-                    { label: 'Eerste afspraak scoren', prompt: 'Hoe krijg ik meer eerste afspraken bij de juiste prospects?' },
-                  ]
-                })().map(({ label, prompt }) => (
-                  <button key={label} className="topic-btn" onClick={() => pickTopic(prompt)}>
-                    {label}
-                  </button>
-                ))}
-              </div>
+        {!started && !loading && (
+          <div className="spar-openers">
+            <div className="openers-grid">
+              {((): string[] => {
+                const rol = (profiel?.rol as string) ?? ''
+                const isStrategisch = ['Sales Manager/Director', 'VP of Sales', 'CEO/DGA'].includes(rol)
+                if (isStrategisch) return [
+                  'Mijn salesteam haalt structureel de targets niet. Waar ligt het écht aan?',
+                  'Wanneer is een salesstrategie echt een strategie en niet een wensenlijst?',
+                  'Hoe stop ik met managen en begin ik met leiden?',
+                  'Mijn beste verkoper vertrekt. Hoe had ik dat kunnen voorkomen?',
+                  'Hoe creëer ik een cultuur waarin excellentie de norm is?',
+                  'Wat moet ik anders doen om over een jaar marktleider te zijn?',
+                ]
+                return [
+                  'Ik verlies deals in de laatste fase. Wat doe ik structureel fout?',
+                  'Mijn prospect zegt "te duur". Moet ik dat accepteren of vechten?',
+                  'Hoe bouw ik een pipeline die niet leegloopt zodra ik even niet push?',
+                  'Wanneer is cold outreach gewoon hard werken en wanneer is het tijdverspilling?',
+                  'Mijn deal staat al weken stil. Wat doe ik verkeerd?',
+                  'Hoe verhoog ik mijn dealwaarde zonder meteen in korting te schieten?',
+                ]
+              })().map((q, i) => (
+                <button key={i} className="opener-btn" onClick={() => ask(q)}>{q}</button>
+              ))}
             </div>
-          )}
+          </div>
+        )}
+
+        <div className="spar-conversation">
           {messages.map((msg, i) => (
             msg.role === 'user' ? (
               <div key={i} className="msg-user">
