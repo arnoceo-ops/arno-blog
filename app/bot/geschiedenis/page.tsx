@@ -174,14 +174,14 @@ export default function GeschiedenisPage() {
         }
 
         .sort-btn {
-          background: #111; border: none; color: #444;
+          background: #111; border: none; color: rgb(136,136,136);
           font-family: 'Bebas Neue', sans-serif;
           font-size: 15px; letter-spacing: 3px;
           padding: 9px 20px; cursor: pointer; transition: all 0.15s;
           border-radius: 999px;
         }
-        .sort-btn:hover { color: #888; }
-        .sort-btn.active { background: #1a1a1a; color: #f0ede6; }
+        .sort-btn:hover { color: #f0ede6; }
+        .sort-btn.active { background: #1a1a1a; color: #EE7700; }
 
         .delete-bar {
           position: fixed; bottom: 0; left: 0; right: 0; z-index: 200;
@@ -198,7 +198,7 @@ export default function GeschiedenisPage() {
         .delete-bar-cancel {
           background: none; border: 1px solid #EE7700; cursor: pointer;
           font-family: 'Bebas Neue', sans-serif;
-          font-size: 20px; letter-spacing: 3px; color: #444;
+          font-size: 20px; letter-spacing: 3px; color: rgb(136,136,136);
           transition: all 0.15s; padding: 14px 0;
           width: 310px; text-align: center; border-radius: 999px;
         }
@@ -215,8 +215,8 @@ export default function GeschiedenisPage() {
         .delete-bar-placeholder {
           width: 310px; padding: 14px 0; text-align: center;
           font-family: 'Bebas Neue', sans-serif;
-          font-size: 20px; letter-spacing: 3px; color: #333;
-          border: 1px solid #222; border-radius: 999px;
+          font-size: 20px; letter-spacing: 3px; color: rgb(136,136,136);
+          border: 1px solid #333; border-radius: 999px;
         }
         .delete-bar-outline {
           background: none; border: 1px solid #EE7700; cursor: pointer;
@@ -279,7 +279,7 @@ export default function GeschiedenisPage() {
                 <p style={{ color: '#d0cdc6', fontSize: 16, lineHeight: 1.9, fontFamily: "'Space Mono', monospace", whiteSpace: 'pre-wrap', marginBottom: 20 }}>{activeAnalyse}</p>
                 <button
                   onClick={() => setActiveAnalyse(null)}
-                  style={{ background: 'none', border: 'none', cursor: 'pointer', fontFamily: "'Bebas Neue', sans-serif", fontSize: 13, letterSpacing: 3, color: '#444' }}
+                  style={{ background: 'none', border: 'none', cursor: 'pointer', fontFamily: "'Bebas Neue', sans-serif", fontSize: 13, letterSpacing: 3, color: 'rgb(136,136,136)' }}
                 >
                   × VERBERG
                 </button>
@@ -440,7 +440,7 @@ export default function GeschiedenisPage() {
                       <p style={{ color: '#d0cdc6', fontSize: 16, fontFamily: "'Space Mono', monospace", lineHeight: 1.9, marginBottom: session.blog_suggestions?.length ? 24 : 0 }}>{session.summary}</p>
                       {session.blog_suggestions && session.blog_suggestions.length > 0 && (
                         <div style={{ borderTop: '1px solid #1a1a1a', paddingTop: 20 }}>
-                          <p style={{ color: '#444', fontSize: 11, letterSpacing: 4, textTransform: 'uppercase', marginBottom: 12, fontFamily: "'Bebas Neue', sans-serif" }}>VERDER LEZEN</p>
+                          <p style={{ color: 'rgb(136,136,136)', fontSize: 11, letterSpacing: 4, textTransform: 'uppercase', marginBottom: 12, fontFamily: "'Bebas Neue', sans-serif" }}>VERDER LEZEN</p>
                           {session.blog_suggestions.map((b, i) => (
                             <a key={i} href={b.url} target="_blank" rel="noopener noreferrer" style={{
                               display: 'block', color: '#888', textDecoration: 'none',
