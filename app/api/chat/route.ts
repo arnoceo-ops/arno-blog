@@ -58,6 +58,7 @@ export async function POST(req: NextRequest) {
     }
 
     const relevant = await getRelevantChunks(question, 10)
+    console.log(`[RAG] ${relevant.length} chunks voor: "${question.slice(0, 60)}"`, relevant.map(r => r.source))
     const context = formatChunksForPrompt(relevant)
 
     const messages = [
