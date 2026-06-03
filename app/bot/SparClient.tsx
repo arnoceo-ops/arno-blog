@@ -443,7 +443,7 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
           color: #333; white-space: nowrap; padding-top: 4px; min-width: 80px;
         }
         .msg-user-text {
-          font-size: 22px; line-height: 1.5; color: #f0ede6;
+          font-size: 26px; line-height: 1.5; color: #f0ede6;
           font-family: 'Bebas Neue', sans-serif; letter-spacing: 0.5px;
         }
 
