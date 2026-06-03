@@ -2,6 +2,7 @@ import { auth } from '@clerk/nextjs/server'
 import { NextRequest, NextResponse } from 'next/server'
 import { createClient } from '@supabase/supabase-js'
 import Anthropic from '@anthropic-ai/sdk'
+import { getRelevantChunks } from '@/lib/rag'
 
 const supabase = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_URL!,
@@ -25,6 +26,7 @@ export async function POST(req: NextRequest) {
     )
     .join('\n\n')
 
+  // Synthese genereren
   let summary = ''
   try {
     const response = await anthropic.messages.create({
@@ -41,6 +43,28 @@ export async function POST(req: NextRequest) {
     console.error('Synthesis error:', e)
   }
 
+  // Blog-suggesties op basis van synthese — alleen als synthese beschikbaar is
+  type BlogSuggestion = { title: string; url: string }
+  const blogSuggestions: BlogSuggestion[] = []
+  if (summary) {
+    try {
+      const chunks = await getRelevantChunks(summary, 10)
+      const seen = new Set<string>()
+      for (const c of chunks) {
+        if (c.url && c.source && c.url.includes('arno.blog') && !seen.has(c.url)) {
+          seen.add(c.url)
+          blogSuggestions.push({
+            title: c.source.replace(/\s*\([^)]+\)\s*$/, ''),
+            url: c.url,
+          })
+          if (blogSuggestions.length === 2) break
+        }
+      }
+    } catch (e) {
+      console.error('Blog suggestions error:', e)
+    }
+  }
+
   await supabase
     .from('arnobot_blog_sessions')
     .upsert({
@@ -49,7 +73,8 @@ export async function POST(req: NextRequest) {
       title,
       summary,
       message_count: messageCount,
+      blog_suggestions: blogSuggestions,
     }, { onConflict: 'session_id' })
 
-  return NextResponse.json({ ok: true, summary })
+  return NextResponse.json({ ok: true, summary, blogs: blogSuggestions })
 }

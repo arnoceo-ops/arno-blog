@@ -10,6 +10,7 @@ interface Session {
   summary: string
   message_count: number
   created_at: string
+  blog_suggestions?: { title: string; url: string }[]
 }
 
 interface ConvMessage {
@@ -273,11 +274,29 @@ export default function GeschiedenisPage() {
             {expanded === session.session_id && (
               <div style={{ paddingBottom: 40, animation: 'fadein 0.3s ease' }}>
 
-                {/* Synthese */}
+                {/* Synthese + blogs */}
                 {session.summary && (
                   <div style={{ background: '#0f0f0f', borderLeft: '3px solid #EE7700', padding: '20px 24px', marginBottom: 32 }}>
                     <p style={{ color: '#EE7700', fontSize: 11, letterSpacing: 4, textTransform: 'uppercase', marginBottom: 12 }}>SYNTHESE</p>
-                    <p style={{ color: '#d0cdc6', fontSize: 16, fontFamily: "'Space Mono', monospace", lineHeight: 1.9 }}>{session.summary}</p>
+                    <p style={{ color: '#d0cdc6', fontSize: 16, fontFamily: "'Space Mono', monospace", lineHeight: 1.9, marginBottom: session.blog_suggestions?.length ? 24 : 0 }}>{session.summary}</p>
+                    {session.blog_suggestions && session.blog_suggestions.length > 0 && (
+                      <div style={{ borderTop: '1px solid #1a1a1a', paddingTop: 20 }}>
+                        <p style={{ color: '#444', fontSize: 11, letterSpacing: 4, textTransform: 'uppercase', marginBottom: 12, fontFamily: "'Bebas Neue', sans-serif" }}>VERDER LEZEN</p>
+                        {session.blog_suggestions.map((b, i) => (
+                          <a key={i} href={b.url} target="_blank" rel="noopener noreferrer" style={{
+                            display: 'block', color: '#888', textDecoration: 'none',
+                            fontFamily: "'Bebas Neue', sans-serif", fontSize: 20, letterSpacing: 1.5,
+                            lineHeight: 1, padding: '10px 16px', marginBottom: 2,
+                            borderLeft: '3px solid #1a1a1a', transition: 'all 0.15s',
+                          }}
+                          onMouseEnter={e => { (e.currentTarget as HTMLAnchorElement).style.color = '#f0ede6'; (e.currentTarget as HTMLAnchorElement).style.borderLeftColor = '#EE7700'; (e.currentTarget as HTMLAnchorElement).style.background = '#111' }}
+                          onMouseLeave={e => { (e.currentTarget as HTMLAnchorElement).style.color = '#888'; (e.currentTarget as HTMLAnchorElement).style.borderLeftColor = '#1a1a1a'; (e.currentTarget as HTMLAnchorElement).style.background = 'none' }}
+                          >
+                            {b.title}
+                          </a>
+                        ))}
+                      </div>
+                    )}
                   </div>
                 )}
 

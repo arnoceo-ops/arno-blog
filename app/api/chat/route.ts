@@ -60,16 +60,6 @@ export async function POST(req: NextRequest) {
     const relevant = await getRelevantChunks(question, 15)
     const context = formatChunksForPrompt(relevant)
 
-    const seenUrls = new Set<string>()
-    const blogSuggestions: { title: string; url: string }[] = []
-    for (const c of relevant) {
-      if (c.url && c.source && c.url.includes('arno.blog') && !seenUrls.has(c.url)) {
-        seenUrls.add(c.url)
-        blogSuggestions.push({ title: c.source, url: c.url })
-        if (blogSuggestions.length === 3) break
-      }
-    }
-
     const messages = [
       ...(history || []),
       { role: 'user' as const, content: question }
@@ -120,7 +110,7 @@ ${context}`,
 
     await supabase.from('arnobot_blog_logs').insert({ question, answer, ip, session_id: sessionId, user_id: userId ?? null })
 
-    return NextResponse.json({ answer, hint, blogs: blogSuggestions }, { headers: corsHeaders(origin) })
+    return NextResponse.json({ answer, hint }, { headers: corsHeaders(origin) })
   } catch (err) {
     const msg = err instanceof Error ? err.message : String(err)
     console.error('Chat error:', msg)

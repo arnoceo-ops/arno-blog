@@ -206,6 +206,7 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
           content: `**Terugblik op dit gesprek**\n\n${data.summary}`,
           hint: null
         }])
+        if (data.blogs?.length) setSuggestedBlogs(data.blogs)
         setSynthesisMessageCount(newCount)
         const newId = crypto.randomUUID()
         sessionStorage.setItem('arnobot_session', newId)
@@ -256,13 +257,6 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
 
       const answer = data.answer || 'Geen antwoord ontvangen.'
       setMessages(prev => [...prev, { role: 'arno', content: answer, hint: data.hint ?? null }])
-      if (data.blogs?.length) {
-        setSuggestedBlogs(prev => {
-          const combined = [...prev, ...(data.blogs as {title: string, url: string}[])]
-          const seen = new Set<string>()
-          return combined.filter(b => seen.has(b.url) ? false : (seen.add(b.url), true)).slice(0, 5)
-        })
-      }
       setHistory(prev => [
         ...prev,
         { role: 'user', content: question },
