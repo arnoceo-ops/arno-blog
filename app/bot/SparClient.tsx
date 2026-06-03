@@ -565,7 +565,7 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
                   ask(input)
                 }
               }}
-              placeholder="Stel je vraag"
+              placeholder={started ? "Ga verder." : "Stel je vraag"}
               disabled={loading || blocked}
               rows={1}
             />
