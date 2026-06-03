@@ -645,10 +645,19 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
 
         /* VOORTGANG BAR */
         .voortgang-bar {
-          text-align: center; padding: 48px 0 40px;
-          color: #2a2a2a; font-family: 'Bebas Neue', sans-serif;
+          text-align: center; padding: 48px 0 16px;
+          color: #555; font-family: 'Bebas Neue', sans-serif;
           font-size: 13px; letter-spacing: 3px;
         }
+        .archief-btn {
+          background: #111; border: none; color: #444;
+          font-family: 'Bebas Neue', sans-serif;
+          font-size: 16px; letter-spacing: 3px;
+          padding: 10px 24px; cursor: pointer;
+          transition: all 0.15s; text-decoration: none;
+          display: inline-block; margin-bottom: 40px;
+        }
+        .archief-btn:hover { color: #f0ede6; background: #1a1a1a; }
       `}</style>
 
       <nav className="site-nav">
@@ -766,10 +775,13 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
               ))}
             </div>
             {voortgang && (
-              <div className="voortgang-bar">
-                {voortgang.count} {voortgang.count === 1 ? 'GESPREK' : 'GESPREKKEN'}
-                {voortgang.lastDate ? ` · LAATSTE: ${formatLastDate(voortgang.lastDate).toUpperCase()}` : ''}
-              </div>
+              <>
+                <div className="voortgang-bar">
+                  {voortgang.count} {voortgang.count === 1 ? 'GESPREK' : 'GESPREKKEN'}
+                  {voortgang.lastDate ? ` · LAATSTE: ${formatLastDate(voortgang.lastDate).toUpperCase()}` : ''}
+                </div>
+                <Link href="/bot/geschiedenis" className="archief-btn">NAAR ARCHIEF</Link>
+              </>
             )}
           </div>
         )}
