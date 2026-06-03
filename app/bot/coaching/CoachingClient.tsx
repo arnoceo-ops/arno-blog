@@ -49,35 +49,8 @@ export default function CoachingClient({ userId }: Props) {
   const [generating, setGenerating] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const [stats, setStats] = useState<Stats | null>(null)
-  const [sharing, setSharing] = useState(false)
-  const [shared, setShared] = useState(false)
-  const [coachEmail, setCoachEmail] = useState('')
-  const [shareFormOpen, setShareFormOpen] = useState(false)
   const [analyses, setAnalyses] = useState<SavedAnalyse[]>([])
   const [uitdaging, setUitdaging] = useState<string | null>(null)
-
-  async function shareWithCoach() {
-    if (!coachEmail.includes('@')) return
-    setSharing(true)
-    setError(null)
-    try {
-      const res = await fetch('/api/bot/share-overview', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ coachEmail }),
-      })
-      const data = await res.json()
-      if (!res.ok || data.error) {
-        setError(data.error || 'Versturen mislukt. Probeer opnieuw.')
-      } else {
-        setShared(true)
-        setShareFormOpen(false)
-      }
-    } catch {
-      setError('Versturen mislukt. Controleer het e-mailadres.')
-    }
-    setSharing(false)
-  }
 
   useEffect(() => {
     fetch('/api/bot/coaching')
@@ -370,61 +343,10 @@ export default function CoachingClient({ userId }: Props) {
         )}
 
 
-        <div className="no-print" style={{ borderTop: '1px solid #1a1a1a', paddingTop: 40, marginTop: doc ? 48 : 0, display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: 20 }}>
+        <div className="no-print" style={{ borderTop: '1px solid #1a1a1a', paddingTop: 40, marginTop: doc ? 48 : 0 }}>
           <Link href="/bot" style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 18, letterSpacing: 3, color: '#EE7700', textDecoration: 'none' }}>
             ← TERUG NAAR DE BOT
           </Link>
-          <div className="no-print">
-            {shared ? (
-              <p style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 16, letterSpacing: 3, color: '#EE7700' }}>
-                ✓ VERSTUURD NAAR {coachEmail.toUpperCase()}
-              </p>
-            ) : shareFormOpen ? (
-              <div style={{ display: 'flex', flexDirection: 'column', gap: 10, alignItems: 'flex-end' }}>
-                {error && <p style={{ color: '#ff6644', fontSize: 12, letterSpacing: 1 }}>{error}</p>}
-                <input
-                  type="email"
-                  placeholder="e-mailadres van coach / manager"
-                  value={coachEmail}
-                  onChange={e => setCoachEmail(e.target.value)}
-                  onKeyDown={e => e.key === 'Enter' && shareWithCoach()}
-                  style={{
-                    background: '#111', border: '1px solid #333', color: '#f0ede6',
-                    fontFamily: "'Space Mono', monospace", fontSize: 13, letterSpacing: 1,
-                    padding: '10px 14px', outline: 'none', width: 280,
-                  }}
-                  onFocus={e => (e.target.style.borderColor = '#EE7700')}
-                  onBlur={e => (e.target.style.borderColor = '#333')}
-                  autoFocus
-                />
-                <div style={{ display: 'flex', gap: 8 }}>
-                  <button
-                    className="pdf-btn"
-                    onClick={() => setShareFormOpen(false)}
-                    style={{ fontSize: 14, padding: '10px 20px' }}
-                  >
-                    ANNULEER
-                  </button>
-                  <button
-                    className="generate-btn"
-                    onClick={shareWithCoach}
-                    disabled={sharing || !coachEmail.includes('@')}
-                    style={{ fontSize: 14, padding: '10px 20px' }}
-                  >
-                    {sharing ? 'VERSTUREN...' : 'VERSTUUR →'}
-                  </button>
-                </div>
-              </div>
-            ) : (
-              <button
-                className="generate-btn"
-                onClick={() => setShareFormOpen(true)}
-                style={{ fontSize: 16 }}
-              >
-                DEEL OVERZICHT →
-              </button>
-            )}
-          </div>
         </div>
       </div>
     </>
