@@ -339,16 +339,32 @@ export default function GeschiedenisPage() {
             onFocus={e => (e.target.style.borderColor = '#EE7700')}
             onBlur={e => (e.target.style.borderColor = '#2a2a2a')}
           />
-          <div style={{ display: 'flex', gap: 2 }}>
-            {(['newest', 'oldest', 'most'] as Sort[]).map(s => (
+          <div style={{ display: 'flex', gap: 2, justifyContent: 'space-between' }}>
+            <div style={{ display: 'flex', gap: 2 }}>
+              {(['newest', 'oldest', 'most'] as Sort[]).map(s => (
+                <button
+                  key={s}
+                  className={`sort-btn${sort === s ? ' active' : ''}`}
+                  onClick={() => setSort(s)}
+                >
+                  {s === 'newest' ? 'NIEUWSTE' : s === 'oldest' ? 'OUDSTE' : 'MEESTE VRAGEN'}
+                </button>
+              ))}
+            </div>
+            {sorted.length > 0 && (
               <button
-                key={s}
-                className={`sort-btn${sort === s ? ' active' : ''}`}
-                onClick={() => setSort(s)}
+                className="sort-btn"
+                onClick={() => {
+                  if (selected.size === sorted.length) {
+                    setSelected(new Set())
+                  } else {
+                    setSelected(new Set(sorted.map(s => s.session_id)))
+                  }
+                }}
               >
-                {s === 'newest' ? 'NIEUWSTE' : s === 'oldest' ? 'OUDSTE' : 'MEESTE VRAGEN'}
+                {selected.size === sorted.length ? 'DESELECTEER ALLES' : 'SELECTEER ALLES'}
               </button>
-            ))}
+            )}
           </div>
         </div>
 
