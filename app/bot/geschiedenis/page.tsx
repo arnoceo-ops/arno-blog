@@ -125,13 +125,11 @@ export default function GeschiedenisPage() {
     setConvLoading(false)
   }
 
-  async function runAnalyse() {
-    const useSelection = selected.size >= 3
-    if (!useSelection && sessions.length < 5) return
+  async function runAnalyse(sessionIds?: string[]) {
     setAnalyseLoading(true)
     setActiveAnalyse(null)
     try {
-      const body = useSelection ? { sessionIds: [...selected] } : {}
+      const body = sessionIds ? { sessionIds } : {}
       const res = await fetch('/api/bot/coaching-analyse', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -154,12 +152,8 @@ export default function GeschiedenisPage() {
   }
 
   const hasSelected = selected.size > 0
-  const canAnalyse = selected.size >= 3 || sessions.length >= 5
-  const analyseLabel = selected.size >= 3
-    ? `ANALYSEER SELECTIE (${selected.size}) →`
-    : sessions.length >= 5
-    ? `ANALYSEER ALLE ${sessions.length} GESPREKKEN →`
-    : null
+  const canAnalyse = sessions.length >= 5
+  const analyseLabel = sessions.length >= 5 ? `ANALYSEER ALLE ${sessions.length} GESPREKKEN →` : null
 
   return (
     <>
@@ -272,7 +266,7 @@ export default function GeschiedenisPage() {
               </div>
             ) : (
               <button
-                onClick={runAnalyse}
+                onClick={() => runAnalyse()}
                 disabled={analyseLoading}
                 style={{
                   background: 'none', border: '1px solid #EE7700', cursor: 'pointer',
@@ -510,6 +504,21 @@ export default function GeschiedenisPage() {
             <button className="delete-bar-cancel" onClick={() => setSelected(new Set())}>
               ANNULEER
             </button>
+            {selected.size >= 3 && (
+              <button
+                className="delete-bar-btn"
+                onClick={() => runAnalyse([...selected])}
+                disabled={analyseLoading}
+                style={{ background: 'none', border: '1px solid #EE7700', color: '#EE7700' }}
+              >
+                {analyseLoading ? 'ANALYSEREN...' : `ANALYSEER SELECTIE (${selected.size}) →`}
+              </button>
+            )}
+            {selected.size < 3 && (
+              <span style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 14, letterSpacing: 2, color: '#444' }}>
+                MIN. 3 VOOR ANALYSE
+              </span>
+            )}
             <button className="delete-bar-btn" onClick={deleteSelected} disabled={deleting}>
               {deleting ? 'VERWIJDEREN...' : `VERWIJDER ${selected.size === 1 ? 'GESPREK' : `${selected.size} GESPREKKEN`} →`}
             </button>
