@@ -306,8 +306,8 @@ export default function GeschiedenisPage() {
                           <span className="analyse-item-meta">
                             {formatDateShort(a.created_at)} · {a.session_count} {a.session_count === 1 ? 'GESPREK' : 'GESPREKKEN'}
                           </span>
-                          <span style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 14, letterSpacing: 2, color: 'rgb(136,136,136)' }}>
-                            {expandedAnalyse === a.id ? '↑' : '↓'}
+                          <span style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 18, letterSpacing: 2, color: expandedAnalyse === a.id ? '#EE7700' : 'rgb(136,136,136)', whiteSpace: 'nowrap' }}>
+                            {expandedAnalyse === a.id ? '↑ SLUITEN' : '↓ OPEN'}
                           </span>
                         </div>
                         {expandedAnalyse === a.id ? (
