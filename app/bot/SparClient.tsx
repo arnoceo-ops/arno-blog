@@ -58,6 +58,21 @@ const VRAGEN_OPERATIONEEL = [
   'Wanneer stop ik met verkopen en begin ik echt te overtuigen — en wat is het verschil?',
 ]
 
+const VRAGEN_ORGANISATORISCH = [
+  'Ik wil een topverkoper aannemen maar iedereen zegt dat hij moeilijk in de omgang is. Doe ik het of niet?',
+  'Hoe weet ik tijdens een sollicitatiegesprek of iemand echt honger heeft of alleen maar goed kan praten?',
+  'Mijn team presteert gemiddeld. Ligt dat aan de mensen of aan mij als leider?',
+  'Hoe weet ik of iemand slecht presteert door gebrek aan talent of door gebrek aan richting?',
+  'Wanneer is iemand een investering en wanneer is hij een kostenpost die ik meesleep?',
+  'Ik wil iemand ontslaan maar twijfel. Wat zegt die twijfel over mij?',
+  'Hoe bouw ik een salesteam dat ook zonder mij blijft presteren?',
+  'Mijn beste mensen vertrekken naar concurrenten. Wat bied ik ze niet wat zij wel bieden?',
+  'Wanneer investeer ik in de ontwikkeling van iemand en wanneer verspil ik mijn tijd?',
+  'Hoe zorg ik dat mijn nieuwe topverkoper over twee jaar nog steeds topverkoper is?',
+  'Mijn team accepteert middelmatigheid. Hoe doorbreek ik dat zonder iedereen kwijt te raken?',
+  'Wanneer is een bonussysteem motiverend en wanneer ondermijnt het precies wat ik wil bouwen?',
+]
+
 export default function SparClient({ userId, profiel, taglineTitle, taglineSub, openers }: Props) {
   const [messages, setMessages] = useState<Message[]>([])
   const [input, setInput] = useState('')
@@ -70,7 +85,7 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
   const [synthesisLoading, setSynthesisLoading] = useState(false)
   const [synthesisMessageCount, setSynthesisMessageCount] = useState(0)
   const isStrategischProfiel = STRATEGISCH_ROLLEN.includes((profiel?.rol as string) ?? '')
-  const [openerModus, setOpenerModus] = useState<'strategisch' | 'operationeel'>(
+  const [openerModus, setOpenerModus] = useState<'strategisch' | 'operationeel' | 'organisatorisch'>(
     isStrategischProfiel ? 'strategisch' : 'operationeel'
   )
   const bottomRef = useRef<HTMLDivElement>(null)
@@ -605,9 +620,13 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
                 className={`toggle-btn${openerModus === 'strategisch' ? ' active' : ''}`}
                 onClick={() => setOpenerModus('strategisch')}
               >STRATEGISCH</button>
+              <button
+                className={`toggle-btn${openerModus === 'organisatorisch' ? ' active' : ''}`}
+                onClick={() => setOpenerModus('organisatorisch')}
+              >ORGANISATORISCH</button>
             </div>
             <div className="openers-grid">
-              {(openerModus === 'strategisch' ? VRAGEN_STRATEGISCH : VRAGEN_OPERATIONEEL).map((q, i) => (
+              {(openerModus === 'strategisch' ? VRAGEN_STRATEGISCH : openerModus === 'organisatorisch' ? VRAGEN_ORGANISATORISCH : VRAGEN_OPERATIONEEL).map((q, i) => (
                 <button key={i} className="opener-btn" onClick={() => ask(q)}>{q}</button>
               ))}
             </div>
