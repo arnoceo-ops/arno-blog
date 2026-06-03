@@ -421,8 +421,9 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
 
         /* OPENERS */
         .spar-openers {
-          padding: 72px 60px 0;
+          padding: 72px 20px 0;
           border-bottom: 1px solid #1a1a1a;
+          display: flex; flex-direction: column; align-items: center;
         }
         .opener-toggle {
           display: flex; gap: 2px; margin-bottom: 2px; justify-content: center;
@@ -442,24 +443,21 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
         }
         .openers-grid {
           display: grid;
-          grid-template-columns: repeat(3, 1fr);
-          width: 100%;
+          grid-template-columns: repeat(2, 1fr);
+          width: 100%; max-width: 812px;
           gap: 2px;
           margin-bottom: 2px;
         }
-        @media (max-width: 900px) { .openers-grid { grid-template-columns: repeat(2, 1fr); } }
-        @media (max-width: 500px) { .openers-grid { grid-template-columns: 1fr; } }
+        @media (max-width: 560px) { .openers-grid { grid-template-columns: 1fr; } }
         .opener-btn {
           background: #111; border: none; color: #888;
           font-family: 'Bebas Neue', sans-serif;
-          font-size: clamp(20px, 1.8vw, 28px); letter-spacing: 1.5px;
-          padding: 32px 36px; cursor: pointer; text-align: left;
-          line-height: 1.25; transition: all 0.15s;
-          border-bottom: 2px solid transparent;
+          font-size: 22px; letter-spacing: 1px;
+          padding: 24px 28px; cursor: pointer; text-align: left;
+          line-height: 1.3; transition: all 0.15s;
         }
         .opener-btn:hover {
           background: #EE7700; color: #141414;
-          border-bottom-color: transparent;
         }
 
         /* GESPREK */
