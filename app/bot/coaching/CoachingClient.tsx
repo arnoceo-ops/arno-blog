@@ -54,7 +54,6 @@ export default function CoachingClient({ userId }: Props) {
   const [coachEmail, setCoachEmail] = useState('')
   const [shareFormOpen, setShareFormOpen] = useState(false)
   const [analyses, setAnalyses] = useState<SavedAnalyse[]>([])
-  const [expandedAnalyse, setExpandedAnalyse] = useState<string | null>(null)
   const [uitdaging, setUitdaging] = useState<string | null>(null)
 
   async function shareWithCoach() {
@@ -342,6 +341,12 @@ export default function CoachingClient({ userId }: Props) {
                     <div className="stat-number">{stats.totalQuestions}</div>
                     <div className="stat-label">VRAGEN GESTELD</div>
                   </div>
+                  {analyses.length > 0 && (
+                    <div className="stat-block">
+                      <div className="stat-number">{analyses.length}</div>
+                      <div className="stat-label">ANALYSES</div>
+                    </div>
+                  )}
                 </div>
               )}
               <p className="coaching-body">{doc.voortgang}</p>
@@ -364,45 +369,6 @@ export default function CoachingClient({ userId }: Props) {
           </div>
         )}
 
-        {/* Patroonanalyses */}
-        {analyses.length > 0 && (
-          <div className="coaching-section no-print">
-            <span className="coaching-label">Patroonanalyses</span>
-            <p style={{ color: 'rgb(136,136,136)', fontSize: 13, lineHeight: 1.7, marginBottom: 24 }}>
-              {analyses.length} {analyses.length === 1 ? 'analyse' : 'analyses'} — gebruikt als extra context bij het genereren van dit document.
-            </p>
-            {analyses.map(a => (
-              <div key={a.id} style={{ borderTop: '1px solid #1a1a1a' }}>
-                <button
-                  onClick={() => setExpandedAnalyse(expandedAnalyse === a.id ? null : a.id)}
-                  style={{ width: '100%', background: 'none', border: 'none', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 24, textAlign: 'left', padding: '20px 0' }}
-                >
-                  <span style={{ color: '#888', fontSize: 11, letterSpacing: 2, textTransform: 'uppercase', whiteSpace: 'nowrap', minWidth: 120, fontFamily: "'Space Mono', monospace" }}>
-                    {formatDate(a.created_at)}
-                  </span>
-                  <div style={{ flex: 1 }}>
-                    <p style={{ color: '#f0ede6', fontSize: 20, fontFamily: "'Bebas Neue', sans-serif", letterSpacing: 1, lineHeight: 1.4 }}>
-                      {getAnalyseTitle(a.analyse_text)}
-                    </p>
-                  </div>
-                  <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: 4, flexShrink: 0 }}>
-                    <span style={{ color: '#888', fontSize: 11, letterSpacing: 2, textTransform: 'uppercase', whiteSpace: 'nowrap', fontFamily: "'Space Mono', monospace" }}>
-                      {a.session_count} {a.session_count === 1 ? 'GESPREK' : 'GESPREKKEN'}
-                    </span>
-                    <span style={{ color: expandedAnalyse === a.id ? '#EE7700' : '#888', fontSize: 16, fontFamily: "'Bebas Neue', sans-serif", letterSpacing: 2 }}>
-                      {expandedAnalyse === a.id ? '↑ SLUITEN' : '↓ OPEN'}
-                    </span>
-                  </div>
-                </button>
-                {expandedAnalyse === a.id && (
-                  <p style={{ color: '#d0cdc6', fontSize: 15, lineHeight: 1.9, fontFamily: "'Space Mono', monospace", whiteSpace: 'pre-wrap', paddingBottom: 28 }}>
-                    {a.analyse_text}
-                  </p>
-                )}
-              </div>
-            ))}
-          </div>
-        )}
 
         <div className="no-print" style={{ borderTop: '1px solid #1a1a1a', paddingTop: 40, marginTop: doc ? 48 : 0, display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: 20 }}>
           <Link href="/bot" style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 18, letterSpacing: 3, color: '#EE7700', textDecoration: 'none' }}>
