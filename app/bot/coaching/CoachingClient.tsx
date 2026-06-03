@@ -236,19 +236,17 @@ export default function CoachingClient({ userId }: Props) {
       <BotNav active="coaching" />
 
       {uitdaging && (
-        <div className="no-print" style={{ borderBottom: '2px solid #EE7700', background: '#0d0d0d', padding: 'clamp(20px,4vw,32px) clamp(20px,6vw,60px)' }}>
-          <div style={{ maxWidth: 812, margin: '0 auto', display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', gap: 32, flexWrap: 'wrap' }}>
-            <div style={{ flex: 1, minWidth: 260 }}>
-              <span style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 11, letterSpacing: 4, color: '#EE7700', display: 'block', marginBottom: 12 }}>UITDAGING VAN VANDAAG</span>
-              <p style={{ fontFamily: "'Space Mono', monospace", fontSize: 15, lineHeight: 1.9, color: '#d0cdc6', maxWidth: 600, marginBottom: 20 }}>{uitdaging}</p>
-              <Link
-                href="/bot"
-                onClick={() => localStorage.setItem('arnobot_prefill', uitdaging)}
-                style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 16, letterSpacing: 3, color: '#EE7700', textDecoration: 'none' }}
-              >
-                GEBRUIK DEZE VRAAG →
-              </Link>
-            </div>
+        <div className="no-print" style={{ borderBottom: '2px solid #EE7700', background: '#0d0d0d', padding: 'clamp(72px,10vw,96px) clamp(20px,6vw,60px) clamp(32px,5vw,48px)' }}>
+          <div style={{ maxWidth: 812, margin: '0 auto', textAlign: 'center' }}>
+            <span style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 11, letterSpacing: 4, color: '#EE7700', display: 'block', marginBottom: 16 }}>UITDAGING VAN VANDAAG</span>
+            <p style={{ fontFamily: "'Space Mono', monospace", fontSize: 15, lineHeight: 1.9, color: '#d0cdc6', maxWidth: 600, margin: '0 auto 24px' }}>{uitdaging}</p>
+            <Link
+              href="/bot"
+              onClick={() => localStorage.setItem('arnobot_prefill', uitdaging)}
+              style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 16, letterSpacing: 3, color: '#EE7700', textDecoration: 'none' }}
+            >
+              GEBRUIK DEZE VRAAG →
+            </Link>
           </div>
         </div>
       )}
