@@ -401,7 +401,7 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
           color: #EE7700; white-space: nowrap; padding-top: 4px; min-width: 80px;
         }
         .msg-arno-text {
-          font-size: 15px; line-height: 2; color: #aaa;
+          font-size: 16px; line-height: 1.9; color: #d0cdc6;
           max-width: 680px; white-space: pre-wrap;
         }
 
