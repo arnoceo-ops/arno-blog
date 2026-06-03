@@ -341,17 +341,22 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
           font-family: 'Barlow', sans-serif;
           font-size: 26px; font-weight: 700; color: rgb(240, 237, 230);
           width: 100%; max-width: 812px;
-          display: block; margin-bottom: 16px; text-align: center;
+          display: block; margin-bottom: 20px; text-align: center;
         }
         .spar-discipline-label {
           font-family: 'Barlow', sans-serif;
           font-size: 26px; font-weight: 700; color: rgb(240, 237, 230);
-          display: block; margin-bottom: 16px; text-align: center; width: 100%;
+          display: block; margin-bottom: 20px; text-align: center; width: 100%;
+        }
+        .spar-questions-label {
+          font-family: 'Barlow', sans-serif;
+          font-size: 26px; font-weight: 700; color: rgb(240, 237, 230);
+          display: block; margin-top: 48px; margin-bottom: 20px; text-align: center; width: 100%;
         }
 
         /* OPENERS */
         .spar-openers {
-          padding: 56px 60px 0;
+          padding: 72px 60px 0;
           border-bottom: 1px solid #1a1a1a;
         }
         .opener-toggle {
@@ -618,7 +623,7 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
 
         {!started && !loading && (
           <div className="spar-openers">
-            <span className="spar-discipline-label">kies een discipline</span>
+            <span className="spar-discipline-label">of kies een discipline</span>
             <div className="opener-toggle">
               <button
                 className={`toggle-btn${openerModus === 'operationeel' ? ' active' : ''}`}
@@ -633,6 +638,7 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
                 onClick={() => setOpenerModus('organisatorisch')}
               >ORGANISATORISCH</button>
             </div>
+            <span className="spar-questions-label">en selecteer een van de vragen</span>
             <div className="openers-grid">
               {(openerModus === 'strategisch' ? VRAGEN_STRATEGISCH : openerModus === 'organisatorisch' ? VRAGEN_ORGANISATORISCH : VRAGEN_OPERATIONEEL).map((q, i) => (
                 <button key={i} className="opener-btn" onClick={() => ask(q)}>{q}</button>
