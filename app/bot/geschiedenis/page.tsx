@@ -21,7 +21,7 @@ interface ConvMessage {
 interface SavedAnalyse {
   id: string
   created_at: string
-  analyse: string
+  analyse_text: string
   session_count: number
 }
 
@@ -142,7 +142,7 @@ export default function GeschiedenisPage() {
           setSavedAnalyses(prev => [{
             id: data.id,
             created_at: data.created_at,
-            analyse: data.analyse,
+            analyse_text: data.analyse,
             session_count: data.count,
           }, ...prev])
         }
@@ -310,9 +310,9 @@ export default function GeschiedenisPage() {
                           </span>
                         </div>
                         {expandedAnalyse === a.id ? (
-                          <p className="analyse-item-full">{a.analyse}</p>
+                          <p className="analyse-item-full">{a.analyse_text}</p>
                         ) : (
-                          <p className="analyse-item-preview">{a.analyse}</p>
+                          <p className="analyse-item-preview">{a.analyse_text}</p>
                         )}
                       </div>
                     ))}

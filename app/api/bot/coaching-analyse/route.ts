@@ -56,7 +56,7 @@ export async function POST(req: NextRequest) {
     .from('arnobot_analyses')
     .insert({
       user_id: userId,
-      analyse,
+      analyse_text: analyse,
       session_count: sessions.length,
       session_ids: sessions.map(s => s.session_id),
     })
