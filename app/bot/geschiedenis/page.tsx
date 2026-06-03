@@ -39,7 +39,7 @@ function formatDateShort(iso: string) {
   return new Date(iso).toLocaleDateString('nl-NL', { day: 'numeric', month: 'short', year: 'numeric' })
 }
 
-type Sort = 'newest' | 'oldest' | 'most'
+type Sort = 'newest' | 'oldest' | 'most' | 'least'
 
 export default function GeschiedenisPage() {
   const [sessions, setSessions] = useState<Session[]>([])
@@ -77,6 +77,7 @@ export default function GeschiedenisPage() {
   const sorted = [...filtered].sort((a, b) => {
     if (sort === 'oldest') return new Date(a.created_at).getTime() - new Date(b.created_at).getTime()
     if (sort === 'most') return b.message_count - a.message_count
+    if (sort === 'least') return a.message_count - b.message_count
     return new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
   })
 
@@ -341,13 +342,13 @@ export default function GeschiedenisPage() {
           />
           <div style={{ display: 'flex', gap: 2, justifyContent: 'space-between' }}>
             <div style={{ display: 'flex', gap: 2 }}>
-              {(['newest', 'oldest', 'most'] as Sort[]).map(s => (
+              {(['newest', 'oldest', 'most', 'least'] as Sort[]).map(s => (
                 <button
                   key={s}
                   className={`sort-btn${sort === s ? ' active' : ''}`}
                   onClick={() => setSort(s)}
                 >
-                  {s === 'newest' ? 'NIEUWSTE' : s === 'oldest' ? 'OUDSTE' : 'MEESTE VRAGEN'}
+                  {s === 'newest' ? 'NIEUWSTE' : s === 'oldest' ? 'OUDSTE' : s === 'most' ? 'MEESTE VRAGEN' : 'MINSTE VRAGEN'}
                 </button>
               ))}
             </div>
