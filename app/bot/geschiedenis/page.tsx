@@ -199,7 +199,7 @@ export default function GeschiedenisPage() {
           transition: all 0.15s; padding: 14px 0;
           width: 310px; text-align: center;
         }
-        .delete-bar-cancel:hover { color: #888; }
+        .delete-bar-cancel:hover { border-color: #EE7700; color: #EE7700; }
         .delete-bar-btn {
           background: #EE7700; border: 1px solid #EE7700; cursor: pointer;
           font-family: 'Bebas Neue', sans-serif;
