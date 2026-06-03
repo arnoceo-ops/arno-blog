@@ -35,6 +35,8 @@ export default function GeschiedenisPage() {
   const [expanded, setExpanded] = useState<string | null>(null)
   const [convMessages, setConvMessages] = useState<ConvMessage[]>([])
   const [convLoading, setConvLoading] = useState(false)
+  const [deletingId, setDeletingId] = useState<string | null>(null)
+  const [deleteConfirmId, setDeleteConfirmId] = useState<string | null>(null)
 
   useEffect(() => {
     fetch('/api/bot/sessions')
@@ -49,7 +51,26 @@ export default function GeschiedenisPage() {
     s.summary?.toLowerCase().includes(search.toLowerCase())
   )
 
+  async function deleteSession(sessionId: string) {
+    if (deleteConfirmId !== sessionId) {
+      setDeleteConfirmId(sessionId)
+      return
+    }
+    setDeletingId(sessionId)
+    setDeleteConfirmId(null)
+    try {
+      await fetch(`/api/bot/session?sessionId=${sessionId}`, { method: 'DELETE' })
+      setSessions(prev => prev.filter(s => s.session_id !== sessionId))
+      if (expanded === sessionId) {
+        setExpanded(null)
+        setConvMessages([])
+      }
+    } catch {}
+    setDeletingId(null)
+  }
+
   async function toggleSession(sessionId: string) {
+    setDeleteConfirmId(null)
     if (expanded === sessionId) {
       setExpanded(null)
       setConvMessages([])
@@ -131,36 +152,58 @@ export default function GeschiedenisPage() {
           <div key={session.session_id} style={{ borderTop: '1px solid #1a1a1a', animation: 'fadein 0.3s ease' }}>
 
             {/* Klikbare header */}
-            <button
-              onClick={() => toggleSession(session.session_id)}
-              style={{
-                width: '100%', background: 'none', border: 'none', cursor: 'pointer',
-                padding: '28px 0', display: 'flex', alignItems: 'flex-start',
-                gap: 24, textAlign: 'left',
-              }}
-            >
-              <span style={{ color: '#333', fontSize: 11, letterSpacing: 2, textTransform: 'uppercase', whiteSpace: 'nowrap', paddingTop: 4, minWidth: 120 }}>
-                {formatDate(session.created_at)}
-              </span>
-              <div style={{ flex: 1 }}>
-                <p style={{ color: '#f0ede6', fontSize: 15, fontFamily: "'Space Mono', monospace", fontWeight: 700, lineHeight: 1.5, marginBottom: session.summary ? 8 : 0 }}>
-                  {session.title}
-                </p>
-                {session.summary && (
-                  <p style={{ color: '#555', fontSize: 13, lineHeight: 1.8, display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}>
-                    {session.summary}
+            <div style={{ display: 'flex', alignItems: 'flex-start', gap: 8 }}>
+              <button
+                onClick={() => toggleSession(session.session_id)}
+                style={{
+                  flex: 1, background: 'none', border: 'none', cursor: 'pointer',
+                  padding: '28px 0', display: 'flex', alignItems: 'flex-start',
+                  gap: 24, textAlign: 'left',
+                }}
+              >
+                <span style={{ color: '#333', fontSize: 11, letterSpacing: 2, textTransform: 'uppercase', whiteSpace: 'nowrap', paddingTop: 4, minWidth: 120 }}>
+                  {formatDate(session.created_at)}
+                </span>
+                <div style={{ flex: 1 }}>
+                  <p style={{ color: '#f0ede6', fontSize: 15, fontFamily: "'Space Mono', monospace", fontWeight: 700, lineHeight: 1.5, marginBottom: session.summary ? 8 : 0 }}>
+                    {session.title}
                   </p>
-                )}
-              </div>
-              <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: 8, paddingTop: 2 }}>
-                <span style={{ color: '#333', fontSize: 10, letterSpacing: 2, textTransform: 'uppercase', whiteSpace: 'nowrap' }}>
-                  {session.message_count} {session.message_count === 1 ? 'vraag' : 'vragen'}
-                </span>
-                <span style={{ color: expanded === session.session_id ? '#EE7700' : '#333', fontSize: 18, fontFamily: "'Bebas Neue', sans-serif", letterSpacing: 2 }}>
-                  {expanded === session.session_id ? '↑ SLUITEN' : '↓ OPEN'}
-                </span>
-              </div>
-            </button>
+                  {session.summary && (
+                    <p style={{ color: '#555', fontSize: 13, lineHeight: 1.8, display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}>
+                      {session.summary}
+                    </p>
+                  )}
+                </div>
+                <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: 8, paddingTop: 2 }}>
+                  <span style={{ color: '#333', fontSize: 10, letterSpacing: 2, textTransform: 'uppercase', whiteSpace: 'nowrap' }}>
+                    {session.message_count} {session.message_count === 1 ? 'vraag' : 'vragen'}
+                  </span>
+                  <span style={{ color: expanded === session.session_id ? '#EE7700' : '#333', fontSize: 18, fontFamily: "'Bebas Neue', sans-serif", letterSpacing: 2 }}>
+                    {expanded === session.session_id ? '↑ SLUITEN' : '↓ OPEN'}
+                  </span>
+                </div>
+              </button>
+              <button
+                onClick={() => deleteSession(session.session_id)}
+                disabled={deletingId === session.session_id}
+                style={{
+                  background: 'none', border: 'none', cursor: 'pointer',
+                  padding: '28px 0 28px 8px', alignSelf: 'flex-start',
+                  fontFamily: "'Bebas Neue', sans-serif",
+                  fontSize: 13, letterSpacing: 2,
+                  color: deleteConfirmId === session.session_id ? '#ff4444' : '#2a2a2a',
+                  whiteSpace: 'nowrap', transition: 'color 0.15s',
+                }}
+                onMouseEnter={e => { if (deleteConfirmId !== session.session_id) (e.currentTarget as HTMLButtonElement).style.color = '#555' }}
+                onMouseLeave={e => { if (deleteConfirmId !== session.session_id) (e.currentTarget as HTMLButtonElement).style.color = '#2a2a2a' }}
+              >
+                {deletingId === session.session_id
+                  ? '...'
+                  : deleteConfirmId === session.session_id
+                  ? 'BEVESTIG ×'
+                  : '×'}
+              </button>
+            </div>
 
             {/* Uitgevouwen inhoud */}
             {expanded === session.session_id && (

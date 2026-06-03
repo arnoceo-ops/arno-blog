@@ -35,3 +35,25 @@ export async function GET(req: NextRequest) {
 
   return NextResponse.json({ messages, history })
 }
+
+export async function DELETE(req: NextRequest) {
+  const { userId } = await auth()
+  if (!userId) return NextResponse.json({ error: 'Niet ingelogd' }, { status: 401 })
+
+  const sessionId = req.nextUrl.searchParams.get('sessionId')
+  if (!sessionId) return NextResponse.json({ error: 'Geen sessionId' }, { status: 400 })
+
+  await supabase
+    .from('arnobot_blog_sessions')
+    .delete()
+    .eq('user_id', userId)
+    .eq('session_id', sessionId)
+
+  await supabase
+    .from('arnobot_blog_logs')
+    .delete()
+    .eq('user_id', userId)
+    .eq('session_id', sessionId)
+
+  return NextResponse.json({ ok: true })
+}
