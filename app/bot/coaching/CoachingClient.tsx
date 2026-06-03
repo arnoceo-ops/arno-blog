@@ -15,6 +15,11 @@ interface CoachingDoc {
   updated_at?: string
 }
 
+interface Stats {
+  sessionCount: number
+  totalQuestions: number
+}
+
 interface Props {
   userId: string
 }
@@ -28,12 +33,23 @@ export default function CoachingClient({ userId }: Props) {
   const [loading, setLoading] = useState(true)
   const [generating, setGenerating] = useState(false)
   const [error, setError] = useState<string | null>(null)
+  const [stats, setStats] = useState<Stats | null>(null)
 
   useEffect(() => {
     fetch('/api/bot/coaching')
       .then(r => r.json())
       .then(data => setDoc(data.coaching))
       .finally(() => setLoading(false))
+    fetch('/api/bot/sessions')
+      .then(r => r.json())
+      .then(data => {
+        const sessions = data.sessions ?? []
+        setStats({
+          sessionCount: sessions.length,
+          totalQuestions: sessions.reduce((sum: number, s: { message_count?: number }) => sum + (s.message_count || 0), 0),
+        })
+      })
+      .catch(() => {})
   }, [])
 
   async function generate() {
@@ -119,6 +135,27 @@ export default function CoachingClient({ userId }: Props) {
         }
         .generate-btn:hover:not(:disabled) { background: #EE7700; color: #0a0a0a; }
         .generate-btn:disabled { border-color: #333; color: #444; cursor: not-allowed; }
+        .pdf-btn {
+          background: none; border: 1px solid #333; cursor: pointer;
+          font-family: 'Bebas Neue', sans-serif;
+          font-size: 18px; letter-spacing: 3px;
+          color: #555; padding: 12px 28px; transition: all 0.2s;
+        }
+        .pdf-btn:hover { border-color: #666; color: #888; }
+        .stat-block { text-align: center; }
+        .stat-number { font-family: 'Bebas Neue', sans-serif; font-size: 56px; color: #EE7700; line-height: 1; }
+        .stat-label { font-family: 'Bebas Neue', sans-serif; font-size: 12px; letter-spacing: 4px; color: #444; margin-top: 4px; }
+        @media print {
+          body { background: #fff !important; color: #000 !important; }
+          .no-print { display: none !important; }
+          .coaching-label { color: #EE7700 !important; }
+          .coaching-body { color: #333 !important; }
+          .ontwikkelpunt-text { color: #000 !important; }
+          .opdracht-box { background: #f5f5f5 !important; border-left: 3px solid #EE7700 !important; }
+          .opdracht-text { color: #000 !important; }
+          .blog-item { color: #333 !important; border-left-color: #EE7700 !important; }
+          .coaching-section { border-top-color: #ddd !important; }
+        }
         .loading-dot {
           width: 8px; height: 8px; background: #EE7700; border-radius: 50%;
           animation: pulse 1.2s ease-in-out infinite; display: inline-block; margin: 0 3px;
@@ -149,15 +186,22 @@ export default function CoachingClient({ userId }: Props) {
             )}
             {error && <p style={{ color: '#ff6644', fontSize: 13, letterSpacing: 1, marginTop: 8 }}>{error}</p>}
           </div>
-          <button className="generate-btn" onClick={generate} disabled={generating || loading}>
-            {generating ? (
-              <span>
-                <span className="loading-dot" />
-                <span className="loading-dot" />
-                <span className="loading-dot" />
-              </span>
-            ) : doc ? 'VERNIEUW COACHING →' : 'GENEREER COACHING →'}
-          </button>
+          <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap' }}>
+            {doc && (
+              <button className="pdf-btn no-print" onClick={() => window.print()}>
+                DOWNLOAD PDF ↓
+              </button>
+            )}
+            <button className="generate-btn no-print" onClick={generate} disabled={generating || loading}>
+              {generating ? (
+                <span>
+                  <span className="loading-dot" />
+                  <span className="loading-dot" />
+                  <span className="loading-dot" />
+                </span>
+              ) : doc ? 'VERNIEUW COACHING →' : 'GENEREER COACHING →'}
+            </button>
+          </div>
         </div>
 
         {loading && (
@@ -203,6 +247,18 @@ export default function CoachingClient({ userId }: Props) {
             {/* Voortgang */}
             <div className="coaching-section">
               <span className="coaching-label">Jouw voortgang</span>
+              {stats && (
+                <div style={{ display: 'flex', gap: 48, marginBottom: 32 }}>
+                  <div className="stat-block">
+                    <div className="stat-number">{stats.sessionCount}</div>
+                    <div className="stat-label">GESPREKKEN GEVOERD</div>
+                  </div>
+                  <div className="stat-block">
+                    <div className="stat-number">{stats.totalQuestions}</div>
+                    <div className="stat-label">VRAGEN GESTELD</div>
+                  </div>
+                </div>
+              )}
               <p className="coaching-body">{doc.voortgang}</p>
             </div>
 
@@ -223,7 +279,7 @@ export default function CoachingClient({ userId }: Props) {
           </div>
         )}
 
-        <div style={{ borderTop: '1px solid #1a1a1a', paddingTop: 40, marginTop: doc ? 48 : 0 }}>
+        <div className="no-print" style={{ borderTop: '1px solid #1a1a1a', paddingTop: 40, marginTop: doc ? 48 : 0 }}>
           <Link href="/bot" style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 18, letterSpacing: 3, color: '#EE7700', textDecoration: 'none' }}>
             ← TERUG NAAR DE BOT
           </Link>
