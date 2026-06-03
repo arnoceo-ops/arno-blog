@@ -408,7 +408,7 @@ export default function GeschiedenisPage() {
                     display: 'flex', alignItems: 'center', gap: 24, textAlign: 'left', padding: 0,
                   }}
                 >
-                  <span style={{ color: '#888', fontSize: 12, letterSpacing: 2, textTransform: 'uppercase', whiteSpace: 'nowrap', minWidth: 120, fontFamily: "'Space Mono', monospace" }}>
+                  <span style={{ color: '#888', fontSize: 11, letterSpacing: 2, textTransform: 'uppercase', whiteSpace: 'nowrap', minWidth: 120, fontFamily: "'Space Mono', monospace" }}>
                     {formatDate(session.created_at)}
                   </span>
                   <div style={{ flex: 1 }}>
