@@ -458,6 +458,8 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
         .spar-input-row {
           display: flex; gap: 0;
           border: 2px solid #EE7700;
+          border-radius: 999px;
+          overflow: hidden;
           width: 100%; max-width: 812px;
         }
         .spar-textarea {
@@ -559,6 +561,7 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
           font-family: 'Bebas Neue', sans-serif;
           font-size: 16px; letter-spacing: 3px;
           padding: 10px 24px; cursor: pointer;
+          border-radius: 999px;
           transition: all 0.15s;
         }
         .toggle-btn:hover { color: #888; }
@@ -679,6 +682,7 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
           font-family: 'Bebas Neue', sans-serif;
           font-size: 15px; letter-spacing: 2px;
           padding: 10px 20px; cursor: pointer; transition: all 0.15s;
+          border-radius: 999px;
         }
         .msg-action-btn.primary {
           color: #EE7700; border-color: #EE7700;
@@ -788,6 +792,7 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
           padding: 10px 24px; cursor: pointer;
           transition: all 0.15s; text-decoration: none;
           display: inline-block; margin-bottom: 40px;
+          border-radius: 999px;
         }
         .archief-btn:hover { color: #f0ede6; background: #1a1a1a; }
       `}</style>

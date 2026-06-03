@@ -176,6 +176,7 @@ export default function GeschiedenisPage() {
           font-family: 'Bebas Neue', sans-serif;
           font-size: 15px; letter-spacing: 3px;
           padding: 9px 20px; cursor: pointer; transition: all 0.15s;
+          border-radius: 999px;
         }
         .sort-btn:hover { color: #888; }
         .sort-btn.active { background: #1a1a1a; color: #f0ede6; }
@@ -197,7 +198,7 @@ export default function GeschiedenisPage() {
           font-family: 'Bebas Neue', sans-serif;
           font-size: 20px; letter-spacing: 3px; color: #444;
           transition: all 0.15s; padding: 14px 0;
-          width: 310px; text-align: center;
+          width: 310px; text-align: center; border-radius: 999px;
         }
         .delete-bar-cancel:hover { border-color: #EE7700; color: #EE7700; }
         .delete-bar-btn {
@@ -205,7 +206,7 @@ export default function GeschiedenisPage() {
           font-family: 'Bebas Neue', sans-serif;
           font-size: 20px; letter-spacing: 3px; color: #0a0a0a;
           padding: 14px 0; transition: background 0.15s;
-          width: 310px; text-align: center;
+          width: 310px; text-align: center; border-radius: 999px;
         }
         .delete-bar-btn:hover { background: #ff8800; border-color: #ff8800; }
         .delete-bar-btn:disabled { background: #333; border-color: #333; color: #555; cursor: not-allowed; }
@@ -213,14 +214,14 @@ export default function GeschiedenisPage() {
           width: 310px; padding: 14px 0; text-align: center;
           font-family: 'Bebas Neue', sans-serif;
           font-size: 20px; letter-spacing: 3px; color: #333;
-          border: 1px solid #222;
+          border: 1px solid #222; border-radius: 999px;
         }
         .delete-bar-outline {
           background: none; border: 1px solid #EE7700; cursor: pointer;
           font-family: 'Bebas Neue', sans-serif;
           font-size: 20px; letter-spacing: 3px; color: #EE7700;
           padding: 14px 0; transition: all 0.15s;
-          width: 310px; text-align: center;
+          width: 310px; text-align: center; border-radius: 999px;
         }
         .delete-bar-outline:hover { background: #EE7700; color: #0a0a0a; }
         .delete-bar-outline:disabled { border-color: #333; color: #444; cursor: not-allowed; }

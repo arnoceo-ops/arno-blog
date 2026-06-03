@@ -151,6 +151,7 @@ export default function CoachingClient({ userId }: Props) {
           font-family: 'Bebas Neue', sans-serif;
           font-size: 18px; letter-spacing: 3px;
           color: #EE7700; padding: 12px 28px; transition: all 0.2s;
+          border-radius: 999px;
         }
         .generate-btn:hover:not(:disabled) { background: #EE7700; color: #0a0a0a; }
         .generate-btn:disabled { border-color: #333; color: #444; cursor: not-allowed; }
@@ -159,6 +160,7 @@ export default function CoachingClient({ userId }: Props) {
           font-family: 'Bebas Neue', sans-serif;
           font-size: 18px; letter-spacing: 3px;
           color: #555; padding: 12px 28px; transition: all 0.2s;
+          border-radius: 999px;
         }
         .pdf-btn:hover { border-color: #666; color: #888; }
         .stat-block { text-align: center; }
