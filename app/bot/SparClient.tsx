@@ -763,19 +763,19 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
         /* VOORTGANG BAR */
         .voortgang-bar {
           text-align: center; padding: 48px 0 16px;
-          color: #555; font-family: 'Bebas Neue', sans-serif;
-          font-size: 13px; letter-spacing: 3px;
+          color: rgb(136,136,136); font-family: 'Bebas Neue', sans-serif;
+          font-size: 15px; letter-spacing: 3px;
         }
         .archief-btn {
-          background: #111; border: none; color: #444;
+          background: none; border: 1px solid #444; color: #888;
           font-family: 'Bebas Neue', sans-serif;
           font-size: 16px; letter-spacing: 3px;
           padding: 10px 24px; cursor: pointer;
-          transition: all 0.15s; text-decoration: none;
+          transition: all 0.2s; text-decoration: none;
           display: inline-block; margin-bottom: 40px;
           border-radius: 999px;
         }
-        .archief-btn:hover { color: #f0ede6; background: #1a1a1a; }
+        .archief-btn:hover { background: #EE7700; border-color: #EE7700; color: #141414; }
       `}</style>
 
       {isMobile ? (
