@@ -176,10 +176,10 @@ export default function CoachingClient({ userId }: Props) {
         .generate-btn:hover:not(:disabled) { background: #EE7700; color: #0a0a0a; }
         .generate-btn:disabled { border-color: #333; color: #444; cursor: not-allowed; }
         .pdf-btn {
-          background: none; border: 1px solid #333; cursor: pointer;
+          background: none; border: 1px solid #555; cursor: pointer;
           font-family: 'Bebas Neue', sans-serif;
           font-size: 18px; letter-spacing: 3px;
-          color: #555; padding: 12px 28px; transition: all 0.2s;
+          color: #888; padding: 12px 28px; transition: all 0.2s;
           border-radius: 999px; min-width: 220px;
         }
         .pdf-btn:hover { border-color: #EE7700; color: #EE7700; }

@@ -64,7 +64,7 @@ export default function AccountPage() {
   const section: React.CSSProperties = { borderTop: '1px solid #1e1e1e', paddingTop: '32px', marginBottom: '48px' }
   const label: React.CSSProperties = { color: '#EE7700', fontSize: '13px', letterSpacing: '4px', marginBottom: '8px' }
   const body: React.CSSProperties = { color: '#f0ede6', opacity: 0.5, fontSize: '15px', lineHeight: '1.8', maxWidth: 480, marginBottom: '24px' }
-  const btn: React.CSSProperties = { padding: '12px 28px', width: '260px', textAlign: 'center', border: '1px solid #EE7700', background: 'none', color: '#EE7700', fontFamily: "'Bebas Neue', sans-serif", fontSize: '18px', letterSpacing: '3px', cursor: 'pointer', transition: 'all 0.2s', borderRadius: '999px' }
+  const btn: React.CSSProperties = { padding: '12px 28px', width: '260px', textAlign: 'center', border: '1px solid #555', background: 'none', color: '#888', fontFamily: "'Bebas Neue', sans-serif", fontSize: '18px', letterSpacing: '3px', cursor: 'pointer', transition: 'all 0.2s', borderRadius: '999px' }
 
   return (
     <>
@@ -122,7 +122,7 @@ export default function AccountPage() {
           <button
             onClick={handleExport}
             disabled={exporting}
-            style={{ ...btn, borderColor: exporting ? '#333' : '#EE7700', color: exporting ? '#444' : '#EE7700', cursor: exporting ? 'not-allowed' : 'pointer' }}
+            style={{ ...btn, borderColor: exporting ? '#333' : '#555', color: exporting ? '#444' : '#888', cursor: exporting ? 'not-allowed' : 'pointer' }}
           >
             {exporting ? 'EXPORTEREN...' : 'DOWNLOAD MIJN DATA'}
           </button>
