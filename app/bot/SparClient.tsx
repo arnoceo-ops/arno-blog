@@ -8,7 +8,9 @@ function formatLastDate(iso: string | null): string {
   if (!iso) return ''
   const d = new Date(iso)
   const now = new Date()
-  const diffDays = Math.floor((now.getTime() - d.getTime()) / (1000 * 60 * 60 * 24))
+  const dDay = new Date(d.getFullYear(), d.getMonth(), d.getDate())
+  const nowDay = new Date(now.getFullYear(), now.getMonth(), now.getDate())
+  const diffDays = Math.round((nowDay.getTime() - dDay.getTime()) / (1000 * 60 * 60 * 24))
   if (diffDays === 0) return 'vandaag'
   if (diffDays === 1) return 'gisteren'
   if (diffDays < 7) return `${diffDays} dagen geleden`
