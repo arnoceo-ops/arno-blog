@@ -19,10 +19,9 @@ const navStyle = {
 }
 
 const logoutBtnStyle: React.CSSProperties = {
-  fontFamily: "'Bebas Neue', sans-serif", fontSize: 18, letterSpacing: 3,
-  color: '#888', background: 'none', border: '1px solid #555',
-  padding: '6px 20px', borderRadius: 999, cursor: 'pointer',
-  transition: 'all 0.2s', marginLeft: 'auto',
+  fontFamily: "'Bebas Neue', sans-serif", fontSize: 22, letterSpacing: 3,
+  color: '#888', background: 'none', border: 'none',
+  padding: 0, cursor: 'pointer', transition: 'color 0.2s',
 }
 
 const linkBase: React.CSSProperties = {
@@ -101,14 +100,16 @@ export default function BotNav({ active }: Props) {
           ? <span style={{ ...linkBase, color: '#EE7700' }}>ACCOUNT</span>
           : <Link href="/bot/account" style={linkBase}>ACCOUNT</Link>}
       </div>
-      <button
-        style={logoutBtnStyle}
-        onMouseEnter={e => { (e.target as HTMLButtonElement).style.color = '#EE7700'; (e.target as HTMLButtonElement).style.borderColor = '#EE7700' }}
-        onMouseLeave={e => { (e.target as HTMLButtonElement).style.color = '#888'; (e.target as HTMLButtonElement).style.borderColor = '#555' }}
-        onClick={() => signOut(() => router.push('/'))}
-      >
-        UITLOGGEN
-      </button>
+      <div style={{ flex: 1, display: 'flex', justifyContent: 'flex-end' }}>
+        <button
+          style={logoutBtnStyle}
+          onMouseEnter={e => { (e.target as HTMLButtonElement).style.color = '#f0ede6' }}
+          onMouseLeave={e => { (e.target as HTMLButtonElement).style.color = '#888' }}
+          onClick={() => signOut(() => router.push('/'))}
+        >
+          UITLOGGEN
+        </button>
+      </div>
     </nav>
   )
 }
