@@ -158,7 +158,7 @@ export default function AccountPage() {
                   disabled={deleteInput !== 'VERWIJDER' || deleting}
                   style={{ ...btn, background: deleteInput === 'VERWIJDER' && !deleting ? '#cc2200' : '#1a1a1a', color: deleteInput === 'VERWIJDER' && !deleting ? '#fff' : '#444', cursor: deleteInput === 'VERWIJDER' && !deleting ? 'pointer' : 'not-allowed' }}
                 >
-                  {deleting ? 'VERWIJDEREN...' : 'BEVESTIG VERWIJDERING'}
+                  {deleting ? 'VERWIJDEREN...' : 'VERWIJDER'}
                 </button>
                 <button
                   onClick={() => { setDeleteConfirm(false); setDeleteInput('') }}
