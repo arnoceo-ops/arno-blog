@@ -13,17 +13,16 @@ interface Props {
 const navStyle = {
   position: 'fixed' as const, top: 0, left: 0, right: 0, zIndex: 100,
   padding: '0 40px', height: 64,
-  display: 'flex', justifyContent: 'center', alignItems: 'center',
+  display: 'flex', alignItems: 'center',
   borderBottom: '1px solid rgba(255,255,255,0.06)',
   background: 'rgba(10,10,10,0.95)', backdropFilter: 'blur(12px)',
 }
 
 const logoutBtnStyle: React.CSSProperties = {
-  position: 'absolute', right: 40,
   fontFamily: "'Bebas Neue', sans-serif", fontSize: 18, letterSpacing: 3,
   color: '#888', background: 'none', border: '1px solid #555',
   padding: '6px 20px', borderRadius: 999, cursor: 'pointer',
-  transition: 'all 0.2s',
+  transition: 'all 0.2s', marginLeft: 'auto',
 }
 
 const linkBase: React.CSSProperties = {
@@ -86,6 +85,7 @@ export default function BotNav({ active }: Props) {
 
   return (
     <nav style={navStyle}>
+      <div style={{ flex: 1 }} />
       <div style={{ display: 'flex', gap: 48, alignItems: 'center' }}>
         <Link href="/" style={linkBase}>HOME</Link>
         {active === 'bot'

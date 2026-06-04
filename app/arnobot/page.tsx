@@ -12,15 +12,17 @@ export default function ArnoBotLandingPage() {
         /* ── NAV ── */
         .site-nav {
           position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-          padding: 16px 40px; display: flex; justify-content: center; align-items: center;
+          padding: 0 40px; height: 60px; display: flex; align-items: center;
           border-bottom: 1px solid rgba(255,255,255,0.06);
           background: rgba(10,10,10,0.9); backdrop-filter: blur(12px);
         }
+        .nav-spacer { flex: 1; }
         .nav-login {
-          position: absolute; right: 40px;
+          flex: 1; display: flex; justify-content: flex-end;
           font-family: 'Bebas Neue', sans-serif; font-size: 18px; letter-spacing: 3px;
           color: #888; text-decoration: none; border: 1px solid #555;
           padding: 6px 20px; border-radius: 999px; transition: all 0.2s;
+          width: fit-content; margin-left: auto;
         }
         .nav-login:hover { color: #EE7700; border-color: #EE7700; }
         .nav-links { display: flex; gap: 48px; align-items: center; }
@@ -207,6 +209,7 @@ export default function ArnoBotLandingPage() {
 
       {/* NAV */}
       <nav className="site-nav">
+        <div className="nav-spacer" />
         <div className="nav-links">
           <Link href="/">HOME</Link>
           <Link href="/bio">ARNO</Link>
@@ -214,7 +217,9 @@ export default function ArnoBotLandingPage() {
           <a href="https://salescanvas.app" target="_blank" rel="noopener noreferrer">CANVAS</a>
           <a href="https://arno.blog/subscribe" target="_blank" rel="noopener noreferrer" className="nav-cta">SUBSCRIBE</a>
         </div>
-        <Link href="/sign-in" className="nav-login">LOGIN</Link>
+        <div className="nav-spacer" style={{ display: 'flex', justifyContent: 'flex-end' }}>
+          <Link href="/sign-in" className="nav-login">LOGIN</Link>
+        </div>
       </nav>
 
       {/* INTRO */}
