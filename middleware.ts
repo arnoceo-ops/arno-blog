@@ -61,6 +61,8 @@ export default clerkMiddleware(async (auth, req) => {
             const newRow = {
               user_id: userId,
               email: email || null,
+              voornaam: clerkUser.firstName || null,
+              achternaam: clerkUser.lastName || null,
               trial_start: new Date().toISOString(),
               is_active: true,
             }
