@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import Link from 'next/link'
 import BotNav from '../BotNav'
 
@@ -57,6 +57,7 @@ export default function GeschiedenisPage() {
   const [savedAnalyses, setSavedAnalyses] = useState<SavedAnalyse[]>([])
   const [expandedAnalyse, setExpandedAnalyse] = useState<string | null>(null)
   const [showAllSessions, setShowAllSessions] = useState(false)
+  const analysesSectionRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
     fetch('/api/bot/sessions')
@@ -159,6 +160,7 @@ export default function GeschiedenisPage() {
       }
     } catch {}
     setAnalyseLoading(false)
+    setTimeout(() => analysesSectionRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' }), 100)
   }
 
   const hasSelected = selected.size > 0
@@ -464,7 +466,7 @@ export default function GeschiedenisPage() {
 
         {/* Analyses sectie */}
         {(activeAnalyse || savedAnalyses.length > 0) && (
-          <div style={{ borderTop: '1px solid #1a1a1a', paddingTop: 40, marginTop: 16 }}>
+          <div ref={analysesSectionRef} style={{ borderTop: '1px solid #1a1a1a', paddingTop: 40, marginTop: 16 }}>
             <p style={{ color: '#EE7700', fontSize: 13, letterSpacing: 4, marginBottom: 8 }}>ARNOBOT</p>
             <h2 style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 64, letterSpacing: 3, lineHeight: 1, marginBottom: 48 }}>ANALYSES</h2>
 
