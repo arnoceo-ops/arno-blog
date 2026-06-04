@@ -18,13 +18,10 @@ export default function ArnoBotLandingPage() {
         }
         .nav-spacer { flex: 1; }
         .nav-login {
-          flex: 1; display: flex; justify-content: flex-end;
-          font-family: 'Bebas Neue', sans-serif; font-size: 18px; letter-spacing: 3px;
-          color: #888; text-decoration: none; border: 1px solid #555;
-          padding: 6px 20px; border-radius: 999px; transition: all 0.2s;
-          width: fit-content; margin-left: auto;
+          font-family: 'Bebas Neue', sans-serif; font-size: 22px; letter-spacing: 3px;
+          color: #888; text-decoration: none; transition: color 0.2s;
         }
-        .nav-login:hover { color: #EE7700; border-color: #EE7700; }
+        .nav-login:hover { color: #f0ede6; }
         .nav-links { display: flex; gap: 48px; align-items: center; }
         .nav-links a {
           color: #888; text-decoration: none;
