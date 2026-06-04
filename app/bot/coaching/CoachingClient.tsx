@@ -228,14 +228,9 @@ export default function CoachingClient({ userId }: Props) {
         <p style={{ color: '#EE7700', fontSize: 13, letterSpacing: 4, marginBottom: 8 }}>ARNOBOT</p>
         <h1 style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 64, letterSpacing: 3, lineHeight: 1, marginBottom: 16 }}>COACHING</h1>
 
-        {/* Header met meta + knop */}
+        {/* Header met knoppen */}
         <div style={{ display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between', marginBottom: 48, paddingBottom: 48, borderBottom: '1px solid #1a1a1a', flexWrap: 'wrap', gap: 20 }}>
           <div>
-            {doc?.updated_at && (
-              <p style={{ color: 'rgb(136,136,136)', fontSize: 12, letterSpacing: 2, fontFamily: "'Bebas Neue', sans-serif", marginBottom: 4 }}>
-                GEGENEREERD OP {formatDate(doc.updated_at)} · {doc.conversation_count} GESPREKKEN
-              </p>
-            )}
             {!doc && !loading && (
               <p style={{ color: '#555', fontSize: 13, lineHeight: 1.8, maxWidth: 480 }}>
                 Op basis van je gesprekken maakt Arno een persoonlijk coachingsdocument. Wat je focust, wat je vermijdt, en wat je concreet moet aanpakken.
@@ -244,11 +239,6 @@ export default function CoachingClient({ userId }: Props) {
             {error && <p style={{ color: '#ff6644', fontSize: 13, letterSpacing: 1, marginTop: 8 }}>{error}</p>}
           </div>
           <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap' }}>
-            {doc && (
-              <button className="pdf-btn no-print" onClick={() => window.print()}>
-                DOWNLOAD PDF ↓
-              </button>
-            )}
             <button className="generate-btn no-print" onClick={generate} disabled={generating || loading}>
               {generating ? (
                 <span>
@@ -258,6 +248,11 @@ export default function CoachingClient({ userId }: Props) {
                 </span>
               ) : doc ? 'VERNIEUW COACHING →' : 'GENEREER COACHING →'}
             </button>
+            {doc && (
+              <button className="pdf-btn no-print" onClick={() => window.print()}>
+                DOWNLOAD PDF ↓
+              </button>
+            )}
           </div>
         </div>
 
@@ -268,8 +263,32 @@ export default function CoachingClient({ userId }: Props) {
         {doc && (
           <div style={{ animation: 'fadein 0.5s ease' }}>
 
-            {/* Focus */}
+            {/* Voortgang — bovenaan */}
             <div className="coaching-section" style={{ borderTop: 'none', paddingTop: 0 }}>
+              <span className="coaching-label">Jouw voortgang</span>
+              {stats && (
+                <div style={{ display: 'flex', gap: 48, marginBottom: 32 }}>
+                  <div className="stat-block">
+                    <div className="stat-number">{stats.sessionCount}</div>
+                    <div className="stat-label">GESPREKKEN GEVOERD</div>
+                  </div>
+                  <div className="stat-block">
+                    <div className="stat-number">{stats.totalQuestions}</div>
+                    <div className="stat-label">VRAGEN GESTELD</div>
+                  </div>
+                  {analyses.length > 0 && (
+                    <div className="stat-block">
+                      <div className="stat-number">{analyses.length}</div>
+                      <div className="stat-label">ANALYSES</div>
+                    </div>
+                  )}
+                </div>
+              )}
+              <p className="coaching-body">{doc.voortgang}</p>
+            </div>
+
+            {/* Focus */}
+            <div className="coaching-section">
               <span className="coaching-label">Waar jij op focust</span>
               <p className="coaching-body">{doc.focus}</p>
             </div>
@@ -299,30 +318,6 @@ export default function CoachingClient({ userId }: Props) {
                 <span className="opdracht-label">Opdracht voor deze week</span>
                 <p className="opdracht-text">{doc.opdracht}</p>
               </div>
-            </div>
-
-            {/* Voortgang */}
-            <div className="coaching-section">
-              <span className="coaching-label">Jouw voortgang</span>
-              {stats && (
-                <div style={{ display: 'flex', gap: 48, marginBottom: 32 }}>
-                  <div className="stat-block">
-                    <div className="stat-number">{stats.sessionCount}</div>
-                    <div className="stat-label">GESPREKKEN GEVOERD</div>
-                  </div>
-                  <div className="stat-block">
-                    <div className="stat-number">{stats.totalQuestions}</div>
-                    <div className="stat-label">VRAGEN GESTELD</div>
-                  </div>
-                  {analyses.length > 0 && (
-                    <div className="stat-block">
-                      <div className="stat-number">{analyses.length}</div>
-                      <div className="stat-label">ANALYSES</div>
-                    </div>
-                  )}
-                </div>
-              )}
-              <p className="coaching-body">{doc.voortgang}</p>
             </div>
 
             {/* Aanbevolen blogs */}
