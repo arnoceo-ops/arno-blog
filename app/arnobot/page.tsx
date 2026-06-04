@@ -12,10 +12,17 @@ export default function ArnoBotLandingPage() {
         /* ── NAV ── */
         .site-nav {
           position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-          padding: 16px 40px; display: flex; justify-content: center;
+          padding: 16px 40px; display: flex; justify-content: center; align-items: center;
           border-bottom: 1px solid rgba(255,255,255,0.06);
           background: rgba(10,10,10,0.9); backdrop-filter: blur(12px);
         }
+        .nav-login {
+          position: absolute; right: 40px;
+          font-family: 'Bebas Neue', sans-serif; font-size: 18px; letter-spacing: 3px;
+          color: #888; text-decoration: none; border: 1px solid #555;
+          padding: 6px 20px; border-radius: 999px; transition: all 0.2s;
+        }
+        .nav-login:hover { color: #EE7700; border-color: #EE7700; }
         .nav-links { display: flex; gap: 48px; align-items: center; }
         .nav-links a {
           color: #888; text-decoration: none;
@@ -207,6 +214,7 @@ export default function ArnoBotLandingPage() {
           <a href="https://salescanvas.app" target="_blank" rel="noopener noreferrer">CANVAS</a>
           <a href="https://arno.blog/subscribe" target="_blank" rel="noopener noreferrer" className="nav-cta">SUBSCRIBE</a>
         </div>
+        <Link href="/sign-in" className="nav-login">LOGIN</Link>
       </nav>
 
       {/* INTRO */}

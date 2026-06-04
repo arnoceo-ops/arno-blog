@@ -173,17 +173,7 @@ export default function AccountPage() {
           )}
         </div>
 
-        {/* Uitloggen */}
-        <div style={{ borderTop: '1px solid #1e1e1e', paddingTop: '32px', marginTop: 0 }}>
-          <button
-            onClick={() => signOut(() => router.push('/'))}
-            style={{ ...btn, borderColor: '#333', color: '#555' }}
-          >
-            UITLOGGEN
-          </button>
-        </div>
-
-        {error && <p style={{ color: '#cc2200', fontSize: 14, letterSpacing: 1, marginTop: 24 }}>✗ {error}</p>}
+{error && <p style={{ color: '#cc2200', fontSize: 14, letterSpacing: 1, marginTop: 24 }}>✗ {error}</p>}
 
       </div>
     </>

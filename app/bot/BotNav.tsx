@@ -2,6 +2,8 @@
 
 import { useState } from 'react'
 import Link from 'next/link'
+import { useClerk } from '@clerk/nextjs'
+import { useRouter } from 'next/navigation'
 import { useIsMobile } from '@/hooks/useBreakpoint'
 
 interface Props {
@@ -16,6 +18,14 @@ const navStyle = {
   background: 'rgba(10,10,10,0.95)', backdropFilter: 'blur(12px)',
 }
 
+const logoutBtnStyle: React.CSSProperties = {
+  position: 'absolute', right: 40,
+  fontFamily: "'Bebas Neue', sans-serif", fontSize: 18, letterSpacing: 3,
+  color: '#888', background: 'none', border: '1px solid #555',
+  padding: '6px 20px', borderRadius: 999, cursor: 'pointer',
+  transition: 'all 0.2s',
+}
+
 const linkBase: React.CSSProperties = {
   color: '#888', textDecoration: 'none',
   fontFamily: "'Bebas Neue', sans-serif", fontSize: 22, letterSpacing: 3,
@@ -24,6 +34,8 @@ const linkBase: React.CSSProperties = {
 export default function BotNav({ active }: Props) {
   const isMobile = useIsMobile()
   const [menuOpen, setMenuOpen] = useState(false)
+  const { signOut } = useClerk()
+  const router = useRouter()
 
   const items: { href: string; label: string; key: Props['active'] }[] = [
     { href: '/', label: 'HOME', key: 'bot' },
@@ -89,6 +101,14 @@ export default function BotNav({ active }: Props) {
           ? <span style={{ ...linkBase, color: '#EE7700' }}>ACCOUNT</span>
           : <Link href="/bot/account" style={linkBase}>ACCOUNT</Link>}
       </div>
+      <button
+        style={logoutBtnStyle}
+        onMouseEnter={e => { (e.target as HTMLButtonElement).style.color = '#EE7700'; (e.target as HTMLButtonElement).style.borderColor = '#EE7700' }}
+        onMouseLeave={e => { (e.target as HTMLButtonElement).style.color = '#888'; (e.target as HTMLButtonElement).style.borderColor = '#555' }}
+        onClick={() => signOut(() => router.push('/'))}
+      >
+        UITLOGGEN
+      </button>
     </nav>
   )
 }
