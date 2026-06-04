@@ -1,6 +1,7 @@
 import { client } from '@/sanity/client'
 import Link from 'next/link'
 import { auth } from '@clerk/nextjs/server'
+import { redirect } from 'next/navigation'
 
 interface Post {
   _id: string
@@ -29,6 +30,7 @@ async function getPosts(): Promise<Post[]> {
 
 export default async function Home() {
   const { userId } = await auth()
+  if (userId) redirect('/bot')
   return (
     <>
       <style>{`
