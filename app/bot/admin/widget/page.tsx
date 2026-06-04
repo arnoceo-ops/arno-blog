@@ -1,7 +1,16 @@
 import { redirect } from 'next/navigation'
 import { cookies } from 'next/headers'
 import { createClient } from '@supabase/supabase-js'
-import DownloadPdfButton from './DownloadPdfButton'
+import DownloadPdfButton from '../DownloadPdfButton'
+
+type LogRow = {
+  id: string
+  created_at: string
+  question: string
+  answer: string
+  ip: string
+  session_id: string
+}
 
 const navLinkStyle = (active: boolean): React.CSSProperties => ({
   color: active ? '#EE7700' : '#555',
@@ -13,16 +22,7 @@ const navLinkStyle = (active: boolean): React.CSSProperties => ({
   borderBottom: active ? '2px solid #EE7700' : '2px solid transparent',
 })
 
-type LogRow = {
-  id: string
-  created_at: string
-  question: string
-  answer: string
-  ip: string
-  session_id: string
-}
-
-export default async function ArnoBotAdminPage({
+export default async function AdminWidgetPage({
   searchParams,
 }: {
   searchParams: Promise<{ from?: string; to?: string; sort?: string }>
@@ -43,7 +43,7 @@ export default async function ArnoBotAdminPage({
   )
 
   const { data } = await supabase
-    .from('arnobot_rds_logs')
+    .from('arno_blog_widget_logs')
     .select('*')
     .gte('created_at', `${from}T00:00:00`)
     .lte('created_at', `${to}T23:59:59`)
@@ -70,12 +70,12 @@ export default async function ArnoBotAdminPage({
     <main style={{ background: '#0a0a0a', minHeight: '100vh', color: '#f0ede6', fontFamily: 'sans-serif', padding: '48px' }}>
     <div style={{ maxWidth: '800px', margin: '0 auto' }}>
       <div style={{ display: 'flex', gap: '32px', marginBottom: '40px' }}>
-        <a href="/bot/admin" style={navLinkStyle(true)}>ROYAL DUTCH SALES</a>
-        <a href="/bot/admin/widget" style={navLinkStyle(false)}>ARNO.BLOG WIDGET</a>
+        <a href="/bot/admin" style={navLinkStyle(false)}>ROYAL DUTCH SALES</a>
+        <a href="/bot/admin/widget" style={navLinkStyle(true)}>ARNO.BLOG WIDGET</a>
       </div>
 
       <div style={{ marginBottom: '40px' }}>
-        <p style={{ color: '#EE7700', fontSize: '16px', letterSpacing: '4px', marginBottom: '8px' }}>ARNOBOT — ROYAL DUTCH SALES</p>
+        <p style={{ color: '#EE7700', fontSize: '16px', letterSpacing: '4px', marginBottom: '8px' }}>ARNOBOT — ARNO.BLOG WIDGET</p>
         <h1 style={{ fontSize: '48px', fontWeight: 700, margin: '0 0 32px 0', letterSpacing: '-1px' }}>Gesprekken</h1>
 
         <form method="GET" style={{ display: 'flex', gap: '12px', alignItems: 'center', flexWrap: 'wrap' }}>
