@@ -322,7 +322,7 @@ export default function GeschiedenisPage() {
         </div>
 
         {!loading && sorted.length > 0 && (
-          <p style={{ fontFamily: "'Space Mono', monospace", fontSize: 15, fontWeight: 400, color: 'rgb(136,136,136)', marginBottom: 8 }}>
+          <p style={{ fontFamily: "'Space Mono', monospace", fontSize: 15, fontWeight: 400, color: 'rgb(136,136,136)', marginBottom: 8, border: '1px solid #2a2a2a', borderLeft: '3px solid #EE7700', padding: '10px 16px', display: 'inline-block' }}>
             Selecteer minimaal 3 gesprekken voor een analyse.
           </p>
         )}
