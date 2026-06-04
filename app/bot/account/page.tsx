@@ -74,6 +74,7 @@ export default function AccountPage() {
         body { background: #0a0a0a; color: #f0ede6; font-family: 'Space Mono', monospace; }
         input { background: #111; border: 1px solid #333; color: #f0ede6; font-family: 'Space Mono', monospace; font-size: 15px; letter-spacing: 2px; padding: 12px 16px; outline: none; width: 100%; }
         input:focus { border-color: #EE7700; }
+        .sec-btn:hover { border-color: #EE7700 !important; color: #EE7700 !important; }
       `}</style>
 
       <BotNav active="account" />
@@ -110,7 +111,7 @@ export default function AccountPage() {
         <div style={section}>
           <p style={label}>ARNOBOT PROFIEL</p>
           <p style={body}>Pas je profiel aan zodat ArnoBot beter op jou is afgestemd.</p>
-          <Link href="/bot/profiel" style={{ ...btn, textDecoration: 'none', display: 'inline-block' }}>
+          <Link href="/bot/profiel" className="sec-btn" style={{ ...btn, textDecoration: 'none', display: 'inline-block' }}>
             PROFIEL AANPASSEN
           </Link>
         </div>
@@ -122,6 +123,7 @@ export default function AccountPage() {
           <button
             onClick={handleExport}
             disabled={exporting}
+            className="sec-btn"
             style={{ ...btn, borderColor: exporting ? '#333' : '#555', color: exporting ? '#444' : '#888', cursor: exporting ? 'not-allowed' : 'pointer' }}
           >
             {exporting ? 'EXPORTEREN...' : 'DOWNLOAD MIJN DATA'}
