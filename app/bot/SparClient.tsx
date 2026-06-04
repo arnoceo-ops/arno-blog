@@ -3,6 +3,8 @@
 import React, { useState, useRef, useEffect } from 'react'
 import Link from 'next/link'
 import { useIsMobile } from '@/hooks/useBreakpoint'
+import { useClerk } from '@clerk/nextjs'
+import { useRouter } from 'next/navigation'
 
 function formatLastDate(iso: string | null): string {
   if (!iso) return ''
@@ -94,6 +96,8 @@ const VRAGEN_ORGANISATORISCH = [
 
 export default function SparClient({ userId, profiel, taglineTitle, taglineSub, openers, resumeSessionId }: Props) {
   const isMobile = useIsMobile()
+  const { signOut } = useClerk()
+  const router = useRouter()
   const [menuOpen, setMenuOpen] = useState(false)
   const [messages, setMessages] = useState<Message[]>([])
   const [input, setInput] = useState('')
@@ -348,10 +352,11 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
                 /* NAV */
         .site-nav {
           position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-          padding: 0 40px; height: 64px; display: flex; justify-content: center; align-items: center;
+          padding: 0 40px; height: 64px; display: flex; align-items: center;
           border-bottom: 1px solid rgba(255,255,255,0.06);
           background: rgba(10,10,10,0.95); backdrop-filter: blur(12px);
         }
+        .nav-spacer { flex: 1; }
         .nav-links { display: flex; gap: 48px; align-items: center; }
         .nav-links a {
           color: #888; text-decoration: none; font-family: 'Bebas Neue', sans-serif;
@@ -805,12 +810,21 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
         </>
       ) : (
         <nav className="site-nav">
+          <div className="nav-spacer" />
           <div className="nav-links">
             <Link href="/">HOME</Link>
             <span style={{ color: '#EE7700', fontFamily: "'Bebas Neue', sans-serif", fontSize: 22, letterSpacing: 3 }}>BOT</span>
             <Link href="/bot/archief">ARCHIEF</Link>
             <Link href="/bot/coaching">COACHING</Link>
             <Link href="/bot/account">ACCOUNT</Link>
+          </div>
+          <div className="nav-spacer" style={{ display: 'flex', justifyContent: 'flex-end' }}>
+            <button
+              style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 22, letterSpacing: 3, color: '#888', background: 'none', border: 'none', cursor: 'pointer', transition: 'color 0.2s' }}
+              onMouseEnter={e => { (e.target as HTMLButtonElement).style.color = '#f0ede6' }}
+              onMouseLeave={e => { (e.target as HTMLButtonElement).style.color = '#888' }}
+              onClick={() => signOut(() => router.push('/'))}
+            >UITLOGGEN</button>
           </div>
         </nav>
       )}
