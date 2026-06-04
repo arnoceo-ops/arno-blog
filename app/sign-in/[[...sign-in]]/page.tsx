@@ -11,10 +11,10 @@ export default function SignInPage() {
     if (!signIn) return
     setError('')
     try {
-      await signIn.sso({
+      await signIn.authenticateWithRedirect({
         strategy: 'oauth_linkedin_oidc',
-        redirectUrl: '/bot',
-        redirectCallbackUrl: `${window.location.origin}/sso-callback`,
+        redirectUrl: `${window.location.origin}/sso-callback`,
+        redirectUrlComplete: '/bot',
       })
     } catch (err: unknown) {
       const msg = (err as { errors?: { message: string }[] })?.errors?.[0]?.message || 'Er is iets misgegaan'
