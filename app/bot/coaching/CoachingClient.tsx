@@ -142,7 +142,7 @@ export default function CoachingClient({ userId }: Props) {
           min-width: 32px; padding-top: 2px;
         }
         .ontwikkelpunt-text {
-          font-size: 18px; line-height: 1.6; color: #f0ede6;
+          font-size: 15px; line-height: 1.9; color: #f0ede6;
           font-family: 'Space Mono', monospace; font-weight: 400;
         }
         .opdracht-box {
