@@ -18,6 +18,7 @@ interface CoachingDoc {
 interface Stats {
   sessionCount: number
   totalQuestions: number
+  lastSessionDate: string | null
 }
 
 interface SavedAnalyse {
@@ -64,6 +65,7 @@ export default function CoachingClient({ userId }: Props) {
         setStats({
           sessionCount: sessions.length,
           totalQuestions: sessions.reduce((sum: number, s: { message_count?: number }) => sum + (s.message_count || 0), 0),
+          lastSessionDate: sessions[0]?.created_at ?? null,
         })
       })
       .catch(() => {})
@@ -238,21 +240,36 @@ export default function CoachingClient({ userId }: Props) {
             )}
             {error && <p style={{ color: '#ff6644', fontSize: 13, letterSpacing: 1, marginTop: 8 }}>{error}</p>}
           </div>
-          <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap' }}>
-            <button className="generate-btn no-print" onClick={generate} disabled={generating || loading}>
-              {generating ? (
-                <span>
-                  <span className="loading-dot" />
-                  <span className="loading-dot" />
-                  <span className="loading-dot" />
-                </span>
-              ) : doc ? 'VERNIEUW COACHING →' : 'GENEREER COACHING →'}
-            </button>
-            {doc && (
-              <button className="pdf-btn no-print" onClick={() => window.print()}>
-                DOWNLOAD PDF ↓
+          <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: 12 }}>
+            <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap' }}>
+              <button className="generate-btn no-print" onClick={generate} disabled={generating || loading}>
+                {generating ? (
+                  <span>
+                    <span className="loading-dot" />
+                    <span className="loading-dot" />
+                    <span className="loading-dot" />
+                  </span>
+                ) : doc ? 'ADVISEER →' : 'GENEREER COACHING →'}
               </button>
-            )}
+              {doc && (
+                <button className="pdf-btn no-print" onClick={() => window.print()}>
+                  DOWNLOAD PDF ↓
+                </button>
+              )}
+            </div>
+            {(() => {
+              if (!doc?.updated_at) return null
+              const docDate = new Date(doc.updated_at)
+              const lastSession = stats?.lastSessionDate ? new Date(stats.lastSessionDate) : null
+              const lastAnalyse = analyses[0]?.created_at ? new Date(analyses[0].created_at) : null
+              const isUpToDate = (!lastSession || docDate >= lastSession) && (!lastAnalyse || docDate >= lastAnalyse)
+              if (!isUpToDate) return null
+              return (
+                <p style={{ fontFamily: "'Space Mono', monospace", fontSize: 12, color: 'rgb(136,136,136)', letterSpacing: 1 }}>
+                  ✓ Advies is actueel — geen nieuwe gesprekken of analyses.
+                </p>
+              )
+            })()}
           </div>
         </div>
 
