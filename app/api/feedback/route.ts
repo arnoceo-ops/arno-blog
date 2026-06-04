@@ -26,11 +26,16 @@ export async function POST(req: Request) {
   if (!token || !chatId) return NextResponse.json({ error: 'Telegram niet geconfigureerd' }, { status: 500 })
 
   const text = `💬 Feedback van ${naam}\n\n${feedback.trim()}`
-  await fetch(`https://api.telegram.org/bot${token}/sendMessage`, {
+  const tgRes = await fetch(`https://api.telegram.org/bot${token}/sendMessage`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ chat_id: chatId, text }),
   })
+  const tgData = await tgRes.json()
+  if (!tgData.ok) {
+    console.error('Telegram error:', tgData)
+    return NextResponse.json({ error: tgData.description || 'Telegram fout' }, { status: 500 })
+  }
 
   return NextResponse.json({ ok: true })
 }

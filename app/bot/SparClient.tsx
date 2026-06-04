@@ -161,16 +161,23 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
     if (!feedbackText.trim()) return
     setFeedbackLoading(true)
     try {
-      await fetch('/api/feedback', {
+      const res = await fetch('/api/feedback', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ feedback: feedbackText }),
       })
+      if (!res.ok) {
+        const data = await res.json().catch(() => ({}))
+        setFeedbackText(feedbackText)
+        alert(data.error || 'Er ging iets mis — probeer opnieuw.')
+        return
+      }
       setFeedbackSent(true)
       setFeedbackText('')
       setTimeout(() => { setFeedbackOpen(false); setFeedbackSent(false) }, 2000)
-    } catch {}
-    finally { setFeedbackLoading(false) }
+    } catch {
+      alert('Er ging iets mis — probeer opnieuw.')
+    } finally { setFeedbackLoading(false) }
   }
 
   useEffect(() => {
