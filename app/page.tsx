@@ -238,10 +238,13 @@ export default async function Home() {
           <a href="https://salescanvas.app" target="_blank" rel="noopener noreferrer">CANVAS</a>
           <a href="https://arno.blog/subscribe" target="_blank" rel="noopener noreferrer" className="nav-cta">SUBSCRIBE</a>
         </div>
-        <div className="nav-spacer" style={{ display: 'flex', justifyContent: 'flex-end' }}>
+        <div className="nav-spacer" style={{ display: 'flex', justifyContent: 'flex-end', gap: '32px' }}>
           {userId
             ? <Link href="/bot" className="nav-btn">MIJN BOT</Link>
-            : <Link href="/sign-in" className="nav-btn">INLOGGEN</Link>
+            : <>
+                <Link href="/sign-up" className="nav-btn">AANMELDEN</Link>
+                <Link href="/sign-in" className="nav-btn">INLOGGEN</Link>
+              </>
           }
         </div>
       </nav>
