@@ -109,8 +109,8 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
   const [suggestedBlogs, setSuggestedBlogs] = useState<{title: string, url: string}[]>([])
   const [voortgang, setVoortgang] = useState<{count: number, lastDate: string | null} | null>(null)
   const isStrategischProfiel = STRATEGISCH_ROLLEN.includes((profiel?.rol as string) ?? '')
-  const [openerModus, setOpenerModus] = useState<'strategisch' | 'operationeel' | 'organisatorisch'>(
-    isStrategischProfiel ? 'strategisch' : 'operationeel'
+  const [openerModus, setOpenerModus] = useState<'strategisch' | 'organisatorisch' | 'sales'>(
+    isStrategischProfiel ? 'strategisch' : 'sales'
   )
   const [recording, setRecording] = useState(false)
   const [speechSupported, setSpeechSupported] = useState(false)
@@ -912,17 +912,17 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
             <span className="spar-discipline-label">of kies een discipline</span>
             <div className="opener-toggle">
               <button
-                className={`toggle-btn${openerModus === 'operationeel' ? ' active' : ''}`}
-                onClick={() => setOpenerModus('operationeel')}
-              >OPERATIONEEL</button>
-              <button
                 className={`toggle-btn${openerModus === 'strategisch' ? ' active' : ''}`}
                 onClick={() => setOpenerModus('strategisch')}
-              >STRATEGISCH</button>
+              >STRATEGIE</button>
               <button
                 className={`toggle-btn${openerModus === 'organisatorisch' ? ' active' : ''}`}
                 onClick={() => setOpenerModus('organisatorisch')}
-              >ORGANISATORISCH</button>
+              >ORGANISATIE</button>
+              <button
+                className={`toggle-btn${openerModus === 'sales' ? ' active' : ''}`}
+                onClick={() => setOpenerModus('sales')}
+              >SALES</button>
             </div>
             <span className="spar-questions-label">en selecteer een van de onderstaande vragen</span>
             <span className="spar-questions-sub">als het je bezighoudt, dan hè? waarom zou je er anders antwoord op willen hebben?</span>
