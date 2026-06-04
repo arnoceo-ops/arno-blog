@@ -33,10 +33,10 @@ function AuthPage({ onLinkedIn, error }: { onLinkedIn: () => void; error: string
         * { box-sizing: border-box; margin: 0; padding: 0; }
         body { background: #0a0a0a; color: #f0ede6; font-family: 'Space Mono', monospace; }
         .li-btn {
-          width: 100%; padding: 16px 24px; background: #0A66C2; color: #fff;
+          width: 100%; padding: 12px 24px; background: #0A66C2; color: #fff;
           border: none; border-radius: 999px; font-family: 'Bebas Neue', sans-serif;
-          font-size: 22px; letter-spacing: 3px; cursor: pointer; transition: background 0.2s;
-          display: flex; align-items: center; justify-content: center; gap: 12px;
+          font-size: 18px; letter-spacing: 3px; cursor: pointer; transition: background 0.2s;
+          display: flex; align-items: center; justify-content: center; gap: 10px;
         }
         .li-btn:hover { background: #0856A4; }
       `}</style>
@@ -53,7 +53,7 @@ function AuthPage({ onLinkedIn, error }: { onLinkedIn: () => void; error: string
             DOORGAAN MET LINKEDIN
           </button>
           {error && <p style={{ color: '#cc3300', fontSize: 13, letterSpacing: 1, textAlign: 'center' }}>{error}</p>}
-          <p style={{ fontSize: 12, color: '#333', letterSpacing: 1, textAlign: 'center', lineHeight: 1.8 }}>
+          <p style={{ fontSize: 12, color: '#666', letterSpacing: 1, textAlign: 'center', lineHeight: 1.8 }}>
             Door aan te melden ga je akkoord met onze voorwaarden.<br />Al een account? LinkedIn-login werkt voor beide.
           </p>
         </div>
