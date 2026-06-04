@@ -210,16 +210,18 @@ export default function CoachingClient({ userId }: Props) {
       <BotNav active="coaching" />
 
       {uitdaging && (
-        <div className="no-print" style={{ borderBottom: '2px solid #EE7700', background: '#0d0d0d', padding: 'clamp(72px,10vw,96px) clamp(20px,6vw,60px) clamp(32px,5vw,48px)' }}>
-          <div style={{ maxWidth: 812, margin: '0 auto', textAlign: 'center' }}>
-            <span style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 11, letterSpacing: 4, color: '#EE7700', display: 'block', marginBottom: 16 }}>UITDAGING VAN VANDAAG</span>
-            <p style={{ fontFamily: "'Space Mono', monospace", fontSize: 15, lineHeight: 1.9, color: '#d0cdc6', maxWidth: 600, margin: '0 auto 24px' }}>{uitdaging}</p>
+        <div className="no-print" style={{ borderBottom: '2px solid #EE7700', background: '#0d0d0d', padding: 'clamp(72px,10vw,96px) clamp(20px,6vw,60px) clamp(48px,6vw,64px)' }}>
+          <div style={{ maxWidth: 680, margin: '0 auto', textAlign: 'center' }}>
+            <span style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 11, letterSpacing: 4, color: '#EE7700', display: 'block', marginBottom: 24 }}>UITDAGING VAN VANDAAG</span>
+            <div style={{ border: '1px solid #2a2a2a', padding: '28px 32px', marginBottom: 28 }}>
+              <p style={{ fontFamily: "'Space Mono', monospace", fontSize: 13, lineHeight: 2, color: '#d0cdc6' }}>{uitdaging}</p>
+            </div>
             <Link
               href="/bot"
               onClick={() => localStorage.setItem('arnobot_prefill', uitdaging)}
               style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 16, letterSpacing: 3, color: '#EE7700', textDecoration: 'none' }}
             >
-              GEBRUIK DEZE VRAAG →
+              GA HIEROVER IN GESPREK MET ARNOBOT →
             </Link>
           </div>
         </div>
@@ -266,7 +268,7 @@ export default function CoachingClient({ userId }: Props) {
               if (!isUpToDate) return null
               return (
                 <p style={{ fontFamily: "'Space Mono', monospace", fontSize: 12, color: 'rgb(136,136,136)', letterSpacing: 1 }}>
-                  ✓ Advies is actueel — geen nieuwe gesprekken of analyses.
+                  ✓ Advies is actueel
                 </p>
               )
             })()}
