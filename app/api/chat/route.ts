@@ -97,7 +97,7 @@ export async function POST(req: NextRequest) {
     if (limitEnabled && ip && !userId) {
       const since = new Date(Date.now() - 48 * 60 * 60 * 1000).toISOString()
       const { count } = await supabase
-        .from('arnobot_blog_logs')
+        .from('arno_blog_widget_logs')
         .select('*', { count: 'exact', head: true })
         .eq('ip', ip)
         .gte('created_at', since)
@@ -140,7 +140,8 @@ PROFIEL VAN DE GEBRUIKER:
 
     const answer = response.content[0].type === 'text' ? response.content[0].text : ''
 
-    await supabase.from('arnobot_blog_logs').insert({ question, answer, ip, session_id: sessionId, user_id: userId ?? null })
+    const logTable = isWidget ? 'arno_blog_widget_logs' : 'arnobot_blog_logs'
+    await supabase.from(logTable).insert({ question, answer, ip, session_id: sessionId, user_id: userId ?? null })
 
     return NextResponse.json({ answer, hint }, { headers: corsHeaders(origin) })
   } catch (err) {
