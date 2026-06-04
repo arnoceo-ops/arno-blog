@@ -210,19 +210,12 @@ export default function CoachingClient({ userId }: Props) {
       <BotNav active="coaching" />
 
       {uitdaging && (
-        <div className="no-print" style={{ borderBottom: '2px solid #EE7700', background: '#0d0d0d', padding: 'clamp(72px,10vw,96px) clamp(20px,6vw,60px) clamp(48px,6vw,64px)' }}>
+        <div className="no-print" style={{ borderBottom: '2px solid #EE7700', background: '#0d0d0d', padding: 'clamp(96px,12vw,120px) clamp(20px,6vw,60px) clamp(48px,6vw,64px)' }}>
           <div style={{ maxWidth: 680, margin: '0 auto', textAlign: 'center' }}>
-            <span style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 11, letterSpacing: 4, color: '#EE7700', display: 'block', marginBottom: 24 }}>UITDAGING VAN VANDAAG</span>
-            <div style={{ border: '1px solid #2a2a2a', padding: '28px 32px', marginBottom: 28 }}>
+            <span style={{ fontFamily: "'Space Mono', monospace", fontSize: 13, letterSpacing: 4, color: '#EE7700', display: 'block', marginBottom: 24 }}>UITDAGING VAN VANDAAG</span>
+            <div style={{ border: '1px solid #2a2a2a', padding: '28px 32px' }}>
               <p style={{ fontFamily: "'Space Mono', monospace", fontSize: 13, lineHeight: 2, color: '#d0cdc6' }}>{uitdaging}</p>
             </div>
-            <Link
-              href="/bot"
-              onClick={() => localStorage.setItem('arnobot_prefill', uitdaging)}
-              style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 16, letterSpacing: 3, color: '#EE7700', textDecoration: 'none' }}
-            >
-              GA HIEROVER IN GESPREK MET ARNOBOT →
-            </Link>
           </div>
         </div>
       )}
