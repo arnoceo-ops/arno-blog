@@ -496,19 +496,19 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
         .spar-reset.sluiten { background: #EE7700; color: #141414; border-left-color: #EE7700; }
         .spar-reset.sluiten:hover { background: #ff8800; }
         .spar-input-intro {
-          font-family: 'Barlow', sans-serif;
-          font-size: 26px; font-weight: 700; color: rgb(240, 237, 230);
+          font-family: 'Bebas Neue', sans-serif;
+          font-size: 26px; letter-spacing: 2px; color: rgb(240, 237, 230);
           width: 100%; max-width: 812px;
           display: block; margin-bottom: 20px; text-align: center;
         }
         .spar-discipline-label {
-          font-family: 'Barlow', sans-serif;
-          font-size: 26px; font-weight: 700; color: rgb(240, 237, 230);
+          font-family: 'Bebas Neue', sans-serif;
+          font-size: 26px; letter-spacing: 2px; color: rgb(240, 237, 230);
           display: block; margin-bottom: 20px; text-align: center; width: 100%;
         }
         .spar-questions-label {
-          font-family: 'Barlow', sans-serif;
-          font-size: 26px; font-weight: 700; color: rgb(240, 237, 230);
+          font-family: 'Bebas Neue', sans-serif;
+          font-size: 26px; letter-spacing: 2px; color: rgb(240, 237, 230);
           display: block; margin-top: clamp(56px,8vw,80px); margin-bottom: 12px; text-align: center; width: 100%;
         }
         .spar-questions-sub {
