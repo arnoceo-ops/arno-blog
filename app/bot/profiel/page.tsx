@@ -142,7 +142,7 @@ export default function BotProfielPage() {
         <div style={{ display: 'flex', gap: 48, alignItems: 'center' }}>
           <Link href="/" style={{ color: '#888', textDecoration: 'none', fontFamily: "'Bebas Neue', sans-serif", fontSize: 22, letterSpacing: 3 }}>HOME</Link>
           <a href="https://www.royaldutchsales.com/arnobot" style={{ color: '#EE7700', textDecoration: 'none', fontFamily: "'Bebas Neue', sans-serif", fontSize: 22, letterSpacing: 3 }}>BOT</a>
-          <Link href="/bot/geschiedenis" style={{ color: '#888', textDecoration: 'none', fontFamily: "'Bebas Neue', sans-serif", fontSize: 22, letterSpacing: 3 }}>ARCHIEF</Link>
+          <Link href="/bot/archief" style={{ color: '#888', textDecoration: 'none', fontFamily: "'Bebas Neue', sans-serif", fontSize: 22, letterSpacing: 3 }}>ARCHIEF</Link>
           <Link href="/bot/coaching" style={{ color: '#888', textDecoration: 'none', fontFamily: "'Bebas Neue', sans-serif", fontSize: 22, letterSpacing: 3 }}>COACHING</Link>
         </div>
       </nav>

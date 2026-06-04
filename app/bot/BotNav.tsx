@@ -28,7 +28,7 @@ export default function BotNav({ active }: Props) {
   const items: { href: string; label: string; key: Props['active'] }[] = [
     { href: '/', label: 'HOME', key: 'bot' },
     { href: '/bot', label: 'BOT', key: 'bot' },
-    { href: '/bot/geschiedenis', label: 'ARCHIEF', key: 'archief' },
+    { href: '/bot/archief', label: 'ARCHIEF', key: 'archief' },
     { href: '/bot/coaching', label: 'COACHING', key: 'coaching' },
     { href: '/bot/account', label: 'ACCOUNT', key: 'account' },
   ]
@@ -63,7 +63,7 @@ export default function BotNav({ active }: Props) {
           <div className="mob-menu" onClick={() => setMenuOpen(false)}>
             <Link href="/">HOME</Link>
             {active === 'bot'      ? <span className="mob-active">BOT</span>      : <Link href="/bot">BOT</Link>}
-            {active === 'archief'  ? <span className="mob-active">ARCHIEF</span>  : <Link href="/bot/geschiedenis">ARCHIEF</Link>}
+            {active === 'archief'  ? <span className="mob-active">ARCHIEF</span>  : <Link href="/bot/archief">ARCHIEF</Link>}
             {active === 'coaching' ? <span className="mob-active">COACHING</span> : <Link href="/bot/coaching">COACHING</Link>}
             {active === 'account'  ? <span className="mob-active">ACCOUNT</span>  : <Link href="/bot/account">ACCOUNT</Link>}
           </div>
@@ -81,7 +81,7 @@ export default function BotNav({ active }: Props) {
           : <Link href="/bot" style={linkBase}>BOT</Link>}
         {active === 'archief'
           ? <span style={{ ...linkBase, color: '#EE7700' }}>ARCHIEF</span>
-          : <Link href="/bot/geschiedenis" style={linkBase}>ARCHIEF</Link>}
+          : <Link href="/bot/archief" style={linkBase}>ARCHIEF</Link>}
         {active === 'coaching'
           ? <span style={{ ...linkBase, color: '#EE7700' }}>COACHING</span>
           : <Link href="/bot/coaching" style={linkBase}>COACHING</Link>}

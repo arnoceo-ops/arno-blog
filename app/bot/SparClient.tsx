@@ -797,7 +797,7 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
             <div className="mob-menu" onClick={() => setMenuOpen(false)}>
               <Link href="/">HOME</Link>
               <span className="active">BOT</span>
-              <Link href="/bot/geschiedenis">ARCHIEF</Link>
+              <Link href="/bot/archief">ARCHIEF</Link>
               <Link href="/bot/coaching">COACHING</Link>
               <Link href="/bot/account">ACCOUNT</Link>
             </div>
@@ -808,7 +808,7 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
           <div className="nav-links">
             <Link href="/">HOME</Link>
             <span style={{ color: '#EE7700', fontFamily: "'Bebas Neue', sans-serif", fontSize: 22, letterSpacing: 3 }}>BOT</span>
-            <Link href="/bot/geschiedenis">ARCHIEF</Link>
+            <Link href="/bot/archief">ARCHIEF</Link>
             <Link href="/bot/coaching">COACHING</Link>
             <Link href="/bot/account">ACCOUNT</Link>
           </div>
@@ -940,7 +940,7 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
                   {voortgang.count} {voortgang.count === 1 ? 'GESPREK' : 'GESPREKKEN'}
                   {voortgang.lastDate ? ` · LAATSTE: ${formatLastDate(voortgang.lastDate).toUpperCase()}` : ''}
                 </div>
-                <Link href="/bot/geschiedenis" className="archief-btn">NAAR ARCHIEF</Link>
+                <Link href="/bot/archief" className="archief-btn">NAAR ARCHIEF</Link>
               </>
             )}
           </div>
