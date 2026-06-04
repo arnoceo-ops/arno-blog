@@ -242,8 +242,8 @@ export default function CoachingClient({ userId }: Props) {
             )}
             {error && <p style={{ color: '#ff6644', fontSize: 13, letterSpacing: 1, marginTop: 8 }}>{error}</p>}
           </div>
-          <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: 12 }}>
-            <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap' }}>
+          <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap', alignItems: 'flex-start' }}>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
               <button className="generate-btn no-print" onClick={generate} disabled={generating || loading}>
                 {generating ? (
                   <span>
@@ -253,25 +253,25 @@ export default function CoachingClient({ userId }: Props) {
                   </span>
                 ) : doc ? 'ADVISEER →' : 'GENEREER COACHING →'}
               </button>
-              {doc && (
-                <button className="pdf-btn no-print" onClick={() => window.print()}>
-                  DOWNLOAD PDF ↓
-                </button>
-              )}
+              {(() => {
+                if (!doc?.updated_at) return null
+                const docDate = new Date(doc.updated_at)
+                const lastSession = stats?.lastSessionDate ? new Date(stats.lastSessionDate) : null
+                const lastAnalyse = analyses[0]?.created_at ? new Date(analyses[0].created_at) : null
+                const isUpToDate = (!lastSession || docDate >= lastSession) && (!lastAnalyse || docDate >= lastAnalyse)
+                if (!isUpToDate) return null
+                return (
+                  <p style={{ fontFamily: "'Space Mono', monospace", fontSize: 12, color: 'rgb(136,136,136)', letterSpacing: 1, textAlign: 'center' }}>
+                    ✓ Advies is actueel
+                  </p>
+                )
+              })()}
             </div>
-            {(() => {
-              if (!doc?.updated_at) return null
-              const docDate = new Date(doc.updated_at)
-              const lastSession = stats?.lastSessionDate ? new Date(stats.lastSessionDate) : null
-              const lastAnalyse = analyses[0]?.created_at ? new Date(analyses[0].created_at) : null
-              const isUpToDate = (!lastSession || docDate >= lastSession) && (!lastAnalyse || docDate >= lastAnalyse)
-              if (!isUpToDate) return null
-              return (
-                <p style={{ fontFamily: "'Space Mono', monospace", fontSize: 12, color: 'rgb(136,136,136)', letterSpacing: 1 }}>
-                  ✓ Advies is actueel
-                </p>
-              )
-            })()}
+            {doc && (
+              <button className="pdf-btn no-print" onClick={() => window.print()}>
+                DOWNLOAD PDF ↓
+              </button>
+            )}
           </div>
         </div>
 
