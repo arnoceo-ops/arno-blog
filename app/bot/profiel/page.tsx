@@ -10,7 +10,6 @@ type Answers = {
   markt: string[]
   wat_verkoop_je: string
   ideale_klant: string
-  toon: string
   uitdaging: string
 }
 
@@ -19,13 +18,11 @@ const empty: Answers = {
   markt: [],
   wat_verkoop_je: '',
   ideale_klant: '',
-  toon: '',
   uitdaging: '',
 }
 
 const ROL_OPTIONS = ['Inside Sales', 'AE New Business', 'AM Farmer', 'Key Account Manager', 'Sales Manager/Director', 'VP of Sales', "ZZP'er", 'CEO/DGA', 'Anders']
 const MARKT_OPTIONS = ['B2B MKB', 'B2B Enterprise', 'B2C', 'Overheid']
-const TOON_OPTIONS = ['Direct en confronterend', 'Vragend en reflectief', 'Motiverend en positief', 'Wissel maar af']
 
 function Chip({ label, selected, onClick }: { label: string; selected: boolean; onClick: () => void }) {
   return (
@@ -104,7 +101,6 @@ export default function BotProfielPage() {
     answers.markt.length > 0 &&
     answers.wat_verkoop_je.trim().length > 2 &&
     answers.ideale_klant.trim().length > 2 &&
-    answers.toon &&
     answers.uitdaging.trim().length > 2
 
   async function handleSubmit() {
@@ -211,16 +207,7 @@ export default function BotProfielPage() {
             />
           </Block>
 
-          <Block nr="05" title="Toon van ArnoBot">
-            <p style={{ fontSize: 15, fontWeight: 700, lineHeight: '30px', color: '#666', marginBottom: 12 }}>Hoe wil je dat ArnoBot je benadert?</p>
-            <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8 }}>
-              {TOON_OPTIONS.map(o => (
-                <Chip key={o} label={o} selected={answers.toon === o} onClick={() => set('toon', o)} />
-              ))}
-            </div>
-          </Block>
-
-          <Block nr="06" title="Jouw grootste uitdaging">
+          <Block nr="05" title="Jouw grootste uitdaging">
             <p style={{ fontSize: 15, fontWeight: 700, lineHeight: '30px', color: '#666', marginBottom: 12 }}>Wat houdt jou nu het meest bezig in je saleswerk?</p>
             <textarea
               value={answers.uitdaging}
