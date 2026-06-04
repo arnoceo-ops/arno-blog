@@ -124,7 +124,7 @@ export default function CoachingClient({ userId }: Props) {
         }
         .coaching-label {
           font-family: 'Bebas Neue', sans-serif;
-          font-size: 11px; letter-spacing: 4px; color: #EE7700;
+          font-size: 13px; letter-spacing: 4px; color: #EE7700;
           text-transform: uppercase; display: block; margin-bottom: 16px;
         }
         .coaching-body {
@@ -151,7 +151,7 @@ export default function CoachingClient({ userId }: Props) {
         }
         .opdracht-label {
           font-family: 'Bebas Neue', sans-serif;
-          font-size: 11px; letter-spacing: 4px; color: #EE7700;
+          font-size: 13px; letter-spacing: 4px; color: #EE7700;
           display: block; margin-bottom: 12px;
         }
         .opdracht-text {
@@ -185,7 +185,7 @@ export default function CoachingClient({ userId }: Props) {
         .pdf-btn:hover { border-color: #666; color: #888; }
         .stat-block { text-align: center; }
         .stat-number { font-family: 'Bebas Neue', sans-serif; font-size: 56px; color: #EE7700; line-height: 1; }
-        .stat-label { font-family: 'Bebas Neue', sans-serif; font-size: 12px; letter-spacing: 4px; color: rgb(136,136,136); margin-top: 4px; }
+        .stat-label { font-family: 'Bebas Neue', sans-serif; font-size: 13px; letter-spacing: 4px; color: rgb(136,136,136); margin-top: 4px; }
         @media print {
           body { background: #fff !important; color: #000 !important; }
           .no-print { display: none !important; }
