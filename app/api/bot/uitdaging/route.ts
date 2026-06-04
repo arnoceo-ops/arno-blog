@@ -29,8 +29,8 @@ export async function GET() {
   }
 
   const prompt = context
-    ? `Je bent Arno Diepeveen, harde sales coach. Genereer één scherpe dagelijkse uitdagingsvraag voor deze salesprofessional op basis van hun coachingsprofiel.\n\n${context}\n\nRegel: alleen de vraag zelf. Geen inleiding, geen uitleg. Max 2 zinnen. Confronterend en actiegericht.`
-    : `Je bent Arno Diepeveen, harde sales coach. Genereer één scherpe dagelijkse uitdagingsvraag voor een salesprofessional. Confronterend, actiegericht, max 2 zinnen. Alleen de vraag zelf.`
+    ? `Je bent Arno Diepeveen, harde sales coach. Genereer één scherpe dagelijkse uitdagingsvraag voor deze salesprofessional op basis van hun coachingsprofiel.\n\n${context}\n\nRegel: alleen de vraag zelf. Geen inleiding, geen uitleg. Max 2 zinnen. Confronterend en actiegericht.\n\nBelangrijk: gebruik alleen specifieke details die rechtstreeks uit het bovenstaande coachingsprofiel komen. Verzin geen getallen, tijdframes of aannames die niet in dat profiel staan — die kloppen mogelijk niet voor deze persoon.`
+    : `Je bent Arno Diepeveen, harde sales coach. Genereer één scherpe dagelijkse uitdagingsvraag voor een salesprofessional. Confronterend, actiegericht, max 2 zinnen. Alleen de vraag zelf.\n\nBelangrijk: verzin geen specifieke getallen, tijdframes of situaties — er is geen profielcontext beschikbaar. Stel de vraag zo dat die klopt voor wie hem leest.`
 
   const response = await anthropic.messages.create({
     model: 'claude-sonnet-4-6',
