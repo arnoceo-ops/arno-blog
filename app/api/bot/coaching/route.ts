@@ -27,7 +27,7 @@ export async function POST(req: NextRequest) {
   const { userId } = await auth()
   if (!userId) return NextResponse.json({ error: 'Niet ingelogd' }, { status: 401 })
 
-  const [sessionsRes, analysesRes] = await Promise.all([
+  const [sessionsRes, analysesRes, profielRes] = await Promise.all([
     supabase
       .from('arnobot_blog_sessions')
       .select('title, summary, message_count, created_at')
@@ -40,6 +40,11 @@ export async function POST(req: NextRequest) {
       .eq('user_id', userId)
       .order('created_at', { ascending: false })
       .limit(10),
+    supabase
+      .from('arnobot_blog_profiles')
+      .select('profiel')
+      .eq('user_id', userId)
+      .single(),
   ])
 
   const sessions = sessionsRes.data ?? []
@@ -48,6 +53,11 @@ export async function POST(req: NextRequest) {
   }
 
   const analyses = analysesRes.data ?? []
+
+  const profiel = profielRes.data?.profiel ?? null
+  const profielText = profiel
+    ? `\n\nGEBRUIKERSPROFIEL:\nRol: ${profiel.rol || '—'}\nMarkt: ${Array.isArray(profiel.markt) ? profiel.markt.join(', ') : profiel.markt || '—'}\nWat verkoop je: ${profiel.wat_verkoop_je || '—'}\nIdeale klant: ${profiel.ideale_klant || '—'}\nGrootste uitdaging: ${profiel.uitdaging || '—'}`
+    : ''
 
   const sessiesText = sessions
     .map((s, i) =>
@@ -82,7 +92,7 @@ Return ALLEEN een JSON-object — geen uitleg, geen markdown eromheen:
 }`,
     messages: [{
       role: 'user',
-      content: `Analyseer deze ${sessions.length} gesprekken${analyses.length > 0 ? ` en ${analyses.length} eerder gemaakte patroonanalyses` : ''} en schrijf een coachingsdocument:\n\nGESPREKKEN:\n${sessiesText}${analysesText}`
+      content: `Analyseer deze ${sessions.length} gesprekken${analyses.length > 0 ? ` en ${analyses.length} eerder gemaakte patroonanalyses` : ''} en schrijf een coachingsdocument:${profielText}\n\nGESPREKKEN:\n${sessiesText}${analysesText}`
     }]
   })
 

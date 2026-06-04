@@ -29,6 +29,17 @@ export async function POST(req: NextRequest) {
     sessions = sessions.filter(s => sessionIds.includes(s.session_id))
   }
 
+  const { data: profielRow } = await supabase
+    .from('arnobot_blog_profiles')
+    .select('profiel')
+    .eq('user_id', userId)
+    .single()
+
+  const profiel = profielRow?.profiel ?? null
+  const profielText = profiel
+    ? `\n\nGEBRUIKERSPROFIEL:\nRol: ${profiel.rol || '—'}\nMarkt: ${Array.isArray(profiel.markt) ? profiel.markt.join(', ') : profiel.markt || '—'}\nWat verkoop je: ${profiel.wat_verkoop_je || '—'}\nIdeale klant: ${profiel.ideale_klant || '—'}\nGrootste uitdaging: ${profiel.uitdaging || '—'}`
+    : ''
+
   const minRequired = sessionIds ? 3 : 5
   if (sessions.length < minRequired) {
     return NextResponse.json({ error: 'te_weinig', count: sessions.length }, { status: 400 })
@@ -68,7 +79,7 @@ export async function POST(req: NextRequest) {
     system: `Je bent Arno Diepeveen. Salesstrateeg, direct, ongefilterd. Je analyseert de gesprekken van iemand die jouw bot gebruikt en geeft een patroonanalyse. Spreek de gebruiker direct aan met "je". Geen bullet points. Geen inleiding. Gewoon de patronen, wat ze zeggen, en één concrete uitdaging die de gebruiker zichzelf moet stellen. Max 3 alinea's. Geen accenten op woorden voor nadruk.`,
     messages: [{
       role: 'user',
-      content: `Analyseer deze ${sessions.length} gesprekken en geef een patroonanalyse in Arno's stijl:\n\n${sessiesText}`
+      content: `Analyseer deze ${sessions.length} gesprekken en geef een patroonanalyse in Arno's stijl:${profielText}\n\nGESPREKKEN:\n${sessiesText}`
     }]
   })
 
