@@ -1,18 +1,4 @@
 {
-  "crons": [
-    {
-      "path": "/api/cron/arnobot-logs",
-      "schedule": "5 3 * * 1"
-    },
-    {
-      "path": "/api/cron/arnobot-blog-ideeen",
-      "schedule": "5 3 * * 1"
-    },
-    {
-      "path": "/api/cron/arnobot-openers",
-      "schedule": "5 3 1 * *"
-    }
-  ],
   "redirects": [
     {
       "source": "/",
