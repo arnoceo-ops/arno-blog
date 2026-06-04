@@ -9,10 +9,11 @@ export default function SSOCallback() {
   const router = useRouter()
 
   useEffect(() => {
-    handleRedirectCallback(
-      {},
-      async () => { router.replace('/bot') }
-    ).catch(() => router.push('/sign-in'))
+    handleRedirectCallback({}).then(() => {
+      window.location.replace('/bot')
+    }).catch(() => {
+      router.push('/sign-in')
+    })
   }, [handleRedirectCallback, router])
 
   return (
