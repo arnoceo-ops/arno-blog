@@ -123,7 +123,7 @@ export default function CoachingClient({ userId }: Props) {
           animation: fadein 0.4s ease;
         }
         .coaching-label {
-          font-family: 'Bebas Neue', sans-serif;
+          font-family: 'Space Mono', monospace;
           font-size: 13px; letter-spacing: 4px; color: #EE7700;
           text-transform: uppercase; display: block; margin-bottom: 16px;
         }
@@ -150,7 +150,7 @@ export default function CoachingClient({ userId }: Props) {
           padding: 24px 28px; margin-top: 0;
         }
         .opdracht-label {
-          font-family: 'Bebas Neue', sans-serif;
+          font-family: 'Space Mono', monospace;
           font-size: 13px; letter-spacing: 4px; color: #EE7700;
           display: block; margin-bottom: 12px;
         }
