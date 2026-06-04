@@ -40,10 +40,11 @@ export default async function Home() {
         /* ── NAV ── */
         .site-nav {
           position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-          padding: 16px 40px; display: flex; justify-content: center;
+          padding: 0 40px; height: 60px; display: flex; align-items: center;
           border-bottom: 1px solid rgba(255,255,255,0.06);
           background: rgba(10,10,10,0.9); backdrop-filter: blur(12px);
         }
+        .nav-spacer { flex: 1; }
         .nav-links { display: flex; gap: 48px; align-items: center; }
         .nav-links a {
           color: #888; text-decoration: none;
@@ -53,10 +54,11 @@ export default async function Home() {
         .nav-links a:hover { color: #f0ede6; }
         .nav-cta { color: #EE7700 !important; }
         .nav-btn {
-          color: #888 !important; border: 1.5px solid #333; border-radius: 999px;
-          padding: 6px 20px; transition: border-color 0.2s, color 0.2s;
+          color: #888; text-decoration: none;
+          font-family: 'Bebas Neue', sans-serif;
+          font-size: 22px; letter-spacing: 3px; transition: color 0.2s;
         }
-        .nav-btn:hover { color: #f0ede6 !important; border-color: #888; }
+        .nav-btn:hover { color: #f0ede6; }
         .nav-item { display: flex; flex-direction: column; align-items: center; gap: 2px; }
         .nav-sub {
           font-family: 'Space Mono', monospace; font-size: 9px;
@@ -229,11 +231,14 @@ export default async function Home() {
 
       {/* NAV — homepage: geen HOME */}
       <nav className="site-nav">
+        <div className="nav-spacer" />
         <div className="nav-links">
           <Link href="/bio">ARNO</Link>
           <a href="https://www.royaldutchsales.com/arnobot">BOT</a>
           <a href="https://salescanvas.app" target="_blank" rel="noopener noreferrer">CANVAS</a>
           <a href="https://arno.blog/subscribe" target="_blank" rel="noopener noreferrer" className="nav-cta">SUBSCRIBE</a>
+        </div>
+        <div className="nav-spacer" style={{ display: 'flex', justifyContent: 'flex-end' }}>
           {userId
             ? <Link href="/bot" className="nav-btn">MIJN BOT</Link>
             : <Link href="/sign-in" className="nav-btn">INLOGGEN</Link>
