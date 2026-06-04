@@ -4,12 +4,12 @@ import { useSignIn } from '@clerk/nextjs'
 import { useState } from 'react'
 
 export default function SignInPage() {
-  const { isLoaded, signIn } = useSignIn()
+  const { fetchStatus, signIn } = useSignIn()
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
 
   async function handleLinkedIn() {
-    if (!isLoaded || !signIn) {
+    if (fetchStatus !== 'idle' || !signIn) {
       setError('Pagina nog niet geladen — ververs de pagina.')
       return
     }
@@ -60,7 +60,7 @@ export default function SignInPage() {
             {loading ? 'VERBINDEN...' : 'DOORGAAN MET LINKEDIN'}
           </button>
           {error && <p style={{ color: '#cc3300', fontSize: 13, letterSpacing: 1, textAlign: 'center' }}>{error}</p>}
-          {!isLoaded && <p style={{ color: '#666', fontSize: 11, letterSpacing: 1, textAlign: 'center' }}>LADEN...</p>}
+          {fetchStatus === 'fetching' && <p style={{ color: '#666', fontSize: 11, letterSpacing: 1, textAlign: 'center' }}>LADEN...</p>}
           <p style={{ fontSize: 12, color: '#666', letterSpacing: 1, textAlign: 'center', lineHeight: 1.8 }}>
             Nog geen account? LinkedIn-login maakt automatisch een account aan.
           </p>
