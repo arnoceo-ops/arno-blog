@@ -56,6 +56,16 @@ export default clerkMiddleware(async (auth, req) => {
               .update({ user_id: userId })
               .eq('email', email)
             user = pending
+          } else {
+            // Nieuwe gebruiker via LinkedIn OAuth — automatisch trial starten
+            const newRow = {
+              user_id: userId,
+              email: email || null,
+              trial_start: new Date().toISOString(),
+              is_active: true,
+            }
+            await supabase.from('approved_users').insert(newRow)
+            user = { is_active: true, paid_at: null, expires_at: null, trial_start: newRow.trial_start }
           }
         }
       } catch (e) {
