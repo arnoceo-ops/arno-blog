@@ -57,6 +57,7 @@ export default function GeschiedenisPage() {
   const [savedAnalyses, setSavedAnalyses] = useState<SavedAnalyse[]>([])
   const [expandedAnalyse, setExpandedAnalyse] = useState<string | null>(null)
   const [showAllSessions, setShowAllSessions] = useState(false)
+  const [isDuplicateAnalyse, setIsDuplicateAnalyse] = useState(false)
   const analysesSectionRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
@@ -137,6 +138,7 @@ export default function GeschiedenisPage() {
   async function runAnalyse(sessionIds?: string[]) {
     setAnalyseLoading(true)
     setActiveAnalyse(null)
+    setIsDuplicateAnalyse(false)
     try {
       const body = sessionIds ? { sessionIds } : {}
       const res = await fetch('/api/bot/coaching-analyse', {
@@ -146,7 +148,8 @@ export default function GeschiedenisPage() {
       })
       const data = await res.json()
       if (data.duplicate) {
-        setActiveAnalyse(`⟳ Deze selectie is al eerder geanalyseerd (${formatDateShort(data.created_at)}):\n\n${data.analyse}`)
+        setIsDuplicateAnalyse(true)
+        setActiveAnalyse(data.analyse)
       } else if (data.analyse) {
         setActiveAnalyse(data.analyse)
         if (data.id) {
@@ -160,7 +163,7 @@ export default function GeschiedenisPage() {
       }
     } catch {}
     setAnalyseLoading(false)
-    setTimeout(() => analysesSectionRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' }), 100)
+    setTimeout(() => analysesSectionRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' }), 300)
   }
 
   const hasSelected = selected.size > 0
@@ -471,8 +474,10 @@ export default function GeschiedenisPage() {
             <h2 style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 64, letterSpacing: 3, lineHeight: 1, marginBottom: 48 }}>ANALYSES</h2>
 
             {activeAnalyse && (
-              <div style={{ marginBottom: 28, background: '#0f0f0f', borderLeft: '3px solid #EE7700', padding: '20px 24px' }}>
-                <p style={{ color: '#EE7700', fontSize: 11, letterSpacing: 4, textTransform: 'uppercase', marginBottom: 12 }}>NIEUW GEGENEREERD</p>
+              <div style={{ marginBottom: 28, background: '#0f0f0f', borderLeft: `3px solid ${isDuplicateAnalyse ? '#888' : '#EE7700'}`, padding: '20px 24px' }}>
+                <p style={{ color: isDuplicateAnalyse ? '#888' : '#EE7700', fontSize: 11, letterSpacing: 4, textTransform: 'uppercase', marginBottom: 12 }}>
+                  {isDuplicateAnalyse ? 'AL EERDER GEANALYSEERD' : 'NIEUW GEGENEREERD'}
+                </p>
                 <p style={{ color: '#d0cdc6', fontSize: 16, lineHeight: 1.9, fontFamily: "'Space Mono', monospace", whiteSpace: 'pre-wrap', marginBottom: 16 }}>{activeAnalyse}</p>
                 <button
                   onClick={() => setActiveAnalyse(null)}
