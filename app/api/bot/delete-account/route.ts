@@ -14,7 +14,7 @@ export async function DELETE() {
   try {
     await Promise.all([
       supabaseAdmin.from('arnobot_blog_profiles').delete().eq('user_id', userId),
-      supabaseAdmin.from('arnobot_blog_logs').delete().eq('user_id', userId),
+      supabaseAdmin.from('arnobot_rds_logs').delete().eq('user_id', userId),
       supabaseAdmin.from('approved_users').delete().eq('user_id', userId),
     ])
 

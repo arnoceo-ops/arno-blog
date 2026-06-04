@@ -14,7 +14,7 @@ export async function GET() {
   try {
     const [profile, logs, account] = await Promise.all([
       supabaseAdmin.from('arnobot_blog_profiles').select('*').eq('user_id', userId),
-      supabaseAdmin.from('arnobot_blog_logs').select('*').eq('user_id', userId),
+      supabaseAdmin.from('arnobot_rds_logs').select('*').eq('user_id', userId),
       supabaseAdmin.from('approved_users').select('*').eq('user_id', userId),
     ])
 

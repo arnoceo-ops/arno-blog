@@ -33,7 +33,7 @@ export default async function ArnoBotAdminPage({
   )
 
   const { data } = await supabase
-    .from('arnobot_blog_logs')
+    .from('arnobot_rds_logs')
     .select('*')
     .gte('created_at', `${from}T00:00:00`)
     .lte('created_at', `${to}T23:59:59`)

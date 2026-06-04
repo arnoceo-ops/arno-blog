@@ -15,7 +15,7 @@ export async function GET(req: NextRequest) {
   if (!sessionId) return NextResponse.json({ messages: [], history: [] })
 
   const { data, error } = await supabase
-    .from('arnobot_blog_logs')
+    .from('arnobot_rds_logs')
     .select('question, answer, created_at')
     .eq('user_id', userId)
     .eq('session_id', sessionId)
@@ -50,7 +50,7 @@ export async function DELETE(req: NextRequest) {
     .eq('session_id', sessionId)
 
   await supabase
-    .from('arnobot_blog_logs')
+    .from('arnobot_rds_logs')
     .delete()
     .eq('user_id', userId)
     .eq('session_id', sessionId)

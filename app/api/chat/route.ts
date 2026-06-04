@@ -140,7 +140,7 @@ PROFIEL VAN DE GEBRUIKER:
 
     const answer = response.content[0].type === 'text' ? response.content[0].text : ''
 
-    const logTable = isWidget ? 'arno_blog_widget_logs' : 'arnobot_blog_logs'
+    const logTable = isWidget ? 'arno_blog_widget_logs' : 'arnobot_rds_logs'
     await supabase.from(logTable).insert({ question, answer, ip, session_id: sessionId, user_id: userId ?? null })
 
     return NextResponse.json({ answer, hint }, { headers: corsHeaders(origin) })
