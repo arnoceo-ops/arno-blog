@@ -200,7 +200,9 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
   }, [])
 
   useEffect(() => {
-    bottomRef.current?.scrollIntoView({ behavior: 'smooth' })
+    if (messages.length > 0 || loading) {
+      bottomRef.current?.scrollIntoView({ behavior: 'smooth' })
+    }
   }, [messages, loading])
 
   useEffect(() => {
