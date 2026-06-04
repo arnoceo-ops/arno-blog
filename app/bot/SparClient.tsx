@@ -44,7 +44,8 @@ interface Props {
   resumeSessionId?: string
 }
 
-const STRATEGISCH_ROLLEN = ['Sales Manager/Director', 'VP of Sales', 'CEO/DGA']
+const STRATEGISCH_ROLLEN = ['VP of Sales', 'CEO/DGA']
+const ORGANISATORISCH_ROLLEN = ['Sales Manager/Director']
 
 const VRAGEN_STRATEGISCH = [
   'Mijn salesteam haalt structureel de targets niet. Waar ligt het écht aan?',
@@ -109,8 +110,9 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
   const [suggestedBlogs, setSuggestedBlogs] = useState<{title: string, url: string}[]>([])
   const [voortgang, setVoortgang] = useState<{count: number, lastDate: string | null} | null>(null)
   const isStrategischProfiel = STRATEGISCH_ROLLEN.includes((profiel?.rol as string) ?? '')
+  const isOrganisatorischProfiel = ORGANISATORISCH_ROLLEN.includes((profiel?.rol as string) ?? '')
   const [openerModus, setOpenerModus] = useState<'strategisch' | 'organisatorisch' | 'sales'>(
-    isStrategischProfiel ? 'strategisch' : 'sales'
+    isStrategischProfiel ? 'strategisch' : isOrganisatorischProfiel ? 'organisatorisch' : 'sales'
   )
   const [recording, setRecording] = useState(false)
   const [speechSupported, setSpeechSupported] = useState(false)
