@@ -1,6 +1,7 @@
 import { clerkMiddleware, createRouteMatcher, clerkClient } from '@clerk/nextjs/server'
 import { createClient } from '@supabase/supabase-js'
 import { NextResponse } from 'next/server'
+import { Resend } from 'resend'
 
 const isPublicRoute = createRouteMatcher([
   '/canvas-aanmelden(.*)',
@@ -68,6 +69,41 @@ export default clerkMiddleware(async (auth, req) => {
             }
             await supabase.from('approved_users').insert(newRow)
             user = { is_active: true, paid_at: null, expires_at: null, trial_start: newRow.trial_start }
+            // Welkomstmail — fire and forget
+            const resend = new Resend(process.env.RESEND_API_KEY)
+            const voornaam = clerkUser.firstName || 'daar'
+            resend.emails.send({
+              from: 'ArnoBot <info@royaldutchsales.com>',
+              to: email,
+              subject: 'Je ArnoBot trial staat klaar',
+              html: `
+                <div style="font-family:sans-serif;max-width:560px;margin:0 auto;color:#f0ede6;background:#0a0a0a;">
+                  <div style="padding:24px 32px;border-bottom:3px solid #EE7700;">
+                    <span style="font-family:'Courier New',monospace;font-size:18px;letter-spacing:4px;color:#EE7700;">
+                      ARNOBOT <span style="color:#fff;">UNLIMITED</span>
+                    </span>
+                  </div>
+                  <div style="padding:32px;">
+                    <h1 style="font-size:32px;margin-bottom:8px;color:#f0ede6;font-family:'Courier New',monospace;letter-spacing:2px;">
+                      Welkom, ${voornaam}.
+                    </h1>
+                    <p style="font-size:15px;color:#888;line-height:1.8;margin-bottom:24px;">
+                      Je account is aangemaakt via LinkedIn.<br />
+                      Je hebt <strong style="color:#EE7700;">30 dagen gratis toegang</strong> tot ArnoBot Unlimited — geen creditcard, geen verplichtingen.
+                    </p>
+                    <div style="background:#111;padding:20px 24px;margin-bottom:24px;border-left:3px solid #EE7700;">
+                      <p style="font-size:12px;letter-spacing:2px;color:#EE7700;margin-bottom:4px;text-transform:uppercase;">Jouw trial</p>
+                      <p style="font-size:16px;font-weight:600;color:#f0ede6;margin:0;">30 dagen gratis — geen automatische afschrijving</p>
+                      <p style="font-size:13px;color:#666;margin:4px 0 0;">Na je trial geef je zelf per e-mail aan of je doorgaat.</p>
+                    </div>
+                    <a href="https://www.royaldutchsales.com/bot"
+                       style="display:inline-block;background:#EE7700;color:#0a0a0a;font-family:'Courier New',monospace;font-size:16px;font-weight:700;letter-spacing:3px;padding:16px 40px;text-decoration:none;border-radius:999px;">
+                      OPEN ARNOBOT →
+                    </a>
+                  </div>
+                </div>
+              `,
+            }).catch(() => {})
           }
         }
       } catch (e) {
