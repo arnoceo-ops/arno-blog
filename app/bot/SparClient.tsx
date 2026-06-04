@@ -767,7 +767,7 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
         /* VOORTGANG BAR */
         .voortgang-bar {
           text-align: center; padding: 48px 0 16px;
-          color: rgb(136,136,136); font-family: 'Bebas Neue', sans-serif;
+          color: rgb(240,237,230); font-family: 'Bebas Neue', sans-serif;
           font-size: 15px; letter-spacing: 3px;
         }
         .archief-btn {
