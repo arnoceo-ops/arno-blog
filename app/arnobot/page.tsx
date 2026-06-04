@@ -1,6 +1,8 @@
 import Link from 'next/link'
+import { auth } from '@clerk/nextjs/server'
 
-export default function ArnoBotLandingPage() {
+export default async function ArnoBotLandingPage() {
+  const { userId } = await auth()
   return (
     <>
       <style>{`
@@ -214,8 +216,14 @@ export default function ArnoBotLandingPage() {
           <a href="https://salescanvas.app" target="_blank" rel="noopener noreferrer">CANVAS</a>
           <a href="https://arno.blog/subscribe" target="_blank" rel="noopener noreferrer" className="nav-cta">SUBSCRIBE</a>
         </div>
-        <div className="nav-spacer" style={{ display: 'flex', justifyContent: 'flex-end' }}>
-          <Link href="/sign-in" className="nav-login">LOGIN</Link>
+        <div className="nav-spacer" style={{ display: 'flex', justifyContent: 'flex-end', gap: '32px' }}>
+          {userId
+            ? <Link href="/bot" className="nav-login">MIJN BOT</Link>
+            : <>
+                <Link href="/sign-up" className="nav-login">AANMELDEN</Link>
+                <Link href="/sign-in" className="nav-login">INLOGGEN</Link>
+              </>
+          }
         </div>
       </nav>
 

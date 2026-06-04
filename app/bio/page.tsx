@@ -1,12 +1,14 @@
 import Link from 'next/link'
 import { client } from '@/sanity/client'
 import { PortableText } from '@portabletext/react'
+import { auth } from '@clerk/nextjs/server'
 
 async function getBioPage() {
   return await client.fetch(`*[_type == "bioPage"][0]`, {}, { next: { revalidate: 0 } })
 }
 
 export default async function BioPage() {
+  const { userId } = await auth()
   const bio = await getBioPage()
 
   return (
@@ -18,11 +20,18 @@ export default async function BioPage() {
 
         .site-nav {
           position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-          padding: 16px 40px; display: flex; justify-content: center;
+          padding: 0 40px; height: 60px; display: flex; align-items: center;
           border-bottom: 1px solid rgba(255,255,255,0.06);
           background: rgba(10,10,10,0.9); backdrop-filter: blur(12px);
         }
+        .nav-spacer { flex: 1; }
         .nav-links { display: flex; gap: 48px; align-items: center; }
+        .nav-btn {
+          color: #888; text-decoration: none;
+          font-family: 'Bebas Neue', sans-serif;
+          font-size: 22px; letter-spacing: 3px; transition: color 0.2s;
+        }
+        .nav-btn:hover { color: #f0ede6; }
         .nav-links a {
           color: #888; text-decoration: none;
           font-family: 'Bebas Neue', sans-serif;
@@ -73,12 +82,22 @@ export default async function BioPage() {
       `}</style>
 
       <nav className="site-nav">
+        <div className="nav-spacer" />
         <div className="nav-links">
           <Link href="/">HOME</Link>
           <Link href="/bio" className="nav-active">ARNO</Link>
           <a href="https://www.royaldutchsales.com/arnobot">BOT</a>
           <a href="https://salescanvas.app" target="_blank" rel="noopener noreferrer">CANVAS</a>
           <a href="https://arno.blog/subscribe" target="_blank" rel="noopener noreferrer" className="nav-cta">SUBSCRIBE</a>
+        </div>
+        <div className="nav-spacer" style={{ display: 'flex', justifyContent: 'flex-end', gap: '32px' }}>
+          {userId
+            ? <Link href="/bot" className="nav-btn">MIJN BOT</Link>
+            : <>
+                <Link href="/sign-up" className="nav-btn">AANMELDEN</Link>
+                <Link href="/sign-in" className="nav-btn">INLOGGEN</Link>
+              </>
+          }
         </div>
       </nav>
 
