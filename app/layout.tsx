@@ -30,7 +30,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <ClerkProvider>
+    <ClerkProvider signInForceRedirectUrl="/bot" signUpForceRedirectUrl="/bot">
       <html lang="en">
         <body
           className={`${geistSans.variable} ${geistMono.variable} ${bebasNeue.variable} antialiased`}
