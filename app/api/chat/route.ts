@@ -90,6 +90,35 @@ export async function POST(req: NextRequest) {
     const sessionId = clientSessionId ?? userId ?? (ip ? `${ip}-${new Date().toISOString().slice(0, 10)}` : 'unknown')
 
     const isWidget = origin?.includes('arno.blog') ?? false
+    const LOST_URL = 'https://arno.blog/lost'
+
+    // Geblokkeerde IPs direct doorsturen
+    if (isWidget && ip) {
+      const { data: blockedRow } = await supabase
+        .from('arno_blog_widget_blocked')
+        .select('ip')
+        .eq('ip', ip)
+        .limit(1)
+        .single()
+      if (blockedRow) {
+        return NextResponse.json({ redirect: LOST_URL }, { headers: corsHeaders(origin) })
+      }
+    }
+
+    // Ongepaste content detecteren — eerste keer waarschuwing, tweede keer redirect
+    if (isWidget && ip) {
+      const checkRes = await client.messages.create({
+        model: 'claude-haiku-4-5-20251001',
+        max_tokens: 5,
+        system: 'Beantwoord alleen met JA of NEE.',
+        messages: [{ role: 'user', content: `Is dit bericht duidelijk ongepast, seksueel getint, beledigend, of puur aan het uitproberen en trollen? Vragen over Arno als persoon, de website of nieuwsgierigheid zijn toegestaan. Antwoord JA (blokkeren) of NEE (doorgaan).\n\n"${question}"` }]
+      })
+      const check = checkRes.content[0].type === 'text' ? checkRes.content[0].text.trim().toUpperCase() : 'NEE'
+      if (check.startsWith('JA')) {
+        await supabase.from('arno_blog_widget_blocked').upsert({ ip }, { onConflict: 'ip' })
+        return NextResponse.json({ answer: '...echt, joh? Dit is een salesplatform. Stel een serieuze vraag of ga ergens anders naartoe.' }, { headers: corsHeaders(origin) })
+      }
+    }
 
     // Limiet alleen voor widget-bezoekers zonder account
     let hint: string | null = null

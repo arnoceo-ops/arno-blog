@@ -240,6 +240,10 @@
       .then(function (res) { return res.json(); })
       .then(function (data) {
         self._setLoading(false);
+        if (data.redirect) {
+          window.location.href = data.redirect;
+          return;
+        }
         if (data.blocked) {
           self._addCta('Je bent door je vragen heen. Wat nu?');
           self._setBlocked();
