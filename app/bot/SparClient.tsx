@@ -938,6 +938,7 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
                 setInput(e.target.value)
                 e.target.style.height = 'auto'
                 e.target.style.height = e.target.scrollHeight + 'px'
+                if (showSluiten) setShowSluiten(false)
               }}
               onKeyDown={e => {
                 if (e.key === 'Enter' && !e.shiftKey) {
