@@ -1,6 +1,7 @@
 'use client'
 
 import Link from 'next/link'
+import BotNav from '@/app/bot/BotNav'
 
 const FAQS = [
   {
@@ -25,7 +26,7 @@ const FAQS = [
   },
 ]
 
-export default function QAClient() {
+export default function QAClient({ isOnboarding }: { isOnboarding: boolean }) {
   return (
     <>
       <style>{`
@@ -35,17 +36,21 @@ export default function QAClient() {
         .qa-continue:hover { background: #cc6600 !important; }
       `}</style>
 
-      <nav style={{
-        position: 'fixed', top: 0, left: 0, right: 0, zIndex: 100,
-        padding: '0 40px', height: 64,
-        display: 'flex', alignItems: 'center',
-        borderBottom: '1px solid rgba(255,255,255,0.06)',
-        background: 'rgba(10,10,10,0.95)', backdropFilter: 'blur(12px)',
-      }}>
-        <Link href="/" style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 22, letterSpacing: 3, color: '#f0ede6', textDecoration: 'none' }}>
-          ARNO<span style={{ color: '#EE7700' }}>BOT.</span>
-        </Link>
-      </nav>
+      {isOnboarding ? (
+        <nav style={{
+          position: 'fixed', top: 0, left: 0, right: 0, zIndex: 100,
+          padding: '0 40px', height: 64,
+          display: 'flex', alignItems: 'center',
+          borderBottom: '1px solid rgba(255,255,255,0.06)',
+          background: 'rgba(10,10,10,0.95)', backdropFilter: 'blur(12px)',
+        }}>
+          <Link href="/" style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 22, letterSpacing: 3, color: '#f0ede6', textDecoration: 'none' }}>
+            ARNO<span style={{ color: '#EE7700' }}>BOT.</span>
+          </Link>
+        </nav>
+      ) : (
+        <BotNav active="qa" />
+      )}
 
       <div style={{ minHeight: '100vh', paddingTop: 64, background: '#0a0a0a' }}>
         <div style={{ maxWidth: 760, margin: '0 auto', padding: '60px 24px 80px' }}>

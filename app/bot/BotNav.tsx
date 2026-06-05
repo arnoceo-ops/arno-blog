@@ -7,7 +7,7 @@ import { useRouter } from 'next/navigation'
 import { useIsMobile } from '@/hooks/useBreakpoint'
 
 interface Props {
-  active: 'bot' | 'archief' | 'coaching' | 'account' | 'profiel'
+  active: 'bot' | 'archief' | 'coaching' | 'account' | 'profiel' | 'qa'
 }
 
 const navStyle = {
@@ -130,6 +130,7 @@ export default function BotNav({ active }: Props) {
             {active === 'bot'      ? <span className="mob-active">BOT</span>      : <Link href="/bot">BOT</Link>}
             {active === 'archief'  ? <span className="mob-active">ARCHIEF</span>  : <Link href="/bot/archief">ARCHIEF</Link>}
             {active === 'coaching' ? <span className="mob-active">COACHING</span> : <Link href="/bot/coaching">COACHING</Link>}
+            {active === 'qa'       ? <span className="mob-active">Q&A</span>      : <Link href="/bot/qa">Q&A</Link>}
             {active === 'account'  ? <span className="mob-active">ACCOUNT</span>  : <Link href="/bot/account">ACCOUNT</Link>}
             <span style={{ color: '#888', cursor: 'pointer' }} onClick={e => { e.stopPropagation(); setMenuOpen(false); setFeedbackOpen(true) }}>FEEDBACK</span>
           </div>
@@ -153,6 +154,9 @@ export default function BotNav({ active }: Props) {
           {active === 'coaching'
             ? <span style={{ ...linkBase, color: '#EE7700' }}>COACHING</span>
             : <Link href="/bot/coaching" style={linkBase}>COACHING</Link>}
+          {active === 'qa'
+            ? <span style={{ ...linkBase, color: '#EE7700' }}>Q&A</span>
+            : <Link href="/bot/qa" style={linkBase}>Q&A</Link>}
           {active === 'account'
             ? <span style={{ ...linkBase, color: '#EE7700' }}>ACCOUNT</span>
             : <Link href="/bot/account" style={linkBase}>ACCOUNT</Link>}
