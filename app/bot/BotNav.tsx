@@ -32,18 +32,74 @@ const linkBase: React.CSSProperties = {
 export default function BotNav({ active }: Props) {
   const isMobile = useIsMobile()
   const [menuOpen, setMenuOpen] = useState(false)
+  const [feedbackOpen, setFeedbackOpen] = useState(false)
+  const [feedbackText, setFeedbackText] = useState('')
+  const [feedbackSent, setFeedbackSent] = useState(false)
+  const [feedbackLoading, setFeedbackLoading] = useState(false)
   const { signOut } = useClerk()
   const router = useRouter()
 
-  const items: { href: string; label: string; key: Props['active'] }[] = [
-    { href: '/', label: 'HOME', key: 'bot' },
-    { href: '/bot', label: 'BOT', key: 'bot' },
-    { href: '/bot/archief', label: 'ARCHIEF', key: 'archief' },
-    { href: '/bot/coaching', label: 'COACHING', key: 'coaching' },
-    { href: '/bot/account', label: 'ACCOUNT', key: 'account' },
-  ]
+  async function sendFeedback() {
+    if (!feedbackText.trim()) return
+    setFeedbackLoading(true)
+    try {
+      const res = await fetch('/api/feedback', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ feedback: feedbackText }),
+      })
+      if (!res.ok) {
+        const data = await res.json().catch(() => ({}))
+        alert(data.error || 'Er ging iets mis — probeer opnieuw.')
+        return
+      }
+      setFeedbackSent(true)
+      setFeedbackText('')
+      setTimeout(() => { setFeedbackOpen(false); setFeedbackSent(false) }, 2000)
+    } catch {
+      alert('Er ging iets mis — probeer opnieuw.')
+    } finally { setFeedbackLoading(false) }
+  }
 
   if (isMobile === null) return null
+
+  const feedbackModal = feedbackOpen && (
+    <div
+      style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.75)', zIndex: 200, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 20 }}
+      onClick={() => setFeedbackOpen(false)}
+    >
+      <div
+        style={{ background: '#111', border: '1px solid #222', maxWidth: 480, width: '100%', padding: 32 }}
+        onClick={e => e.stopPropagation()}
+      >
+        <p style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 13, letterSpacing: 4, color: '#EE7700', marginBottom: 8 }}>ARNOBOT</p>
+        <h2 style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 36, letterSpacing: 1, color: '#f0ede6', marginBottom: 20 }}>FEEDBACK</h2>
+        {feedbackSent ? (
+          <p style={{ fontFamily: "'Space Mono', monospace", fontSize: 14, color: '#EE7700', letterSpacing: 1 }}>Bedankt — je feedback is verzonden.</p>
+        ) : (
+          <>
+            <textarea
+              value={feedbackText}
+              onChange={e => setFeedbackText(e.target.value)}
+              placeholder="Wat kan er beter? Wat werkt goed? Alles is welkom."
+              style={{ width: '100%', minHeight: 120, background: '#0a0a0a', border: '1px solid #333', color: '#f0ede6', fontFamily: "'Space Mono', monospace", fontSize: 13, padding: '12px 16px', resize: 'vertical', outline: 'none', marginBottom: 16, boxSizing: 'border-box' }}
+            />
+            <div style={{ display: 'flex', gap: 12 }}>
+              <button
+                onClick={sendFeedback}
+                disabled={feedbackLoading || !feedbackText.trim()}
+                style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 18, letterSpacing: 3, padding: '12px 28px', background: '#EE7700', color: '#0a0a0a', border: 'none', cursor: 'pointer', borderRadius: 999, opacity: feedbackLoading || !feedbackText.trim() ? 0.5 : 1 }}
+              >{feedbackLoading ? '...' : 'VERSTUUR'}</button>
+              <button
+                onClick={() => setFeedbackOpen(false)}
+                style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 18, letterSpacing: 3, padding: '12px 28px', background: 'none', color: '#555', border: '1px solid #222', cursor: 'pointer', borderRadius: 999 }}
+              >ANNULEER</button>
+            </div>
+          </>
+        )}
+      </div>
+    </div>
+  )
 
   if (isMobile) {
     return (
@@ -75,39 +131,48 @@ export default function BotNav({ active }: Props) {
             {active === 'archief'  ? <span className="mob-active">ARCHIEF</span>  : <Link href="/bot/archief">ARCHIEF</Link>}
             {active === 'coaching' ? <span className="mob-active">COACHING</span> : <Link href="/bot/coaching">COACHING</Link>}
             {active === 'account'  ? <span className="mob-active">ACCOUNT</span>  : <Link href="/bot/account">ACCOUNT</Link>}
+            <span style={{ color: '#555', cursor: 'pointer' }} onClick={e => { e.stopPropagation(); setMenuOpen(false); setFeedbackOpen(true) }}>FEEDBACK</span>
           </div>
         )}
+        {feedbackModal}
       </>
     )
   }
 
   return (
-    <nav style={navStyle}>
-      <div style={{ flex: 1 }} />
-      <div style={{ display: 'flex', gap: 48, alignItems: 'center' }}>
-        {active === 'bot'
-          ? <span style={{ ...linkBase, color: '#EE7700' }}>BOT</span>
-          : <Link href="/bot" style={linkBase}>BOT</Link>}
-        {active === 'archief'
-          ? <span style={{ ...linkBase, color: '#EE7700' }}>ARCHIEF</span>
-          : <Link href="/bot/archief" style={linkBase}>ARCHIEF</Link>}
-        {active === 'coaching'
-          ? <span style={{ ...linkBase, color: '#EE7700' }}>COACHING</span>
-          : <Link href="/bot/coaching" style={linkBase}>COACHING</Link>}
-        {active === 'account'
-          ? <span style={{ ...linkBase, color: '#EE7700' }}>ACCOUNT</span>
-          : <Link href="/bot/account" style={linkBase}>ACCOUNT</Link>}
-      </div>
-      <div style={{ flex: 1, display: 'flex', justifyContent: 'flex-end' }}>
-        <button
-          style={logoutBtnStyle}
-          onMouseEnter={e => { (e.target as HTMLButtonElement).style.color = '#f0ede6' }}
-          onMouseLeave={e => { (e.target as HTMLButtonElement).style.color = '#888' }}
-          onClick={() => signOut(() => router.push('/'))}
-        >
-          UITLOGGEN
-        </button>
-      </div>
-    </nav>
+    <>
+      <nav style={navStyle}>
+        <div style={{ flex: 1 }} />
+        <div style={{ display: 'flex', gap: 48, alignItems: 'center' }}>
+          {active === 'bot'
+            ? <span style={{ ...linkBase, color: '#EE7700' }}>BOT</span>
+            : <Link href="/bot" style={linkBase}>BOT</Link>}
+          {active === 'archief'
+            ? <span style={{ ...linkBase, color: '#EE7700' }}>ARCHIEF</span>
+            : <Link href="/bot/archief" style={linkBase}>ARCHIEF</Link>}
+          {active === 'coaching'
+            ? <span style={{ ...linkBase, color: '#EE7700' }}>COACHING</span>
+            : <Link href="/bot/coaching" style={linkBase}>COACHING</Link>}
+          {active === 'account'
+            ? <span style={{ ...linkBase, color: '#EE7700' }}>ACCOUNT</span>
+            : <Link href="/bot/account" style={linkBase}>ACCOUNT</Link>}
+        </div>
+        <div style={{ flex: 1, display: 'flex', justifyContent: 'flex-end', gap: 32, alignItems: 'center' }}>
+          <button
+            style={{ ...logoutBtnStyle, color: '#555' }}
+            onMouseEnter={e => { (e.target as HTMLButtonElement).style.color = '#EE7700' }}
+            onMouseLeave={e => { (e.target as HTMLButtonElement).style.color = '#555' }}
+            onClick={() => setFeedbackOpen(true)}
+          >FEEDBACK</button>
+          <button
+            style={logoutBtnStyle}
+            onMouseEnter={e => { (e.target as HTMLButtonElement).style.color = '#f0ede6' }}
+            onMouseLeave={e => { (e.target as HTMLButtonElement).style.color = '#888' }}
+            onClick={() => signOut(() => router.push('/'))}
+          >UITLOGGEN</button>
+        </div>
+      </nav>
+      {feedbackModal}
+    </>
   )
 }
