@@ -925,7 +925,7 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
             </p>
             <p style={{ fontFamily: "'Space Mono', monospace", fontSize: 'clamp(11px, 0.9vw, 13px)', color: 'rgb(136, 136, 136)', lineHeight: 1.8 }}>
               Gebouwd op 40 jaar sales, 30 jaar entrepreneurship,<br />
-              20 jaar bloggen, 15 jaar coachen.
+              20 jaar bloggen, 15 jaar scale-up coaching.
             </p>
           </div>
         </div>
