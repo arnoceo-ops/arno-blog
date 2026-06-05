@@ -7,7 +7,7 @@ import { useRouter } from 'next/navigation'
 import { useIsMobile } from '@/hooks/useBreakpoint'
 
 interface Props {
-  active: 'bot' | 'archief' | 'coaching' | 'account'
+  active: 'bot' | 'archief' | 'coaching' | 'account' | 'profiel'
 }
 
 const navStyle = {

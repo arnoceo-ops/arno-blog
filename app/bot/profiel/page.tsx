@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import { useUser } from '@clerk/nextjs'
+import BotNav from '@/app/bot/BotNav'
 
 type Answers = {
   rol: string
@@ -117,13 +118,6 @@ export default function BotProfielPage() {
     setIsDirty(true)
   }
 
-  function handleBotNav() {
-    if (isDirty) {
-      if (!window.confirm('Je hebt wijzigingen die nog niet zijn opgeslagen. Toch doorgaan?')) return
-    }
-    router.push('/bot')
-  }
-
   const rolIngevuld = answers.rol && (answers.rol !== 'Anders' || rolAnders.trim().length > 1)
 
   const allFilled =
@@ -169,11 +163,7 @@ export default function BotProfielPage() {
         textarea::placeholder, input::placeholder { color: #444; }
       `}</style>
 
-      <nav style={{ position: 'fixed', top: 0, left: 0, right: 0, zIndex: 100, padding: '16px 40px', display: 'flex', justifyContent: 'center', borderBottom: '1px solid rgba(255,255,255,0.06)', background: 'rgba(10,10,10,0.95)', backdropFilter: 'blur(12px)' }}>
-        <div style={{ display: 'flex', gap: 48, alignItems: 'center' }}>
-          <button onClick={handleBotNav} style={{ background: 'none', border: 'none', padding: 0, color: '#EE7700', textDecoration: 'none', fontFamily: "'Bebas Neue', sans-serif", fontSize: 22, letterSpacing: 3, cursor: 'pointer' }}>BOT</button>
-        </div>
-      </nav>
+      <BotNav active="profiel" />
 
       <div style={{ minHeight: '100vh', paddingTop: 80, paddingBottom: 80 }}>
         <div style={{ maxWidth: 680, margin: '0 auto', padding: '60px 24px 0' }}>
