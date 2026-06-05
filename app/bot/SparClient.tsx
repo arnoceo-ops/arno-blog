@@ -256,7 +256,7 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
   useEffect(() => {
     if (resizeInput && inputRef.current) {
       inputRef.current.style.height = 'auto'
-      inputRef.current.style.height = Math.min(inputRef.current.scrollHeight, 120) + 'px'
+      inputRef.current.style.height = inputRef.current.scrollHeight + 'px'
       inputRef.current.focus()
       setResizeInput(false)
     }
@@ -268,7 +268,7 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
       if (inputRef.current) {
         inputRef.current.focus()
         inputRef.current.style.height = 'auto'
-        inputRef.current.style.height = Math.min(inputRef.current.scrollHeight, 120) + 'px'
+        inputRef.current.style.height = inputRef.current.scrollHeight + 'px'
       }
     }, 0)
   }
@@ -903,7 +903,7 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
               onChange={e => {
                 setInput(e.target.value)
                 e.target.style.height = 'auto'
-                e.target.style.height = Math.min(e.target.scrollHeight, 120) + 'px'
+                e.target.style.height = e.target.scrollHeight + 'px'
               }}
               onKeyDown={e => {
                 if (e.key === 'Enter' && !e.shiftKey) {
