@@ -87,7 +87,7 @@ export default function BotProfielPage() {
   const [rolAnders, setRolAnders] = useState('')
   const [saving, setSaving] = useState(false)
   const [error, setError] = useState('')
-  const [isFirstTime, setIsFirstTime] = useState(false)
+  const [isFirstTime, setIsFirstTime] = useState<boolean | null>(null)
 
   const [isDirty, setIsDirty] = useState(false)
   const firstName = user?.firstName || 'daar'
@@ -98,6 +98,7 @@ export default function BotProfielPage() {
       .then(data => {
         if (data?.profiel) {
           setAnswers(prev => ({ ...prev, ...data.profiel }))
+          setIsFirstTime(false)
         } else {
           setIsFirstTime(true)
         }
@@ -163,7 +164,20 @@ export default function BotProfielPage() {
         textarea::placeholder, input::placeholder { color: #444; }
       `}</style>
 
-      <BotNav active="profiel" />
+      {isFirstTime === false && <BotNav active="profiel" />}
+      {isFirstTime === true && (
+        <nav style={{
+          position: 'fixed', top: 0, left: 0, right: 0, zIndex: 100,
+          padding: '0 40px', height: 64,
+          display: 'flex', alignItems: 'center',
+          borderBottom: '1px solid rgba(255,255,255,0.06)',
+          background: 'rgba(10,10,10,0.95)', backdropFilter: 'blur(12px)',
+        }}>
+          <a href="/" style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 22, letterSpacing: 3, color: '#f0ede6', textDecoration: 'none' }}>
+            ARNO<span style={{ color: '#EE7700' }}>BOT.</span>
+          </a>
+        </nav>
+      )}
 
       <div style={{ minHeight: '100vh', paddingTop: 80, paddingBottom: 80 }}>
         <div style={{ maxWidth: 680, margin: '0 auto', padding: '60px 24px 0' }}>

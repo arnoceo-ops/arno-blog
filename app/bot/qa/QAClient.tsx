@@ -1,0 +1,119 @@
+'use client'
+
+import Link from 'next/link'
+
+const FAQS = [
+  {
+    q: 'Wat is ArnoBot precies?',
+    a: 'ArnoBot is een AI-salescoach die uitsluitend antwoord geeft vanuit de bibliotheek van Arno Diepeveen. 40 jaar sales-expertise, 369.000 woorden aan inzichten, cases en coaching. Geen internet, geen generieke AI.',
+  },
+  {
+    q: 'Hoe gebruik ik het optimaal?',
+    a: 'Wees concreet. Beschrijf je situatie, je markt en je uitdaging zo specifiek mogelijk. ArnoBot is geen zoekmachine; het is een coach. Stel vragen zoals je dat aan een senior advisor zou doen.',
+  },
+  {
+    q: 'Is mijn gesprek privé?',
+    a: 'Ja. Jouw sessies zijn volledig privé. Niemand anders heeft toegang tot jouw gesprekken.',
+  },
+  {
+    q: 'Wat als het antwoord niet klopt?',
+    a: 'ArnoBot antwoordt altijd vanuit de bibliotheek. Als een antwoord je verbaast, kun je doorvragen. Gebruik je eigen oordeel, net als bij een gesprek met een echte coach.',
+  },
+  {
+    q: 'Wat is het verschil met ChatGPT?',
+    a: 'ChatGPT is generiek. ArnoBot is uitsluitend getraind op Arno\'s content. Geen Wikipedia, geen internet. Alleen wat Arno heeft geschreven en gedoceerd in 40 jaar.',
+  },
+]
+
+export default function QAClient() {
+  return (
+    <>
+      <style>{`
+        @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Mono:wght@400;700&display=swap');
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { background: #0a0a0a; color: #f0ede6; font-family: 'Space Mono', monospace; }
+        .qa-continue:hover { background: #cc6600 !important; }
+      `}</style>
+
+      <nav style={{
+        position: 'fixed', top: 0, left: 0, right: 0, zIndex: 100,
+        padding: '0 40px', height: 64,
+        display: 'flex', alignItems: 'center',
+        borderBottom: '1px solid rgba(255,255,255,0.06)',
+        background: 'rgba(10,10,10,0.95)', backdropFilter: 'blur(12px)',
+      }}>
+        <Link href="/" style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 22, letterSpacing: 3, color: '#f0ede6', textDecoration: 'none' }}>
+          ARNO<span style={{ color: '#EE7700' }}>BOT.</span>
+        </Link>
+      </nav>
+
+      <div style={{ minHeight: '100vh', paddingTop: 64, background: '#0a0a0a' }}>
+        <div style={{ maxWidth: 760, margin: '0 auto', padding: '60px 24px 80px' }}>
+
+          <p style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 14, letterSpacing: 6, color: '#EE7700', marginBottom: 8 }}>WELKOM</p>
+          <h1 style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 'clamp(40px, 6vw, 64px)', color: '#f0ede6', lineHeight: 1.0, letterSpacing: 1, marginBottom: 16 }}>
+            Voordat je begint.
+          </h1>
+          <p style={{ fontFamily: "'Space Mono', monospace", fontSize: 14, color: '#888', lineHeight: 1.8, marginBottom: 48, maxWidth: 520 }}>
+            Kijk de introductievideo en lees de vragen hieronder.<br />
+            Daarna richt je je profiel in. Dat duurt 3 minuten.
+          </p>
+
+          {/* Video */}
+          <div style={{
+            width: '100%',
+            aspectRatio: '16/9',
+            background: '#111',
+            border: '1px solid #1a1a1a',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            marginBottom: 64,
+            borderRadius: 4,
+          }}>
+            <p style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 20, letterSpacing: 4, color: '#333' }}>VIDEO KOMT BINNENKORT</p>
+          </div>
+
+          {/* FAQ */}
+          <div style={{ borderTop: '3px solid #EE7700', paddingTop: 40, marginBottom: 64 }}>
+            <p style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 14, letterSpacing: 6, color: '#EE7700', marginBottom: 8 }}>VRAGEN</p>
+            <h2 style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 40, color: '#f0ede6', letterSpacing: 1, marginBottom: 40 }}>
+              Veel gestelde vragen
+            </h2>
+
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 0 }}>
+              {FAQS.map((faq, i) => (
+                <div key={i} style={{ borderBottom: '1px solid #1a1a1a', paddingBottom: 28, marginBottom: 28 }}>
+                  <p style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 22, letterSpacing: 1, color: '#f0ede6', marginBottom: 10 }}>{faq.q}</p>
+                  <p style={{ fontFamily: "'Space Mono', monospace", fontSize: 13, color: '#888', lineHeight: 1.8 }}>{faq.a}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <div style={{ textAlign: 'center' }}>
+            <Link
+              href="/bot/profiel"
+              className="qa-continue"
+              style={{
+                display: 'inline-block',
+                padding: '16px 48px',
+                background: '#EE7700',
+                color: '#0a0a0a',
+                fontFamily: "'Bebas Neue', sans-serif",
+                fontSize: 22,
+                letterSpacing: 3,
+                textDecoration: 'none',
+                borderRadius: 999,
+                transition: 'background 0.2s',
+              }}
+            >
+              IK BEN ER KLAAR VOOR
+            </Link>
+          </div>
+
+        </div>
+      </div>
+    </>
+  )
+}

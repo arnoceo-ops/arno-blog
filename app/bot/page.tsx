@@ -23,7 +23,7 @@ export default async function BotPage({ searchParams }: { searchParams: Promise<
     .eq('user_id', userId)
     .single()
 
-  if (!profileRow) redirect('/bot/profiel')
+  if (!profileRow) redirect('/bot/qa')
 
   const spar = await getSparPage()
   const { resume } = await searchParams
