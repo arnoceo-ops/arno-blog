@@ -350,6 +350,18 @@ export default function CoachingClient({ userId }: Props) {
         )}
 
 
+        {doc && (
+          <div className="no-print" style={{ borderTop: '1px solid #1a1a1a', paddingTop: 40, marginTop: 48, display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: 24 }}>
+            <p style={{ fontFamily: "'Space Mono', monospace", fontSize: 13, color: '#888', lineHeight: 1.7 }}>
+              Wil je dit aanpakken met Arno zelf?<br />
+              Maandelijks 45 minuten. Direct. Ongefilterd.
+            </p>
+            <a href="/upgrade" style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 16, letterSpacing: 3, padding: '12px 28px', background: '#EE7700', color: '#141414', textDecoration: 'none', borderRadius: 999, whiteSpace: 'nowrap' }}>
+              BEKIJK ARNOLIVE →
+            </a>
+          </div>
+        )}
+
         <div className="no-print" style={{ borderTop: '1px solid #1a1a1a', paddingTop: 40, marginTop: doc ? 48 : 0 }}>
           <Link href="/bot" style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 18, letterSpacing: 3, color: '#EE7700', textDecoration: 'none' }}>
             ← TERUG NAAR DE BOT
