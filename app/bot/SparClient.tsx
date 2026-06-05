@@ -840,7 +840,6 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
           </nav>
           {menuOpen && (
             <div className="mob-menu" onClick={() => setMenuOpen(false)}>
-              <Link href="/">HOME</Link>
               <span className="active">BOT</span>
               <Link href="/bot/archief">ARCHIEF</Link>
               <Link href="/bot/coaching">COACHING</Link>
@@ -853,7 +852,6 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
         <nav className="site-nav">
           <div className="nav-spacer" />
           <div className="nav-links">
-            <Link href="/">HOME</Link>
             <span style={{ color: '#EE7700', fontFamily: "'Bebas Neue', sans-serif", fontSize: 22, letterSpacing: 3 }}>BOT</span>
             <Link href="/bot/archief">ARCHIEF</Link>
             <Link href="/bot/coaching">COACHING</Link>
