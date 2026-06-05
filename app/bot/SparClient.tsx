@@ -125,6 +125,8 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
   const [feedbackText, setFeedbackText] = useState('')
   const [feedbackSent, setFeedbackSent] = useState(false)
   const [feedbackLoading, setFeedbackLoading] = useState(false)
+  const [navGuardOpen, setNavGuardOpen] = useState(false)
+  const [pendingNavDest, setPendingNavDest] = useState<string | null>(null)
   const recognitionRef = useRef<any>(null)
   const bottomRef = useRef<HTMLDivElement>(null)
   const inputRef = useRef<HTMLTextAreaElement>(null)
@@ -157,6 +159,27 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
     rec.start()
     setRecording(true)
   }
+
+  function handleNavAttempt(dest: string) {
+    if (started && messages.length > 0 && !showSluiten) {
+      setPendingNavDest(dest)
+      setNavGuardOpen(true)
+    } else {
+      if (dest === 'logout') signOut(() => router.push('/'))
+      else router.push(dest)
+    }
+  }
+
+  useEffect(() => {
+    if (showSluiten && pendingNavDest) {
+      const dest = pendingNavDest
+      setPendingNavDest(null)
+      setTimeout(() => {
+        if (dest === 'logout') signOut(() => router.push('/'))
+        else router.push(dest)
+      }, 1800)
+    }
+  }, [showSluiten])
 
   async function sendFeedback() {
     if (!feedbackText.trim()) return
@@ -242,8 +265,12 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
   }, [messages, loading])
 
   useEffect(() => {
-    function handleUnload() {
+    function handleUnload(e: BeforeUnloadEvent) {
       if (!sessionId || messages.length === 0) return
+      if (started && !showSluiten) {
+        e.preventDefault()
+        e.returnValue = ''
+      }
       const blob = new Blob(
         [JSON.stringify({ sessionId, messages })],
         { type: 'application/json' }
@@ -252,7 +279,7 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
     }
     window.addEventListener('beforeunload', handleUnload)
     return () => window.removeEventListener('beforeunload', handleUnload)
-  }, [sessionId, messages])
+  }, [sessionId, messages, started, showSluiten])
 
   useEffect(() => {
     if (resizeInput && inputRef.current) {
@@ -402,11 +429,12 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
         }
         .nav-spacer { flex: 1; }
         .nav-links { display: flex; gap: 48px; align-items: center; }
-        .nav-links a {
+        .nav-links a, .nav-links button {
           color: #888; text-decoration: none; font-family: 'Bebas Neue', sans-serif;
           font-size: 22px; letter-spacing: 3px; transition: color 0.2s;
+          background: none; border: none; cursor: pointer; padding: 0;
         }
-        .nav-links a:hover { color: #f0ede6; }
+        .nav-links a:hover, .nav-links button:hover { color: #f0ede6; }
         .nav-active { color: #EE7700 !important; }
         .nav-cta { color: #EE7700 !important; }
 
@@ -847,10 +875,10 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
           {menuOpen && (
             <div className="mob-menu" onClick={() => setMenuOpen(false)}>
               <span className="active">BOT</span>
-              <Link href="/bot/archief">ARCHIEF</Link>
-              <Link href="/bot/coaching">COACHING</Link>
-              <Link href="/bot/account">ACCOUNT</Link>
-              <span style={{ color: '#555', cursor: 'pointer' }} onClick={e => { e.stopPropagation(); setMenuOpen(false); setFeedbackOpen(true) }}>FEEDBACK</span>
+              <button style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 28, letterSpacing: 3, color: '#888', background: 'none', border: 'none', cursor: 'pointer', textAlign: 'left', padding: 0 }} onClick={() => handleNavAttempt('/bot/archief')}>ARCHIEF</button>
+              <button style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 28, letterSpacing: 3, color: '#888', background: 'none', border: 'none', cursor: 'pointer', textAlign: 'left', padding: 0 }} onClick={() => handleNavAttempt('/bot/coaching')}>COACHING</button>
+              <button style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 28, letterSpacing: 3, color: '#888', background: 'none', border: 'none', cursor: 'pointer', textAlign: 'left', padding: 0 }} onClick={() => handleNavAttempt('/bot/account')}>ACCOUNT</button>
+              <span style={{ color: '#888', cursor: 'pointer' }} onClick={e => { e.stopPropagation(); setMenuOpen(false); setFeedbackOpen(true) }}>FEEDBACK</span>
             </div>
           )}
         </>
@@ -859,22 +887,22 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
           <div className="nav-spacer" />
           <div className="nav-links">
             <span style={{ color: '#EE7700', fontFamily: "'Bebas Neue', sans-serif", fontSize: 22, letterSpacing: 3 }}>BOT</span>
-            <Link href="/bot/archief">ARCHIEF</Link>
-            <Link href="/bot/coaching">COACHING</Link>
-            <Link href="/bot/account">ACCOUNT</Link>
+            <button onClick={() => handleNavAttempt('/bot/archief')}>ARCHIEF</button>
+            <button onClick={() => handleNavAttempt('/bot/coaching')}>COACHING</button>
+            <button onClick={() => handleNavAttempt('/bot/account')}>ACCOUNT</button>
           </div>
           <div className="nav-spacer" style={{ display: 'flex', justifyContent: 'flex-end', gap: 32, alignItems: 'center' }}>
             <button
-              style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 22, letterSpacing: 3, color: '#555', background: 'none', border: 'none', cursor: 'pointer', transition: 'color 0.2s' }}
-              onMouseEnter={e => { (e.target as HTMLButtonElement).style.color = '#EE7700' }}
-              onMouseLeave={e => { (e.target as HTMLButtonElement).style.color = '#555' }}
+              style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 22, letterSpacing: 3, color: '#888', background: 'none', border: 'none', cursor: 'pointer', transition: 'color 0.2s' }}
+              onMouseEnter={e => { (e.target as HTMLButtonElement).style.color = '#f0ede6' }}
+              onMouseLeave={e => { (e.target as HTMLButtonElement).style.color = '#888' }}
               onClick={() => setFeedbackOpen(true)}
             >FEEDBACK</button>
             <button
               style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 22, letterSpacing: 3, color: '#888', background: 'none', border: 'none', cursor: 'pointer', transition: 'color 0.2s' }}
               onMouseEnter={e => { (e.target as HTMLButtonElement).style.color = '#f0ede6' }}
               onMouseLeave={e => { (e.target as HTMLButtonElement).style.color = '#888' }}
-              onClick={() => signOut(() => router.push('/'))}
+              onClick={() => handleNavAttempt('logout')}
             >UITLOGGEN</button>
           </div>
         </nav>
@@ -1080,6 +1108,26 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
           <div ref={bottomRef} />
         </div>
       </div>
+
+      {navGuardOpen && (
+        <div style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.85)', zIndex: 300, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 20 }}>
+          <div style={{ background: '#111', border: '1px solid #222', maxWidth: 440, width: '100%', padding: 40 }}>
+            <p style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 13, letterSpacing: 4, color: '#EE7700', marginBottom: 8 }}>ARNOBOT</p>
+            <h2 style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 36, letterSpacing: 1, color: '#f0ede6', marginBottom: 12 }}>WACHT EVEN</h2>
+            <p style={{ fontFamily: "'Space Mono', monospace", fontSize: 14, color: '#888', lineHeight: 1.7, marginBottom: 28 }}>Je hebt een gesprek open. Wil je het sluiten voordat je verdergaat?</p>
+            <div style={{ display: 'flex', gap: 12 }}>
+              <button
+                onClick={() => { setNavGuardOpen(false); handleNieuw() }}
+                style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 18, letterSpacing: 3, padding: '12px 28px', background: '#EE7700', color: '#0a0a0a', border: 'none', cursor: 'pointer', borderRadius: 999 }}
+              >SLUIT GESPREK</button>
+              <button
+                onClick={() => { setNavGuardOpen(false); setPendingNavDest(null) }}
+                style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 18, letterSpacing: 3, padding: '12px 28px', background: 'none', color: '#555', border: '1px solid #222', cursor: 'pointer', borderRadius: 999 }}
+              >DOORGAAN</button>
+            </div>
+          </div>
+        </div>
+      )}
 
       {feedbackOpen && (
         <div
