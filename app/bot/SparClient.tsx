@@ -919,8 +919,9 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
               ARNO<span style={{ color: '#EE7700' }}>BOT.</span><br />
               JOUW NO EXCUSES SALES COACH
             </p>
-            <p style={{ fontFamily: "'Space Mono', monospace", fontSize: 18, color: 'rgb(240, 237, 230)', lineHeight: 1.6, marginBottom: 14, whiteSpace: 'nowrap' }}>
-              BETERE RELATIES. MEER DEALS. HOGERE MARGES. HARDER GROEIEN.
+            <p style={{ fontFamily: "'Space Mono', monospace", fontSize: 18, color: 'rgb(240, 237, 230)', lineHeight: 1.8, marginBottom: 14, textAlign: 'right' }}>
+              Betere relaties. Meer deals.<br />
+              Hogere marges. Harder groeien.
             </p>
             <p style={{ fontFamily: "'Space Mono', monospace", fontSize: 'clamp(11px, 0.9vw, 13px)', color: 'rgb(136, 136, 136)', lineHeight: 1.8 }}>
               Gebouwd op 40 jaar sales, 30 jaar entrepreneurship,<br />
