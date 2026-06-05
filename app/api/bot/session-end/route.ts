@@ -43,21 +43,34 @@ export async function POST(req: NextRequest) {
     )
     .join('\n\n')
 
-  // Synthese genereren
+  // Synthese en feiten parallel genereren
   let summary = ''
+  let feiten = ''
   try {
-    const response = await anthropic.messages.create({
-      model: 'claude-haiku-4-5-20251001',
-      max_tokens: 150,
-      system: 'Je bent Arno Diepeveen. Oprichter Royal Dutch Sales. Direct, ongefilterd, geen bullshit. Geen corporate taal. Geen accenten op woorden voor nadruk.',
-      messages: [{
-        role: 'user',
-        content: `Schrijf een terugblik op dit gesprek in maximaal 2-3 zinnen. Wat was de kern en wat is de ene concrete takeaway. Geen inleiding, geen opsomming — direct de essentie, in eerste persoon als Arno.\n\n${conversationText}`
-      }]
-    })
-    summary = response.content[0].type === 'text' ? response.content[0].text : ''
+    const [summaryRes, feitenRes] = await Promise.all([
+      anthropic.messages.create({
+        model: 'claude-haiku-4-5-20251001',
+        max_tokens: 150,
+        system: 'Je bent Arno Diepeveen. Oprichter Royal Dutch Sales. Direct, ongefilterd, geen bullshit. Geen corporate taal. Geen accenten op woorden voor nadruk.',
+        messages: [{
+          role: 'user',
+          content: `Schrijf een terugblik op dit gesprek in maximaal 2-3 zinnen. Wat was de kern en wat is de ene concrete takeaway. Geen inleiding, geen opsomming — direct de essentie, in eerste persoon als Arno.\n\n${conversationText}`
+        }]
+      }),
+      anthropic.messages.create({
+        model: 'claude-haiku-4-5-20251001',
+        max_tokens: 200,
+        system: 'Extraheer alleen concrete, feitelijke informatie uit dit gesprek. Denk aan: producten, diensten, bedrijfsnaam, markt, specifieke situaties, namen, cijfers, uitdagingen, doelen. Geen interpretaties, geen advies — alleen feiten die de gebruiker heeft gedeeld. Maximaal 8 korte bullets, elk beginnend met een streepje.',
+        messages: [{
+          role: 'user',
+          content: `Extraheer de feiten uit dit gesprek:\n\n${conversationText}`
+        }]
+      })
+    ])
+    summary = summaryRes.content[0].type === 'text' ? summaryRes.content[0].text : ''
+    feiten = feitenRes.content[0].type === 'text' ? feitenRes.content[0].text : ''
   } catch (e) {
-    console.error('Synthesis error:', e)
+    console.error('Synthesis/feiten error:', e)
   }
 
   // Blog-suggesties: eerst inline geciteerde blogs uit de berichten halen
@@ -108,6 +121,7 @@ export async function POST(req: NextRequest) {
       session_id: sessionId,
       title,
       summary,
+      feiten,
       message_count: messageCount,
       blog_suggestions: blogSuggestions,
     }, { onConflict: 'session_id' })

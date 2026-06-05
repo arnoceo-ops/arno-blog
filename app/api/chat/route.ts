@@ -127,24 +127,36 @@ PROFIEL VAN DE GEBRUIKER:
 - Grootste uitdaging: ${profiel.uitdaging || 'onbekend'}
 ` : ''
 
-    // Eerdere gesprekken als geheugen meegeven (alleen voor ingelogde RDS-gebruikers)
+    // Gespreksgeheugen: feiten + samenvattingen uit eerdere sessies
     let geheugentekst = ''
     if (userId && !isWidget) {
       const { data: prevSessions } = await supabase
         .from('arnobot_blog_sessions')
-        .select('title, summary, created_at')
+        .select('title, summary, feiten, created_at')
         .eq('user_id', userId)
         .not('session_id', 'eq', sessionId)
-        .not('summary', 'eq', '')
         .order('created_at', { ascending: false })
-        .limit(5)
+        .limit(10)
 
       if (prevSessions && prevSessions.length > 0) {
-        geheugentekst = `\n\nEERDERE GESPREKKEN MET DEZE GEBRUIKER:\n` +
-          prevSessions.map(s => {
+        const feitenBlokken = prevSessions
+          .filter(s => s.feiten)
+          .map(s => s.feiten)
+          .join('\n')
+
+        const samenvattingen = prevSessions
+          .filter(s => s.summary)
+          .map(s => {
             const datum = new Date(s.created_at).toLocaleDateString('nl-NL', { day: 'numeric', month: 'long' })
-            return `- ${datum}: ${s.title}${s.summary ? ` — ${s.summary}` : ''}`
-          }).join('\n')
+            return `- ${datum}: ${s.summary}`
+          })
+          .join('\n')
+
+        if (feitenBlokken || samenvattingen) {
+          geheugentekst = '\n\nWAT DEZE GEBRUIKER EERDER HEEFT GEDEELD:'
+          if (feitenBlokken) geheugentekst += `\n\nConcrete feiten uit eerdere gesprekken:\n${feitenBlokken}`
+          if (samenvattingen) geheugentekst += `\n\nSamenvattingen van eerdere gesprekken:\n${samenvattingen}`
+        }
       }
     }
 
