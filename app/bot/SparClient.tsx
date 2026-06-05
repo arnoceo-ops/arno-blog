@@ -282,6 +282,7 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
     setMessages([])
     setHistory([])
     setInput('')
+    if (inputRef.current) inputRef.current.style.height = '55px'
     setLoading(false)
     setBlocked(false)
     setShowSluiten(false)
@@ -303,6 +304,8 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
       return
     }
     if (showSluiten) setShowSluiten(false)
+    setInput('')
+    if (inputRef.current) inputRef.current.style.height = '55px'
     setSynthesisLoading(true)
     try {
       const res = await fetch('/api/bot/session-end', {
