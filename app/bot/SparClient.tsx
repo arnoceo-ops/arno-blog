@@ -946,7 +946,7 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
                   ask(input)
                 }
               }}
-              placeholder={started ? "vervolg het gesprek" : "Stel je vraag"}
+              placeholder={started ? "vervolg het gesprek" : "beschrijf je casus of stel je vraag"}
               disabled={loading || blocked}
               rows={1}
             />
