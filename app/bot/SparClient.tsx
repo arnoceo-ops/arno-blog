@@ -927,7 +927,7 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
                 <img
                   src={`/header-fotos/foto-${idx}.jpg`}
                   alt=""
-                  style={{ height: 'clamp(140px, 16vw, 220px)', width: 'auto', objectFit: 'contain', display: 'block' }}
+                  style={{ height: '300px', width: 'auto', objectFit: 'contain', display: 'block' }}
                 />
               )
             })()}
