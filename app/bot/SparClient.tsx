@@ -969,7 +969,7 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
             </button>
             {started && (
               <button
-                className={`spar-reset${showSluiten && messages.length <= synthesisMessageCount ? ' sluiten' : messages.length >= 2 ? ' accented' : ''}`}
+                className={`spar-reset${(showSluiten && messages.length <= synthesisMessageCount) || (messages.length >= 2 && !input.trim()) ? ' sluiten' : messages.length >= 2 ? ' accented' : ''}`}
                 onClick={handleNieuw}
                 disabled={synthesisLoading}
               >
