@@ -877,6 +877,7 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
               <span className="active">BOT</span>
               <button style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 28, letterSpacing: 3, color: '#888', background: 'none', border: 'none', cursor: 'pointer', textAlign: 'left', padding: 0 }} onClick={() => handleNavAttempt('/bot/archief')}>ARCHIEF</button>
               <button style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 28, letterSpacing: 3, color: '#888', background: 'none', border: 'none', cursor: 'pointer', textAlign: 'left', padding: 0 }} onClick={() => handleNavAttempt('/bot/coaching')}>COACHING</button>
+              <button style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 28, letterSpacing: 3, color: '#888', background: 'none', border: 'none', cursor: 'pointer', textAlign: 'left', padding: 0 }} onClick={() => handleNavAttempt('/bot/qa')}>Q&A</button>
               <button style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 28, letterSpacing: 3, color: '#888', background: 'none', border: 'none', cursor: 'pointer', textAlign: 'left', padding: 0 }} onClick={() => handleNavAttempt('/bot/account')}>ACCOUNT</button>
               <span style={{ color: '#888', cursor: 'pointer' }} onClick={e => { e.stopPropagation(); setMenuOpen(false); setFeedbackOpen(true) }}>FEEDBACK</span>
             </div>
@@ -889,6 +890,7 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
             <span style={{ color: '#EE7700', fontFamily: "'Bebas Neue', sans-serif", fontSize: 22, letterSpacing: 3 }}>BOT</span>
             <button onClick={() => handleNavAttempt('/bot/archief')}>ARCHIEF</button>
             <button onClick={() => handleNavAttempt('/bot/coaching')}>COACHING</button>
+            <button onClick={() => handleNavAttempt('/bot/qa')}>Q&A</button>
             <button onClick={() => handleNavAttempt('/bot/account')}>ACCOUNT</button>
           </div>
           <div className="nav-spacer" style={{ display: 'flex', justifyContent: 'flex-end', gap: 32, alignItems: 'center' }}>

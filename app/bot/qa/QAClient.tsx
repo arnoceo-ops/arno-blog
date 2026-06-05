@@ -107,26 +107,28 @@ export default function QAClient({ isOnboarding }: { isOnboarding: boolean }) {
             </div>
           </div>
 
-          <div style={{ textAlign: 'center' }}>
-            <Link
-              href="/bot/profiel"
-              className="qa-continue"
-              style={{
-                display: 'inline-block',
-                padding: '16px 48px',
-                background: '#EE7700',
-                color: '#0a0a0a',
-                fontFamily: "'Bebas Neue', sans-serif",
-                fontSize: 22,
-                letterSpacing: 3,
-                textDecoration: 'none',
-                borderRadius: 999,
-                transition: 'background 0.2s',
-              }}
-            >
-              IK BEN ER KLAAR VOOR
-            </Link>
-          </div>
+          {isOnboarding && (
+            <div style={{ textAlign: 'center' }}>
+              <Link
+                href="/bot/profiel"
+                className="qa-continue"
+                style={{
+                  display: 'inline-block',
+                  padding: '16px 48px',
+                  background: '#EE7700',
+                  color: '#0a0a0a',
+                  fontFamily: "'Bebas Neue', sans-serif",
+                  fontSize: 22,
+                  letterSpacing: 3,
+                  textDecoration: 'none',
+                  borderRadius: 999,
+                  transition: 'background 0.2s',
+                }}
+              >
+                I&apos;M READY.
+              </Link>
+            </div>
+          )}
 
         </div>
       </div>
