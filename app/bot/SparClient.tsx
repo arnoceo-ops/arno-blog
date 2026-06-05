@@ -241,6 +241,19 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
   }, [messages, loading])
 
   useEffect(() => {
+    function handleUnload() {
+      if (!sessionId || messages.length === 0) return
+      const blob = new Blob(
+        [JSON.stringify({ sessionId, messages })],
+        { type: 'application/json' }
+      )
+      navigator.sendBeacon('/api/bot/session-end', blob)
+    }
+    window.addEventListener('beforeunload', handleUnload)
+    return () => window.removeEventListener('beforeunload', handleUnload)
+  }, [sessionId, messages])
+
+  useEffect(() => {
     if (resizeInput && inputRef.current) {
       inputRef.current.style.height = 'auto'
       inputRef.current.style.height = Math.min(inputRef.current.scrollHeight, 120) + 'px'

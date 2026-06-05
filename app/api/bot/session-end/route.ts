@@ -11,11 +11,28 @@ const supabase = createClient(
 const anthropic = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY! })
 
 export async function POST(req: NextRequest) {
-  const { userId } = await auth()
-  if (!userId) return NextResponse.json({ error: 'Niet ingelogd' }, { status: 401 })
-
   const { sessionId, messages } = await req.json()
   if (!sessionId || !messages?.length) return NextResponse.json({ ok: true })
+
+  // Auth via Clerk cookie, of fallback via bestaande log-rij (voor sendBeacon die geen cookies meestuurt)
+  let userId: string | null = null
+  try {
+    const clerkAuth = await auth()
+    userId = clerkAuth.userId
+  } catch {}
+
+  if (!userId) {
+    const { data: logRow } = await supabase
+      .from('arnobot_rds_logs')
+      .select('user_id')
+      .eq('session_id', sessionId)
+      .not('user_id', 'is', null)
+      .limit(1)
+      .single()
+    userId = logRow?.user_id ?? null
+  }
+
+  if (!userId) return NextResponse.json({ error: 'Niet ingelogd' }, { status: 401 })
 
   const title = (messages.find((m: { role: string }) => m.role === 'user')?.content as string)?.slice(0, 100) || 'Gesprek'
   const messageCount = messages.filter((m: { role: string }) => m.role === 'user').length
