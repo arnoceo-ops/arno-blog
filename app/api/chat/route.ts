@@ -116,7 +116,7 @@ export async function POST(req: NextRequest) {
       const check = checkRes.content[0].type === 'text' ? checkRes.content[0].text.trim().toUpperCase() : 'NEE'
       if (check.startsWith('JA')) {
         await supabase.from('arno_blog_widget_blocked').upsert({ ip }, { onConflict: 'ip' })
-        return NextResponse.json({ answer: '...echt, joh? Dit is een salesplatform. Stel een serieuze vraag of ga ergens anders naartoe.' }, { headers: corsHeaders(origin) })
+        return NextResponse.json({ answer: '...echt, joh?' }, { headers: corsHeaders(origin) })
       }
     }
 
