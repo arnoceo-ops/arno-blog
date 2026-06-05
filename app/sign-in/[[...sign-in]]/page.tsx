@@ -1,12 +1,19 @@
 'use client'
 
-import { useSignIn } from '@clerk/nextjs'
-import { useState } from 'react'
+import { useSignIn, useUser } from '@clerk/nextjs'
+import { useState, useEffect } from 'react'
+import { useRouter } from 'next/navigation'
 
 export default function SignInPage() {
   const { fetchStatus, signIn } = useSignIn()
+  const { isSignedIn } = useUser()
+  const router = useRouter()
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
+
+  useEffect(() => {
+    if (isSignedIn) router.replace('/bot')
+  }, [isSignedIn, router])
 
   async function handleLinkedIn() {
     if (fetchStatus !== 'idle' || !signIn) {
@@ -48,17 +55,19 @@ export default function SignInPage() {
         .li-btn:disabled { background: #444; cursor: not-allowed; }
       `}</style>
       <div style={{ display: 'flex', minHeight: '100vh', alignItems: 'center', justifyContent: 'center', backgroundColor: '#0a0a0a', padding: '40px 20px' }}>
-        <div style={{ width: '100%', maxWidth: 400, display: 'flex', flexDirection: 'column', gap: 24, alignItems: 'center' }}>
+        <div style={{ width: '100%', maxWidth: 400, display: 'flex', flexDirection: 'column', gap: 24 }}>
           <div style={{ textAlign: 'center' }}>
             <p style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 13, letterSpacing: 6, color: '#EE7700', marginBottom: 8 }}>ARNOBOT UNLIMITED</p>
             <h1 style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 44, letterSpacing: 1, lineHeight: 1 }}>INLOGGEN</h1>
           </div>
+          <div style={{ display: 'flex', justifyContent: 'center' }}>
           <button className="li-btn" onClick={handleLinkedIn} type="button" disabled={loading}>
             <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
               <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
             </svg>
             {loading ? 'VERBINDEN...' : 'DOORGAAN MET LINKEDIN'}
           </button>
+          </div>
           {error && <p style={{ color: '#cc3300', fontSize: 13, letterSpacing: 1, textAlign: 'center' }}>{error}</p>}
           {fetchStatus === 'fetching' && <p style={{ color: '#666', fontSize: 11, letterSpacing: 1, textAlign: 'center' }}>LADEN...</p>}
           <p style={{ fontSize: 12, color: '#666', letterSpacing: 1, textAlign: 'center', lineHeight: 1.8 }}>
