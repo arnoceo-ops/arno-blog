@@ -71,7 +71,6 @@ export default function BotNav({ active }: Props) {
         </nav>
         {menuOpen && (
           <div className="mob-menu" onClick={() => setMenuOpen(false)}>
-            <Link href="/">HOME</Link>
             {active === 'bot'      ? <span className="mob-active">BOT</span>      : <Link href="/bot">BOT</Link>}
             {active === 'archief'  ? <span className="mob-active">ARCHIEF</span>  : <Link href="/bot/archief">ARCHIEF</Link>}
             {active === 'coaching' ? <span className="mob-active">COACHING</span> : <Link href="/bot/coaching">COACHING</Link>}
@@ -86,7 +85,6 @@ export default function BotNav({ active }: Props) {
     <nav style={navStyle}>
       <div style={{ flex: 1 }} />
       <div style={{ display: 'flex', gap: 48, alignItems: 'center' }}>
-        <Link href="/" style={linkBase}>HOME</Link>
         {active === 'bot'
           ? <span style={{ ...linkBase, color: '#EE7700' }}>BOT</span>
           : <Link href="/bot" style={linkBase}>BOT</Link>}
