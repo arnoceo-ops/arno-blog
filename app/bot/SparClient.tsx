@@ -110,6 +110,7 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
   const [synthesisLoading, setSynthesisLoading] = useState(false)
   const [synthesisMessageCount, setSynthesisMessageCount] = useState(0)
   const [verfijnen, setVerfijnen] = useState(false)
+  const [verfijndSuggestie, setVerfijndSuggestie] = useState('')
   const [resizeInput, setResizeInput] = useState(false)
   const [suggestedBlogs, setSuggestedBlogs] = useState<{title: string, url: string}[]>([])
   const [voortgang, setVoortgang] = useState<{count: number, lastDate: string | null} | null>(null)
@@ -956,8 +957,7 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
                   })
                   const data = await res.json()
                   if (data.verfijnd) {
-                    setInput(data.verfijnd)
-                    setResizeInput(true)
+                    setVerfijndSuggestie(data.verfijnd)
                   }
                 } catch {}
                 finally { setVerfijnen(false) }
@@ -965,6 +965,22 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
             >
               {verfijnen ? '...' : '↑ VERFIJN MIJN VRAAG'}
             </button>
+          )}
+          {verfijndSuggestie && (
+            <div style={{ width: '100%', maxWidth: 812, background: '#111', border: '1px solid #EE7700', padding: '16px 20px', marginTop: 8 }}>
+              <p style={{ fontFamily: "'Space Mono', monospace", fontSize: 13, color: '#EE7700', letterSpacing: 2, marginBottom: 10 }}>VERFIJNDE VERSIE</p>
+              <p style={{ fontFamily: "'Space Mono', monospace", fontSize: 14, color: '#d0cdc6', lineHeight: 1.7, marginBottom: 16 }}>{verfijndSuggestie}</p>
+              <div style={{ display: 'flex', gap: 10 }}>
+                <button
+                  onClick={() => { setInput(verfijndSuggestie); setVerfijndSuggestie(''); setResizeInput(true) }}
+                  style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 15, letterSpacing: 3, padding: '8px 20px', background: '#EE7700', color: '#0a0a0a', border: 'none', cursor: 'pointer', borderRadius: 999 }}
+                >GEBRUIK DIT</button>
+                <button
+                  onClick={() => setVerfijndSuggestie('')}
+                  style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 15, letterSpacing: 3, padding: '8px 20px', background: 'none', color: '#555', border: '1px solid #222', cursor: 'pointer', borderRadius: 999 }}
+                >NEGEER</button>
+              </div>
+            </div>
           )}
         </div>}
 
