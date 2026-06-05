@@ -327,35 +327,21 @@ export default function GeschiedenisPage() {
         </div>
 
         {!loading && sorted.length >= 3 && (
-          <div style={{ marginBottom: 40, background: '#0f0f0f', borderLeft: '3px solid #EE7700', padding: '20px 24px' }}>
-            <p style={{ color: '#EE7700', fontSize: 11, letterSpacing: 4, textTransform: 'uppercase', marginBottom: 16 }}>PATROONANALYSE</p>
-            <div style={{ display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between', flexWrap: 'wrap', gap: 16 }}>
-              <div>
-                <p style={{ color: '#d0cdc6', fontSize: 14, fontFamily: "'Space Mono', monospace", lineHeight: 1.8, marginBottom: 6 }}>
-                  {hasSelected
-                    ? `${selected.size} gesprek${selected.size === 1 ? '' : 'ken'} geselecteerd voor gerichte analyse.`
-                    : 'ArnoBot legt patronen bloot over al je gesprekken heen.'}
-                </p>
-                <p style={{ color: '#555', fontSize: 12, fontFamily: "'Space Mono', monospace", letterSpacing: 1 }}>
-                  {hasSelected
-                    ? <button onClick={() => setSelected(new Set())} style={{ background: 'none', border: 'none', cursor: 'pointer', color: '#555', fontFamily: "'Space Mono', monospace", fontSize: 12, letterSpacing: 1, padding: 0, textDecoration: 'underline' }}>Deselecteer alles</button>
-                    : 'Of vink gesprekken aan hieronder voor een gerichte analyse.'}
-                </p>
-              </div>
-              <button
-                onClick={() => hasSelected && selected.size >= 3 ? runAnalyse([...selected]) : runAnalyse()}
-                disabled={analyseLoading || (hasSelected && selected.size < 3)}
-                style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 18, letterSpacing: 3, padding: '12px 28px', background: hasSelected && selected.size < 3 ? '#222' : '#EE7700', color: hasSelected && selected.size < 3 ? '#555' : '#0a0a0a', border: 'none', cursor: hasSelected && selected.size < 3 ? 'not-allowed' : 'pointer', borderRadius: 999, whiteSpace: 'nowrap', transition: 'all 0.2s' }}
-              >
-                {analyseLoading
-                  ? 'ANALYSEREN...'
-                  : hasSelected && selected.size < 3
-                    ? `NOG ${3 - selected.size} MEER NODIG`
-                    : hasSelected
-                      ? `ANALYSEER SELECTIE (${selected.size}) →`
-                      : `ANALYSEER ALLE ${sorted.length} →`}
-              </button>
+          <div style={{ marginBottom: 40, background: '#0f0f0f', borderLeft: '3px solid #EE7700', padding: '20px 24px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: 16 }}>
+            <div>
+              <p style={{ color: '#EE7700', fontSize: 11, letterSpacing: 4, textTransform: 'uppercase', marginBottom: 6 }}>PATROONANALYSE</p>
+              <p style={{ color: '#888', fontSize: 13, fontFamily: "'Space Mono', monospace", lineHeight: 1.7 }}>
+                ArnoBot analyseert al je gesprekken en legt patronen bloot.<br />
+                <span style={{ color: '#555' }}>Of selecteer specifieke gesprekken hieronder voor een gerichte analyse.</span>
+              </p>
             </div>
+            <button
+              onClick={() => runAnalyse()}
+              disabled={analyseLoading}
+              style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 18, letterSpacing: 3, padding: '12px 28px', background: '#EE7700', color: '#0a0a0a', border: 'none', cursor: 'pointer', borderRadius: 999, whiteSpace: 'nowrap', opacity: analyseLoading ? 0.6 : 1 }}
+            >
+              {analyseLoading ? 'ANALYSEREN...' : `ANALYSEER ALLE ${sorted.length} GESPREKKEN →`}
+            </button>
           </div>
         )}
 
@@ -563,7 +549,7 @@ export default function GeschiedenisPage() {
         )}
       </div>
 
-      {/* Sticky balk — alleen voor verwijderen */}
+      {/* Sticky balk — gesprekken */}
       {hasSelected && (
         <div className="delete-bar">
           <span className="delete-bar-count">
@@ -573,6 +559,19 @@ export default function GeschiedenisPage() {
             <button className="delete-bar-cancel" onClick={() => setSelected(new Set())}>
               ANNULEER
             </button>
+            {selected.size >= 3 ? (
+              <button
+                className="delete-bar-outline"
+                onClick={() => runAnalyse([...selected])}
+                disabled={analyseLoading}
+              >
+                {analyseLoading ? 'ANALYSEREN...' : 'ANALYSEER SELECTIE →'}
+              </button>
+            ) : (
+              <span style={{ fontFamily: "'Space Mono', monospace", fontSize: 11, letterSpacing: 2, color: '#555' }}>
+                SELECTEER NOG {3 - selected.size} MEER VOOR ANALYSE
+              </span>
+            )}
             <button className="delete-bar-btn" onClick={deleteSelected} disabled={deleting}>
               {deleting ? 'VERWIJDEREN...' : 'VERWIJDER →'}
             </button>
