@@ -177,7 +177,7 @@ export default function BotProfielPage() {
             </h1>
             <div style={{ borderLeft: '4px solid #EE7700', paddingLeft: 20, color: '#888', fontSize: 15, lineHeight: '30px' }}>
               <p style={{ color: '#f0ede6', fontWeight: 700, marginBottom: 8 }}>ArnoBot stemt zijn coaching af op jouw situatie.</p>
-              <p>Hoe meer hij weet over wie jij bent, wat je verkoopt en waar je mee worstelt, hoe gerichter zijn advies. Dit invullen kost je twee minuten.</p>
+              <p>Hoe meer hij weet over wie jij bent, wat je verkoopt en wat je uitdagingen zijn, hoe gerichter het advies. Wees bloedeerlijk; dit is jouw persoonlijke omgeving. Er kijkt niemand mee.</p>
             </div>
           </div>
 
