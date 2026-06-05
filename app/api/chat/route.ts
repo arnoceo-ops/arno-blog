@@ -21,6 +21,19 @@ export async function OPTIONS(req: NextRequest) {
   return new NextResponse(null, { status: 204, headers: corsHeaders(origin) })
 }
 
+export async function GET(req: NextRequest) {
+  const origin = req.headers.get('origin')
+  const ip = req.headers.get('x-forwarded-for')?.split(',')[0]?.trim() || null
+  if (!ip) return new NextResponse(null, { status: 204, headers: corsHeaders(origin) })
+  const { data } = await supabase
+    .from('arno_blog_widget_blocked')
+    .select('ip')
+    .eq('ip', ip)
+    .limit(1)
+    .single()
+  return NextResponse.json({ blocked: !!data }, { headers: corsHeaders(origin) })
+}
+
 import Anthropic from '@anthropic-ai/sdk'
 import { createClient } from '@supabase/supabase-js'
 import { getRelevantChunks, formatChunksForPrompt } from '@/lib/rag'

@@ -3,6 +3,12 @@
 
   var API_URL = 'https://www.royaldutchsales.com/api/chat';
 
+  // Check bij laden of IP geblokkeerd is — zo ja, direct naar /lost
+  fetch(API_URL, { method: 'GET' })
+    .then(function (res) { return res.json(); })
+    .then(function (data) { if (data.blocked) window.location.href = 'https://arno.blog/lost'; })
+    .catch(function () {});
+
   var DEFAULT_OPENERS = [
     'Mijn salesteam haalt structureel de targets niet. Waar ligt dat aan?',
     'Wat onderscheidt een winnende salesorganisatie van een gemiddelde?',
