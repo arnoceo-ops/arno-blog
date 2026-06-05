@@ -168,14 +168,25 @@ export default function BotProfielPage() {
       {isFirstTime === true && (
         <nav style={{
           position: 'fixed', top: 0, left: 0, right: 0, zIndex: 100,
-          padding: '0 40px', height: 64,
-          display: 'flex', alignItems: 'center',
+          padding: '0 clamp(20px, 4vw, 40px)', height: 64,
+          display: 'flex', alignItems: 'center', justifyContent: 'space-between',
           borderBottom: '1px solid rgba(255,255,255,0.06)',
           background: 'rgba(10,10,10,0.95)', backdropFilter: 'blur(12px)',
         }}>
           <a href="/" style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 22, letterSpacing: 3, color: '#f0ede6', textDecoration: 'none' }}>
             ARNO<span style={{ color: '#EE7700' }}>BOT.</span>
           </a>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 4 }}>
+              <div style={{ width: 48, height: 3, background: '#444', borderRadius: 2 }} />
+              <span style={{ fontFamily: "'Space Mono', monospace", fontSize: 9, letterSpacing: 2, color: '#555' }}>VIDEO</span>
+            </div>
+            <div style={{ width: 16, height: 1, background: '#333', marginBottom: 13 }} />
+            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 4 }}>
+              <div style={{ width: 48, height: 3, background: '#EE7700', borderRadius: 2 }} />
+              <span style={{ fontFamily: "'Space Mono', monospace", fontSize: 9, letterSpacing: 2, color: '#EE7700' }}>PROFIEL</span>
+            </div>
+          </div>
         </nav>
       )}
 
