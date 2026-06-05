@@ -33,6 +33,12 @@ const TARGET_DIT_JAAR_OPTIONS = ['Ja', 'Misschien', 'Nee']
 const TARGET_3_JAAR_OPTIONS = ['Ja', '2 van 3', '1 van 3', 'Nee']
 
 const ROL_OPTIONS = ['Inside Sales', 'AE New Business', 'AM Farmer', 'Key Account Manager', 'Sales Manager/Director', 'VP of Sales', "ZZP'er", 'CEO/DGA', 'Anders']
+
+function getTargetLabel(rol: string) {
+  if (['Sales Manager/Director', 'VP of Sales'].includes(rol)) return 'team'
+  if (rol === 'CEO/DGA') return 'company'
+  return 'individuele'
+}
 const MARKT_OPTIONS = ['B2B MKB', 'B2B Enterprise', 'B2C', 'Overheid']
 
 function Chip({ label, selected, onClick }: { label: string; selected: boolean; onClick: () => void }) {
@@ -246,14 +252,18 @@ export default function BotProfielPage() {
             />
           </Block>
 
-          <Block nr="08" title="Target dit jaar">
-            <p style={{ fontSize: 15, fontWeight: 700, lineHeight: '30px', color: '#666', marginBottom: 12 }}>Verwacht je dit jaar je target te halen?</p>
+          <Block nr="08" title="Target">
+            <p style={{ fontSize: 15, fontWeight: 700, lineHeight: '30px', color: '#666', marginBottom: 12 }}>
+              Verwacht je dit jaar je {getTargetLabel(answers.rol)} target te halen?
+            </p>
             <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8, marginBottom: 28 }}>
               {TARGET_DIT_JAAR_OPTIONS.map(o => (
                 <Chip key={o} label={o} selected={answers.target_dit_jaar === o} onClick={() => set('target_dit_jaar', o)} />
               ))}
             </div>
-            <p style={{ fontSize: 15, fontWeight: 700, lineHeight: '30px', color: '#666', marginBottom: 12 }}>Heb je de afgelopen 3 jaar je target gehaald?</p>
+            <p style={{ fontSize: 15, fontWeight: 700, lineHeight: '30px', color: '#666', marginBottom: 12 }}>
+              Heb je de afgelopen 3 jaar je {getTargetLabel(answers.rol)} target gehaald?
+            </p>
             <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8 }}>
               {TARGET_3_JAAR_OPTIONS.map(o => (
                 <Chip key={o} label={o} selected={answers.target_3_jaar === o} onClick={() => set('target_3_jaar', o)} />
