@@ -511,7 +511,7 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
           background: #111; color: #555;
           font-size: 20px; border: none; border-left: 1px solid #2a2a2a;
           padding: 0 18px; cursor: pointer; transition: all 0.2s;
-          min-height: 55px; display: flex; align-items: center; justify-content: center;
+          height: 55px; align-self: flex-end; display: flex; align-items: center; justify-content: center;
         }
         .spar-mic:hover { color: #f0ede6; background: #1a1a1a; }
         .spar-mic.recording {
@@ -529,7 +529,7 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
           font-size: 20px; letter-spacing: 3px;
           padding: 0 32px; border: none; cursor: pointer;
           transition: background 0.2s; white-space: nowrap; min-width: 120px;
-          min-height: 55px;
+          height: 55px; align-self: flex-end;
         }
         .spar-send:hover { background: #ff8800; }
         .spar-send:disabled { background: #333; color: #666; cursor: not-allowed; }
@@ -539,7 +539,7 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
           font-size: 18px; letter-spacing: 3px;
           padding: 0 24px; border: none; border-left: 1px solid #2a2a2a; cursor: pointer;
           transition: all 0.2s; white-space: nowrap;
-          min-height: 55px;
+          height: 55px; align-self: flex-end;
         }
         .spar-reset:hover { background: #1a1a1a; color: #f0ede6; }
         .spar-reset.sluiten { background: #EE7700; color: #141414; border-left-color: #EE7700; }
