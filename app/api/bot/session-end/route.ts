@@ -95,15 +95,18 @@ export async function POST(req: NextRequest) {
     if (blogSuggestions.length >= 3) break
   }
 
-  // Fallback: RAG op de gebruikersvragen (specifieker dan samenvatting)
+  // Fallback: eerst op gebruikersvragen, dan op samenvatting
   if (blogSuggestions.length === 0) {
     try {
       const userQuestions = (messages as { role: string; content: string }[])
         .filter(m => m.role === 'user')
         .map(m => m.content)
         .join(' ')
-      if (userQuestions) {
-        const chunks = await getRelevantChunks(userQuestions, 15)
+
+      const queries = [userQuestions, summary].filter(Boolean)
+      for (const query of queries) {
+        if (blogSuggestions.length >= 2) break
+        const chunks = await getRelevantChunks(query, 15)
         for (const c of chunks) {
           if (c.url && c.source && c.url.includes('arno.blog') && !seenUrls.has(c.url)) {
             seenUrls.add(c.url)
