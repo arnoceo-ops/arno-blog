@@ -3,7 +3,6 @@
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import { useUser } from '@clerk/nextjs'
-import Link from 'next/link'
 
 type Answers = {
   rol: string
@@ -89,6 +88,7 @@ export default function BotProfielPage() {
   const [error, setError] = useState('')
   const [isFirstTime, setIsFirstTime] = useState(false)
 
+  const [isDirty, setIsDirty] = useState(false)
   const firstName = user?.firstName || 'daar'
 
   useEffect(() => {
@@ -106,6 +106,7 @@ export default function BotProfielPage() {
 
   function set(key: keyof Answers, val: string) {
     setAnswers(prev => ({ ...prev, [key]: val }))
+    setIsDirty(true)
   }
 
   function toggleMarkt(val: string) {
@@ -113,6 +114,14 @@ export default function BotProfielPage() {
       ...prev,
       markt: prev.markt.includes(val) ? prev.markt.filter(v => v !== val) : [...prev.markt, val]
     }))
+    setIsDirty(true)
+  }
+
+  function handleBotNav() {
+    if (isDirty) {
+      if (!window.confirm('Je hebt wijzigingen die nog niet zijn opgeslagen. Toch doorgaan?')) return
+    }
+    router.push('/bot')
   }
 
   const rolIngevuld = answers.rol && (answers.rol !== 'Anders' || rolAnders.trim().length > 1)
@@ -135,6 +144,7 @@ export default function BotProfielPage() {
         body: JSON.stringify({ profiel: { ...answers, rol: answers.rol === 'Anders' ? rolAnders.trim() : answers.rol } }),
       })
       if (!res.ok) throw new Error('Opslaan mislukt')
+      setIsDirty(false)
       router.push('/bot')
     } catch {
       setError('Er ging iets mis. Probeer het opnieuw.')
@@ -161,8 +171,7 @@ export default function BotProfielPage() {
 
       <nav style={{ position: 'fixed', top: 0, left: 0, right: 0, zIndex: 100, padding: '16px 40px', display: 'flex', justifyContent: 'center', borderBottom: '1px solid rgba(255,255,255,0.06)', background: 'rgba(10,10,10,0.95)', backdropFilter: 'blur(12px)' }}>
         <div style={{ display: 'flex', gap: 48, alignItems: 'center' }}>
-          <Link href="/" style={{ color: '#888', textDecoration: 'none', fontFamily: "'Bebas Neue', sans-serif", fontSize: 22, letterSpacing: 3 }}>HOME</Link>
-          <a href="https://www.royaldutchsales.com/arnobot" style={{ color: '#EE7700', textDecoration: 'none', fontFamily: "'Bebas Neue', sans-serif", fontSize: 22, letterSpacing: 3 }}>BOT</a>
+          <button onClick={handleBotNav} style={{ background: 'none', border: 'none', padding: 0, color: '#EE7700', textDecoration: 'none', fontFamily: "'Bebas Neue', sans-serif", fontSize: 22, letterSpacing: 3, cursor: 'pointer' }}>BOT</button>
         </div>
       </nav>
 
