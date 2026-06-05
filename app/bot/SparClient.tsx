@@ -933,7 +933,7 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
           <div className="spar-tagline">
             <p style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 'clamp(28px, 3vw, 42px)', letterSpacing: 2, color: '#f0ede6', lineHeight: 1.05, marginBottom: 16 }}>
               ARNO<span style={{ color: '#EE7700' }}>BOT.</span><br />
-              JOUW NO EXCUSES SALES COACH
+              JOUW 24/7 NO EXCUSES SALES COACH
             </p>
             <p style={{ fontFamily: "'Space Mono', monospace", fontSize: 18, color: 'rgb(240, 237, 230)', lineHeight: 1.8, marginBottom: 14, textAlign: 'right' }}>
               Betere relaties. Meer deals.<br />
