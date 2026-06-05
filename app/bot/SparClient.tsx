@@ -538,14 +538,16 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
         .spar-send:hover { background: #ff8800; }
         .spar-send:disabled { background: #333; color: #666; cursor: not-allowed; }
         .spar-reset {
-          background: #111; color: #aaa;
+          background: #111; color: #f0ede6;
           font-family: 'Bebas Neue', sans-serif;
-          font-size: 18px; letter-spacing: 3px;
-          padding: 0 24px; border: none; border-left: 1px solid #2a2a2a; cursor: pointer;
-          transition: all 0.2s; white-space: nowrap;
+          font-size: 20px; letter-spacing: 3px;
+          padding: 0 32px; border: none; border-left: 1px solid #2a2a2a; cursor: pointer;
+          transition: all 0.2s; white-space: nowrap; min-width: 120px;
           height: 55px; align-self: flex-end;
         }
-        .spar-reset:hover { background: #1a1a1a; color: #f0ede6; }
+        .spar-reset:hover { background: #1a1a1a; }
+        .spar-reset.accented { border: 1px solid #555; border-left: 1px solid #555; }
+        .spar-reset.accented:hover { border-color: #888; }
         .spar-reset.sluiten { background: #EE7700; color: #141414; border-left-color: #EE7700; }
         .spar-reset.sluiten:hover { background: #ff8800; }
         .spar-input-intro {
@@ -938,11 +940,11 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
             </button>
             {started && (
               <button
-                className={`spar-reset${showSluiten && messages.length <= synthesisMessageCount ? ' sluiten' : ''}`}
+                className={`spar-reset${showSluiten && messages.length <= synthesisMessageCount ? ' sluiten' : messages.length >= 2 ? ' accented' : ''}`}
                 onClick={handleNieuw}
                 disabled={synthesisLoading}
               >
-                {synthesisLoading ? '...' : (showSluiten && messages.length <= synthesisMessageCount) ? 'SLUITEN' : 'SLUIT'}
+                {synthesisLoading ? '...' : (showSluiten && messages.length <= synthesisMessageCount) ? 'SLUITEN' : 'SLUIT →'}
               </button>
             )}
           </div>
