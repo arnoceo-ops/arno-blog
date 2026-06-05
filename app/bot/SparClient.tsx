@@ -915,9 +915,17 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
             ARNO<br /><span>BOT.</span>
           </h1>
           <div className="spar-tagline">
-            <p>
-              <strong>{taglineTitle}</strong><br />
-              {taglineSub}
+            <p style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 'clamp(28px, 3vw, 42px)', letterSpacing: 2, color: '#f0ede6', lineHeight: 1.05, marginBottom: 16 }}>
+              IK BEN ARNO<span style={{ color: '#EE7700' }}>BOT</span><br />
+              JOUW 24/7 SALESCOACH.
+            </p>
+            <p style={{ fontFamily: "'Space Mono', monospace", fontWeight: 700, fontSize: 'clamp(13px, 1.1vw, 15px)', color: '#f0ede6', lineHeight: 1.8, marginBottom: 14 }}>
+              HET IS MIJN MISSIE JOU TE LATEN<br />SCHITTEREN ALS TOP SALES.
+            </p>
+            <p style={{ fontFamily: "'Space Mono', monospace", fontSize: 'clamp(11px, 0.9vw, 13px)', color: '#555', lineHeight: 1.8 }}>
+              Gebaseerd op 40 jaar sales, 30 jaar bedrijven bouwen,<br />
+              20 jaar blogs schrijven en 15 jaar scaling up coaching.<br />
+              Alles bij elkaar een bibliotheek van 369.000 woorden.
             </p>
           </div>
         </div>
