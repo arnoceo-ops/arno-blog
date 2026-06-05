@@ -37,6 +37,7 @@ const ROL_OPTIONS = ['Inside Sales', 'AE New Business', 'AM Farmer', 'Key Accoun
 function getTargetLabel(rol: string) {
   if (['Sales Manager/Director', 'VP of Sales'].includes(rol)) return 'team'
   if (rol === 'CEO/DGA') return 'company'
+  if (rol === "ZZP'er") return ''
   return 'individuele'
 }
 const MARKT_OPTIONS = ['B2B MKB', 'B2B Enterprise', 'B2C', 'Overheid']
@@ -254,7 +255,7 @@ export default function BotProfielPage() {
 
           <Block nr="08" title="Target">
             <p style={{ fontSize: 15, fontWeight: 700, lineHeight: '30px', color: '#666', marginBottom: 12 }}>
-              Verwacht je dit jaar je {getTargetLabel(answers.rol)} target te halen?
+              Verwacht je dit jaar je {getTargetLabel(answers.rol) ? `${getTargetLabel(answers.rol)} ` : ''}target te halen?
             </p>
             <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8, marginBottom: 28 }}>
               {TARGET_DIT_JAAR_OPTIONS.map(o => (
@@ -262,7 +263,7 @@ export default function BotProfielPage() {
               ))}
             </div>
             <p style={{ fontSize: 15, fontWeight: 700, lineHeight: '30px', color: '#666', marginBottom: 12 }}>
-              Heb je de afgelopen 3 jaar je {getTargetLabel(answers.rol)} target gehaald?
+              Heb je de afgelopen 3 jaar je {getTargetLabel(answers.rol) ? `${getTargetLabel(answers.rol)} ` : ''}target gehaald?
             </p>
             <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8 }}>
               {TARGET_3_JAAR_OPTIONS.map(o => (
