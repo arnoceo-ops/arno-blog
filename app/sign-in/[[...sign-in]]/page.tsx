@@ -62,7 +62,7 @@ export default function SignInPage() {
           {error && <p style={{ color: '#cc3300', fontSize: 13, letterSpacing: 1, textAlign: 'center' }}>{error}</p>}
           {fetchStatus === 'fetching' && <p style={{ color: '#666', fontSize: 11, letterSpacing: 1, textAlign: 'center' }}>LADEN...</p>}
           <p style={{ fontSize: 12, color: '#666', letterSpacing: 1, textAlign: 'center', lineHeight: 1.8 }}>
-            Nog geen account? LinkedIn-login maakt automatisch een account aan.
+            Door in te loggen ga je akkoord met onze voorwaarden.
           </p>
         </div>
       </div>

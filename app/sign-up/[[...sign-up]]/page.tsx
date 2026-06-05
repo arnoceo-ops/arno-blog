@@ -54,7 +54,7 @@ function AuthPage({ onLinkedIn, error }: { onLinkedIn: () => void; error: string
           </button>
           {error && <p style={{ color: '#cc3300', fontSize: 13, letterSpacing: 1, textAlign: 'center' }}>{error}</p>}
           <p style={{ fontSize: 12, color: '#666', letterSpacing: 1, textAlign: 'center', lineHeight: 1.8 }}>
-            Door aan te melden ga je akkoord met onze voorwaarden.<br />Al een account? LinkedIn-login werkt voor beide.
+            Door aan te melden ga je akkoord met onze voorwaarden.
           </p>
         </div>
       </div>
