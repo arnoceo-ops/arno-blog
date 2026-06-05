@@ -911,9 +911,12 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
       <div className="spar-page" style={started ? { paddingBottom: 110 } : {}}>
 
         <div className="spar-hero">
-          <h1 className="spar-title">
-            ARNO<br /><span>BOT.</span>
-          </h1>
+          <div style={{ display: 'flex', alignItems: 'flex-end', gap: 'clamp(16px, 2vw, 32px)' }}>
+            <img src="/arno-header.jpg" alt="Arno" style={{ height: 'clamp(140px, 16vw, 220px)', width: 'auto', objectFit: 'cover', display: 'block' }} />
+            <h1 className="spar-title">
+              ARNO<br /><span>BOT.</span>
+            </h1>
+          </div>
           <div className="spar-tagline">
             <p style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 'clamp(28px, 3vw, 42px)', letterSpacing: 2, color: '#f0ede6', lineHeight: 1.05, marginBottom: 16 }}>
               ARNO<span style={{ color: '#EE7700' }}>BOT.</span><br />
