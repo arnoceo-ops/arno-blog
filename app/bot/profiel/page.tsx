@@ -15,6 +15,7 @@ type Answers = {
   salescyclus: string
   target_dit_jaar: string
   target_3_jaar: string
+  teamgrootte: string
 }
 
 const empty: Answers = {
@@ -27,17 +28,19 @@ const empty: Answers = {
   salescyclus: '',
   target_dit_jaar: '',
   target_3_jaar: '',
+  teamgrootte: '',
 }
 
 const TARGET_DIT_JAAR_OPTIONS = ['Ja', 'Nee']
 const TARGET_3_JAAR_OPTIONS = ['Ja', 'Nee']
-
-const ROL_OPTIONS = ['Inside Sales', 'AE New Business', 'AM Farmer', 'Key Account Manager', 'Sales Manager/Director', 'VP of Sales', "ZZP'er", 'CEO/DGA', 'Anders']
+const TEAMGROOTTE_OPTIONS = ['1-3', '4-10', '11-25', '>25']
+const ROL_OPTIONS = ['AE Hunter', 'AM Farmer', 'Key AM', 'Inside Sales', 'Sales Director', 'VP of Sales', 'CEO/DGA', 'Solopreneur', 'Anders']
+const HEEFT_TEAM = ['Sales Director', 'VP of Sales', 'CEO/DGA']
 
 function getTargetLabel(rol: string) {
-  if (['Sales Manager/Director', 'VP of Sales'].includes(rol)) return 'team'
+  if (['Sales Director', 'VP of Sales'].includes(rol)) return 'team'
   if (rol === 'CEO/DGA') return 'company'
-  if (rol === "ZZP'er") return ''
+  if (rol === 'Solopreneur') return ''
   return 'individuele'
 }
 const MARKT_OPTIONS = ['B2B MKB', 'B2B Enterprise', 'B2C', 'Overheid']
@@ -183,7 +186,7 @@ export default function BotProfielPage() {
             <p style={{ fontSize: 15, fontWeight: 700, lineHeight: '30px', color: '#666', marginBottom: 12 }}>Wat is je rol?</p>
             <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8 }}>
               {ROL_OPTIONS.map(o => (
-                <Chip key={o} label={o} selected={answers.rol === o} onClick={() => set('rol', o)} />
+                <Chip key={o} label={o} selected={answers.rol === o} onClick={() => { set('rol', o); if (!HEEFT_TEAM.includes(o)) set('teamgrootte', '') }} />
               ))}
             </div>
             {answers.rol === 'Anders' && (
@@ -193,6 +196,16 @@ export default function BotProfielPage() {
                 placeholder="Jouw rol..."
                 style={{ marginTop: 12 }}
               />
+            )}
+            {HEEFT_TEAM.includes(answers.rol) && (
+              <div style={{ marginTop: 24 }}>
+                <p style={{ fontSize: 15, fontWeight: 700, lineHeight: '30px', color: '#666', marginBottom: 12 }}>Hoe groot is je sales team?</p>
+                <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8 }}>
+                  {TEAMGROOTTE_OPTIONS.map(o => (
+                    <Chip key={o} label={o} selected={answers.teamgrootte === o} onClick={() => set('teamgrootte', o)} />
+                  ))}
+                </div>
+              </div>
             )}
           </Block>
 
