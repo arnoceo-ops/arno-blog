@@ -917,6 +917,19 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
               ARNO<br /><span>BOT.</span>
             </h1>
           </div>
+          <div style={{ flex: 1, display: 'flex', justifyContent: 'center', alignItems: 'flex-end' }}>
+            {(() => {
+              const total = 17
+              const idx = Math.floor(Date.now() / (48 * 60 * 60 * 1000)) % total + 1
+              return (
+                <img
+                  src={`/header-fotos/foto-${idx}.jpg`}
+                  alt=""
+                  style={{ height: 'clamp(140px, 16vw, 220px)', width: 'auto', objectFit: 'contain', display: 'block' }}
+                />
+              )
+            })()}
+          </div>
           <div className="spar-tagline">
             <p style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 'clamp(28px, 3vw, 42px)', letterSpacing: 2, color: '#f0ede6', lineHeight: 1.05, marginBottom: 16 }}>
               ARNO<span style={{ color: '#EE7700' }}>BOT.</span><br />
