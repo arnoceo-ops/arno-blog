@@ -131,7 +131,7 @@ export default function BotNav({ active }: Props) {
             {active === 'archief'  ? <span className="mob-active">ARCHIEF</span>  : <Link href="/bot/archief">ARCHIEF</Link>}
             {active === 'coaching' ? <span className="mob-active">COACHING</span> : <Link href="/bot/coaching">COACHING</Link>}
             {active === 'account'  ? <span className="mob-active">ACCOUNT</span>  : <Link href="/bot/account">ACCOUNT</Link>}
-            <span style={{ color: '#555', cursor: 'pointer' }} onClick={e => { e.stopPropagation(); setMenuOpen(false); setFeedbackOpen(true) }}>FEEDBACK</span>
+            <span style={{ color: '#888', cursor: 'pointer' }} onClick={e => { e.stopPropagation(); setMenuOpen(false); setFeedbackOpen(true) }}>FEEDBACK</span>
           </div>
         )}
         {feedbackModal}
@@ -159,9 +159,9 @@ export default function BotNav({ active }: Props) {
         </div>
         <div style={{ flex: 1, display: 'flex', justifyContent: 'flex-end', gap: 32, alignItems: 'center' }}>
           <button
-            style={{ ...logoutBtnStyle, color: '#555' }}
-            onMouseEnter={e => { (e.target as HTMLButtonElement).style.color = '#EE7700' }}
-            onMouseLeave={e => { (e.target as HTMLButtonElement).style.color = '#555' }}
+            style={logoutBtnStyle}
+            onMouseEnter={e => { (e.target as HTMLButtonElement).style.color = '#f0ede6' }}
+            onMouseLeave={e => { (e.target as HTMLButtonElement).style.color = '#888' }}
             onClick={() => setFeedbackOpen(true)}
           >FEEDBACK</button>
           <button
