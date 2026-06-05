@@ -11,6 +11,10 @@ type Answers = {
   wat_verkoop_je: string
   ideale_klant: string
   uitdaging: string
+  dealgrootte: string
+  salescyclus: string
+  target_dit_jaar: string
+  target_3_jaar: string
 }
 
 const empty: Answers = {
@@ -19,7 +23,14 @@ const empty: Answers = {
   wat_verkoop_je: '',
   ideale_klant: '',
   uitdaging: '',
+  dealgrootte: '',
+  salescyclus: '',
+  target_dit_jaar: '',
+  target_3_jaar: '',
 }
+
+const TARGET_DIT_JAAR_OPTIONS = ['Ja', 'Misschien', 'Nee']
+const TARGET_3_JAAR_OPTIONS = ['Ja', '2 van 3', '1 van 3', 'Nee']
 
 const ROL_OPTIONS = ['Inside Sales', 'AE New Business', 'AM Farmer', 'Key Account Manager', 'Sales Manager/Director', 'VP of Sales', "ZZP'er", 'CEO/DGA', 'Anders']
 const MARKT_OPTIONS = ['B2B MKB', 'B2B Enterprise', 'B2C', 'Overheid']
@@ -215,6 +226,39 @@ export default function BotProfielPage() {
               placeholder="Bijv: Mijn conversie in het tweede gesprek is te laag, ik verlies deals op prijs..."
               rows={3}
             />
+          </Block>
+
+          <Block nr="06" title="Gemiddelde dealgrootte">
+            <p style={{ fontSize: 15, fontWeight: 700, lineHeight: '30px', color: '#666', marginBottom: 12 }}>Wat is de gemiddelde waarde van een deal?</p>
+            <input
+              value={answers.dealgrootte}
+              onChange={e => set('dealgrootte', e.target.value)}
+              placeholder="Bijv: €15.000 — €40.000"
+            />
+          </Block>
+
+          <Block nr="07" title="Salescyclus">
+            <p style={{ fontSize: 15, fontWeight: 700, lineHeight: '30px', color: '#666', marginBottom: 12 }}>Hoe lang duurt een gemiddeld salestraject?</p>
+            <input
+              value={answers.salescyclus}
+              onChange={e => set('salescyclus', e.target.value)}
+              placeholder="Bijv: 2 tot 6 weken"
+            />
+          </Block>
+
+          <Block nr="08" title="Target dit jaar">
+            <p style={{ fontSize: 15, fontWeight: 700, lineHeight: '30px', color: '#666', marginBottom: 12 }}>Verwacht je dit jaar je target te halen?</p>
+            <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8, marginBottom: 28 }}>
+              {TARGET_DIT_JAAR_OPTIONS.map(o => (
+                <Chip key={o} label={o} selected={answers.target_dit_jaar === o} onClick={() => set('target_dit_jaar', o)} />
+              ))}
+            </div>
+            <p style={{ fontSize: 15, fontWeight: 700, lineHeight: '30px', color: '#666', marginBottom: 12 }}>Heb je de afgelopen 3 jaar je target gehaald?</p>
+            <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8 }}>
+              {TARGET_3_JAAR_OPTIONS.map(o => (
+                <Chip key={o} label={o} selected={answers.target_3_jaar === o} onClick={() => set('target_3_jaar', o)} />
+              ))}
+            </div>
           </Block>
 
           {error && <p style={{ color: '#c0392b', fontSize: 15, fontWeight: 700, lineHeight: '30px', marginBottom: 16 }}>{error}</p>}

@@ -172,7 +172,7 @@ PROFIEL VAN DE GEBRUIKER:
 - Markt: ${Array.isArray(profiel.markt) ? profiel.markt.join(', ') : profiel.markt || 'onbekend'}
 - Wat hij/zij verkoopt: ${profiel.wat_verkoop_je || 'onbekend'}
 - Ideale klant: ${profiel.ideale_klant || 'onbekend'}
-- Grootste uitdaging: ${profiel.uitdaging || 'onbekend'}
+- Grootste uitdaging: ${profiel.uitdaging || 'onbekend'}${profiel.dealgrootte ? `\n- Gemiddelde dealgrootte: ${profiel.dealgrootte}` : ''}${profiel.salescyclus ? `\n- Salescyclus: ${profiel.salescyclus}` : ''}${profiel.target_dit_jaar ? `\n- Target dit jaar halen: ${profiel.target_dit_jaar}` : ''}${profiel.target_3_jaar ? `\n- Target afgelopen 3 jaar: ${profiel.target_3_jaar}` : ''}
 ` : ''
 
     // Gespreksgeheugen: feiten + samenvattingen uit eerdere sessies
