@@ -229,7 +229,7 @@ export default function CoachingClient({ userId }: Props) {
         <div style={{ display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between', marginBottom: 48, paddingBottom: 48, borderBottom: '1px solid #1a1a1a', flexWrap: 'wrap', gap: 20 }}>
           <div>
             {!doc && !loading && (
-              <p style={{ color: '#555', fontSize: 13, lineHeight: 1.8, maxWidth: 480 }}>
+              <p style={{ color: '#888', fontSize: 13, lineHeight: 1.8, maxWidth: 480 }}>
                 Op basis van je gesprekken maakt Arno een persoonlijk coachingsdocument. Wat je focust, wat je vermijdt, en wat je concreet moet aanpakken.
               </p>
             )}
