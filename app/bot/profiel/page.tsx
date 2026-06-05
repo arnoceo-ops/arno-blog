@@ -29,8 +29,8 @@ const empty: Answers = {
   target_3_jaar: '',
 }
 
-const TARGET_DIT_JAAR_OPTIONS = ['Ja', 'Misschien', 'Nee']
-const TARGET_3_JAAR_OPTIONS = ['Ja', '2 van 3', '1 van 3', 'Nee']
+const TARGET_DIT_JAAR_OPTIONS = ['Ja', 'Nee']
+const TARGET_3_JAAR_OPTIONS = ['Ja', 'Nee']
 
 const ROL_OPTIONS = ['Inside Sales', 'AE New Business', 'AM Farmer', 'Key Account Manager', 'Sales Manager/Director', 'VP of Sales', "ZZP'er", 'CEO/DGA', 'Anders']
 
@@ -278,7 +278,7 @@ export default function BotProfielPage() {
             onClick={handleSubmit}
             disabled={!allFilled || saving}
             style={{
-              width: '100%', padding: 16,
+              padding: '16px 48px',
               background: allFilled ? '#EE7700' : '#1a1a1a',
               color: allFilled ? '#0a0a0a' : '#333',
               border: 'none', borderRadius: 999,
@@ -286,6 +286,7 @@ export default function BotProfielPage() {
               fontSize: 22, letterSpacing: 3,
               cursor: allFilled ? 'pointer' : 'not-allowed',
               transition: 'background 0.2s',
+              display: 'block', margin: '0 auto',
             }}
           >
             {saving ? 'Bezig...' : isFirstTime ? 'START ARNOBOT →' : 'PROFIEL OPSLAAN →'}
