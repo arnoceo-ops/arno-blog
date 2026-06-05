@@ -473,11 +473,9 @@ export default function GeschiedenisPage() {
             <p style={{ color: '#EE7700', fontSize: 13, letterSpacing: 4, marginBottom: 8 }}>ARNOBOT</p>
             <h2 style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 64, letterSpacing: 3, lineHeight: 1, marginBottom: 48 }}>ANALYSES</h2>
 
-            {activeAnalyse && (
-              <div style={{ marginBottom: 28, background: '#0f0f0f', borderLeft: `3px solid ${isDuplicateAnalyse ? '#888' : '#EE7700'}`, padding: '20px 24px' }}>
-                <p style={{ color: isDuplicateAnalyse ? '#888' : '#EE7700', fontSize: 11, letterSpacing: 4, textTransform: 'uppercase', marginBottom: 12 }}>
-                  {isDuplicateAnalyse ? 'AL EERDER GEANALYSEERD' : 'NIEUW GEGENEREERD'}
-                </p>
+            {activeAnalyse && !isDuplicateAnalyse && (
+              <div style={{ marginBottom: 28, background: '#0f0f0f', borderLeft: '3px solid #EE7700', padding: '20px 24px' }}>
+                <p style={{ color: '#EE7700', fontSize: 11, letterSpacing: 4, textTransform: 'uppercase', marginBottom: 12 }}>NIEUW GEGENEREERD</p>
                 <p style={{ color: '#d0cdc6', fontSize: 16, lineHeight: 1.9, fontFamily: "'Space Mono', monospace", whiteSpace: 'pre-wrap', marginBottom: 16 }}>{activeAnalyse}</p>
                 <button
                   onClick={() => setActiveAnalyse(null)}
@@ -486,6 +484,11 @@ export default function GeschiedenisPage() {
                   × VERBERG
                 </button>
               </div>
+            )}
+            {isDuplicateAnalyse && (
+              <p style={{ color: '#555', fontSize: 12, letterSpacing: 2, fontFamily: "'Space Mono', monospace", marginBottom: 28 }}>
+                Deze combinatie is al eerder geanalyseerd — zie hieronder.
+              </p>
             )}
 
             {savedAnalyses.map(a => (
