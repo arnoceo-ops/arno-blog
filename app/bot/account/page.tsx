@@ -61,10 +61,10 @@ export default function AccountPage() {
     }
   }
 
-  const section: React.CSSProperties = { borderTop: '1px solid #1e1e1e', paddingTop: '32px', marginBottom: '48px' }
-  const label: React.CSSProperties = { color: '#EE7700', fontSize: '13px', letterSpacing: '4px', marginBottom: '8px' }
-  const body: React.CSSProperties = { color: '#f0ede6', opacity: 0.5, fontSize: '15px', lineHeight: '1.8', maxWidth: 480, marginBottom: '24px' }
-  const btn: React.CSSProperties = { padding: '12px 28px', width: '260px', textAlign: 'center', border: '1px solid #555', background: 'none', color: '#888', fontFamily: "'Bebas Neue', sans-serif", fontSize: '18px', letterSpacing: '3px', cursor: 'pointer', transition: 'all 0.2s', borderRadius: '999px' }
+  const section: React.CSSProperties = { borderTop: '1px solid #1a1a1a', paddingTop: '32px', marginBottom: '48px' }
+  const label: React.CSSProperties = { fontFamily: "'Space Mono', monospace", color: '#EE7700', fontSize: '13px', letterSpacing: '4px', marginBottom: '16px', display: 'block' }
+  const body: React.CSSProperties = { color: '#888', fontSize: '15px', lineHeight: '1.9', maxWidth: 480, marginBottom: '24px' }
+  const btn: React.CSSProperties = { padding: '12px 32px', border: '1px solid #555', background: 'none', color: '#888', fontFamily: "'Bebas Neue', sans-serif", fontSize: '18px', letterSpacing: '3px', cursor: 'pointer', transition: 'all 0.2s', borderRadius: '999px', display: 'inline-block' }
 
   return (
     <>
@@ -86,8 +86,8 @@ export default function AccountPage() {
 
         {/* Privacy statement */}
         <div style={{ background: '#111', borderLeft: '4px solid #EE7700', padding: '20px 24px', marginBottom: 48 }}>
-          <p style={{ fontSize: 13, letterSpacing: 3, color: '#EE7700', marginBottom: 8, fontFamily: "'Bebas Neue', sans-serif" }}>JOUW DATA IS VAN JOU</p>
-          <p style={{ fontSize: 15, lineHeight: '28px', color: '#888' }}>
+          <p style={{ fontFamily: "'Space Mono', monospace", fontSize: 13, letterSpacing: 4, color: '#EE7700', marginBottom: 12 }}>JOUW DATA IS VAN JOU</p>
+          <p style={{ fontSize: 15, lineHeight: '1.9', color: '#888' }}>
             Alles wat je hier invoert en bespreekt met ArnoBot, is 100% veilig opgeslagen en wordt nooit gedeeld met derden, gebruikt voor marketing of ingezet voor andere doeleinden dan jouw persoonlijke coaching. Je kunt je gegevens op elk moment downloaden of je account volledig verwijderen.
           </p>
         </div>
@@ -97,12 +97,12 @@ export default function AccountPage() {
           <p style={label}>ACCOUNTINFORMATIE</p>
           <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
             <div>
-              <p style={{ color: '#f0ede6', opacity: 0.4, fontSize: 13, letterSpacing: 2, marginBottom: 4 }}>NAAM</p>
-              <p style={{ fontSize: 16 }}>{name}</p>
+              <p style={{ fontFamily: "'Space Mono', monospace", color: '#555', fontSize: 13, letterSpacing: 2, marginBottom: 4 }}>NAAM</p>
+              <p style={{ fontSize: 15, color: '#f0ede6' }}>{name}</p>
             </div>
             <div>
-              <p style={{ color: '#f0ede6', opacity: 0.4, fontSize: 13, letterSpacing: 2, marginBottom: 4 }}>E-MAILADRES</p>
-              <p style={{ fontSize: 16 }}>{email}</p>
+              <p style={{ fontFamily: "'Space Mono', monospace", color: '#555', fontSize: 13, letterSpacing: 2, marginBottom: 4 }}>E-MAILADRES</p>
+              <p style={{ fontSize: 15, color: '#f0ede6' }}>{email}</p>
             </div>
           </div>
         </div>
