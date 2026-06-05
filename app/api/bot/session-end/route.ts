@@ -95,18 +95,24 @@ export async function POST(req: NextRequest) {
     if (blogSuggestions.length >= 3) break
   }
 
-  // Fallback: RAG op de synthese als er geen inline links zijn
-  if (blogSuggestions.length === 0 && summary) {
+  // Fallback: RAG op de gebruikersvragen (specifieker dan samenvatting)
+  if (blogSuggestions.length === 0) {
     try {
-      const chunks = await getRelevantChunks(summary, 10)
-      for (const c of chunks) {
-        if (c.url && c.source && c.url.includes('arno.blog') && !seenUrls.has(c.url)) {
-          seenUrls.add(c.url)
-          blogSuggestions.push({
-            title: c.source.replace(/\s*\([^)]+\)\s*$/, ''),
-            url: c.url,
-          })
-          if (blogSuggestions.length >= 2) break
+      const userQuestions = (messages as { role: string; content: string }[])
+        .filter(m => m.role === 'user')
+        .map(m => m.content)
+        .join(' ')
+      if (userQuestions) {
+        const chunks = await getRelevantChunks(userQuestions, 15)
+        for (const c of chunks) {
+          if (c.url && c.source && c.url.includes('arno.blog') && !seenUrls.has(c.url)) {
+            seenUrls.add(c.url)
+            blogSuggestions.push({
+              title: c.source.replace(/\s*\([^)]+\)\s*$/, ''),
+              url: c.url,
+            })
+            if (blogSuggestions.length >= 2) break
+          }
         }
       }
     } catch (e) {
