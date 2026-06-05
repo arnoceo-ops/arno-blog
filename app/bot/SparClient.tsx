@@ -80,7 +80,7 @@ const VRAGEN_OPERATIONEEL = [
 ]
 
 const VRAGEN_ORGANISATORISCH = [
-  'Ik heb al zes maanden een vacature openstaan en niemand is goed genoeg. Wanneer is mijn standaard terecht en wanneer is het een excuus om niet te kiezen?',
+  'Al zes maanden een vacature open en niemand is goed genoeg. Terecht of excuus?',
   'Hoe weet ik tijdens een sollicitatiegesprek of iemand echt honger heeft of alleen maar zichzelf goed verkoopt?',
   'Mijn team presteert gemiddeld en ik doe alles om het beter te maken. Wat als ik het verkeerde team heb gebouwd?',
   'Ik coach mijn mensen al maanden maar er verandert niets. Wanneer is het hun probleem en wanneer is het het mijne?',
