@@ -31,8 +31,8 @@ export default async function BotPage({ searchParams }: { searchParams: Promise<
     <SparClient
       userId={userId}
       profiel={profileRow.profiel}
-      taglineTitle={spar?.taglineTitle ?? '19 jaar blogs. 369.000 woorden.'}
-      taglineSub={spar?.taglineSub ?? 'Stel je vraag over sales, strategie of mindset.\nGeen bullshit. Geen corporate taal.\nGewoon Arno — direct en ongefilterd.'}
+      taglineTitle={spar?.taglineTitle ?? 'Ik ben ARNOBOT: Jouw 24/7 salescoach.'}
+      taglineSub={spar?.taglineSub ?? 'Gebaseerd op 40 jaar sales executie, 30 jaar bedrijven bouwen, 20 jaar blogs schrijven en 15 jaar scaling up coaching. Jouw vragen worden beantwoord uit mijn bibliotheek van 369.000 woorden.'}
       openers={spar?.openers ?? []}
       resumeSessionId={resume}
     />
