@@ -108,7 +108,7 @@ export async function POST(req: NextRequest) {
         if (blogSuggestions.length >= 2) break
         const chunks = await getRelevantChunks(query, 15)
         for (const c of chunks) {
-          if (c.url && c.source && c.url.includes('arno.blog') && !seenUrls.has(c.url)) {
+          if (c.url && c.source && c.url.includes('arno.blog') && !seenUrls.has(c.url) && (c.relevance_score ?? 0) >= 0.6) {
             seenUrls.add(c.url)
             blogSuggestions.push({
               title: c.source.replace(/\s*\([^)]+\)\s*$/, ''),

@@ -26,7 +26,7 @@ async function rerankChunks(
   query: string,
   chunks: { content: string; context: string | null; source: string | null; url: string | null }[],
   topN: number
-): Promise<{ content: string; context: string | null; source: string | null; url: string | null }[]> {
+): Promise<{ content: string; context: string | null; source: string | null; url: string | null; relevance_score: number }[]> {
   try {
     const res = await fetch('https://api.voyageai.com/v1/rerank', {
       method: 'POST',
@@ -43,14 +43,17 @@ async function rerankChunks(
     })
     if (!res.ok) throw new Error(`Rerank API error: ${await res.text()}`)
     const data = await res.json()
-    return data.results.map((r: { index: number }) => chunks[r.index])
+    return data.results.map((r: { index: number; relevance_score: number }) => ({
+      ...chunks[r.index],
+      relevance_score: r.relevance_score ?? 0,
+    }))
   } catch (e) {
     console.error('[RAG] Rerank mislukt, gebruik vector volgorde:', e)
-    return chunks.slice(0, topN)
+    return chunks.slice(0, topN).map(c => ({ ...c, relevance_score: 0 }))
   }
 }
 
-export type RagChunk = { content: string; context: string | null; source: string | null; url: string | null }
+export type RagChunk = { content: string; context: string | null; source: string | null; url: string | null; relevance_score: number }
 
 export async function getRelevantChunks(query: string, topN = 15): Promise<RagChunk[]> {
   const queryEmbedding = await getEmbedding(query)
