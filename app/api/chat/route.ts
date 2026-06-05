@@ -118,16 +118,22 @@ export async function POST(req: NextRequest) {
       }
     }
 
-    // Ongepaste content detecteren — eerste keer waarschuwing, tweede keer redirect
+    // Content moderatie voor widget
     if (isWidget && ip) {
       const checkRes = await client.messages.create({
         model: 'claude-haiku-4-5-20251001',
-        max_tokens: 5,
-        system: 'Beantwoord alleen met JA of NEE.',
-        messages: [{ role: 'user', content: `Is dit bericht duidelijk ongepast, seksueel getint, beledigend, of puur aan het uitproberen en trollen? Vragen over Arno als persoon, de website of nieuwsgierigheid zijn toegestaan. Antwoord JA (blokkeren) of NEE (doorgaan).\n\n"${question}"` }]
+        max_tokens: 10,
+        system: 'Categoriseer het bericht. Antwoord met precies één woord: ONGEPAST (seksueel, beledigend, trollen), OFFTOPIC (niet over sales/business/Arno, maar niet beledigend), of OK.',
+        messages: [{ role: 'user', content: `Categoriseer: "${question}"` }]
       })
-      const check = checkRes.content[0].type === 'text' ? checkRes.content[0].text.trim().toUpperCase() : 'NEE'
-      if (check.startsWith('JA')) {
+      const check = checkRes.content[0].type === 'text' ? checkRes.content[0].text.trim().toUpperCase() : 'OK'
+
+      if (check.includes('ONGEPAST')) {
+        await supabase.from('arno_blog_widget_blocked').upsert({ ip }, { onConflict: 'ip' })
+        return NextResponse.json({ redirect: LOST_URL }, { headers: corsHeaders(origin) })
+      }
+
+      if (check.includes('OFFTOPIC') && history && history.length > 0) {
         await supabase.from('arno_blog_widget_blocked').upsert({ ip }, { onConflict: 'ip' })
         return NextResponse.json({ answer: '...echt, joh?' }, { headers: corsHeaders(origin) })
       }
