@@ -326,28 +326,9 @@ export default function GeschiedenisPage() {
           </div>
         </div>
 
-        {!loading && sorted.length >= 3 && (
-          <div style={{ marginBottom: 40, background: '#0f0f0f', borderLeft: '3px solid #EE7700', padding: '20px 24px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: 16 }}>
-            <div>
-              <p style={{ color: '#EE7700', fontSize: 11, letterSpacing: 4, textTransform: 'uppercase', marginBottom: 6 }}>PATROONANALYSE</p>
-              <p style={{ color: '#888', fontSize: 13, fontFamily: "'Space Mono', monospace", lineHeight: 1.7 }}>
-                ArnoBot analyseert al je gesprekken en legt patronen bloot.<br />
-                <span style={{ color: '#555' }}>Of selecteer specifieke gesprekken hieronder voor een gerichte analyse.</span>
-              </p>
-            </div>
-            <button
-              onClick={() => runAnalyse()}
-              disabled={analyseLoading}
-              style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 18, letterSpacing: 3, padding: '12px 28px', background: '#EE7700', color: '#0a0a0a', border: 'none', cursor: 'pointer', borderRadius: 999, whiteSpace: 'nowrap', opacity: analyseLoading ? 0.6 : 1 }}
-            >
-              {analyseLoading ? 'ANALYSEREN...' : `ANALYSEER ALLE ${sorted.length} GESPREKKEN →`}
-            </button>
-          </div>
-        )}
-
-        {!loading && sorted.length > 0 && sorted.length < 3 && (
-          <p style={{ fontFamily: "'Space Mono', monospace", fontSize: 13, color: '#555', marginBottom: 24, letterSpacing: 1 }}>
-            Voer minimaal 3 gesprekken voor je eerste analyse kunt maken. ({sorted.length}/3)
+        {!loading && sorted.length > 0 && (
+          <p style={{ fontFamily: "'Space Mono', monospace", fontSize: 15, fontWeight: 400, color: 'rgb(136,136,136)', marginBottom: 8, border: '1px solid #2a2a2a', borderLeft: '3px solid #EE7700', padding: '10px 16px', display: 'inline-block' }}>
+            Selecteer minimaal 3 gesprekken voor een analyse.
           </p>
         )}
 
@@ -559,18 +540,14 @@ export default function GeschiedenisPage() {
             <button className="delete-bar-cancel" onClick={() => setSelected(new Set())}>
               ANNULEER
             </button>
-            {selected.size >= 3 ? (
+            {selected.size >= 3 && (
               <button
                 className="delete-bar-outline"
                 onClick={() => runAnalyse([...selected])}
                 disabled={analyseLoading}
               >
-                {analyseLoading ? 'ANALYSEREN...' : 'ANALYSEER SELECTIE →'}
+                {analyseLoading ? 'ANALYSEREN...' : 'ANALYSEER →'}
               </button>
-            ) : (
-              <span style={{ fontFamily: "'Space Mono', monospace", fontSize: 11, letterSpacing: 2, color: '#555' }}>
-                SELECTEER NOG {3 - selected.size} MEER VOOR ANALYSE
-              </span>
             )}
             <button className="delete-bar-btn" onClick={deleteSelected} disabled={deleting}>
               {deleting ? 'VERWIJDEREN...' : 'VERWIJDER →'}
