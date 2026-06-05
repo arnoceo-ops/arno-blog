@@ -127,9 +127,30 @@ PROFIEL VAN DE GEBRUIKER:
 - Grootste uitdaging: ${profiel.uitdaging || 'onbekend'}
 ` : ''
 
+    // Eerdere gesprekken als geheugen meegeven (alleen voor ingelogde RDS-gebruikers)
+    let geheugentekst = ''
+    if (userId && !isWidget) {
+      const { data: prevSessions } = await supabase
+        .from('arnobot_blog_sessions')
+        .select('title, summary, created_at')
+        .eq('user_id', userId)
+        .not('session_id', 'eq', sessionId)
+        .not('summary', 'eq', '')
+        .order('created_at', { ascending: false })
+        .limit(5)
+
+      if (prevSessions && prevSessions.length > 0) {
+        geheugentekst = `\n\nEERDERE GESPREKKEN MET DEZE GEBRUIKER:\n` +
+          prevSessions.map(s => {
+            const datum = new Date(s.created_at).toLocaleDateString('nl-NL', { day: 'numeric', month: 'long' })
+            return `- ${datum}: ${s.title}${s.summary ? ` — ${s.summary}` : ''}`
+          }).join('\n')
+      }
+    }
+
     const systemPrompt = isWidget
       ? buildWidgetSystemPrompt(context, hint === 'salescanvas')
-      : buildRdsSystemPrompt(profielContext, context)
+      : buildRdsSystemPrompt(profielContext + geheugentekst, context)
 
     const response = await client.messages.create({
       model: 'claude-sonnet-4-6',
