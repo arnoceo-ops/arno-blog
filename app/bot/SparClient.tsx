@@ -938,11 +938,11 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
             </button>
             {started && (
               <button
-                className={`spar-reset${showSluiten && messages.length <= synthesisMessageCount ? ' sluiten' : ''}`}
+                className="spar-reset"
                 onClick={handleNieuw}
                 disabled={synthesisLoading}
               >
-                {synthesisLoading ? '...' : (showSluiten && messages.length <= synthesisMessageCount) ? 'SLUITEN' : 'NIEUW'}
+                {synthesisLoading ? '...' : 'SLUITEN'}
               </button>
             )}
           </div>
@@ -1073,6 +1073,25 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
                   {b.title.replace(/\s*\([^)]+\)\s*$/, '')}
                 </a>
               ))}
+            </div>
+          )}
+          {showSluiten && messages.length <= synthesisMessageCount && (
+            <div style={{ padding: '40px 0 80px', display: 'flex', justifyContent: 'center' }}>
+              <button
+                onClick={reset}
+                style={{
+                  fontFamily: "'Bebas Neue', sans-serif",
+                  fontSize: 22, letterSpacing: 3,
+                  padding: '16px 48px',
+                  background: '#EE7700', color: '#141414',
+                  border: 'none', borderRadius: 999, cursor: 'pointer',
+                  transition: 'background 0.2s',
+                }}
+                onMouseEnter={e => { (e.currentTarget as HTMLButtonElement).style.background = '#ff8800' }}
+                onMouseLeave={e => { (e.currentTarget as HTMLButtonElement).style.background = '#EE7700' }}
+              >
+                NIEUW GESPREK →
+              </button>
             </div>
           )}
           <div ref={bottomRef} />
