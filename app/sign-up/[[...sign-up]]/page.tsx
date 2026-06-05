@@ -33,16 +33,16 @@ function AuthPage({ onLinkedIn, error }: { onLinkedIn: () => void; error: string
         * { box-sizing: border-box; margin: 0; padding: 0; }
         body { background: #0a0a0a; color: #f0ede6; font-family: 'Space Mono', monospace; }
         .li-btn {
-          width: 100%; padding: 12px 24px; background: #0A66C2; color: #fff;
+          padding: 10px 28px; background: #0A66C2; color: #fff;
           border: none; border-radius: 999px; font-family: 'Bebas Neue', sans-serif;
-          font-size: 18px; letter-spacing: 3px; cursor: pointer; transition: background 0.2s;
-          display: flex; align-items: center; justify-content: center; gap: 10px;
+          font-size: 16px; letter-spacing: 3px; cursor: pointer; transition: background 0.2s;
+          display: inline-flex; align-items: center; justify-content: center; gap: 8px;
         }
         .li-btn:hover { background: #0856A4; }
       `}</style>
       <div style={{ display: 'flex', minHeight: '100vh', alignItems: 'center', justifyContent: 'center', backgroundColor: '#0a0a0a', padding: '40px 20px' }}>
-        <div style={{ width: '100%', maxWidth: 400, display: 'flex', flexDirection: 'column', gap: 24 }}>
-          <div>
+        <div style={{ width: '100%', maxWidth: 400, display: 'flex', flexDirection: 'column', gap: 24, alignItems: 'center' }}>
+          <div style={{ textAlign: 'center' }}>
             <p style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 13, letterSpacing: 6, color: '#EE7700', marginBottom: 8 }}>ARNOBOT UNLIMITED</p>
             <h1 style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 44, letterSpacing: 1, lineHeight: 1 }}>AANMELDEN</h1>
           </div>
