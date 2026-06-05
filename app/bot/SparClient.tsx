@@ -538,7 +538,7 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
         .spar-send:hover { background: #ff8800; }
         .spar-send:disabled { background: #333; color: #666; cursor: not-allowed; }
         .spar-reset {
-          background: #111; color: #555;
+          background: #111; color: #aaa;
           font-family: 'Bebas Neue', sans-serif;
           font-size: 18px; letter-spacing: 3px;
           padding: 0 24px; border: none; border-left: 1px solid #2a2a2a; cursor: pointer;
@@ -915,7 +915,7 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
                   ask(input)
                 }
               }}
-              placeholder={started ? "Ga verder." : "Stel je vraag"}
+              placeholder={started ? "vervolg het gesprek" : "Stel je vraag"}
               disabled={loading || blocked}
               rows={1}
             />
@@ -942,7 +942,7 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
                 onClick={handleNieuw}
                 disabled={synthesisLoading}
               >
-                {synthesisLoading ? '...' : (showSluiten && messages.length <= synthesisMessageCount) ? 'SLUITEN' : 'NIEUW'}
+                {synthesisLoading ? '...' : (showSluiten && messages.length <= synthesisMessageCount) ? 'SLUITEN' : 'SLUIT'}
               </button>
             )}
           </div>
