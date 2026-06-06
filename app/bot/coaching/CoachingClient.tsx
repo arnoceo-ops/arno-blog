@@ -168,7 +168,7 @@ export default function CoachingClient({ userId }: Props) {
           background: none; border: 1px solid #EE7700; cursor: pointer;
           font-family: 'Bebas Neue', sans-serif;
           font-size: 18px; letter-spacing: 3px;
-          color: #EE7700; padding: 12px 28px; transition: all 0.2s;
+          color: #f0ede6; padding: 12px 28px; transition: all 0.2s;
           border-radius: 999px; min-width: 220px;
         }
         .generate-btn:hover:not(:disabled) { background: #EE7700; color: #f0ede6; }

@@ -234,7 +234,7 @@ export default function GeschiedenisPage() {
         .delete-bar-outline {
           background: none; border: 1px solid #EE7700; cursor: pointer;
           font-family: 'Bebas Neue', sans-serif;
-          font-size: 16px; letter-spacing: 3px; color: #EE7700;
+          font-size: 16px; letter-spacing: 3px; color: #f0ede6;
           padding: 11px 0; transition: all 0.15s;
           width: 180px; text-align: center; border-radius: 999px;
         }
