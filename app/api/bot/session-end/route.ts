@@ -43,11 +43,12 @@ export async function POST(req: NextRequest) {
     )
     .join('\n\n')
 
-  // Synthese en feiten parallel genereren
+  // Synthese, feiten en uitdaging parallel genereren
   let summary = ''
   let feiten = ''
+  let uitdaging = ''
   try {
-    const [summaryRes, feitenRes] = await Promise.all([
+    const [summaryRes, feitenRes, uitdagingRes] = await Promise.all([
       anthropic.messages.create({
         model: 'claude-haiku-4-5-20251001',
         max_tokens: 150,
@@ -65,10 +66,20 @@ export async function POST(req: NextRequest) {
           role: 'user',
           content: `Extraheer de feiten uit dit gesprek:\n\n${conversationText}`
         }]
+      }),
+      anthropic.messages.create({
+        model: 'claude-haiku-4-5-20251001',
+        max_tokens: 80,
+        system: 'Extraheer de concrete actie of uitdaging die uit dit gesprek volgt voor de gebruiker. Één bondige zin, beginnen met een werkwoord. Geen inleiding, geen "je moet" — direct de actie. Als er geen expliciete actie was, formuleer dan de logische volgende stap.',
+        messages: [{
+          role: 'user',
+          content: `Wat is de concrete uitdaging of actie voor de gebruiker na dit gesprek?\n\n${conversationText}`
+        }]
       })
     ])
     summary = summaryRes.content[0].type === 'text' ? summaryRes.content[0].text : ''
     feiten = feitenRes.content[0].type === 'text' ? feitenRes.content[0].text : ''
+    uitdaging = uitdagingRes.content[0].type === 'text' ? uitdagingRes.content[0].text.trim() : ''
   } catch (e) {
     console.error('Synthesis/feiten error:', e)
   }
@@ -131,6 +142,7 @@ export async function POST(req: NextRequest) {
       title,
       summary,
       feiten,
+      uitdaging: uitdaging || null,
       message_count: messageCount,
       blog_suggestions: blogSuggestions,
     }, { onConflict: 'session_id' })
