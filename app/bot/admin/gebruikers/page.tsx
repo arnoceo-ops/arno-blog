@@ -141,12 +141,11 @@ export default async function GebruikersPage({
   return (
     <main style={{ background: '#0a0a0a', minHeight: '100vh', color: '#f0ede6', fontFamily: 'sans-serif' }}>
 
-      <nav style={{ background: '#0d0d0d', borderBottom: '1px solid #1a1a1a', height: 64, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: 6 }}>
-        <span style={{ fontFamily: 'monospace', fontSize: '11px', letterSpacing: '5px', color: '#EE7700', fontWeight: 700 }}>ARNOBOT ADMIN</span>
+      <nav style={{ background: '#0d0d0d', borderBottom: '1px solid #1a1a1a', height: 56, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
         <div style={{ display: 'flex', gap: '4px' }}>
-          <a href="/bot/admin" style={navLinkStyle(false)}>GESPREKKEN RDS</a>
+          <a href="/bot/admin" style={navLinkStyle(false)}>RDS</a>
           <a href="/bot/admin/widget" style={navLinkStyle(false)}>WIDGET</a>
-          <a href="/bot/admin/gebruikers" style={navLinkStyle(true)}>GEBRUIKERS</a>
+          <a href="/bot/admin/gebruikers" style={navLinkStyle(true)}>USERS</a>
         </div>
       </nav>
 
