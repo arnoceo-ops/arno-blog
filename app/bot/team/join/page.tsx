@@ -63,7 +63,7 @@ function JoinContent() {
             <>
               <h1 style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 64, letterSpacing: 3, color: '#f0ede6', lineHeight: 1, marginBottom: 16 }}>ONGELDIGE LINK.</h1>
               <p style={{ fontFamily: "'Space Mono', monospace", fontWeight: 400, fontSize: 15, color: '#888', lineHeight: 1.9, marginBottom: 32 }}>Deze uitnodigingslink is niet geldig of al verlopen.</p>
-              <Link href="/bot" style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 18, letterSpacing: 3, color: '#EE7700', textDecoration: 'none' }}>← TERUG NAAR ARNOBOT</Link>
+              <Link href="/" style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 18, letterSpacing: 3, color: '#EE7700', textDecoration: 'none' }}>← NAAR ROYALDUTCHSALES.COM</Link>
             </>
           )}
 
@@ -111,7 +111,7 @@ function JoinContent() {
             <>
               <h1 style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 64, letterSpacing: 3, color: '#f0ede6', lineHeight: 1, marginBottom: 16 }}>OEPS.</h1>
               <p style={{ fontFamily: "'Space Mono', monospace", fontWeight: 400, fontSize: 15, color: '#888', lineHeight: 1.9, marginBottom: 32 }}>{errorMsg}</p>
-              <Link href="/bot" style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 18, letterSpacing: 3, color: '#EE7700', textDecoration: 'none' }}>← TERUG NAAR ARNOBOT</Link>
+              <Link href="/" style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 18, letterSpacing: 3, color: '#EE7700', textDecoration: 'none' }}>← NAAR ROYALDUTCHSALES.COM</Link>
             </>
           )}
         </div>
