@@ -2,6 +2,7 @@ import { redirect } from 'next/navigation'
 import { cookies } from 'next/headers'
 import { createClient } from '@supabase/supabase-js'
 import { clerkClient } from '@clerk/nextjs/server'
+import SearchLinkedIn from './SearchLinkedIn'
 
 const navLinkStyle = (active: boolean): React.CSSProperties => ({
   color: active ? '#EE7700' : '#555',
@@ -106,11 +107,10 @@ export default async function GebruikersPage() {
                   <p style={{ fontSize: '11px', letterSpacing: '2px', color: status.color, fontWeight: 700, marginBottom: '4px' }}>{status.label}</p>
                   <p style={{ fontSize: '11px', color: '#333', letterSpacing: '1px' }}>{joinDate}</p>
                 </div>
-                {u.linkedin && (
-                  <a href={u.linkedin} target="_blank" rel="noopener noreferrer" style={{ fontSize: '11px', letterSpacing: '2px', color: '#EE7700', textDecoration: 'none', flexShrink: 0 }}>
-                    LI →
-                  </a>
-                )}
+                {u.linkedin
+                  ? <a href={u.linkedin} target="_blank" rel="noopener noreferrer" style={{ fontSize: '11px', letterSpacing: '2px', color: '#EE7700', textDecoration: 'none', flexShrink: 0, fontWeight: 700 }}>LI →</a>
+                  : <SearchLinkedIn userId={u.user_id} name={name} hasLinkedin={false} />
+                }
               </div>
             )
           })}
