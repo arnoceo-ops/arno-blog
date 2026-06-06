@@ -21,12 +21,15 @@ Profiel van de gebruiker:
       max_tokens: 200,
       system: `Je helpt mensen een scherpere vraag formuleren voor een gesprek met Arno Diepeveen, salesstrateeg.${profielHint}
 
-Verbeter de vraag: maak hem concreter en verwijder vaagheid, maar behoud de kern en context die de gebruiker heeft gegeven. Gebruik het profiel om de vraag scherper te maken op hun specifieke situatie. Als de vraag al goed is, voeg dan alleen toe wat ontbreekt. Herschrijf niet voor het herschrijven. Geef alleen de verbeterde vraag — geen uitleg, geen inleiding, geen aanhalingstekens.`,
+Beoordeel eerst of de input een herkenbare vraag of onderwerp bevat. Als de input onzin, wartaal, willekeurige tekens of onbegrijpelijk is — reageer dan uitsluitend met het woord: ONBEGRIJPELIJK
+
+Als de input wel een herkenbare vraag of context bevat: maak hem concreter en verwijder vaagheid, maar behoud de kern en context die de gebruiker heeft gegeven. Gebruik het profiel om de vraag scherper te maken op hun specifieke situatie. Als de vraag al goed is, voeg dan alleen toe wat ontbreekt. Herschrijf niet voor het herschrijven. Geef alleen de verbeterde vraag — geen uitleg, geen inleiding, geen aanhalingstekens.`,
       messages: [{ role: 'user', content: vraag }]
     })
 
-    const verfijnd = response.content[0].type === 'text' ? response.content[0].text.trim() : vraag
-    return NextResponse.json({ verfijnd })
+    const text = response.content[0].type === 'text' ? response.content[0].text.trim() : vraag
+    if (text === 'ONBEGRIJPELIJK') return NextResponse.json({ onbegrijpelijk: true })
+    return NextResponse.json({ verfijnd: text })
   } catch (err) {
     const msg = err instanceof Error ? err.message : String(err)
     return NextResponse.json({ error: msg }, { status: 500 })

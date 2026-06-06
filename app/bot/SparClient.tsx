@@ -111,6 +111,7 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
   const [synthesisMessageCount, setSynthesisMessageCount] = useState(0)
   const [verfijnen, setVerfijnen] = useState(false)
   const [verfijndSuggestie, setVerfijndSuggestie] = useState('')
+  const [verfijnFout, setVerfijnFout] = useState(false)
   const [resizeInput, setResizeInput] = useState(false)
   const [suggestedBlogs, setSuggestedBlogs] = useState<{title: string, url: string}[]>([])
   const [voortgang, setVoortgang] = useState<{count: number, lastDate: string | null} | null>(null)
@@ -1060,7 +1061,11 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
                     body: JSON.stringify({ vraag: input, profiel })
                   })
                   const data = await res.json()
-                  if (data.verfijnd) {
+                  if (data.onbegrijpelijk) {
+                    setVerfijnFout(true)
+                    setTimeout(() => setVerfijnFout(false), 4000)
+                  } else if (data.verfijnd) {
+                    setVerfijnFout(false)
                     setVerfijndSuggestie(data.verfijnd)
                   }
                 } catch {}
@@ -1069,6 +1074,11 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
             >
               {verfijnen ? '...' : '→ VERBETER MIJN PROMPT'}
             </button>
+          )}
+          {verfijnFout && (
+            <p style={{ fontFamily: "'Space Mono', monospace", fontSize: 13, color: '#cc4444', textAlign: 'center', marginTop: 8 }}>
+              Dit snap ik niet. Typ een echte vraag en ik maak hem scherper.
+            </p>
           )}
           {verfijndSuggestie && (
             <div style={{ width: '100%', maxWidth: 812, background: '#111', border: '1px solid #EE7700', padding: '16px 20px', marginTop: 8 }}>
