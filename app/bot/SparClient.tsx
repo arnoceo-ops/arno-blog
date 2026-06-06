@@ -914,7 +914,7 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
           </nav>
           {menuOpen && (
             <div className="mob-menu" onClick={() => setMenuOpen(false)}>
-              <span className="active">BOT</span>
+              <span className="active">ARNOBOT</span>
               <button style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 28, letterSpacing: 3, color: '#888', background: 'none', border: 'none', cursor: 'pointer', textAlign: 'left', padding: 0 }} onClick={() => handleNavAttempt('/bot/bieb')}>BIEB</button>
               <button style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 28, letterSpacing: 3, color: '#888', background: 'none', border: 'none', cursor: 'pointer', textAlign: 'left', padding: 0 }} onClick={() => handleNavAttempt('/bot/coaching')}>COACHING</button>
               <button style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 28, letterSpacing: 3, color: '#888', background: 'none', border: 'none', cursor: 'pointer', textAlign: 'left', padding: 0 }} onClick={() => handleNavAttempt('/bot/qa')}>Q&A</button>
@@ -927,7 +927,7 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
         <nav className="site-nav">
           <div className="nav-spacer" />
           <div className="nav-links">
-            <span style={{ color: '#EE7700', fontFamily: "'Bebas Neue', sans-serif", fontSize: 22, letterSpacing: 3 }}>BOT</span>
+            <span style={{ color: '#EE7700', fontFamily: "'Bebas Neue', sans-serif", fontSize: 22, letterSpacing: 3 }}>ARNOBOT</span>
             <button onClick={() => handleNavAttempt('/bot/bieb')}>BIEB</button>
             <button onClick={() => handleNavAttempt('/bot/coaching')}>COACHING</button>
             <button onClick={() => handleNavAttempt('/bot/qa')}>Q&A</button>
