@@ -193,7 +193,7 @@ export default function GeschiedenisPage() {
         .analyse-loading-bar { position:fixed;bottom:0;left:0;right:0;z-index:200;background:#0a0a0a;border-top:2px solid #EE7700;padding:20px 40px;display:flex;align-items:center;justify-content:center;gap:12px;animation:slideup 0.2s ease; }
 
         .sort-btn {
-          background: #111; border: 1px solid rgb(240,237,230); color: rgb(136,136,136);
+          background: #111; border: 1px solid #EE7700; color: rgb(136,136,136);
           font-family: 'Bebas Neue', sans-serif;
           font-size: 15px; letter-spacing: 3px;
           padding: 9px 20px; cursor: pointer; transition: all 0.15s;
