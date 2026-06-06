@@ -497,10 +497,10 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
           .spar-tagline { text-align: left; max-width: 100%; }
           .spar-tagline-sub { display: none; }
         }
-        @media (max-width: 560px) {
-          .spar-input-row { flex-wrap: wrap; }
-          .spar-textarea { flex: 0 0 100%; }
-          .spar-mic { height: 50px; width: 56px; flex-shrink: 0; border-left: none; border-top: 1px solid #2a2a2a; }
+        @media (max-width: 700px) {
+          .spar-input-row { flex-direction: column; }
+          .spar-buttons { width: 100%; border-top: 1px solid #2a2a2a; }
+          .spar-mic { height: 50px; width: 56px; flex-shrink: 0; border-left: none; }
           .spar-send { flex: 1; min-width: 0; height: 50px; }
           .spar-reset { flex: 1; min-width: 0; height: 50px; }
           .toggle-btn { font-size: 13px; letter-spacing: 2px; padding: 8px 14px; }
@@ -548,11 +548,14 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
         }
         .spar-textarea::placeholder { color: #aaa; font-style: normal; font-size: 15px; font-weight: 400; }
         .spar-textarea:focus { background: #161616; }
+        .spar-buttons {
+          display: flex; align-self: flex-end;
+        }
         .spar-mic {
           background: #111; color: #555;
           font-size: 20px; border: none; border-left: 1px solid #2a2a2a;
           padding: 0 18px; cursor: pointer; transition: all 0.2s;
-          height: 55px; align-self: flex-end; display: flex; align-items: center; justify-content: center;
+          height: 55px; display: flex; align-items: center; justify-content: center;
         }
         .spar-mic:hover { color: #f0ede6; background: #1a1a1a; }
         .spar-mic.recording {
@@ -988,32 +991,34 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
               disabled={loading || blocked}
               rows={1}
             />
-            {speechSupported && (
+            <div className="spar-buttons">
+              {speechSupported && (
+                <button
+                  className={`spar-mic${recording ? ' recording' : ''}`}
+                  onClick={toggleRecording}
+                  disabled={loading || blocked}
+                  title={recording ? 'Stop opname' : 'Spreek je vraag in'}
+                >
+                  {recording ? '⏹' : '🎤'}
+                </button>
+              )}
               <button
-                className={`spar-mic${recording ? ' recording' : ''}`}
-                onClick={toggleRecording}
-                disabled={loading || blocked}
-                title={recording ? 'Stop opname' : 'Spreek je vraag in'}
+                className="spar-send"
+                onClick={() => ask(input)}
+                disabled={loading || blocked || !input.trim()}
               >
-                {recording ? '⏹' : '🎤'}
+                {loading ? '...' : 'VRAAG →'}
               </button>
-            )}
-            <button
-              className="spar-send"
-              onClick={() => ask(input)}
-              disabled={loading || blocked || !input.trim()}
-            >
-              {loading ? '...' : 'VRAAG →'}
-            </button>
-            {started && (
-              <button
-                className={`spar-reset${(showSluiten && messages.length <= synthesisMessageCount) || (messages.length >= 2 && !input.trim()) ? ' sluiten' : messages.length >= 2 ? ' accented' : ''}`}
-                onClick={handleNieuw}
-                disabled={synthesisLoading}
-              >
-                {synthesisLoading ? '...' : (showSluiten && messages.length <= synthesisMessageCount) ? 'SLUITEN' : 'SLUIT →'}
-              </button>
-            )}
+              {started && (
+                <button
+                  className={`spar-reset${(showSluiten && messages.length <= synthesisMessageCount) || (messages.length >= 2 && !input.trim()) ? ' sluiten' : messages.length >= 2 ? ' accented' : ''}`}
+                  onClick={handleNieuw}
+                  disabled={synthesisLoading}
+                >
+                  {synthesisLoading ? '...' : (showSluiten && messages.length <= synthesisMessageCount) ? 'SLUITEN' : 'SLUIT →'}
+                </button>
+              )}
+            </div>
           </div>
           {input.trim().length > 5 && (
             <button
