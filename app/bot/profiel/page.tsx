@@ -327,12 +327,12 @@ export default function BotProfielPage() {
             onClick={handleSubmit}
             disabled={!allFilled || saving}
             style={{
-              padding: '16px 48px',
+              padding: '12px 36px',
               background: allFilled ? '#EE7700' : '#1a1a1a',
               color: allFilled ? '#0a0a0a' : '#333',
               border: 'none', borderRadius: 999,
               fontFamily: "'Bebas Neue', sans-serif",
-              fontSize: 22, letterSpacing: 3,
+              fontSize: 18, letterSpacing: 3,
               cursor: allFilled ? 'pointer' : 'not-allowed',
               transition: 'background 0.2s',
               display: 'block', margin: '0 auto',

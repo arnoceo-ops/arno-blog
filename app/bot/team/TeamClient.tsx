@@ -46,8 +46,8 @@ const section: React.CSSProperties = {
 
 const btnPrimary = (disabled: boolean): React.CSSProperties => ({
   fontFamily: "'Bebas Neue', sans-serif",
-  fontSize: 22, letterSpacing: 3,
-  padding: '16px 48px',
+  fontSize: 18, letterSpacing: 3,
+  padding: '12px 36px',
   background: disabled ? '#1a1a1a' : '#EE7700',
   color: disabled ? '#333' : '#0a0a0a',
   border: 'none', borderRadius: 999,
@@ -58,7 +58,7 @@ const btnPrimary = (disabled: boolean): React.CSSProperties => ({
 const btnOutline: React.CSSProperties = {
   fontFamily: "'Bebas Neue', sans-serif",
   fontSize: 18, letterSpacing: 3,
-  padding: '12px 28px',
+  padding: '12px 32px',
   background: 'none', border: '1px solid #555',
   color: '#888', borderRadius: 999,
   cursor: 'pointer', transition: 'all 0.2s',
