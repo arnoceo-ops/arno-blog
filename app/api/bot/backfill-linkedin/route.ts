@@ -2,6 +2,7 @@ import { clerkClient } from '@clerk/nextjs/server'
 import { NextRequest, NextResponse } from 'next/server'
 import { createClient } from '@supabase/supabase-js'
 import { cookies } from 'next/headers'
+import type { ExternalAccount } from '@clerk/backend'
 
 const supabase = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_URL!,
@@ -29,21 +30,19 @@ export async function POST(req: NextRequest) {
   for (const row of rows) {
     try {
       const clerkUser = await clerk.users.getUser(row.user_id)
-      const accounts = clerkUser.externalAccounts ?? []
+      const accounts: ExternalAccount[] = clerkUser.externalAccounts ?? []
 
-      const accountInfo = accounts.map((a: Record<string, unknown>) => ({
+      const accountInfo = accounts.map(a => ({
         provider: a.provider,
         username: a.username,
         emailAddress: a.emailAddress,
       }))
       debug.push({ user_id: row.user_id, accounts: accountInfo })
 
-      const linkedinAccount = accounts.find(
-        (a: Record<string, unknown>) => typeof a.provider === 'string' && a.provider.includes('linkedin')
-      ) as Record<string, unknown> | undefined
-
-      const username = linkedinAccount?.username as string | null | undefined
-      const linkedinUrl = username ? `https://www.linkedin.com/in/${username}` : null
+      const linkedinAccount = accounts.find(a => a.provider.includes('linkedin'))
+      const linkedinUrl = linkedinAccount?.username
+        ? `https://www.linkedin.com/in/${linkedinAccount.username}`
+        : null
 
       const patch: Record<string, string | null> = {}
       if (!row.voornaam && clerkUser.firstName) patch.voornaam = clerkUser.firstName
