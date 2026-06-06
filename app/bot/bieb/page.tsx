@@ -181,6 +181,11 @@ export default function GeschiedenisPage() {
         body { background: #0a0a0a; color: #f0ede6; font-family: 'Space Mono', monospace; }
         @keyframes fadein { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
         @keyframes slideup { from { opacity: 0; transform: translateY(100%); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes blink { 0%,100%{opacity:0.2} 50%{opacity:1} }
+        .loading-dot { display:inline-block;width:7px;height:7px;border-radius:50%;background:#EE7700;animation:blink 1.2s ease-in-out infinite; }
+        .loading-dot:nth-child(2){animation-delay:0.2s}
+        .loading-dot:nth-child(3){animation-delay:0.4s}
+        .analyse-loading-bar { position:fixed;bottom:0;left:0;right:0;z-index:200;background:#0a0a0a;border-top:2px solid #EE7700;padding:20px 40px;display:flex;align-items:center;justify-content:center;gap:12px;animation:slideup 0.2s ease; }
 
         .sort-btn {
           background: #111; border: none; color: rgb(136,136,136);
@@ -452,7 +457,10 @@ export default function GeschiedenisPage() {
                   )}
 
                   {convLoading && (
-                    <p style={{ color: '#333', fontSize: 11, letterSpacing: 3, textTransform: 'uppercase', padding: '16px 0' }}>Gesprek laden...</p>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: 10, padding: '16px 0' }}>
+                      <span className="loading-dot" /><span className="loading-dot" /><span className="loading-dot" />
+                      <span style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 15, letterSpacing: 4, color: '#555' }}>GESPREK LADEN</span>
+                    </div>
                   )}
                   {convMessages.map((msg, i) => (
                     <div key={i} style={{ padding: '20px 0', borderTop: '1px solid #111', display: 'flex', flexDirection: isMobile ? 'column' : 'row', gap: isMobile ? 4 : 32, alignItems: 'flex-start' }}>
@@ -562,8 +570,16 @@ export default function GeschiedenisPage() {
         )}
       </div>
 
+      {/* Analyse loading indicator */}
+      {analyseLoading && (
+        <div className="analyse-loading-bar">
+          <span className="loading-dot" /><span className="loading-dot" /><span className="loading-dot" />
+          <span style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 18, letterSpacing: 4, color: '#888' }}>ARNO ANALYSEERT</span>
+        </div>
+      )}
+
       {/* Sticky balk */}
-      {hasSelected && (
+      {hasSelected && !analyseLoading && (
         <div className="delete-bar">
           <span className="delete-bar-count">
             {selected.size} {selected.size === 1 ? 'GESPREK' : 'GESPREKKEN'} GESELECTEERD
