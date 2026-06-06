@@ -127,8 +127,9 @@ export default function TeamClient() {
         body { background: #0a0a0a; color: #f0ede6; font-family: 'Space Mono', monospace; font-weight: 400; }
         .team-input {
           background: #111; color: #f0ede6; border: 1.5px solid #333;
-          font-family: 'Space Mono', monospace; font-size: 15px; font-weight: 400;
-          padding: 14px 16px; width: 100%; outline: none;
+          border-radius: 4px; font-family: 'Space Mono', monospace;
+          font-size: 15px; font-weight: 400;
+          padding: 12px 16px; width: 100%; outline: none;
           box-sizing: border-box; transition: border-color 0.15s;
         }
         .team-input:focus { border-color: #EE7700; }
@@ -151,7 +152,7 @@ export default function TeamClient() {
                 START JE<br />TEAM.
               </h1>
               <div style={{ maxWidth: 480 }}>
-                <label style={{ fontFamily: "'Space Mono', monospace", fontWeight: 400, fontSize: 11, letterSpacing: 3, color: '#888', display: 'block', marginBottom: 8 }}>TEAMNAAM</label>
+                <label style={{ fontFamily: "'Space Mono', monospace", fontWeight: 400, fontSize: 13, letterSpacing: 4, color: '#EE7700', display: 'block', marginBottom: 8 }}>TEAMNAAM</label>
                 <input
                   type="text"
                   className="team-input"
@@ -165,7 +166,7 @@ export default function TeamClient() {
                 <button
                   onClick={createTeam}
                   disabled={creating || !teamName.trim()}
-                  style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 20, letterSpacing: 3, padding: '14px 36px', background: '#EE7700', color: '#f0ede6', border: 'none', cursor: creating ? 'not-allowed' : 'pointer', opacity: creating || !teamName.trim() ? 0.5 : 1 }}
+                  style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 22, letterSpacing: 3, padding: '16px 48px', background: creating || !teamName.trim() ? '#1a1a1a' : '#EE7700', color: creating || !teamName.trim() ? '#333' : '#0a0a0a', border: 'none', borderRadius: 999, cursor: creating ? 'not-allowed' : 'pointer', transition: 'background 0.2s' }}
                 >
                   {creating ? 'AANMAKEN...' : 'TEAM AANMAKEN'}
                 </button>
@@ -186,7 +187,7 @@ export default function TeamClient() {
                   <p style={{ fontFamily: "'Space Mono', monospace", fontWeight: 400, fontSize: 11, letterSpacing: 2, color: '#555' }}>UITNODIGINGSLINK</p>
                   <button
                     onClick={copyInviteLink}
-                    style={{ fontFamily: "'Space Mono', monospace", fontWeight: 400, fontSize: 12, letterSpacing: 1, padding: '10px 20px', background: 'none', boxShadow: 'inset 0 0 0 1px #EE7700', color: '#EE7700', border: 'none', cursor: 'pointer' }}
+                    style={{ fontFamily: "'Bebas Neue', sans-serif", fontWeight: 400, fontSize: 18, letterSpacing: 3, padding: '12px 28px', background: 'none', border: '1px solid #EE7700', color: '#EE7700', borderRadius: 999, cursor: 'pointer', transition: 'all 0.2s' }}
                   >
                     {copied ? 'GEKOPIEERD!' : 'KOPIEER LINK'}
                   </button>
@@ -240,7 +241,7 @@ export default function TeamClient() {
                 <button
                   onClick={generateSpotlight}
                   disabled={spotlightLoading || members.length < 2}
-                  style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 20, letterSpacing: 3, padding: '14px 36px', background: spotlightLoading ? 'none' : '#EE7700', color: '#f0ede6', border: 'none', boxShadow: spotlightLoading ? 'inset 0 0 0 1px #EE7700' : 'none', cursor: spotlightLoading || members.length < 2 ? 'not-allowed' : 'pointer', opacity: members.length < 2 ? 0.4 : 1, marginBottom: 24 }}
+                  style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 22, letterSpacing: 3, padding: '16px 48px', background: spotlightLoading || members.length < 2 ? '#1a1a1a' : '#EE7700', color: spotlightLoading || members.length < 2 ? '#333' : '#0a0a0a', border: 'none', borderRadius: 999, cursor: spotlightLoading || members.length < 2 ? 'not-allowed' : 'pointer', transition: 'background 0.2s', marginBottom: 24 }}
                 >
                   {spotlightLoading ? 'ARNO ANALYSEERT...' : 'GENEREER TEAM-ANALYSE'}
                 </button>
