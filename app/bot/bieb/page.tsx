@@ -200,7 +200,7 @@ export default function GeschiedenisPage() {
           border-radius: 999px;
         }
         .sort-btn:hover { color: #f0ede6; }
-        .sort-btn.active { background: #1a1a1a; color: #EE7700; }
+        .sort-btn.active { background: #EE7700; border-color: #EE7700; color: rgb(240,237,230); }
 
         .delete-bar {
           position: fixed; bottom: 0; left: 0; right: 0; z-index: 200;
