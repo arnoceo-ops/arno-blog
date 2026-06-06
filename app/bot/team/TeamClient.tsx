@@ -49,7 +49,7 @@ const btnPrimary = (disabled: boolean): React.CSSProperties => ({
   fontSize: 18, letterSpacing: 3,
   padding: '12px 36px',
   background: disabled ? '#1a1a1a' : '#EE7700',
-  color: disabled ? '#333' : '#0a0a0a',
+  color: disabled ? '#333' : '#f0ede6',
   border: 'none', borderRadius: 999,
   cursor: disabled ? 'not-allowed' : 'pointer',
   transition: 'background 0.2s',
