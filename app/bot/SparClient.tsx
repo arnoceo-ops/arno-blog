@@ -501,7 +501,7 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
         .spar-hero {
           padding: clamp(32px,6vw,80px) clamp(20px,5vw,60px) clamp(28px,4vw,60px);
           border-bottom: 3px solid #EE7700;
-          display: flex; justify-content: space-between; align-items: flex-start;
+          display: flex; justify-content: space-between; align-items: flex-end;
           flex-wrap: wrap; gap: 24px;
         }
         .spar-title {
@@ -954,13 +954,13 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
 
         <div className="spar-hero">
           <div style={{ flex: 1, display: 'flex', alignItems: 'flex-start', gap: 'clamp(16px, 2vw, 32px)' }}>
-            <img src="/cyborg.png" alt="Arno" style={{ height: '300px', width: 'auto', objectFit: 'contain', display: 'block' }} />
-            <h1 className="spar-title" style={{ alignSelf: 'flex-end' }}>
+            <img src="/cyborg.png" alt="Arno" style={{ height: '350px', width: 'auto', objectFit: 'contain', display: 'block' }} />
+            <h1 className="spar-title" style={{ alignSelf: 'center' }}>
               ARNO<br /><span>BOT.</span>
             </h1>
           </div>
           {!isMobile && (
-            <div style={{ flex: 1, display: 'flex', justifyContent: 'center', alignItems: 'flex-start' }}>
+            <div style={{ flex: 1, display: 'flex', justifyContent: 'center', alignItems: 'flex-end' }}>
               {(() => {
                 const total = 17
                 const idx = Math.floor(Date.now() / (48 * 60 * 60 * 1000)) % total + 1
