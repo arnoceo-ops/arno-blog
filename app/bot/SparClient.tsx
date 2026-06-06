@@ -131,6 +131,7 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
   const bottomRef = useRef<HTMLDivElement>(null)
   const inputRef = useRef<HTMLTextAreaElement>(null)
   const synthesisRef = useRef<HTMLDivElement>(null)
+  const lastMessageRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
     const SR = (window as any).SpeechRecognition || (window as any).webkitSpeechRecognition
@@ -262,8 +263,10 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
   useEffect(() => {
     if (showSluiten && synthesisRef.current) {
       synthesisRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' })
-    } else if (messages.length > 0 || loading) {
+    } else if (loading) {
       bottomRef.current?.scrollIntoView({ behavior: 'smooth' })
+    } else if (messages.length > 0) {
+      lastMessageRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' })
     }
   }, [messages, loading, showSluiten])
 
@@ -1118,14 +1121,14 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
         <div className="spar-conversation">
           {messages.map((msg, i) => (
             msg.role === 'user' ? (
-              <div key={i} className="msg-user">
+              <div key={i} ref={i === messages.length - 1 ? lastMessageRef : undefined} className="msg-user" style={isMobile ? { flexDirection: 'column', gap: 4 } : {}}>
                 <span className="msg-user-label">JIJ</span>
                 <span className="msg-user-text">{msg.content}</span>
               </div>
             ) : (
-              <div key={i} ref={msg.content?.startsWith('**Terugblik') ? synthesisRef : undefined}>
+              <div key={i} ref={msg.content?.startsWith('**Terugblik') ? synthesisRef : i === messages.length - 1 ? lastMessageRef : undefined}>
                 {msg.content && (
-                  <div className="msg-arno">
+                  <div className="msg-arno" style={isMobile ? { flexDirection: 'column', gap: 4 } : {}}>
                     <span className="msg-arno-label">ARNO</span>
                     <span className="msg-arno-text" dangerouslySetInnerHTML={{ __html: renderContent(msg.content) }} />
                   </div>
