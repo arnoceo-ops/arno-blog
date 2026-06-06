@@ -293,20 +293,7 @@ export default function GeschiedenisPage() {
             onBlur={e => (e.target.style.borderColor = '#2a2a2a')}
           />
 
-          <div style={{ display: 'flex', flexDirection: 'column', gap: 8, alignItems: 'flex-start' }}>
-            {sorted.length > 0 && (
-              <button
-                className={`sort-btn${selected.size === sorted.length ? ' active' : ''}`}
-                style={{ borderRadius: 8 }}
-                onClick={() => {
-                  if (selected.size === sorted.length) setSelected(new Set())
-                  else setSelected(new Set(sorted.map(s => s.session_id)))
-                }}
-              >
-                {selected.size === sorted.length ? 'DESELECTEER ALLES' : 'SELECTEER ALLES'}
-              </button>
-            )}
-            <div style={{ display: 'flex', gap: 4 }}>
+          <div style={{ display: 'flex', gap: 4 }}>
               <button
                 className={`sort-btn${sort === 'newest' || sort === 'oldest' ? ' active' : ''}`}
                 style={{ borderRadius: 8, minWidth: 110 }}
@@ -322,13 +309,24 @@ export default function GeschiedenisPage() {
                 VRAGEN {sort === 'least' ? '↑' : '↓'}
               </button>
             </div>
-          </div>
         </div>
 
         {!loading && sorted.length > 0 && (
-          <p style={{ fontFamily: "'Space Mono', monospace", fontSize: 15, fontWeight: 400, color: 'rgb(136,136,136)', marginBottom: 8, border: '1px solid #2a2a2a', borderLeft: '3px solid #EE7700', padding: '10px 16px', display: 'inline-block' }}>
-            Selecteer minimaal 3 gesprekken voor een analyse.
-          </p>
+          <div style={{ marginBottom: 24, display: 'flex', flexDirection: 'column', gap: 12, alignItems: 'flex-start' }}>
+            <p style={{ fontFamily: "'Space Mono', monospace", fontSize: 15, fontWeight: 400, color: 'rgb(136,136,136)', border: '1px solid #2a2a2a', borderLeft: '3px solid #EE7700', padding: '10px 16px', display: 'inline-block' }}>
+              Selecteer minimaal 3 gesprekken voor een analyse.
+            </p>
+            <button
+              className={`sort-btn${selected.size === sorted.length ? ' active' : ''}`}
+              style={{ borderRadius: 8 }}
+              onClick={() => {
+                if (selected.size === sorted.length) setSelected(new Set())
+                else setSelected(new Set(sorted.map(s => s.session_id)))
+              }}
+            >
+              {selected.size === sorted.length ? 'DESELECTEER ALLES' : 'SELECTEER ALLES'}
+            </button>
+          </div>
         )}
 
         {loading && (
