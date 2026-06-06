@@ -69,8 +69,6 @@ export default function BotNav({ active }: Props) {
       .catch(() => {})
   }, [])
 
-  if (isMobile === null) return null
-
   const feedbackModal = feedbackOpen && (
     <div
       style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.75)', zIndex: 200, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 20 }}

@@ -129,6 +129,7 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
   const [navGuardOpen, setNavGuardOpen] = useState(false)
   const [pendingNavDest, setPendingNavDest] = useState<string | null>(null)
   const [teamPrompt, setTeamPrompt] = useState(false)
+  const [isManager, setIsManager] = useState(false)
   const recognitionRef = useRef<any>(null)
   const bottomRef = useRef<HTMLDivElement>(null)
   const inputRef = useRef<HTMLTextAreaElement>(null)
@@ -260,7 +261,10 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
       if (heeftManagerRol && gebruik !== 'individueel') {
         fetch('/api/bot/team/status')
           .then(r => r.json())
-          .then(d => { if (!d.hasTeam && !d.promptDismissed) setTeamPrompt(true) })
+          .then(d => {
+            if (d.isManager) setIsManager(true)
+            if (!d.hasTeam && !d.promptDismissed) setTeamPrompt(true)
+          })
           .catch(() => {})
       }
 
@@ -929,6 +933,7 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
               <span className="active">ARNOBOT</span>
               <button style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 28, letterSpacing: 3, color: '#888', background: 'none', border: 'none', cursor: 'pointer', textAlign: 'left', padding: 0 }} onClick={() => handleNavAttempt('/bot/bieb')}>BIEB</button>
               <button style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 28, letterSpacing: 3, color: '#888', background: 'none', border: 'none', cursor: 'pointer', textAlign: 'left', padding: 0 }} onClick={() => handleNavAttempt('/bot/coaching')}>COACHING</button>
+              {isManager && <button style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 28, letterSpacing: 3, color: '#888', background: 'none', border: 'none', cursor: 'pointer', textAlign: 'left', padding: 0 }} onClick={() => handleNavAttempt('/bot/team')}>TEAM</button>}
               <button style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 28, letterSpacing: 3, color: '#888', background: 'none', border: 'none', cursor: 'pointer', textAlign: 'left', padding: 0 }} onClick={() => handleNavAttempt('/bot/qa')}>Q&A</button>
               <button style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 28, letterSpacing: 3, color: '#888', background: 'none', border: 'none', cursor: 'pointer', textAlign: 'left', padding: 0 }} onClick={() => handleNavAttempt('/bot/account')}>ACCOUNT</button>
               <span style={{ color: '#888', cursor: 'pointer' }} onClick={e => { e.stopPropagation(); setMenuOpen(false); setFeedbackOpen(true) }}>FEEDBACK</span>
@@ -942,6 +947,7 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
             <span style={{ color: '#EE7700', fontFamily: "'Bebas Neue', sans-serif", fontSize: 22, letterSpacing: 3 }}>ARNOBOT</span>
             <button onClick={() => handleNavAttempt('/bot/bieb')}>BIEB</button>
             <button onClick={() => handleNavAttempt('/bot/coaching')}>COACHING</button>
+            {isManager && <button onClick={() => handleNavAttempt('/bot/team')}>TEAM</button>}
             <button onClick={() => handleNavAttempt('/bot/qa')}>Q&A</button>
             <button onClick={() => handleNavAttempt('/bot/account')}>ACCOUNT</button>
           </div>
