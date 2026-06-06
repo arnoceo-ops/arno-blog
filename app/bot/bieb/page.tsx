@@ -281,8 +281,8 @@ export default function GeschiedenisPage() {
         <p style={{ color: '#EE7700', fontSize: 13, letterSpacing: 4, marginBottom: 8 }}>ARNOBOT</p>
         <h1 style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 64, letterSpacing: 3, lineHeight: 1, marginBottom: 48 }}>GESPREKKEN</h1>
 
-        {/* Zoekbalk + sortering */}
-        <div style={{ marginBottom: 40, borderBottom: '1px solid #1a1a1a', paddingBottom: 40 }}>
+        {/* Zoekbalk */}
+        <div style={{ marginBottom: 16 }}>
           <input
             type="text"
             value={search}
@@ -292,13 +292,26 @@ export default function GeschiedenisPage() {
               width: '100%', background: '#111', border: '1px solid #2a2a2a',
               color: '#f0ede6', fontFamily: "'Space Mono', monospace",
               fontSize: 14, padding: '12px 16px', outline: 'none', letterSpacing: 1,
-              marginBottom: 16,
             }}
             onFocus={e => (e.target.style.borderColor = '#EE7700')}
             onBlur={e => (e.target.style.borderColor = '#2a2a2a')}
           />
+        </div>
 
-          <div style={{ display: 'flex', gap: 4 }}>
+        {/* Knoppen balk */}
+        {!loading && sorted.length > 0 && (
+          <div style={{ marginBottom: 32, border: '1px solid #2a2a2a', padding: '14px 20px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 12, flexWrap: 'wrap' }}>
+            <button
+              className={`sort-btn${selected.size === sorted.length ? ' active' : ''}`}
+              style={{ borderRadius: 8 }}
+              onClick={() => {
+                if (selected.size === sorted.length) setSelected(new Set())
+                else setSelected(new Set(sorted.map(s => s.session_id)))
+              }}
+            >
+              {selected.size === sorted.length ? 'DESELECTEER ALLES' : 'SELECTEER ALLES'}
+            </button>
+            <div style={{ display: 'flex', gap: 4 }}>
               <button
                 className={`sort-btn${sort === 'newest' || sort === 'oldest' ? ' active' : ''}`}
                 style={{ borderRadius: 8, minWidth: 110 }}
@@ -314,24 +327,13 @@ export default function GeschiedenisPage() {
                 VRAGEN {sort === 'least' ? '↑' : '↓'}
               </button>
             </div>
-        </div>
+          </div>
+        )}
 
         {!loading && sorted.length > 0 && (
-          <div style={{ marginBottom: 24, display: 'flex', flexDirection: 'column', gap: 12, alignItems: 'flex-start' }}>
-            <p style={{ fontFamily: "'Space Mono', monospace", fontSize: 15, fontWeight: 400, color: 'rgb(136,136,136)', border: '1px solid #2a2a2a', borderLeft: '3px solid #EE7700', padding: '10px 16px', display: 'inline-block' }}>
-              Selecteer minimaal 3 gesprekken voor een analyse.
-            </p>
-            <button
-              className={`sort-btn${selected.size === sorted.length ? ' active' : ''}`}
-              style={{ borderRadius: 8 }}
-              onClick={() => {
-                if (selected.size === sorted.length) setSelected(new Set())
-                else setSelected(new Set(sorted.map(s => s.session_id)))
-              }}
-            >
-              {selected.size === sorted.length ? 'DESELECTEER ALLES' : 'SELECTEER ALLES'}
-            </button>
-          </div>
+          <p style={{ fontFamily: "'Space Mono', monospace", fontSize: 15, fontWeight: 400, color: 'rgb(136,136,136)', border: '1px solid #2a2a2a', borderLeft: '3px solid #EE7700', padding: '10px 16px', display: 'inline-block', marginBottom: 24 }}>
+            Selecteer minimaal 3 gesprekken voor een analyse.
+          </p>
         )}
 
         {loading && (
