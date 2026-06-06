@@ -193,7 +193,7 @@ export default function GeschiedenisPage() {
         .analyse-loading-bar { position:fixed;bottom:0;left:0;right:0;z-index:200;background:#0a0a0a;border-top:2px solid #EE7700;padding:20px 40px;display:flex;align-items:center;justify-content:center;gap:12px;animation:slideup 0.2s ease; }
 
         .sort-btn {
-          background: #111; border: none; color: rgb(136,136,136);
+          background: #111; border: 1px solid #3a3a3a; color: rgb(136,136,136);
           font-family: 'Bebas Neue', sans-serif;
           font-size: 15px; letter-spacing: 3px;
           padding: 9px 20px; cursor: pointer; transition: all 0.15s;
@@ -300,7 +300,7 @@ export default function GeschiedenisPage() {
 
         {/* Knoppen balk */}
         {!loading && sorted.length > 0 && (
-          <div style={{ marginBottom: 32, border: '1px solid #2a2a2a', padding: '14px 20px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 12, flexWrap: 'wrap' }}>
+          <div style={{ marginBottom: 32, padding: '4px 0', display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 12, flexWrap: 'wrap' }}>
             <button
               className={`sort-btn${selected.size === sorted.length ? ' active' : ''}`}
               style={{ borderRadius: 8 }}
