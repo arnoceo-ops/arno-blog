@@ -560,9 +560,14 @@ export default function GeschiedenisPage() {
         )}
 
         {sorted.length > 0 && (
-          <div style={{ borderTop: '1px solid #1a1a1a', paddingTop: 40, marginTop: 40 }}>
+          <div style={{ borderTop: '1px solid #1a1a1a', paddingTop: 40, marginTop: 40, display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: 16 }}>
             <Link href="/bot" style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 18, letterSpacing: 3, color: '#EE7700', textDecoration: 'none' }}>
-              ← TERUG NAAR DE BOT
+              ← TERUG NAAR ARNOBOT
+            </Link>
+            <Link href="/bot/coaching" style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 18, letterSpacing: 3, color: 'rgb(136,136,136)', textDecoration: 'none' }}
+              onMouseOver={e => (e.currentTarget.style.color = '#EE7700')}
+              onMouseOut={e => (e.currentTarget.style.color = 'rgb(136,136,136)')}>
+              VERDER NAAR COACHING →
             </Link>
           </div>
         )}
