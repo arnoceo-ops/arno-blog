@@ -512,8 +512,9 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
           .spar-send { flex: 1; min-width: 0; height: 48px; font-size: 17px; padding: 0 20px; }
           .spar-reset { height: 48px; padding: 0 16px; font-size: 15px; }
           .spar-openers { overflow-x: hidden; }
-          .opener-toggle { display: grid; grid-template-columns: repeat(3, 1fr); width: 100%; max-width: 812px; }
+          .opener-toggle { display: grid; grid-template-columns: repeat(2, 1fr); width: 100%; max-width: 812px; }
           .toggle-btn { font-size: 11px; letter-spacing: 0px; padding: 7px 4px; border-radius: 4px; }
+          .toggle-btn:last-child { grid-column: 1 / -1; justify-self: center; width: 50%; }
           .verfijn-btn { display: none; }
         }
 
