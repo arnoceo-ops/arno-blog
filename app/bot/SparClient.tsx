@@ -1077,20 +1077,21 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
         {!started && !loading && (
           <div className="spar-openers">
             <span className="spar-discipline-label">of kies een discipline</span>
-            <div className="opener-toggle">
-              <button
-                className={`toggle-btn${openerModus === 'strategisch' ? ' active' : ''}`}
-                onClick={() => setOpenerModus('strategisch')}
-              >STRATEGIE</button>
-              <button
-                className={`toggle-btn${openerModus === 'organisatorisch' ? ' active' : ''}`}
-                onClick={() => setOpenerModus('organisatorisch')}
-              >ORGANISATIE</button>
-              <button
-                className={`toggle-btn${openerModus === 'sales' ? ' active' : ''}`}
-                onClick={() => setOpenerModus('sales')}
-              >SALES</button>
-            </div>
+            {isMobile ? (
+              <div style={{ display: 'flex', flexDirection: 'column', gap: 2, width: '100%' }}>
+                <div style={{ display: 'flex', gap: 2 }}>
+                  <button className={`toggle-btn${openerModus === 'strategisch' ? ' active' : ''}`} style={{ flex: 1 }} onClick={() => setOpenerModus('strategisch')}>STRATEGIE</button>
+                  <button className={`toggle-btn${openerModus === 'organisatorisch' ? ' active' : ''}`} style={{ flex: 1 }} onClick={() => setOpenerModus('organisatorisch')}>ORGANISATIE</button>
+                </div>
+                <button className={`toggle-btn${openerModus === 'sales' ? ' active' : ''}`} style={{ width: 'calc(50% - 1px)', alignSelf: 'center' }} onClick={() => setOpenerModus('sales')}>SALES</button>
+              </div>
+            ) : (
+              <div className="opener-toggle">
+                <button className={`toggle-btn${openerModus === 'strategisch' ? ' active' : ''}`} onClick={() => setOpenerModus('strategisch')}>STRATEGIE</button>
+                <button className={`toggle-btn${openerModus === 'organisatorisch' ? ' active' : ''}`} onClick={() => setOpenerModus('organisatorisch')}>ORGANISATIE</button>
+                <button className={`toggle-btn${openerModus === 'sales' ? ' active' : ''}`} onClick={() => setOpenerModus('sales')}>SALES</button>
+              </div>
+            )}
             <span className="spar-questions-label">en selecteer een van de onderstaande vragen</span>
             <span className="spar-questions-sub">als het je bezighoudt, dan hè? waarom zou je er anders antwoord op willen hebben?</span>
             <div className="openers-grid-line" />
