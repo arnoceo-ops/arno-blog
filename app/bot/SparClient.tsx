@@ -511,7 +511,7 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
         }
         .spar-title span { color: #EE7700; }
         .spar-tagline {
-          text-align: right; padding-bottom: 8px; flex: 1;
+          text-align: right; padding-bottom: 8px; flex: 1; align-self: center;
         }
         .spar-tagline p { font-size: 15px; line-height: 1.9; color: #888; }
         .spar-tagline strong { font-weight: 700; color: #f0ede6; font-family: 'Barlow', sans-serif; font-size: 26px; letter-spacing: 0.5px; display: block; margin-bottom: 6px; }
