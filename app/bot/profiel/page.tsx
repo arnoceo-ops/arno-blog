@@ -74,8 +74,8 @@ function Block({ nr, title, children }: { nr: string; title: string; children: R
   return (
     <div style={{ marginBottom: 48, borderBottom: '1px solid #1a1a1a', paddingBottom: 40 }}>
       <div style={{ display: 'flex', alignItems: 'baseline', gap: 12, marginBottom: 20 }}>
-        <span style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 13, letterSpacing: 4, color: '#EE7700' }}>{nr}</span>
-        <h3 style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 28, color: '#f0ede6', margin: 0, letterSpacing: 1 }}>{title}</h3>
+        <span style={{ fontFamily: "'Space Mono', monospace", fontSize: 13, letterSpacing: 4, color: '#EE7700' }}>{nr}</span>
+        <h3 style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 26, fontWeight: 400, color: '#f0ede6', margin: 0, letterSpacing: 1 }}>{title}</h3>
       </div>
       {children}
     </div>
@@ -199,7 +199,7 @@ export default function BotProfielPage() {
             <p style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 14, letterSpacing: 6, color: '#EE7700', marginBottom: 8 }}>
               {isFirstTime ? 'WELKOM' : 'JOUW PROFIEL'}
             </p>
-            <h1 style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 44, color: '#f0ede6', lineHeight: 1.05, letterSpacing: 1, marginBottom: 24 }}>
+            <h1 style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 64, color: '#f0ede6', lineHeight: 1.05, letterSpacing: 1, marginBottom: 24 }}>
               {isFirstTime ? `Goed dat je er bent, ${firstName}.` : 'Profiel aanpassen'}
             </h1>
             <div style={{ borderLeft: '4px solid #EE7700', paddingLeft: 20, color: '#888', fontSize: 15, lineHeight: '30px' }}>
