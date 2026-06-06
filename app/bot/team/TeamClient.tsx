@@ -178,7 +178,7 @@ export default function TeamClient() {
           {/* Team aanmaken */}
           {!loading && !hasTeam && (
             <>
-              <p style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 13, letterSpacing: 4, color: '#EE7700', marginBottom: 8 }}>ARNOBOT</p>
+              <p style={{ ...label, marginBottom: 8 }}>ARNOBOT</p>
               <h1 style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 64, letterSpacing: 3, color: '#f0ede6', lineHeight: 1, margin: '0 0 48px 0' }}>
                 START JE TEAM.
               </h1>
@@ -211,7 +211,7 @@ export default function TeamClient() {
           {/* Dashboard */}
           {!loading && hasTeam && isManager && team && (
             <>
-              <p style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 13, letterSpacing: 4, color: '#EE7700', marginBottom: 8 }}>TEAM</p>
+              <p style={{ ...label, marginBottom: 8 }}>TEAM</p>
               <div style={{ display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between', flexWrap: 'wrap', gap: 16, marginBottom: 48, borderBottom: '3px solid #EE7700', paddingBottom: 32 }}>
                 <h1 style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 64, letterSpacing: 3, color: '#f0ede6', lineHeight: 1, margin: 0 }}>
                   {team.name.toUpperCase()}
@@ -233,7 +233,7 @@ export default function TeamClient() {
                       <thead>
                         <tr style={{ borderBottom: '1px solid #1a1a1a' }}>
                           {['NAAM', 'ROL', 'GESPREKKEN', 'LAATSTE ACTIVITEIT', 'ANALYSES'].map(h => (
-                            <th key={h} style={{ textAlign: 'left', fontFamily: "'Bebas Neue', sans-serif", fontWeight: 400, fontSize: 13, letterSpacing: 2, color: '#555', padding: '8px 16px 12px 0' }}>{h}</th>
+                            <th key={h} style={{ textAlign: 'left', fontFamily: "'Space Mono', monospace", fontWeight: 400, fontSize: 13, letterSpacing: 2, color: '#555', padding: '8px 16px 12px 0' }}>{h}</th>
                           ))}
                         </tr>
                       </thead>
@@ -241,7 +241,7 @@ export default function TeamClient() {
                         {members.map(m => (
                           <tr key={m.user_id} style={{ borderBottom: '1px solid #111' }}>
                             <td style={{ padding: '16px 16px 16px 0', fontWeight: 400, fontSize: 15, color: '#f0ede6' }}>{m.name}</td>
-                            <td style={{ padding: '16px 16px 16px 0', fontWeight: 400, fontSize: 13, letterSpacing: 2, color: m.role === 'manager' ? '#EE7700' : '#555' }}>
+                            <td style={{ padding: '16px 16px 16px 0', fontFamily: "'Space Mono', monospace", fontWeight: 400, fontSize: 13, letterSpacing: 2, color: m.role === 'manager' ? '#EE7700' : '#555' }}>
                               {m.role === 'manager' ? 'MANAGER' : 'LID'}
                             </td>
                             <td style={{ padding: '16px 16px 16px 0', fontWeight: 400, fontSize: 15, color: m.sessions > 0 ? '#f0ede6' : '#444' }}>{m.sessions}</td>
