@@ -67,12 +67,16 @@ export default async function AdminWidgetPage({
   const dateRange = from === to ? from : `${from} t/m ${to}`
 
   return (
-    <main style={{ background: '#0a0a0a', minHeight: '100vh', color: '#f0ede6', fontFamily: 'sans-serif', padding: '48px' }}>
-    <div style={{ maxWidth: '800px', margin: '0 auto' }}>
-      <div style={{ display: 'flex', gap: '32px', marginBottom: '40px' }}>
-        <a href="/bot/admin" style={navLinkStyle(false)}>ROYAL DUTCH SALES</a>
-        <a href="/bot/admin/widget" style={navLinkStyle(true)}>ARNO.BLOG WIDGET</a>
-      </div>
+    <main style={{ background: '#0a0a0a', minHeight: '100vh', color: '#f0ede6', fontFamily: 'sans-serif' }}>
+      <nav style={{ background: '#0d0d0d', borderBottom: '1px solid #1a1a1a', padding: '0 48px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', height: 56 }}>
+        <span style={{ fontFamily: 'monospace', fontSize: '14px', letterSpacing: '4px', color: '#EE7700', fontWeight: 700 }}>ARNOBOT ADMIN</span>
+        <div style={{ display: 'flex', gap: '4px' }}>
+          <a href="/bot/admin" style={{ ...navLinkStyle(false), padding: '6px 16px', borderBottom: 'none', borderRadius: 4 }}>GESPREKKEN RDS</a>
+          <a href="/bot/admin/widget" style={{ ...navLinkStyle(true), padding: '6px 16px', borderBottom: 'none', background: '#1a1a1a', borderRadius: 4 }}>WIDGET</a>
+          <a href="/bot/admin/gebruikers" style={{ ...navLinkStyle(false), padding: '6px 16px', borderBottom: 'none', borderRadius: 4 }}>GEBRUIKERS</a>
+        </div>
+      </nav>
+    <div style={{ maxWidth: '800px', margin: '0 auto', padding: '48px 24px' }}>
 
       <div style={{ marginBottom: '40px' }}>
         <p style={{ color: '#EE7700', fontSize: '16px', letterSpacing: '4px', marginBottom: '8px' }}>ARNOBOT — ARNO.BLOG WIDGET</p>
