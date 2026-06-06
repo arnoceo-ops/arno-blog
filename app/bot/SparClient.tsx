@@ -511,7 +511,7 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
           .spar-mic { height: 48px; width: 52px; flex-shrink: 0; border-left: none; border-right: 1px solid #2a2a2a; }
           .spar-send { flex: 1; min-width: 0; height: 48px; font-size: 17px; padding: 0 20px; }
           .spar-reset { height: 48px; padding: 0 16px; font-size: 15px; }
-          .toggle-btn { font-size: 13px; letter-spacing: 2px; padding: 8px 14px; }
+          .toggle-btn { font-size: 12px; letter-spacing: 1px; padding: 8px 10px; }
           .verfijn-btn { display: none; }
         }
 
