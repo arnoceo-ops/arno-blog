@@ -658,7 +658,7 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
           display: flex; flex-direction: column; align-items: center;
         }
         .opener-toggle {
-          display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin: 0 auto 2px; max-width: 480px;
+          display: grid; grid-template-columns: repeat(3, 142px); gap: 8px; margin: 0 auto 2px;
         }
         .toggle-btn {
           background: #111; border: none; color: #444;
