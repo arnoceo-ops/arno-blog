@@ -45,25 +45,46 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: 'te_weinig', count: sessions.length }, { status: 400 })
   }
 
-  // Dedup: check of deze exacte selectie al is geanalyseerd
-  const idsKey = sessions.map(s => s.session_id).sort().join(',')
+  // Dedup: check exacte match of grote overlap (Jaccard >= 0.8)
+  const newIds = new Set(sessions.map(s => s.session_id))
+  const idsKey = [...newIds].sort().join(',')
+
   const { data: existingAnalyses } = await supabase
     .from('arnobot_analyses')
     .select('id, analyse_text, created_at, session_count, session_ids')
     .eq('user_id', userId)
 
-  const duplicate = existingAnalyses?.find(a => {
+  const exactDuplicate = existingAnalyses?.find(a => {
     if (!Array.isArray(a.session_ids)) return false
     return (a.session_ids as string[]).slice().sort().join(',') === idsKey
   })
 
-  if (duplicate) {
+  if (exactDuplicate) {
     return NextResponse.json({
       duplicate: true,
-      analyse: duplicate.analyse_text,
-      id: duplicate.id,
-      created_at: duplicate.created_at,
-      count: duplicate.session_count,
+      analyse: exactDuplicate.analyse_text,
+      id: exactDuplicate.id,
+      created_at: exactDuplicate.created_at,
+      count: exactDuplicate.session_count,
+    })
+  }
+
+  // Jaccard-overlap: als >= 80% overlap met een bestaande analyse → verwijs terug
+  const similar = existingAnalyses?.find(a => {
+    if (!Array.isArray(a.session_ids) || a.session_ids.length === 0) return false
+    const existingIds = new Set(a.session_ids as string[])
+    const intersection = [...newIds].filter(id => existingIds.has(id)).length
+    const union = new Set([...newIds, ...existingIds]).size
+    return intersection / union >= 0.8
+  })
+
+  if (similar) {
+    return NextResponse.json({
+      similar: true,
+      analyse: similar.analyse_text,
+      id: similar.id,
+      created_at: similar.created_at,
+      count: similar.session_count,
     })
   }
 

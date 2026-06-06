@@ -60,6 +60,7 @@ export default function GeschiedenisPage() {
   const [expandedAnalyse, setExpandedAnalyse] = useState<string | null>(null)
   const [showAllSessions, setShowAllSessions] = useState(false)
   const [isDuplicateAnalyse, setIsDuplicateAnalyse] = useState(false)
+  const [isSimilarAnalyse, setIsSimilarAnalyse] = useState(false)
   const analysesSectionRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
@@ -141,6 +142,7 @@ export default function GeschiedenisPage() {
     setAnalyseLoading(true)
     setActiveAnalyse(null)
     setIsDuplicateAnalyse(false)
+    setIsSimilarAnalyse(false)
     try {
       const body = sessionIds ? { sessionIds } : {}
       const res = await fetch('/api/bot/coaching-analyse', {
@@ -151,6 +153,9 @@ export default function GeschiedenisPage() {
       const data = await res.json()
       if (data.duplicate) {
         setIsDuplicateAnalyse(true)
+        setActiveAnalyse(data.analyse)
+      } else if (data.similar) {
+        setIsSimilarAnalyse(true)
         setActiveAnalyse(data.analyse)
       } else if (data.analyse) {
         setActiveAnalyse(data.analyse)
@@ -508,7 +513,7 @@ export default function GeschiedenisPage() {
             <p style={{ color: '#EE7700', fontSize: 13, letterSpacing: 4, marginBottom: 8 }}>ARNOBOT</p>
             <h2 style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 64, letterSpacing: 3, lineHeight: 1, marginBottom: 48 }}>ANALYSES</h2>
 
-            {activeAnalyse && !isDuplicateAnalyse && (
+            {activeAnalyse && !isDuplicateAnalyse && !isSimilarAnalyse && (
               <div style={{ marginBottom: 28, background: '#0f0f0f', borderLeft: '3px solid #EE7700', padding: '20px 24px' }}>
                 <p style={{ color: '#EE7700', fontSize: 11, letterSpacing: 4, textTransform: 'uppercase', marginBottom: 12 }}>NIEUW GEGENEREERD</p>
                 <p style={{ color: '#d0cdc6', fontSize: 16, lineHeight: 1.9, fontFamily: "'Space Mono', monospace", whiteSpace: 'pre-wrap', marginBottom: 16 }}>{activeAnalyse}</p>
@@ -524,6 +529,14 @@ export default function GeschiedenisPage() {
               <p style={{ color: '#555', fontSize: 12, letterSpacing: 2, fontFamily: "'Space Mono', monospace", marginBottom: 28 }}>
                 Deze combinatie is al eerder geanalyseerd — zie hieronder.
               </p>
+            )}
+            {isSimilarAnalyse && (
+              <div style={{ background: '#0f0f0f', borderLeft: '3px solid #555', padding: '20px 24px', marginBottom: 28 }}>
+                <p style={{ color: '#888', fontSize: 13, letterSpacing: 3, fontFamily: "'Bebas Neue', sans-serif", marginBottom: 10 }}>WEINIG VERANDERD</p>
+                <p style={{ color: '#666', fontSize: 14, lineHeight: 1.9, fontFamily: "'Space Mono', monospace" }}>
+                  Je gesprekken overlappen voor meer dan 80% met een eerdere analyse. Er is niet genoeg veranderd om iets nieuws te zeggen. Ga eens aan de slag met wat er al staat — voer nieuwe gesprekken en kom dan terug.
+                </p>
+              </div>
             )}
 
             {savedAnalyses.map(a => (
