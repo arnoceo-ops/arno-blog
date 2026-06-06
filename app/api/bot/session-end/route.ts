@@ -55,7 +55,7 @@ export async function POST(req: NextRequest) {
         system: 'Je bent Arno Diepeveen. Oprichter Royal Dutch Sales. Direct, ongefilterd, geen bullshit. Geen corporate taal. Geen accenten op woorden voor nadruk.',
         messages: [{
           role: 'user',
-          content: `Schrijf een feitelijke terugblik op dit gesprek in maximaal 2-3 zinnen. Wat was het onderwerp, wat is er besproken, wat is er gezegd. Geen oordelen, geen conclusies, geen takeaways — alleen een neutrale samenvatting van wat er heeft plaatsgevonden. In eerste persoon als Arno.\n\n${conversationText}`
+          content: `Schrijf een feitelijke terugblik op dit gesprek in maximaal 2 zinnen. Beschrijf alleen wat er besproken is: het onderwerp en de richting van het gesprek. Geen analyse, geen oordelen, geen "ik heb uitgewerkt" of "ik heb geconcludeerd" — alleen wat er aan de orde was. Spreek de gebruiker direct aan met "je" of "jij", nooit als "de gebruiker". Je schrijft als Arno, direct tegen de persoon met wie je gesproken hebt.\n\n${conversationText}`
         }]
       }),
       anthropic.messages.create({
