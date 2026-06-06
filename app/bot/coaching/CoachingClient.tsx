@@ -62,6 +62,7 @@ export default function CoachingClient({ userId }: Props) {
   const [analyses, setAnalyses] = useState<SavedAnalyse[]>([])
   const [uitdaging, setUitdaging] = useState<string | null>(null)
   const [sessionsData, setSessionsData] = useState<SessionWithUitdaging[]>([])
+  const [toonAlleUitdagingen, setToonAlleUitdagingen] = useState(false)
 
   useEffect(() => {
     fetch('/api/bot/coaching')
@@ -364,7 +365,7 @@ export default function CoachingClient({ userId }: Props) {
                   </span>
                 </span>
                 <div>
-                  {sessionsData.map(s => (
+                  {(toonAlleUitdagingen ? sessionsData : sessionsData.slice(0, 5)).map(s => (
                     <div key={s.session_id} className={`uitdaging-row${s.uitdaging_done ? ' done' : ''}`}>
                       <button
                         className={`uitdaging-check${s.uitdaging_done ? ' checked' : ''}`}
@@ -374,14 +375,24 @@ export default function CoachingClient({ userId }: Props) {
                         {s.uitdaging_done ? '✓' : ''}
                       </button>
                       <div style={{ flex: 1 }}>
-                        <p style={{ fontFamily: "'Space Mono', monospace", fontSize: 14, color: '#f0ede6', lineHeight: 1.7, marginBottom: 4 }}>{s.uitdaging}</p>
-                        <p style={{ fontFamily: "'Space Mono', monospace", fontSize: 11, color: '#444', letterSpacing: 2 }}>
+                        <p style={{ fontFamily: "'Space Mono', monospace", fontSize: 15, color: '#f0ede6', lineHeight: 1.7, marginBottom: 4 }}>{s.uitdaging}</p>
+                        <p style={{ fontFamily: "'Space Mono', monospace", fontSize: 13, color: 'rgb(136,136,136)', letterSpacing: 1 }}>
                           {new Date(s.created_at).toLocaleDateString('nl-NL', { day: 'numeric', month: 'long' })} · {s.title.slice(0, 50)}{s.title.length > 50 ? '...' : ''}
                         </p>
                       </div>
                     </div>
                   ))}
                 </div>
+                {sessionsData.length > 5 && (
+                  <button
+                    onClick={() => setToonAlleUitdagingen(v => !v)}
+                    style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 15, letterSpacing: 3, color: '#555', background: 'none', border: 'none', cursor: 'pointer', padding: '12px 0 0', transition: 'color 0.15s' }}
+                    onMouseEnter={e => (e.currentTarget.style.color = '#EE7700')}
+                    onMouseLeave={e => (e.currentTarget.style.color = '#555')}
+                  >
+                    {toonAlleUitdagingen ? '↑ MINDER' : `↓ TOON ALLE ${sessionsData.length}`}
+                  </button>
+                )}
               </div>
             )}
 

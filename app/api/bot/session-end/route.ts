@@ -79,7 +79,7 @@ export async function POST(req: NextRequest) {
     ])
     summary = summaryRes.content[0].type === 'text' ? summaryRes.content[0].text : ''
     feiten = feitenRes.content[0].type === 'text' ? feitenRes.content[0].text : ''
-    uitdaging = uitdagingRes.content[0].type === 'text' ? uitdagingRes.content[0].text.trim() : ''
+    uitdaging = (uitdagingRes.content[0].type === 'text' ? uitdagingRes.content[0].text.trim() : '').replace(/\*\*/g, '')
   } catch (e) {
     console.error('Synthesis/feiten error:', e)
   }
