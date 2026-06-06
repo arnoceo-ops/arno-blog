@@ -193,14 +193,14 @@ export default function GeschiedenisPage() {
         .analyse-loading-bar { position:fixed;bottom:0;left:0;right:0;z-index:200;background:#0a0a0a;border-top:2px solid #EE7700;padding:20px 40px;display:flex;align-items:center;justify-content:center;gap:12px;animation:slideup 0.2s ease; }
 
         .sort-btn {
-          background: #111; border: 1px solid #EE7700; color: rgb(136,136,136);
+          background: #111; border: none; box-shadow: inset 0 0 0 1px #EE7700; color: rgb(136,136,136);
           font-family: 'Bebas Neue', sans-serif;
           font-size: 15px; letter-spacing: 3px;
           padding: 9px 20px; cursor: pointer; transition: all 0.15s;
           border-radius: 999px;
         }
         .sort-btn:hover { color: #f0ede6; }
-        .sort-btn.active { background: #EE7700; border-color: #EE7700; color: rgb(240,237,230); }
+        .sort-btn.active { background: #EE7700; box-shadow: none; color: rgb(240,237,230); }
 
         .delete-bar {
           position: fixed; bottom: 0; left: 0; right: 0; z-index: 200;
@@ -215,13 +215,13 @@ export default function GeschiedenisPage() {
         }
         .delete-bar-actions { display: flex; gap: 12px; align-items: center; flex-wrap: wrap; justify-content: center; }
         .delete-bar-cancel {
-          background: none; border: 1px solid #EE7700; cursor: pointer;
+          background: none; border: none; box-shadow: inset 0 0 0 1px #EE7700; cursor: pointer;
           font-family: 'Bebas Neue', sans-serif;
           font-size: 16px; letter-spacing: 3px; color: rgb(136,136,136);
           transition: all 0.15s; padding: 11px 0;
           width: 180px; text-align: center; border-radius: 999px;
         }
-        .delete-bar-cancel:hover { border-color: #EE7700; color: #EE7700; }
+        .delete-bar-cancel:hover { color: #EE7700; }
         .delete-bar-btn {
           background: #EE7700; border: 1px solid #EE7700; cursor: pointer;
           font-family: 'Bebas Neue', sans-serif;
@@ -232,7 +232,7 @@ export default function GeschiedenisPage() {
         .delete-bar-btn:hover { background: #ff8800; border-color: #ff8800; }
         .delete-bar-btn:disabled { background: #333; border-color: #333; color: #555; cursor: not-allowed; }
         .delete-bar-outline {
-          background: none; border: 1px solid #EE7700; cursor: pointer;
+          background: none; border: none; box-shadow: inset 0 0 0 1px #EE7700; cursor: pointer;
           font-family: 'Bebas Neue', sans-serif;
           font-size: 16px; letter-spacing: 3px; color: #f0ede6;
           padding: 11px 0; transition: all 0.15s;

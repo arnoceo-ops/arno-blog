@@ -165,22 +165,22 @@ export default function CoachingClient({ userId }: Props) {
         }
         .blog-item:hover { color: #f0ede6; border-left-color: #EE7700; background: #111; }
         .generate-btn {
-          background: none; border: 1px solid #EE7700; cursor: pointer;
+          background: none; border: none; box-shadow: inset 0 0 0 1px #EE7700; cursor: pointer;
           font-family: 'Bebas Neue', sans-serif;
           font-size: 18px; letter-spacing: 3px;
           color: #f0ede6; padding: 12px 28px; transition: all 0.2s;
           border-radius: 999px; min-width: 220px;
         }
-        .generate-btn:hover:not(:disabled) { background: #EE7700; color: #f0ede6; }
-        .generate-btn:disabled { border-color: #333; color: #444; cursor: not-allowed; }
+        .generate-btn:hover:not(:disabled) { background: #EE7700; box-shadow: none; color: #f0ede6; }
+        .generate-btn:disabled { box-shadow: inset 0 0 0 1px #333; color: #444; cursor: not-allowed; }
         .pdf-btn {
-          background: none; border: 1px solid #555; cursor: pointer;
+          background: none; border: none; box-shadow: inset 0 0 0 1px #555; cursor: pointer;
           font-family: 'Bebas Neue', sans-serif;
           font-size: 18px; letter-spacing: 3px;
           color: #888; padding: 12px 28px; transition: all 0.2s;
           border-radius: 999px; min-width: 220px;
         }
-        .pdf-btn:hover { border-color: #EE7700; color: #EE7700; }
+        .pdf-btn:hover { box-shadow: inset 0 0 0 1px #EE7700; color: #EE7700; }
         .stat-block { text-align: center; }
         .stat-number { font-family: 'Bebas Neue', sans-serif; font-size: 56px; color: #EE7700; line-height: 1; }
         .stat-label { font-family: 'Bebas Neue', sans-serif; font-size: 13px; letter-spacing: 4px; color: rgb(136,136,136); margin-top: 4px; }
