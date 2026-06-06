@@ -935,7 +935,7 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
         </nav>
       )}
 
-      <div className="spar-page" style={started ? { paddingBottom: 110 } : {}}>
+      <div className="spar-page" style={started ? { paddingBottom: isMobile ? 200 : 110 } : {}}>
 
         <div className="spar-hero">
           <div style={{ display: 'flex', alignItems: 'flex-end', gap: 'clamp(16px, 2vw, 32px)' }}>
