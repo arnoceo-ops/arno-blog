@@ -87,7 +87,7 @@ const VRAGEN_ORGANISATORISCH = [
   'Wanneer is iemand een investering die tijd nodig heeft, en wanneer is hij gewoon een kostenpost die ik meesleep?',
   'Ik wil iemand ontslaan maar twijfel al weken. Wat zegt die twijfel eigenlijk over mij?',
   'Mijn beste mensen vertrekken naar concurrenten. Wat bied ik ze niet wat die concurrent wel biedt?',
-  'Ik betaal mijn verkopers goed maar ze zijn niet hongerig. Hoe koop je precies wat je niet wil?',
+  'Ik betaal mijn verkopers goed maar het zijn geen warriors. Hoe kom ik daar achter voordat ik ze een contract aanbied?',
   'Mijn team kan de huidige fase aan, maar niet de volgende. Bouw ik om ze heen of vervang ik ze?',
   'Mijn team accepteert middelmatigheid als norm. Hoe verander ik die norm zonder iedereen tegen me te krijgen?',
   'Wat is het verschil tussen iemand die loyaal is aan het bedrijf en iemand die gewoon nergens anders naartoe kan?',
