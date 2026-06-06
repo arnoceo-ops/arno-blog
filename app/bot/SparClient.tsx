@@ -495,6 +495,15 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
         .spar-tagline strong { font-weight: 700; color: #f0ede6; font-family: 'Barlow', sans-serif; font-size: 26px; letter-spacing: 0.5px; display: block; margin-bottom: 6px; }
         @media (max-width: 600px) {
           .spar-tagline { text-align: left; max-width: 100%; }
+          .spar-tagline-sub { display: none; }
+        }
+        @media (max-width: 560px) {
+          .spar-input-row { flex-wrap: wrap; }
+          .spar-textarea { flex: 0 0 100%; }
+          .spar-mic { height: 50px; width: 56px; flex-shrink: 0; border-left: none; border-top: 1px solid #2a2a2a; }
+          .spar-send { flex: 1; min-width: 0; height: 50px; }
+          .spar-reset { flex: 1; min-width: 0; height: 50px; }
+          .toggle-btn { font-size: 13px; letter-spacing: 2px; padding: 8px 14px; }
         }
 
         /* INPUT — BOVEN BIJ NIEUW GESPREK, STICKY-ONDER BIJ ACTIEF */
@@ -919,29 +928,31 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
               ARNO<br /><span>BOT.</span>
             </h1>
           </div>
-          <div style={{ flex: 1, display: 'flex', justifyContent: 'center', alignItems: 'flex-end' }}>
-            {(() => {
-              const total = 17
-              const idx = Math.floor(Date.now() / (48 * 60 * 60 * 1000)) % total + 1
-              return (
-                <img
-                  src={`/header-fotos/foto-${idx}.jpg`}
-                  alt=""
-                  style={{ height: '300px', width: 'auto', objectFit: 'contain', display: 'block' }}
-                />
-              )
-            })()}
-          </div>
+          {!isMobile && (
+            <div style={{ flex: 1, display: 'flex', justifyContent: 'center', alignItems: 'flex-end' }}>
+              {(() => {
+                const total = 17
+                const idx = Math.floor(Date.now() / (48 * 60 * 60 * 1000)) % total + 1
+                return (
+                  <img
+                    src={`/header-fotos/foto-${idx}.jpg`}
+                    alt=""
+                    style={{ height: '300px', width: 'auto', objectFit: 'contain', display: 'block' }}
+                  />
+                )
+              })()}
+            </div>
+          )}
           <div className="spar-tagline">
             <p style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 'clamp(28px, 3vw, 42px)', letterSpacing: 2, color: '#f0ede6', lineHeight: 1.05, marginBottom: 16 }}>
               ARNO<span style={{ color: '#EE7700' }}>BOT.</span><br />
               JOUW 24/7 NO EXCUSES SALES COACH
             </p>
-            <p style={{ fontFamily: "'Space Mono', monospace", fontSize: 18, color: 'rgb(240, 237, 230)', lineHeight: 1.8, marginBottom: 14, textAlign: 'right' }}>
+            <p className="spar-tagline-sub" style={{ fontFamily: "'Space Mono', monospace", fontSize: 18, color: 'rgb(240, 237, 230)', lineHeight: 1.8, marginBottom: 14, textAlign: 'right' }}>
               Betere relaties. Meer deals.<br />
               Hogere marges. Harder groeien.
             </p>
-            <p style={{ fontFamily: "'Space Mono', monospace", fontSize: 'clamp(11px, 0.9vw, 13px)', color: 'rgb(136, 136, 136)', lineHeight: 1.8 }}>
+            <p className="spar-tagline-sub" style={{ fontFamily: "'Space Mono', monospace", fontSize: 'clamp(11px, 0.9vw, 13px)', color: 'rgb(136, 136, 136)', lineHeight: 1.8 }}>
               gebouwd op 40 jaar sales, 30 jaar entrepreneurship,<br />
               20 jaar bloggen, 15 jaar scale-up coaching.<br />
               369.000 woorden. altijd up to date

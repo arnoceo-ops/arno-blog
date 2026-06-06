@@ -43,7 +43,7 @@ function getTargetLabel(rol: string) {
   if (rol === 'Solopreneur') return ''
   return 'individuele'
 }
-const MARKT_OPTIONS = ['B2B MKB', 'B2B Enterprise', 'B2C', 'Overheid']
+const MARKT_OPTIONS = ['B2B MKB', 'B2B Enterprise', 'B2C', 'Overheid', 'Investeerders']
 
 function Chip({ label, selected, onClick }: { label: string; selected: boolean; onClick: () => void }) {
   return (
