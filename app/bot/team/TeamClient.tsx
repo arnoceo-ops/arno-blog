@@ -119,11 +119,7 @@ export default function TeamClient() {
       })
       const data = await res.json()
       if (!res.ok) { setCreateError(data.error || 'Mislukt'); return }
-      setTeam(data.team)
-      setHasTeam(true)
-      setIsManager(true)
-      setMembers([])
-      loadDashboard()
+      window.location.reload()
     } catch {
       setCreateError('Er ging iets mis')
     } finally {
