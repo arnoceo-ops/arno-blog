@@ -54,16 +54,27 @@ export default clerkMiddleware(async (auth, req) => {
           if (pending) {
             await supabase
               .from('approved_users')
-              .update({ user_id: userId })
+              .update({
+                user_id: userId,
+                voornaam: clerkUser.firstName || undefined,
+                achternaam: clerkUser.lastName || undefined,
+              })
               .eq('email', email)
             user = pending
           } else {
             // Nieuwe gebruiker via LinkedIn OAuth — automatisch trial starten
+            const linkedinAccount = clerkUser.externalAccounts?.find(
+              (a: { provider: string }) => a.provider.includes('linkedin')
+            )
+            const linkedinUrl = (linkedinAccount as { username?: string | null } | undefined)?.username
+              ? `https://www.linkedin.com/in/${(linkedinAccount as { username: string }).username}`
+              : null
             const newRow = {
               user_id: userId,
               email: email || null,
               voornaam: clerkUser.firstName || null,
               achternaam: clerkUser.lastName || null,
+              linkedin: linkedinUrl,
               trial_start: new Date().toISOString(),
               is_active: true,
             }
