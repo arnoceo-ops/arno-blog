@@ -226,14 +226,14 @@ export default function BotProfielPage() {
             {HEEFT_TEAM.includes(answers.rol) && (
               <>
                 <div style={{ marginTop: 24 }}>
-                  <p style={{ fontSize: 15, fontWeight: 400, lineHeight: '30px', color: '#666', marginBottom: 12 }}>Gebruik je ArnoBot individueel of voor jouw team?</p>
+                  <p style={{ fontSize: 15, fontWeight: 400, lineHeight: '30px', color: 'rgb(240, 237, 230)', marginBottom: 12 }}>Gebruik je ArnoBot individueel of voor jouw team?</p>
                   <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8 }}>
                     <Chip label="INDIVIDUEEL" selected={answers.gebruik === 'individueel'} onClick={() => set('gebruik', 'individueel')} />
                     <Chip label="VOOR MIJN TEAM" selected={answers.gebruik === 'team'} onClick={() => set('gebruik', 'team')} />
                   </div>
                 </div>
                 <div style={{ marginTop: 24 }}>
-                  <p style={{ fontSize: 15, fontWeight: 400, lineHeight: '30px', color: '#666', marginBottom: 12 }}>Hoe groot is je sales team?</p>
+                  <p style={{ fontSize: 15, fontWeight: 400, lineHeight: '30px', color: 'rgb(240, 237, 230)', marginBottom: 12 }}>Hoe groot is je sales team?</p>
                   <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8 }}>
                     {TEAMGROOTTE_OPTIONS.map(o => (
                       <Chip key={o} label={o} selected={answers.teamgrootte === o} onClick={() => set('teamgrootte', o)} />
