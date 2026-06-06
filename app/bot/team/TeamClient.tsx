@@ -286,8 +286,8 @@ export default function TeamClient() {
                   {spotlightLoading ? 'ARNO ANALYSEERT...' : 'GENEREER TEAM-ANALYSE'}
                 </button>
                 {spotlightLoading && (
-                  <p style={{ fontFamily: "'Space Mono', monospace", fontWeight: 400, fontSize: 13, color: '#EE7700', letterSpacing: 2, marginBottom: 32 }}>
-                    Even geduld — dit duurt zo'n 10 seconden...
+                  <p style={{ fontFamily: "'Space Mono', monospace", fontWeight: 400, fontSize: 13, color: '#555', marginBottom: 32 }}>
+                    Arno analyseert je team...
                   </p>
                 )}
                 {members.length < 2 && (
