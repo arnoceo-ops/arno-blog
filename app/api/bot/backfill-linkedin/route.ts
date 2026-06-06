@@ -24,16 +24,26 @@ export async function POST(req: NextRequest) {
 
   const clerk = await clerkClient()
   let updated = 0
+  const debug: unknown[] = []
 
   for (const row of rows) {
     try {
       const clerkUser = await clerk.users.getUser(row.user_id)
-      const linkedinAccount = clerkUser.externalAccounts?.find(
-        (a: { provider: string }) => a.provider.includes('linkedin')
-      )
-      const linkedinUrl = (linkedinAccount as { username?: string | null } | undefined)?.username
-        ? `https://www.linkedin.com/in/${(linkedinAccount as { username: string }).username}`
-        : null
+      const accounts = clerkUser.externalAccounts ?? []
+
+      const accountInfo = accounts.map((a: Record<string, unknown>) => ({
+        provider: a.provider,
+        username: a.username,
+        emailAddress: a.emailAddress,
+      }))
+      debug.push({ user_id: row.user_id, accounts: accountInfo })
+
+      const linkedinAccount = accounts.find(
+        (a: Record<string, unknown>) => typeof a.provider === 'string' && a.provider.includes('linkedin')
+      ) as Record<string, unknown> | undefined
+
+      const username = linkedinAccount?.username as string | null | undefined
+      const linkedinUrl = username ? `https://www.linkedin.com/in/${username}` : null
 
       const patch: Record<string, string | null> = {}
       if (!row.voornaam && clerkUser.firstName) patch.voornaam = clerkUser.firstName
@@ -44,10 +54,10 @@ export async function POST(req: NextRequest) {
         await supabase.from('approved_users').update(patch).eq('user_id', row.user_id)
         updated++
       }
-    } catch {
-      // gebruiker niet gevonden in Clerk, overslaan
+    } catch (e) {
+      debug.push({ user_id: row.user_id, error: String(e) })
     }
   }
 
-  return NextResponse.json({ updated, total: rows.length })
+  return NextResponse.json({ updated, total: rows.length, debug })
 }
