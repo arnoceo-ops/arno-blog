@@ -55,7 +55,7 @@ export async function POST(req: NextRequest) {
         system: 'Je bent Arno Diepeveen. Oprichter Royal Dutch Sales. Direct, ongefilterd, geen bullshit. Geen corporate taal. Geen accenten op woorden voor nadruk.',
         messages: [{
           role: 'user',
-          content: `Schrijf een terugblik op dit gesprek in maximaal 2-3 zinnen. Wat was de kern en wat is de ene concrete takeaway. Geen inleiding, geen opsomming — direct de essentie, in eerste persoon als Arno.\n\n${conversationText}`
+          content: `Schrijf een feitelijke terugblik op dit gesprek in maximaal 2-3 zinnen. Wat was het onderwerp, wat is er besproken, wat is er gezegd. Geen oordelen, geen conclusies, geen takeaways — alleen een neutrale samenvatting van wat er heeft plaatsgevonden. In eerste persoon als Arno.\n\n${conversationText}`
         }]
       }),
       anthropic.messages.create({
