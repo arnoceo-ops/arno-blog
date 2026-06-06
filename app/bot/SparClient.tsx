@@ -260,13 +260,21 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
     }
   }, [])
 
+  function scrollToRef(ref: React.RefObject<HTMLDivElement | null>) {
+    const el = ref.current
+    if (!el) return
+    const navHeight = (isMobile ? 56 : 64) + 16
+    const top = el.getBoundingClientRect().top + window.scrollY - navHeight
+    window.scrollTo({ top, behavior: 'smooth' })
+  }
+
   useEffect(() => {
     if (showSluiten && synthesisRef.current) {
-      synthesisRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' })
+      scrollToRef(synthesisRef)
     } else if (loading) {
       bottomRef.current?.scrollIntoView({ behavior: 'smooth' })
     } else if (messages.length > 0) {
-      lastMessageRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+      scrollToRef(lastMessageRef)
     }
   }, [messages, loading, showSluiten])
 
