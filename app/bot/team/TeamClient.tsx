@@ -275,16 +275,21 @@ export default function TeamClient() {
               <div style={section}>
                 <span style={label}>COLLECTIEVE ANALYSE</span>
                 <h2 style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 48, letterSpacing: 3, color: '#f0ede6', lineHeight: 1, margin: '0 0 16px 0' }}>TEAM SPOTLIGHT</h2>
-                <p style={body}>
-                  Arno analyseert de collectieve gesprekken van je team: gemeenschappelijke blinde vlekken, patronen en sterktes.
+                <p style={{ ...body, marginBottom: 32 }}>
+                  Arno analyseert de collectieve gesprekken van je team: gemeenschappelijke patronen, sterktes en groeikansen.
                 </p>
                 <button
                   onClick={generateSpotlight}
                   disabled={spotlightLoading || members.length < 2}
-                  style={{ ...btnPrimary(spotlightLoading || members.length < 2), marginBottom: members.length < 2 ? 12 : 40 }}
+                  style={{ ...btnPrimary(members.length < 2), opacity: spotlightLoading ? 0.6 : 1, marginBottom: 12 }}
                 >
                   {spotlightLoading ? 'ARNO ANALYSEERT...' : 'GENEREER TEAM-ANALYSE'}
                 </button>
+                {spotlightLoading && (
+                  <p style={{ fontFamily: "'Space Mono', monospace", fontWeight: 400, fontSize: 13, color: '#EE7700', letterSpacing: 2, marginBottom: 32 }}>
+                    Even geduld — dit duurt zo'n 10 seconden...
+                  </p>
+                )}
                 {members.length < 2 && (
                   <p style={{ ...body, fontSize: 13, color: '#555', marginBottom: 40 }}>Minimaal 2 teamleden nodig voor een team-analyse.</p>
                 )}
