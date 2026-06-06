@@ -1067,7 +1067,7 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
                 finally { setVerfijnen(false) }
               }}
             >
-              {verfijnen ? '...' : '↑ VERBETER MIJN PROMPT'}
+              {verfijnen ? '...' : '→ VERBETER MIJN PROMPT'}
             </button>
           )}
           {verfijndSuggestie && (
