@@ -2,17 +2,20 @@
 
 import { useState, useEffect, Suspense } from 'react'
 import { useSearchParams, useRouter } from 'next/navigation'
+import { useUser } from '@clerk/nextjs'
 import Link from 'next/link'
 
 function JoinContent() {
   const searchParams = useSearchParams()
   const router = useRouter()
+  const { isLoaded, isSignedIn } = useUser()
   const code = searchParams.get('code') ?? ''
   const [teamName, setTeamName] = useState('')
   const [status, setStatus] = useState<'loading' | 'ready' | 'joining' | 'done' | 'error' | 'invalid'>('loading')
   const [errorMsg, setErrorMsg] = useState('')
 
   useEffect(() => {
+    if (!isLoaded) return
     if (!code) { setStatus('invalid'); return }
     fetch(`/api/bot/team/join?code=${code}`)
       .then(r => r.json())
@@ -21,7 +24,7 @@ function JoinContent() {
         else setStatus('invalid')
       })
       .catch(() => setStatus('invalid'))
-  }, [code])
+  }, [code, isLoaded])
 
   async function join() {
     setStatus('joining')
@@ -73,9 +76,23 @@ function JoinContent() {
                 Je wordt uitgenodigd om deel te nemen aan team<br />
                 <span style={{ color: '#f0ede6', fontWeight: 400 }}>{teamName}</span>
               </p>
-              <button onClick={join} style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 18, letterSpacing: 3, padding: '12px 36px', background: '#EE7700', color: '#f0ede6', border: 'none', borderRadius: 999, cursor: 'pointer', transition: 'background 0.2s' }}>
-                DEELNEMEN
-              </button>
+              {isSignedIn ? (
+                <button onClick={join} style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 18, letterSpacing: 3, padding: '12px 36px', background: '#EE7700', color: '#f0ede6', border: 'none', borderRadius: 999, cursor: 'pointer', transition: 'background 0.2s' }}>
+                  DEELNEMEN
+                </button>
+              ) : (
+                <>
+                  <p style={{ fontFamily: "'Space Mono', monospace", fontWeight: 400, fontSize: 13, color: '#555', lineHeight: 1.9, marginBottom: 20 }}>
+                    Je hebt een account nodig om deel te nemen.
+                  </p>
+                  <Link
+                    href={`/sign-in?redirect_url=${encodeURIComponent(`/bot/team/join?code=${code}`)}`}
+                    style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 18, letterSpacing: 3, padding: '12px 36px', background: '#EE7700', color: '#f0ede6', border: 'none', borderRadius: 999, cursor: 'pointer', textDecoration: 'none', display: 'inline-block' }}
+                  >
+                    INLOGGEN OF AANMELDEN
+                  </Link>
+                </>
+              )}
             </>
           )}
 
