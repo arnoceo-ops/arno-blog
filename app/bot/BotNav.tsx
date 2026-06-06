@@ -127,8 +127,8 @@ export default function BotNav({ active }: Props) {
         </nav>
         {menuOpen && (
           <div className="mob-menu" onClick={() => setMenuOpen(false)}>
-            {active === 'bot'      ? <span className="mob-active">BOT</span>      : <Link href="/bot">BOT</Link>}
-            {active === 'archief'  ? <span className="mob-active">ARCHIEF</span>  : <Link href="/bot/archief">ARCHIEF</Link>}
+            {active === 'bot'      ? <span className="mob-active">ARNOBOT</span>   : <Link href="/bot">ARNOBOT</Link>}
+            {active === 'archief'  ? <span className="mob-active">BIEB</span>     : <Link href="/bot/archief">BIEB</Link>}
             {active === 'coaching' ? <span className="mob-active">COACHING</span> : <Link href="/bot/coaching">COACHING</Link>}
             {active === 'qa'       ? <span className="mob-active">Q&A</span>      : <Link href="/bot/qa">Q&A</Link>}
             {active === 'account'  ? <span className="mob-active">ACCOUNT</span>  : <Link href="/bot/account">ACCOUNT</Link>}
@@ -143,14 +143,13 @@ export default function BotNav({ active }: Props) {
   return (
     <>
       <nav style={navStyle}>
-        <div style={{ flex: 1 }} />
-        <div style={{ display: 'flex', gap: 48, alignItems: 'center' }}>
+        <div style={{ display: 'flex', gap: 48, alignItems: 'center', flex: 1 }}>
           {active === 'bot'
-            ? <span style={{ ...linkBase, color: '#EE7700' }}>BOT</span>
-            : <Link href="/bot" style={linkBase}>BOT</Link>}
+            ? <span style={{ ...linkBase, color: '#EE7700' }}>ARNOBOT</span>
+            : <Link href="/bot" style={linkBase}>ARNOBOT</Link>}
           {active === 'archief'
-            ? <span style={{ ...linkBase, color: '#EE7700' }}>ARCHIEF</span>
-            : <Link href="/bot/archief" style={linkBase}>ARCHIEF</Link>}
+            ? <span style={{ ...linkBase, color: '#EE7700' }}>BIEB</span>
+            : <Link href="/bot/archief" style={linkBase}>BIEB</Link>}
           {active === 'coaching'
             ? <span style={{ ...linkBase, color: '#EE7700' }}>COACHING</span>
             : <Link href="/bot/coaching" style={linkBase}>COACHING</Link>}
