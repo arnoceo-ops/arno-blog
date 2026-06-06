@@ -67,30 +67,32 @@ export default async function GebruikersPage({
 
   const sevenDaysAgo = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString()
 
-  const [usersRes, sessionsRes, coachingRes] = await Promise.all([
+  const [usersRes, logsRes, coachingRes] = await Promise.all([
     supabase
       .from('approved_users')
       .select('user_id, email, full_name, voornaam, achternaam, linkedin, trial_start, expires_at, paid_at, is_active, created_at'),
     supabase
-      .from('arnobot_blog_sessions')
-      .select('user_id, message_count, created_at'),
+      .from('arnobot_rds_logs')
+      .select('user_id, session_id, created_at')
+      .not('user_id', 'is', null),
     supabase
       .from('arnobot_coaching')
       .select('user_id, updated_at'),
   ])
 
-  const sessions = sessionsRes.data ?? []
+  const logs = logsRes.data ?? []
   const coachingRows = coachingRes.data ?? []
 
-  // Aggregate per user
+  // Aggregate per user from rds_logs (real-time source, not session-end dependent)
   const sessionMap: Record<string, { count: number; questions: number; lastSession: string | null; recentCount: number }> = {}
-  for (const s of sessions) {
-    if (!sessionMap[s.user_id]) sessionMap[s.user_id] = { count: 0, questions: 0, lastSession: null, recentCount: 0 }
-    const m = sessionMap[s.user_id]
-    m.count++
-    m.questions += s.message_count || 0
-    if (!m.lastSession || s.created_at > m.lastSession) m.lastSession = s.created_at
-    if (s.created_at >= sevenDaysAgo) m.recentCount++
+  for (const l of logs) {
+    if (!sessionMap[l.user_id]) sessionMap[l.user_id] = { count: 0, questions: 0, lastSession: null, recentCount: 0, sessions: new Set<string>() } as never
+    const m = sessionMap[l.user_id] as { count: number; questions: number; lastSession: string | null; recentCount: number; sessions: Set<string> }
+    m.questions++
+    m.sessions.add(l.session_id)
+    m.count = m.sessions.size
+    if (!m.lastSession || l.created_at > m.lastSession) m.lastSession = l.created_at
+    if (l.created_at >= sevenDaysAgo) m.recentCount++
   }
 
   const coachingMap: Record<string, number> = {}
