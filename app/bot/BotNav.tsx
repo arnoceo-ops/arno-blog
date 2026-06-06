@@ -7,7 +7,7 @@ import { useRouter } from 'next/navigation'
 import { useIsMobile } from '@/hooks/useBreakpoint'
 
 interface Props {
-  active: 'bot' | 'bieb' | 'coaching' | 'account' | 'profiel' | 'qa'
+  active: 'bot' | 'bieb' | 'coaching' | 'team' | 'account' | 'profiel' | 'qa'
 }
 
 const navStyle = {
@@ -32,6 +32,7 @@ const linkBase: React.CSSProperties = {
 export default function BotNav({ active }: Props) {
   const isMobile = useIsMobile()
   const [menuOpen, setMenuOpen] = useState(false)
+  const [isManager, setIsManager] = useState(false)
   const [feedbackOpen, setFeedbackOpen] = useState(false)
   const [feedbackText, setFeedbackText] = useState('')
   const [feedbackSent, setFeedbackSent] = useState(false)
@@ -60,6 +61,13 @@ export default function BotNav({ active }: Props) {
       alert('Er ging iets mis — probeer opnieuw.')
     } finally { setFeedbackLoading(false) }
   }
+
+  useEffect(() => {
+    fetch('/api/bot/team/status')
+      .then(r => r.json())
+      .then(d => { if (d.isManager) setIsManager(true) })
+      .catch(() => {})
+  }, [])
 
   if (isMobile === null) return null
 
@@ -130,6 +138,7 @@ export default function BotNav({ active }: Props) {
             {active === 'bot'      ? <span className="mob-active">ARNOBOT</span>   : <Link href="/bot">ARNOBOT</Link>}
             {active === 'bieb'  ? <span className="mob-active">BIEB</span>     : <Link href="/bot/bieb">BIEB</Link>}
             {active === 'coaching' ? <span className="mob-active">COACHING</span> : <Link href="/bot/coaching">COACHING</Link>}
+            {isManager && (active === 'team' ? <span className="mob-active">TEAM</span> : <Link href="/bot/team">TEAM</Link>)}
             {active === 'qa'       ? <span className="mob-active">Q&A</span>      : <Link href="/bot/qa">Q&A</Link>}
             {active === 'account'  ? <span className="mob-active">ACCOUNT</span>  : <Link href="/bot/account">ACCOUNT</Link>}
             <span style={{ color: '#888', cursor: 'pointer' }} onClick={e => { e.stopPropagation(); setMenuOpen(false); setFeedbackOpen(true) }}>FEEDBACK</span>
@@ -154,6 +163,9 @@ export default function BotNav({ active }: Props) {
           {active === 'coaching'
             ? <span style={{ ...linkBase, color: '#EE7700' }}>COACHING</span>
             : <Link href="/bot/coaching" style={linkBase}>COACHING</Link>}
+          {isManager && (active === 'team'
+            ? <span style={{ ...linkBase, color: '#EE7700' }}>TEAM</span>
+            : <Link href="/bot/team" style={linkBase}>TEAM</Link>)}
           {active === 'qa'
             ? <span style={{ ...linkBase, color: '#EE7700' }}>Q&A</span>
             : <Link href="/bot/qa" style={linkBase}>Q&A</Link>}

@@ -1,0 +1,55 @@
+import { auth } from '@clerk/nextjs/server'
+import { NextResponse } from 'next/server'
+import { createClient } from '@supabase/supabase-js'
+
+const supabase = createClient(
+  process.env.NEXT_PUBLIC_SUPABASE_URL!,
+  process.env.SUPABASE_SERVICE_ROLE_KEY!
+)
+
+export async function POST(req: Request) {
+  const { userId } = await auth()
+  if (!userId) return NextResponse.json({ error: 'Niet ingelogd' }, { status: 401 })
+
+  const { invite_code } = await req.json()
+  if (!invite_code) return NextResponse.json({ error: 'Geen uitnodigingscode' }, { status: 400 })
+
+  const { data: existing } = await supabase
+    .from('arnobot_team_members')
+    .select('team_id')
+    .eq('user_id', userId)
+    .single()
+
+  if (existing) return NextResponse.json({ error: 'Je bent al lid van een team' }, { status: 400 })
+
+  const { data: team } = await supabase
+    .from('arnobot_teams')
+    .select('id, name')
+    .eq('invite_code', invite_code)
+    .single()
+
+  if (!team) return NextResponse.json({ error: 'Ongeldige uitnodigingscode' }, { status: 404 })
+
+  const { error } = await supabase
+    .from('arnobot_team_members')
+    .insert({ team_id: team.id, user_id: userId, role: 'member' })
+
+  if (error) return NextResponse.json({ error: 'Joinen mislukt' }, { status: 500 })
+
+  return NextResponse.json({ team })
+}
+
+export async function GET(req: Request) {
+  const { searchParams } = new URL(req.url)
+  const code = searchParams.get('code')
+  if (!code) return NextResponse.json({ error: 'Geen code' }, { status: 400 })
+
+  const { data: team } = await supabase
+    .from('arnobot_teams')
+    .select('name')
+    .eq('invite_code', code)
+    .single()
+
+  if (!team) return NextResponse.json({ error: 'Ongeldig' }, { status: 404 })
+  return NextResponse.json({ teamName: team.name })
+}

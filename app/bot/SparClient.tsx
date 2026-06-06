@@ -128,6 +128,7 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
   const [feedbackLoading, setFeedbackLoading] = useState(false)
   const [navGuardOpen, setNavGuardOpen] = useState(false)
   const [pendingNavDest, setPendingNavDest] = useState<string | null>(null)
+  const [teamPrompt, setTeamPrompt] = useState(false)
   const recognitionRef = useRef<any>(null)
   const bottomRef = useRef<HTMLDivElement>(null)
   const inputRef = useRef<HTMLTextAreaElement>(null)
@@ -251,6 +252,14 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
           }
         })
         .catch(() => {})
+
+      const HEEFT_TEAM_ROLLEN = ['Sales Director', 'VP of Sales', 'CEO/DGA']
+      if (HEEFT_TEAM_ROLLEN.includes((profiel?.rol as string) ?? '')) {
+        fetch('/api/bot/team/status')
+          .then(r => r.json())
+          .then(d => { if (!d.hasTeam && !d.promptDismissed) setTeamPrompt(true) })
+          .catch(() => {})
+      }
 
       // Pre-fill vanuit coaching pagina
       const prefill = localStorage.getItem('arnobot_prefill')
@@ -990,6 +999,27 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
             </p>
           </div>
         </div>
+
+        {teamPrompt && !started && (
+          <div style={{ background: '#111', borderTop: '1px solid #1a1a1a', borderBottom: '1px solid #1a1a1a', padding: '16px clamp(20px,5vw,60px)', display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: 12 }}>
+            <p style={{ fontFamily: "'Space Mono', monospace", fontSize: 13, color: '#888', margin: 0 }}>
+              Je coacht een team — wil je ArnoBot ook voor je hele team inzetten?
+            </p>
+            <div style={{ display: 'flex', gap: 12 }}>
+              <button
+                onClick={() => { window.location.href = '/bot/team' }}
+                style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 16, letterSpacing: 3, padding: '10px 24px', background: '#EE7700', color: '#f0ede6', border: 'none', cursor: 'pointer' }}
+              >TEAM STARTEN</button>
+              <button
+                onClick={() => {
+                  setTeamPrompt(false)
+                  fetch('/api/bot/team/dismiss-prompt', { method: 'POST' }).catch(() => {})
+                }}
+                style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 16, letterSpacing: 3, padding: '10px 24px', background: 'none', color: '#555', border: 'none', cursor: 'pointer' }}
+              >LATER</button>
+            </div>
+          </div>
+        )}
 
         {!blocked && <div className={`spar-input-area${started ? ' active' : ''}`}>
           {!started && !loading && (
