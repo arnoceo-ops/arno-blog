@@ -265,6 +265,13 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
   }, [messages, loading])
 
   useEffect(() => {
+    if (inputRef.current) {
+      inputRef.current.style.height = 'auto'
+      inputRef.current.style.height = inputRef.current.scrollHeight + 'px'
+    }
+  }, [input])
+
+  useEffect(() => {
     function handleUnload(e: BeforeUnloadEvent) {
       if (!sessionId || messages.length === 0) return
       if (started && !showSluiten) {
@@ -499,10 +506,10 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
         }
         @media (max-width: 700px) {
           .spar-input-row { flex-direction: column; }
-          .spar-buttons { width: 100%; border-top: 1px solid #2a2a2a; }
-          .spar-mic { height: 50px; width: 56px; flex-shrink: 0; border-left: none; }
-          .spar-send { flex: 1; min-width: 0; height: 50px; }
-          .spar-reset { flex: 1; min-width: 0; height: 50px; }
+          .spar-buttons { align-self: stretch; border-top: 1px solid #2a2a2a; }
+          .spar-mic { height: 48px; width: 52px; flex-shrink: 0; border-left: none; border-right: 1px solid #2a2a2a; }
+          .spar-send { flex: 1; min-width: 0; height: 48px; font-size: 17px; padding: 0 20px; }
+          .spar-reset { height: 48px; padding: 0 16px; font-size: 15px; }
           .toggle-btn { font-size: 13px; letter-spacing: 2px; padding: 8px 14px; }
         }
 
@@ -987,7 +994,7 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
                   ask(input)
                 }
               }}
-              placeholder={started ? "vervolg het gesprek" : "beschrijf je casus of stel je vraag"}
+              placeholder={started ? "vervolg het gesprek" : isMobile ? "beschrijf je casus" : "beschrijf je casus of stel je vraag"}
               disabled={loading || blocked}
               rows={1}
             />
