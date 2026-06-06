@@ -130,6 +130,7 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
   const recognitionRef = useRef<any>(null)
   const bottomRef = useRef<HTMLDivElement>(null)
   const inputRef = useRef<HTMLTextAreaElement>(null)
+  const synthesisRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
     const SR = (window as any).SpeechRecognition || (window as any).webkitSpeechRecognition
@@ -259,10 +260,12 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
   }, [])
 
   useEffect(() => {
-    if (messages.length > 0 || loading) {
+    if (showSluiten && synthesisRef.current) {
+      synthesisRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' })
+    } else if (messages.length > 0 || loading) {
       bottomRef.current?.scrollIntoView({ behavior: 'smooth' })
     }
-  }, [messages, loading])
+  }, [messages, loading, showSluiten])
 
   useEffect(() => {
     if (inputRef.current) {
@@ -1120,7 +1123,7 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
                 <span className="msg-user-text">{msg.content}</span>
               </div>
             ) : (
-              <div key={i}>
+              <div key={i} ref={msg.content?.startsWith('**Terugblik') ? synthesisRef : undefined}>
                 {msg.content && (
                   <div className="msg-arno">
                     <span className="msg-arno-label">ARNO</span>
@@ -1151,16 +1154,6 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
                 <div className="loading-dot" />
               </div>
               <span className="loading-text">Arno denkt na</span>
-            </div>
-          )}
-          {showSluiten && messages.length <= synthesisMessageCount && (
-            <div style={{ padding: '28px 0', borderTop: '1px solid #1a1a1a', display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 24, flexWrap: 'wrap' }}>
-              <p style={{ fontFamily: "'Space Mono', monospace", fontSize: 13, color: '#888', lineHeight: 1.6 }}>
-                Wil je maandelijks sparren met Arno zelf?
-              </p>
-              <a href="/upgrade" style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 16, letterSpacing: 3, padding: '10px 24px', background: '#EE7700', color: '#141414', textDecoration: 'none', borderRadius: 999, whiteSpace: 'nowrap' }}>
-                BEKIJK ARNOLIVE →
-              </a>
             </div>
           )}
           {showSluiten && messages.length <= synthesisMessageCount && suggestedBlogs.length > 0 && (
