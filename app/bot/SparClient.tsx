@@ -254,7 +254,10 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
         .catch(() => {})
 
       const HEEFT_TEAM_ROLLEN = ['Sales Director', 'VP of Sales', 'CEO/DGA']
-      if (HEEFT_TEAM_ROLLEN.includes((profiel?.rol as string) ?? '')) {
+      const heeftManagerRol = HEEFT_TEAM_ROLLEN.includes((profiel?.rol as string) ?? '')
+      const gebruik = (profiel?.gebruik as string) ?? ''
+      // Toon prompt als: manager-rol + (wil team OF nog geen keuze gemaakt), maar niet als expliciet individueel
+      if (heeftManagerRol && gebruik !== 'individueel') {
         fetch('/api/bot/team/status')
           .then(r => r.json())
           .then(d => { if (!d.hasTeam && !d.promptDismissed) setTeamPrompt(true) })
