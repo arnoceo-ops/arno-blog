@@ -279,7 +279,7 @@ export default function CoachingClient({ userId }: Props) {
             <div className="coaching-section" style={{ borderTop: 'none', paddingTop: 0 }}>
               <span className="coaching-label">Jouw voortgang</span>
               {stats && (
-                <div style={{ display: 'flex', gap: 48, marginBottom: 32 }}>
+                <div style={{ display: 'flex', gap: 48, marginBottom: 32, flexWrap: 'wrap' }}>
                   <div className="stat-block">
                     <div className="stat-number">{stats.sessionCount}</div>
                     <div className="stat-label">GESPREKKEN GEVOERD</div>
