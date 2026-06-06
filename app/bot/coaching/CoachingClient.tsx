@@ -28,21 +28,8 @@ interface SavedAnalyse {
   session_count: number
 }
 
-interface SessionWithUitdaging {
-  session_id: string
-  title: string
-  created_at: string
-  uitdaging: string
-  uitdaging_done: boolean
-  message_count: number
-}
-
 interface Props {
   userId: string
-}
-
-function formatDate(iso: string) {
-  return new Date(iso).toLocaleDateString('nl-NL', { day: 'numeric', month: 'long', year: 'numeric' })
 }
 
 function getAnalyseTitle(text: string): string {
@@ -61,8 +48,6 @@ export default function CoachingClient({ userId }: Props) {
   const [stats, setStats] = useState<Stats | null>(null)
   const [analyses, setAnalyses] = useState<SavedAnalyse[]>([])
   const [uitdaging, setUitdaging] = useState<string | null>(null)
-  const [sessionsData, setSessionsData] = useState<SessionWithUitdaging[]>([])
-  const [toonAlleUitdagingen, setToonAlleUitdagingen] = useState(false)
 
   useEffect(() => {
     fetch('/api/bot/coaching')
@@ -78,7 +63,6 @@ export default function CoachingClient({ userId }: Props) {
           totalQuestions: sessions.reduce((sum: number, s: { message_count?: number }) => sum + (s.message_count || 0), 0),
           lastSessionDate: sessions[0]?.created_at ?? null,
         })
-        setSessionsData(sessions.filter((s: SessionWithUitdaging) => s.uitdaging))
       })
       .catch(() => {})
     fetch('/api/bot/coaching-analyses')
@@ -104,15 +88,6 @@ export default function CoachingClient({ userId }: Props) {
         .catch(() => {})
     }
   }, [])
-
-  async function toggleUitdaging(sessionId: string, done: boolean) {
-    setSessionsData(prev => prev.map(s => s.session_id === sessionId ? { ...s, uitdaging_done: done } : s))
-    await fetch('/api/bot/uitdaging-done', {
-      method: 'PATCH',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ sessionId, done }),
-    })
-  }
 
   async function generate() {
     setGenerating(true)
@@ -226,41 +201,6 @@ export default function CoachingClient({ userId }: Props) {
         }
         .loading-dot:nth-child(2) { animation-delay: 0.2s; }
         .loading-dot:nth-child(3) { animation-delay: 0.4s; }
-
-        /* Uitdaging tracker */
-        .uitdaging-row {
-          display: flex; align-items: flex-start; gap: 16px;
-          padding: 16px 0; border-bottom: 1px solid #141414;
-          transition: opacity 0.2s;
-        }
-        .uitdaging-row:last-child { border-bottom: none; }
-        .uitdaging-row.done { opacity: 0.4; }
-        .uitdaging-check {
-          width: 24px; height: 24px; border-radius: 4px; flex-shrink: 0; margin-top: 2px;
-          border: 2px solid #333; background: none; cursor: pointer;
-          display: flex; align-items: center; justify-content: center;
-          transition: all 0.15s; color: #0a0a0a; font-size: 14px; font-weight: 700;
-        }
-        .uitdaging-check.checked { background: #44cc88; border-color: #44cc88; }
-        .uitdaging-check:hover:not(.checked) { border-color: #EE7700; }
-
-        /* Tijdlijn */
-        .timeline { position: relative; padding-left: 28px; }
-        .timeline::before {
-          content: ''; position: absolute; left: 7px; top: 8px; bottom: 8px;
-          width: 2px; background: #1a1a1a;
-        }
-        .timeline-item { position: relative; margin-bottom: 24px; }
-        .timeline-item:last-child { margin-bottom: 0; }
-        .timeline-dot {
-          position: absolute; left: -24px; top: 6px;
-          width: 14px; height: 14px; border-radius: 50%; border: 2px solid #EE7700;
-          background: #0a0a0a;
-        }
-        .timeline-dot.active { background: #EE7700; }
-        .timeline-date { font-size: 11px; letter-spacing: 3px; color: #555; margin-bottom: 4px; }
-        .timeline-title { font-size: 14px; color: #f0ede6; line-height: 1.5; margin-bottom: 4px; }
-        .timeline-meta { font-size: 11px; color: #444; letter-spacing: 1px; }
       `}</style>
 
       <BotNav active="coaching" />
@@ -355,69 +295,6 @@ export default function CoachingClient({ userId }: Props) {
               <p className="coaching-body">{doc.voortgang}</p>
             </div>
 
-            {/* Uitdaging tracker */}
-            {sessionsData.length > 0 && (
-              <div className="coaching-section">
-                <span className="coaching-label">
-                  Uitdagingen
-                  <span style={{ color: '#555', marginLeft: 12 }}>
-                    {sessionsData.filter(s => s.uitdaging_done).length}/{sessionsData.length} afgerond
-                  </span>
-                </span>
-                <div>
-                  {(toonAlleUitdagingen ? sessionsData : sessionsData.slice(0, 5)).map(s => (
-                    <div key={s.session_id} className={`uitdaging-row${s.uitdaging_done ? ' done' : ''}`}>
-                      <button
-                        className={`uitdaging-check${s.uitdaging_done ? ' checked' : ''}`}
-                        onClick={() => toggleUitdaging(s.session_id, !s.uitdaging_done)}
-                        title={s.uitdaging_done ? 'Markeer als open' : 'Markeer als gedaan'}
-                      >
-                        {s.uitdaging_done ? '✓' : ''}
-                      </button>
-                      <div style={{ flex: 1 }}>
-                        <p style={{ fontFamily: "'Space Mono', monospace", fontSize: 15, color: '#f0ede6', lineHeight: 1.7, marginBottom: 4 }}>{s.uitdaging}</p>
-                        <p style={{ fontFamily: "'Space Mono', monospace", fontSize: 13, color: 'rgb(136,136,136)', letterSpacing: 1 }}>
-                          {new Date(s.created_at).toLocaleDateString('nl-NL', { day: 'numeric', month: 'long' })} · {s.title.slice(0, 50)}{s.title.length > 50 ? '...' : ''}
-                        </p>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-                {sessionsData.length > 5 && (
-                  <button
-                    onClick={() => setToonAlleUitdagingen(v => !v)}
-                    style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 15, letterSpacing: 3, color: '#555', background: 'none', border: 'none', cursor: 'pointer', padding: '12px 0 0', transition: 'color 0.15s' }}
-                    onMouseEnter={e => (e.currentTarget.style.color = '#EE7700')}
-                    onMouseLeave={e => (e.currentTarget.style.color = '#555')}
-                  >
-                    {toonAlleUitdagingen ? '↑ MINDER' : `↓ TOON ALLE ${sessionsData.length}`}
-                  </button>
-                )}
-              </div>
-            )}
-
-            {/* Tijdlijn */}
-            {sessionsData.length > 1 && (
-              <div className="coaching-section">
-                <span className="coaching-label">Tijdlijn</span>
-                <div className="timeline">
-                  {sessionsData.slice(0, 10).map((s, i) => (
-                    <div key={s.session_id} className="timeline-item">
-                      <div className={`timeline-dot${i === 0 ? ' active' : ''}`} />
-                      <p className="timeline-date">{new Date(s.created_at).toLocaleDateString('nl-NL', { day: 'numeric', month: 'long', year: 'numeric' })}</p>
-                      <p className="timeline-title">{s.title}</p>
-                      <p className="timeline-meta">
-                        {s.message_count} {s.message_count === 1 ? 'vraag' : 'vragen'} · uitdaging{' '}
-                        <span style={{ color: s.uitdaging_done ? '#44cc88' : '#EE7700' }}>
-                          {s.uitdaging_done ? 'afgerond' : 'open'}
-                        </span>
-                      </p>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            )}
-
             {/* Focus */}
             <div className="coaching-section">
               <span className="coaching-label">Waar jij op focust</span>
@@ -467,7 +344,6 @@ export default function CoachingClient({ userId }: Props) {
 
           </div>
         )}
-
 
         {doc && (
           <div className="no-print" style={{ borderTop: '1px solid #1a1a1a', paddingTop: 40, marginTop: 48, display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: 24 }}>
