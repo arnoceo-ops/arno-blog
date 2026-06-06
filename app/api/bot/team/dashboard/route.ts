@@ -21,7 +21,7 @@ export async function GET() {
 
   if (!managerMember) return NextResponse.json({ error: 'Geen manager-toegang' }, { status: 403 })
 
-  const team = managerMember.arnobot_teams as { id: string; name: string; invite_code: string }
+  const team = managerMember.arnobot_teams as unknown as { id: string; name: string; invite_code: string }
 
   // Get all team members
   const { data: members } = await supabase
