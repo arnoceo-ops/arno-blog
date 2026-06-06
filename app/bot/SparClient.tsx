@@ -511,7 +511,7 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
         }
         .spar-title span { color: #EE7700; }
         .spar-tagline {
-          text-align: right; padding-bottom: 8px; max-width: 520px;
+          text-align: right; padding-bottom: 8px; flex: 1;
         }
         .spar-tagline p { font-size: 15px; line-height: 1.9; color: #888; }
         .spar-tagline strong { font-weight: 700; color: #f0ede6; font-family: 'Barlow', sans-serif; font-size: 26px; letter-spacing: 0.5px; display: block; margin-bottom: 6px; }
@@ -953,7 +953,7 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
       <div className="spar-page" style={started ? { paddingBottom: isMobile ? 200 : 110 } : {}}>
 
         <div className="spar-hero">
-          <div style={{ display: 'flex', alignItems: 'flex-start', gap: 'clamp(16px, 2vw, 32px)' }}>
+          <div style={{ flex: 1, display: 'flex', alignItems: 'flex-start', gap: 'clamp(16px, 2vw, 32px)' }}>
             <img src="/cyborg.jpg" alt="Arno" style={{ height: '300px', width: 'auto', objectFit: 'contain', display: 'block' }} />
             <h1 className="spar-title">
               ARNO<br /><span>BOT.</span>
