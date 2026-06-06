@@ -129,7 +129,10 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
   const [navGuardOpen, setNavGuardOpen] = useState(false)
   const [pendingNavDest, setPendingNavDest] = useState<string | null>(null)
   const [teamPrompt, setTeamPrompt] = useState(false)
-  const [isManager, setIsManager] = useState(false)
+  const [isManager, setIsManager] = useState(() => {
+    if (typeof window === 'undefined') return false
+    return localStorage.getItem('arnobot_is_manager') === '1'
+  })
   const recognitionRef = useRef<any>(null)
   const bottomRef = useRef<HTMLDivElement>(null)
   const inputRef = useRef<HTMLTextAreaElement>(null)

@@ -32,7 +32,10 @@ const linkBase: React.CSSProperties = {
 export default function BotNav({ active }: Props) {
   const isMobile = useIsMobile()
   const [menuOpen, setMenuOpen] = useState(false)
-  const [isManager, setIsManager] = useState(false)
+  const [isManager, setIsManager] = useState(() => {
+    if (typeof window === 'undefined') return false
+    return localStorage.getItem('arnobot_is_manager') === '1'
+  })
   const [feedbackOpen, setFeedbackOpen] = useState(false)
   const [feedbackText, setFeedbackText] = useState('')
   const [feedbackSent, setFeedbackSent] = useState(false)
@@ -65,7 +68,11 @@ export default function BotNav({ active }: Props) {
   useEffect(() => {
     fetch('/api/bot/team/status')
       .then(r => r.json())
-      .then(d => { if (d.isManager) setIsManager(true) })
+      .then(d => {
+        const manager = !!d.isManager
+        localStorage.setItem('arnobot_is_manager', manager ? '1' : '0')
+        setIsManager(manager)
+      })
       .catch(() => {})
   }, [])
 
