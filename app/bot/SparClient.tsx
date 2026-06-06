@@ -915,7 +915,7 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
           {menuOpen && (
             <div className="mob-menu" onClick={() => setMenuOpen(false)}>
               <span className="active">BOT</span>
-              <button style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 28, letterSpacing: 3, color: '#888', background: 'none', border: 'none', cursor: 'pointer', textAlign: 'left', padding: 0 }} onClick={() => handleNavAttempt('/bot/archief')}>ARCHIEF</button>
+              <button style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 28, letterSpacing: 3, color: '#888', background: 'none', border: 'none', cursor: 'pointer', textAlign: 'left', padding: 0 }} onClick={() => handleNavAttempt('/bot/bieb')}>BIEB</button>
               <button style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 28, letterSpacing: 3, color: '#888', background: 'none', border: 'none', cursor: 'pointer', textAlign: 'left', padding: 0 }} onClick={() => handleNavAttempt('/bot/coaching')}>COACHING</button>
               <button style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 28, letterSpacing: 3, color: '#888', background: 'none', border: 'none', cursor: 'pointer', textAlign: 'left', padding: 0 }} onClick={() => handleNavAttempt('/bot/qa')}>Q&A</button>
               <button style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 28, letterSpacing: 3, color: '#888', background: 'none', border: 'none', cursor: 'pointer', textAlign: 'left', padding: 0 }} onClick={() => handleNavAttempt('/bot/account')}>ACCOUNT</button>
@@ -928,7 +928,7 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
           <div className="nav-spacer" />
           <div className="nav-links">
             <span style={{ color: '#EE7700', fontFamily: "'Bebas Neue', sans-serif", fontSize: 22, letterSpacing: 3 }}>BOT</span>
-            <button onClick={() => handleNavAttempt('/bot/archief')}>ARCHIEF</button>
+            <button onClick={() => handleNavAttempt('/bot/bieb')}>BIEB</button>
             <button onClick={() => handleNavAttempt('/bot/coaching')}>COACHING</button>
             <button onClick={() => handleNavAttempt('/bot/qa')}>Q&A</button>
             <button onClick={() => handleNavAttempt('/bot/account')}>ACCOUNT</button>
@@ -1130,7 +1130,7 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
                   {voortgang.count} {voortgang.count === 1 ? 'GESPREK' : 'GESPREKKEN'}
                   {voortgang.lastDate ? ` · LAATSTE: ${formatLastDate(voortgang.lastDate).toUpperCase()}` : ''}
                 </div>
-                <Link href="/bot/archief" className="archief-btn">NAAR ARCHIEF</Link>
+                <Link href="/bot/bieb" className="archief-btn">NAAR ARCHIEF</Link>
               </>
             )}
           </div>

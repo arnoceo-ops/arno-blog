@@ -7,7 +7,7 @@ import { useRouter } from 'next/navigation'
 import { useIsMobile } from '@/hooks/useBreakpoint'
 
 interface Props {
-  active: 'bot' | 'archief' | 'coaching' | 'account' | 'profiel' | 'qa'
+  active: 'bot' | 'bieb' | 'coaching' | 'account' | 'profiel' | 'qa'
 }
 
 const navStyle = {
@@ -110,7 +110,7 @@ export default function BotNav({ active }: Props) {
           .mob-nav-logo span { color:#EE7700; }
           .mob-hamburger { background:none;border:none;cursor:pointer;display:flex;flex-direction:column;gap:5px;padding:8px; }
           .mob-hamburger span { display:block;width:22px;height:2px;background:#f0ede6; }
-          .mob-menu { position:fixed;top:56px;left:0;right:0;z-index:99;background:#0a0a0a;border-bottom:1px solid rgba(255,255,255,0.06);padding:24px 20px;display:flex;flex-direction:column;gap:20px; }
+          .mob-menu { position:fixed;top:56px;left:0;right:0;z-index:99;background:#0a0a0a;border-bottom:1px solid rgba(255,255,255,0.06);padding:24px 20px;display:flex;flex-direction:column;gap:20px;align-items:flex-end; }
           .mob-menu a,.mob-menu span { font-family:'Bebas Neue',sans-serif;font-size:28px;letter-spacing:3px;text-decoration:none; }
           .mob-menu a { color:#888; }
           .mob-menu a:hover { color:#f0ede6; }
@@ -128,7 +128,7 @@ export default function BotNav({ active }: Props) {
         {menuOpen && (
           <div className="mob-menu" onClick={() => setMenuOpen(false)}>
             {active === 'bot'      ? <span className="mob-active">ARNOBOT</span>   : <Link href="/bot">ARNOBOT</Link>}
-            {active === 'archief'  ? <span className="mob-active">BIEB</span>     : <Link href="/bot/archief">BIEB</Link>}
+            {active === 'bieb'  ? <span className="mob-active">BIEB</span>     : <Link href="/bot/bieb">BIEB</Link>}
             {active === 'coaching' ? <span className="mob-active">COACHING</span> : <Link href="/bot/coaching">COACHING</Link>}
             {active === 'qa'       ? <span className="mob-active">Q&A</span>      : <Link href="/bot/qa">Q&A</Link>}
             {active === 'account'  ? <span className="mob-active">ACCOUNT</span>  : <Link href="/bot/account">ACCOUNT</Link>}
@@ -143,13 +143,14 @@ export default function BotNav({ active }: Props) {
   return (
     <>
       <nav style={navStyle}>
-        <div style={{ display: 'flex', gap: 48, alignItems: 'center', flex: 1 }}>
+        <div style={{ flex: 1 }} />
+        <div style={{ display: 'flex', gap: 48, alignItems: 'center' }}>
           {active === 'bot'
             ? <span style={{ ...linkBase, color: '#EE7700' }}>ARNOBOT</span>
             : <Link href="/bot" style={linkBase}>ARNOBOT</Link>}
-          {active === 'archief'
+          {active === 'bieb'
             ? <span style={{ ...linkBase, color: '#EE7700' }}>BIEB</span>
-            : <Link href="/bot/archief" style={linkBase}>BIEB</Link>}
+            : <Link href="/bot/bieb" style={linkBase}>BIEB</Link>}
           {active === 'coaching'
             ? <span style={{ ...linkBase, color: '#EE7700' }}>COACHING</span>
             : <Link href="/bot/coaching" style={linkBase}>COACHING</Link>}

@@ -264,7 +264,7 @@ export default function GeschiedenisPage() {
         }
       `}</style>
 
-      <BotNav active="archief" />
+      <BotNav active="bieb" />
 
       <div style={{ maxWidth: 812, margin: '0 auto', padding: `clamp(80px,12vw,120px) clamp(16px,4vw,20px) ${hasSelected ? 100 : 80}px` }}>
 
