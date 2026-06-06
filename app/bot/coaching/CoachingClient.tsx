@@ -171,7 +171,7 @@ export default function CoachingClient({ userId }: Props) {
           color: #EE7700; padding: 12px 28px; transition: all 0.2s;
           border-radius: 999px; min-width: 220px;
         }
-        .generate-btn:hover:not(:disabled) { background: #EE7700; color: #0a0a0a; }
+        .generate-btn:hover:not(:disabled) { background: #EE7700; color: #f0ede6; }
         .generate-btn:disabled { border-color: #333; color: #444; cursor: not-allowed; }
         .pdf-btn {
           background: none; border: 1px solid #555; cursor: pointer;
@@ -352,7 +352,7 @@ export default function CoachingClient({ userId }: Props) {
               Wil je dit aanpakken met Arno zelf?<br />
               Maandelijks 45 minuten. Direct. Ongefilterd.
             </p>
-            <a href="/upgrade" style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 16, letterSpacing: 3, padding: '12px 28px', background: '#EE7700', color: '#141414', textDecoration: 'none', borderRadius: 999, whiteSpace: 'nowrap' }}>
+            <a href="/upgrade" style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 16, letterSpacing: 3, padding: '12px 28px', background: '#EE7700', color: '#f0ede6', textDecoration: 'none', borderRadius: 999, whiteSpace: 'nowrap' }}>
               BEKIJK ARNOLIVE →
             </a>
           </div>

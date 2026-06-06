@@ -596,7 +596,7 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
         }
 
         .spar-send {
-          background: #EE7700; color: #141414;
+          background: #EE7700; color: #f0ede6;
           font-family: 'Bebas Neue', sans-serif;
           font-size: 20px; letter-spacing: 3px;
           padding: 0 32px; border: none; cursor: pointer;
@@ -616,7 +616,7 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
         .spar-reset:hover { background: #1a1a1a; }
         .spar-reset.accented { border: 1px solid #555; border-left: 1px solid #555; }
         .spar-reset.accented:hover { border-color: #888; }
-        .spar-reset.sluiten { background: #EE7700; color: #141414; border-left-color: #EE7700; }
+        .spar-reset.sluiten { background: #EE7700; color: #f0ede6; border-left-color: #EE7700; }
         .spar-reset.sluiten:hover { background: #ff8800; }
         .spar-input-intro {
           font-family: 'Bebas Neue', sans-serif;
@@ -669,7 +669,7 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
           transition: all 0.15s;
         }
         .toggle-btn:hover { color: #888; }
-        .toggle-btn.active { background: #EE7700; color: #141414; }
+        .toggle-btn.active { background: #EE7700; color: #f0ede6; }
         .openers-label {
           font-size: 10px; letter-spacing: 4px; text-transform: uppercase;
           color: #333; padding: 32px 0 20px; display: block;
@@ -695,7 +695,7 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
           line-height: 1.3; transition: all 0.15s;
         }
         .opener-btn:hover {
-          background: #EE7700; color: #141414;
+          background: #EE7700; color: #f0ede6;
         }
 
         /* GESPREK */
@@ -792,7 +792,7 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
           color: #EE7700; border-color: #EE7700;
         }
         .msg-action-btn.primary:hover {
-          background: #EE7700; color: #141414;
+          background: #EE7700; color: #f0ede6;
         }
         .msg-action-btn.secondary {
           color: #444; border-color: #222;
@@ -818,7 +818,7 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
         }
         .msg-cta-btn {
           display: inline-block;
-          background: #EE7700; color: #141414;
+          background: #EE7700; color: #f0ede6;
           font-family: 'Bebas Neue', sans-serif;
           font-size: 18px; letter-spacing: 3px;
           padding: 12px 28px; text-decoration: none;
@@ -854,7 +854,7 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
           line-height: 1.25; transition: all 0.15s;
         }
         .topic-btn:hover {
-          background: #EE7700; color: #141414;
+          background: #EE7700; color: #f0ede6;
         }
 
         /* BLOG SUGGESTIES NA GESPREK */
@@ -1087,7 +1087,7 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
               <div style={{ display: 'flex', gap: 10 }}>
                 <button
                   onClick={() => { setInput(verfijndSuggestie); setVerfijndSuggestie(''); setResizeInput(true) }}
-                  style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 15, letterSpacing: 3, padding: '8px 20px', background: '#EE7700', color: '#0a0a0a', border: 'none', cursor: 'pointer', borderRadius: 999 }}
+                  style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 15, letterSpacing: 3, padding: '8px 20px', background: '#EE7700', color: '#f0ede6', border: 'none', cursor: 'pointer', borderRadius: 999 }}
                 >GEBRUIK DIT</button>
                 <button
                   onClick={() => setVerfijndSuggestie('')}
@@ -1200,7 +1200,7 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
             <div style={{ display: 'flex', gap: 12 }}>
               <button
                 onClick={() => { setNavGuardOpen(false); handleNieuw() }}
-                style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 18, letterSpacing: 3, padding: '12px 28px', background: '#EE7700', color: '#0a0a0a', border: 'none', cursor: 'pointer', borderRadius: 999 }}
+                style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 18, letterSpacing: 3, padding: '12px 28px', background: '#EE7700', color: '#f0ede6', border: 'none', cursor: 'pointer', borderRadius: 999 }}
               >SLUIT GESPREK</button>
               <button
                 onClick={() => { setNavGuardOpen(false); setPendingNavDest(null) }}
@@ -1236,7 +1236,7 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
                   <button
                     onClick={sendFeedback}
                     disabled={feedbackLoading || !feedbackText.trim()}
-                    style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 18, letterSpacing: 3, padding: '12px 28px', background: '#EE7700', color: '#0a0a0a', border: 'none', cursor: 'pointer', borderRadius: 999, opacity: feedbackLoading || !feedbackText.trim() ? 0.5 : 1 }}
+                    style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 18, letterSpacing: 3, padding: '12px 28px', background: '#EE7700', color: '#f0ede6', border: 'none', cursor: 'pointer', borderRadius: 999, opacity: feedbackLoading || !feedbackText.trim() ? 0.5 : 1 }}
                   >{feedbackLoading ? '...' : 'VERSTUUR'}</button>
                   <button
                     onClick={() => setFeedbackOpen(false)}

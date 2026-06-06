@@ -88,7 +88,7 @@ export default function BotNav({ active }: Props) {
               <button
                 onClick={sendFeedback}
                 disabled={feedbackLoading || !feedbackText.trim()}
-                style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 18, letterSpacing: 3, padding: '12px 28px', background: '#EE7700', color: '#0a0a0a', border: 'none', cursor: 'pointer', borderRadius: 999, opacity: feedbackLoading || !feedbackText.trim() ? 0.5 : 1 }}
+                style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 18, letterSpacing: 3, padding: '12px 28px', background: '#EE7700', color: '#f0ede6', border: 'none', cursor: 'pointer', borderRadius: 999, opacity: feedbackLoading || !feedbackText.trim() ? 0.5 : 1 }}
               >{feedbackLoading ? '...' : 'VERSTUUR'}</button>
               <button
                 onClick={() => setFeedbackOpen(false)}
