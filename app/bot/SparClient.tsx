@@ -954,8 +954,8 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
 
         <div className="spar-hero">
           <div style={{ flex: 1, display: 'flex', alignItems: 'flex-start', gap: 'clamp(16px, 2vw, 32px)' }}>
-            <img src="/cyborg.png" alt="Arno" style={{ height: '350px', width: 'auto', objectFit: 'contain', display: 'block' }} />
-            <h1 className="spar-title" style={{ alignSelf: 'center' }}>
+            <img src="/cyborg.jpg" alt="Arno" style={{ height: '300px', width: 'auto', objectFit: 'contain', display: 'block' }} />
+            <h1 className="spar-title">
               ARNO<br /><span>BOT.</span>
             </h1>
           </div>
