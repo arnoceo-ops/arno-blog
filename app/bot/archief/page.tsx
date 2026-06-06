@@ -287,7 +287,7 @@ export default function GeschiedenisPage() {
             onBlur={e => (e.target.style.borderColor = '#2a2a2a')}
           />
 
-          <div style={{ display: 'flex', gap: 8, alignItems: 'center', flexWrap: 'wrap' }}>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 8, alignItems: 'flex-start' }}>
             {sorted.length > 0 && (
               <button
                 className={`sort-btn${selected.size === sorted.length ? ' active' : ''}`}
@@ -300,7 +300,7 @@ export default function GeschiedenisPage() {
                 {selected.size === sorted.length ? 'DESELECTEER ALLES' : 'SELECTEER ALLES'}
               </button>
             )}
-            <div style={{ display: 'flex', gap: 4, marginLeft: 'auto' }}>
+            <div style={{ display: 'flex', gap: 4 }}>
               <button
                 className={`sort-btn${sort === 'newest' || sort === 'oldest' ? ' active' : ''}`}
                 style={{ borderRadius: 8, minWidth: 110 }}
