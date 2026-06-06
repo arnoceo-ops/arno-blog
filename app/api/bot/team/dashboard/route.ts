@@ -26,7 +26,7 @@ export async function GET() {
   // Get all team members
   const { data: members } = await supabase
     .from('arnobot_team_members')
-    .select('user_id, role, joined_at')
+    .select('user_id, role, joined_at, display_name')
     .eq('team_id', team.id)
 
   if (!members?.length) return NextResponse.json({ team, members: [] })
@@ -81,7 +81,7 @@ export async function GET() {
     user_id: m.user_id,
     role: m.role,
     joined_at: m.joined_at,
-    name: nameMap[m.user_id] || 'Onbekend',
+    name: nameMap[m.user_id] || (m as any).display_name || 'Onbekend',
     sessions: sessionCounts[m.user_id] ?? 0,
     last_activity: lastActivity[m.user_id] ?? null,
     analyses: analysesCounts[m.user_id] ?? 0,
