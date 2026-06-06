@@ -287,59 +287,36 @@ export default function GeschiedenisPage() {
             onBlur={e => (e.target.style.borderColor = '#2a2a2a')}
           />
 
-          {isMobile ? (
-            <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
-              {sorted.length > 0 && (
-                <button
-                  className={`sort-btn${selected.size === sorted.length ? ' active' : ''}`}
-                  style={{ width: '100%', borderRadius: 8 }}
-                  onClick={() => {
-                    if (selected.size === sorted.length) setSelected(new Set())
-                    else setSelected(new Set(sorted.map(s => s.session_id)))
-                  }}
-                >
-                  {selected.size === sorted.length ? 'DESELECTEER ALLES' : 'SELECTEER ALLES'}
-                </button>
-              )}
-              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 4 }}>
-                {(['newest', 'oldest', 'most', 'least'] as Sort[]).map(s => (
-                  <button
-                    key={s}
-                    className={`sort-btn${sort === s ? ' active' : ''}`}
-                    style={{ borderRadius: 8 }}
-                    onClick={() => setSort(s)}
-                  >
-                    {s === 'newest' ? 'NIEUWSTE' : s === 'oldest' ? 'OUDSTE' : s === 'most' ? 'MEESTE' : 'MINSTE'}
-                  </button>
-                ))}
-              </div>
+          <div style={{ display: 'flex', gap: 8, alignItems: 'center', flexWrap: 'wrap' }}>
+            {sorted.length > 0 && (
+              <button
+                className={`sort-btn${selected.size === sorted.length ? ' active' : ''}`}
+                style={{ borderRadius: 8 }}
+                onClick={() => {
+                  if (selected.size === sorted.length) setSelected(new Set())
+                  else setSelected(new Set(sorted.map(s => s.session_id)))
+                }}
+              >
+                {selected.size === sorted.length ? 'DESELECTEER ALLES' : 'SELECTEER ALLES'}
+              </button>
+            )}
+            <div style={{ display: 'flex', gap: 4, marginLeft: 'auto' }}>
+              <button
+                className={`sort-btn${sort === 'newest' || sort === 'oldest' ? ' active' : ''}`}
+                style={{ borderRadius: 8, minWidth: 110 }}
+                onClick={() => setSort(sort === 'newest' ? 'oldest' : 'newest')}
+              >
+                DATUM {sort === 'oldest' ? '↑' : '↓'}
+              </button>
+              <button
+                className={`sort-btn${sort === 'most' || sort === 'least' ? ' active' : ''}`}
+                style={{ borderRadius: 8, minWidth: 110 }}
+                onClick={() => setSort(sort === 'most' ? 'least' : 'most')}
+              >
+                VRAGEN {sort === 'least' ? '↑' : '↓'}
+              </button>
             </div>
-          ) : (
-            <div style={{ display: 'flex', gap: 2, justifyContent: 'space-between', alignItems: 'center' }}>
-              {sorted.length > 0 && (
-                <button
-                  className="sort-btn"
-                  onClick={() => {
-                    if (selected.size === sorted.length) setSelected(new Set())
-                    else setSelected(new Set(sorted.map(s => s.session_id)))
-                  }}
-                >
-                  {selected.size === sorted.length ? 'DESELECTEER ALLES' : 'SELECTEER ALLES'}
-                </button>
-              )}
-              <div style={{ display: 'flex', gap: 2, marginLeft: 'auto' }}>
-                {(['newest', 'oldest', 'most', 'least'] as Sort[]).map(s => (
-                  <button
-                    key={s}
-                    className={`sort-btn${sort === s ? ' active' : ''}`}
-                    onClick={() => setSort(s)}
-                  >
-                    {s === 'newest' ? 'NIEUWSTE' : s === 'oldest' ? 'OUDSTE' : s === 'most' ? 'MEESTE VRAGEN' : 'MINSTE VRAGEN'}
-                  </button>
-                ))}
-              </div>
-            </div>
-          )}
+          </div>
         </div>
 
         {!loading && sorted.length > 0 && (
