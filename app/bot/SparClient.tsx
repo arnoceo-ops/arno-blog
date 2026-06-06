@@ -266,7 +266,7 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
 
   useEffect(() => {
     if (inputRef.current) {
-      inputRef.current.style.height = 'auto'
+      inputRef.current.style.height = '0px'
       inputRef.current.style.height = inputRef.current.scrollHeight + 'px'
     }
   }, [input])
@@ -290,7 +290,7 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
 
   useEffect(() => {
     if (resizeInput && inputRef.current) {
-      inputRef.current.style.height = 'auto'
+      inputRef.current.style.height = '0px'
       inputRef.current.style.height = inputRef.current.scrollHeight + 'px'
       inputRef.current.focus()
       setResizeInput(false)
@@ -302,7 +302,7 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
     setTimeout(() => {
       if (inputRef.current) {
         inputRef.current.focus()
-        inputRef.current.style.height = 'auto'
+        inputRef.current.style.height = '0px'
         inputRef.current.style.height = inputRef.current.scrollHeight + 'px'
       }
     }, 0)
@@ -554,6 +554,7 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
           min-height: 55px;
           line-height: 29px;
           display: block;
+          field-sizing: content;
         }
         .spar-textarea::placeholder { color: #aaa; font-style: normal; font-size: 15px; font-weight: 400; }
         .spar-textarea:focus { background: #161616; }
@@ -986,7 +987,7 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
               value={input}
               onChange={e => {
                 setInput(e.target.value)
-                e.target.style.height = 'auto'
+                e.target.style.height = '0px'
                 e.target.style.height = e.target.scrollHeight + 'px'
                 if (showSluiten) setShowSluiten(false)
               }}
