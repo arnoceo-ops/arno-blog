@@ -129,10 +129,7 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
   const [navGuardOpen, setNavGuardOpen] = useState(false)
   const [pendingNavDest, setPendingNavDest] = useState<string | null>(null)
   const [teamPrompt, setTeamPrompt] = useState(false)
-  const [isManager, setIsManager] = useState(() => {
-    if (typeof window === 'undefined') return false
-    return localStorage.getItem('arnobot_is_manager') === '1'
-  })
+  const [isManager, setIsManager] = useState(false)
   const recognitionRef = useRef<any>(null)
   const bottomRef = useRef<HTMLDivElement>(null)
   const inputRef = useRef<HTMLTextAreaElement>(null)
@@ -262,6 +259,8 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
       const gebruik = (profiel?.gebruik as string) ?? ''
       // Toon prompt als: manager-rol + (wil team OF nog geen keuze gemaakt), maar niet als expliciet individueel
       if (heeftManagerRol && gebruik !== 'individueel') {
+        const cached = localStorage.getItem('arnobot_is_manager') === '1'
+        if (cached) setIsManager(true)
         fetch('/api/bot/team/status')
           .then(r => r.json())
           .then(d => {
