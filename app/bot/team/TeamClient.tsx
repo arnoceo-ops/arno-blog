@@ -23,6 +23,16 @@ interface Member {
   analyses: number
 }
 
+interface TeamAnalyse {
+  id: string
+  analyse_text: string
+  created_at: string
+}
+
+function formatAnalyseDate(iso: string) {
+  return new Date(iso).toLocaleDateString('nl-NL', { day: 'numeric', month: 'long', year: 'numeric' }).toUpperCase()
+}
+
 interface Team {
   id: string
   name: string
@@ -75,8 +85,8 @@ export default function TeamClient() {
   const [creating, setCreating] = useState(false)
   const [createError, setCreateError] = useState('')
   const [copied, setCopied] = useState(false)
-  const [spotlight, setSpotlight] = useState('')
   const [spotlightLoading, setSpotlightLoading] = useState(false)
+  const [teamAnalyses, setTeamAnalyses] = useState<TeamAnalyse[]>([])
 
   useEffect(() => {
     fetch('/api/bot/team/status')
@@ -105,6 +115,10 @@ export default function TeamClient() {
         setLoading(false)
       })
       .catch(() => setLoading(false))
+    fetch('/api/bot/team/spotlight')
+      .then(r => r.json())
+      .then(data => setTeamAnalyses(data.analyses ?? []))
+      .catch(() => {})
   }
 
   async function createTeam() {
@@ -129,14 +143,17 @@ export default function TeamClient() {
 
   async function generateSpotlight() {
     setSpotlightLoading(true)
-    setSpotlight('')
     try {
       const res = await fetch('/api/bot/team/spotlight', { method: 'POST' })
       const data = await res.json()
-      if (data.analyse) setSpotlight(data.analyse)
-      else setSpotlight(data.error || 'Niet genoeg data beschikbaar.')
+      if (!res.ok) {
+        alert(data.error || 'Niet genoeg data beschikbaar.')
+      } else {
+        const updated = await fetch('/api/bot/team/spotlight').then(r => r.json())
+        setTeamAnalyses(updated.analyses ?? [])
+      }
     } catch {
-      setSpotlight('Er ging iets mis.')
+      alert('Er ging iets mis.')
     } finally {
       setSpotlightLoading(false)
     }
@@ -264,16 +281,23 @@ export default function TeamClient() {
                 <button
                   onClick={generateSpotlight}
                   disabled={spotlightLoading || members.length < 2}
-                  style={{ ...btnPrimary(spotlightLoading || members.length < 2), marginBottom: 16 }}
+                  style={{ ...btnPrimary(spotlightLoading || members.length < 2), marginBottom: members.length < 2 ? 12 : 40 }}
                 >
                   {spotlightLoading ? 'ARNO ANALYSEERT...' : 'GENEREER TEAM-ANALYSE'}
                 </button>
                 {members.length < 2 && (
-                  <p style={{ ...body, fontSize: 13, color: '#555', marginBottom: 0 }}>Minimaal 2 teamleden nodig voor een team-analyse.</p>
+                  <p style={{ ...body, fontSize: 13, color: '#555', marginBottom: 40 }}>Minimaal 2 teamleden nodig voor een team-analyse.</p>
                 )}
-                {spotlight && (
-                  <div style={{ background: '#111', borderLeft: '4px solid #EE7700', padding: '24px 28px', marginTop: 16 }}>
-                    <p style={{ ...body, color: '#f0ede6', marginBottom: 0, whiteSpace: 'pre-wrap' }}>{spotlight}</p>
+                {teamAnalyses.length > 0 && (
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: 24 }}>
+                    {teamAnalyses.map(a => (
+                      <div key={a.id}>
+                        <span style={{ ...label, marginBottom: 12 }}>{formatAnalyseDate(a.created_at)}</span>
+                        <div style={{ background: '#111', borderLeft: '4px solid #EE7700', padding: '24px 28px' }}>
+                          <p style={{ ...body, color: '#f0ede6', marginBottom: 0, whiteSpace: 'pre-wrap' }}>{a.analyse_text}</p>
+                        </div>
+                      </div>
+                    ))}
                   </div>
                 )}
               </div>

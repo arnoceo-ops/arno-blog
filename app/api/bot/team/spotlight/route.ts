@@ -9,11 +9,33 @@ const supabase = createClient(
 )
 const anthropic = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY! })
 
+export async function GET() {
+  const { userId } = await auth()
+  if (!userId) return NextResponse.json({ error: 'Niet ingelogd' }, { status: 401 })
+
+  const { data: managerMember } = await supabase
+    .from('arnobot_team_members')
+    .select('team_id')
+    .eq('user_id', userId)
+    .eq('role', 'manager')
+    .single()
+
+  if (!managerMember) return NextResponse.json({ analyses: [] })
+
+  const { data: analyses } = await supabase
+    .from('arnobot_team_analyses')
+    .select('id, analyse_text, created_at')
+    .eq('team_id', managerMember.team_id)
+    .order('created_at', { ascending: false })
+    .limit(10)
+
+  return NextResponse.json({ analyses: analyses ?? [] })
+}
+
 export async function POST() {
   const { userId } = await auth()
   if (!userId) return NextResponse.json({ error: 'Niet ingelogd' }, { status: 401 })
 
-  // Verify manager
   const { data: managerMember } = await supabase
     .from('arnobot_team_members')
     .select('team_id, arnobot_teams(name)')
@@ -25,7 +47,6 @@ export async function POST() {
 
   const team = managerMember.arnobot_teams as unknown as { name: string }
 
-  // Get all team member IDs
   const { data: members } = await supabase
     .from('arnobot_team_members')
     .select('user_id')
@@ -35,7 +56,6 @@ export async function POST() {
 
   const memberIds = members.map(m => m.user_id)
 
-  // Collect recent session summaries from all team members
   const { data: sessions } = await supabase
     .from('arnobot_blog_sessions')
     .select('user_id, summary, feiten')
@@ -69,5 +89,10 @@ ${teamData}`
   })
 
   const analyse = result.content[0].type === 'text' ? result.content[0].text : ''
+
+  await supabase
+    .from('arnobot_team_analyses')
+    .insert({ team_id: managerMember.team_id, analyse_text: analyse })
+
   return NextResponse.json({ analyse })
 }
