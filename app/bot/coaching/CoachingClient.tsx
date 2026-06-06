@@ -235,10 +235,11 @@ export default function CoachingClient({ userId }: Props) {
             <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
               <button className="generate-btn no-print" onClick={generate} disabled={generating || loading}>
                 {generating ? (
-                  <span>
+                  <span style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 10 }}>
                     <span className="loading-dot" />
                     <span className="loading-dot" />
                     <span className="loading-dot" />
+                    <span>ARNO GENEREERT</span>
                   </span>
                 ) : doc ? 'ADVISEER →' : 'GENEREER COACHING →'}
               </button>
