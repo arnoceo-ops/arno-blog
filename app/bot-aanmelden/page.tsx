@@ -1,9 +1,13 @@
 'use client'
 
+import { useEffect } from 'react'
+import { useRouter } from 'next/navigation'
 import { useState } from 'react'
 import Link from 'next/link'
 
 export default function BotAanmeldenPage() {
+  const router = useRouter()
+  useEffect(() => { router.replace('/sign-in') }, [router])
   const [form, setForm] = useState({ naam: '', email: '', telefoon: '', linkedin: '' })
   const [emailPlaceholder, setEmailPlaceholder] = useState('naam@bedrijf.nl')
   const [submitted, setSubmitted] = useState(false)
