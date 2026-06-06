@@ -62,8 +62,8 @@ export default function AccountPage() {
   }
 
   const section: React.CSSProperties = { borderTop: '1px solid #1a1a1a', paddingTop: '32px', marginBottom: '48px' }
-  const label: React.CSSProperties = { fontFamily: "'Space Mono', monospace", color: '#EE7700', fontSize: '13px', letterSpacing: '4px', marginBottom: '16px', display: 'block' }
-  const body: React.CSSProperties = { color: '#888', fontSize: '15px', lineHeight: '1.9', maxWidth: 480, marginBottom: '24px' }
+  const label: React.CSSProperties = { fontFamily: "'Space Mono', monospace", fontWeight: 400, color: '#EE7700', fontSize: '13px', letterSpacing: '4px', marginBottom: '16px', display: 'block' }
+  const body: React.CSSProperties = { fontWeight: 400, color: '#888', fontSize: '15px', lineHeight: '1.9', maxWidth: 480, marginBottom: '24px' }
   const btn: React.CSSProperties = { padding: '12px 32px', border: '1px solid #555', background: 'none', color: '#888', fontFamily: "'Bebas Neue', sans-serif", fontSize: '18px', letterSpacing: '3px', cursor: 'pointer', transition: 'all 0.2s', borderRadius: '999px', display: 'inline-block' }
 
   return (
@@ -71,7 +71,7 @@ export default function AccountPage() {
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Mono:wght@400;700&display=swap');
         * { box-sizing: border-box; margin: 0; padding: 0; }
-        body { background: #0a0a0a; color: #f0ede6; font-family: 'Space Mono', monospace; }
+        body { background: #0a0a0a; color: #f0ede6; font-family: 'Space Mono', monospace; font-weight: 400; }
         input { background: #111; border: 1px solid #333; color: #f0ede6; font-family: 'Space Mono', monospace; font-size: 15px; letter-spacing: 2px; padding: 12px 16px; outline: none; width: 100%; }
         input:focus { border-color: #EE7700; }
         .sec-btn:hover { border-color: #EE7700 !important; color: #EE7700 !important; }
