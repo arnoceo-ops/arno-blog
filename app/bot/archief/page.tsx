@@ -165,6 +165,7 @@ export default function GeschiedenisPage() {
       }
     } catch {}
     setAnalyseLoading(false)
+    setSelected(new Set())
     setTimeout(() => analysesSectionRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' }), 300)
   }
 
