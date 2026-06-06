@@ -3,6 +3,7 @@
 import { useState, useEffect, useRef } from 'react'
 import Link from 'next/link'
 import BotNav from '../BotNav'
+import { useIsMobile } from '@/hooks/useBreakpoint'
 
 interface Session {
   id: string
@@ -43,6 +44,7 @@ function formatDateShort(iso: string) {
 type Sort = 'newest' | 'oldest' | 'most' | 'least'
 
 export default function GeschiedenisPage() {
+  const isMobile = useIsMobile()
   const [sessions, setSessions] = useState<Session[]>([])
   const [loading, setLoading] = useState(true)
   const [search, setSearch] = useState('')
@@ -179,13 +181,6 @@ export default function GeschiedenisPage() {
         @keyframes fadein { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
         @keyframes slideup { from { opacity: 0; transform: translateY(100%); } to { opacity: 1; transform: translateY(0); } }
 
-        @media (max-width: 600px) {
-          .sort-row { flex-wrap: wrap; }
-          .delete-bar { padding: 16px 20px; }
-          .delete-bar-count { font-size: 16px; }
-          .delete-bar-btn { font-size: 16px; padding: 12px 20px; }
-        }
-
         .sort-btn {
           background: #111; border: none; color: rgb(136,136,136);
           font-family: 'Bebas Neue', sans-serif;
@@ -201,13 +196,13 @@ export default function GeschiedenisPage() {
           background: #0a0a0a; border-top: 2px solid #EE7700;
           padding: 20px 40px;
           display: flex; align-items: center; justify-content: center; gap: 24px;
-          animation: slideup 0.2s ease;
+          animation: slideup 0.2s ease; flex-wrap: wrap;
         }
         .delete-bar-count {
           font-family: 'Bebas Neue', sans-serif;
           font-size: 18px; letter-spacing: 3px; color: #EE7700;
         }
-        .delete-bar-actions { display: flex; gap: 12px; align-items: center; }
+        .delete-bar-actions { display: flex; gap: 12px; align-items: center; flex-wrap: wrap; justify-content: center; }
         .delete-bar-cancel {
           background: none; border: 1px solid #EE7700; cursor: pointer;
           font-family: 'Bebas Neue', sans-serif;
@@ -225,12 +220,6 @@ export default function GeschiedenisPage() {
         }
         .delete-bar-btn:hover { background: #ff8800; border-color: #ff8800; }
         .delete-bar-btn:disabled { background: #333; border-color: #333; color: #555; cursor: not-allowed; }
-        .delete-bar-placeholder {
-          width: 180px; padding: 11px 0; text-align: center;
-          font-family: 'Bebas Neue', sans-serif;
-          font-size: 16px; letter-spacing: 3px; color: rgb(136,136,136);
-          border: 1px solid #333; border-radius: 999px;
-        }
         .delete-bar-outline {
           background: none; border: 1px solid #EE7700; cursor: pointer;
           font-family: 'Bebas Neue', sans-serif;
@@ -263,14 +252,14 @@ export default function GeschiedenisPage() {
           font-family: 'Bebas Neue', sans-serif; font-size: 14px;
           letter-spacing: 2px; color: rgb(136,136,136);
         }
-        .analyse-item-preview {
-          color: #666; font-size: 16px; line-height: 1.7;
-          margin-top: 12px; white-space: pre-wrap;
-          display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
-        }
         .analyse-item-full {
           color: #d0cdc6; font-size: 16px; line-height: 1.9;
           margin-top: 12px; white-space: pre-wrap;
+        }
+
+        @media (max-width: 768px) {
+          .delete-bar { padding: 16px 20px; gap: 12px; }
+          .delete-bar-cancel, .delete-bar-btn, .delete-bar-outline { width: 140px; font-size: 14px; padding: 10px 0; }
         }
       `}</style>
 
@@ -297,33 +286,60 @@ export default function GeschiedenisPage() {
             onFocus={e => (e.target.style.borderColor = '#EE7700')}
             onBlur={e => (e.target.style.borderColor = '#2a2a2a')}
           />
-          <div className="sort-row" style={{ display: 'flex', gap: 2, justifyContent: 'space-between', alignItems: 'center' }}>
-            {sorted.length > 0 && (
-              <button
-                className="sort-btn"
-                onClick={() => {
-                  if (selected.size === sorted.length) {
-                    setSelected(new Set())
-                  } else {
-                    setSelected(new Set(sorted.map(s => s.session_id)))
-                  }
-                }}
-              >
-                {selected.size === sorted.length ? 'DESELECTEER ALLES' : 'SELECTEER ALLES'}
-              </button>
-            )}
-            <div style={{ display: 'flex', gap: 2, marginLeft: 'auto' }}>
-              {(['newest', 'oldest', 'most', 'least'] as Sort[]).map(s => (
+
+          {isMobile ? (
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
+              {sorted.length > 0 && (
                 <button
-                  key={s}
-                  className={`sort-btn${sort === s ? ' active' : ''}`}
-                  onClick={() => setSort(s)}
+                  className={`sort-btn${selected.size === sorted.length ? ' active' : ''}`}
+                  style={{ width: '100%', borderRadius: 8 }}
+                  onClick={() => {
+                    if (selected.size === sorted.length) setSelected(new Set())
+                    else setSelected(new Set(sorted.map(s => s.session_id)))
+                  }}
                 >
-                  {s === 'newest' ? 'NIEUWSTE' : s === 'oldest' ? 'OUDSTE' : s === 'most' ? 'MEESTE VRAGEN' : 'MINSTE VRAGEN'}
+                  {selected.size === sorted.length ? 'DESELECTEER ALLES' : 'SELECTEER ALLES'}
                 </button>
-              ))}
+              )}
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 4 }}>
+                {(['newest', 'oldest', 'most', 'least'] as Sort[]).map(s => (
+                  <button
+                    key={s}
+                    className={`sort-btn${sort === s ? ' active' : ''}`}
+                    style={{ borderRadius: 8 }}
+                    onClick={() => setSort(s)}
+                  >
+                    {s === 'newest' ? 'NIEUWSTE' : s === 'oldest' ? 'OUDSTE' : s === 'most' ? 'MEESTE' : 'MINSTE'}
+                  </button>
+                ))}
+              </div>
             </div>
-          </div>
+          ) : (
+            <div style={{ display: 'flex', gap: 2, justifyContent: 'space-between', alignItems: 'center' }}>
+              {sorted.length > 0 && (
+                <button
+                  className="sort-btn"
+                  onClick={() => {
+                    if (selected.size === sorted.length) setSelected(new Set())
+                    else setSelected(new Set(sorted.map(s => s.session_id)))
+                  }}
+                >
+                  {selected.size === sorted.length ? 'DESELECTEER ALLES' : 'SELECTEER ALLES'}
+                </button>
+              )}
+              <div style={{ display: 'flex', gap: 2, marginLeft: 'auto' }}>
+                {(['newest', 'oldest', 'most', 'least'] as Sort[]).map(s => (
+                  <button
+                    key={s}
+                    className={`sort-btn${sort === s ? ' active' : ''}`}
+                    onClick={() => setSort(s)}
+                  >
+                    {s === 'newest' ? 'NIEUWSTE' : s === 'oldest' ? 'OUDSTE' : s === 'most' ? 'MEESTE VRAGEN' : 'MINSTE VRAGEN'}
+                  </button>
+                ))}
+              </div>
+            </div>
+          )}
         </div>
 
         {!loading && sorted.length > 0 && (
@@ -352,30 +368,33 @@ export default function GeschiedenisPage() {
         {/* Sessie-lijst */}
         {visibleSessions.map(session => {
           const isSelected = selected.has(session.session_id)
+          const isOpen = expanded === session.session_id
           return (
             <div key={session.session_id} style={{ borderTop: '1px solid #1a1a1a', animation: 'fadein 0.3s ease' }}>
-              <div style={{ display: 'flex', alignItems: 'center', gap: 16, padding: '28px 0' }}>
 
-                <button
-                  className={`session-checkbox${isSelected ? ' checked' : ''}`}
-                  onClick={() => toggleSelect(session.session_id)}
-                  title={isSelected ? 'Deselecteer' : 'Selecteer'}
-                >
-                  {isSelected ? '✓' : ''}
-                </button>
-
-                <button
-                  onClick={() => toggleSession(session.session_id)}
-                  style={{
-                    flex: 1, background: 'none', border: 'none', cursor: 'pointer',
-                    display: 'flex', alignItems: 'center', gap: 24, textAlign: 'left', padding: 0,
-                  }}
-                >
-                  <span style={{ color: '#888', fontSize: 11, letterSpacing: 2, textTransform: 'uppercase', whiteSpace: 'nowrap', minWidth: 120, fontFamily: "'Space Mono', monospace" }}>
-                    {formatDate(session.created_at)}
-                  </span>
-                  <div style={{ flex: 1 }}>
-                    <p style={{ color: '#f0ede6', fontSize: 20, fontFamily: "'Bebas Neue', sans-serif", letterSpacing: 1, lineHeight: 1.4, marginBottom: session.summary ? 6 : 0 }}>
+              {isMobile ? (
+                /* Mobile card layout */
+                <div style={{ padding: '20px 0' }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 10 }}>
+                    <button
+                      className={`session-checkbox${isSelected ? ' checked' : ''}`}
+                      onClick={() => toggleSelect(session.session_id)}
+                      title={isSelected ? 'Deselecteer' : 'Selecteer'}
+                    >
+                      {isSelected ? '✓' : ''}
+                    </button>
+                    <span style={{ color: '#888', fontSize: 11, letterSpacing: 2, textTransform: 'uppercase', fontFamily: "'Space Mono', monospace", flex: 1 }}>
+                      {formatDateShort(session.created_at)}
+                    </span>
+                    <span style={{ color: '#555', fontSize: 11, letterSpacing: 2, textTransform: 'uppercase', fontFamily: "'Space Mono', monospace", whiteSpace: 'nowrap' }}>
+                      {session.message_count} {session.message_count === 1 ? 'vraag' : 'vragen'}
+                    </span>
+                  </div>
+                  <button
+                    onClick={() => toggleSession(session.session_id)}
+                    style={{ width: '100%', background: 'none', border: 'none', cursor: 'pointer', textAlign: 'left', padding: 0 }}
+                  >
+                    <p style={{ color: '#f0ede6', fontSize: 18, fontFamily: "'Bebas Neue', sans-serif", letterSpacing: 1, lineHeight: 1.4, marginBottom: session.summary ? 6 : 0 }}>
                       {session.title}
                     </p>
                     {session.summary && (
@@ -383,19 +402,51 @@ export default function GeschiedenisPage() {
                         {session.summary}
                       </p>
                     )}
-                  </div>
-                  <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: 6, flexShrink: 0 }}>
-                    <span style={{ color: '#888', fontSize: 11, letterSpacing: 2, textTransform: 'uppercase', whiteSpace: 'nowrap', fontFamily: "'Space Mono', monospace" }}>
-                      {session.message_count} {session.message_count === 1 ? 'vraag' : 'vragen'}
+                    <span style={{ color: isOpen ? '#EE7700' : '#555', fontSize: 13, fontFamily: "'Bebas Neue', sans-serif", letterSpacing: 2, display: 'block', marginTop: 8 }}>
+                      {isOpen ? '↑ SLUITEN' : '↓ OPEN'}
                     </span>
-                    <span style={{ color: expanded === session.session_id ? '#EE7700' : '#888', fontSize: 18, fontFamily: "'Bebas Neue', sans-serif", letterSpacing: 2 }}>
-                      {expanded === session.session_id ? '↑ SLUITEN' : '↓ OPEN'}
+                  </button>
+                </div>
+              ) : (
+                /* Desktop card layout */
+                <div style={{ display: 'flex', alignItems: 'center', gap: 16, padding: '28px 0' }}>
+                  <button
+                    className={`session-checkbox${isSelected ? ' checked' : ''}`}
+                    onClick={() => toggleSelect(session.session_id)}
+                    title={isSelected ? 'Deselecteer' : 'Selecteer'}
+                  >
+                    {isSelected ? '✓' : ''}
+                  </button>
+                  <button
+                    onClick={() => toggleSession(session.session_id)}
+                    style={{ flex: 1, background: 'none', border: 'none', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 24, textAlign: 'left', padding: 0 }}
+                  >
+                    <span style={{ color: '#888', fontSize: 11, letterSpacing: 2, textTransform: 'uppercase', whiteSpace: 'nowrap', minWidth: 120, fontFamily: "'Space Mono', monospace" }}>
+                      {formatDate(session.created_at)}
                     </span>
-                  </div>
-                </button>
-              </div>
+                    <div style={{ flex: 1 }}>
+                      <p style={{ color: '#f0ede6', fontSize: 20, fontFamily: "'Bebas Neue', sans-serif", letterSpacing: 1, lineHeight: 1.4, marginBottom: session.summary ? 6 : 0 }}>
+                        {session.title}
+                      </p>
+                      {session.summary && (
+                        <p style={{ color: '#666', fontSize: 13, lineHeight: 1.8, display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}>
+                          {session.summary}
+                        </p>
+                      )}
+                    </div>
+                    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: 6, flexShrink: 0 }}>
+                      <span style={{ color: '#888', fontSize: 11, letterSpacing: 2, textTransform: 'uppercase', whiteSpace: 'nowrap', fontFamily: "'Space Mono', monospace" }}>
+                        {session.message_count} {session.message_count === 1 ? 'vraag' : 'vragen'}
+                      </span>
+                      <span style={{ color: isOpen ? '#EE7700' : '#888', fontSize: 18, fontFamily: "'Bebas Neue', sans-serif", letterSpacing: 2 }}>
+                        {isOpen ? '↑ SLUITEN' : '↓ OPEN'}
+                      </span>
+                    </div>
+                  </button>
+                </div>
+              )}
 
-              {expanded === session.session_id && (
+              {isOpen && (
                 <div style={{ paddingBottom: 40, animation: 'fadein 0.3s ease' }}>
                   {session.summary && (
                     <div style={{ background: '#0f0f0f', borderLeft: '3px solid #EE7700', padding: '20px 24px', marginBottom: 32 }}>
@@ -426,12 +477,12 @@ export default function GeschiedenisPage() {
                     <p style={{ color: '#333', fontSize: 11, letterSpacing: 3, textTransform: 'uppercase', padding: '16px 0' }}>Gesprek laden...</p>
                   )}
                   {convMessages.map((msg, i) => (
-                    <div key={i} style={{ padding: '24px 0', borderTop: '1px solid #111', display: 'flex', gap: 32, alignItems: 'flex-start' }}>
-                      <span style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 18, letterSpacing: 3, color: msg.role === 'user' ? 'rgb(136,136,136)' : '#EE7700', whiteSpace: 'nowrap', paddingTop: 3, minWidth: 60 }}>
+                    <div key={i} style={{ padding: '20px 0', borderTop: '1px solid #111', display: 'flex', flexDirection: isMobile ? 'column' : 'row', gap: isMobile ? 4 : 32, alignItems: 'flex-start' }}>
+                      <span style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 14, letterSpacing: 3, color: msg.role === 'user' ? 'rgb(136,136,136)' : '#EE7700', whiteSpace: 'nowrap', paddingTop: isMobile ? 0 : 3, minWidth: isMobile ? 0 : 60 }}>
                         {msg.role === 'user' ? 'JIJ' : 'ARNO'}
                       </span>
                       <span
-                        style={{ fontSize: msg.role === 'user' ? 16 : 14, lineHeight: msg.role === 'user' ? 1.6 : 1.9, color: msg.role === 'user' ? '#f0ede6' : '#888', fontFamily: msg.role === 'user' ? "'Space Mono', monospace" : "'Space Mono', monospace", fontWeight: 400, letterSpacing: 0, whiteSpace: 'pre-wrap' }}
+                        style={{ fontSize: msg.role === 'user' ? 16 : 14, lineHeight: msg.role === 'user' ? 1.6 : 1.9, color: msg.role === 'user' ? '#f0ede6' : '#888', fontFamily: "'Space Mono', monospace", fontWeight: 400, letterSpacing: 0, whiteSpace: 'pre-wrap' }}
                         dangerouslySetInnerHTML={{ __html: renderContent(msg.content) }}
                       />
                     </div>
@@ -497,8 +548,8 @@ export default function GeschiedenisPage() {
                   onClick={() => setExpandedAnalyse(expandedAnalyse === a.id ? null : a.id)}
                   style={{ width: '100%', background: 'none', border: 'none', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 24, textAlign: 'left', padding: '28px 0' }}
                 >
-                  <span style={{ color: '#888', fontSize: 11, letterSpacing: 2, textTransform: 'uppercase', whiteSpace: 'nowrap', minWidth: 120, fontFamily: "'Space Mono', monospace" }}>
-                    {formatDate(a.created_at)}
+                  <span style={{ color: '#888', fontSize: 11, letterSpacing: 2, textTransform: 'uppercase', whiteSpace: 'nowrap', minWidth: isMobile ? 0 : 120, fontFamily: "'Space Mono', monospace" }}>
+                    {isMobile ? formatDateShort(a.created_at) : formatDate(a.created_at)}
                   </span>
                   <div style={{ flex: 1 }}>
                     <p style={{ color: '#f0ede6', fontSize: 20, fontFamily: "'Bebas Neue', sans-serif", letterSpacing: 1, lineHeight: 1.4 }}>
@@ -533,7 +584,7 @@ export default function GeschiedenisPage() {
         )}
       </div>
 
-      {/* Sticky balk — gesprekken */}
+      {/* Sticky balk */}
       {hasSelected && (
         <div className="delete-bar">
           <span className="delete-bar-count">
