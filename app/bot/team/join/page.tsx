@@ -42,60 +42,64 @@ function JoinContent() {
   }
 
   return (
-    <div style={{ minHeight: '100vh', background: '#0a0a0a', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 24 }}>
-      <div style={{ maxWidth: 480, width: '100%' }}>
-        <p style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 13, letterSpacing: 4, color: '#EE7700', marginBottom: 8 }}>ARNOBOT</p>
+    <>
+      <style>{`
+        @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Mono:wght@400;700&display=swap');
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { background: #0a0a0a; color: #f0ede6; font-family: 'Space Mono', monospace; font-weight: 400; }
+      `}</style>
+      <div style={{ minHeight: '100vh', background: '#0a0a0a', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 24 }}>
+        <div style={{ maxWidth: 480, width: '100%' }}>
+          <p style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 13, letterSpacing: 4, color: '#EE7700', marginBottom: 8 }}>ARNOBOT</p>
 
-        {status === 'loading' && (
-          <p style={{ fontFamily: "'Space Mono', monospace", color: '#555', fontSize: 13, letterSpacing: 2 }}>LADEN...</p>
-        )}
+          {status === 'loading' && (
+            <p style={{ fontFamily: "'Space Mono', monospace", fontWeight: 400, fontSize: 15, color: '#555', letterSpacing: 2 }}>LADEN...</p>
+          )}
 
-        {status === 'invalid' && (
-          <>
-            <h1 style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 52, color: '#f0ede6', marginBottom: 16 }}>ONGELDIGE LINK</h1>
-            <p style={{ fontFamily: "'Space Mono', monospace", fontSize: 13, color: '#888', marginBottom: 32 }}>Deze uitnodigingslink is niet geldig of al verlopen.</p>
-            <Link href="/bot" style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 18, letterSpacing: 3, color: '#EE7700', textDecoration: 'none' }}>← TERUG NAAR ARNOBOT</Link>
-          </>
-        )}
+          {status === 'invalid' && (
+            <>
+              <h1 style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 64, letterSpacing: 3, color: '#f0ede6', lineHeight: 1, marginBottom: 16 }}>ONGELDIGE LINK.</h1>
+              <p style={{ fontFamily: "'Space Mono', monospace", fontWeight: 400, fontSize: 15, color: '#888', lineHeight: 1.9, marginBottom: 32 }}>Deze uitnodigingslink is niet geldig of al verlopen.</p>
+              <Link href="/bot" style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 18, letterSpacing: 3, color: '#EE7700', textDecoration: 'none' }}>← TERUG NAAR ARNOBOT</Link>
+            </>
+          )}
 
-        {status === 'ready' && (
-          <>
-            <h1 style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 'clamp(40px,8vw,64px)', color: '#f0ede6', lineHeight: 0.95, marginBottom: 24 }}>
-              JE BENT UITGENODIGD.
-            </h1>
-            <p style={{ fontFamily: "'Space Mono', monospace", fontSize: 14, color: '#888', lineHeight: 1.8, marginBottom: 32 }}>
-              Je wordt uitgenodigd om deel te nemen aan team<br />
-              <span style={{ color: '#f0ede6', fontWeight: 700 }}>{teamName}</span>
-            </p>
-            <button
-              onClick={join}
-              style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 20, letterSpacing: 3, padding: '16px 40px', background: '#EE7700', color: '#f0ede6', border: 'none', cursor: 'pointer' }}
-            >
-              DEELNEMEN
-            </button>
-          </>
-        )}
+          {status === 'ready' && (
+            <>
+              <h1 style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 64, letterSpacing: 3, color: '#f0ede6', lineHeight: 1, marginBottom: 24 }}>
+                JE BENT UITGENODIGD.
+              </h1>
+              <p style={{ fontFamily: "'Space Mono', monospace", fontWeight: 400, fontSize: 15, color: '#888', lineHeight: 1.9, marginBottom: 32 }}>
+                Je wordt uitgenodigd om deel te nemen aan team<br />
+                <span style={{ color: '#f0ede6', fontWeight: 400 }}>{teamName}</span>
+              </p>
+              <button onClick={join} style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 18, letterSpacing: 3, padding: '12px 36px', background: '#EE7700', color: '#f0ede6', border: 'none', borderRadius: 999, cursor: 'pointer', transition: 'background 0.2s' }}>
+                DEELNEMEN
+              </button>
+            </>
+          )}
 
-        {status === 'joining' && (
-          <p style={{ fontFamily: "'Space Mono', monospace", color: '#EE7700', fontSize: 13, letterSpacing: 2 }}>JOINEN...</p>
-        )}
+          {status === 'joining' && (
+            <p style={{ fontFamily: "'Space Mono', monospace", fontWeight: 400, fontSize: 15, color: '#EE7700', letterSpacing: 2 }}>JOINEN...</p>
+          )}
 
-        {status === 'done' && (
-          <>
-            <h1 style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 52, color: '#EE7700', marginBottom: 16 }}>WELKOM!</h1>
-            <p style={{ fontFamily: "'Space Mono', monospace", fontSize: 13, color: '#888' }}>Je bent nu lid van {teamName}. Je wordt doorgestuurd...</p>
-          </>
-        )}
+          {status === 'done' && (
+            <>
+              <h1 style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 64, letterSpacing: 3, color: '#EE7700', lineHeight: 1, marginBottom: 16 }}>WELKOM!</h1>
+              <p style={{ fontFamily: "'Space Mono', monospace", fontWeight: 400, fontSize: 15, color: '#888', lineHeight: 1.9 }}>Je bent nu lid van {teamName}. Je wordt doorgestuurd...</p>
+            </>
+          )}
 
-        {status === 'error' && (
-          <>
-            <h1 style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 52, color: '#f0ede6', marginBottom: 16 }}>OEPS.</h1>
-            <p style={{ fontFamily: "'Space Mono', monospace", fontSize: 13, color: '#888', marginBottom: 24 }}>{errorMsg}</p>
-            <Link href="/bot" style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 18, letterSpacing: 3, color: '#EE7700', textDecoration: 'none' }}>← TERUG NAAR ARNOBOT</Link>
-          </>
-        )}
+          {status === 'error' && (
+            <>
+              <h1 style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 64, letterSpacing: 3, color: '#f0ede6', lineHeight: 1, marginBottom: 16 }}>OEPS.</h1>
+              <p style={{ fontFamily: "'Space Mono', monospace", fontWeight: 400, fontSize: 15, color: '#888', lineHeight: 1.9, marginBottom: 32 }}>{errorMsg}</p>
+              <Link href="/bot" style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 18, letterSpacing: 3, color: '#EE7700', textDecoration: 'none' }}>← TERUG NAAR ARNOBOT</Link>
+            </>
+          )}
+        </div>
       </div>
-    </div>
+    </>
   )
 }
 
