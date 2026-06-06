@@ -1,17 +1,17 @@
-import { auth, clerkClient } from '@clerk/nextjs/server'
-import { NextResponse } from 'next/server'
+import { clerkClient } from '@clerk/nextjs/server'
+import { NextRequest, NextResponse } from 'next/server'
 import { createClient } from '@supabase/supabase-js'
+import { cookies } from 'next/headers'
 
 const supabase = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_URL!,
   process.env.SUPABASE_SERVICE_ROLE_KEY!
 )
 
-const ADMIN_ID = 'user_3Anf3P2XruhPw1Zkko7sxqrfUvp'
-
-export async function POST() {
-  const { userId } = await auth()
-  if (userId !== ADMIN_ID) {
+export async function POST(req: NextRequest) {
+  const cookieStore = await cookies()
+  const token = cookieStore.get('arnobot_admin')?.value
+  if (!token || token !== process.env.ARNOBOT_ADMIN_KEY) {
     return NextResponse.json({ error: 'Geen toegang' }, { status: 403 })
   }
 
