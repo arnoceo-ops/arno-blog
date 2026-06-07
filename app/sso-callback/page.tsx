@@ -14,7 +14,7 @@ export default function SSOCallback() {
         <p style={{ fontFamily: "'Space Mono', monospace", fontWeight: 400, fontSize: 13, letterSpacing: 4, color: '#555' }}>
           ARNO DENKT NA...
         </p>
-        <AuthenticateWithRedirectCallback afterSignInUrl="/bot" afterSignUpUrl="/bot" />
+        <AuthenticateWithRedirectCallback />
       </div>
     </>
   )
