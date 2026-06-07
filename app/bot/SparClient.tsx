@@ -1006,7 +1006,7 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
             <p className="spar-tagline-sub" style={{ fontFamily: "'Space Mono', monospace", fontSize: 'clamp(11px, 0.9vw, 13px)', color: 'rgb(136, 136, 136)', lineHeight: 1.8 }}>
               gebouwd op 40 jaar sales, 30 jaar entrepreneurship,<br />
               20 jaar bloggen, 15 jaar scale-up coaching.<br />
-              369.000 woorden. altijd up to date
+              369.000 woorden. altijd up to date.
             </p>
           </div>
         </div>
