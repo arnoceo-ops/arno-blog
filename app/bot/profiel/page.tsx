@@ -17,6 +17,8 @@ type Answers = {
   target_dit_jaar: string
   target_3_jaar: string
   teamgrootte: string
+  jaren_sales: string
+  jaren_functie: string
 }
 
 const empty: Answers = {
@@ -31,6 +33,8 @@ const empty: Answers = {
   target_dit_jaar: '',
   target_3_jaar: '',
   teamgrootte: '',
+  jaren_sales: '',
+  jaren_functie: '',
 }
 
 const TARGET_DIT_JAAR_OPTIONS = ['Ja', 'Nee']
@@ -38,6 +42,8 @@ const TARGET_3_JAAR_OPTIONS = ['Ja', 'Nee']
 const TEAMGROOTTE_OPTIONS = ['1-3', '4-10', '11-25', '>25']
 const ROL_OPTIONS = ['AE Hunter', 'AM Farmer', 'Key AM', 'Inside Sales', 'Sales Director', 'VP of Sales', 'CEO/DGA', 'Solopreneur', 'Anders']
 const HEEFT_TEAM = ['Sales Director', 'VP of Sales', 'CEO/DGA']
+const JAREN_SALES_OPTIONS = ['< 2 jaar', '2-5 jaar', '5-10 jaar', '10-20 jaar', '> 20 jaar']
+const JAREN_FUNCTIE_OPTIONS = ['< 1 jaar', '1-3 jaar', '3-7 jaar', '> 7 jaar']
 
 function getTargetLabel(rol: string) {
   if (['Sales Director', 'VP of Sales'].includes(rol)) return 'team'
@@ -316,6 +322,21 @@ export default function BotProfielPage() {
             <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8 }}>
               {TARGET_3_JAAR_OPTIONS.map(o => (
                 <Chip key={o} label={o} selected={answers.target_3_jaar === o} onClick={() => set('target_3_jaar', o)} />
+              ))}
+            </div>
+          </Block>
+
+          <Block nr="09" title="Jouw ervaring">
+            <p style={{ fontSize: 15, fontWeight: 400, lineHeight: '30px', color: '#666', marginBottom: 12 }}>Hoe lang zit je al in sales?</p>
+            <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8, marginBottom: 28 }}>
+              {JAREN_SALES_OPTIONS.map(o => (
+                <Chip key={o} label={o} selected={answers.jaren_sales === o} onClick={() => set('jaren_sales', o)} />
+              ))}
+            </div>
+            <p style={{ fontSize: 15, fontWeight: 400, lineHeight: '30px', color: '#666', marginBottom: 12 }}>Hoe lang doe je al de functie die je hierboven hebt aangegeven?</p>
+            <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8 }}>
+              {JAREN_FUNCTIE_OPTIONS.map(o => (
+                <Chip key={o} label={o} selected={answers.jaren_functie === o} onClick={() => set('jaren_functie', o)} />
               ))}
             </div>
           </Block>
