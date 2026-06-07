@@ -1,24 +1,21 @@
 'use client'
 
-import { useClerk } from '@clerk/nextjs'
-import { useEffect } from 'react'
-import { useRouter } from 'next/navigation'
+import { AuthenticateWithRedirectCallback } from '@clerk/nextjs'
 
 export default function SSOCallback() {
-  const { handleRedirectCallback } = useClerk()
-  const router = useRouter()
-
-  useEffect(() => {
-    handleRedirectCallback({}).then(() => {
-      window.location.replace('/bot')
-    }).catch(() => {
-      router.push('/sign-in')
-    })
-  }, [handleRedirectCallback, router])
-
   return (
-    <div style={{ display: 'flex', minHeight: '100vh', alignItems: 'center', justifyContent: 'center', backgroundColor: '#0a0a0a' }}>
-      <p style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 22, letterSpacing: 3, color: '#888' }}>EVEN WACHTEN...</p>
-    </div>
+    <>
+      <style>{`
+        @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Mono:wght@400;700&display=swap');
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { background: #0a0a0a; }
+      `}</style>
+      <div style={{ display: 'flex', minHeight: '100vh', alignItems: 'center', justifyContent: 'center', backgroundColor: '#0a0a0a' }}>
+        <p style={{ fontFamily: "'Space Mono', monospace", fontWeight: 400, fontSize: 13, letterSpacing: 4, color: '#555' }}>
+          ARNO DENKT NA...
+        </p>
+        <AuthenticateWithRedirectCallback afterSignInUrl="/bot" afterSignUpUrl="/bot" />
+      </div>
+    </>
   )
 }
