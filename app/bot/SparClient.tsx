@@ -637,20 +637,23 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
         .spar-reset.sluiten { background: #f59e0b; color: #111827; border-left-color: #f59e0b; }
         .spar-reset.sluiten:hover { background: #ff8800; }
         .spar-input-intro {
-          font-family: 'Bebas Neue', sans-serif;
-          font-size: 26px; letter-spacing: 2px; color: #f1f5f9;
+          font-family: 'Space Mono', monospace;
+          font-size: 13px; font-weight: 400; letter-spacing: 4px; color: #f59e0b;
+          text-transform: uppercase;
           width: 100%; max-width: 812px;
           display: block; margin-bottom: 20px; text-align: center;
         }
         .spar-discipline-label {
-          font-family: 'Bebas Neue', sans-serif;
-          font-size: 26px; letter-spacing: 2px; color: #f1f5f9;
+          font-family: 'Space Mono', monospace;
+          font-size: 13px; font-weight: 400; letter-spacing: 4px; color: #f59e0b;
           display: block; margin-bottom: 20px; text-align: center; width: 100%;
+          text-transform: uppercase;
         }
         .spar-questions-label {
-          font-family: 'Bebas Neue', sans-serif;
-          font-size: 26px; letter-spacing: 2px; color: #f1f5f9;
+          font-family: 'Space Mono', monospace;
+          font-size: 13px; font-weight: 400; letter-spacing: 4px; color: #f59e0b;
           display: block; margin-top: clamp(56px,8vw,80px); margin-bottom: 12px; text-align: center; width: 100%;
+          text-transform: uppercase;
         }
         .spar-questions-sub {
           font-family: 'Space Mono', monospace;
@@ -690,7 +693,7 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
         .toggle-btn.active { background: #f59e0b; color: #111827; }
         .openers-label {
           font-size: 10px; letter-spacing: 4px; text-transform: uppercase;
-          color: #374151; padding: 32px 0 20px; display: block;
+          color: #4b5563; padding: 32px 0 20px; display: block;
         }
         .openers-grid {
           display: grid;

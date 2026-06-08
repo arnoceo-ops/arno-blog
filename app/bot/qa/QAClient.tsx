@@ -64,7 +64,7 @@ export default function QAClient({ isOnboarding }: { isOnboarding: boolean }) {
       )}
 
       <div style={{ minHeight: '100vh', paddingTop: 64, background: '#111827' }}>
-        <div style={{ maxWidth: 760, margin: '0 auto', padding: '60px 24px 80px' }}>
+        <div style={{ maxWidth: 812, margin: '0 auto', padding: '60px 24px 80px' }}>
 
           <p style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 14, letterSpacing: 6, color: '#f59e0b', marginBottom: 8 }}>WELKOM</p>
           <h1 style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 'clamp(40px, 6vw, 64px)', color: '#f1f5f9', lineHeight: 1.0, letterSpacing: 1, marginBottom: 16 }}>

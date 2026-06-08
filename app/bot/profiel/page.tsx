@@ -199,7 +199,7 @@ export default function BotProfielPage() {
       )}
 
       <div style={{ minHeight: '100vh', paddingTop: 80, paddingBottom: 80 }}>
-        <div style={{ maxWidth: 680, margin: '0 auto', padding: '60px 24px 0' }}>
+        <div style={{ maxWidth: 812, margin: '0 auto', padding: '60px 24px 0' }}>
 
           <div style={{ borderBottom: '3px solid #f59e0b', paddingBottom: 32, marginBottom: 48 }}>
             <p style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 14, letterSpacing: 6, color: '#f59e0b', marginBottom: 8 }}>

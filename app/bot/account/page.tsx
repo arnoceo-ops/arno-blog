@@ -79,7 +79,7 @@ export default function AccountPage() {
 
       <BotNav active="account" />
 
-      <div style={{ maxWidth: 720, margin: '0 auto', padding: '120px 48px 80px' }}>
+      <div style={{ maxWidth: 812, margin: '0 auto', padding: '120px 48px 80px' }}>
 
         <p style={{ color: '#f59e0b', fontSize: 13, letterSpacing: 4, marginBottom: 8 }}>ACCOUNT</p>
         <h1 style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 64, letterSpacing: 3, margin: '0 0 48px 0', lineHeight: 1 }}>JOUW GEGEVENS</h1>
