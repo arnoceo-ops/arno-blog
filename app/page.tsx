@@ -98,7 +98,7 @@ export default async function Home() {
           font-family: 'Bebas Neue', sans-serif;
           font-size: clamp(28px, 3vw, 44px);
           letter-spacing: 4px; text-transform: uppercase;
-          color: rgba(240,237,230,0.6); line-height: 1.4;
+          color: rgba(241,245,249,0.6); line-height: 1.4;
         }
         .hero-tagline p span { color: rgba(245,158,11,0.9); }
         @media (min-width: 768px) { .hero-tagline { display: block; } }
@@ -171,7 +171,7 @@ export default async function Home() {
           padding: 14px 18px; width: 380px; max-width: 100%; transition: background 0.2s; margin-top: 8px;
           border-radius: 999px;
         }
-        .subscribe-btn:hover { background: #ff8800; }
+        .subscribe-btn:hover { background: #d97706; }
 
         /* ── FOOTER ── */
         footer {
@@ -203,7 +203,7 @@ export default async function Home() {
         .footer-links a:hover { color: #f59e0b; }
         .footer-bottom {
           grid-column: span 3; border-top: 1px solid #ddd; padding-top: 32px;
-          display: flex; justify-content: space-between; color: #aaa; font-size: 10px;
+          display: flex; justify-content: space-between; color: #6b7280; font-size: 10px;
         }
 
         /* ── MOBILE ── */

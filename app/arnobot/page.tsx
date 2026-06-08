@@ -100,7 +100,7 @@ export default async function ArnoBotLandingPage() {
           padding: 14px 18px; width: 380px; max-width: 100%; transition: background 0.2s; margin-top: 8px;
           border-radius: 999px;
         }
-        .subscribe-btn:hover { background: #ff8800; }
+        .subscribe-btn:hover { background: #d97706; }
         .subscribe-btn-dark {
           display: block; text-decoration: none; text-align: center;
           background: #1e293b; color: #9ca3af;
@@ -109,7 +109,7 @@ export default async function ArnoBotLandingPage() {
           padding: 14px 18px; width: 380px; max-width: 100%; transition: background 0.2s; margin-top: 8px;
           border-radius: 999px;
         }
-        .subscribe-btn-dark:hover { background: #222; color: #f1f5f9; }
+        .subscribe-btn-dark:hover { background: #111827; color: #f1f5f9; }
 
         /* ── PRICING CARDS (naast elkaar) ── */
         .pricing-pair {
@@ -147,7 +147,7 @@ export default async function ArnoBotLandingPage() {
         }
         .pricing-btn:hover { opacity: 0.85; }
         .pricing-guarantee {
-          font-size: 10px; color: #aaa; letter-spacing: 0.5px;
+          font-size: 10px; color: #6b7280; letter-spacing: 0.5px;
           font-family: 'Space Mono', monospace; text-align: center;
         }
 

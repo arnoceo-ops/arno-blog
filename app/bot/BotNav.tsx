@@ -81,7 +81,7 @@ export default function BotNav({ active }: Props) {
       onClick={() => setFeedbackOpen(false)}
     >
       <div
-        style={{ background: '#1f2937', border: '1px solid #222', maxWidth: 480, width: '100%', padding: 32 }}
+        style={{ background: '#1f2937', border: '1px solid #374151', maxWidth: 480, width: '100%', padding: 32 }}
         onClick={e => e.stopPropagation()}
       >
         <p style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 13, letterSpacing: 4, color: '#f59e0b', marginBottom: 8 }}>ARNOBOT</p>
@@ -104,7 +104,7 @@ export default function BotNav({ active }: Props) {
               >{feedbackLoading ? '...' : 'VERSTUUR'}</button>
               <button
                 onClick={() => setFeedbackOpen(false)}
-                style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 18, letterSpacing: 3, padding: '12px 28px', background: 'none', color: '#6b7280', border: '1px solid #222', cursor: 'pointer', borderRadius: 999 }}
+                style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 18, letterSpacing: 3, padding: '12px 28px', background: 'none', color: '#6b7280', border: '1px solid #374151', cursor: 'pointer', borderRadius: 999 }}
               >ANNULEER</button>
             </div>
           </>

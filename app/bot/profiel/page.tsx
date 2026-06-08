@@ -202,7 +202,7 @@ export default function BotProfielPage() {
         <div style={{ maxWidth: 812, margin: '0 auto', padding: '60px clamp(16px,4vw,20px) 0' }}>
 
           <div style={{ borderBottom: '3px solid #f59e0b', paddingBottom: 32, marginBottom: 48 }}>
-            <p style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 14, letterSpacing: 6, color: '#f59e0b', marginBottom: 8 }}>
+            <p style={{ fontFamily: "'Space Mono', monospace", fontSize: 13, letterSpacing: 4, color: '#f59e0b', marginBottom: 8 }}>
               {isFirstTime ? 'WELKOM' : 'JOUW PROFIEL'}
             </p>
             <h1 style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 64, color: '#f1f5f9', lineHeight: 1.05, letterSpacing: 1, marginBottom: 24 }}>

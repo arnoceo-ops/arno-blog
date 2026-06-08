@@ -592,7 +592,7 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
           display: block;
           field-sizing: content;
         }
-        .spar-textarea::placeholder { color: #aaa; font-style: normal; font-size: 15px; font-weight: 400; }
+        .spar-textarea::placeholder { color: #4b5563; font-style: normal; font-size: 15px; font-weight: 400; }
         .spar-textarea:focus { background: #1f2937; }
         .spar-buttons {
           display: flex; align-self: flex-end;
@@ -610,7 +610,7 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
         }
         @keyframes micpulse {
           0%, 100% { color: #f59e0b; }
-          50% { color: #ff4400; }
+          50% { color: #f59e0b; }
         }
 
         .spar-send {
@@ -621,7 +621,7 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
           transition: background 0.2s; white-space: nowrap; min-width: 120px;
           height: 55px; align-self: flex-end;
         }
-        .spar-send:hover { background: #ff8800; }
+        .spar-send:hover { background: #d97706; }
         .spar-send:disabled { background: #374151; color: #6b7280; cursor: not-allowed; }
         .spar-reset {
           background: #1f2937; color: #f1f5f9;
@@ -635,7 +635,7 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
         .spar-reset.accented { border: 1px solid #6b7280; border-left: 1px solid #6b7280; }
         .spar-reset.accented:hover { border-color: #9ca3af; }
         .spar-reset.sluiten { background: #f59e0b; color: #111827; border-left-color: #f59e0b; }
-        .spar-reset.sluiten:hover { background: #ff8800; }
+        .spar-reset.sluiten:hover { background: #d97706; }
         .spar-input-intro {
           font-family: 'Space Mono', monospace;
           font-size: 13px; font-weight: 400; letter-spacing: 4px; color: #f59e0b;
@@ -846,7 +846,7 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
           border-radius: 999px;
           transition: background 0.2s;
         }
-        .msg-cta-btn:hover { background: #ff8800; }
+        .msg-cta-btn:hover { background: #d97706; }
 
         /* EMPTY STATE */
         .empty-state {
@@ -1135,7 +1135,7 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
                 >GEBRUIK DIT</button>
                 <button
                   onClick={() => setVerfijndSuggestie('')}
-                  style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 15, letterSpacing: 3, padding: '8px 20px', background: 'none', color: '#6b7280', border: '1px solid #222', cursor: 'pointer', borderRadius: 999 }}
+                  style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 15, letterSpacing: 3, padding: '8px 20px', background: 'none', color: '#6b7280', border: '1px solid #374151', cursor: 'pointer', borderRadius: 999 }}
                 >NEGEER</button>
               </div>
             </div>
@@ -1237,7 +1237,7 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
 
       {navGuardOpen && (
         <div style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.85)', zIndex: 300, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 20 }}>
-          <div style={{ background: '#1f2937', border: '1px solid #222', maxWidth: 440, width: '100%', padding: 40 }}>
+          <div style={{ background: '#1f2937', border: '1px solid #374151', maxWidth: 440, width: '100%', padding: 40 }}>
             <p style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 13, letterSpacing: 4, color: '#f59e0b', marginBottom: 8 }}>ARNOBOT</p>
             <h2 style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 36, letterSpacing: 1, color: '#f1f5f9', marginBottom: 12 }}>WACHT EVEN</h2>
             <p style={{ fontFamily: "'Space Mono', monospace", fontSize: 14, color: '#9ca3af', lineHeight: 1.7, marginBottom: 28 }}>Je hebt een gesprek open. Wil je het sluiten voordat je verdergaat?</p>
@@ -1248,7 +1248,7 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
               >SLUIT GESPREK</button>
               <button
                 onClick={() => { setNavGuardOpen(false); setPendingNavDest(null) }}
-                style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 18, letterSpacing: 3, padding: '12px 28px', background: 'none', color: '#6b7280', border: '1px solid #222', cursor: 'pointer', borderRadius: 999 }}
+                style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 18, letterSpacing: 3, padding: '12px 28px', background: 'none', color: '#6b7280', border: '1px solid #374151', cursor: 'pointer', borderRadius: 999 }}
               >DOORGAAN</button>
             </div>
           </div>
@@ -1261,7 +1261,7 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
           onClick={() => setFeedbackOpen(false)}
         >
           <div
-            style={{ background: '#1f2937', border: '1px solid #222', maxWidth: 480, width: '100%', padding: 32 }}
+            style={{ background: '#1f2937', border: '1px solid #374151', maxWidth: 480, width: '100%', padding: 32 }}
             onClick={e => e.stopPropagation()}
           >
             <p style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 13, letterSpacing: 4, color: '#f59e0b', marginBottom: 8 }}>ARNOBOT</p>
@@ -1284,7 +1284,7 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
                   >{feedbackLoading ? '...' : 'VERSTUUR'}</button>
                   <button
                     onClick={() => setFeedbackOpen(false)}
-                    style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 18, letterSpacing: 3, padding: '12px 28px', background: 'none', color: '#6b7280', border: '1px solid #222', cursor: 'pointer', borderRadius: 999 }}
+                    style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 18, letterSpacing: 3, padding: '12px 28px', background: 'none', color: '#6b7280', border: '1px solid #374151', cursor: 'pointer', borderRadius: 999 }}
                   >ANNULEER</button>
                 </div>
               </>

@@ -229,7 +229,7 @@ export default function GeschiedenisPage() {
           padding: 11px 0; transition: background 0.15s;
           width: 180px; text-align: center; border-radius: 999px;
         }
-        .delete-bar-btn:hover { background: #ff8800; border-color: #ff8800; }
+        .delete-bar-btn:hover { background: #d97706; border-color: #d97706; }
         .delete-bar-btn:disabled { background: #374151; border-color: #374151; color: #6b7280; cursor: not-allowed; }
         .delete-bar-outline {
           background: none; border: none; box-shadow: inset 0 0 0 1px #f59e0b; cursor: pointer;
