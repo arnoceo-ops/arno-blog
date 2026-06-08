@@ -200,7 +200,7 @@ export default function GeschiedenisPage() {
           border-radius: 999px;
         }
         .sort-btn:hover { color: #f1f5f9; }
-        .sort-btn.active { background: #f59e0b; box-shadow: none; color: #f1f5f9; }
+        .sort-btn.active { background: #f59e0b; box-shadow: none; color: #111827; }
 
         .delete-bar {
           position: fixed; bottom: 0; left: 0; right: 0; z-index: 200;
@@ -225,7 +225,7 @@ export default function GeschiedenisPage() {
         .delete-bar-btn {
           background: #f59e0b; border: 1px solid #f59e0b; cursor: pointer;
           font-family: 'Bebas Neue', sans-serif;
-          font-size: 16px; letter-spacing: 3px; color: #f1f5f9;
+          font-size: 16px; letter-spacing: 3px; color: #111827;
           padding: 11px 0; transition: background 0.15s;
           width: 180px; text-align: center; border-radius: 999px;
         }
@@ -238,7 +238,7 @@ export default function GeschiedenisPage() {
           padding: 11px 0; transition: all 0.15s;
           width: 180px; text-align: center; border-radius: 999px;
         }
-        .delete-bar-outline:hover { background: #f59e0b; color: #f1f5f9; }
+        .delete-bar-outline:hover { background: #f59e0b; color: #111827; }
         .delete-bar-outline:disabled { border-color: #374151; color: #4b5563; cursor: not-allowed; }
 
         .session-checkbox {
@@ -291,7 +291,7 @@ export default function GeschiedenisPage() {
             style={{
               width: '100%', background: '#1f2937', border: '1px solid #374151',
               color: '#f1f5f9', fontFamily: "'Space Mono', monospace",
-              fontSize: 14, padding: '12px 16px', outline: 'none', letterSpacing: 1,
+              fontSize: 15, padding: '12px 16px', outline: 'none', letterSpacing: 1,
             }}
             onFocus={e => (e.target.style.borderColor = '#f59e0b')}
             onBlur={e => (e.target.style.borderColor = '#374151')}

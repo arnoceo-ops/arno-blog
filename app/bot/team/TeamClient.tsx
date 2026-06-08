@@ -69,7 +69,7 @@ const btnOutline: React.CSSProperties = {
   fontFamily: "'Bebas Neue', sans-serif",
   fontSize: 18, letterSpacing: 3,
   padding: '12px 32px',
-  background: 'none', border: '1px solid #6b7280',
+  background: 'none', border: '1px solid #374151',
   color: '#9ca3af', borderRadius: 999,
   cursor: 'pointer', transition: 'all 0.2s',
 }

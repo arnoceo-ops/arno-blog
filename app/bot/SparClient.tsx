@@ -816,7 +816,7 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
           background: #f59e0b; color: #111827;
         }
         .msg-action-btn.secondary {
-          color: #4b5563; border-color: #222;
+          color: #4b5563; border-color: #374151;
         }
         .msg-action-btn.secondary:hover {
           border-color: #6b7280; color: #9ca3af;
@@ -919,7 +919,7 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
           display: inline-block; margin-bottom: 40px;
           border-radius: 999px;
         }
-        .archief-btn:hover { background: #f59e0b; border-color: #f59e0b; color: #1f2937; }
+        .archief-btn:hover { background: #f59e0b; border-color: #f59e0b; color: #111827; }
       `}</style>
 
       {isMobile ? (

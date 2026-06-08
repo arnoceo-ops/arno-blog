@@ -350,7 +350,7 @@ export default function BotProfielPage() {
             style={{
               padding: '12px 36px',
               background: allFilled ? '#f59e0b' : '#1e293b',
-              color: allFilled ? '#f1f5f9' : '#374151',
+              color: allFilled ? '#111827' : '#374151',
               border: 'none', borderRadius: 999,
               fontFamily: "'Bebas Neue', sans-serif",
               fontSize: 18, letterSpacing: 3,

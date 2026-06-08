@@ -66,11 +66,11 @@ export default function QAClient({ isOnboarding }: { isOnboarding: boolean }) {
       <div style={{ minHeight: '100vh', paddingTop: 64, background: '#111827' }}>
         <div style={{ maxWidth: 812, margin: '0 auto', padding: 'clamp(60px,8vw,80px) clamp(16px,4vw,20px) 80px' }}>
 
-          <p style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 13, letterSpacing: 4, color: '#f59e0b', marginBottom: 8 }}>WELKOM</p>
+          <p style={{ fontFamily: "'Space Mono', monospace", fontSize: 13, letterSpacing: 4, color: '#f59e0b', marginBottom: 8 }}>WELKOM</p>
           <h1 style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 'clamp(40px, 6vw, 64px)', color: '#f1f5f9', lineHeight: 1.0, letterSpacing: 1, marginBottom: 16 }}>
             Voordat je begint.
           </h1>
-          <p style={{ fontFamily: "'Space Mono', monospace", fontSize: 14, color: '#9ca3af', lineHeight: 1.8, marginBottom: 48, maxWidth: 520 }}>
+          <p style={{ fontFamily: "'Space Mono', monospace", fontSize: 15, color: '#9ca3af', lineHeight: 1.9, marginBottom: 48, maxWidth: 520 }}>
             Kijk de introductievideo en lees de vragen hieronder.<br />
             Daarna richt je je profiel in. Dat duurt 3 minuten.
           </p>
@@ -92,7 +92,7 @@ export default function QAClient({ isOnboarding }: { isOnboarding: boolean }) {
 
           {/* FAQ */}
           <div style={{ borderTop: '3px solid #f59e0b', paddingTop: 40, marginBottom: 64 }}>
-            <p style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 13, letterSpacing: 4, color: '#f59e0b', marginBottom: 8 }}>VRAGEN</p>
+            <p style={{ fontFamily: "'Space Mono', monospace", fontSize: 13, letterSpacing: 4, color: '#f59e0b', marginBottom: 8 }}>VRAGEN</p>
             <h2 style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 40, color: '#f1f5f9', letterSpacing: 1, marginBottom: 40 }}>
               Veel gestelde vragen
             </h2>
@@ -101,7 +101,7 @@ export default function QAClient({ isOnboarding }: { isOnboarding: boolean }) {
               {FAQS.map((faq, i) => (
                 <div key={i} style={{ borderBottom: '1px solid #1e293b', paddingBottom: 28, marginBottom: 28 }}>
                   <p style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 22, letterSpacing: 1, color: '#f1f5f9', marginBottom: 10 }}>{faq.q}</p>
-                  <p style={{ fontFamily: "'Space Mono', monospace", fontSize: 13, color: '#9ca3af', lineHeight: 1.8 }}>{faq.a}</p>
+                  <p style={{ fontFamily: "'Space Mono', monospace", fontSize: 15, color: '#9ca3af', lineHeight: 1.9 }}>{faq.a}</p>
                 </div>
               ))}
             </div>
@@ -114,11 +114,11 @@ export default function QAClient({ isOnboarding }: { isOnboarding: boolean }) {
                 className="qa-continue"
                 style={{
                   display: 'inline-block',
-                  padding: '16px 48px',
+                  padding: '12px 36px',
                   background: '#f59e0b',
                   color: '#111827',
                   fontFamily: "'Bebas Neue', sans-serif",
-                  fontSize: 22,
+                  fontSize: 18,
                   letterSpacing: 3,
                   textDecoration: 'none',
                   borderRadius: 999,
