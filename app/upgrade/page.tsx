@@ -13,7 +13,7 @@ export default function UpgradePage() {
           --black: #111827;
           --orange: #f59e0b;
           --orange-dark: #cc6600;
-          --muted: #666;
+          --muted: #6b7280;
           --body: #374151;
         }
         .up-nav { background: var(--black); padding: 0 clamp(20px,5vw,48px); height: 64px; display: flex; align-items: center; justify-content: space-between; }

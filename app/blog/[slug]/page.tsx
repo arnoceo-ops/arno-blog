@@ -142,7 +142,7 @@ export default async function PostPage({ params }: { params: Promise<{ slug: str
           display: flex;
           justify-content: space-between;
           align-items: center;
-          border-bottom: 1px solid #1a1a1a;
+          border-bottom: 1px solid #1e293b;
           background: rgba(17,24,39,0.95);
           backdrop-filter: blur(10px);
         }
@@ -195,7 +195,7 @@ export default async function PostPage({ params }: { params: Promise<{ slug: str
           align-items: center;
           gap: 24px;
           padding-bottom: 40px;
-          border-bottom: 1px solid #1a1a1a;
+          border-bottom: 1px solid #1e293b;
         }
         .post-date {
           font-size: 11px;
@@ -305,7 +305,7 @@ export default async function PostPage({ params }: { params: Promise<{ slug: str
 
         /* ── POST NAVIGATION ── */
         .post-nav-bottom {
-          border-top: 1px solid #1a1a1a;
+          border-top: 1px solid #1e293b;
           display: grid;
           grid-template-columns: 1fr 1fr;
         }
@@ -324,7 +324,7 @@ export default async function PostPage({ params }: { params: Promise<{ slug: str
           background: #1f2937;
         }
         .post-nav-next {
-          border-left: 1px solid #1a1a1a;
+          border-left: 1px solid #1e293b;
           text-align: right;
           align-items: flex-end;
         }

@@ -285,7 +285,7 @@ export default async function ArnoBotLandingPage() {
             <div style={{background:'transparent', fontFamily:"'Bebas Neue', sans-serif", fontSize:'16px', letterSpacing:'4px', padding:'6px 18px', visibility:'hidden'}}>4 maanden gratis</div>
             <span style={{fontSize:'28px', letterSpacing:'3px', textTransform:'uppercase', color:'#f59e0b', fontFamily:"'Bebas Neue', sans-serif"}}>Per maand</span>
             <div style={{display:'flex', alignItems:'baseline', gap:'8px'}}>
-              <span style={{fontFamily:"'Bebas Neue', sans-serif", fontSize:'clamp(28px, 3vw, 44px)', color:'#666', letterSpacing:0}}>€</span>
+              <span style={{fontFamily:"'Bebas Neue', sans-serif", fontSize:'clamp(28px, 3vw, 44px)', color:'#6b7280', letterSpacing:0}}>€</span>
               <span style={{fontFamily:"'Bebas Neue', sans-serif", fontSize:'clamp(64px, 7vw, 104px)', color:'#f1f5f9', letterSpacing:'-2px', lineHeight:0.9}}>97</span>
             </div>
             <a href="/sign-up" style={{
@@ -306,7 +306,7 @@ export default async function ArnoBotLandingPage() {
             <div style={{background:'#f1f5f9', color:'#1e293b', fontFamily:"'Bebas Neue', sans-serif", fontSize:'16px', letterSpacing:'4px', textTransform:'uppercase', padding:'6px 18px', display:'inline-block'}}>4 maanden gratis</div>
             <span style={{fontSize:'28px', letterSpacing:'3px', textTransform:'uppercase', color:'#f59e0b', fontFamily:"'Bebas Neue', sans-serif"}}>Per jaar</span>
             <div style={{display:'flex', alignItems:'baseline', gap:'8px'}}>
-              <span style={{fontFamily:"'Bebas Neue', sans-serif", fontSize:'clamp(28px, 3vw, 44px)', color:'#666', letterSpacing:0}}>€</span>
+              <span style={{fontFamily:"'Bebas Neue', sans-serif", fontSize:'clamp(28px, 3vw, 44px)', color:'#6b7280', letterSpacing:0}}>€</span>
               <span style={{fontFamily:"'Bebas Neue', sans-serif", fontSize:'clamp(64px, 7vw, 104px)', color:'#f1f5f9', letterSpacing:'-2px', lineHeight:0.9}}>777</span>
             </div>
             <a href="/sign-up" style={{

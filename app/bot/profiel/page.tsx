@@ -215,7 +215,7 @@ export default function BotProfielPage() {
           </div>
 
           <Block nr="01" title="Wie ben je?">
-            <p style={{ fontSize: 15, fontWeight: 400, lineHeight: '30px', color: '#666', marginBottom: 12 }}>Wat is je rol?</p>
+            <p style={{ fontSize: 15, fontWeight: 400, lineHeight: '30px', color: '#9ca3af', marginBottom: 12 }}>Wat is je rol?</p>
             <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8 }}>
               {ROL_OPTIONS.map(o => (
                 <Chip key={o} label={o} selected={answers.rol === o} onClick={() => { set('rol', o); if (!HEEFT_TEAM.includes(o)) { set('teamgrootte', ''); set('gebruik', '') } }} />
@@ -251,7 +251,7 @@ export default function BotProfielPage() {
           </Block>
 
           <Block nr="02" title="Jouw markt">
-            <p style={{ fontSize: 15, fontWeight: 400, lineHeight: '30px', color: '#666', marginBottom: 12 }}>In welke markt ben je actief? <span style={{ color: '#4b5563' }}>(meerdere antwoorden mogelijk)</span></p>
+            <p style={{ fontSize: 15, fontWeight: 400, lineHeight: '30px', color: '#9ca3af', marginBottom: 12 }}>In welke markt ben je actief? <span style={{ color: '#4b5563' }}>(meerdere antwoorden mogelijk)</span></p>
             <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8 }}>
               {MARKT_OPTIONS.map(o => (
                 <Chip key={o} label={o} selected={answers.markt.includes(o)} onClick={() => toggleMarkt(o)} />
@@ -260,7 +260,7 @@ export default function BotProfielPage() {
           </Block>
 
           <Block nr="03" title="Wat verkoop je?">
-            <p style={{ fontSize: 15, fontWeight: 400, lineHeight: '30px', color: '#666', marginBottom: 12 }}>Omschrijf kort wat je verkoopt</p>
+            <p style={{ fontSize: 15, fontWeight: 400, lineHeight: '30px', color: '#9ca3af', marginBottom: 12 }}>Omschrijf kort wat je verkoopt</p>
             <textarea
               value={answers.wat_verkoop_je}
               onChange={e => set('wat_verkoop_je', e.target.value)}
@@ -270,7 +270,7 @@ export default function BotProfielPage() {
           </Block>
 
           <Block nr="04" title="Jouw ideale klant">
-            <p style={{ fontSize: 15, fontWeight: 400, lineHeight: '30px', color: '#666', marginBottom: 12 }}>Wie is jouw ideale klant?</p>
+            <p style={{ fontSize: 15, fontWeight: 400, lineHeight: '30px', color: '#9ca3af', marginBottom: 12 }}>Wie is jouw ideale klant?</p>
             <textarea
               value={answers.ideale_klant}
               onChange={e => set('ideale_klant', e.target.value)}
@@ -280,7 +280,7 @@ export default function BotProfielPage() {
           </Block>
 
           <Block nr="05" title="Jouw grootste uitdaging">
-            <p style={{ fontSize: 15, fontWeight: 400, lineHeight: '30px', color: '#666', marginBottom: 12 }}>Wat houdt jou nu het meest bezig in je saleswerk?</p>
+            <p style={{ fontSize: 15, fontWeight: 400, lineHeight: '30px', color: '#9ca3af', marginBottom: 12 }}>Wat houdt jou nu het meest bezig in je saleswerk?</p>
             <textarea
               value={answers.uitdaging}
               onChange={e => set('uitdaging', e.target.value)}
@@ -290,7 +290,7 @@ export default function BotProfielPage() {
           </Block>
 
           <Block nr="06" title="Gemiddelde dealgrootte">
-            <p style={{ fontSize: 15, fontWeight: 400, lineHeight: '30px', color: '#666', marginBottom: 12 }}>Wat is de gemiddelde waarde van een deal?</p>
+            <p style={{ fontSize: 15, fontWeight: 400, lineHeight: '30px', color: '#9ca3af', marginBottom: 12 }}>Wat is de gemiddelde waarde van een deal?</p>
             <input
               value={answers.dealgrootte}
               onChange={e => set('dealgrootte', e.target.value)}
@@ -299,7 +299,7 @@ export default function BotProfielPage() {
           </Block>
 
           <Block nr="07" title="Salescyclus">
-            <p style={{ fontSize: 15, fontWeight: 400, lineHeight: '30px', color: '#666', marginBottom: 12 }}>Hoe lang duurt een gemiddeld salestraject?</p>
+            <p style={{ fontSize: 15, fontWeight: 400, lineHeight: '30px', color: '#9ca3af', marginBottom: 12 }}>Hoe lang duurt een gemiddeld salestraject?</p>
             <input
               value={answers.salescyclus}
               onChange={e => set('salescyclus', e.target.value)}
@@ -308,7 +308,7 @@ export default function BotProfielPage() {
           </Block>
 
           <Block nr="08" title="Target">
-            <p style={{ fontSize: 15, fontWeight: 400, lineHeight: '30px', color: '#666', marginBottom: 12 }}>
+            <p style={{ fontSize: 15, fontWeight: 400, lineHeight: '30px', color: '#9ca3af', marginBottom: 12 }}>
               Verwacht je dit jaar je {getTargetLabel(answers.rol) ? `${getTargetLabel(answers.rol)} ` : ''}target te halen?
             </p>
             <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8, marginBottom: 28 }}>
@@ -316,7 +316,7 @@ export default function BotProfielPage() {
                 <Chip key={o} label={o} selected={answers.target_dit_jaar === o} onClick={() => set('target_dit_jaar', o)} />
               ))}
             </div>
-            <p style={{ fontSize: 15, fontWeight: 400, lineHeight: '30px', color: '#666', marginBottom: 12 }}>
+            <p style={{ fontSize: 15, fontWeight: 400, lineHeight: '30px', color: '#9ca3af', marginBottom: 12 }}>
               Heb je de afgelopen 3 jaar je {getTargetLabel(answers.rol) ? `${getTargetLabel(answers.rol)} ` : ''}target gehaald?
             </p>
             <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8 }}>
@@ -327,13 +327,13 @@ export default function BotProfielPage() {
           </Block>
 
           <Block nr="09" title="Jouw ervaring">
-            <p style={{ fontSize: 15, fontWeight: 400, lineHeight: '30px', color: '#666', marginBottom: 12 }}>Hoe lang zit je al in sales?</p>
+            <p style={{ fontSize: 15, fontWeight: 400, lineHeight: '30px', color: '#9ca3af', marginBottom: 12 }}>Hoe lang zit je al in sales?</p>
             <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8, marginBottom: 28 }}>
               {JAREN_SALES_OPTIONS.map(o => (
                 <Chip key={o} label={o} selected={answers.jaren_sales === o} onClick={() => set('jaren_sales', o)} />
               ))}
             </div>
-            <p style={{ fontSize: 15, fontWeight: 400, lineHeight: '30px', color: '#666', marginBottom: 12 }}>Hoe lang doe je al de functie die je hierboven hebt aangegeven?</p>
+            <p style={{ fontSize: 15, fontWeight: 400, lineHeight: '30px', color: '#9ca3af', marginBottom: 12 }}>Hoe lang doe je al de functie die je hierboven hebt aangegeven?</p>
             <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8 }}>
               {JAREN_FUNCTIE_OPTIONS.map(o => (
                 <Chip key={o} label={o} selected={answers.jaren_functie === o} onClick={() => set('jaren_functie', o)} />

@@ -59,7 +59,7 @@ export default function PrivacyPage() {
         .notice {
           background: #1f2937; border-left: 3px solid #f59e0b;
           padding: 20px 24px; margin-bottom: 40px;
-          font-size: 12px; color: #666; line-height: 1.8;
+          font-size: 12px; color: #6b7280; line-height: 1.8;
         }
 
         footer {

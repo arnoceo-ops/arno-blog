@@ -210,7 +210,7 @@ export default function CoachingClient({ userId }: Props) {
           <div style={{ maxWidth: 680, margin: '0 auto', textAlign: 'center' }}>
             <span style={{ fontFamily: "'Space Mono', monospace", fontSize: 13, letterSpacing: 4, color: '#f59e0b', display: 'block', marginBottom: 24 }}>UITDAGING VAN VANDAAG</span>
             <div style={{ border: '1px solid #374151', padding: '28px 32px' }}>
-              <p style={{ fontFamily: "'Space Mono', monospace", fontSize: 13, lineHeight: 2, color: '#d0cdc6' }}>{uitdaging}</p>
+              <p style={{ fontFamily: "'Space Mono', monospace", fontSize: 13, lineHeight: 2, color: '#9ca3af' }}>{uitdaging}</p>
             </div>
           </div>
         </div>

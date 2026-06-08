@@ -135,7 +135,7 @@ export default function CanvasAanmeldenPage() {
           font-family: 'Bebas Neue', sans-serif; font-size: 32px;
           letter-spacing: 2px; color: #f1f5f9; margin-bottom: 8px;
         }
-        .plan-desc { font-size: 12px; color: #666; line-height: 1.7; }
+        .plan-desc { font-size: 12px; color: #6b7280; line-height: 1.7; }
         .plan-card.active .plan-name { color: #f59e0b; }
 
         .seats-row { display: flex; gap: 8px; margin-top: 16px; }
@@ -155,7 +155,7 @@ export default function CanvasAanmeldenPage() {
         }
         .check-box.checked { border-color: #f59e0b; background: #1a1000; }
         .check-box.checked::after { content: '✓'; color: #f59e0b; font-size: 12px; }
-        .check-label { font-size: 12px; color: #666; line-height: 1.7; }
+        .check-label { font-size: 12px; color: #6b7280; line-height: 1.7; }
         .check-label a { color: #f59e0b; text-decoration: none; }
         .check-label a:hover { text-decoration: underline; }
 

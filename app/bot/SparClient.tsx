@@ -622,7 +622,7 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
           height: 55px; align-self: flex-end;
         }
         .spar-send:hover { background: #ff8800; }
-        .spar-send:disabled { background: #374151; color: #666; cursor: not-allowed; }
+        .spar-send:disabled { background: #374151; color: #6b7280; cursor: not-allowed; }
         .spar-reset {
           background: #1f2937; color: #f1f5f9;
           font-family: 'Bebas Neue', sans-serif;
@@ -753,7 +753,7 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
           color: #f59e0b; white-space: nowrap; padding-top: 2px; min-width: 48px;
         }
         .msg-arno-text {
-          font-size: 16px; line-height: 1.9; color: #d0cdc6;
+          font-size: 16px; line-height: 1.9; color: #9ca3af;
           max-width: 680px; white-space: pre-wrap;
         }
 
@@ -1127,7 +1127,7 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
           {verfijndSuggestie && (
             <div style={{ width: '100%', maxWidth: 812, background: '#1f2937', border: '1px solid #f59e0b', padding: '16px 20px', marginTop: 8 }}>
               <p style={{ fontFamily: "'Space Mono', monospace", fontSize: 13, color: '#f59e0b', letterSpacing: 2, marginBottom: 10 }}>VERFIJNDE VERSIE</p>
-              <p style={{ fontFamily: "'Space Mono', monospace", fontSize: 14, color: '#d0cdc6', lineHeight: 1.7, marginBottom: 16 }}>{verfijndSuggestie}</p>
+              <p style={{ fontFamily: "'Space Mono', monospace", fontSize: 14, color: '#9ca3af', lineHeight: 1.7, marginBottom: 16 }}>{verfijndSuggestie}</p>
               <div style={{ display: 'flex', gap: 10 }}>
                 <button
                   onClick={() => { setInput(verfijndSuggestie); setVerfijndSuggestie(''); setResizeInput(true) }}
