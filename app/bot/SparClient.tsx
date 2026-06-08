@@ -674,7 +674,7 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
         /* OPENERS */
         .spar-openers {
           padding: clamp(56px,8vw,96px) 20px 0;
-          border-top: 1px solid #1e293b;
+          background: #1f2937;
           border-bottom: 1px solid #1e293b;
           display: flex; flex-direction: column; align-items: center;
         }
