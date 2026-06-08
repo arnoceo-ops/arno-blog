@@ -519,9 +519,9 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
         .spar-hero {
           height: 400px;
           border-bottom: 3px solid #f59e0b;
-          display: flex; justify-content: space-between; align-items: flex-end;
+          display: flex; justify-content: space-between; align-items: flex-start;
           position: relative;
-          padding: 0 clamp(20px,5vw,60px) 28px 0;
+          padding: clamp(20px,3vw,36px) clamp(20px,5vw,60px) 28px 0;
           overflow: hidden;
         }
         .spar-title {
@@ -987,7 +987,7 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
             </h1>
           </div>
           {!isMobile && (
-            <div style={{ position: 'absolute', left: '50%', transform: 'translateX(-50%)', bottom: 0, display: 'flex', alignItems: 'flex-end', pointerEvents: 'none' }}>
+            <div style={{ position: 'absolute', left: '50%', transform: 'translateX(-50%)', top: 'clamp(20px,3vw,36px)', display: 'flex', alignItems: 'flex-start', pointerEvents: 'none' }}>
               {(() => {
                 const total = 17
                 const idx = Math.floor(Date.now() / (48 * 60 * 60 * 1000)) % total + 1
