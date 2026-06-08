@@ -529,7 +529,7 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
         }
         .spar-title span { color: #f59e0b; }
         .spar-tagline {
-          text-align: right; padding-bottom: 8px; flex: 1; align-self: center;
+          text-align: right; padding-bottom: 8px; flex: 1; min-width: 0; align-self: center;
         }
         .spar-tagline p { font-size: 15px; line-height: 1.9; color: #9ca3af; }
         .spar-tagline strong { font-weight: 700; color: #f1f5f9; font-family: 'Barlow', sans-serif; font-size: 26px; letter-spacing: 0.5px; display: block; margin-bottom: 6px; }
@@ -976,14 +976,14 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
       <div className="spar-page" style={started ? { paddingBottom: isMobile ? 200 : 110 } : {}}>
 
         <div className="spar-hero">
-          <div style={{ flex: 1, display: 'flex', alignItems: 'flex-start', gap: 'clamp(16px, 2vw, 32px)' }}>
-            <img src="/cyborg.jpg" alt="Arno" style={{ height: '300px', width: 'auto', objectFit: 'contain', display: 'block' }} />
+          <div style={{ flex: '0 0 auto', display: 'flex', alignItems: 'flex-start', gap: 'clamp(16px, 2vw, 32px)', minWidth: 0 }}>
+            <img src="/cyborg.jpg" alt="Arno" style={{ height: 'clamp(180px, 22vw, 300px)', width: 'auto', maxWidth: '180px', objectFit: 'contain', display: 'block', flexShrink: 0 }} />
             <h1 className="spar-title">
               ARNO<br /><span>BOT.</span>
             </h1>
           </div>
           {!isMobile && (
-            <div style={{ flex: 1, display: 'flex', justifyContent: 'center', alignItems: 'flex-end' }}>
+            <div style={{ flex: '1 1 0', display: 'flex', justifyContent: 'center', alignItems: 'flex-end', minWidth: 0, overflow: 'hidden' }}>
               {(() => {
                 const total = 17
                 const idx = Math.floor(Date.now() / (48 * 60 * 60 * 1000)) % total + 1
@@ -991,7 +991,7 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
                   <img
                     src={`/header-fotos/foto-${idx}.jpg`}
                     alt=""
-                    style={{ height: '300px', width: 'auto', objectFit: 'contain', display: 'block' }}
+                    style={{ maxHeight: '300px', width: 'auto', maxWidth: '100%', objectFit: 'contain', display: 'block' }}
                   />
                 )
               })()}
