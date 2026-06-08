@@ -61,7 +61,7 @@ function Chip({ label, selected, onClick }: { label: string; selected: boolean; 
       style={{
         padding: '8px 18px',
         border: selected ? '2px solid #f59e0b' : '1.5px solid #374151',
-        background: selected ? 'rgba(245,158,11,0.12)' : '#1f2937',
+        background: selected ? 'rgba(245,158,11,0.12)' : '#111827',
         color: selected ? '#f59e0b' : '#9ca3af',
         fontFamily: "'Space Mono', monospace",
         fontSize: 15,
@@ -78,7 +78,7 @@ function Chip({ label, selected, onClick }: { label: string; selected: boolean; 
 
 function Block({ nr, title, children }: { nr: string; title: string; children: React.ReactNode }) {
   return (
-    <div style={{ marginBottom: 48, borderBottom: '1px solid #1e293b', paddingBottom: 40 }}>
+    <div style={{ marginBottom: 48, borderBottom: '1px solid #374151', paddingBottom: 40 }}>
       <div style={{ display: 'flex', alignItems: 'baseline', gap: 12, marginBottom: 20 }}>
         <span style={{ fontFamily: "'Space Mono', monospace", fontSize: 13, letterSpacing: 4, color: '#f59e0b' }}>{nr}</span>
         <h3 style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 26, fontWeight: 400, color: '#f1f5f9', margin: 0, letterSpacing: 1 }}>{title}</h3>
@@ -160,9 +160,9 @@ export default function BotProfielPage() {
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Mono:wght@400;700&display=swap');
         * { box-sizing: border-box; margin: 0; padding: 0; }
-        body { background: #111827; color: #f1f5f9; font-family: 'Space Mono', monospace; font-size: 15px; font-weight: 400; line-height: 30px; }
+        body { background: #1f2937; color: #f1f5f9; font-family: 'Space Mono', monospace; font-size: 15px; font-weight: 400; line-height: 30px; }
         textarea, input {
-          background: #1f2937; color: #f1f5f9; border: 1.5px solid #374151;
+          background: #111827; color: #f1f5f9; border: 1.5px solid #374151;
           border-radius: 4px; font-family: 'Space Mono', monospace;
           font-size: 15px; font-weight: 400; padding: 12px 16px; width: 100%;
           box-sizing: border-box; outline: none; resize: vertical;
@@ -349,7 +349,7 @@ export default function BotProfielPage() {
             disabled={!allFilled || saving}
             style={{
               padding: '12px 36px',
-              background: allFilled ? '#f59e0b' : '#1e293b',
+              background: allFilled ? '#f59e0b' : '#374151',
               color: allFilled ? '#111827' : '#374151',
               border: 'none', borderRadius: 999,
               fontFamily: "'Bebas Neue', sans-serif",

@@ -81,7 +81,7 @@ export default function BotNav({ active }: Props) {
       onClick={() => setFeedbackOpen(false)}
     >
       <div
-        style={{ background: '#1f2937', border: '1px solid #374151', maxWidth: 480, width: '100%', padding: 32 }}
+        style={{ background: '#111827', border: '1px solid #374151', maxWidth: 480, width: '100%', padding: 32 }}
         onClick={e => e.stopPropagation()}
       >
         <p style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 13, letterSpacing: 4, color: '#f59e0b', marginBottom: 8 }}>ARNOBOT</p>

@@ -484,7 +484,7 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
           height: 56px; padding: 0 20px;
           display: flex; align-items: center; justify-content: space-between;
           border-bottom: 1px solid rgba(255,255,255,0.06);
-          background: rgba(31,41,55,0.97); backdrop-filter: blur(12px);
+          background: rgba(17,24,39,0.97); backdrop-filter: blur(12px);
         }
         .mob-nav-logo {
           font-family: 'Bebas Neue', sans-serif; font-size: 22px; letter-spacing: 3px;
@@ -604,9 +604,9 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
           padding: 0 18px; cursor: pointer; transition: all 0.2s;
           height: 55px; display: flex; align-items: center; justify-content: center;
         }
-        .spar-mic:hover { color: #f1f5f9; background: #1e293b; }
+        .spar-mic:hover { color: #f1f5f9; background: #374151; }
         .spar-mic.recording {
-          color: #f59e0b; background: #1e293b;
+          color: #f59e0b; background: #374151;
           animation: micpulse 1s ease-in-out infinite;
         }
         @keyframes micpulse {
@@ -632,7 +632,7 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
           transition: all 0.2s; white-space: nowrap; min-width: 120px;
           height: 55px; align-self: flex-end;
         }
-        .spar-reset:hover { background: #1e293b; }
+        .spar-reset:hover { background: #374151; }
         .spar-reset.accented { border: 1px solid #6b7280; border-left: 1px solid #6b7280; }
         .spar-reset.accented:hover { border-color: #9ca3af; }
         .spar-reset.sluiten { background: #f59e0b; color: #111827; border-left-color: #f59e0b; }
@@ -676,7 +676,7 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
         .spar-openers {
           padding: clamp(56px,8vw,96px) 20px 0;
           background: #1f2937;
-          border-bottom: 1px solid #1e293b;
+          border-bottom: 1px solid #374151;
           display: flex; flex-direction: column; align-items: center;
         }
         .opener-toggle {
@@ -882,7 +882,7 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
         /* BLOG SUGGESTIES NA GESPREK */
         .blog-suggestions {
           padding: 32px 0 48px;
-          border-top: 1px solid #1e293b;
+          border-top: 1px solid #374151;
           animation: fadein 0.5s ease;
         }
         .blog-suggestions-label {
@@ -895,7 +895,7 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
           font-family: 'Bebas Neue', sans-serif;
           font-size: 22px; letter-spacing: 1.5px;
           line-height: 1; padding: 14px 20px;
-          border-left: 3px solid #1e293b;
+          border-left: 3px solid #374151;
           margin-bottom: 2px;
           transition: all 0.15s;
         }
@@ -1016,7 +1016,7 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
         </div>
 
         {teamPrompt && !started && (
-          <div style={{ background: '#1f2937', borderTop: '1px solid #1e293b', borderBottom: '1px solid #1e293b', padding: '16px clamp(20px,5vw,60px)', display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: 12 }}>
+          <div style={{ background: '#1f2937', borderTop: '1px solid #374151', borderBottom: '1px solid #374151', padding: '16px clamp(20px,5vw,60px)', display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: 12 }}>
             <p style={{ fontFamily: "'Space Mono', monospace", fontSize: 13, color: '#9ca3af', margin: 0 }}>
               Je coacht een team — wil je ArnoBot ook voor je hele team inzetten?
             </p>

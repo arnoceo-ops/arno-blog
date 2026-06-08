@@ -32,7 +32,7 @@ export default function QAClient({ isOnboarding }: { isOnboarding: boolean }) {
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Mono:wght@400;700&display=swap');
         * { box-sizing: border-box; margin: 0; padding: 0; }
-        body { background: #111827; color: #f1f5f9; font-family: 'Space Mono', monospace; }
+        body { background: #1f2937; color: #f1f5f9; font-family: 'Space Mono', monospace; }
         .qa-continue:hover { background: #d97706 !important; }
       `}</style>
 
@@ -79,8 +79,8 @@ export default function QAClient({ isOnboarding }: { isOnboarding: boolean }) {
           <div style={{
             width: '100%',
             aspectRatio: '16/9',
-            background: '#1f2937',
-            border: '1px solid #1e293b',
+            background: '#111827',
+            border: '1px solid #374151',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
@@ -99,7 +99,7 @@ export default function QAClient({ isOnboarding }: { isOnboarding: boolean }) {
 
             <div style={{ display: 'flex', flexDirection: 'column', gap: 0 }}>
               {FAQS.map((faq, i) => (
-                <div key={i} style={{ borderBottom: '1px solid #1e293b', paddingBottom: 28, marginBottom: 28 }}>
+                <div key={i} style={{ borderBottom: '1px solid #374151', paddingBottom: 28, marginBottom: 28 }}>
                   <p style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 22, letterSpacing: 1, color: '#f1f5f9', marginBottom: 10 }}>{faq.q}</p>
                   <p style={{ fontFamily: "'Space Mono', monospace", fontSize: 15, color: '#9ca3af', lineHeight: 1.9 }}>{faq.a}</p>
                 </div>

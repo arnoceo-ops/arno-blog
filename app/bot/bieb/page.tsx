@@ -183,7 +183,7 @@ export default function GeschiedenisPage() {
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Mono:wght@400;700&display=swap');
         * { box-sizing: border-box; margin: 0; padding: 0; }
-        body { background: #111827; color: #f1f5f9; font-family: 'Space Mono', monospace; }
+        body { background: #1f2937; color: #f1f5f9; font-family: 'Space Mono', monospace; }
         @keyframes fadein { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
         @keyframes slideup { from { opacity: 0; transform: translateY(100%); } to { opacity: 1; transform: translateY(0); } }
         @keyframes blink { 0%,100%{opacity:0.2} 50%{opacity:1} }
@@ -193,7 +193,7 @@ export default function GeschiedenisPage() {
         .analyse-loading-bar { position:fixed;bottom:0;left:0;right:0;z-index:200;background:#111827;border-top:2px solid #f59e0b;padding:20px 40px;display:flex;align-items:center;justify-content:center;gap:12px;animation:slideup 0.2s ease; }
 
         .sort-btn {
-          background: #1f2937; border: none; box-shadow: inset 0 0 0 1px #f59e0b; color: #9ca3af;
+          background: #111827; border: none; box-shadow: inset 0 0 0 1px #f59e0b; color: #9ca3af;
           font-family: 'Bebas Neue', sans-serif;
           font-size: 15px; letter-spacing: 3px;
           padding: 9px 20px; cursor: pointer; transition: all 0.15s;
@@ -252,7 +252,7 @@ export default function GeschiedenisPage() {
         .session-checkbox.checked { border-color: #f59e0b; background: #f59e0b; color: #111827; }
 
         .analyse-item {
-          border-top: 1px solid #1e293b; padding: 20px 0;
+          border-top: 1px solid #374151; padding: 20px 0;
           animation: fadein 0.3s ease;
         }
         .analyse-item-header {
@@ -289,7 +289,7 @@ export default function GeschiedenisPage() {
             onChange={e => setSearch(e.target.value)}
             placeholder="Zoek in gesprekken..."
             style={{
-              width: '100%', background: '#1f2937', border: '1px solid #374151',
+              width: '100%', background: '#111827', border: '1px solid #374151',
               color: '#f1f5f9', fontFamily: "'Space Mono', monospace",
               fontSize: 15, padding: '12px 16px', outline: 'none', letterSpacing: 1,
             }}
@@ -358,7 +358,7 @@ export default function GeschiedenisPage() {
           const isSelected = selected.has(session.session_id)
           const isOpen = expanded === session.session_id
           return (
-            <div key={session.session_id} style={{ borderTop: '1px solid #1e293b', animation: 'fadein 0.3s ease' }}>
+            <div key={session.session_id} style={{ borderTop: '1px solid #374151', animation: 'fadein 0.3s ease' }}>
 
               {isMobile ? (
                 /* Mobile card layout */
@@ -437,21 +437,21 @@ export default function GeschiedenisPage() {
               {isOpen && (
                 <div style={{ paddingBottom: 40, animation: 'fadein 0.3s ease' }}>
                   {session.summary && (
-                    <div style={{ background: '#1f2937', borderLeft: '3px solid #f59e0b', padding: '20px 24px', marginBottom: 32 }}>
+                    <div style={{ background: '#111827', borderLeft: '3px solid #f59e0b', padding: '20px 24px', marginBottom: 32 }}>
                       <p style={{ color: '#f59e0b', fontSize: 11, letterSpacing: 4, textTransform: 'uppercase', marginBottom: 12 }}>SYNTHESE</p>
                       <p style={{ color: '#9ca3af', fontSize: 16, fontFamily: "'Space Mono', monospace", lineHeight: 1.9, marginBottom: session.blog_suggestions?.length ? 24 : 0 }}>{session.summary}</p>
                       {session.blog_suggestions && session.blog_suggestions.length > 0 && (
-                        <div style={{ borderTop: '1px solid #1e293b', paddingTop: 20 }}>
+                        <div style={{ borderTop: '1px solid #374151', paddingTop: 20 }}>
                           <p style={{ color: '#9ca3af', fontSize: 11, letterSpacing: 4, textTransform: 'uppercase', marginBottom: 12, fontFamily: "'Bebas Neue', sans-serif" }}>VERDER LEZEN</p>
                           {session.blog_suggestions.map((b, i) => (
                             <a key={i} href={b.url} target="_blank" rel="noopener noreferrer" style={{
                               display: 'block', color: '#9ca3af', textDecoration: 'none',
                               fontFamily: "'Bebas Neue', sans-serif", fontSize: 20, letterSpacing: 1.5,
                               lineHeight: 1, padding: '10px 16px', marginBottom: 2,
-                              borderLeft: '3px solid #1e293b', transition: 'all 0.15s',
+                              borderLeft: '3px solid #374151', transition: 'all 0.15s',
                             }}
-                            onMouseEnter={e => { (e.currentTarget as HTMLAnchorElement).style.color = '#f1f5f9'; (e.currentTarget as HTMLAnchorElement).style.borderLeftColor = '#f59e0b'; (e.currentTarget as HTMLAnchorElement).style.background = '#1f2937' }}
-                            onMouseLeave={e => { (e.currentTarget as HTMLAnchorElement).style.color = '#9ca3af'; (e.currentTarget as HTMLAnchorElement).style.borderLeftColor = '#1e293b'; (e.currentTarget as HTMLAnchorElement).style.background = 'none' }}
+                            onMouseEnter={e => { (e.currentTarget as HTMLAnchorElement).style.color = '#f1f5f9'; (e.currentTarget as HTMLAnchorElement).style.borderLeftColor = '#f59e0b'; (e.currentTarget as HTMLAnchorElement).style.background = '#111827' }}
+                            onMouseLeave={e => { (e.currentTarget as HTMLAnchorElement).style.color = '#9ca3af'; (e.currentTarget as HTMLAnchorElement).style.borderLeftColor = '#374151'; (e.currentTarget as HTMLAnchorElement).style.background = 'none' }}
                             >
                               {b.title}
                             </a>
@@ -468,7 +468,7 @@ export default function GeschiedenisPage() {
                     </div>
                   )}
                   {convMessages.map((msg, i) => (
-                    <div key={i} style={{ padding: '20px 0', borderTop: '1px solid #1f2937', display: 'flex', flexDirection: isMobile ? 'column' : 'row', gap: isMobile ? 4 : 32, alignItems: 'flex-start' }}>
+                    <div key={i} style={{ padding: '20px 0', borderTop: '1px solid #374151', display: 'flex', flexDirection: isMobile ? 'column' : 'row', gap: isMobile ? 4 : 32, alignItems: 'flex-start' }}>
                       <span style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 14, letterSpacing: 3, color: msg.role === 'user' ? '#9ca3af' : '#f59e0b', whiteSpace: 'nowrap', paddingTop: isMobile ? 0 : 3, minWidth: isMobile ? 0 : 60 }}>
                         {msg.role === 'user' ? 'JIJ' : 'ARNO'}
                       </span>
@@ -479,7 +479,7 @@ export default function GeschiedenisPage() {
                     </div>
                   ))}
 
-                  <div style={{ marginTop: 24, paddingTop: 24, borderTop: '1px solid #1f2937' }}>
+                  <div style={{ marginTop: 24, paddingTop: 24, borderTop: '1px solid #374151' }}>
                     <Link
                       href={`/bot?resume=${session.session_id}`}
                       style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 18, letterSpacing: 3, color: '#9ca3af', textDecoration: 'none' }}
@@ -497,7 +497,7 @@ export default function GeschiedenisPage() {
 
         {/* Toon meer / minder sessies */}
         {!search && sorted.length > 5 && (
-          <div style={{ borderTop: '1px solid #1e293b', padding: '28px 0', textAlign: 'center' }}>
+          <div style={{ borderTop: '1px solid #374151', padding: '28px 0', textAlign: 'center' }}>
             <button
               onClick={() => setShowAllSessions(v => !v)}
               style={{ background: 'none', border: '1px solid #374151', cursor: 'pointer', fontFamily: "'Bebas Neue', sans-serif", fontSize: 16, letterSpacing: 3, color: '#9ca3af', padding: '11px 32px', borderRadius: 999, transition: 'all 0.15s' }}
@@ -511,12 +511,12 @@ export default function GeschiedenisPage() {
 
         {/* Analyses sectie */}
         {(activeAnalyse || savedAnalyses.length > 0) && (
-          <div ref={analysesSectionRef} style={{ borderTop: '1px solid #1e293b', paddingTop: 40, marginTop: 16 }}>
+          <div ref={analysesSectionRef} style={{ borderTop: '1px solid #374151', paddingTop: 40, marginTop: 16 }}>
             <p style={{ color: '#f59e0b', fontSize: 13, letterSpacing: 4, marginBottom: 8 }}>ARNOBOT</p>
             <h2 style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 64, letterSpacing: 3, lineHeight: 1, marginBottom: 48 }}>ANALYSES</h2>
 
             {activeAnalyse && !isDuplicateAnalyse && !isSimilarAnalyse && (
-              <div style={{ marginBottom: 28, background: '#1f2937', borderLeft: '3px solid #f59e0b', padding: '20px 24px' }}>
+              <div style={{ marginBottom: 28, background: '#111827', borderLeft: '3px solid #f59e0b', padding: '20px 24px' }}>
                 <p style={{ color: '#f59e0b', fontSize: 11, letterSpacing: 4, textTransform: 'uppercase', marginBottom: 12 }}>NIEUW GEGENEREERD</p>
                 <p style={{ color: '#9ca3af', fontSize: 16, lineHeight: 1.9, fontFamily: "'Space Mono', monospace", whiteSpace: 'pre-wrap', marginBottom: 16 }}>{activeAnalyse}</p>
                 <button
@@ -533,7 +533,7 @@ export default function GeschiedenisPage() {
               </p>
             )}
             {isSimilarAnalyse && (
-              <div style={{ background: '#1f2937', borderLeft: '3px solid #6b7280', padding: '20px 24px', marginBottom: 28 }}>
+              <div style={{ background: '#111827', borderLeft: '3px solid #6b7280', padding: '20px 24px', marginBottom: 28 }}>
                 <p style={{ color: '#9ca3af', fontSize: 13, letterSpacing: 3, fontFamily: "'Bebas Neue', sans-serif", marginBottom: 10 }}>WEINIG VERANDERD</p>
                 <p style={{ color: '#6b7280', fontSize: 14, lineHeight: 1.9, fontFamily: "'Space Mono', monospace" }}>
                   Je gesprekken overlappen voor meer dan 80% met een eerdere analyse. Er is niet genoeg veranderd om iets nieuws te zeggen. Ga eens aan de slag met wat er al staat — voer nieuwe gesprekken en kom dan terug.
@@ -542,7 +542,7 @@ export default function GeschiedenisPage() {
             )}
 
             {savedAnalyses.map(a => (
-              <div key={a.id} style={{ borderTop: '1px solid #1e293b', animation: 'fadein 0.3s ease' }}>
+              <div key={a.id} style={{ borderTop: '1px solid #374151', animation: 'fadein 0.3s ease' }}>
                 <button
                   onClick={() => setExpandedAnalyse(expandedAnalyse === a.id ? null : a.id)}
                   style={{ width: '100%', background: 'none', border: 'none', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 24, textAlign: 'left', padding: '28px 0' }}
@@ -575,7 +575,7 @@ export default function GeschiedenisPage() {
         )}
 
         {sorted.length > 0 && (
-          <div style={{ borderTop: '1px solid #1e293b', paddingTop: 40, marginTop: 40, display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: 16 }}>
+          <div style={{ borderTop: '1px solid #374151', paddingTop: 40, marginTop: 40, display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: 16 }}>
             <Link href="/bot" style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 18, letterSpacing: 3, color: '#f59e0b', textDecoration: 'none' }}>
               ← TERUG NAAR ARNOBOT
             </Link>
