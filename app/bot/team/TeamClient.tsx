@@ -186,7 +186,7 @@ export default function TeamClient() {
       <BotNav active="team" />
 
       <div style={{ minHeight: '100vh', background: '#111827' }}>
-        <div style={{ maxWidth: 812, margin: '0 auto', padding: '120px 48px 80px' }}>
+        <div style={{ maxWidth: 812, margin: '0 auto', padding: 'clamp(80px,12vw,120px) clamp(16px,4vw,20px) 80px' }}>
 
           {loading && (
             <p style={{ ...body, color: '#6b7280', letterSpacing: 2 }}>LADEN...</p>
