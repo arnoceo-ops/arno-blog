@@ -521,7 +521,6 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
           border-bottom: 3px solid #f59e0b;
           display: flex; justify-content: space-between; align-items: flex-end;
           flex-wrap: wrap; gap: 24px;
-          position: relative;
         }
         .spar-title {
           font-family: 'Bebas Neue', sans-serif;
@@ -977,13 +976,13 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
 
         <div className="spar-hero">
           <div style={{ flex: '0 0 auto', display: 'flex', alignItems: 'flex-start', gap: 'clamp(16px, 2vw, 32px)', minWidth: 0 }}>
-            <img src="/cyborg.jpg" alt="Arno" style={{ height: 'clamp(180px, 22vw, 300px)', width: 'auto', display: 'block', flexShrink: 0 }} />
+            <img src="/cyborg.jpg" alt="Arno" style={{ height: 'clamp(180px, 22vw, 300px)', width: 'auto', maxWidth: '180px', objectFit: 'contain', display: 'block', flexShrink: 0 }} />
             <h1 className="spar-title">
               ARNO<br /><span>BOT.</span>
             </h1>
           </div>
           {!isMobile && (
-            <div style={{ position: 'absolute', left: '50%', transform: 'translateX(-50%)', bottom: 0, display: 'flex', alignItems: 'flex-end', pointerEvents: 'none' }}>
+            <div style={{ flex: '1 1 0', display: 'flex', justifyContent: 'center', alignItems: 'flex-end', minWidth: 0, overflow: 'hidden' }}>
               {(() => {
                 const total = 17
                 const idx = Math.floor(Date.now() / (48 * 60 * 60 * 1000)) % total + 1
@@ -991,7 +990,7 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
                   <img
                     src={`/header-fotos/foto-${idx}.jpg`}
                     alt=""
-                    style={{ maxHeight: 'clamp(180px, 22vw, 300px)', width: 'auto', display: 'block' }}
+                    style={{ maxHeight: '300px', width: 'auto', maxWidth: '100%', objectFit: 'contain', display: 'block' }}
                   />
                 )
               })()}
