@@ -39,7 +39,7 @@ export default function UpgradePage() {
         .up-amount { font-family: 'Bebas Neue', sans-serif; font-size: 64px; line-height: 1; color: var(--black); }
         .up-card-dark .up-amount { color: #fff; }
         .up-divider { height: 1px; background: #ddd; margin: 0 0 24px; }
-        .up-card-dark .up-divider { background: #1e1e1e; }
+        .up-card-dark .up-divider { background: #1e293b; }
         .up-features { list-style: none; display: flex; flex-direction: column; gap: 10px; margin-bottom: 32px; flex: 1; padding: 0; }
         .up-features li { font-size: 15px; color: var(--body); padding-left: 20px; position: relative; line-height: 1.5; }
         .up-features li::before { content: '→'; position: absolute; left: 0; color: var(--orange); font-size: 12px; }

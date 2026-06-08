@@ -1,4 +1,4 @@
-'use client'
+﻿'use client'
 
 import { useSignIn, useUser } from '@clerk/nextjs'
 import { useState, useEffect } from 'react'
@@ -44,7 +44,7 @@ export default function SignInPage() {
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Mono:wght@400;700&display=swap');
         * { box-sizing: border-box; margin: 0; padding: 0; }
-        body { background: #0a0a0a; color: #f0ede6; font-family: 'Space Mono', monospace; }
+        body { background: #111827; color: #f1f5f9; font-family: 'Space Mono', monospace; }
         .li-btn {
           padding: 10px 28px; background: #0A66C2; color: #fff;
           border: none; border-radius: 999px; font-family: 'Bebas Neue', sans-serif;
@@ -54,7 +54,7 @@ export default function SignInPage() {
         .li-btn:hover { background: #0856A4; }
         .li-btn:disabled { background: #444; cursor: not-allowed; }
       `}</style>
-      <div style={{ display: 'flex', minHeight: '100vh', alignItems: 'center', justifyContent: 'center', backgroundColor: '#0a0a0a', padding: '40px 20px' }}>
+      <div style={{ display: 'flex', minHeight: '100vh', alignItems: 'center', justifyContent: 'center', backgroundColor: '#111827', padding: '40px 20px' }}>
         <div style={{ width: '100%', maxWidth: 400, display: 'flex', flexDirection: 'column', gap: 24 }}>
           <div style={{ textAlign: 'center' }}>
             <p style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 13, letterSpacing: 6, color: '#EE7700', marginBottom: 8 }}>ARNOBOT UNLIMITED</p>

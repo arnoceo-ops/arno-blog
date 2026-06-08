@@ -458,7 +458,7 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
         @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Mono:wght@400;700&family=Barlow:wght@400;700&family=Barlow+Condensed:wght@300;600;900&display=swap');
         * { box-sizing: border-box; margin: 0; padding: 0; }
         html, body { height: 100%; }
-        body { background: #141414; color: #f1f5f9; font-family: 'Space Mono', monospace; }
+        body { background: #1f2937; color: #f1f5f9; font-family: 'Space Mono', monospace; }
 
                 /* NAV */
         .site-nav {
@@ -540,8 +540,8 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
         @media (max-width: 700px) {
           .spar-input-row { flex-direction: column; }
           .spar-textarea { flex: none; width: 100%; }
-          .spar-buttons { align-self: stretch; border-top: 1px solid #2a2a2a; }
-          .spar-mic { height: 48px; width: 52px; flex-shrink: 0; border-left: none; border-right: 1px solid #2a2a2a; }
+          .spar-buttons { align-self: stretch; border-top: 1px solid #374151; }
+          .spar-mic { height: 48px; width: 52px; flex-shrink: 0; border-left: none; border-right: 1px solid #374151; }
           .spar-send { flex: 1; min-width: 0; height: 48px; font-size: 17px; padding: 0 20px; }
           .spar-reset { height: 48px; padding: 0 16px; font-size: 15px; }
           .spar-openers { overflow-x: hidden; }
@@ -553,7 +553,7 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
 
         /* INPUT — BOVEN BIJ NIEUW GESPREK, STICKY-ONDER BIJ ACTIEF */
         .spar-input-area {
-          background: #141414;
+          background: #1f2937;
           padding: clamp(24px,4vw,40px) clamp(20px,5vw,60px) clamp(32px,5vw,56px);
           display: flex;
           flex-direction: column;
@@ -593,13 +593,13 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
           field-sizing: content;
         }
         .spar-textarea::placeholder { color: #aaa; font-style: normal; font-size: 15px; font-weight: 400; }
-        .spar-textarea:focus { background: #161616; }
+        .spar-textarea:focus { background: #1f2937; }
         .spar-buttons {
           display: flex; align-self: flex-end;
         }
         .spar-mic {
           background: #1f2937; color: #6b7280;
-          font-size: 20px; border: none; border-left: 1px solid #2a2a2a;
+          font-size: 20px; border: none; border-left: 1px solid #374151;
           padding: 0 18px; cursor: pointer; transition: all 0.2s;
           height: 55px; display: flex; align-items: center; justify-content: center;
         }
@@ -627,7 +627,7 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
           background: #1f2937; color: #f1f5f9;
           font-family: 'Bebas Neue', sans-serif;
           font-size: 20px; letter-spacing: 3px;
-          padding: 0 32px; border: none; border-left: 1px solid #2a2a2a; cursor: pointer;
+          padding: 0 32px; border: none; border-left: 1px solid #374151; cursor: pointer;
           transition: all 0.2s; white-space: nowrap; min-width: 120px;
           height: 55px; align-self: flex-end;
         }
@@ -727,7 +727,7 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
         }
 
         .msg-user {
-          padding: clamp(24px,4vw,40px) 0; border-bottom: 1px solid #141414;
+          padding: clamp(24px,4vw,40px) 0; border-bottom: 1px solid #1f2937;
           display: flex; gap: clamp(16px,3vw,40px); align-items: flex-start;
         }
         .msg-user-label {
@@ -741,7 +741,7 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
         }
 
         .msg-arno {
-          padding: clamp(24px,4vw,40px) 0; border-bottom: 1px solid #141414;
+          padding: clamp(24px,4vw,40px) 0; border-bottom: 1px solid #1f2937;
           display: flex; gap: clamp(16px,3vw,40px); align-items: flex-start;
         }
         .msg-arno-label {
@@ -795,12 +795,12 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
         .msg-actions {
           padding: 20px 0 20px 120px;
           display: flex; gap: 12px; align-items: center;
-          border-bottom: 1px solid #141414;
+          border-bottom: 1px solid #1f2937;
           animation: fadein 0.4s ease;
         }
         @keyframes fadein { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
         .msg-action-btn {
-          background: none; border: 1px solid #2a2a2a;
+          background: none; border: 1px solid #374151;
           font-family: 'Bebas Neue', sans-serif;
           font-size: 15px; letter-spacing: 2px;
           padding: 10px 20px; cursor: pointer; transition: all 0.15s;
@@ -823,12 +823,12 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
         .msg-hint {
           padding: 16px 0 16px 120px;
           font-size: 12px; letter-spacing: 2px; text-transform: uppercase;
-          color: #f59e0b; border-bottom: 1px solid #141414;
+          color: #f59e0b; border-bottom: 1px solid #1f2937;
           animation: fadein 0.4s ease;
         }
         .msg-cta {
           padding: 24px 0 24px 120px;
-          border-bottom: 1px solid #141414;
+          border-bottom: 1px solid #1f2937;
           animation: fadein 0.4s ease;
         }
         .msg-cta p {
@@ -916,7 +916,7 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
           display: inline-block; margin-bottom: 40px;
           border-radius: 999px;
         }
-        .archief-btn:hover { background: #f59e0b; border-color: #f59e0b; color: #141414; }
+        .archief-btn:hover { background: #f59e0b; border-color: #f59e0b; color: #1f2937; }
       `}</style>
 
       {isMobile ? (

@@ -289,12 +289,12 @@ export default function GeschiedenisPage() {
             onChange={e => setSearch(e.target.value)}
             placeholder="Zoek in gesprekken..."
             style={{
-              width: '100%', background: '#1f2937', border: '1px solid #2a2a2a',
+              width: '100%', background: '#1f2937', border: '1px solid #374151',
               color: '#f1f5f9', fontFamily: "'Space Mono', monospace",
               fontSize: 14, padding: '12px 16px', outline: 'none', letterSpacing: 1,
             }}
             onFocus={e => (e.target.style.borderColor = '#f59e0b')}
-            onBlur={e => (e.target.style.borderColor = '#2a2a2a')}
+            onBlur={e => (e.target.style.borderColor = '#374151')}
           />
         </div>
 
@@ -331,7 +331,7 @@ export default function GeschiedenisPage() {
         )}
 
         {!loading && sorted.length > 0 && (
-          <p style={{ fontFamily: "'Space Mono', monospace", fontSize: 15, fontWeight: 400, color: 'rgb(136,136,136)', border: '1px solid #2a2a2a', borderLeft: '3px solid #f59e0b', padding: '10px 16px', display: 'inline-block', marginBottom: 24 }}>
+          <p style={{ fontFamily: "'Space Mono', monospace", fontSize: 15, fontWeight: 400, color: 'rgb(136,136,136)', border: '1px solid #374151', borderLeft: '3px solid #f59e0b', padding: '10px 16px', display: 'inline-block', marginBottom: 24 }}>
             Selecteer minimaal 3 gesprekken voor een analyse.
           </p>
         )}
