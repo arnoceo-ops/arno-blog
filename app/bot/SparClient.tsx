@@ -532,9 +532,9 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
         .spar-title span { color: #f59e0b; }
         .spar-tagline {
           text-align: right; flex: 1; min-width: 0;
-          align-self: stretch;
-          display: flex; flex-direction: column; justify-content: space-between;
-          padding-top: 20px; padding-bottom: 12px;
+          align-self: flex-start;
+          display: flex; flex-direction: column; justify-content: flex-start;
+          gap: clamp(10px, 1.5vw, 18px);
         }
         .spar-tagline p { font-size: 15px; line-height: 1.9; color: #9ca3af; }
         @media (max-width: 600px) {
