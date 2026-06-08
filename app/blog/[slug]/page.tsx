@@ -1,4 +1,4 @@
-import { client } from '@/sanity/client'
+﻿import { client } from '@/sanity/client'
 import { PortableText } from '@portabletext/react'
 import imageUrlBuilder from '@sanity/image-url'
 import Link from 'next/link'
@@ -143,7 +143,7 @@ export default async function PostPage({ params }: { params: Promise<{ slug: str
           justify-content: space-between;
           align-items: center;
           border-bottom: 1px solid #1a1a1a;
-          background: rgba(10,10,10,0.95);
+          background: rgba(17,24,39,0.95);
           backdrop-filter: blur(10px);
         }
         .nav-logo {

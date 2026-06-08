@@ -15,7 +15,7 @@ const navStyle = {
   padding: '0 40px', height: 64,
   display: 'flex', alignItems: 'center',
   borderBottom: '1px solid rgba(255,255,255,0.06)',
-  background: 'rgba(10,10,10,0.95)', backdropFilter: 'blur(12px)',
+  background: 'rgba(17,24,39,0.95)', backdropFilter: 'blur(12px)',
 }
 
 const logoutBtnStyle: React.CSSProperties = {
@@ -117,7 +117,7 @@ export default function BotNav({ active }: Props) {
     return (
       <>
         <style>{`
-          .mob-nav { position:fixed;top:0;left:0;right:0;z-index:100;height:56px;padding:0 20px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid rgba(255,255,255,0.06);background:rgba(10,10,10,0.97);backdrop-filter:blur(12px); }
+          .mob-nav { position:fixed;top:0;left:0;right:0;z-index:100;height:56px;padding:0 20px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid rgba(255,255,255,0.06);background:rgba(17,24,39,0.97);backdrop-filter:blur(12px); }
           .mob-nav-logo { font-family:'Bebas Neue',sans-serif;font-size:22px;letter-spacing:3px;color:#f1f5f9;text-decoration:none; }
           .mob-nav-logo span { color:#f59e0b; }
           .mob-hamburger { background:none;border:none;cursor:pointer;display:flex;flex-direction:column;gap:5px;padding:8px; }

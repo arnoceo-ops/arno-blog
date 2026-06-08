@@ -437,7 +437,7 @@ export default function GeschiedenisPage() {
               {isOpen && (
                 <div style={{ paddingBottom: 40, animation: 'fadein 0.3s ease' }}>
                   {session.summary && (
-                    <div style={{ background: '#0f0f0f', borderLeft: '3px solid #f59e0b', padding: '20px 24px', marginBottom: 32 }}>
+                    <div style={{ background: '#1f2937', borderLeft: '3px solid #f59e0b', padding: '20px 24px', marginBottom: 32 }}>
                       <p style={{ color: '#f59e0b', fontSize: 11, letterSpacing: 4, textTransform: 'uppercase', marginBottom: 12 }}>SYNTHESE</p>
                       <p style={{ color: '#d0cdc6', fontSize: 16, fontFamily: "'Space Mono', monospace", lineHeight: 1.9, marginBottom: session.blog_suggestions?.length ? 24 : 0 }}>{session.summary}</p>
                       {session.blog_suggestions && session.blog_suggestions.length > 0 && (
@@ -516,7 +516,7 @@ export default function GeschiedenisPage() {
             <h2 style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 64, letterSpacing: 3, lineHeight: 1, marginBottom: 48 }}>ANALYSES</h2>
 
             {activeAnalyse && !isDuplicateAnalyse && !isSimilarAnalyse && (
-              <div style={{ marginBottom: 28, background: '#0f0f0f', borderLeft: '3px solid #f59e0b', padding: '20px 24px' }}>
+              <div style={{ marginBottom: 28, background: '#1f2937', borderLeft: '3px solid #f59e0b', padding: '20px 24px' }}>
                 <p style={{ color: '#f59e0b', fontSize: 11, letterSpacing: 4, textTransform: 'uppercase', marginBottom: 12 }}>NIEUW GEGENEREERD</p>
                 <p style={{ color: '#d0cdc6', fontSize: 16, lineHeight: 1.9, fontFamily: "'Space Mono', monospace", whiteSpace: 'pre-wrap', marginBottom: 16 }}>{activeAnalyse}</p>
                 <button
@@ -533,7 +533,7 @@ export default function GeschiedenisPage() {
               </p>
             )}
             {isSimilarAnalyse && (
-              <div style={{ background: '#0f0f0f', borderLeft: '3px solid #6b7280', padding: '20px 24px', marginBottom: 28 }}>
+              <div style={{ background: '#1f2937', borderLeft: '3px solid #6b7280', padding: '20px 24px', marginBottom: 28 }}>
                 <p style={{ color: '#9ca3af', fontSize: 13, letterSpacing: 3, fontFamily: "'Bebas Neue', sans-serif", marginBottom: 10 }}>WEINIG VERANDERD</p>
                 <p style={{ color: '#666', fontSize: 14, lineHeight: 1.9, fontFamily: "'Space Mono', monospace" }}>
                   Je gesprekken overlappen voor meer dan 80% met een eerdere analyse. Er is niet genoeg veranderd om iets nieuws te zeggen. Ga eens aan de slag met wat er al staat — voer nieuwe gesprekken en kom dan terug.

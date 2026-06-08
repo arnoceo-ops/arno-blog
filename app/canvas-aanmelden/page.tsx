@@ -65,7 +65,7 @@ export default function CanvasAanmeldenPage() {
           position: fixed; top: 0; left: 0; right: 0; z-index: 100;
           padding: 16px 40px; display: flex; justify-content: center;
           border-bottom: 1px solid rgba(255,255,255,0.06);
-          background: rgba(10,10,10,0.9); backdrop-filter: blur(12px);
+          background: rgba(17,24,39,0.9); backdrop-filter: blur(12px);
         }
         .nav-links { display: flex; gap: 48px; align-items: center; }
         .nav-links a {
@@ -109,7 +109,7 @@ export default function CanvasAanmeldenPage() {
         }
         .label span { color: #f59e0b; }
         .input {
-          width: 100%; background: #0f0f0f; border: 1px solid #222;
+          width: 100%; background: #1f2937; border: 1px solid #222;
           color: #f1f5f9; font-family: 'Space Mono', monospace; font-size: 14px;
           padding: 14px 18px; outline: none; transition: border-color 0.2s;
           appearance: none;
@@ -121,7 +121,7 @@ export default function CanvasAanmeldenPage() {
 
         .plan-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2px; }
         .plan-card {
-          background: #0f0f0f; border: 1px solid #222;
+          background: #1f2937; border: 1px solid #222;
           padding: 28px 24px; cursor: pointer; transition: border-color 0.2s;
           position: relative;
         }
@@ -140,7 +140,7 @@ export default function CanvasAanmeldenPage() {
 
         .seats-row { display: flex; gap: 8px; margin-top: 16px; }
         .seat-btn {
-          width: 44px; height: 44px; background: #0f0f0f; border: 1px solid #222;
+          width: 44px; height: 44px; background: #1f2937; border: 1px solid #222;
           color: #9ca3af; font-family: 'Space Mono', monospace; font-size: 14px;
           cursor: pointer; transition: all 0.15s;
         }
@@ -149,7 +149,7 @@ export default function CanvasAanmeldenPage() {
 
         .check-row { display: flex; align-items: flex-start; gap: 14px; margin-bottom: 18px; cursor: pointer; }
         .check-box {
-          width: 20px; height: 20px; min-width: 20px; background: #0f0f0f;
+          width: 20px; height: 20px; min-width: 20px; background: #1f2937;
           border: 1px solid #374151; display: flex; align-items: center; justify-content: center;
           transition: border-color 0.2s; margin-top: 1px;
         }
@@ -181,7 +181,7 @@ export default function CanvasAanmeldenPage() {
         .success-sub { font-size: 13px; color: #9ca3af; line-height: 1.9; max-width: 480px; margin: 0 auto; }
 
         footer {
-          background: #050505; padding: 40px 60px;
+          background: #0d1117; padding: 40px 60px;
           display: flex; justify-content: space-between; align-items: center;
           border-top: 1px solid #1f2937;
         }

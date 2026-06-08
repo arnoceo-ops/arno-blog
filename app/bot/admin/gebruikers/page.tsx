@@ -186,7 +186,7 @@ export default async function GebruikersPage({
                 gridTemplateColumns: cols,
                 gap: '0 24px',
                 alignItems: 'center',
-                background: '#0f0f0f',
+                background: '#1f2937',
                 padding: '14px 20px',
                 borderLeft: `3px solid ${actief7d ? '#44cc88' : '#1e293b'}`,
               }}>

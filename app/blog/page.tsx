@@ -54,7 +54,7 @@ export default async function BlogPage() {
           position: fixed; top: 0; left: 0; right: 0; z-index: 100;
           padding: 16px 40px; display: flex; justify-content: center;
           border-bottom: 1px solid rgba(255,255,255,0.06);
-          background: rgba(10,10,10,0.9); backdrop-filter: blur(12px);
+          background: rgba(17,24,39,0.9); backdrop-filter: blur(12px);
         }
         .nav-links { display: flex; gap: 48px; align-items: center; }
         .nav-links a {
@@ -108,7 +108,7 @@ export default async function BlogPage() {
         .post-row-date { font-size: 10px; letter-spacing: 2px; text-transform: uppercase; color: #4b5563; white-space: nowrap; transition: color 0.15s; }
 
         footer {
-          background: #050505; padding: 40px 60px;
+          background: #0d1117; padding: 40px 60px;
           display: flex; justify-content: space-between; align-items: center;
           border-top: 1px solid #1f2937;
         }
