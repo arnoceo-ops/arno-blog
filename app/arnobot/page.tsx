@@ -6,7 +6,7 @@ export default async function ArnoBotLandingPage() {
   return (
     <>
       <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Mono:wght@400;700&family=Barlow+Condensed:wght@300;600;900&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Mono:wght@400;700&family=Barlow+Condensed:wght@300;600;900&family=DM+Sans:wght@400;500&display=swap');
 
         * { box-sizing: border-box; margin: 0; padding: 0; }
         body { background: #1e293b; color: #f1f5f9; font-family: 'Space Mono', monospace; }
@@ -61,7 +61,7 @@ export default async function ArnoBotLandingPage() {
           font-size: clamp(40px, 4vw, 64px);
           line-height: 1.05; color: #1e293b; letter-spacing: 1px;
         }
-        .canvas-body { font-size: 15px; line-height: 2; color: #6b7280; max-width: 420px; }
+        .canvas-body { font-family: 'DM Sans', sans-serif; font-size: 16px; line-height: 1.85; color: #6b7280; max-width: 420px; }
         .canvas-link {
           display: block; color: #f59e0b; text-decoration: none;
           font-family: 'Bebas Neue', sans-serif;
@@ -90,7 +90,7 @@ export default async function ArnoBotLandingPage() {
         }
         .subscribe-title .black { color: #f1f5f9; }
         .subscribe-title .orange { color: #f59e0b; }
-        .subscribe-body { font-size: 15px; line-height: 2; color: #9ca3af; margin-bottom: 8px; }
+        .subscribe-body { font-family: 'DM Sans', sans-serif; font-size: 16px; line-height: 1.85; color: #9ca3af; margin-bottom: 8px; }
         .subscribe-body em { font-style: normal; font-weight: 700; color: #f1f5f9; }
         .subscribe-btn {
           display: block; text-decoration: none; text-align: center; align-self: flex-end;
@@ -170,8 +170,8 @@ export default async function ArnoBotLandingPage() {
           text-transform: uppercase; line-height: 1.2;
         }
         .feature-text small {
-          display: block; font-family: 'Space Mono', monospace;
-          font-size: 13px; letter-spacing: 0.5px; color: #9ca3af;
+          display: block; font-family: 'DM Sans', sans-serif;
+          font-size: 15px; letter-spacing: 0; color: #9ca3af;
           font-weight: 400; text-transform: none; margin-top: 10px; line-height: 1.7;
         }
 
