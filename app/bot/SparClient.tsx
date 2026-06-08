@@ -484,7 +484,7 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
           height: 56px; padding: 0 20px;
           display: flex; align-items: center; justify-content: space-between;
           border-bottom: 1px solid rgba(255,255,255,0.06);
-          background: rgba(17,24,39,0.97); backdrop-filter: blur(12px);
+          background: rgba(31,41,55,0.97); backdrop-filter: blur(12px);
         }
         .mob-nav-logo {
           font-family: 'Bebas Neue', sans-serif; font-size: 22px; letter-spacing: 3px;
@@ -562,7 +562,7 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
         .spar-input-area.active {
           position: fixed;
           bottom: 0; left: 0; right: 0;
-          background: rgba(17,24,39,0.97);
+          background: rgba(31,41,55,0.97);
           border-top: 2px solid #f59e0b;
           padding: 12px clamp(16px,4vw,60px);
           z-index: 50;
@@ -682,7 +682,7 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
           display: grid; grid-template-columns: repeat(3, 142px); gap: 8px; margin: 0 auto 2px;
         }
         .toggle-btn {
-          background: #1f2937; border: none; color: #4b5563;
+          background: #111827; border: none; color: #4b5563;
           font-family: 'Bebas Neue', sans-serif;
           font-size: 16px; letter-spacing: 3px;
           padding: 10px 24px; cursor: pointer;
@@ -709,7 +709,7 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
         }
         @media (max-width: 560px) { .openers-grid { grid-template-columns: 1fr; } }
         .opener-btn {
-          background: #1f2937; border: none; color: #9ca3af;
+          background: #111827; border: none; color: #9ca3af;
           font-family: 'Bebas Neue', sans-serif;
           font-size: 22px; letter-spacing: 1px;
           padding: 24px 28px; cursor: pointer; text-align: left;
