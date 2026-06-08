@@ -72,7 +72,7 @@ const portableTextComponents = {
       <strong style={{ color: '#f1f5f9', fontWeight: 700 }}>{children}</strong>
     ),
     em: ({ children }: { children?: React.ReactNode }) => (
-      <em style={{ color: '#EE7700', fontStyle: 'normal' }}>{children}</em>
+      <em style={{ color: '#f59e0b', fontStyle: 'normal' }}>{children}</em>
     ),
     link: ({ value, children }: { value?: { href: string }, children?: React.ReactNode }) => (
       <a href={value?.href} target="_blank" rel="noopener noreferrer" className="body-link">
@@ -113,9 +113,9 @@ export default async function PostPage({ params }: { params: Promise<{ slug: str
     return (
       <div style={{ background: '#111827', minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
         <div style={{ textAlign: 'center', fontFamily: 'Space Mono, monospace' }}>
-          <p style={{ color: '#EE7700', fontSize: '11px', letterSpacing: '4px', textTransform: 'uppercase' }}>404</p>
+          <p style={{ color: '#f59e0b', fontSize: '11px', letterSpacing: '4px', textTransform: 'uppercase' }}>404</p>
           <h1 style={{ fontFamily: 'Bebas Neue, sans-serif', fontSize: '80px', color: '#f1f5f9', margin: '16px 0' }}>Post niet gevonden</h1>
-          <Link href="/" style={{ color: '#555', textDecoration: 'none', fontSize: '11px', letterSpacing: '3px', textTransform: 'uppercase' }}>← Terug naar home</Link>
+          <Link href="/" style={{ color: '#6b7280', textDecoration: 'none', fontSize: '11px', letterSpacing: '3px', textTransform: 'uppercase' }}>← Terug naar home</Link>
         </div>
       </div>
     )
@@ -150,11 +150,11 @@ export default async function PostPage({ params }: { params: Promise<{ slug: str
           font-family: 'Bebas Neue', sans-serif;
           font-size: 22px;
           letter-spacing: 3px;
-          color: #EE7700;
+          color: #f59e0b;
           text-decoration: none;
         }
         .back-link {
-          color: #555;
+          color: #6b7280;
           text-decoration: none;
           font-size: 11px;
           letter-spacing: 3px;
@@ -162,7 +162,7 @@ export default async function PostPage({ params }: { params: Promise<{ slug: str
           font-family: 'Space Mono', monospace;
           transition: color 0.2s;
         }
-        .back-link:hover { color: #EE7700; }
+        .back-link:hover { color: #f59e0b; }
 
         .post-hero {
           padding-top: 80px;
@@ -177,7 +177,7 @@ export default async function PostPage({ params }: { params: Promise<{ slug: str
           font-size: 11px;
           letter-spacing: 4px;
           text-transform: uppercase;
-          color: #EE7700;
+          color: #f59e0b;
           font-family: 'Space Mono', monospace;
           margin-bottom: 24px;
           display: block;
@@ -201,19 +201,19 @@ export default async function PostPage({ params }: { params: Promise<{ slug: str
           font-size: 11px;
           letter-spacing: 3px;
           text-transform: uppercase;
-          color: #555;
+          color: #6b7280;
           font-family: 'Space Mono', monospace;
         }
         .post-divider {
           width: 40px;
           height: 1px;
-          background: #EE7700;
+          background: #f59e0b;
         }
         .post-author {
           font-size: 11px;
           letter-spacing: 3px;
           text-transform: uppercase;
-          color: #333;
+          color: #9ca3af;
           font-family: 'Space Mono', monospace;
         }
 
@@ -239,7 +239,7 @@ export default async function PostPage({ params }: { params: Promise<{ slug: str
           font-family: 'Space Mono', monospace;
           font-size: 13px;
           line-height: 2.2;
-          color: #888;
+          color: #9ca3af;
           margin-bottom: 28px;
         }
         .body-h1 {
@@ -266,7 +266,7 @@ export default async function PostPage({ params }: { params: Promise<{ slug: str
           text-transform: uppercase;
         }
         .body-quote {
-          border-left: 3px solid #EE7700;
+          border-left: 3px solid #f59e0b;
           padding: 4px 0 4px 32px;
           margin: 40px 0;
           font-family: 'Barlow Condensed', sans-serif;
@@ -276,12 +276,12 @@ export default async function PostPage({ params }: { params: Promise<{ slug: str
           line-height: 1.4;
         }
         .body-link {
-          color: #EE7700;
+          color: #f59e0b;
           text-decoration: none;
-          border-bottom: 1px solid rgba(238,119,0,0.3);
+          border-bottom: 1px solid rgba(245,158,11,0.3);
           transition: border-color 0.2s;
         }
-        .body-link:hover { border-color: #EE7700; }
+        .body-link:hover { border-color: #f59e0b; }
         .body-ul, .body-ol {
           margin: 0 0 28px 0;
           padding-left: 0;
@@ -291,7 +291,7 @@ export default async function PostPage({ params }: { params: Promise<{ slug: str
           font-family: 'Space Mono', monospace;
           font-size: 13px;
           line-height: 2.2;
-          color: #888;
+          color: #9ca3af;
           padding-left: 24px;
           position: relative;
           margin-bottom: 8px;
@@ -300,7 +300,7 @@ export default async function PostPage({ params }: { params: Promise<{ slug: str
           content: '→';
           position: absolute;
           left: 0;
-          color: #EE7700;
+          color: #f59e0b;
         }
 
         /* ── POST NAVIGATION ── */
@@ -330,7 +330,7 @@ export default async function PostPage({ params }: { params: Promise<{ slug: str
         }
         .post-nav-arrow {
           font-size: 32px;
-          color: #EE7700;
+          color: #f59e0b;
           line-height: 1;
         }
         .post-nav-label {

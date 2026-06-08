@@ -57,7 +57,7 @@ export default function SignInPage() {
       <div style={{ display: 'flex', minHeight: '100vh', alignItems: 'center', justifyContent: 'center', backgroundColor: '#111827', padding: '40px 20px' }}>
         <div style={{ width: '100%', maxWidth: 400, display: 'flex', flexDirection: 'column', gap: 24 }}>
           <div style={{ textAlign: 'center' }}>
-            <p style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 13, letterSpacing: 6, color: '#EE7700', marginBottom: 8 }}>ARNOBOT UNLIMITED</p>
+            <p style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 13, letterSpacing: 6, color: '#f59e0b', marginBottom: 8 }}>ARNOBOT UNLIMITED</p>
             <h1 style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 44, letterSpacing: 1, lineHeight: 1 }}>INLOGGEN</h1>
           </div>
           <div style={{ display: 'flex', justifyContent: 'center' }}>

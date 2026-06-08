@@ -61,7 +61,7 @@ function Chip({ label, selected, onClick }: { label: string; selected: boolean; 
       style={{
         padding: '8px 18px',
         border: selected ? '2px solid #f59e0b' : '1.5px solid #374151',
-        background: selected ? 'rgba(238,119,0,0.12)' : '#1f2937',
+        background: selected ? 'rgba(245,158,11,0.12)' : '#1f2937',
         color: selected ? '#f59e0b' : '#9ca3af',
         fontFamily: "'Space Mono', monospace",
         fontSize: 15,

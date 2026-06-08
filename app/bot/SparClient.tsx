@@ -779,19 +779,19 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
         /* GLOW op invoerveld na gesprek */
         .spar-input-row.active-glow {
           border-color: #f59e0b;
-          box-shadow: 0 0 0 3px rgba(238,119,0,0.25), 0 0 24px rgba(238,119,0,0.15);
+          box-shadow: 0 0 0 3px rgba(245,158,11,0.25), 0 0 24px rgba(245,158,11,0.15);
           animation: glowpulse 2s ease-in-out infinite;
         }
         .spar-input-row.blink-glow {
           animation: blinkglow 0.4s ease-in-out 4;
         }
         @keyframes glowpulse {
-          0%, 100% { box-shadow: 0 0 0 3px rgba(238,119,0,0.2), 0 0 16px rgba(238,119,0,0.1); }
-          50% { box-shadow: 0 0 0 3px rgba(238,119,0,0.5), 0 0 40px rgba(238,119,0,0.3); }
+          0%, 100% { box-shadow: 0 0 0 3px rgba(245,158,11,0.2), 0 0 16px rgba(245,158,11,0.1); }
+          50% { box-shadow: 0 0 0 3px rgba(245,158,11,0.5), 0 0 40px rgba(245,158,11,0.3); }
         }
         @keyframes blinkglow {
-          0%, 100% { box-shadow: 0 0 0 3px rgba(238,119,0,0.15); }
-          50% { box-shadow: 0 0 0 6px rgba(238,119,0,0.7), 0 0 48px rgba(238,119,0,0.4); border-color: #ff9900; }
+          0%, 100% { box-shadow: 0 0 0 3px rgba(245,158,11,0.15); }
+          50% { box-shadow: 0 0 0 6px rgba(245,158,11,0.7), 0 0 48px rgba(245,158,11,0.4); border-color: #ff9900; }
         }
 
         /* ACTIE KNOPPEN onder antwoord */

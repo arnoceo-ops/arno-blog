@@ -100,7 +100,7 @@ export default async function Home() {
           letter-spacing: 4px; text-transform: uppercase;
           color: rgba(240,237,230,0.6); line-height: 1.4;
         }
-        .hero-tagline p span { color: rgba(238,119,0,0.9); }
+        .hero-tagline p span { color: rgba(245,158,11,0.9); }
         @media (min-width: 768px) { .hero-tagline { display: block; } }
 
         /* ── CANVAS ── */
