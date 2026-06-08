@@ -81,7 +81,7 @@ export default function BotNav({ active }: Props) {
       onClick={() => setFeedbackOpen(false)}
     >
       <div
-        style={{ background: '#111827', border: '1px solid #374151', maxWidth: 480, width: '100%', padding: 32 }}
+        style={{ background: '#1f2937', border: '1px solid #374151', maxWidth: 480, width: '100%', padding: 32 }}
         onClick={e => e.stopPropagation()}
       >
         <p style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 13, letterSpacing: 4, color: '#f59e0b', marginBottom: 8 }}>ARNOBOT</p>
@@ -94,7 +94,7 @@ export default function BotNav({ active }: Props) {
               value={feedbackText}
               onChange={e => setFeedbackText(e.target.value)}
               placeholder="Wat kan er beter? Wat werkt goed? Alles is welkom."
-              style={{ width: '100%', minHeight: 120, background: '#111827', border: '1px solid #374151', color: '#f1f5f9', fontFamily: "'Space Mono', monospace", fontSize: 13, padding: '12px 16px', resize: 'vertical', outline: 'none', marginBottom: 16, boxSizing: 'border-box' }}
+              style={{ width: '100%', minHeight: 120, background: '#1f2937', border: '1px solid #374151', color: '#f1f5f9', fontFamily: "'Space Mono', monospace", fontSize: 13, padding: '12px 16px', resize: 'vertical', outline: 'none', marginBottom: 16, boxSizing: 'border-box' }}
             />
             <div style={{ display: 'flex', gap: 12 }}>
               <button

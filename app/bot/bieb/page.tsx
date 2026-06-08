@@ -183,7 +183,7 @@ export default function GeschiedenisPage() {
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Mono:wght@400;700&display=swap');
         * { box-sizing: border-box; margin: 0; padding: 0; }
-        body { background: #1f2937; color: #f1f5f9; font-family: 'Space Mono', monospace; }
+        body { background: #111827; color: #f1f5f9; font-family: 'Space Mono', monospace; }
         @keyframes fadein { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
         @keyframes slideup { from { opacity: 0; transform: translateY(100%); } to { opacity: 1; transform: translateY(0); } }
         @keyframes blink { 0%,100%{opacity:0.2} 50%{opacity:1} }
@@ -193,7 +193,7 @@ export default function GeschiedenisPage() {
         .analyse-loading-bar { position:fixed;bottom:0;left:0;right:0;z-index:200;background:#111827;border-top:2px solid #f59e0b;padding:20px 40px;display:flex;align-items:center;justify-content:center;gap:12px;animation:slideup 0.2s ease; }
 
         .sort-btn {
-          background: #111827; border: none; box-shadow: inset 0 0 0 1px #f59e0b; color: #9ca3af;
+          background: #1f2937; border: none; box-shadow: inset 0 0 0 1px #f59e0b; color: #9ca3af;
           font-family: 'Bebas Neue', sans-serif;
           font-size: 15px; letter-spacing: 3px;
           padding: 9px 20px; cursor: pointer; transition: all 0.15s;
@@ -289,7 +289,7 @@ export default function GeschiedenisPage() {
             onChange={e => setSearch(e.target.value)}
             placeholder="Zoek in gesprekken..."
             style={{
-              width: '100%', background: '#111827', border: '1px solid #374151',
+              width: '100%', background: '#1f2937', border: '1px solid #374151',
               color: '#f1f5f9', fontFamily: "'Space Mono', monospace",
               fontSize: 15, padding: '12px 16px', outline: 'none', letterSpacing: 1,
             }}
@@ -437,7 +437,7 @@ export default function GeschiedenisPage() {
               {isOpen && (
                 <div style={{ paddingBottom: 40, animation: 'fadein 0.3s ease' }}>
                   {session.summary && (
-                    <div style={{ background: '#111827', borderLeft: '3px solid #f59e0b', padding: '20px 24px', marginBottom: 32 }}>
+                    <div style={{ background: '#1f2937', borderLeft: '3px solid #f59e0b', padding: '20px 24px', marginBottom: 32 }}>
                       <p style={{ color: '#f59e0b', fontSize: 11, letterSpacing: 4, textTransform: 'uppercase', marginBottom: 12 }}>SYNTHESE</p>
                       <p style={{ color: '#9ca3af', fontSize: 16, fontFamily: "'Space Mono', monospace", lineHeight: 1.9, marginBottom: session.blog_suggestions?.length ? 24 : 0 }}>{session.summary}</p>
                       {session.blog_suggestions && session.blog_suggestions.length > 0 && (
@@ -450,7 +450,7 @@ export default function GeschiedenisPage() {
                               lineHeight: 1, padding: '10px 16px', marginBottom: 2,
                               borderLeft: '3px solid #374151', transition: 'all 0.15s',
                             }}
-                            onMouseEnter={e => { (e.currentTarget as HTMLAnchorElement).style.color = '#f1f5f9'; (e.currentTarget as HTMLAnchorElement).style.borderLeftColor = '#f59e0b'; (e.currentTarget as HTMLAnchorElement).style.background = '#111827' }}
+                            onMouseEnter={e => { (e.currentTarget as HTMLAnchorElement).style.color = '#f1f5f9'; (e.currentTarget as HTMLAnchorElement).style.borderLeftColor = '#f59e0b'; (e.currentTarget as HTMLAnchorElement).style.background = '#1f2937' }}
                             onMouseLeave={e => { (e.currentTarget as HTMLAnchorElement).style.color = '#9ca3af'; (e.currentTarget as HTMLAnchorElement).style.borderLeftColor = '#374151'; (e.currentTarget as HTMLAnchorElement).style.background = 'none' }}
                             >
                               {b.title}
@@ -516,7 +516,7 @@ export default function GeschiedenisPage() {
             <h2 style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 64, letterSpacing: 3, lineHeight: 1, marginBottom: 48 }}>ANALYSES</h2>
 
             {activeAnalyse && !isDuplicateAnalyse && !isSimilarAnalyse && (
-              <div style={{ marginBottom: 28, background: '#111827', borderLeft: '3px solid #f59e0b', padding: '20px 24px' }}>
+              <div style={{ marginBottom: 28, background: '#1f2937', borderLeft: '3px solid #f59e0b', padding: '20px 24px' }}>
                 <p style={{ color: '#f59e0b', fontSize: 11, letterSpacing: 4, textTransform: 'uppercase', marginBottom: 12 }}>NIEUW GEGENEREERD</p>
                 <p style={{ color: '#9ca3af', fontSize: 16, lineHeight: 1.9, fontFamily: "'Space Mono', monospace", whiteSpace: 'pre-wrap', marginBottom: 16 }}>{activeAnalyse}</p>
                 <button
@@ -533,7 +533,7 @@ export default function GeschiedenisPage() {
               </p>
             )}
             {isSimilarAnalyse && (
-              <div style={{ background: '#111827', borderLeft: '3px solid #6b7280', padding: '20px 24px', marginBottom: 28 }}>
+              <div style={{ background: '#1f2937', borderLeft: '3px solid #6b7280', padding: '20px 24px', marginBottom: 28 }}>
                 <p style={{ color: '#9ca3af', fontSize: 13, letterSpacing: 3, fontFamily: "'Bebas Neue', sans-serif", marginBottom: 10 }}>WEINIG VERANDERD</p>
                 <p style={{ color: '#6b7280', fontSize: 14, lineHeight: 1.9, fontFamily: "'Space Mono', monospace" }}>
                   Je gesprekken overlappen voor meer dan 80% met een eerdere analyse. Er is niet genoeg veranderd om iets nieuws te zeggen. Ga eens aan de slag met wat er al staat — voer nieuwe gesprekken en kom dan terug.

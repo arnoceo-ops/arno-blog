@@ -517,11 +517,11 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
 
         /* HERO */
         .spar-hero {
-          height: 360px;
+          height: 400px;
           border-bottom: 3px solid #f59e0b;
           display: flex; justify-content: space-between; align-items: flex-end;
           position: relative;
-          padding: 0 clamp(20px,5vw,60px) 0 0;
+          padding: 0 clamp(20px,5vw,60px) 28px 0;
           overflow: hidden;
         }
         .spar-title {

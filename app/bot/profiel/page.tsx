@@ -61,7 +61,7 @@ function Chip({ label, selected, onClick }: { label: string; selected: boolean; 
       style={{
         padding: '8px 18px',
         border: selected ? '2px solid #f59e0b' : '1.5px solid #374151',
-        background: selected ? 'rgba(245,158,11,0.12)' : '#111827',
+        background: selected ? 'rgba(245,158,11,0.12)' : '#1f2937',
         color: selected ? '#f59e0b' : '#9ca3af',
         fontFamily: "'Space Mono', monospace",
         fontSize: 15,
@@ -160,9 +160,9 @@ export default function BotProfielPage() {
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Mono:wght@400;700&display=swap');
         * { box-sizing: border-box; margin: 0; padding: 0; }
-        body { background: #1f2937; color: #f1f5f9; font-family: 'Space Mono', monospace; font-size: 15px; font-weight: 400; line-height: 30px; }
+        body { background: #111827; color: #f1f5f9; font-family: 'Space Mono', monospace; font-size: 15px; font-weight: 400; line-height: 30px; }
         textarea, input {
-          background: #111827; color: #f1f5f9; border: 1.5px solid #374151;
+          background: #1f2937; color: #f1f5f9; border: 1.5px solid #374151;
           border-radius: 4px; font-family: 'Space Mono', monospace;
           font-size: 15px; font-weight: 400; padding: 12px 16px; width: 100%;
           box-sizing: border-box; outline: none; resize: vertical;

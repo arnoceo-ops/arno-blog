@@ -171,9 +171,9 @@ export default function TeamClient() {
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Mono:wght@400;700&display=swap');
         * { box-sizing: border-box; margin: 0; padding: 0; }
-        body { background: #1f2937; color: #f1f5f9; font-family: 'Space Mono', monospace; font-weight: 400; }
+        body { background: #111827; color: #f1f5f9; font-family: 'Space Mono', monospace; font-weight: 400; }
         .team-input {
-          background: #111827; color: #f1f5f9; border: 1.5px solid #374151; border-radius: 4px;
+          background: #1f2937; color: #f1f5f9; border: 1.5px solid #374151; border-radius: 4px;
           font-family: 'Space Mono', monospace; font-size: 15px; font-weight: 400;
           padding: 12px 16px; width: 100%; outline: none;
           box-sizing: border-box; transition: border-color 0.15s; line-height: 1.9;
@@ -185,7 +185,7 @@ export default function TeamClient() {
 
       <BotNav active="team" />
 
-      <div style={{ minHeight: '100vh', background: '#1f2937' }}>
+      <div style={{ minHeight: '100vh', background: '#111827' }}>
         <div style={{ maxWidth: 812, margin: '0 auto', padding: 'clamp(80px,12vw,120px) clamp(16px,4vw,20px) 80px' }}>
 
           {loading && (
@@ -200,7 +200,7 @@ export default function TeamClient() {
                 START JE TEAM.
               </h1>
 
-              <div style={{ background: '#111827', borderLeft: '4px solid #f59e0b', padding: '20px 24px', marginBottom: 48 }}>
+              <div style={{ background: '#1f2937', borderLeft: '4px solid #f59e0b', padding: '20px 24px', marginBottom: 48 }}>
                 <p style={{ ...body, color: '#9ca3af', marginBottom: 0 }}>
                   Maak een team aan en nodig je salesteam uit via een persoonlijke link. Als manager zie je de voortgang en collectieve patronen van je hele team.
                 </p>
@@ -298,7 +298,7 @@ export default function TeamClient() {
                     {teamAnalyses.map(a => (
                       <div key={a.id}>
                         <span style={{ ...label, marginBottom: 12 }}>{formatAnalyseDate(a.created_at)}</span>
-                        <div style={{ background: '#111827', borderLeft: '4px solid #f59e0b', padding: '24px 28px' }}>
+                        <div style={{ background: '#1f2937', borderLeft: '4px solid #f59e0b', padding: '24px 28px' }}>
                           <p style={{ ...body, color: '#f1f5f9', marginBottom: 0, whiteSpace: 'pre-wrap' }}>{a.analyse_text}</p>
                         </div>
                       </div>

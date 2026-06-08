@@ -32,7 +32,7 @@ export default function QAClient({ isOnboarding }: { isOnboarding: boolean }) {
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Mono:wght@400;700&display=swap');
         * { box-sizing: border-box; margin: 0; padding: 0; }
-        body { background: #1f2937; color: #f1f5f9; font-family: 'Space Mono', monospace; }
+        body { background: #111827; color: #f1f5f9; font-family: 'Space Mono', monospace; }
         .qa-continue:hover { background: #d97706 !important; }
       `}</style>
 
@@ -79,7 +79,7 @@ export default function QAClient({ isOnboarding }: { isOnboarding: boolean }) {
           <div style={{
             width: '100%',
             aspectRatio: '16/9',
-            background: '#111827',
+            background: '#1f2937',
             border: '1px solid #374151',
             display: 'flex',
             alignItems: 'center',

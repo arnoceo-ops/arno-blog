@@ -111,7 +111,7 @@ export default function CoachingClient({ userId }: Props) {
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Mono:wght@400;700&display=swap');
         * { box-sizing: border-box; margin: 0; padding: 0; }
-        body { background: #1f2937; color: #f1f5f9; font-family: 'Space Mono', monospace; }
+        body { background: #111827; color: #f1f5f9; font-family: 'Space Mono', monospace; }
         @keyframes fadein { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
         @keyframes pulse { 0%,100% { opacity: 0.4; } 50% { opacity: 1; } }
 
@@ -144,7 +144,7 @@ export default function CoachingClient({ userId }: Props) {
           font-family: 'Space Mono', monospace; font-weight: 400;
         }
         .opdracht-box {
-          background: #111827; border-left: 3px solid #f59e0b;
+          background: #1f2937; border-left: 3px solid #f59e0b;
           padding: 24px 28px; margin-top: 0;
         }
         .opdracht-label {
@@ -163,7 +163,7 @@ export default function CoachingClient({ userId }: Props) {
           padding: 14px 20px; border-left: 3px solid #374151;
           margin-bottom: 2px; transition: all 0.15s;
         }
-        .blog-item:hover { color: #f1f5f9; border-left-color: #f59e0b; background: #111827; }
+        .blog-item:hover { color: #f1f5f9; border-left-color: #f59e0b; background: #1f2937; }
         .generate-btn {
           background: none; border: none; box-shadow: inset 0 0 0 1px #f59e0b; cursor: pointer;
           font-family: 'Bebas Neue', sans-serif;

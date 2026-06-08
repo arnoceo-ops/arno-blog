@@ -71,8 +71,8 @@ export default function AccountPage() {
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Mono:wght@400;700&display=swap');
         * { box-sizing: border-box; margin: 0; padding: 0; }
-        body { background: #1f2937; color: #f1f5f9; font-family: 'Space Mono', monospace; font-weight: 400; }
-        input { background: #111827; border: 1px solid #374151; color: #f1f5f9; font-family: 'Space Mono', monospace; font-size: 15px; letter-spacing: 2px; padding: 12px 16px; outline: none; width: 100%; }
+        body { background: #111827; color: #f1f5f9; font-family: 'Space Mono', monospace; font-weight: 400; }
+        input { background: #1f2937; border: 1px solid #374151; color: #f1f5f9; font-family: 'Space Mono', monospace; font-size: 15px; letter-spacing: 2px; padding: 12px 16px; outline: none; width: 100%; }
         input:focus { border-color: #f59e0b; }
         .sec-btn:hover { border-color: #f59e0b !important; color: #f59e0b !important; }
       `}</style>
@@ -85,7 +85,7 @@ export default function AccountPage() {
         <h1 style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 64, letterSpacing: 3, margin: '0 0 48px 0', lineHeight: 1 }}>JOUW GEGEVENS</h1>
 
         {/* Privacy statement */}
-        <div style={{ background: '#111827', borderLeft: '4px solid #f59e0b', padding: '20px 24px', marginBottom: 48 }}>
+        <div style={{ background: '#1f2937', borderLeft: '4px solid #f59e0b', padding: '20px 24px', marginBottom: 48 }}>
           <p style={{ fontFamily: "'Space Mono', monospace", fontSize: 13, letterSpacing: 4, color: '#f59e0b', marginBottom: 12 }}>JOUW DATA IS VAN JOU</p>
           <p style={{ fontSize: 15, lineHeight: '1.9', color: '#9ca3af' }}>
             Alles wat je hier invoert en bespreekt met ArnoBot, is 100% veilig opgeslagen en wordt nooit gedeeld met derden, gebruikt voor marketing of ingezet voor andere doeleinden dan jouw persoonlijke coaching. Je kunt je gegevens op elk moment downloaden of je account volledig verwijderen.
