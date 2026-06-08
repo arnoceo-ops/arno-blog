@@ -1,4 +1,4 @@
-'use client'
+﻿'use client'
 
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
@@ -41,25 +41,25 @@ interface Team {
 
 const label: React.CSSProperties = {
   fontFamily: "'Space Mono', monospace", fontWeight: 400,
-  fontSize: 13, letterSpacing: 4, color: '#EE7700',
+  fontSize: 13, letterSpacing: 4, color: '#f59e0b',
   display: 'block', marginBottom: 16,
 }
 
 const body: React.CSSProperties = {
   fontFamily: "'Space Mono', monospace", fontWeight: 400,
-  fontSize: 15, color: '#888', lineHeight: '1.9', marginBottom: 24,
+  fontSize: 15, color: '#9ca3af', lineHeight: '1.9', marginBottom: 24,
 }
 
 const section: React.CSSProperties = {
-  borderTop: '1px solid #1a1a1a', paddingTop: 32, marginBottom: 48,
+  borderTop: '1px solid #1e293b', paddingTop: 32, marginBottom: 48,
 }
 
 const btnPrimary = (disabled: boolean): React.CSSProperties => ({
   fontFamily: "'Bebas Neue', sans-serif",
   fontSize: 18, letterSpacing: 3,
   padding: '12px 36px',
-  background: disabled ? '#1a1a1a' : '#EE7700',
-  color: disabled ? '#333' : '#f0ede6',
+  background: disabled ? '#1e293b' : '#f59e0b',
+  color: disabled ? '#374151' : '#111827',
   border: 'none', borderRadius: 999,
   cursor: disabled ? 'not-allowed' : 'pointer',
   transition: 'background 0.2s',
@@ -69,8 +69,8 @@ const btnOutline: React.CSSProperties = {
   fontFamily: "'Bebas Neue', sans-serif",
   fontSize: 18, letterSpacing: 3,
   padding: '12px 32px',
-  background: 'none', border: '1px solid #555',
-  color: '#888', borderRadius: 999,
+  background: 'none', border: '1px solid #6b7280',
+  color: '#9ca3af', borderRadius: 999,
   cursor: 'pointer', transition: 'all 0.2s',
 }
 
@@ -171,37 +171,37 @@ export default function TeamClient() {
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Mono:wght@400;700&display=swap');
         * { box-sizing: border-box; margin: 0; padding: 0; }
-        body { background: #0a0a0a; color: #f0ede6; font-family: 'Space Mono', monospace; font-weight: 400; }
+        body { background: #111827; color: #f1f5f9; font-family: 'Space Mono', monospace; font-weight: 400; }
         .team-input {
-          background: #111; color: #f0ede6; border: 1.5px solid #333; border-radius: 4px;
+          background: #1f2937; color: #f1f5f9; border: 1.5px solid #374151; border-radius: 4px;
           font-family: 'Space Mono', monospace; font-size: 15px; font-weight: 400;
           padding: 12px 16px; width: 100%; outline: none;
           box-sizing: border-box; transition: border-color 0.15s; line-height: 1.9;
         }
-        .team-input:focus { border-color: #EE7700; }
-        .team-input::placeholder { color: #444; }
-        .btn-outline:hover { border-color: #EE7700 !important; color: #EE7700 !important; }
+        .team-input:focus { border-color: #f59e0b; }
+        .team-input::placeholder { color: #4b5563; }
+        .btn-outline:hover { border-color: #f59e0b !important; color: #f59e0b !important; }
       `}</style>
 
       <BotNav active="team" />
 
-      <div style={{ minHeight: '100vh', background: '#0a0a0a' }}>
+      <div style={{ minHeight: '100vh', background: '#111827' }}>
         <div style={{ maxWidth: 720, margin: '0 auto', padding: '120px 48px 80px' }}>
 
           {loading && (
-            <p style={{ ...body, color: '#555', letterSpacing: 2 }}>LADEN...</p>
+            <p style={{ ...body, color: '#6b7280', letterSpacing: 2 }}>LADEN...</p>
           )}
 
           {/* Team aanmaken */}
           {!loading && !hasTeam && (
             <>
               <p style={{ ...label, marginBottom: 8 }}>ARNOBOT</p>
-              <h1 style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 64, letterSpacing: 3, color: '#f0ede6', lineHeight: 1, margin: '0 0 48px 0' }}>
+              <h1 style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 64, letterSpacing: 3, color: '#f1f5f9', lineHeight: 1, margin: '0 0 48px 0' }}>
                 START JE TEAM.
               </h1>
 
-              <div style={{ background: '#111', borderLeft: '4px solid #EE7700', padding: '20px 24px', marginBottom: 48 }}>
-                <p style={{ ...body, color: '#888', marginBottom: 0 }}>
+              <div style={{ background: '#1f2937', borderLeft: '4px solid #f59e0b', padding: '20px 24px', marginBottom: 48 }}>
+                <p style={{ ...body, color: '#9ca3af', marginBottom: 0 }}>
                   Maak een team aan en nodig je salesteam uit via een persoonlijke link. Als manager zie je de voortgang en collectieve patronen van je hele team.
                 </p>
               </div>
@@ -229,12 +229,12 @@ export default function TeamClient() {
           {!loading && hasTeam && isManager && team && (
             <>
               <p style={{ ...label, marginBottom: 8 }}>TEAM</p>
-              <div style={{ display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between', flexWrap: 'wrap', gap: 16, marginBottom: 48, borderBottom: '3px solid #EE7700', paddingBottom: 32 }}>
-                <h1 style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 64, letterSpacing: 3, color: '#f0ede6', lineHeight: 1, margin: 0 }}>
+              <div style={{ display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between', flexWrap: 'wrap', gap: 16, marginBottom: 48, borderBottom: '3px solid #f59e0b', paddingBottom: 32 }}>
+                <h1 style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 64, letterSpacing: 3, color: '#f1f5f9', lineHeight: 1, margin: 0 }}>
                   {team.name.toUpperCase()}
                 </h1>
                 <div style={{ display: 'flex', gap: 12, alignItems: 'center' }}>
-                  <button className="btn-outline" onClick={copyInviteLink} style={{ ...btnOutline, color: copied ? '#EE7700' : '#888', borderColor: copied ? '#EE7700' : '#555' }}>
+                  <button className="btn-outline" onClick={copyInviteLink} style={{ ...btnOutline, color: copied ? '#f59e0b' : '#9ca3af', borderColor: copied ? '#f59e0b' : '#6b7280' }}>
                     {copied ? 'GEKOPIEERD!' : 'KOPIEER UITNODIGINGSLINK'}
                   </button>
                 </div>
@@ -248,22 +248,22 @@ export default function TeamClient() {
                   <div style={{ overflowX: 'auto' }}>
                     <table style={{ width: '100%', borderCollapse: 'collapse', fontFamily: "'Space Mono', monospace", fontWeight: 400 }}>
                       <thead>
-                        <tr style={{ borderBottom: '1px solid #1a1a1a' }}>
+                        <tr style={{ borderBottom: '1px solid #1e293b' }}>
                           {['NAAM', 'ROL', 'GESPREKKEN', 'LAATSTE ACTIVITEIT', 'ANALYSES'].map(h => (
-                            <th key={h} style={{ textAlign: 'left', fontFamily: "'Space Mono', monospace", fontWeight: 400, fontSize: 13, letterSpacing: 2, color: '#555', padding: '8px 16px 12px 0' }}>{h}</th>
+                            <th key={h} style={{ textAlign: 'left', fontFamily: "'Space Mono', monospace", fontWeight: 400, fontSize: 13, letterSpacing: 2, color: '#6b7280', padding: '8px 16px 12px 0' }}>{h}</th>
                           ))}
                         </tr>
                       </thead>
                       <tbody>
                         {members.map(m => (
-                          <tr key={m.user_id} style={{ borderBottom: '1px solid #111' }}>
-                            <td style={{ padding: '16px 16px 16px 0', fontWeight: 400, fontSize: 15, color: '#f0ede6' }}>{m.name}</td>
-                            <td style={{ padding: '16px 16px 16px 0', fontFamily: "'Space Mono', monospace", fontWeight: 400, fontSize: 13, letterSpacing: 2, color: m.role === 'manager' ? '#EE7700' : '#555' }}>
+                          <tr key={m.user_id} style={{ borderBottom: '1px solid #1f2937' }}>
+                            <td style={{ padding: '16px 16px 16px 0', fontWeight: 400, fontSize: 15, color: '#f1f5f9' }}>{m.name}</td>
+                            <td style={{ padding: '16px 16px 16px 0', fontFamily: "'Space Mono', monospace", fontWeight: 400, fontSize: 13, letterSpacing: 2, color: m.role === 'manager' ? '#f59e0b' : '#6b7280' }}>
                               {m.role === 'manager' ? 'MANAGER' : 'LID'}
                             </td>
-                            <td style={{ padding: '16px 16px 16px 0', fontWeight: 400, fontSize: 15, color: m.sessions > 0 ? '#f0ede6' : '#444' }}>{m.sessions}</td>
-                            <td style={{ padding: '16px 16px 16px 0', fontWeight: 400, fontSize: 15, color: '#888' }}>{formatLast(m.last_activity)}</td>
-                            <td style={{ padding: '16px 0', fontWeight: 400, fontSize: 15, color: m.analyses > 0 ? '#f0ede6' : '#444' }}>{m.analyses}</td>
+                            <td style={{ padding: '16px 16px 16px 0', fontWeight: 400, fontSize: 15, color: m.sessions > 0 ? '#f1f5f9' : '#4b5563' }}>{m.sessions}</td>
+                            <td style={{ padding: '16px 16px 16px 0', fontWeight: 400, fontSize: 15, color: '#9ca3af' }}>{formatLast(m.last_activity)}</td>
+                            <td style={{ padding: '16px 0', fontWeight: 400, fontSize: 15, color: m.analyses > 0 ? '#f1f5f9' : '#4b5563' }}>{m.analyses}</td>
                           </tr>
                         ))}
                       </tbody>
@@ -274,7 +274,7 @@ export default function TeamClient() {
 
               <div style={section}>
                 <span style={label}>COLLECTIEVE ANALYSE</span>
-                <h2 style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 48, letterSpacing: 3, color: '#f0ede6', lineHeight: 1, margin: '0 0 16px 0' }}>TEAM SPOTLIGHT</h2>
+                <h2 style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 48, letterSpacing: 3, color: '#f1f5f9', lineHeight: 1, margin: '0 0 16px 0' }}>TEAM SPOTLIGHT</h2>
                 <p style={{ ...body, marginBottom: 32 }}>
                   Arno analyseert de collectieve gesprekken van je team: gemeenschappelijke patronen, sterktes en groeikansen.
                 </p>
@@ -286,20 +286,20 @@ export default function TeamClient() {
                   {spotlightLoading ? 'ARNO ANALYSEERT...' : 'GENEREER TEAM-ANALYSE'}
                 </button>
                 {spotlightLoading && (
-                  <p style={{ fontFamily: "'Space Mono', monospace", fontWeight: 400, fontSize: 13, color: '#555', marginBottom: 32 }}>
+                  <p style={{ fontFamily: "'Space Mono', monospace", fontWeight: 400, fontSize: 13, color: '#6b7280', marginBottom: 32 }}>
                     Arno analyseert je team...
                   </p>
                 )}
                 {members.length < 2 && (
-                  <p style={{ ...body, fontSize: 13, color: '#555', marginBottom: 40 }}>Minimaal 2 teamleden nodig voor een team-analyse.</p>
+                  <p style={{ ...body, fontSize: 13, color: '#6b7280', marginBottom: 40 }}>Minimaal 2 teamleden nodig voor een team-analyse.</p>
                 )}
                 {teamAnalyses.length > 0 && (
                   <div style={{ display: 'flex', flexDirection: 'column', gap: 24 }}>
                     {teamAnalyses.map(a => (
                       <div key={a.id}>
                         <span style={{ ...label, marginBottom: 12 }}>{formatAnalyseDate(a.created_at)}</span>
-                        <div style={{ background: '#111', borderLeft: '4px solid #EE7700', padding: '24px 28px' }}>
-                          <p style={{ ...body, color: '#f0ede6', marginBottom: 0, whiteSpace: 'pre-wrap' }}>{a.analyse_text}</p>
+                        <div style={{ background: '#1f2937', borderLeft: '4px solid #f59e0b', padding: '24px 28px' }}>
+                          <p style={{ ...body, color: '#f1f5f9', marginBottom: 0, whiteSpace: 'pre-wrap' }}>{a.analyse_text}</p>
                         </div>
                       </div>
                     ))}

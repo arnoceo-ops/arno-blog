@@ -1,4 +1,4 @@
-'use client'
+﻿'use client'
 
 import { useState } from 'react'
 
@@ -43,7 +43,7 @@ export default function DownloadPdfButton({
     <button
       onClick={handleDownload}
       disabled={loading}
-      style={{ background: loading ? '#333' : '#EE7700', color: '#000', border: 'none', padding: '10px 20px', fontWeight: 700, cursor: loading ? 'not-allowed' : 'pointer', fontSize: '14px', letterSpacing: '1px' }}
+      style={{ background: loading ? '#374151' : '#f59e0b', color: '#000', border: 'none', padding: '10px 20px', fontWeight: 700, cursor: loading ? 'not-allowed' : 'pointer', fontSize: '14px', letterSpacing: '1px' }}
     >
       {loading ? 'GENEREREN...' : '↓ DOWNLOAD PDF'}
     </button>

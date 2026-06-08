@@ -1,36 +1,36 @@
-import { redirect } from 'next/navigation'
+﻿import { redirect } from 'next/navigation'
 import { cookies } from 'next/headers'
 import { createClient } from '@supabase/supabase-js'
 import { clerkClient } from '@clerk/nextjs/server'
 import SearchLinkedIn from './SearchLinkedIn'
 
 const navLinkStyle = (active: boolean): React.CSSProperties => ({
-  color: active ? '#EE7700' : '#888',
+  color: active ? '#f59e0b' : '#9ca3af',
   textDecoration: 'none',
   fontSize: '15px',
   letterSpacing: '3px',
   fontWeight: 700,
   padding: '6px 20px',
   borderRadius: 4,
-  background: active ? '#1a1a1a' : 'none',
+  background: active ? '#1e293b' : 'none',
 })
 
 function trialStatus(row: { paid_at?: string | null; expires_at?: string | null; trial_start?: string | null; is_active?: boolean }) {
-  if (!row.is_active) return { label: 'INACTIEF', color: '#555' }
+  if (!row.is_active) return { label: 'INACTIEF', color: '#6b7280' }
   if (row.paid_at) return { label: 'BETAALD', color: '#44cc88' }
   if (row.expires_at) {
     const exp = new Date(row.expires_at)
     const left = Math.ceil((exp.getTime() - Date.now()) / (1000 * 60 * 60 * 24))
     if (left <= 0) return { label: 'VERLOPEN', color: '#cc4444' }
-    return { label: `TRIAL — ${left}d`, color: '#EE7700' }
+    return { label: `TRIAL — ${left}d`, color: '#f59e0b' }
   }
   if (row.trial_start) {
     const end = new Date(new Date(row.trial_start).getTime() + 30 * 24 * 60 * 60 * 1000)
     const left = Math.ceil((end.getTime() - Date.now()) / (1000 * 60 * 60 * 24))
     if (left <= 0) return { label: 'TRIAL VERLOPEN', color: '#cc4444' }
-    return { label: `TRIAL — ${left}d`, color: '#EE7700' }
+    return { label: `TRIAL — ${left}d`, color: '#f59e0b' }
   }
-  return { label: 'ONBEKEND', color: '#555' }
+  return { label: 'ONBEKEND', color: '#6b7280' }
 }
 
 function SortHeader({ label, field, sort, dir }: { label: string; field: string; sort: string; dir: string }) {
@@ -40,7 +40,7 @@ function SortHeader({ label, field, sort, dir }: { label: string; field: string;
   return (
     <a
       href={`?sort=${field}&dir=${nextDir}`}
-      style={{ fontSize: '11px', letterSpacing: '3px', color: isActive ? '#EE7700' : '#444', textDecoration: 'none', textAlign: 'right', display: 'block', cursor: 'pointer' }}
+      style={{ fontSize: '11px', letterSpacing: '3px', color: isActive ? '#f59e0b' : '#4b5563', textDecoration: 'none', textAlign: 'right', display: 'block', cursor: 'pointer' }}
     >
       {label}{arrow}
     </a>
@@ -139,9 +139,9 @@ export default async function GebruikersPage({
   const cols = '56px 1fr 140px 80px 80px 100px 70px 80px 80px'
 
   return (
-    <main style={{ background: '#0a0a0a', minHeight: '100vh', color: '#f0ede6', fontFamily: 'sans-serif' }}>
+    <main style={{ background: '#111827', minHeight: '100vh', color: '#f1f5f9', fontFamily: 'sans-serif' }}>
 
-      <nav style={{ background: '#0d0d0d', borderBottom: '1px solid #1a1a1a', height: 56, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+      <nav style={{ background: '#0d0d0d', borderBottom: '1px solid #1e293b', height: 56, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
         <div style={{ display: 'flex', gap: '4px' }}>
           <a href="/bot/admin" style={navLinkStyle(false)}>RDS</a>
           <a href="/bot/admin/widget" style={navLinkStyle(false)}>WIDGET</a>
@@ -151,16 +151,16 @@ export default async function GebruikersPage({
 
       <div style={{ maxWidth: '1400px', margin: '0 auto', padding: '48px 40px' }}>
 
-        <p style={{ color: '#EE7700', fontSize: '13px', letterSpacing: '5px', marginBottom: '8px' }}>ARNOBOT</p>
+        <p style={{ color: '#f59e0b', fontSize: '13px', letterSpacing: '5px', marginBottom: '8px' }}>ARNOBOT</p>
         <h1 style={{ fontSize: '56px', fontWeight: 700, margin: '0 0 8px 0', letterSpacing: '-1px' }}>Gebruikers</h1>
-        <p style={{ color: '#555', fontSize: '14px', letterSpacing: '2px', marginBottom: '48px' }}>
+        <p style={{ color: '#6b7280', fontSize: '14px', letterSpacing: '2px', marginBottom: '48px' }}>
           {sorted.length} gebruiker{sorted.length !== 1 ? 's' : ''}
         </p>
 
         {/* Tabel header */}
         <div style={{ display: 'grid', gridTemplateColumns: cols, gap: '0 24px', padding: '0 20px 12px', borderBottom: '1px solid #222', alignItems: 'end' }}>
           <div />
-          <a href={`?sort=naam&dir=${sort === 'naam' && dir === 'desc' ? 'asc' : 'desc'}`} style={{ fontSize: '11px', letterSpacing: '3px', color: sort === 'naam' ? '#EE7700' : '#444', textDecoration: 'none' }}>
+          <a href={`?sort=naam&dir=${sort === 'naam' && dir === 'desc' ? 'asc' : 'desc'}`} style={{ fontSize: '11px', letterSpacing: '3px', color: sort === 'naam' ? '#f59e0b' : '#4b5563', textDecoration: 'none' }}>
             NAAM{sort === 'naam' ? (dir === 'desc' ? ' ↓' : ' ↑') : ''}
           </a>
           <SortHeader label="STATUS" field="aangemeld" sort={sort} dir={dir} />
@@ -169,7 +169,7 @@ export default async function GebruikersPage({
           <SortHeader label="LAATSTE GESPREK" field="laatste" sort={sort} dir={dir} />
           <SortHeader label="COACHING" field="coaching" sort={sort} dir={dir} />
           <SortHeader label="7 DAGEN" field="actief" sort={sort} dir={dir} />
-          <span style={{ fontSize: '11px', letterSpacing: '3px', color: '#444', textAlign: 'right' }}>LINKEDIN</span>
+          <span style={{ fontSize: '11px', letterSpacing: '3px', color: '#4b5563', textAlign: 'right' }}>LINKEDIN</span>
         </div>
 
         <div style={{ display: 'flex', flexDirection: 'column', gap: '2px', marginTop: '2px' }}>
@@ -188,17 +188,17 @@ export default async function GebruikersPage({
                 alignItems: 'center',
                 background: '#0f0f0f',
                 padding: '14px 20px',
-                borderLeft: `3px solid ${actief7d ? '#44cc88' : '#1a1a1a'}`,
+                borderLeft: `3px solid ${actief7d ? '#44cc88' : '#1e293b'}`,
               }}>
                 {/* Foto */}
                 {u.imageUrl
                   ? <img src={u.imageUrl} alt={name} style={{ width: 44, height: 44, borderRadius: '50%', objectFit: 'cover' }} />
-                  : <div style={{ width: 44, height: 44, borderRadius: '50%', background: '#1a1a1a', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 18, color: '#333' }}>?</div>
+                  : <div style={{ width: 44, height: 44, borderRadius: '50%', background: '#1e293b', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 18, color: '#374151' }}>?</div>
                 }
                 {/* Naam + email */}
                 <div style={{ minWidth: 0 }}>
-                  <p style={{ fontWeight: 700, fontSize: '16px', marginBottom: '2px', color: '#f0ede6', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{name}</p>
-                  <p style={{ fontSize: '12px', color: '#555' }}>{u.email || '—'}</p>
+                  <p style={{ fontWeight: 700, fontSize: '16px', marginBottom: '2px', color: '#f1f5f9', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{name}</p>
+                  <p style={{ fontSize: '12px', color: '#6b7280' }}>{u.email || '—'}</p>
                 </div>
                 {/* Status */}
                 <div style={{ textAlign: 'right' }}>
@@ -206,19 +206,19 @@ export default async function GebruikersPage({
                 </div>
                 {/* Gesprekken */}
                 <div style={{ textAlign: 'right' }}>
-                  <p style={{ fontSize: '16px', fontWeight: 700, color: u.count > 0 ? '#f0ede6' : '#333' }}>{u.count}</p>
+                  <p style={{ fontSize: '16px', fontWeight: 700, color: u.count > 0 ? '#f1f5f9' : '#374151' }}>{u.count}</p>
                 </div>
                 {/* Vragen */}
                 <div style={{ textAlign: 'right' }}>
-                  <p style={{ fontSize: '16px', fontWeight: 700, color: u.questions > 0 ? '#f0ede6' : '#333' }}>{u.questions}</p>
+                  <p style={{ fontSize: '16px', fontWeight: 700, color: u.questions > 0 ? '#f1f5f9' : '#374151' }}>{u.questions}</p>
                 </div>
                 {/* Laatste gesprek */}
                 <div style={{ textAlign: 'right' }}>
-                  <p style={{ fontSize: '13px', color: '#888' }}>{lastSessionDate}</p>
+                  <p style={{ fontSize: '13px', color: '#9ca3af' }}>{lastSessionDate}</p>
                 </div>
                 {/* Coaching */}
                 <div style={{ textAlign: 'right' }}>
-                  <p style={{ fontSize: '16px', fontWeight: 700, color: u.coachingCount > 0 ? '#44cc88' : '#333' }}>{u.coachingCount || '—'}</p>
+                  <p style={{ fontSize: '16px', fontWeight: 700, color: u.coachingCount > 0 ? '#44cc88' : '#374151' }}>{u.coachingCount || '—'}</p>
                 </div>
                 {/* Actief 7d */}
                 <div style={{ textAlign: 'right' }}>
@@ -227,7 +227,7 @@ export default async function GebruikersPage({
                 {/* LinkedIn */}
                 <div style={{ textAlign: 'right' }}>
                   {u.linkedin
-                    ? <a href={u.linkedin} target="_blank" rel="noopener noreferrer" style={{ fontSize: '13px', letterSpacing: '2px', color: '#EE7700', textDecoration: 'none', fontWeight: 700 }}>LI →</a>
+                    ? <a href={u.linkedin} target="_blank" rel="noopener noreferrer" style={{ fontSize: '13px', letterSpacing: '2px', color: '#f59e0b', textDecoration: 'none', fontWeight: 700 }}>LI →</a>
                     : <SearchLinkedIn userId={u.user_id} name={name} hasLinkedin={false} />
                   }
                 </div>

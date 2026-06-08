@@ -1,18 +1,18 @@
-import { Document, Page, Text, View, StyleSheet } from '@react-pdf/renderer'
+﻿import { Document, Page, Text, View, StyleSheet } from '@react-pdf/renderer'
 
 const styles = StyleSheet.create({
   page: { backgroundColor: '#ffffff', padding: 48, fontFamily: 'Helvetica' },
-  header: { borderBottomWidth: 3, borderBottomColor: '#EE7700', paddingBottom: 16, marginBottom: 32 },
-  headerLabel: { fontSize: 8, letterSpacing: 3, color: '#EE7700', marginBottom: 6 },
-  headerTitle: { fontSize: 28, fontFamily: 'Helvetica-Bold', color: '#0a0a0a' },
-  headerDate: { fontSize: 10, color: '#888', marginTop: 4 },
+  header: { borderBottomWidth: 3, borderBottomColor: '#f59e0b', paddingBottom: 16, marginBottom: 32 },
+  headerLabel: { fontSize: 8, letterSpacing: 3, color: '#f59e0b', marginBottom: 6 },
+  headerTitle: { fontSize: 28, fontFamily: 'Helvetica-Bold', color: '#111827' },
+  headerDate: { fontSize: 10, color: '#9ca3af', marginTop: 4 },
   session: { marginBottom: 40 },
-  sessionHeader: { borderTopWidth: 2, borderTopColor: '#EE7700', paddingTop: 12, marginBottom: 20 },
-  sessionLabel: { fontSize: 8, letterSpacing: 2, color: '#EE7700', marginBottom: 4 },
+  sessionHeader: { borderTopWidth: 2, borderTopColor: '#f59e0b', paddingTop: 12, marginBottom: 20 },
+  sessionLabel: { fontSize: 8, letterSpacing: 2, color: '#f59e0b', marginBottom: 4 },
   sessionMeta: { fontSize: 8, color: '#aaa' },
   message: { marginBottom: 20 },
-  question: { fontSize: 12, fontFamily: 'Helvetica-Bold', color: '#0a0a0a', marginBottom: 8 },
-  answer: { fontSize: 10, color: '#444', lineHeight: 1.7 },
+  question: { fontSize: 12, fontFamily: 'Helvetica-Bold', color: '#111827', marginBottom: 8 },
+  answer: { fontSize: 10, color: '#4b5563', lineHeight: 1.7 },
   timestamp: { fontSize: 8, color: '#ccc', marginTop: 6 },
 })
 

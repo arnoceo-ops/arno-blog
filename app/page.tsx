@@ -1,4 +1,4 @@
-import { client } from '@/sanity/client'
+﻿import { client } from '@/sanity/client'
 import Link from 'next/link'
 import { auth } from '@clerk/nextjs/server'
 import { redirect } from 'next/navigation'
@@ -37,7 +37,7 @@ export default async function Home() {
         @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Mono:wght@400;700&family=Barlow+Condensed:wght@300;600;900&display=swap');
 
         * { box-sizing: border-box; margin: 0; padding: 0; }
-        body { background: #0a0a0a; color: #f0ede6; font-family: 'Space Mono', monospace; }
+        body { background: #111827; color: #f1f5f9; font-family: 'Space Mono', monospace; }
 
         /* ── NAV ── */
         .site-nav {
@@ -49,25 +49,25 @@ export default async function Home() {
         .nav-spacer { flex: 1; }
         .nav-links { display: flex; gap: 48px; align-items: center; }
         .nav-links a {
-          color: #888; text-decoration: none;
+          color: #9ca3af; text-decoration: none;
           font-family: 'Bebas Neue', sans-serif;
           font-size: 22px; letter-spacing: 3px; transition: color 0.2s;
         }
-        .nav-links a:hover { color: #f0ede6; }
-        .nav-cta { color: #EE7700 !important; }
+        .nav-links a:hover { color: #f1f5f9; }
+        .nav-cta { color: #f59e0b !important; }
         .nav-btn {
-          color: #888; text-decoration: none;
+          color: #9ca3af; text-decoration: none;
           font-family: 'Bebas Neue', sans-serif;
           font-size: 22px; letter-spacing: 3px; transition: color 0.2s;
         }
-        .nav-btn:hover { color: #f0ede6; }
+        .nav-btn:hover { color: #f1f5f9; }
         .nav-item { display: flex; flex-direction: column; align-items: center; gap: 2px; }
         .nav-sub {
           font-family: 'Space Mono', monospace; font-size: 9px;
-          letter-spacing: 2px; color: #444; text-decoration: none;
+          letter-spacing: 2px; color: #4b5563; text-decoration: none;
           text-transform: uppercase; transition: color 0.2s;
         }
-        .nav-sub:hover { color: #EE7700 !important; }
+        .nav-sub:hover { color: #f59e0b !important; }
 
         /* ── HERO ── */
         .hero {
@@ -77,7 +77,7 @@ export default async function Home() {
         .hero-bg {
           position: absolute; inset: 0;
           background-image: url('/hero.jpg');
-          background-size: cover; background-position: center; background-color: #1a1a1a;
+          background-size: cover; background-position: center; background-color: #1e293b;
         }
         .hero-overlay {
           position: absolute; inset: 0;
@@ -87,9 +87,9 @@ export default async function Home() {
         .hero-title {
           font-family: 'Bebas Neue', sans-serif;
           font-size: clamp(80px, 12vw, 160px);
-          line-height: 0.88; letter-spacing: -2px; color: #f0ede6;
+          line-height: 0.88; letter-spacing: -2px; color: #f1f5f9;
         }
-        .hero-title span { color: #EE7700; }
+        .hero-title span { color: #f59e0b; }
         .hero-tagline {
           position: absolute; bottom: 80px; right: 60px; z-index: 2;
           text-align: right; display: none;
@@ -105,8 +105,8 @@ export default async function Home() {
 
         /* ── CANVAS ── */
         .canvas-section {
-          background: #f0ede6; display: grid; grid-template-columns: 1fr 1fr;
-          border-top: 3px solid #EE7700;
+          background: #f1f5f9; display: grid; grid-template-columns: 1fr 1fr;
+          border-top: 3px solid #f59e0b;
         }
         .canvas-left {
           padding: 80px 60px; border-right: 1px solid #ddd; display: flex;
@@ -116,11 +116,11 @@ export default async function Home() {
         .canvas-quote {
           font-family: 'Bebas Neue', sans-serif;
           font-size: clamp(40px, 4vw, 64px);
-          line-height: 1.05; color: #0a0a0a;
-          border-right: 4px solid #EE7700; padding-right: 32px;
+          line-height: 1.05; color: #111827;
+          border-right: 4px solid #f59e0b; padding-right: 32px;
           text-align: right;
         }
-        .canvas-quote em { font-style: normal; color: #EE7700; }
+        .canvas-quote em { font-style: normal; color: #f59e0b; }
         .canvas-right {
           padding: 80px 60px; display: flex; flex-direction: column;
           justify-content: flex-start; gap: 24px;
@@ -128,27 +128,27 @@ export default async function Home() {
         .canvas-title {
           font-family: 'Bebas Neue', sans-serif;
           font-size: clamp(40px, 4vw, 64px);
-          line-height: 1.05; color: #0a0a0a; letter-spacing: 1px;
+          line-height: 1.05; color: #111827; letter-spacing: 1px;
         }
-        .canvas-body { font-size: 15px; line-height: 2; color: #555; max-width: 420px; }
+        .canvas-body { font-size: 15px; line-height: 2; color: #6b7280; max-width: 420px; }
         .canvas-link {
-          display: block; color: #EE7700; text-decoration: none;
+          display: block; color: #f59e0b; text-decoration: none;
           font-family: 'Bebas Neue', sans-serif;
           font-size: 24px; letter-spacing: 3px; text-transform: uppercase;
-          margin-top: 16px; background: #0a0a0a;
+          margin-top: 16px; background: #111827;
           padding: 14px 18px; border: none; border-radius: 999px;
           width: 380px; max-width: 100%; text-align: center; transition: background 0.2s;
         }
-        .canvas-link:hover { background: #1a1a1a; }
+        .canvas-link:hover { background: #1e293b; }
 
         /* ── SUBSCRIBE ── */
         .subscribe-section {
-          background: #111; color: #f0ede6;
+          background: #1f2937; color: #f1f5f9;
           display: grid; grid-template-columns: 1fr 1fr;
-          border-top: 3px solid #EE7700;
+          border-top: 3px solid #f59e0b;
         }
         .subscribe-text-col {
-          padding: 80px 60px; border-right: 1px solid #333;
+          padding: 80px 60px; border-right: 1px solid #374151;
           display: flex; align-items: flex-start; justify-content: flex-end;
         }
         .subscribe-text-inner { max-width: 480px; width: 100%; display: flex; flex-direction: column; gap: 16px; text-align: right; }
@@ -159,13 +159,13 @@ export default async function Home() {
           font-size: clamp(40px, 4vw, 64px);
           line-height: 1.05; letter-spacing: 1px; margin-bottom: 4px;
         }
-        .subscribe-title .black { color: #f0ede6; }
-        .subscribe-title .orange { color: #EE7700; }
-        .subscribe-body { font-size: 15px; line-height: 2; color: #888; margin-bottom: 8px; }
-        .subscribe-body em { font-style: normal; font-weight: 700; color: #f0ede6; }
+        .subscribe-title .black { color: #f1f5f9; }
+        .subscribe-title .orange { color: #f59e0b; }
+        .subscribe-body { font-size: 15px; line-height: 2; color: #9ca3af; margin-bottom: 8px; }
+        .subscribe-body em { font-style: normal; font-weight: 700; color: #f1f5f9; }
         .subscribe-btn {
           display: block; text-decoration: none; text-align: center; align-self: flex-end;
-          background: #EE7700; color: #0a0a0a;
+          background: #f59e0b; color: #111827;
           font-family: 'Bebas Neue', sans-serif;
           font-size: 24px; letter-spacing: 3px; text-transform: uppercase;
           padding: 14px 18px; width: 380px; max-width: 100%; transition: background 0.2s; margin-top: 8px;
@@ -175,32 +175,32 @@ export default async function Home() {
 
         /* ── FOOTER ── */
         footer {
-          background: #f0ede6; color: #0a0a0a; padding: 60px;
+          background: #f1f5f9; color: #111827; padding: 60px;
           display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 40px;
-          border-top: 3px solid #EE7700; align-items: flex-start;
+          border-top: 3px solid #f59e0b; align-items: flex-start;
         }
         .footer-logo {
           font-family: 'Bebas Neue', sans-serif; font-size: 40px;
-          color: #EE7700; letter-spacing: 3px; display: block; margin-bottom: 12px; margin-top: -7px;
+          color: #f59e0b; letter-spacing: 3px; display: block; margin-bottom: 12px; margin-top: -7px;
         }
-        .footer-quote { font-size: 15px; color: #888; line-height: 2; max-width: 520px; font-family: 'Space Mono', monospace; }
-        .footer-quote .attribution { font-family: 'Bebas Neue', sans-serif; font-size: 16px; letter-spacing: 3px; color: #EE7700; display: block; margin-top: 6px; }
+        .footer-quote { font-size: 15px; color: #9ca3af; line-height: 2; max-width: 520px; font-family: 'Space Mono', monospace; }
+        .footer-quote .attribution { font-family: 'Bebas Neue', sans-serif; font-size: 16px; letter-spacing: 3px; color: #f59e0b; display: block; margin-top: 6px; }
         .social-icons { display: flex; gap: 20px; margin-top: 24px; }
         .social-icons a { text-decoration: none; transition: opacity 0.2s; }
         .social-icons a:hover { opacity: 0.75; }
         .social-icons svg { width: 24px; height: 24px; fill: currentColor; }
-        .icon-email { color: #888; }
+        .icon-email { color: #9ca3af; }
         .icon-telegram { color: #2AABEE; }
         .icon-instagram { color: #E1306C; }
         .icon-linkedin { color: #0A66C2; }
         .footer-col h4 {
           font-size: 15px; letter-spacing: 3px; text-transform: uppercase;
-          color: #0a0a0a; margin-bottom: 20px; font-family: 'Space Mono', monospace; font-weight: 700;
+          color: #111827; margin-bottom: 20px; font-family: 'Space Mono', monospace; font-weight: 700;
         }
         .footer-links { list-style: none; }
         .footer-links li { margin-bottom: 10px; }
-        .footer-links a { color: #888; text-decoration: none; font-size: 15px; font-family: 'Space Mono', monospace; transition: color 0.1s; }
-        .footer-links a:hover { color: #EE7700; }
+        .footer-links a { color: #9ca3af; text-decoration: none; font-size: 15px; font-family: 'Space Mono', monospace; transition: color 0.1s; }
+        .footer-links a:hover { color: #f59e0b; }
         .footer-bottom {
           grid-column: span 3; border-top: 1px solid #ddd; padding-top: 32px;
           display: flex; justify-content: space-between; color: #aaa; font-size: 10px;
@@ -216,12 +216,12 @@ export default async function Home() {
 
           .canvas-section { grid-template-columns: 1fr; }
           .canvas-left { padding: 48px 24px; border-right: none; border-bottom: 1px solid #ddd; justify-content: flex-start; }
-          .canvas-quote { border-right: none; border-left: 4px solid #EE7700; padding-right: 0; padding-left: 24px; text-align: left; }
+          .canvas-quote { border-right: none; border-left: 4px solid #f59e0b; padding-right: 0; padding-left: 24px; text-align: left; }
           .canvas-right { padding: 40px 24px; }
           .canvas-link { width: 100%; }
 
           .subscribe-section { grid-template-columns: 1fr; }
-          .subscribe-text-col { padding: 48px 24px; border-right: none; border-bottom: 1px solid #333; justify-content: flex-start; }
+          .subscribe-text-col { padding: 48px 24px; border-right: none; border-bottom: 1px solid #374151; justify-content: flex-start; }
           .subscribe-text-inner { text-align: left; }
           .subscribe-btn { align-self: stretch; width: 100%; }
           .subscribe-photo-col img { width: calc(100% - 48px); margin: 40px 24px; }
@@ -277,7 +277,7 @@ export default async function Home() {
           </div>
         </div>
         <div className="canvas-right">
-          <h2 className="canvas-title">SALES<span style={{color:'#EE7700'}}>CANVAS.</span></h2>
+          <h2 className="canvas-title">SALES<span style={{color:'#f59e0b'}}>CANVAS.</span></h2>
           <p className="canvas-body">
             De meeste bazen weten niet waarom ze winnen. En al helemaal niet waarom ze verliezen. Sales Canvas legt het bloot. Geen excuses, geen flaterende spiegel. Goed verkopen is geen talent; het is een systeem. Brutaal eerlijk, zonder ruimte voor zelfbedrog. Bewijst zichzelf in 30 dagen gratis.
           </p>
@@ -286,7 +286,7 @@ export default async function Home() {
       </section>
 
       {/* ARNOBOT */}
-      <section className="subscribe-section" style={{background: '#0a0a0a'}}>
+      <section className="subscribe-section" style={{background: '#111827'}}>
         <div className="subscribe-text-col">
           <div className="subscribe-text-inner">
             <h2 className="subscribe-title">

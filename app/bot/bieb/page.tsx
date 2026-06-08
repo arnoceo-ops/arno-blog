@@ -1,4 +1,4 @@
-'use client'
+﻿'use client'
 
 import { useState, useEffect, useRef } from 'react'
 import Link from 'next/link'
@@ -183,76 +183,76 @@ export default function GeschiedenisPage() {
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Mono:wght@400;700&display=swap');
         * { box-sizing: border-box; margin: 0; padding: 0; }
-        body { background: #0a0a0a; color: #f0ede6; font-family: 'Space Mono', monospace; }
+        body { background: #111827; color: #f1f5f9; font-family: 'Space Mono', monospace; }
         @keyframes fadein { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
         @keyframes slideup { from { opacity: 0; transform: translateY(100%); } to { opacity: 1; transform: translateY(0); } }
         @keyframes blink { 0%,100%{opacity:0.2} 50%{opacity:1} }
-        .loading-dot { display:inline-block;width:7px;height:7px;border-radius:50%;background:#EE7700;animation:blink 1.2s ease-in-out infinite; }
+        .loading-dot { display:inline-block;width:7px;height:7px;border-radius:50%;background:#f59e0b;animation:blink 1.2s ease-in-out infinite; }
         .loading-dot:nth-child(2){animation-delay:0.2s}
         .loading-dot:nth-child(3){animation-delay:0.4s}
-        .analyse-loading-bar { position:fixed;bottom:0;left:0;right:0;z-index:200;background:#0a0a0a;border-top:2px solid #EE7700;padding:20px 40px;display:flex;align-items:center;justify-content:center;gap:12px;animation:slideup 0.2s ease; }
+        .analyse-loading-bar { position:fixed;bottom:0;left:0;right:0;z-index:200;background:#111827;border-top:2px solid #f59e0b;padding:20px 40px;display:flex;align-items:center;justify-content:center;gap:12px;animation:slideup 0.2s ease; }
 
         .sort-btn {
-          background: #111; border: none; box-shadow: inset 0 0 0 1px #EE7700; color: rgb(136,136,136);
+          background: #1f2937; border: none; box-shadow: inset 0 0 0 1px #f59e0b; color: rgb(136,136,136);
           font-family: 'Bebas Neue', sans-serif;
           font-size: 15px; letter-spacing: 3px;
           padding: 9px 20px; cursor: pointer; transition: all 0.15s;
           border-radius: 999px;
         }
-        .sort-btn:hover { color: #f0ede6; }
-        .sort-btn.active { background: #EE7700; box-shadow: none; color: rgb(240,237,230); }
+        .sort-btn:hover { color: #f1f5f9; }
+        .sort-btn.active { background: #f59e0b; box-shadow: none; color: rgb(240,237,230); }
 
         .delete-bar {
           position: fixed; bottom: 0; left: 0; right: 0; z-index: 200;
-          background: #0a0a0a; border-top: 2px solid #EE7700;
+          background: #111827; border-top: 2px solid #f59e0b;
           padding: 20px 40px;
           display: flex; align-items: center; justify-content: center; gap: 24px;
           animation: slideup 0.2s ease; flex-wrap: wrap;
         }
         .delete-bar-count {
           font-family: 'Bebas Neue', sans-serif;
-          font-size: 18px; letter-spacing: 3px; color: #EE7700;
+          font-size: 18px; letter-spacing: 3px; color: #f59e0b;
         }
         .delete-bar-actions { display: flex; gap: 12px; align-items: center; flex-wrap: wrap; justify-content: center; }
         .delete-bar-cancel {
-          background: none; border: none; box-shadow: inset 0 0 0 1px #EE7700; cursor: pointer;
+          background: none; border: none; box-shadow: inset 0 0 0 1px #f59e0b; cursor: pointer;
           font-family: 'Bebas Neue', sans-serif;
           font-size: 16px; letter-spacing: 3px; color: rgb(136,136,136);
           transition: all 0.15s; padding: 11px 0;
           width: 180px; text-align: center; border-radius: 999px;
         }
-        .delete-bar-cancel:hover { color: #EE7700; }
+        .delete-bar-cancel:hover { color: #f59e0b; }
         .delete-bar-btn {
-          background: #EE7700; border: 1px solid #EE7700; cursor: pointer;
+          background: #f59e0b; border: 1px solid #f59e0b; cursor: pointer;
           font-family: 'Bebas Neue', sans-serif;
-          font-size: 16px; letter-spacing: 3px; color: #f0ede6;
+          font-size: 16px; letter-spacing: 3px; color: #f1f5f9;
           padding: 11px 0; transition: background 0.15s;
           width: 180px; text-align: center; border-radius: 999px;
         }
         .delete-bar-btn:hover { background: #ff8800; border-color: #ff8800; }
-        .delete-bar-btn:disabled { background: #333; border-color: #333; color: #555; cursor: not-allowed; }
+        .delete-bar-btn:disabled { background: #374151; border-color: #374151; color: #6b7280; cursor: not-allowed; }
         .delete-bar-outline {
-          background: none; border: none; box-shadow: inset 0 0 0 1px #EE7700; cursor: pointer;
+          background: none; border: none; box-shadow: inset 0 0 0 1px #f59e0b; cursor: pointer;
           font-family: 'Bebas Neue', sans-serif;
-          font-size: 16px; letter-spacing: 3px; color: #f0ede6;
+          font-size: 16px; letter-spacing: 3px; color: #f1f5f9;
           padding: 11px 0; transition: all 0.15s;
           width: 180px; text-align: center; border-radius: 999px;
         }
-        .delete-bar-outline:hover { background: #EE7700; color: #f0ede6; }
-        .delete-bar-outline:disabled { border-color: #333; color: #444; cursor: not-allowed; }
+        .delete-bar-outline:hover { background: #f59e0b; color: #f1f5f9; }
+        .delete-bar-outline:disabled { border-color: #374151; color: #4b5563; cursor: not-allowed; }
 
         .session-checkbox {
           flex-shrink: 0; width: 22px; height: 22px;
-          border: 2px solid #333; background: none;
+          border: 2px solid #374151; background: none;
           cursor: pointer; display: flex; align-items: center; justify-content: center;
           font-family: 'Bebas Neue', sans-serif; font-size: 14px;
           transition: all 0.12s; color: transparent;
         }
         .session-checkbox:hover { border-color: #666; }
-        .session-checkbox.checked { border-color: #EE7700; background: #EE7700; color: #0a0a0a; }
+        .session-checkbox.checked { border-color: #f59e0b; background: #f59e0b; color: #111827; }
 
         .analyse-item {
-          border-top: 1px solid #1a1a1a; padding: 20px 0;
+          border-top: 1px solid #1e293b; padding: 20px 0;
           animation: fadein 0.3s ease;
         }
         .analyse-item-header {
@@ -278,7 +278,7 @@ export default function GeschiedenisPage() {
 
       <div style={{ maxWidth: 812, margin: '0 auto', padding: `clamp(80px,12vw,120px) clamp(16px,4vw,20px) ${hasSelected ? 100 : 80}px` }}>
 
-        <p style={{ color: '#EE7700', fontSize: 13, letterSpacing: 4, marginBottom: 8 }}>ARNOBOT</p>
+        <p style={{ color: '#f59e0b', fontSize: 13, letterSpacing: 4, marginBottom: 8 }}>ARNOBOT</p>
         <h1 style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 64, letterSpacing: 3, lineHeight: 1, marginBottom: 48 }}>GESPREKKEN</h1>
 
         {/* Zoekbalk */}
@@ -289,11 +289,11 @@ export default function GeschiedenisPage() {
             onChange={e => setSearch(e.target.value)}
             placeholder="Zoek in gesprekken..."
             style={{
-              width: '100%', background: '#111', border: '1px solid #2a2a2a',
-              color: '#f0ede6', fontFamily: "'Space Mono', monospace",
+              width: '100%', background: '#1f2937', border: '1px solid #2a2a2a',
+              color: '#f1f5f9', fontFamily: "'Space Mono', monospace",
               fontSize: 14, padding: '12px 16px', outline: 'none', letterSpacing: 1,
             }}
-            onFocus={e => (e.target.style.borderColor = '#EE7700')}
+            onFocus={e => (e.target.style.borderColor = '#f59e0b')}
             onBlur={e => (e.target.style.borderColor = '#2a2a2a')}
           />
         </div>
@@ -331,7 +331,7 @@ export default function GeschiedenisPage() {
         )}
 
         {!loading && sorted.length > 0 && (
-          <p style={{ fontFamily: "'Space Mono', monospace", fontSize: 15, fontWeight: 400, color: 'rgb(136,136,136)', border: '1px solid #2a2a2a', borderLeft: '3px solid #EE7700', padding: '10px 16px', display: 'inline-block', marginBottom: 24 }}>
+          <p style={{ fontFamily: "'Space Mono', monospace", fontSize: 15, fontWeight: 400, color: 'rgb(136,136,136)', border: '1px solid #2a2a2a', borderLeft: '3px solid #f59e0b', padding: '10px 16px', display: 'inline-block', marginBottom: 24 }}>
             Selecteer minimaal 3 gesprekken voor een analyse.
           </p>
         )}
@@ -342,11 +342,11 @@ export default function GeschiedenisPage() {
 
         {!loading && sorted.length === 0 && (
           <div style={{ padding: '48px 0', textAlign: 'center' }}>
-            <p style={{ color: '#333', fontSize: 13, letterSpacing: 3, textTransform: 'uppercase', marginBottom: 16 }}>
+            <p style={{ color: '#374151', fontSize: 13, letterSpacing: 3, textTransform: 'uppercase', marginBottom: 16 }}>
               {search ? 'Geen gesprekken gevonden' : 'Nog geen gesprekken'}
             </p>
             {!search && (
-              <Link href="/bot" style={{ color: '#EE7700', fontFamily: "'Bebas Neue', sans-serif", fontSize: 18, letterSpacing: 3, textDecoration: 'none' }}>
+              <Link href="/bot" style={{ color: '#f59e0b', fontFamily: "'Bebas Neue', sans-serif", fontSize: 18, letterSpacing: 3, textDecoration: 'none' }}>
                 START EERSTE GESPREK →
               </Link>
             )}
@@ -358,7 +358,7 @@ export default function GeschiedenisPage() {
           const isSelected = selected.has(session.session_id)
           const isOpen = expanded === session.session_id
           return (
-            <div key={session.session_id} style={{ borderTop: '1px solid #1a1a1a', animation: 'fadein 0.3s ease' }}>
+            <div key={session.session_id} style={{ borderTop: '1px solid #1e293b', animation: 'fadein 0.3s ease' }}>
 
               {isMobile ? (
                 /* Mobile card layout */
@@ -371,10 +371,10 @@ export default function GeschiedenisPage() {
                     >
                       {isSelected ? '✓' : ''}
                     </button>
-                    <span style={{ color: '#888', fontSize: 11, letterSpacing: 2, textTransform: 'uppercase', fontFamily: "'Space Mono', monospace", flex: 1 }}>
+                    <span style={{ color: '#9ca3af', fontSize: 11, letterSpacing: 2, textTransform: 'uppercase', fontFamily: "'Space Mono', monospace", flex: 1 }}>
                       {formatDateShort(session.created_at)}
                     </span>
-                    <span style={{ color: '#555', fontSize: 11, letterSpacing: 2, textTransform: 'uppercase', fontFamily: "'Space Mono', monospace", whiteSpace: 'nowrap' }}>
+                    <span style={{ color: '#6b7280', fontSize: 11, letterSpacing: 2, textTransform: 'uppercase', fontFamily: "'Space Mono', monospace", whiteSpace: 'nowrap' }}>
                       {session.message_count} {session.message_count === 1 ? 'vraag' : 'vragen'}
                     </span>
                   </div>
@@ -382,7 +382,7 @@ export default function GeschiedenisPage() {
                     onClick={() => toggleSession(session.session_id)}
                     style={{ width: '100%', background: 'none', border: 'none', cursor: 'pointer', textAlign: 'left', padding: 0 }}
                   >
-                    <p style={{ color: '#f0ede6', fontSize: 18, fontFamily: "'Bebas Neue', sans-serif", letterSpacing: 1, lineHeight: 1.4, marginBottom: session.summary ? 6 : 0 }}>
+                    <p style={{ color: '#f1f5f9', fontSize: 18, fontFamily: "'Bebas Neue', sans-serif", letterSpacing: 1, lineHeight: 1.4, marginBottom: session.summary ? 6 : 0 }}>
                       {session.title}
                     </p>
                     {session.summary && (
@@ -390,7 +390,7 @@ export default function GeschiedenisPage() {
                         {session.summary}
                       </p>
                     )}
-                    <span style={{ color: isOpen ? '#EE7700' : '#555', fontSize: 13, fontFamily: "'Bebas Neue', sans-serif", letterSpacing: 2, display: 'block', marginTop: 8 }}>
+                    <span style={{ color: isOpen ? '#f59e0b' : '#6b7280', fontSize: 13, fontFamily: "'Bebas Neue', sans-serif", letterSpacing: 2, display: 'block', marginTop: 8 }}>
                       {isOpen ? '↑ SLUITEN' : '↓ OPEN'}
                     </span>
                   </button>
@@ -409,11 +409,11 @@ export default function GeschiedenisPage() {
                     onClick={() => toggleSession(session.session_id)}
                     style={{ flex: 1, background: 'none', border: 'none', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 24, textAlign: 'left', padding: 0 }}
                   >
-                    <span style={{ color: '#888', fontSize: 11, letterSpacing: 2, textTransform: 'uppercase', whiteSpace: 'nowrap', minWidth: 120, fontFamily: "'Space Mono', monospace" }}>
+                    <span style={{ color: '#9ca3af', fontSize: 11, letterSpacing: 2, textTransform: 'uppercase', whiteSpace: 'nowrap', minWidth: 120, fontFamily: "'Space Mono', monospace" }}>
                       {formatDate(session.created_at)}
                     </span>
                     <div style={{ flex: 1 }}>
-                      <p style={{ color: '#f0ede6', fontSize: 20, fontFamily: "'Bebas Neue', sans-serif", letterSpacing: 1, lineHeight: 1.4, marginBottom: session.summary ? 6 : 0 }}>
+                      <p style={{ color: '#f1f5f9', fontSize: 20, fontFamily: "'Bebas Neue', sans-serif", letterSpacing: 1, lineHeight: 1.4, marginBottom: session.summary ? 6 : 0 }}>
                         {session.title}
                       </p>
                       {session.summary && (
@@ -423,10 +423,10 @@ export default function GeschiedenisPage() {
                       )}
                     </div>
                     <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: 6, flexShrink: 0 }}>
-                      <span style={{ color: '#888', fontSize: 11, letterSpacing: 2, textTransform: 'uppercase', whiteSpace: 'nowrap', fontFamily: "'Space Mono', monospace" }}>
+                      <span style={{ color: '#9ca3af', fontSize: 11, letterSpacing: 2, textTransform: 'uppercase', whiteSpace: 'nowrap', fontFamily: "'Space Mono', monospace" }}>
                         {session.message_count} {session.message_count === 1 ? 'vraag' : 'vragen'}
                       </span>
-                      <span style={{ color: isOpen ? '#EE7700' : '#888', fontSize: 18, fontFamily: "'Bebas Neue', sans-serif", letterSpacing: 2 }}>
+                      <span style={{ color: isOpen ? '#f59e0b' : '#9ca3af', fontSize: 18, fontFamily: "'Bebas Neue', sans-serif", letterSpacing: 2 }}>
                         {isOpen ? '↑ SLUITEN' : '↓ OPEN'}
                       </span>
                     </div>
@@ -437,21 +437,21 @@ export default function GeschiedenisPage() {
               {isOpen && (
                 <div style={{ paddingBottom: 40, animation: 'fadein 0.3s ease' }}>
                   {session.summary && (
-                    <div style={{ background: '#0f0f0f', borderLeft: '3px solid #EE7700', padding: '20px 24px', marginBottom: 32 }}>
-                      <p style={{ color: '#EE7700', fontSize: 11, letterSpacing: 4, textTransform: 'uppercase', marginBottom: 12 }}>SYNTHESE</p>
+                    <div style={{ background: '#0f0f0f', borderLeft: '3px solid #f59e0b', padding: '20px 24px', marginBottom: 32 }}>
+                      <p style={{ color: '#f59e0b', fontSize: 11, letterSpacing: 4, textTransform: 'uppercase', marginBottom: 12 }}>SYNTHESE</p>
                       <p style={{ color: '#d0cdc6', fontSize: 16, fontFamily: "'Space Mono', monospace", lineHeight: 1.9, marginBottom: session.blog_suggestions?.length ? 24 : 0 }}>{session.summary}</p>
                       {session.blog_suggestions && session.blog_suggestions.length > 0 && (
-                        <div style={{ borderTop: '1px solid #1a1a1a', paddingTop: 20 }}>
+                        <div style={{ borderTop: '1px solid #1e293b', paddingTop: 20 }}>
                           <p style={{ color: 'rgb(136,136,136)', fontSize: 11, letterSpacing: 4, textTransform: 'uppercase', marginBottom: 12, fontFamily: "'Bebas Neue', sans-serif" }}>VERDER LEZEN</p>
                           {session.blog_suggestions.map((b, i) => (
                             <a key={i} href={b.url} target="_blank" rel="noopener noreferrer" style={{
-                              display: 'block', color: '#888', textDecoration: 'none',
+                              display: 'block', color: '#9ca3af', textDecoration: 'none',
                               fontFamily: "'Bebas Neue', sans-serif", fontSize: 20, letterSpacing: 1.5,
                               lineHeight: 1, padding: '10px 16px', marginBottom: 2,
-                              borderLeft: '3px solid #1a1a1a', transition: 'all 0.15s',
+                              borderLeft: '3px solid #1e293b', transition: 'all 0.15s',
                             }}
-                            onMouseEnter={e => { (e.currentTarget as HTMLAnchorElement).style.color = '#f0ede6'; (e.currentTarget as HTMLAnchorElement).style.borderLeftColor = '#EE7700'; (e.currentTarget as HTMLAnchorElement).style.background = '#111' }}
-                            onMouseLeave={e => { (e.currentTarget as HTMLAnchorElement).style.color = '#888'; (e.currentTarget as HTMLAnchorElement).style.borderLeftColor = '#1a1a1a'; (e.currentTarget as HTMLAnchorElement).style.background = 'none' }}
+                            onMouseEnter={e => { (e.currentTarget as HTMLAnchorElement).style.color = '#f1f5f9'; (e.currentTarget as HTMLAnchorElement).style.borderLeftColor = '#f59e0b'; (e.currentTarget as HTMLAnchorElement).style.background = '#1f2937' }}
+                            onMouseLeave={e => { (e.currentTarget as HTMLAnchorElement).style.color = '#9ca3af'; (e.currentTarget as HTMLAnchorElement).style.borderLeftColor = '#1e293b'; (e.currentTarget as HTMLAnchorElement).style.background = 'none' }}
                             >
                               {b.title}
                             </a>
@@ -464,26 +464,26 @@ export default function GeschiedenisPage() {
                   {convLoading && (
                     <div style={{ display: 'flex', alignItems: 'center', gap: 10, padding: '16px 0' }}>
                       <span className="loading-dot" /><span className="loading-dot" /><span className="loading-dot" />
-                      <span style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 15, letterSpacing: 4, color: '#555' }}>GESPREK LADEN</span>
+                      <span style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 15, letterSpacing: 4, color: '#6b7280' }}>GESPREK LADEN</span>
                     </div>
                   )}
                   {convMessages.map((msg, i) => (
-                    <div key={i} style={{ padding: '20px 0', borderTop: '1px solid #111', display: 'flex', flexDirection: isMobile ? 'column' : 'row', gap: isMobile ? 4 : 32, alignItems: 'flex-start' }}>
-                      <span style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 14, letterSpacing: 3, color: msg.role === 'user' ? 'rgb(136,136,136)' : '#EE7700', whiteSpace: 'nowrap', paddingTop: isMobile ? 0 : 3, minWidth: isMobile ? 0 : 60 }}>
+                    <div key={i} style={{ padding: '20px 0', borderTop: '1px solid #1f2937', display: 'flex', flexDirection: isMobile ? 'column' : 'row', gap: isMobile ? 4 : 32, alignItems: 'flex-start' }}>
+                      <span style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 14, letterSpacing: 3, color: msg.role === 'user' ? 'rgb(136,136,136)' : '#f59e0b', whiteSpace: 'nowrap', paddingTop: isMobile ? 0 : 3, minWidth: isMobile ? 0 : 60 }}>
                         {msg.role === 'user' ? 'JIJ' : 'ARNO'}
                       </span>
                       <span
-                        style={{ fontSize: msg.role === 'user' ? 16 : 14, lineHeight: msg.role === 'user' ? 1.6 : 1.9, color: msg.role === 'user' ? '#f0ede6' : '#888', fontFamily: "'Space Mono', monospace", fontWeight: 400, letterSpacing: 0, whiteSpace: 'pre-wrap' }}
+                        style={{ fontSize: msg.role === 'user' ? 16 : 14, lineHeight: msg.role === 'user' ? 1.6 : 1.9, color: msg.role === 'user' ? '#f1f5f9' : '#9ca3af', fontFamily: "'Space Mono', monospace", fontWeight: 400, letterSpacing: 0, whiteSpace: 'pre-wrap' }}
                         dangerouslySetInnerHTML={{ __html: renderContent(msg.content) }}
                       />
                     </div>
                   ))}
 
-                  <div style={{ marginTop: 24, paddingTop: 24, borderTop: '1px solid #111' }}>
+                  <div style={{ marginTop: 24, paddingTop: 24, borderTop: '1px solid #1f2937' }}>
                     <Link
                       href={`/bot?resume=${session.session_id}`}
                       style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 18, letterSpacing: 3, color: 'rgb(136,136,136)', textDecoration: 'none' }}
-                      onMouseOver={e => (e.currentTarget.style.color = '#EE7700')}
+                      onMouseOver={e => (e.currentTarget.style.color = '#f59e0b')}
                       onMouseOut={e => (e.currentTarget.style.color = 'rgb(136,136,136)')}
                     >
                       ← Vervolg dit gesprek met ArnoBot.
@@ -497,12 +497,12 @@ export default function GeschiedenisPage() {
 
         {/* Toon meer / minder sessies */}
         {!search && sorted.length > 5 && (
-          <div style={{ borderTop: '1px solid #1a1a1a', padding: '28px 0', textAlign: 'center' }}>
+          <div style={{ borderTop: '1px solid #1e293b', padding: '28px 0', textAlign: 'center' }}>
             <button
               onClick={() => setShowAllSessions(v => !v)}
-              style={{ background: 'none', border: '1px solid #333', cursor: 'pointer', fontFamily: "'Bebas Neue', sans-serif", fontSize: 16, letterSpacing: 3, color: 'rgb(136,136,136)', padding: '11px 32px', borderRadius: 999, transition: 'all 0.15s' }}
-              onMouseEnter={e => { (e.currentTarget as HTMLButtonElement).style.borderColor = '#EE7700'; (e.currentTarget as HTMLButtonElement).style.color = '#EE7700' }}
-              onMouseLeave={e => { (e.currentTarget as HTMLButtonElement).style.borderColor = '#333'; (e.currentTarget as HTMLButtonElement).style.color = 'rgb(136,136,136)' }}
+              style={{ background: 'none', border: '1px solid #374151', cursor: 'pointer', fontFamily: "'Bebas Neue', sans-serif", fontSize: 16, letterSpacing: 3, color: 'rgb(136,136,136)', padding: '11px 32px', borderRadius: 999, transition: 'all 0.15s' }}
+              onMouseEnter={e => { (e.currentTarget as HTMLButtonElement).style.borderColor = '#f59e0b'; (e.currentTarget as HTMLButtonElement).style.color = '#f59e0b' }}
+              onMouseLeave={e => { (e.currentTarget as HTMLButtonElement).style.borderColor = '#374151'; (e.currentTarget as HTMLButtonElement).style.color = 'rgb(136,136,136)' }}
             >
               {showAllSessions ? `TOON MINDER ↑` : `TOON ALLE ${sorted.length} GESPREKKEN ↓`}
             </button>
@@ -511,13 +511,13 @@ export default function GeschiedenisPage() {
 
         {/* Analyses sectie */}
         {(activeAnalyse || savedAnalyses.length > 0) && (
-          <div ref={analysesSectionRef} style={{ borderTop: '1px solid #1a1a1a', paddingTop: 40, marginTop: 16 }}>
-            <p style={{ color: '#EE7700', fontSize: 13, letterSpacing: 4, marginBottom: 8 }}>ARNOBOT</p>
+          <div ref={analysesSectionRef} style={{ borderTop: '1px solid #1e293b', paddingTop: 40, marginTop: 16 }}>
+            <p style={{ color: '#f59e0b', fontSize: 13, letterSpacing: 4, marginBottom: 8 }}>ARNOBOT</p>
             <h2 style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 64, letterSpacing: 3, lineHeight: 1, marginBottom: 48 }}>ANALYSES</h2>
 
             {activeAnalyse && !isDuplicateAnalyse && !isSimilarAnalyse && (
-              <div style={{ marginBottom: 28, background: '#0f0f0f', borderLeft: '3px solid #EE7700', padding: '20px 24px' }}>
-                <p style={{ color: '#EE7700', fontSize: 11, letterSpacing: 4, textTransform: 'uppercase', marginBottom: 12 }}>NIEUW GEGENEREERD</p>
+              <div style={{ marginBottom: 28, background: '#0f0f0f', borderLeft: '3px solid #f59e0b', padding: '20px 24px' }}>
+                <p style={{ color: '#f59e0b', fontSize: 11, letterSpacing: 4, textTransform: 'uppercase', marginBottom: 12 }}>NIEUW GEGENEREERD</p>
                 <p style={{ color: '#d0cdc6', fontSize: 16, lineHeight: 1.9, fontFamily: "'Space Mono', monospace", whiteSpace: 'pre-wrap', marginBottom: 16 }}>{activeAnalyse}</p>
                 <button
                   onClick={() => setActiveAnalyse(null)}
@@ -528,13 +528,13 @@ export default function GeschiedenisPage() {
               </div>
             )}
             {isDuplicateAnalyse && (
-              <p style={{ color: '#555', fontSize: 12, letterSpacing: 2, fontFamily: "'Space Mono', monospace", marginBottom: 28 }}>
+              <p style={{ color: '#6b7280', fontSize: 12, letterSpacing: 2, fontFamily: "'Space Mono', monospace", marginBottom: 28 }}>
                 Deze combinatie is al eerder geanalyseerd — zie hieronder.
               </p>
             )}
             {isSimilarAnalyse && (
-              <div style={{ background: '#0f0f0f', borderLeft: '3px solid #555', padding: '20px 24px', marginBottom: 28 }}>
-                <p style={{ color: '#888', fontSize: 13, letterSpacing: 3, fontFamily: "'Bebas Neue', sans-serif", marginBottom: 10 }}>WEINIG VERANDERD</p>
+              <div style={{ background: '#0f0f0f', borderLeft: '3px solid #6b7280', padding: '20px 24px', marginBottom: 28 }}>
+                <p style={{ color: '#9ca3af', fontSize: 13, letterSpacing: 3, fontFamily: "'Bebas Neue', sans-serif", marginBottom: 10 }}>WEINIG VERANDERD</p>
                 <p style={{ color: '#666', fontSize: 14, lineHeight: 1.9, fontFamily: "'Space Mono', monospace" }}>
                   Je gesprekken overlappen voor meer dan 80% met een eerdere analyse. Er is niet genoeg veranderd om iets nieuws te zeggen. Ga eens aan de slag met wat er al staat — voer nieuwe gesprekken en kom dan terug.
                 </p>
@@ -542,24 +542,24 @@ export default function GeschiedenisPage() {
             )}
 
             {savedAnalyses.map(a => (
-              <div key={a.id} style={{ borderTop: '1px solid #1a1a1a', animation: 'fadein 0.3s ease' }}>
+              <div key={a.id} style={{ borderTop: '1px solid #1e293b', animation: 'fadein 0.3s ease' }}>
                 <button
                   onClick={() => setExpandedAnalyse(expandedAnalyse === a.id ? null : a.id)}
                   style={{ width: '100%', background: 'none', border: 'none', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 24, textAlign: 'left', padding: '28px 0' }}
                 >
-                  <span style={{ color: '#888', fontSize: 11, letterSpacing: 2, textTransform: 'uppercase', whiteSpace: 'nowrap', minWidth: isMobile ? 0 : 120, fontFamily: "'Space Mono', monospace" }}>
+                  <span style={{ color: '#9ca3af', fontSize: 11, letterSpacing: 2, textTransform: 'uppercase', whiteSpace: 'nowrap', minWidth: isMobile ? 0 : 120, fontFamily: "'Space Mono', monospace" }}>
                     {isMobile ? formatDateShort(a.created_at) : formatDate(a.created_at)}
                   </span>
                   <div style={{ flex: 1 }}>
-                    <p style={{ color: '#f0ede6', fontSize: 20, fontFamily: "'Bebas Neue', sans-serif", letterSpacing: 1, lineHeight: 1.4 }}>
+                    <p style={{ color: '#f1f5f9', fontSize: 20, fontFamily: "'Bebas Neue', sans-serif", letterSpacing: 1, lineHeight: 1.4 }}>
                       {getAnalyseTitle(a.analyse_text)}
                     </p>
                   </div>
                   <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: 6, flexShrink: 0 }}>
-                    <span style={{ color: '#888', fontSize: 11, letterSpacing: 2, textTransform: 'uppercase', whiteSpace: 'nowrap', fontFamily: "'Space Mono', monospace" }}>
+                    <span style={{ color: '#9ca3af', fontSize: 11, letterSpacing: 2, textTransform: 'uppercase', whiteSpace: 'nowrap', fontFamily: "'Space Mono', monospace" }}>
                       {a.session_count} {a.session_count === 1 ? 'GESPREK' : 'GESPREKKEN'}
                     </span>
-                    <span style={{ color: expandedAnalyse === a.id ? '#EE7700' : '#888', fontSize: 18, fontFamily: "'Bebas Neue', sans-serif", letterSpacing: 2 }}>
+                    <span style={{ color: expandedAnalyse === a.id ? '#f59e0b' : '#9ca3af', fontSize: 18, fontFamily: "'Bebas Neue', sans-serif", letterSpacing: 2 }}>
                       {expandedAnalyse === a.id ? '↑ SLUITEN' : '↓ OPEN'}
                     </span>
                   </div>
@@ -575,12 +575,12 @@ export default function GeschiedenisPage() {
         )}
 
         {sorted.length > 0 && (
-          <div style={{ borderTop: '1px solid #1a1a1a', paddingTop: 40, marginTop: 40, display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: 16 }}>
-            <Link href="/bot" style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 18, letterSpacing: 3, color: '#EE7700', textDecoration: 'none' }}>
+          <div style={{ borderTop: '1px solid #1e293b', paddingTop: 40, marginTop: 40, display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: 16 }}>
+            <Link href="/bot" style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 18, letterSpacing: 3, color: '#f59e0b', textDecoration: 'none' }}>
               ← TERUG NAAR ARNOBOT
             </Link>
             <Link href="/bot/coaching" style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 18, letterSpacing: 3, color: 'rgb(136,136,136)', textDecoration: 'none' }}
-              onMouseOver={e => (e.currentTarget.style.color = '#EE7700')}
+              onMouseOver={e => (e.currentTarget.style.color = '#f59e0b')}
               onMouseOut={e => (e.currentTarget.style.color = 'rgb(136,136,136)')}>
               VERDER NAAR COACHING →
             </Link>
@@ -592,7 +592,7 @@ export default function GeschiedenisPage() {
       {analyseLoading && (
         <div className="analyse-loading-bar">
           <span className="loading-dot" /><span className="loading-dot" /><span className="loading-dot" />
-          <span style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 18, letterSpacing: 4, color: '#888' }}>ARNO ANALYSEERT</span>
+          <span style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 18, letterSpacing: 4, color: '#9ca3af' }}>ARNO ANALYSEERT</span>
         </div>
       )}
 

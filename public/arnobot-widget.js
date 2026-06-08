@@ -1,4 +1,4 @@
-(function () {
+﻿(function () {
   'use strict';
 
   var API_URL = 'https://arno.bot/api/chat';
@@ -29,20 +29,20 @@
     '  display:flex;flex-direction:column;',
     '}',
     '#arnobot-header{',
-    '  background:#fff;border-bottom:2px solid #EE7700;',
+    '  background:#fff;border-bottom:2px solid #f59e0b;',
     '  padding:20px 28px;',
     '  display:flex;align-items:center;gap:16px;',
     '  flex-shrink:0;',
     '}',
     '#arnobot-avatar{',
-    '  width:72px;height:72px;background:#EE7700;',
+    '  width:72px;height:72px;background:#f59e0b;',
     '  display:flex;align-items:center;justify-content:center;',
     '  font-family:"Bebas Neue",sans-serif;font-size:48px;letter-spacing:1px;color:#fff;',
     '  flex-shrink:0;',
     '}',
     '#arnobot-header-text{}',
     '#arnobot-name{font-family:"Bebas Neue",sans-serif;font-size:28px;letter-spacing:3px;color:rgb(51,51,51);line-height:1;}',
-    '#arnobot-status{font-size:10px;letter-spacing:2px;color:#EE7700;margin-top:2px;}',
+    '#arnobot-status{font-size:10px;letter-spacing:2px;color:#f59e0b;margin-top:2px;}',
     '#arnobot-messages{',
     '  flex:1;padding:0;',
     '  display:flex;flex-direction:column;',
@@ -50,19 +50,19 @@
     '.ab-msg{padding:24px 28px;border-bottom:1px solid #f0f0f0;display:flex;gap:20px;align-items:flex-start;}',
     '.ab-msg-label{font-family:"Bebas Neue",sans-serif;font-size:20px;letter-spacing:2px;white-space:nowrap;padding-top:2px;min-width:64px;}',
     '.ab-msg-label.user{color:#bbb}',
-    '.ab-msg-label.arno{color:#EE7700}',
+    '.ab-msg-label.arno{color:#f59e0b}',
     '.ab-msg-text.user{font-size:20px;line-height:1.4;color:rgb(51,51,51);font-family:"Bebas Neue",sans-serif;letter-spacing:0.5px;}',
     '.ab-msg-text.arno{font-size:15px;line-height:1.6;color:rgb(51,51,51);white-space:pre-wrap;max-width:560px;}',
     '.ab-loading{padding:24px 28px 24px 104px;display:flex;align-items:center;gap:12px;}',
     '.ab-dots{display:flex;gap:5px;}',
-    '.ab-dot{width:7px;height:7px;background:#EE7700;border-radius:50%;animation:abpulse 1.2s ease-in-out infinite;}',
+    '.ab-dot{width:7px;height:7px;background:#f59e0b;border-radius:50%;animation:abpulse 1.2s ease-in-out infinite;}',
     '.ab-dot:nth-child(2){animation-delay:.2s}',
     '.ab-dot:nth-child(3){animation-delay:.4s}',
     '@keyframes abpulse{0%,100%{opacity:.2;transform:scale(.8)}50%{opacity:1;transform:scale(1)}}',
     '.ab-loading-text{font-size:12px;letter-spacing:2px;color:#bbb;text-transform:uppercase;}',
     '#arnobot-openers{padding:20px 28px 0;border-bottom:1px solid #f0f0f0;}',
     '.ab-openers-label{font-family:"Open Sans",sans-serif;font-size:17px;font-weight:700;letter-spacing:0;color:rgb(51,51,51);display:block;margin-bottom:6px;line-height:1.4;}',
-    '.ab-openers-sub{font-family:"Open Sans",sans-serif;font-size:14px;font-weight:400;color:#888;display:block;margin-bottom:16px;line-height:1.5;}',
+    '.ab-openers-sub{font-family:"Open Sans",sans-serif;font-size:14px;font-weight:400;color:#9ca3af;display:block;margin-bottom:16px;line-height:1.5;}',
     '.ab-openers-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:2px;margin-bottom:2px;}',
     '@media(max-width:480px){.ab-openers-grid{grid-template-columns:1fr}}',
     '.ab-opener{',
@@ -71,7 +71,7 @@
     '  padding:16px 18px;cursor:pointer;text-align:left;line-height:1.4;',
     '  transition:all .15s;',
     '}',
-    '.ab-opener:hover{background:#EE7700;color:#fff;border-left-color:#cc6600;}',
+    '.ab-opener:hover{background:#f59e0b;color:#fff;border-left-color:#cc6600;}',
     '#arnobot-input-area{',
     '  padding:16px 20px;background:#fff;border-top:1px solid #f0f0f0;',
     '  flex-shrink:0;',
@@ -81,7 +81,7 @@
     '#arnobot-input-row{',
     '  display:flex;gap:0;border:1.5px solid #ddd;transition:border-color .2s;',
     '}',
-    '#arnobot-input-row.active{border-color:#EE7700;box-shadow:0 0 0 2px rgba(238,119,0,.1);}',
+    '#arnobot-input-row.active{border-color:#f59e0b;box-shadow:0 0 0 2px rgba(238,119,0,.1);}',
     '#arnobot-textarea{',
     '  flex:1;background:#fff;border:none;color:rgb(51,51,51);',
     '  font-family:"Open Sans",sans-serif;font-size:15px;',
@@ -91,7 +91,7 @@
     '#arnobot-textarea::placeholder{color:#bbb;font-size:13px;}',
     '#arnobot-textarea:focus{background:#fafafa;}',
     '#arnobot-send{',
-    '  background:#EE7700;color:#fff;',
+    '  background:#f59e0b;color:#fff;',
     '  font-family:"Bebas Neue",sans-serif;font-size:24px;letter-spacing:2px;',
     '  padding:0 24px;border:none;cursor:pointer;',
     '  transition:background .15s;white-space:nowrap;min-width:100px;',
@@ -105,24 +105,24 @@
     '  background:none;font-family:"Bebas Neue",sans-serif;font-size:20px;letter-spacing:2px;',
     '  padding:8px 16px;cursor:pointer;border:1px solid;transition:all .15s;',
     '}',
-    '.ab-action.primary{color:#EE7700;border-color:#EE7700;}',
-    '.ab-action.primary:hover{background:#EE7700;color:#fff;}',
+    '.ab-action.primary{color:#f59e0b;border-color:#f59e0b;}',
+    '.ab-action.primary:hover{background:#f59e0b;color:#fff;}',
     '.ab-action.secondary{color:#ccc;border-color:#e5e5e5;}',
     '.ab-action.secondary:hover{color:#999;border-color:#ccc;}',
-    '.ab-hint{padding:12px 28px;font-size:15px;color:#EE7700;border-bottom:1px solid #f0f0f0;}',
+    '.ab-hint{padding:12px 28px;font-size:15px;color:#f59e0b;border-bottom:1px solid #f0f0f0;}',
     '.ab-cta{padding:20px 28px;border-bottom:1px solid #f0f0f0;}',
-    '.ab-cta-heading{font-size:15px;font-weight:700;color:#333;margin:0 0 16px 0;}',
+    '.ab-cta-heading{font-size:15px;font-weight:700;color:#374151;margin:0 0 16px 0;}',
     '.ab-cta-cards{display:grid;grid-template-columns:1fr 1fr;gap:12px;}',
     '@media(max-width:520px){.ab-cta-cards{grid-template-columns:1fr}}',
     '.ab-cta-card{padding:20px;border:1px solid #e5e5e5;display:flex;flex-direction:column;gap:10px;}',
-    '.ab-cta-card--primary{border-color:#EE7700;}',
-    '.ab-cta-card-title{font-family:"Bebas Neue",sans-serif;font-size:20px;letter-spacing:2px;color:#333;}',
-    '.ab-cta-card--primary .ab-cta-card-title{color:#EE7700;}',
-    '.ab-cta-card-body{font-size:13px;color:#888;line-height:1.5;flex:1;}',
-    '.ab-cta-btn--primary{display:block;background:#EE7700;color:#fff;font-family:"Bebas Neue",sans-serif;font-size:16px;letter-spacing:2px;padding:10px 16px;text-decoration:none;text-align:center;transition:background .15s;}',
+    '.ab-cta-card--primary{border-color:#f59e0b;}',
+    '.ab-cta-card-title{font-family:"Bebas Neue",sans-serif;font-size:20px;letter-spacing:2px;color:#374151;}',
+    '.ab-cta-card--primary .ab-cta-card-title{color:#f59e0b;}',
+    '.ab-cta-card-body{font-size:13px;color:#9ca3af;line-height:1.5;flex:1;}',
+    '.ab-cta-btn--primary{display:block;background:#f59e0b;color:#fff;font-family:"Bebas Neue",sans-serif;font-size:16px;letter-spacing:2px;padding:10px 16px;text-decoration:none;text-align:center;transition:background .15s;}',
     '.ab-cta-btn--primary:hover{background:#ff8800;}',
-    '.ab-cta-btn--secondary{display:block;background:none;color:#EE7700;border:1.5px solid #EE7700;font-family:"Bebas Neue",sans-serif;font-size:16px;letter-spacing:2px;padding:10px 16px;text-decoration:none;text-align:center;transition:all .15s;}',
-    '.ab-cta-btn--secondary:hover{background:#EE7700;color:#fff;}',
+    '.ab-cta-btn--secondary{display:block;background:none;color:#f59e0b;border:1.5px solid #f59e0b;font-family:"Bebas Neue",sans-serif;font-size:16px;letter-spacing:2px;padding:10px 16px;text-decoration:none;text-align:center;transition:all .15s;}',
+    '.ab-cta-btn--secondary:hover{background:#f59e0b;color:#fff;}',
   ].join('\n');
 
   function injectStyles() {
@@ -143,7 +143,7 @@
 
   function renderText(str) {
     return escapeHtml(str)
-      .replace(/\[([^\]]+)\]\((https?:\/\/[^\s)]+)\)/g, '<a href="$2" target="_blank" rel="noopener noreferrer" style="color:#EE7700;text-decoration:underline">$1</a>')
+      .replace(/\[([^\]]+)\]\((https?:\/\/[^\s)]+)\)/g, '<a href="$2" target="_blank" rel="noopener noreferrer" style="color:#f59e0b;text-decoration:underline">$1</a>')
       .replace(/_(.*?)_/g, '<em>$1</em>')
       .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
   }
@@ -172,7 +172,7 @@
       '<div id="arnobot-messages"></div>',
       '<div id="arnobot-openers">',
       '  <span class="ab-openers-label">Geen corporate vaagtaal. Gewoon Arno: direct en ongefilterd.</span>',
-      '  <span class="ab-openers-sub">Kies een vraag hieronder — <span style="color:#EE7700">of stel je eigen vraag onderaan.</span></span>',
+      '  <span class="ab-openers-sub">Kies een vraag hieronder — <span style="color:#f59e0b">of stel je eigen vraag onderaan.</span></span>',
       '  <div class="ab-openers-grid">' + this.openers.map(function (q) {
         return '<button class="ab-opener">' + escapeHtml(q) + '</button>';
       }).join('') + '</div>',

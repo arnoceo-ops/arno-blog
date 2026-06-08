@@ -1,4 +1,4 @@
-'use client'
+﻿'use client'
 
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
@@ -60,9 +60,9 @@ function Chip({ label, selected, onClick }: { label: string; selected: boolean; 
       onClick={onClick}
       style={{
         padding: '8px 18px',
-        border: selected ? '2px solid #EE7700' : '1.5px solid #333',
-        background: selected ? 'rgba(238,119,0,0.12)' : '#111',
-        color: selected ? '#EE7700' : '#888',
+        border: selected ? '2px solid #f59e0b' : '1.5px solid #374151',
+        background: selected ? 'rgba(238,119,0,0.12)' : '#1f2937',
+        color: selected ? '#f59e0b' : '#9ca3af',
         fontFamily: "'Space Mono', monospace",
         fontSize: 15,
         fontWeight: 400,
@@ -78,10 +78,10 @@ function Chip({ label, selected, onClick }: { label: string; selected: boolean; 
 
 function Block({ nr, title, children }: { nr: string; title: string; children: React.ReactNode }) {
   return (
-    <div style={{ marginBottom: 48, borderBottom: '1px solid #1a1a1a', paddingBottom: 40 }}>
+    <div style={{ marginBottom: 48, borderBottom: '1px solid #1e293b', paddingBottom: 40 }}>
       <div style={{ display: 'flex', alignItems: 'baseline', gap: 12, marginBottom: 20 }}>
-        <span style={{ fontFamily: "'Space Mono', monospace", fontSize: 13, letterSpacing: 4, color: '#EE7700' }}>{nr}</span>
-        <h3 style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 26, fontWeight: 400, color: '#f0ede6', margin: 0, letterSpacing: 1 }}>{title}</h3>
+        <span style={{ fontFamily: "'Space Mono', monospace", fontSize: 13, letterSpacing: 4, color: '#f59e0b' }}>{nr}</span>
+        <h3 style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 26, fontWeight: 400, color: '#f1f5f9', margin: 0, letterSpacing: 1 }}>{title}</h3>
       </div>
       {children}
     </div>
@@ -160,16 +160,16 @@ export default function BotProfielPage() {
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Mono:wght@400;700&display=swap');
         * { box-sizing: border-box; margin: 0; padding: 0; }
-        body { background: #0a0a0a; color: #f0ede6; font-family: 'Space Mono', monospace; font-size: 15px; font-weight: 400; line-height: 30px; }
+        body { background: #111827; color: #f1f5f9; font-family: 'Space Mono', monospace; font-size: 15px; font-weight: 400; line-height: 30px; }
         textarea, input {
-          background: #111; color: #f0ede6; border: 1.5px solid #333;
+          background: #1f2937; color: #f1f5f9; border: 1.5px solid #374151;
           border-radius: 4px; font-family: 'Space Mono', monospace;
           font-size: 15px; font-weight: 400; padding: 12px 16px; width: 100%;
           box-sizing: border-box; outline: none; resize: vertical;
           transition: border-color 0.15s; line-height: 30px;
         }
-        textarea:focus, input:focus { border-color: #EE7700; }
-        textarea::placeholder, input::placeholder { color: #444; }
+        textarea:focus, input:focus { border-color: #f59e0b; }
+        textarea::placeholder, input::placeholder { color: #4b5563; }
       `}</style>
 
       {isFirstTime === false && <BotNav active="profiel" />}
@@ -181,18 +181,18 @@ export default function BotProfielPage() {
           borderBottom: '1px solid rgba(255,255,255,0.06)',
           background: 'rgba(10,10,10,0.95)', backdropFilter: 'blur(12px)',
         }}>
-          <a href="/" style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 22, letterSpacing: 3, color: '#f0ede6', textDecoration: 'none' }}>
-            ARNO<span style={{ color: '#EE7700' }}>BOT.</span>
+          <a href="/" style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 22, letterSpacing: 3, color: '#f1f5f9', textDecoration: 'none' }}>
+            ARNO<span style={{ color: '#f59e0b' }}>BOT.</span>
           </a>
           <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
             <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 4 }}>
-              <div style={{ width: 48, height: 3, background: '#444', borderRadius: 2 }} />
-              <span style={{ fontFamily: "'Space Mono', monospace", fontSize: 9, letterSpacing: 2, color: '#555' }}>VIDEO</span>
+              <div style={{ width: 48, height: 3, background: '#4b5563', borderRadius: 2 }} />
+              <span style={{ fontFamily: "'Space Mono', monospace", fontSize: 9, letterSpacing: 2, color: '#6b7280' }}>VIDEO</span>
             </div>
-            <div style={{ width: 16, height: 1, background: '#333', marginBottom: 13 }} />
+            <div style={{ width: 16, height: 1, background: '#374151', marginBottom: 13 }} />
             <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 4 }}>
-              <div style={{ width: 48, height: 3, background: '#EE7700', borderRadius: 2 }} />
-              <span style={{ fontFamily: "'Space Mono', monospace", fontSize: 9, letterSpacing: 2, color: '#EE7700' }}>PROFIEL</span>
+              <div style={{ width: 48, height: 3, background: '#f59e0b', borderRadius: 2 }} />
+              <span style={{ fontFamily: "'Space Mono', monospace", fontSize: 9, letterSpacing: 2, color: '#f59e0b' }}>PROFIEL</span>
             </div>
           </div>
         </nav>
@@ -201,15 +201,15 @@ export default function BotProfielPage() {
       <div style={{ minHeight: '100vh', paddingTop: 80, paddingBottom: 80 }}>
         <div style={{ maxWidth: 680, margin: '0 auto', padding: '60px 24px 0' }}>
 
-          <div style={{ borderBottom: '3px solid #EE7700', paddingBottom: 32, marginBottom: 48 }}>
-            <p style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 14, letterSpacing: 6, color: '#EE7700', marginBottom: 8 }}>
+          <div style={{ borderBottom: '3px solid #f59e0b', paddingBottom: 32, marginBottom: 48 }}>
+            <p style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 14, letterSpacing: 6, color: '#f59e0b', marginBottom: 8 }}>
               {isFirstTime ? 'WELKOM' : 'JOUW PROFIEL'}
             </p>
-            <h1 style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 64, color: '#f0ede6', lineHeight: 1.05, letterSpacing: 1, marginBottom: 24 }}>
+            <h1 style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 64, color: '#f1f5f9', lineHeight: 1.05, letterSpacing: 1, marginBottom: 24 }}>
               {isFirstTime ? `Goed dat je er bent, ${firstName}.` : 'Profiel aanpassen'}
             </h1>
-            <div style={{ borderLeft: '4px solid #EE7700', paddingLeft: 20, color: '#888', fontSize: 15, lineHeight: '30px' }}>
-              <p style={{ color: '#f0ede6', fontWeight: 400, marginBottom: 8 }}>ArnoBot stemt zijn coaching af op jouw situatie.</p>
+            <div style={{ borderLeft: '4px solid #f59e0b', paddingLeft: 20, color: '#9ca3af', fontSize: 15, lineHeight: '30px' }}>
+              <p style={{ color: '#f1f5f9', fontWeight: 400, marginBottom: 8 }}>ArnoBot stemt zijn coaching af op jouw situatie.</p>
               <p>Hoe meer hij weet over wie jij bent, wat je verkoopt en wat je uitdagingen zijn, hoe gerichter het advies. Wees bloedeerlijk; dit is jouw persoonlijke omgeving. Er kijkt niemand mee.</p>
             </div>
           </div>
@@ -251,7 +251,7 @@ export default function BotProfielPage() {
           </Block>
 
           <Block nr="02" title="Jouw markt">
-            <p style={{ fontSize: 15, fontWeight: 400, lineHeight: '30px', color: '#666', marginBottom: 12 }}>In welke markt ben je actief? <span style={{ color: '#444' }}>(meerdere antwoorden mogelijk)</span></p>
+            <p style={{ fontSize: 15, fontWeight: 400, lineHeight: '30px', color: '#666', marginBottom: 12 }}>In welke markt ben je actief? <span style={{ color: '#4b5563' }}>(meerdere antwoorden mogelijk)</span></p>
             <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8 }}>
               {MARKT_OPTIONS.map(o => (
                 <Chip key={o} label={o} selected={answers.markt.includes(o)} onClick={() => toggleMarkt(o)} />
@@ -349,8 +349,8 @@ export default function BotProfielPage() {
             disabled={!allFilled || saving}
             style={{
               padding: '12px 36px',
-              background: allFilled ? '#EE7700' : '#1a1a1a',
-              color: allFilled ? '#f0ede6' : '#333',
+              background: allFilled ? '#f59e0b' : '#1e293b',
+              color: allFilled ? '#f1f5f9' : '#374151',
               border: 'none', borderRadius: 999,
               fontFamily: "'Bebas Neue', sans-serif",
               fontSize: 18, letterSpacing: 3,

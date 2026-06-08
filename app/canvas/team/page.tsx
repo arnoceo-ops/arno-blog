@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import { useEffect, useState, useCallback } from 'react';
 import { useAuth } from '@clerk/nextjs';
@@ -11,13 +11,13 @@ const SEGMENT_TOTALS  = { strategie: 39, mensen: 13, uitvoering: 44 };
 const G  = 'Geist, system-ui, sans-serif';
 const BN = 'Bebas Neue, sans-serif';
 
-const ORANGE = '#EE7700';
+const ORANGE = '#f59e0b';
 const GREY   = 'rgb(136, 136, 136)';
-const CREAM  = '#f0ede6';
-const DARK   = '#0a0a0a';
+const CREAM  = '#f1f5f9';
+const DARK   = '#111827';
 const CARD   = '#0d0d0d';
 const LINE   = '#1f1f1f';
-const LINE2  = '#1a1a1a';
+const LINE2  = '#1e293b';
 
 const RED    = '#c0392b';
 const YELLOW = '#d4a017';
@@ -129,14 +129,14 @@ Vraag analyse: ${result.questions.slice(0, 5).map(q => q.label + ': ' + q.diagno
             <div key={i} style={{
               alignSelf: m.role === 'user' ? 'flex-end' : 'flex-start',
               maxWidth: '80%',
-              background: m.role === 'user' ? ORANGE : '#1a1a1a',
+              background: m.role === 'user' ? ORANGE : '#1e293b',
               padding: '10px 16px',
             }}>
               <div style={{ fontFamily: G, fontSize: 13, color: m.role === 'user' ? DARK : CREAM, lineHeight: 1.5 }}>{m.text}</div>
             </div>
           ))}
           {thinking && (
-            <div style={{ alignSelf: 'flex-start', background: '#1a1a1a', padding: '10px 16px' }}>
+            <div style={{ alignSelf: 'flex-start', background: '#1e293b', padding: '10px 16px' }}>
               <div style={{ fontFamily: G, fontSize: 13, color: GREY }}>ArnoBot denkt na...</div>
             </div>
           )}
@@ -156,7 +156,7 @@ Vraag analyse: ${result.questions.slice(0, 5).map(q => q.label + ': ' + q.diagno
             fontFamily: G,
             fontSize: 13,
             color: CREAM,
-            background: '#111',
+            background: '#1f2937',
             border: `1px solid ${LINE}`,
             padding: '10px 16px',
             outline: 'none',
@@ -470,7 +470,7 @@ function AlignmentScore({
 
           {/* Question breakdown — top 5 best + top 5 worst */}
           {result.questions.length > 0 && (<>
-            <div style={{ height: 2, background: '#EE7700', margin: '2px 0' }} />
+            <div style={{ height: 2, background: '#f59e0b', margin: '2px 0' }} />
             <div style={{ padding: '32px 40px 40px' }}>
 
               {/* Header */}
@@ -730,7 +730,7 @@ export default function TeamPage() {
       {!loading && !error && <TeamAverages members={members} />}
 
       {!loading && !error && (
-        <><div style={{ height: 2, background: '#EE7700' }} /><AlignmentScore members={members} token={token} /></>
+        <><div style={{ height: 2, background: '#f59e0b' }} /><AlignmentScore members={members} token={token} /></>
       )}
 
       {loading && <div style={{ fontFamily: G, fontSize: 13, color: GREY, textAlign: 'center' as const, padding: '80px 0' }}>Laden...</div>}

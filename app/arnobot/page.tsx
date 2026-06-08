@@ -1,4 +1,4 @@
-import Link from 'next/link'
+﻿import Link from 'next/link'
 import { auth } from '@clerk/nextjs/server'
 
 export default async function ArnoBotLandingPage() {
@@ -9,7 +9,7 @@ export default async function ArnoBotLandingPage() {
         @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Mono:wght@400;700&family=Barlow+Condensed:wght@300;600;900&display=swap');
 
         * { box-sizing: border-box; margin: 0; padding: 0; }
-        body { background: #1a1a1a; color: #f0ede6; font-family: 'Space Mono', monospace; }
+        body { background: #1e293b; color: #f1f5f9; font-family: 'Space Mono', monospace; }
 
         /* ── NAV ── */
         .site-nav {
@@ -21,23 +21,23 @@ export default async function ArnoBotLandingPage() {
         .nav-spacer { flex: 1; }
         .nav-login {
           font-family: 'Bebas Neue', sans-serif; font-size: 22px; letter-spacing: 3px;
-          color: #888; text-decoration: none; transition: color 0.2s;
+          color: #9ca3af; text-decoration: none; transition: color 0.2s;
         }
-        .nav-login:hover { color: #f0ede6; }
+        .nav-login:hover { color: #f1f5f9; }
         .nav-links { display: flex; gap: 48px; align-items: center; }
         .nav-links a {
-          color: #888; text-decoration: none;
+          color: #9ca3af; text-decoration: none;
           font-family: 'Bebas Neue', sans-serif;
           font-size: 22px; letter-spacing: 3px; transition: color 0.2s;
         }
-        .nav-links a:hover { color: #f0ede6; }
-        .nav-active { color: #EE7700 !important; }
-        .nav-cta { color: #EE7700 !important; }
+        .nav-links a:hover { color: #f1f5f9; }
+        .nav-active { color: #f59e0b !important; }
+        .nav-cta { color: #f59e0b !important; }
 
         /* ── CANVAS (light sections) ── */
         .canvas-section {
-          background: #f0ede6; display: grid; grid-template-columns: 1fr 1fr;
-          border-top: 3px solid #EE7700;
+          background: #f1f5f9; display: grid; grid-template-columns: 1fr 1fr;
+          border-top: 3px solid #f59e0b;
         }
         .canvas-left {
           padding: 80px 60px; border-right: 1px solid #ddd; display: flex;
@@ -47,11 +47,11 @@ export default async function ArnoBotLandingPage() {
         .canvas-quote {
           font-family: 'Bebas Neue', sans-serif;
           font-size: clamp(40px, 4vw, 64px);
-          line-height: 1.05; color: #1a1a1a;
-          border-right: 4px solid #EE7700; padding-right: 32px;
+          line-height: 1.05; color: #1e293b;
+          border-right: 4px solid #f59e0b; padding-right: 32px;
           text-align: right;
         }
-        .canvas-quote em { font-style: normal; color: #EE7700; }
+        .canvas-quote em { font-style: normal; color: #f59e0b; }
         .canvas-right {
           padding: 80px 60px; display: flex; flex-direction: column;
           justify-content: flex-start; gap: 24px;
@@ -59,27 +59,27 @@ export default async function ArnoBotLandingPage() {
         .canvas-title {
           font-family: 'Bebas Neue', sans-serif;
           font-size: clamp(40px, 4vw, 64px);
-          line-height: 1.05; color: #1a1a1a; letter-spacing: 1px;
+          line-height: 1.05; color: #1e293b; letter-spacing: 1px;
         }
-        .canvas-body { font-size: 15px; line-height: 2; color: #555; max-width: 420px; }
+        .canvas-body { font-size: 15px; line-height: 2; color: #6b7280; max-width: 420px; }
         .canvas-link {
-          display: block; color: #EE7700; text-decoration: none;
+          display: block; color: #f59e0b; text-decoration: none;
           font-family: 'Bebas Neue', sans-serif;
           font-size: 24px; letter-spacing: 3px; text-transform: uppercase;
-          margin-top: 16px; background: #0a0a0a;
+          margin-top: 16px; background: #111827;
           padding: 14px 18px; border: none; border-radius: 999px;
           width: 380px; max-width: 100%; text-align: center; transition: background 0.2s;
         }
-        .canvas-link:hover { background: #1a1a1a; }
+        .canvas-link:hover { background: #1e293b; }
 
         /* ── SUBSCRIBE (dark sections) ── */
         .subscribe-section {
-          background: #1a1a1a; color: #f0ede6;
+          background: #1e293b; color: #f1f5f9;
           display: grid; grid-template-columns: 1fr 1fr;
-          border-top: 3px solid #EE7700;
+          border-top: 3px solid #f59e0b;
         }
         .subscribe-text-col {
-          padding: 80px 60px; border-right: 1px solid #333;
+          padding: 80px 60px; border-right: 1px solid #374151;
           display: flex; align-items: flex-start; justify-content: flex-end;
         }
         .subscribe-text-inner { max-width: 540px; width: 100%; display: flex; flex-direction: column; gap: 16px; text-align: right; }
@@ -88,13 +88,13 @@ export default async function ArnoBotLandingPage() {
           font-size: clamp(40px, 4vw, 64px);
           line-height: 1.05; letter-spacing: 1px; margin-bottom: 4px;
         }
-        .subscribe-title .black { color: #f0ede6; }
-        .subscribe-title .orange { color: #EE7700; }
-        .subscribe-body { font-size: 15px; line-height: 2; color: #888; margin-bottom: 8px; }
-        .subscribe-body em { font-style: normal; font-weight: 700; color: #f0ede6; }
+        .subscribe-title .black { color: #f1f5f9; }
+        .subscribe-title .orange { color: #f59e0b; }
+        .subscribe-body { font-size: 15px; line-height: 2; color: #9ca3af; margin-bottom: 8px; }
+        .subscribe-body em { font-style: normal; font-weight: 700; color: #f1f5f9; }
         .subscribe-btn {
           display: block; text-decoration: none; text-align: center; align-self: flex-end;
-          background: #EE7700; color: #0a0a0a;
+          background: #f59e0b; color: #111827;
           font-family: 'Bebas Neue', sans-serif;
           font-size: 24px; letter-spacing: 3px; text-transform: uppercase;
           padding: 14px 18px; width: 380px; max-width: 100%; transition: background 0.2s; margin-top: 8px;
@@ -103,13 +103,13 @@ export default async function ArnoBotLandingPage() {
         .subscribe-btn:hover { background: #ff8800; }
         .subscribe-btn-dark {
           display: block; text-decoration: none; text-align: center;
-          background: #1a1a1a; color: #888;
+          background: #1e293b; color: #9ca3af;
           font-family: 'Bebas Neue', sans-serif;
           font-size: 24px; letter-spacing: 3px; text-transform: uppercase;
           padding: 14px 18px; width: 380px; max-width: 100%; transition: background 0.2s; margin-top: 8px;
           border-radius: 999px;
         }
-        .subscribe-btn-dark:hover { background: #222; color: #f0ede6; }
+        .subscribe-btn-dark:hover { background: #222; color: #f1f5f9; }
 
         /* ── PRICING CARDS (naast elkaar) ── */
         .pricing-pair {
@@ -123,7 +123,7 @@ export default async function ArnoBotLandingPage() {
         .pricing-card + .pricing-card { border-left: 1px solid #ccc; }
         .pricing-label {
           font-size: 11px; letter-spacing: 5px; text-transform: uppercase;
-          color: #EE7700; font-family: 'Bebas Neue', sans-serif;
+          color: #f59e0b; font-family: 'Bebas Neue', sans-serif;
         }
         .pricing-amount {
           display: flex; align-items: baseline; gap: 4px;
@@ -134,12 +134,12 @@ export default async function ArnoBotLandingPage() {
         }
         .pricing-number {
           font-family: 'Bebas Neue', sans-serif;
-          font-size: clamp(52px, 5vw, 80px); color: #333;
+          font-size: clamp(52px, 5vw, 80px); color: #374151;
           letter-spacing: -1px; line-height: 0.9;
         }
         .pricing-btn {
           display: block; text-decoration: none; text-align: center; width: 100%;
-          background: #EE7700; color: #0a0a0a;
+          background: #f59e0b; color: #111827;
           font-family: 'Bebas Neue', sans-serif;
           font-size: 17px; letter-spacing: 3px;
           padding: 11px 0; border-radius: 999px;
@@ -162,16 +162,16 @@ export default async function ArnoBotLandingPage() {
           padding: 28px 0; border-bottom: 1px solid #ddd;
         }
         .feature-item:last-child { border-bottom: none; }
-        .feature-arrow { color: #EE7700; font-family: 'Bebas Neue', sans-serif; font-size: 20px; flex-shrink: 0; }
+        .feature-arrow { color: #f59e0b; font-family: 'Bebas Neue', sans-serif; font-size: 20px; flex-shrink: 0; }
         .feature-text {
           font-family: 'Barlow Condensed', sans-serif;
           font-size: 22px; font-weight: 600;
-          color: #1a1a1a; letter-spacing: 0.5px;
+          color: #1e293b; letter-spacing: 0.5px;
           text-transform: uppercase; line-height: 1.2;
         }
         .feature-text small {
           display: block; font-family: 'Space Mono', monospace;
-          font-size: 13px; letter-spacing: 0.5px; color: #888;
+          font-size: 13px; letter-spacing: 0.5px; color: #9ca3af;
           font-weight: 400; text-transform: none; margin-top: 10px; line-height: 1.7;
         }
 
@@ -179,10 +179,10 @@ export default async function ArnoBotLandingPage() {
         footer {
           background: #050505; padding: 40px 60px;
           display: flex; justify-content: space-between; align-items: center;
-          border-top: 1px solid #111;
+          border-top: 1px solid #1f2937;
         }
-        .footer-logo { font-family: 'Bebas Neue', sans-serif; font-size: 24px; color: #EE7700; letter-spacing: 3px; text-decoration: none; }
-        .footer-copy { font-size: 10px; color: #333; }
+        .footer-logo { font-family: 'Bebas Neue', sans-serif; font-size: 24px; color: #f59e0b; letter-spacing: 3px; text-decoration: none; }
+        .footer-copy { font-size: 10px; color: #374151; }
 
         /* ── MOBILE ── */
         @media (max-width: 768px) {
@@ -192,12 +192,12 @@ export default async function ArnoBotLandingPage() {
 
           .canvas-section { grid-template-columns: 1fr; }
           .canvas-left { padding: 48px 24px; border-right: none; border-bottom: 1px solid #ddd; justify-content: flex-start; }
-          .canvas-quote { border-right: none; border-left: 4px solid #EE7700; padding-right: 0; padding-left: 24px; text-align: left; }
+          .canvas-quote { border-right: none; border-left: 4px solid #f59e0b; padding-right: 0; padding-left: 24px; text-align: left; }
           .canvas-right { padding: 40px 24px; }
           .canvas-link { width: 100%; }
 
           .subscribe-section { grid-template-columns: 1fr; }
-          .subscribe-text-col { padding: 48px 24px; border-right: none; border-bottom: 1px solid #333; justify-content: flex-start; }
+          .subscribe-text-col { padding: 48px 24px; border-right: none; border-bottom: 1px solid #374151; justify-content: flex-start; }
           .subscribe-text-inner { text-align: left; }
           .subscribe-btn { align-self: stretch; width: 100%; }
           .subscribe-btn-dark { width: 100%; }
@@ -228,17 +228,17 @@ export default async function ArnoBotLandingPage() {
       </nav>
 
       {/* INTRO */}
-      <section className="subscribe-section" style={{background: '#0a0a0a', paddingTop: '80px'}}>
+      <section className="subscribe-section" style={{background: '#111827', paddingTop: '80px'}}>
         {/* LEFT: foto — zelfde als homepage: img in padded kolom */}
         <div className="subscribe-text-col">
           <img src="/cyborg.jpg" alt="ArnoBot" style={{display:'block', width:'380px', maxWidth:'100%', height:'auto'}} />
         </div>
         {/* RIGHT: propositie */}
-        <div className="canvas-right" style={{background:'#1a1a1a', justifyContent:'center'}}>
+        <div className="canvas-right" style={{background:'#1e293b', justifyContent:'center'}}>
           <div style={{maxWidth:'540px'}}>
-            <p style={{fontSize:'13px', letterSpacing:'4px', textTransform:'uppercase', color:'#EE7700', fontFamily:"'Space Mono', monospace", marginBottom:'16px'}}>ArnoBot Unlimited</p>
-            <h2 style={{fontFamily:"'Barlow Condensed', sans-serif", fontSize:'clamp(32px, 3.5vw, 52px)', fontWeight:600, color:'#f0ede6', lineHeight:1.1, textTransform:'uppercase', letterSpacing:'1px', marginBottom:'20px'}}>
-              Jouw Personal Sales<br />Coach <span style={{color:'#EE7700'}}>voor €97 p/m</span>
+            <p style={{fontSize:'13px', letterSpacing:'4px', textTransform:'uppercase', color:'#f59e0b', fontFamily:"'Space Mono', monospace", marginBottom:'16px'}}>ArnoBot Unlimited</p>
+            <h2 style={{fontFamily:"'Barlow Condensed', sans-serif", fontSize:'clamp(32px, 3.5vw, 52px)', fontWeight:600, color:'#f1f5f9', lineHeight:1.1, textTransform:'uppercase', letterSpacing:'1px', marginBottom:'20px'}}>
+              Jouw Personal Sales<br />Coach <span style={{color:'#f59e0b'}}>voor €97 p/m</span>
             </h2>
             <p className="subscribe-body">
               Dat is het equivalent van een kwartier consultancy. Wat jij hiervoor krijgt, is 24/7 toegang tot Arno's brein: 40 jaar sales leadership, 30 jaar bedrijven bouwen en 20 jaar sales blogs schrijven.<br /><br />Wat het je oplevert? Verkopen vanuit je unieke kracht. Sales mastery. Crushing targets. It's your call.
@@ -283,52 +283,52 @@ export default async function ArnoBotLandingPage() {
         <div className="subscribe-text-col" style={{alignItems:'center', padding:'80px 60px'}}>
           <div style={{display:'flex', flexDirection:'column', alignItems:'center', gap:'20px', textAlign:'center'}}>
             <div style={{background:'transparent', fontFamily:"'Bebas Neue', sans-serif", fontSize:'16px', letterSpacing:'4px', padding:'6px 18px', visibility:'hidden'}}>4 maanden gratis</div>
-            <span style={{fontSize:'28px', letterSpacing:'3px', textTransform:'uppercase', color:'#EE7700', fontFamily:"'Bebas Neue', sans-serif"}}>Per maand</span>
+            <span style={{fontSize:'28px', letterSpacing:'3px', textTransform:'uppercase', color:'#f59e0b', fontFamily:"'Bebas Neue', sans-serif"}}>Per maand</span>
             <div style={{display:'flex', alignItems:'baseline', gap:'8px'}}>
               <span style={{fontFamily:"'Bebas Neue', sans-serif", fontSize:'clamp(28px, 3vw, 44px)', color:'#666', letterSpacing:0}}>€</span>
-              <span style={{fontFamily:"'Bebas Neue', sans-serif", fontSize:'clamp(64px, 7vw, 104px)', color:'#f0ede6', letterSpacing:'-2px', lineHeight:0.9}}>97</span>
+              <span style={{fontFamily:"'Bebas Neue', sans-serif", fontSize:'clamp(64px, 7vw, 104px)', color:'#f1f5f9', letterSpacing:'-2px', lineHeight:0.9}}>97</span>
             </div>
             <a href="/sign-up" style={{
               display:'inline-block', textDecoration:'none', textAlign:'center',
-              background:'#EE7700', color:'#1a1a1a', fontFamily:"'Bebas Neue', sans-serif",
+              background:'#f59e0b', color:'#1e293b', fontFamily:"'Bebas Neue', sans-serif",
               fontSize:'20px', letterSpacing:'3px', padding:'12px 0', width:'150px', borderRadius:'999px',
               transition:'background 0.2s'
             }}>START NU.</a>
             <a href="/sign-up" style={{
-              fontSize:'13px', color:'#888', fontFamily:"'Space Mono', monospace",
+              fontSize:'13px', color:'#9ca3af', fontFamily:"'Space Mono', monospace",
               textDecoration:'none', letterSpacing:'1px'
             }}>30 dagen Free Trial</a>
           </div>
         </div>
         {/* RIGHT: PER JAAR — zelfde kolom als canvas-right */}
-        <div className="canvas-right" style={{background:'#1a1a1a', justifyContent:'center', alignItems:'flex-start', padding:'80px 60px'}}>
+        <div className="canvas-right" style={{background:'#1e293b', justifyContent:'center', alignItems:'flex-start', padding:'80px 60px'}}>
           <div style={{display:'flex', flexDirection:'column', alignItems:'center', gap:'20px', textAlign:'center'}}>
-            <div style={{background:'#f0ede6', color:'#1a1a1a', fontFamily:"'Bebas Neue', sans-serif", fontSize:'16px', letterSpacing:'4px', textTransform:'uppercase', padding:'6px 18px', display:'inline-block'}}>4 maanden gratis</div>
-            <span style={{fontSize:'28px', letterSpacing:'3px', textTransform:'uppercase', color:'#EE7700', fontFamily:"'Bebas Neue', sans-serif"}}>Per jaar</span>
+            <div style={{background:'#f1f5f9', color:'#1e293b', fontFamily:"'Bebas Neue', sans-serif", fontSize:'16px', letterSpacing:'4px', textTransform:'uppercase', padding:'6px 18px', display:'inline-block'}}>4 maanden gratis</div>
+            <span style={{fontSize:'28px', letterSpacing:'3px', textTransform:'uppercase', color:'#f59e0b', fontFamily:"'Bebas Neue', sans-serif"}}>Per jaar</span>
             <div style={{display:'flex', alignItems:'baseline', gap:'8px'}}>
               <span style={{fontFamily:"'Bebas Neue', sans-serif", fontSize:'clamp(28px, 3vw, 44px)', color:'#666', letterSpacing:0}}>€</span>
-              <span style={{fontFamily:"'Bebas Neue', sans-serif", fontSize:'clamp(64px, 7vw, 104px)', color:'#f0ede6', letterSpacing:'-2px', lineHeight:0.9}}>777</span>
+              <span style={{fontFamily:"'Bebas Neue', sans-serif", fontSize:'clamp(64px, 7vw, 104px)', color:'#f1f5f9', letterSpacing:'-2px', lineHeight:0.9}}>777</span>
             </div>
             <a href="/sign-up" style={{
               display:'inline-block', textDecoration:'none', textAlign:'center',
-              background:'#EE7700', color:'#1a1a1a', fontFamily:"'Bebas Neue', sans-serif",
+              background:'#f59e0b', color:'#1e293b', fontFamily:"'Bebas Neue', sans-serif",
               fontSize:'20px', letterSpacing:'3px', padding:'12px 0', width:'150px', borderRadius:'999px',
               transition:'background 0.2s'
             }}>START NU.</a>
             <a href="/sign-up" style={{
-              fontSize:'13px', color:'#888', fontFamily:"'Space Mono', monospace",
+              fontSize:'13px', color:'#9ca3af', fontFamily:"'Space Mono', monospace",
               textDecoration:'none', letterSpacing:'1px'
             }}>30 dagen Free Trial</a>
           </div>
         </div>
         {/* TEAMS — full-width strip */}
-        <div style={{gridColumn:'1 / -1', borderTop:'1px solid #333', padding:'28px 60px', display:'flex', flexDirection:'column', alignItems:'center', justifyContent:'center', gap:'16px', textAlign:'center'}}>
-          <span style={{fontFamily:"'Space Mono', monospace", fontSize:'13px', color:'#888', letterSpacing:'0.5px'}}>
+        <div style={{gridColumn:'1 / -1', borderTop:'1px solid #374151', padding:'28px 60px', display:'flex', flexDirection:'column', alignItems:'center', justifyContent:'center', gap:'16px', textAlign:'center'}}>
+          <span style={{fontFamily:"'Space Mono', monospace", fontSize:'13px', color:'#9ca3af', letterSpacing:'0.5px'}}>
             Wil je je hele salesteam uitrusten met ArnoBot als persoonlijke coach?
           </span>
           <a href="mailto:arno@arno.bot" style={{
             fontFamily:"'Bebas Neue', sans-serif", fontSize:'18px', letterSpacing:'3px',
-            color:'#EE7700', textDecoration:'none', textTransform:'uppercase', whiteSpace:'nowrap'
+            color:'#f59e0b', textDecoration:'none', textTransform:'uppercase', whiteSpace:'nowrap'
           }}>Neem contact op →</a>
         </div>
       </section>
@@ -368,7 +368,7 @@ export default async function ArnoBotLandingPage() {
             <div style={{paddingTop:'28px'}}>
               <a href="/sign-up" style={{
                 display:'inline-block', textDecoration:'none', textAlign:'center',
-                background:'#EE7700', color:'#1a1a1a', fontFamily:"'Bebas Neue', sans-serif",
+                background:'#f59e0b', color:'#1e293b', fontFamily:"'Bebas Neue', sans-serif",
                 fontSize:'20px', letterSpacing:'3px', padding:'12px 0', width:'150px', borderRadius:'999px'
               }}>START NU.</a>
             </div>
@@ -377,21 +377,21 @@ export default async function ArnoBotLandingPage() {
       </section>
 
       {/* COMING SOON — donker */}
-      <section className="canvas-section" style={{background:'#0a0a0a', borderTop:'3px solid #EE7700'}}>
-        <div className="canvas-left" style={{borderRight:'1px solid #333'}}>
+      <section className="canvas-section" style={{background:'#111827', borderTop:'3px solid #f59e0b'}}>
+        <div className="canvas-left" style={{borderRight:'1px solid #374151'}}>
           <div className="canvas-left-inner" style={{display:'flex', justifyContent:'flex-end'}}>
-            <div style={{fontFamily:"'Bebas Neue', sans-serif", fontSize:'14px', letterSpacing:'6px', color:'#555', border:'2px dashed #333', padding:'8px 20px', display:'inline-block'}}>
+            <div style={{fontFamily:"'Bebas Neue', sans-serif", fontSize:'14px', letterSpacing:'6px', color:'#6b7280', border:'2px dashed #374151', padding:'8px 20px', display:'inline-block'}}>
               BINNENKORT
             </div>
           </div>
         </div>
-        <div className="canvas-right" style={{background:'#1a1a1a'}}>
+        <div className="canvas-right" style={{background:'#1e293b'}}>
           <div style={{maxWidth:'540px', width:'100%'}}>
-            <h2 className="canvas-title" style={{color:'#f0ede6'}}>ARNO <span style={{color:'#EE7700'}}>LIVE.</span></h2>
-            <p className="canvas-body" style={{color:'#888'}}>
+            <h2 className="canvas-title" style={{color:'#f1f5f9'}}>ARNO <span style={{color:'#f59e0b'}}>LIVE.</span></h2>
+            <p className="canvas-body" style={{color:'#9ca3af'}}>
               Niet alleen de bot. Arno zelf. Persoonlijke online coaching op basis van jouw specifieke situatie. Voor als je nog harder vooruit wilt.
             </p>
-            <p style={{fontFamily:"'Space Mono', monospace", fontSize:'12px', color:'#555', letterSpacing:'0.5px', marginTop:'8px'}}>* Een half uur per kwartaal gratis bij een jaarabonnement.</p>
+            <p style={{fontFamily:"'Space Mono', monospace", fontSize:'12px', color:'#6b7280', letterSpacing:'0.5px', marginTop:'8px'}}>* Een half uur per kwartaal gratis bij een jaarabonnement.</p>
           </div>
         </div>
       </section>

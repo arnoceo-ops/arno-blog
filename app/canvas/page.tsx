@@ -1,4 +1,4 @@
-// @ts-nocheck
+﻿// @ts-nocheck
 'use client'
 
 import React, { useState, useEffect } from 'react'
@@ -262,25 +262,25 @@ export default function CanvasPage() {
   if (approved === false) {
     return (
       <main style={{
-        backgroundColor: '#0a0a0a', minHeight: '100vh', color: '#f0ede6',
+        backgroundColor: '#111827', minHeight: '100vh', color: '#f1f5f9',
         fontFamily: 'var(--font-geist-sans), sans-serif',
         display: 'flex', flexDirection: 'column', alignItems: 'center',
         justifyContent: 'center', padding: '64px 48px', textAlign: 'center',
       }}>
-        <p style={{ color: '#EE7700', fontSize: '11px', letterSpacing: '4px', marginBottom: '24px', opacity: 0.7 }}>
+        <p style={{ color: '#f59e0b', fontSize: '11px', letterSpacing: '4px', marginBottom: '24px', opacity: 0.7 }}>
           ROYAL DUTCH SALES
         </p>
-        <h1 style={{ fontFamily: 'var(--font-bebas), sans-serif', fontSize: '64px', letterSpacing: '4px', color: '#f0ede6', margin: '0 0 24px 0', lineHeight: 1 }}>
+        <h1 style={{ fontFamily: 'var(--font-bebas), sans-serif', fontSize: '64px', letterSpacing: '4px', color: '#f1f5f9', margin: '0 0 24px 0', lineHeight: 1 }}>
           TOEGANG AANVRAGEN
         </h1>
-        <p style={{ color: '#f0ede6', opacity: 0.4, fontSize: '15px', maxWidth: '480px', lineHeight: 1.8, marginBottom: '40px' }}>
+        <p style={{ color: '#f1f5f9', opacity: 0.4, fontSize: '15px', maxWidth: '480px', lineHeight: 1.8, marginBottom: '40px' }}>
           Jouw account wacht op goedkeuring. Neem contact op via{' '}
-          <a href="mailto:arno@royaldutchsales.com" style={{ color: '#EE7700', textDecoration: 'none' }}>
+          <a href="mailto:arno@royaldutchsales.com" style={{ color: '#f59e0b', textDecoration: 'none' }}>
             arno@royaldutchsales.com
           </a>{' '}
           om toegang te krijgen tot RDS Canvas.
         </p>
-        <Link href="/" style={{ color: '#EE7700', fontSize: '11px', letterSpacing: '3px', textDecoration: 'none', opacity: 0.6 }}>
+        <Link href="/" style={{ color: '#f59e0b', fontSize: '11px', letterSpacing: '3px', textDecoration: 'none', opacity: 0.6 }}>
           ← TERUG NAAR HOME
         </Link>
       </main>
@@ -291,7 +291,7 @@ export default function CanvasPage() {
 
   return (
     <main style={{
-      backgroundColor: '#0a0a0a', minHeight: '100vh', color: '#f0ede6',
+      backgroundColor: '#111827', minHeight: '100vh', color: '#f1f5f9',
       fontFamily: 'var(--font-geist-sans), sans-serif',
     }}>
       {/* NAV */}
@@ -305,7 +305,7 @@ export default function CanvasPage() {
         ].map(({ href, label }, i) => (
           <React.Fragment key={href}>
             {i > 0 && <span style={{ color: '#1a1714', opacity: 0.2 }}>/</span>}
-            <Link href={href} style={{ fontFamily: 'Bebas Neue, sans-serif', fontSize: 36, letterSpacing: '3px', color: href === '/canvas' ? '#EE7700' : '#1a1714', textDecoration: 'none', opacity: href === '/canvas' ? 1 : 0.4 }}>
+            <Link href={href} style={{ fontFamily: 'Bebas Neue, sans-serif', fontSize: 36, letterSpacing: '3px', color: href === '/canvas' ? '#f59e0b' : '#1a1714', textDecoration: 'none', opacity: href === '/canvas' ? 1 : 0.4 }}>
               {label}
             </Link>
           </React.Fragment>
@@ -324,13 +324,13 @@ export default function CanvasPage() {
 
       {/* HEADER */}
       <div style={{ padding: '64px 48px 0', marginBottom: '80px' }}>
-        <p style={{ color: '#EE7700', fontSize: '11px', letterSpacing: '4px', marginBottom: '12px', opacity: 0.7 }}>
+        <p style={{ color: '#f59e0b', fontSize: '11px', letterSpacing: '4px', marginBottom: '12px', opacity: 0.7 }}>
           ROYAL DUTCH SALES
         </p>
-        <h1 style={{ fontFamily: 'var(--font-bebas), sans-serif', fontSize: '96px', letterSpacing: '6px', color: '#f0ede6', margin: '0 0 8px 0', lineHeight: 1 }}>
+        <h1 style={{ fontFamily: 'var(--font-bebas), sans-serif', fontSize: '96px', letterSpacing: '6px', color: '#f1f5f9', margin: '0 0 8px 0', lineHeight: 1 }}>
           RDS CANVAS
         </h1>
-        <p style={{ color: '#f0ede6', opacity: 0.35, fontSize: '13px', letterSpacing: '1px' }}>
+        <p style={{ color: '#f1f5f9', opacity: 0.35, fontSize: '13px', letterSpacing: '1px' }}>
           {user.firstName} — Verkoopplan {new Date().getFullYear()}
         </p>
       </div>
@@ -341,35 +341,35 @@ export default function CanvasPage() {
         {/* Volledigheid */}
         <div style={{ marginBottom: '48px' }}>
           <div style={{ display: 'flex', alignItems: 'baseline', gap: '20px', marginBottom: '16px' }}>
-            <span style={{ color: '#EE7700', fontSize: '11px', letterSpacing: '4px' }}>VOLLEDIGHEID</span>
-            <span style={{ color: '#EE7700', fontSize: '11px', letterSpacing: '2px', opacity: 0.4 }}>
+            <span style={{ color: '#f59e0b', fontSize: '11px', letterSpacing: '4px' }}>VOLLEDIGHEID</span>
+            <span style={{ color: '#f59e0b', fontSize: '11px', letterSpacing: '2px', opacity: 0.4 }}>
               {loading ? '...' : scoreLabel}
             </span>
           </div>
-          <div style={{ fontFamily: 'var(--font-bebas), sans-serif', fontSize: '120px', color: '#f0ede6', lineHeight: 1, marginBottom: '24px', letterSpacing: '2px' }}>
+          <div style={{ fontFamily: 'var(--font-bebas), sans-serif', fontSize: '120px', color: '#f1f5f9', lineHeight: 1, marginBottom: '24px', letterSpacing: '2px' }}>
             {loading ? '—' : `${healthScore}%`}
           </div>
-          <div style={{ width: '100%', height: '2px', backgroundColor: '#1a1a1a', marginBottom: '32px' }}>
-            <div style={{ height: '2px', width: loading ? '0%' : `${healthScore}%`, backgroundColor: '#EE7700', transition: 'width 1s ease' }} />
+          <div style={{ width: '100%', height: '2px', backgroundColor: '#1e293b', marginBottom: '32px' }}>
+            <div style={{ height: '2px', width: loading ? '0%' : `${healthScore}%`, backgroundColor: '#f59e0b', transition: 'width 1s ease' }} />
           </div>
         </div>
 
         {/* Kwaliteitsscore */}
         <div style={{ marginBottom: '48px', paddingTop: '32px', borderTop: '1px solid #1e1e1e' }}>
           <div style={{ display: 'flex', alignItems: 'baseline', gap: '20px', marginBottom: '16px' }}>
-            <span style={{ color: '#EE7700', fontSize: '11px', letterSpacing: '4px' }}>PLAN KWALITEIT</span>
+            <span style={{ color: '#f59e0b', fontSize: '11px', letterSpacing: '4px' }}>PLAN KWALITEIT</span>
             {kwaliteitsScore !== null && (
-              <span style={{ color: '#EE7700', fontSize: '11px', letterSpacing: '2px', opacity: 0.4 }}>
+              <span style={{ color: '#f59e0b', fontSize: '11px', letterSpacing: '2px', opacity: 0.4 }}>
                 {getKwaliteitLabel(kwaliteitsScore)}
               </span>
             )}
-            <span style={{ color: '#f0ede6', fontSize: '10px', letterSpacing: '2px', opacity: 0.25, marginLeft: 'auto' }}>
+            <span style={{ color: '#f1f5f9', fontSize: '10px', letterSpacing: '2px', opacity: 0.25, marginLeft: 'auto' }}>
               MENSEN 40% · STRATEGIE 30% · UITVOERING 30%
             </span>
           </div>
 
           <div style={{ display: 'flex', alignItems: 'flex-end', gap: '40px' }}>
-            <div style={{ fontFamily: 'var(--font-bebas), sans-serif', fontSize: '120px', color: kwaliteitsScore !== null ? '#f0ede6' : '#1e1e1e', lineHeight: 1, letterSpacing: '2px' }}>
+            <div style={{ fontFamily: 'var(--font-bebas), sans-serif', fontSize: '120px', color: kwaliteitsScore !== null ? '#f1f5f9' : '#1e1e1e', lineHeight: 1, letterSpacing: '2px' }}>
               {kwaliteitsScore !== null ? `${kwaliteitsScore}%` : '—'}
             </div>
 
@@ -379,8 +379,8 @@ export default function CanvasPage() {
                 disabled={analysing}
                 style={{
                   padding: '12px 28px',
-                  backgroundColor: analysing ? '#1a1a1a' : '#EE7700',
-                  color: analysing ? '#444' : '#0a0a0a',
+                  backgroundColor: analysing ? '#1e293b' : '#f59e0b',
+                  color: analysing ? '#4b5563' : '#111827',
                   border: 'none',
                   fontFamily: 'var(--font-bebas), sans-serif',
                   fontSize: '18px',
@@ -392,7 +392,7 @@ export default function CanvasPage() {
                 {analysing ? (analyseProgress || 'ANALYSEREN...') : 'ANALYSEER PLAN'}
               </button>
               {laatsteAnalyse && !analysing && (
-                <p style={{ color: '#f0ede6', fontSize: '10px', opacity: 0.25, letterSpacing: '2px', marginTop: '8px' }}>
+                <p style={{ color: '#f1f5f9', fontSize: '10px', opacity: 0.25, letterSpacing: '2px', marginTop: '8px' }}>
                   LAATSTE ANALYSE: {formatTimestamp(laatsteAnalyse)}
                 </p>
               )}
@@ -400,8 +400,8 @@ export default function CanvasPage() {
           </div>
 
           {kwaliteitsScore !== null && (
-            <div style={{ width: '100%', height: '2px', backgroundColor: '#1a1a1a', marginTop: '16px' }}>
-              <div style={{ height: '2px', width: `${kwaliteitsScore}%`, backgroundColor: '#EE7700', transition: 'width 1s ease' }} />
+            <div style={{ width: '100%', height: '2px', backgroundColor: '#1e293b', marginTop: '16px' }}>
+              <div style={{ height: '2px', width: `${kwaliteitsScore}%`, backgroundColor: '#f59e0b', transition: 'width 1s ease' }} />
             </div>
           )}
         </div>
@@ -411,8 +411,8 @@ export default function CanvasPage() {
           <div style={{ display: 'flex', gap: '64px' }}>
             {SECTIONS.map(s => (
               <div key={s.key}>
-                <p style={{ color: '#EE7700', fontSize: '10px', letterSpacing: '3px', marginBottom: '6px' }}>{s.title}</p>
-                <p style={{ color: '#f0ede6', fontSize: '13px', opacity: 0.5, letterSpacing: '1px' }}>
+                <p style={{ color: '#f59e0b', fontSize: '10px', letterSpacing: '3px', marginBottom: '6px' }}>{s.title}</p>
+                <p style={{ color: '#f1f5f9', fontSize: '13px', opacity: 0.5, letterSpacing: '1px' }}>
                   {loading ? '—' : `${scores[s.key]} / ${TOTAL_FIELDS[s.key].length}`}
                 </p>
               </div>
@@ -435,9 +435,9 @@ export default function CanvasPage() {
                 onMouseLeave={() => setHovered(null)}
                 style={{
                   padding: '40px 32px',
-                  backgroundColor: isHovered ? '#111' : '#0a0a0a',
+                  backgroundColor: isHovered ? '#1f2937' : '#111827',
                   border: '1px solid',
-                  borderColor: isComplete ? '#EE7700' : isHovered ? '#444' : '#1e1e1e',
+                  borderColor: isComplete ? '#f59e0b' : isHovered ? '#4b5563' : '#1e1e1e',
                   transition: 'all 0.2s ease',
                   cursor: 'pointer',
                   minHeight: '220px',
@@ -447,23 +447,23 @@ export default function CanvasPage() {
                 }}
               >
                 <div>
-                  <p style={{ color: '#EE7700', fontSize: '11px', letterSpacing: '3px', marginBottom: '12px', opacity: 0.6 }}>{s.pages}</p>
-                  <h2 style={{ fontFamily: 'var(--font-bebas), sans-serif', color: '#f0ede6', fontSize: '48px', letterSpacing: '3px', margin: '0 0 8px 0', lineHeight: 1 }}>
+                  <p style={{ color: '#f59e0b', fontSize: '11px', letterSpacing: '3px', marginBottom: '12px', opacity: 0.6 }}>{s.pages}</p>
+                  <h2 style={{ fontFamily: 'var(--font-bebas), sans-serif', color: '#f1f5f9', fontSize: '48px', letterSpacing: '3px', margin: '0 0 8px 0', lineHeight: 1 }}>
                     {s.title}
                   </h2>
-                  <p style={{ color: '#f0ede6', opacity: 0.3, fontSize: '12px', letterSpacing: '1px' }}>
+                  <p style={{ color: '#f1f5f9', opacity: 0.3, fontSize: '12px', letterSpacing: '1px' }}>
                     {TOTAL_FIELDS[s.key].length} velden
                   </p>
                 </div>
                 {!loading && (
                   <div style={{ marginTop: '32px' }}>
                     <div style={{ width: '100%', height: '1px', backgroundColor: '#1e1e1e', marginBottom: '10px' }}>
-                      <div style={{ height: '1px', width: `${pct}%`, backgroundColor: '#EE7700', transition: 'width 0.8s ease' }} />
+                      <div style={{ height: '1px', width: `${pct}%`, backgroundColor: '#f59e0b', transition: 'width 0.8s ease' }} />
                     </div>
                     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                      <span style={{ color: '#EE7700', fontSize: '11px', letterSpacing: '2px', opacity: 0.5 }}>{pct}%</span>
+                      <span style={{ color: '#f59e0b', fontSize: '11px', letterSpacing: '2px', opacity: 0.5 }}>{pct}%</span>
                       {isHovered && (
-                        <span style={{ color: '#EE7700', fontSize: '10px', letterSpacing: '2px', opacity: 0.5 }}>OPEN →</span>
+                        <span style={{ color: '#f59e0b', fontSize: '10px', letterSpacing: '2px', opacity: 0.5 }}>OPEN →</span>
                       )}
                     </div>
                   </div>

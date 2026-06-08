@@ -1,4 +1,4 @@
-import { auth, currentUser } from '@clerk/nextjs/server'
+﻿import { auth, currentUser } from '@clerk/nextjs/server'
 import { NextResponse } from 'next/server'
 import { createClient } from '@supabase/supabase-js'
 import { Resend } from 'resend'
@@ -71,38 +71,38 @@ export async function POST(req: Request) {
 
   const sessiesHtml = d.recenteSessies.map(s => `
     <tr>
-      <td style="padding:10px 0;border-bottom:1px solid #eee;color:#333;font-size:14px">${s.title}</td>
-      <td style="padding:10px 16px;border-bottom:1px solid #eee;color:#888;font-size:13px;white-space:nowrap">${s.message_count} vragen</td>
+      <td style="padding:10px 0;border-bottom:1px solid #eee;color:#374151;font-size:14px">${s.title}</td>
+      <td style="padding:10px 16px;border-bottom:1px solid #eee;color:#9ca3af;font-size:13px;white-space:nowrap">${s.message_count} vragen</td>
       <td style="padding:10px 0;border-bottom:1px solid #eee;color:#aaa;font-size:12px;white-space:nowrap">${formatDate(s.created_at)}</td>
     </tr>
     ${s.summary ? `<tr><td colspan="3" style="padding:0 0 10px;color:#666;font-size:13px;line-height:1.6;border-bottom:1px solid #eee">${s.summary}</td></tr>` : ''}
   `).join('')
 
   const coachingHtml = coaching ? `
-    <h2 style="font-family:sans-serif;font-size:18px;color:#EE7700;margin:32px 0 16px;text-transform:uppercase;letter-spacing:2px">Coachingsdocument</h2>
+    <h2 style="font-family:sans-serif;font-size:18px;color:#f59e0b;margin:32px 0 16px;text-transform:uppercase;letter-spacing:2px">Coachingsdocument</h2>
     <p style="font-size:12px;color:#aaa;margin-bottom:24px">Gegenereerd op ${d.coaching?.updated_at ? formatDate(d.coaching.updated_at) : '—'} · ${d.coaching?.conversation_count ?? 0} gesprekken</p>
 
-    <h3 style="font-size:13px;color:#EE7700;text-transform:uppercase;letter-spacing:2px;margin:0 0 8px">Waar op gefocust</h3>
-    <p style="font-size:14px;color:#333;line-height:1.8;margin:0 0 24px">${coaching.focus ?? ''}</p>
+    <h3 style="font-size:13px;color:#f59e0b;text-transform:uppercase;letter-spacing:2px;margin:0 0 8px">Waar op gefocust</h3>
+    <p style="font-size:14px;color:#374151;line-height:1.8;margin:0 0 24px">${coaching.focus ?? ''}</p>
 
-    <h3 style="font-size:13px;color:#EE7700;text-transform:uppercase;letter-spacing:2px;margin:0 0 8px">Blinde vlekken</h3>
-    <p style="font-size:14px;color:#333;line-height:1.8;margin:0 0 24px">${coaching.blinde_vlekken ?? ''}</p>
+    <h3 style="font-size:13px;color:#f59e0b;text-transform:uppercase;letter-spacing:2px;margin:0 0 8px">Blinde vlekken</h3>
+    <p style="font-size:14px;color:#374151;line-height:1.8;margin:0 0 24px">${coaching.blinde_vlekken ?? ''}</p>
 
-    <h3 style="font-size:13px;color:#EE7700;text-transform:uppercase;letter-spacing:2px;margin:0 0 12px">3 Ontwikkelpunten</h3>
+    <h3 style="font-size:13px;color:#f59e0b;text-transform:uppercase;letter-spacing:2px;margin:0 0 12px">3 Ontwikkelpunten</h3>
     ${((coaching.ontwikkelpunten as string[]) ?? []).map((p, i) => `
-      <p style="font-size:14px;color:#333;line-height:1.7;margin:0 0 10px"><strong style="color:#EE7700">${i + 1}.</strong> ${p}</p>
+      <p style="font-size:14px;color:#374151;line-height:1.7;margin:0 0 10px"><strong style="color:#f59e0b">${i + 1}.</strong> ${p}</p>
     `).join('')}
 
-    <h3 style="font-size:13px;color:#EE7700;text-transform:uppercase;letter-spacing:2px;margin:24px 0 8px">Opdracht voor deze week</h3>
-    <p style="font-size:14px;color:#333;line-height:1.8;margin:0 0 24px;padding:16px 20px;background:#fff8f0;border-left:3px solid #EE7700">${coaching.opdracht ?? ''}</p>
+    <h3 style="font-size:13px;color:#f59e0b;text-transform:uppercase;letter-spacing:2px;margin:24px 0 8px">Opdracht voor deze week</h3>
+    <p style="font-size:14px;color:#374151;line-height:1.8;margin:0 0 24px;padding:16px 20px;background:#fff8f0;border-left:3px solid #f59e0b">${coaching.opdracht ?? ''}</p>
 
-    <h3 style="font-size:13px;color:#EE7700;text-transform:uppercase;letter-spacing:2px;margin:24px 0 8px">Voortgang</h3>
-    <p style="font-size:14px;color:#333;line-height:1.8;margin:0 0 24px">${coaching.voortgang ?? ''}</p>
+    <h3 style="font-size:13px;color:#f59e0b;text-transform:uppercase;letter-spacing:2px;margin:24px 0 8px">Voortgang</h3>
+    <p style="font-size:14px;color:#374151;line-height:1.8;margin:0 0 24px">${coaching.voortgang ?? ''}</p>
   ` : '<p style="font-size:14px;color:#aaa;font-style:italic">Nog geen coachingsdocument gegenereerd.</p>'
 
   const analyseHtml = d.analyses.length > 0 ? `
-    <h2 style="font-family:sans-serif;font-size:18px;color:#EE7700;margin:32px 0 16px;text-transform:uppercase;letter-spacing:2px">Laatste patroonanalyse</h2>
-    <p style="font-size:14px;color:#333;line-height:1.9;white-space:pre-wrap">${d.analyses[0].analyse_text}</p>
+    <h2 style="font-family:sans-serif;font-size:18px;color:#f59e0b;margin:32px 0 16px;text-transform:uppercase;letter-spacing:2px">Laatste patroonanalyse</h2>
+    <p style="font-size:14px;color:#374151;line-height:1.9;white-space:pre-wrap">${d.analyses[0].analyse_text}</p>
     <p style="font-size:12px;color:#aaa;margin-top:8px">${formatDate(d.analyses[0].created_at)} · ${d.analyses[0].session_count} gesprekken</p>
   ` : ''
 
@@ -112,31 +112,31 @@ export async function POST(req: Request) {
     <body style="margin:0;padding:0;background:#f5f5f5;font-family:'Helvetica Neue',Arial,sans-serif">
       <div style="max-width:680px;margin:0 auto;background:#fff;padding:48px 40px">
 
-        <div style="border-bottom:3px solid #EE7700;padding-bottom:24px;margin-bottom:32px">
-          <p style="margin:0 0 4px;font-size:11px;letter-spacing:4px;color:#EE7700;text-transform:uppercase">ArnoBot</p>
-          <h1 style="margin:0;font-size:32px;color:#111;letter-spacing:1px">Coachingsoverzicht</h1>
-          <p style="margin:8px 0 0;font-size:14px;color:#888">Aangevraagd door gebruiker op ${formatDate(new Date().toISOString())}</p>
+        <div style="border-bottom:3px solid #f59e0b;padding-bottom:24px;margin-bottom:32px">
+          <p style="margin:0 0 4px;font-size:11px;letter-spacing:4px;color:#f59e0b;text-transform:uppercase">ArnoBot</p>
+          <h1 style="margin:0;font-size:32px;color:#1f2937;letter-spacing:1px">Coachingsoverzicht</h1>
+          <p style="margin:8px 0 0;font-size:14px;color:#9ca3af">Aangevraagd door gebruiker op ${formatDate(new Date().toISOString())}</p>
         </div>
 
-        <h2 style="font-size:13px;color:#EE7700;text-transform:uppercase;letter-spacing:2px;margin:0 0 12px">Gebruiker</h2>
-        <p style="font-size:16px;color:#111;margin:0 0 4px;font-weight:bold">${d.naam}</p>
+        <h2 style="font-size:13px;color:#f59e0b;text-transform:uppercase;letter-spacing:2px;margin:0 0 12px">Gebruiker</h2>
+        <p style="font-size:16px;color:#1f2937;margin:0 0 4px;font-weight:bold">${d.naam}</p>
         <p style="font-size:14px;color:#666;margin:0 0 8px">${d.email}</p>
 
         <div style="display:flex;gap:32px;margin:24px 0 32px;padding:20px 24px;background:#f9f9f9">
           <div>
-            <div style="font-size:36px;font-weight:bold;color:#EE7700;line-height:1">${d.stats.sessionCount}</div>
-            <div style="font-size:11px;color:#888;text-transform:uppercase;letter-spacing:2px;margin-top:4px">Gesprekken</div>
+            <div style="font-size:36px;font-weight:bold;color:#f59e0b;line-height:1">${d.stats.sessionCount}</div>
+            <div style="font-size:11px;color:#9ca3af;text-transform:uppercase;letter-spacing:2px;margin-top:4px">Gesprekken</div>
           </div>
           <div>
-            <div style="font-size:36px;font-weight:bold;color:#EE7700;line-height:1">${d.stats.totalQuestions}</div>
-            <div style="font-size:11px;color:#888;text-transform:uppercase;letter-spacing:2px;margin-top:4px">Vragen gesteld</div>
+            <div style="font-size:36px;font-weight:bold;color:#f59e0b;line-height:1">${d.stats.totalQuestions}</div>
+            <div style="font-size:11px;color:#9ca3af;text-transform:uppercase;letter-spacing:2px;margin-top:4px">Vragen gesteld</div>
           </div>
         </div>
 
         ${coachingHtml}
         ${analyseHtml}
 
-        <h2 style="font-family:sans-serif;font-size:18px;color:#EE7700;margin:32px 0 16px;text-transform:uppercase;letter-spacing:2px">Recente gesprekken</h2>
+        <h2 style="font-family:sans-serif;font-size:18px;color:#f59e0b;margin:32px 0 16px;text-transform:uppercase;letter-spacing:2px">Recente gesprekken</h2>
         <table style="width:100%;border-collapse:collapse">
           ${sessiesHtml}
         </table>

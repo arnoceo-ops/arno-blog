@@ -1,4 +1,4 @@
-// @ts-nocheck
+﻿// @ts-nocheck
 import React from 'react'
 import { Document, Page, Text, View, StyleSheet, Image } from '@react-pdf/renderer'
 
@@ -12,7 +12,7 @@ interface PdfProps {
 }
 
 const C = {
-  bg: '#0a0a0a', cream: '#f0ede6', orange: '#EE7700', subtle: '#1e1e1e',
+  bg: '#111827', cream: '#f1f5f9', orange: '#f59e0b', subtle: '#1e1e1e',
   white: '#ffffff', stripe: '#f5f3f0', dark: '#3d3935', mid: '#8c8480', line: '#ddd8d0',
 }
 
@@ -38,11 +38,11 @@ const s = StyleSheet.create({
   scoreBarFill: { height: 2, backgroundColor: C.orange },
   scoreMeta: { color: C.cream, fontSize: 7, letterSpacing: 1, opacity: 0.2, marginTop: 4 },
   cardsRow: { flexDirection: 'row', gap: 2, marginTop: 32 },
-  card: { flex: 1, padding: '20 16', backgroundColor: '#111', borderWidth: 1, borderColor: '#222' },
+  card: { flex: 1, padding: '20 16', backgroundColor: '#1f2937', borderWidth: 1, borderColor: '#222' },
   cardPages: { color: C.orange, fontSize: 7, letterSpacing: 2, marginBottom: 6, opacity: 0.6 },
   cardTitle: { fontSize: 22, color: C.cream, marginBottom: 4, fontFamily: 'Helvetica-Bold' },
   cardMeta: { color: C.cream, fontSize: 8, opacity: 0.3 },
-  cardBar: { height: 1, backgroundColor: '#333', marginTop: 12, marginBottom: 3 },
+  cardBar: { height: 1, backgroundColor: '#374151', marginTop: 12, marginBottom: 3 },
   cardBarFill: { height: 1, backgroundColor: C.orange },
   cardPct: { color: C.orange, fontSize: 7, letterSpacing: 1, opacity: 0.5 },
   heroImage: { width: '100%', height: 190, objectFit: 'cover' },

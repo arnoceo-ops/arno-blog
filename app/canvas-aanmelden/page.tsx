@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import Link from 'next/link';
 import { useState } from 'react';
@@ -59,7 +59,7 @@ export default function CanvasAanmeldenPage() {
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Mono:wght@400;700&family=Barlow:wght@400;700&display=swap');
         *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-        body { background: #0a0a0a; color: #f0ede6; font-family: 'Space Mono', monospace; }
+        body { background: #111827; color: #f1f5f9; font-family: 'Space Mono', monospace; }
 
         .site-nav {
           position: fixed; top: 0; left: 0; right: 0; z-index: 100;
@@ -69,19 +69,19 @@ export default function CanvasAanmeldenPage() {
         }
         .nav-links { display: flex; gap: 48px; align-items: center; }
         .nav-links a {
-          color: #888; text-decoration: none;
+          color: #9ca3af; text-decoration: none;
           font-family: 'Bebas Neue', sans-serif;
           font-size: 22px; letter-spacing: 3px; transition: color 0.2s;
         }
-        .nav-links a:hover { color: #f0ede6; }
-        .nav-active { color: #EE7700 !important; }
-        .nav-cta { color: #EE7700 !important; }
+        .nav-links a:hover { color: #f1f5f9; }
+        .nav-active { color: #f59e0b !important; }
+        .nav-cta { color: #f59e0b !important; }
 
         .page { padding-top: 80px; min-height: 100vh; }
 
         .hero {
           padding: 80px 60px 60px;
-          border-bottom: 3px solid #EE7700;
+          border-bottom: 3px solid #f59e0b;
           display: flex; justify-content: space-between; align-items: flex-end;
           flex-wrap: wrap; gap: 32px;
         }
@@ -89,14 +89,14 @@ export default function CanvasAanmeldenPage() {
           font-family: 'Bebas Neue', sans-serif;
           font-size: clamp(56px, 9vw, 108px); line-height: 0.9;
         }
-        .hero-title span:first-child { color: #EE7700; display: block; }
-        .hero-title span:last-child { color: #f0ede6; display: block; }
+        .hero-title span:first-child { color: #f59e0b; display: block; }
+        .hero-title span:last-child { color: #f1f5f9; display: block; }
         .hero-meta { text-align: right; padding-bottom: 8px; }
-        .hero-meta p { font-family: 'Space Mono', monospace; font-size: 13px; line-height: 1.9; color: #888; }
+        .hero-meta p { font-family: 'Space Mono', monospace; font-size: 13px; line-height: 1.9; color: #9ca3af; }
         .no-cc {
           display: inline-flex; align-items: center; gap: 8px;
           font-family: 'Bebas Neue', sans-serif; font-size: 16px; letter-spacing: 2px;
-          color: #EE7700; margin-top: 12px;
+          color: #f59e0b; margin-top: 12px;
         }
         .no-cc::before { content: '✓'; }
 
@@ -105,17 +105,17 @@ export default function CanvasAanmeldenPage() {
         .field { margin-bottom: 32px; }
         .label {
           display: block; font-family: 'Bebas Neue', sans-serif;
-          font-size: 16px; letter-spacing: 2px; color: #888; margin-bottom: 10px;
+          font-size: 16px; letter-spacing: 2px; color: #9ca3af; margin-bottom: 10px;
         }
-        .label span { color: #EE7700; }
+        .label span { color: #f59e0b; }
         .input {
           width: 100%; background: #0f0f0f; border: 1px solid #222;
-          color: #f0ede6; font-family: 'Space Mono', monospace; font-size: 14px;
+          color: #f1f5f9; font-family: 'Space Mono', monospace; font-size: 14px;
           padding: 14px 18px; outline: none; transition: border-color 0.2s;
           appearance: none;
         }
-        .input:focus { border-color: #EE7700; }
-        .input::placeholder { color: #444; }
+        .input:focus { border-color: #f59e0b; }
+        .input::placeholder { color: #4b5563; }
         select.input { cursor: pointer; }
         textarea.input { resize: vertical; min-height: 100px; }
 
@@ -125,45 +125,45 @@ export default function CanvasAanmeldenPage() {
           padding: 28px 24px; cursor: pointer; transition: border-color 0.2s;
           position: relative;
         }
-        .plan-card:hover { border-color: #444; }
-        .plan-card.active { border-color: #EE7700; }
+        .plan-card:hover { border-color: #4b5563; }
+        .plan-card.active { border-color: #f59e0b; }
         .plan-card.active::before {
           content: ''; position: absolute; top: 0; left: 0; right: 0;
-          height: 2px; background: #EE7700;
+          height: 2px; background: #f59e0b;
         }
         .plan-name {
           font-family: 'Bebas Neue', sans-serif; font-size: 32px;
-          letter-spacing: 2px; color: #f0ede6; margin-bottom: 8px;
+          letter-spacing: 2px; color: #f1f5f9; margin-bottom: 8px;
         }
         .plan-desc { font-size: 12px; color: #666; line-height: 1.7; }
-        .plan-card.active .plan-name { color: #EE7700; }
+        .plan-card.active .plan-name { color: #f59e0b; }
 
         .seats-row { display: flex; gap: 8px; margin-top: 16px; }
         .seat-btn {
           width: 44px; height: 44px; background: #0f0f0f; border: 1px solid #222;
-          color: #888; font-family: 'Space Mono', monospace; font-size: 14px;
+          color: #9ca3af; font-family: 'Space Mono', monospace; font-size: 14px;
           cursor: pointer; transition: all 0.15s;
         }
-        .seat-btn:hover { border-color: #444; color: #f0ede6; }
-        .seat-btn.active { border-color: #EE7700; color: #EE7700; background: #1a1000; }
+        .seat-btn:hover { border-color: #4b5563; color: #f1f5f9; }
+        .seat-btn.active { border-color: #f59e0b; color: #f59e0b; background: #1a1000; }
 
         .check-row { display: flex; align-items: flex-start; gap: 14px; margin-bottom: 18px; cursor: pointer; }
         .check-box {
           width: 20px; height: 20px; min-width: 20px; background: #0f0f0f;
-          border: 1px solid #333; display: flex; align-items: center; justify-content: center;
+          border: 1px solid #374151; display: flex; align-items: center; justify-content: center;
           transition: border-color 0.2s; margin-top: 1px;
         }
-        .check-box.checked { border-color: #EE7700; background: #1a1000; }
-        .check-box.checked::after { content: '✓'; color: #EE7700; font-size: 12px; }
+        .check-box.checked { border-color: #f59e0b; background: #1a1000; }
+        .check-box.checked::after { content: '✓'; color: #f59e0b; font-size: 12px; }
         .check-label { font-size: 12px; color: #666; line-height: 1.7; }
-        .check-label a { color: #EE7700; text-decoration: none; }
+        .check-label a { color: #f59e0b; text-decoration: none; }
         .check-label a:hover { text-decoration: underline; }
 
-        .divider { height: 1px; background: #1a1a1a; margin: 40px 0; }
+        .divider { height: 1px; background: #1e293b; margin: 40px 0; }
 
         .submit-btn {
           font-family: 'Bebas Neue', sans-serif; font-size: 22px; letter-spacing: 3px;
-          color: #0a0a0a; background: #EE7700; border: none; padding: 18px 0;
+          color: #111827; background: #f59e0b; border: none; padding: 18px 0;
           width: 100%; cursor: pointer; transition: opacity 0.2s;
         }
         .submit-btn:disabled { opacity: 0.4; cursor: not-allowed; }
@@ -176,17 +176,17 @@ export default function CanvasAanmeldenPage() {
         }
         .success-title {
           font-family: 'Bebas Neue', sans-serif; font-size: clamp(48px, 8vw, 96px);
-          color: #EE7700; line-height: 0.9; margin-bottom: 24px;
+          color: #f59e0b; line-height: 0.9; margin-bottom: 24px;
         }
-        .success-sub { font-size: 13px; color: #888; line-height: 1.9; max-width: 480px; margin: 0 auto; }
+        .success-sub { font-size: 13px; color: #9ca3af; line-height: 1.9; max-width: 480px; margin: 0 auto; }
 
         footer {
           background: #050505; padding: 40px 60px;
           display: flex; justify-content: space-between; align-items: center;
-          border-top: 1px solid #111;
+          border-top: 1px solid #1f2937;
         }
-        .footer-logo { font-family: 'Bebas Neue', sans-serif; font-size: 24px; color: #EE7700; letter-spacing: 3px; }
-        .footer-copy { font-size: 10px; color: #333; }
+        .footer-logo { font-family: 'Bebas Neue', sans-serif; font-size: 24px; color: #f59e0b; letter-spacing: 3px; }
+        .footer-copy { font-size: 10px; color: #374151; }
 
         @media (max-width: 600px) {
           .hero { padding: 60px 24px 40px; }
@@ -224,7 +224,7 @@ export default function CanvasAanmeldenPage() {
             <div className="success-title">AANMELDING<br />ONTVANGEN.</div>
             <p className="success-sub">
               Bedankt. Je ontvangt binnen 24 uur een bevestiging op {form.email}.<br /><br />
-              Vragen? Mail naar <a href="mailto:arno@royaldutchsales.com" style={{ color: '#EE7700' }}>arno@royaldutchsales.com</a>
+              Vragen? Mail naar <a href="mailto:arno@royaldutchsales.com" style={{ color: '#f59e0b' }}>arno@royaldutchsales.com</a>
             </p>
           </div>
         ) : (
@@ -299,7 +299,7 @@ export default function CanvasAanmeldenPage() {
             <div className="check-row" onClick={() => set('voorwaarden', !form.voorwaarden)}>
               <div className={`check-box${form.voorwaarden ? ' checked' : ''}`} />
               <div className="check-label">
-                Ik ga akkoord met de <a href="/voorwaarden" onClick={e => e.stopPropagation()}>algemene voorwaarden</a> en <a href="/privacy" onClick={e => e.stopPropagation()}>privacyverklaring</a> van Royal Dutch Sales. <span style={{ color: '#EE7700' }}>*</span>
+                Ik ga akkoord met de <a href="/voorwaarden" onClick={e => e.stopPropagation()}>algemene voorwaarden</a> en <a href="/privacy" onClick={e => e.stopPropagation()}>privacyverklaring</a> van Royal Dutch Sales. <span style={{ color: '#f59e0b' }}>*</span>
               </div>
             </div>
 
@@ -318,7 +318,7 @@ export default function CanvasAanmeldenPage() {
               {loading ? 'VERZENDEN...' : 'AANMELDEN VOOR 8 DAGEN GRATIS'}
             </button>
 
-            <p style={{ marginTop: 16, fontSize: 11, color: '#444', textAlign: 'center', lineHeight: 1.7 }}>
+            <p style={{ marginTop: 16, fontSize: 11, color: '#4b5563', textAlign: 'center', lineHeight: 1.7 }}>
               Na aanmelding ontvang je binnen 24 uur een bevestiging. Geen automatische afschrijving. Geen creditcard nodig.
             </p>
 

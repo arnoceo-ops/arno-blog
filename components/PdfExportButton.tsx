@@ -1,4 +1,4 @@
-// @ts-nocheck
+﻿// @ts-nocheck
 'use client'
 
 import { useState } from 'react'
@@ -88,8 +88,8 @@ export default function PdfExportButton() {
 
   const btnStyle = {
     padding: '12px 28px',
-    backgroundColor: loading ? '#1a1a1a' : '#EE7700',
-    color: loading ? '#444' : '#0a0a0a',
+    backgroundColor: loading ? '#1e293b' : '#f59e0b',
+    color: loading ? '#4b5563' : '#111827',
     border: 'none',
     fontFamily: 'var(--font-bebas), sans-serif',
     fontSize: '18px',

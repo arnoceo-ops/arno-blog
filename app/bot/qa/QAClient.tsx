@@ -1,4 +1,4 @@
-'use client'
+﻿'use client'
 
 import Link from 'next/link'
 import BotNav from '@/app/bot/BotNav'
@@ -32,7 +32,7 @@ export default function QAClient({ isOnboarding }: { isOnboarding: boolean }) {
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Mono:wght@400;700&display=swap');
         * { box-sizing: border-box; margin: 0; padding: 0; }
-        body { background: #0a0a0a; color: #f0ede6; font-family: 'Space Mono', monospace; }
+        body { background: #111827; color: #f1f5f9; font-family: 'Space Mono', monospace; }
         .qa-continue:hover { background: #cc6600 !important; }
       `}</style>
 
@@ -44,18 +44,18 @@ export default function QAClient({ isOnboarding }: { isOnboarding: boolean }) {
           borderBottom: '1px solid rgba(255,255,255,0.06)',
           background: 'rgba(10,10,10,0.95)', backdropFilter: 'blur(12px)',
         }}>
-          <Link href="/" style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 22, letterSpacing: 3, color: '#f0ede6', textDecoration: 'none' }}>
-            ARNO<span style={{ color: '#EE7700' }}>BOT.</span>
+          <Link href="/" style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 22, letterSpacing: 3, color: '#f1f5f9', textDecoration: 'none' }}>
+            ARNO<span style={{ color: '#f59e0b' }}>BOT.</span>
           </Link>
           <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
             <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 4 }}>
-              <div style={{ width: 48, height: 3, background: '#EE7700', borderRadius: 2 }} />
-              <span style={{ fontFamily: "'Space Mono', monospace", fontSize: 9, letterSpacing: 2, color: '#EE7700' }}>VIDEO</span>
+              <div style={{ width: 48, height: 3, background: '#f59e0b', borderRadius: 2 }} />
+              <span style={{ fontFamily: "'Space Mono', monospace", fontSize: 9, letterSpacing: 2, color: '#f59e0b' }}>VIDEO</span>
             </div>
-            <div style={{ width: 16, height: 1, background: '#333', marginBottom: 13 }} />
+            <div style={{ width: 16, height: 1, background: '#374151', marginBottom: 13 }} />
             <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 4 }}>
               <div style={{ width: 48, height: 3, background: '#222', borderRadius: 2 }} />
-              <span style={{ fontFamily: "'Space Mono', monospace", fontSize: 9, letterSpacing: 2, color: '#444' }}>PROFIEL</span>
+              <span style={{ fontFamily: "'Space Mono', monospace", fontSize: 9, letterSpacing: 2, color: '#4b5563' }}>PROFIEL</span>
             </div>
           </div>
         </nav>
@@ -63,14 +63,14 @@ export default function QAClient({ isOnboarding }: { isOnboarding: boolean }) {
         <BotNav active="qa" />
       )}
 
-      <div style={{ minHeight: '100vh', paddingTop: 64, background: '#0a0a0a' }}>
+      <div style={{ minHeight: '100vh', paddingTop: 64, background: '#111827' }}>
         <div style={{ maxWidth: 760, margin: '0 auto', padding: '60px 24px 80px' }}>
 
-          <p style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 14, letterSpacing: 6, color: '#EE7700', marginBottom: 8 }}>WELKOM</p>
-          <h1 style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 'clamp(40px, 6vw, 64px)', color: '#f0ede6', lineHeight: 1.0, letterSpacing: 1, marginBottom: 16 }}>
+          <p style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 14, letterSpacing: 6, color: '#f59e0b', marginBottom: 8 }}>WELKOM</p>
+          <h1 style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 'clamp(40px, 6vw, 64px)', color: '#f1f5f9', lineHeight: 1.0, letterSpacing: 1, marginBottom: 16 }}>
             Voordat je begint.
           </h1>
-          <p style={{ fontFamily: "'Space Mono', monospace", fontSize: 14, color: '#888', lineHeight: 1.8, marginBottom: 48, maxWidth: 520 }}>
+          <p style={{ fontFamily: "'Space Mono', monospace", fontSize: 14, color: '#9ca3af', lineHeight: 1.8, marginBottom: 48, maxWidth: 520 }}>
             Kijk de introductievideo en lees de vragen hieronder.<br />
             Daarna richt je je profiel in. Dat duurt 3 minuten.
           </p>
@@ -79,29 +79,29 @@ export default function QAClient({ isOnboarding }: { isOnboarding: boolean }) {
           <div style={{
             width: '100%',
             aspectRatio: '16/9',
-            background: '#111',
-            border: '1px solid #1a1a1a',
+            background: '#1f2937',
+            border: '1px solid #1e293b',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
             marginBottom: 64,
             borderRadius: 4,
           }}>
-            <p style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 20, letterSpacing: 4, color: '#333' }}>VIDEO KOMT BINNENKORT</p>
+            <p style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 20, letterSpacing: 4, color: '#374151' }}>VIDEO KOMT BINNENKORT</p>
           </div>
 
           {/* FAQ */}
-          <div style={{ borderTop: '3px solid #EE7700', paddingTop: 40, marginBottom: 64 }}>
-            <p style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 14, letterSpacing: 6, color: '#EE7700', marginBottom: 8 }}>VRAGEN</p>
-            <h2 style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 40, color: '#f0ede6', letterSpacing: 1, marginBottom: 40 }}>
+          <div style={{ borderTop: '3px solid #f59e0b', paddingTop: 40, marginBottom: 64 }}>
+            <p style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 14, letterSpacing: 6, color: '#f59e0b', marginBottom: 8 }}>VRAGEN</p>
+            <h2 style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 40, color: '#f1f5f9', letterSpacing: 1, marginBottom: 40 }}>
               Veel gestelde vragen
             </h2>
 
             <div style={{ display: 'flex', flexDirection: 'column', gap: 0 }}>
               {FAQS.map((faq, i) => (
-                <div key={i} style={{ borderBottom: '1px solid #1a1a1a', paddingBottom: 28, marginBottom: 28 }}>
-                  <p style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 22, letterSpacing: 1, color: '#f0ede6', marginBottom: 10 }}>{faq.q}</p>
-                  <p style={{ fontFamily: "'Space Mono', monospace", fontSize: 13, color: '#888', lineHeight: 1.8 }}>{faq.a}</p>
+                <div key={i} style={{ borderBottom: '1px solid #1e293b', paddingBottom: 28, marginBottom: 28 }}>
+                  <p style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 22, letterSpacing: 1, color: '#f1f5f9', marginBottom: 10 }}>{faq.q}</p>
+                  <p style={{ fontFamily: "'Space Mono', monospace", fontSize: 13, color: '#9ca3af', lineHeight: 1.8 }}>{faq.a}</p>
                 </div>
               ))}
             </div>
@@ -115,8 +115,8 @@ export default function QAClient({ isOnboarding }: { isOnboarding: boolean }) {
                 style={{
                   display: 'inline-block',
                   padding: '16px 48px',
-                  background: '#EE7700',
-                  color: '#0a0a0a',
+                  background: '#f59e0b',
+                  color: '#111827',
                   fontFamily: "'Bebas Neue', sans-serif",
                   fontSize: 22,
                   letterSpacing: 3,

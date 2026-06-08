@@ -1,4 +1,4 @@
-'use client'
+﻿'use client'
 
 import React, { useState, useRef, useEffect } from 'react'
 import Link from 'next/link'
@@ -23,9 +23,9 @@ function renderContent(text: string) {
   return text
     .replace(/\[([^\]]+)\]\s*\((https?:\/\/[^\s)]+)\)/g, (_, linkText, url) => {
       const display = linkText.length > 52 ? linkText.slice(0, 49) + '...' : linkText
-      return `<a href="${url}" target="_blank" rel="noopener noreferrer" style="color:#EE7700;text-decoration:underline">${display}</a>`
+      return `<a href="${url}" target="_blank" rel="noopener noreferrer" style="color:#f59e0b;text-decoration:underline">${display}</a>`
     })
-    .replace(/(?<!\()(https?:\/\/[^\s<"]+)/g, (url, _, offset, str) => str[offset - 1] === '"' ? url : `<a href="${url}" target="_blank" rel="noopener noreferrer" style="color:#EE7700;text-decoration:underline">${url}</a>`)
+    .replace(/(?<!\()(https?:\/\/[^\s<"]+)/g, (url, _, offset, str) => str[offset - 1] === '"' ? url : `<a href="${url}" target="_blank" rel="noopener noreferrer" style="color:#f59e0b;text-decoration:underline">${url}</a>`)
     .replace(/\*\*([^*\n]+)\*\*/g, '<strong>$1</strong>')
     .replace(/\*([^*\n]+)\*/g, '<em>$1</em>')
     .replace(/_([^_\n]+)_/g, '<em>$1</em>')
@@ -458,7 +458,7 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
         @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Mono:wght@400;700&family=Barlow:wght@400;700&family=Barlow+Condensed:wght@300;600;900&display=swap');
         * { box-sizing: border-box; margin: 0; padding: 0; }
         html, body { height: 100%; }
-        body { background: #141414; color: #f0ede6; font-family: 'Space Mono', monospace; }
+        body { background: #141414; color: #f1f5f9; font-family: 'Space Mono', monospace; }
 
                 /* NAV */
         .site-nav {
@@ -470,13 +470,13 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
         .nav-spacer { flex: 1; }
         .nav-links { display: flex; gap: 48px; align-items: center; }
         .nav-links a, .nav-links button {
-          color: #888; text-decoration: none; font-family: 'Bebas Neue', sans-serif;
+          color: #9ca3af; text-decoration: none; font-family: 'Bebas Neue', sans-serif;
           font-size: 22px; letter-spacing: 3px; transition: color 0.2s;
           background: none; border: none; cursor: pointer; padding: 0;
         }
-        .nav-links a:hover, .nav-links button:hover { color: #f0ede6; }
-        .nav-active { color: #EE7700 !important; }
-        .nav-cta { color: #EE7700 !important; }
+        .nav-links a:hover, .nav-links button:hover { color: #f1f5f9; }
+        .nav-active { color: #f59e0b !important; }
+        .nav-cta { color: #f59e0b !important; }
 
         /* MOBILE NAV */
         .mob-nav {
@@ -488,26 +488,26 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
         }
         .mob-nav-logo {
           font-family: 'Bebas Neue', sans-serif; font-size: 22px; letter-spacing: 3px;
-          color: #f0ede6; text-decoration: none;
+          color: #f1f5f9; text-decoration: none;
         }
-        .mob-nav-logo span { color: #EE7700; }
+        .mob-nav-logo span { color: #f59e0b; }
         .mob-hamburger {
           background: none; border: none; cursor: pointer;
           display: flex; flex-direction: column; gap: 5px; padding: 8px;
         }
-        .mob-hamburger span { display: block; width: 22px; height: 2px; background: #f0ede6; transition: all 0.2s; }
+        .mob-hamburger span { display: block; width: 22px; height: 2px; background: #f1f5f9; transition: all 0.2s; }
         .mob-menu {
           position: fixed; top: 56px; left: 0; right: 0; z-index: 99;
-          background: #0a0a0a; border-bottom: 1px solid rgba(255,255,255,0.06);
+          background: #111827; border-bottom: 1px solid rgba(255,255,255,0.06);
           padding: 24px 20px; display: flex; flex-direction: column; gap: 24px;
         }
         .mob-menu a, .mob-menu span {
           font-family: 'Bebas Neue', sans-serif; font-size: 28px; letter-spacing: 3px;
           text-decoration: none;
         }
-        .mob-menu a { color: #888; }
-        .mob-menu a:hover { color: #f0ede6; }
-        .mob-menu .active { color: #EE7700; }
+        .mob-menu a { color: #9ca3af; }
+        .mob-menu a:hover { color: #f1f5f9; }
+        .mob-menu .active { color: #f59e0b; }
 
         /* SPAR LAYOUT */
         .spar-page {
@@ -518,7 +518,7 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
         /* HERO */
         .spar-hero {
           padding: clamp(32px,6vw,80px) clamp(20px,5vw,60px) clamp(28px,4vw,60px);
-          border-bottom: 3px solid #EE7700;
+          border-bottom: 3px solid #f59e0b;
           display: flex; justify-content: space-between; align-items: flex-end;
           flex-wrap: wrap; gap: 24px;
         }
@@ -527,12 +527,12 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
           font-size: clamp(64px, 10vw, 120px);
           line-height: 0.9; letter-spacing: -2px;
         }
-        .spar-title span { color: #EE7700; }
+        .spar-title span { color: #f59e0b; }
         .spar-tagline {
           text-align: right; padding-bottom: 8px; flex: 1; align-self: center;
         }
-        .spar-tagline p { font-size: 15px; line-height: 1.9; color: #888; }
-        .spar-tagline strong { font-weight: 700; color: #f0ede6; font-family: 'Barlow', sans-serif; font-size: 26px; letter-spacing: 0.5px; display: block; margin-bottom: 6px; }
+        .spar-tagline p { font-size: 15px; line-height: 1.9; color: #9ca3af; }
+        .spar-tagline strong { font-weight: 700; color: #f1f5f9; font-family: 'Barlow', sans-serif; font-size: 26px; letter-spacing: 0.5px; display: block; margin-bottom: 6px; }
         @media (max-width: 600px) {
           .spar-tagline { text-align: left; max-width: 100%; }
           .spar-tagline-sub { display: none; }
@@ -563,26 +563,26 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
           position: fixed;
           bottom: 0; left: 0; right: 0;
           background: rgba(10,10,10,0.97);
-          border-top: 2px solid #EE7700;
+          border-top: 2px solid #f59e0b;
           padding: 12px clamp(16px,4vw,60px);
           z-index: 50;
         }
         .spar-input-label {
           font-family: 'Bebas Neue', sans-serif;
           font-size: 14px; letter-spacing: 3px; text-transform: uppercase;
-          color: #444; margin-bottom: 10px; display: block; line-height: 1;
+          color: #4b5563; margin-bottom: 10px; display: block; line-height: 1;
           width: 100%; max-width: 812px;
         }
         .spar-input-row {
           display: flex; gap: 0;
-          border: 2px solid #EE7700;
+          border: 2px solid #f59e0b;
           width: 100%; max-width: 812px;
         }
         .spar-textarea {
           flex: 1;
-          background: #111;
+          background: #1f2937;
           border: none;
-          color: #f0ede6;
+          color: #f1f5f9;
           font-family: 'Space Mono', monospace;
           font-size: 15px; font-weight: 400;
           padding: 13px 18px; outline: none;
@@ -598,23 +598,23 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
           display: flex; align-self: flex-end;
         }
         .spar-mic {
-          background: #111; color: #555;
+          background: #1f2937; color: #6b7280;
           font-size: 20px; border: none; border-left: 1px solid #2a2a2a;
           padding: 0 18px; cursor: pointer; transition: all 0.2s;
           height: 55px; display: flex; align-items: center; justify-content: center;
         }
-        .spar-mic:hover { color: #f0ede6; background: #1a1a1a; }
+        .spar-mic:hover { color: #f1f5f9; background: #1e293b; }
         .spar-mic.recording {
-          color: #EE7700; background: #1a1a1a;
+          color: #f59e0b; background: #1e293b;
           animation: micpulse 1s ease-in-out infinite;
         }
         @keyframes micpulse {
-          0%, 100% { color: #EE7700; }
+          0%, 100% { color: #f59e0b; }
           50% { color: #ff4400; }
         }
 
         .spar-send {
-          background: #EE7700; color: #f0ede6;
+          background: #f59e0b; color: #111827;
           font-family: 'Bebas Neue', sans-serif;
           font-size: 20px; letter-spacing: 3px;
           padding: 0 32px; border: none; cursor: pointer;
@@ -622,19 +622,19 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
           height: 55px; align-self: flex-end;
         }
         .spar-send:hover { background: #ff8800; }
-        .spar-send:disabled { background: #333; color: #666; cursor: not-allowed; }
+        .spar-send:disabled { background: #374151; color: #666; cursor: not-allowed; }
         .spar-reset {
-          background: #111; color: #f0ede6;
+          background: #1f2937; color: #f1f5f9;
           font-family: 'Bebas Neue', sans-serif;
           font-size: 20px; letter-spacing: 3px;
           padding: 0 32px; border: none; border-left: 1px solid #2a2a2a; cursor: pointer;
           transition: all 0.2s; white-space: nowrap; min-width: 120px;
           height: 55px; align-self: flex-end;
         }
-        .spar-reset:hover { background: #1a1a1a; }
-        .spar-reset.accented { border: 1px solid #555; border-left: 1px solid #555; }
-        .spar-reset.accented:hover { border-color: #888; }
-        .spar-reset.sluiten { background: #EE7700; color: #f0ede6; border-left-color: #EE7700; }
+        .spar-reset:hover { background: #1e293b; }
+        .spar-reset.accented { border: 1px solid #6b7280; border-left: 1px solid #6b7280; }
+        .spar-reset.accented:hover { border-color: #9ca3af; }
+        .spar-reset.sluiten { background: #f59e0b; color: #111827; border-left-color: #f59e0b; }
         .spar-reset.sluiten:hover { background: #ff8800; }
         .spar-input-intro {
           font-family: 'Bebas Neue', sans-serif;
@@ -654,43 +654,43 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
         }
         .spar-questions-sub {
           font-family: 'Space Mono', monospace;
-          font-size: 15px; font-weight: 400; color: #888;
+          font-size: 15px; font-weight: 400; color: #9ca3af;
           display: block; margin-bottom: 40px; text-align: center; width: 100%;
         }
         .verfijn-btn {
           background: none; border: none; cursor: pointer;
           font-family: 'Bebas Neue', sans-serif;
           font-size: 18px; letter-spacing: 3px;
-          color: #EE7700; padding: 6px 0 0; text-align: center;
+          color: #f59e0b; padding: 6px 0 0; text-align: center;
           width: 100%; max-width: 812px;
           transition: opacity 0.15s;
         }
         .verfijn-btn:hover { opacity: 0.75; }
-        .verfijn-btn:disabled { color: #555; cursor: not-allowed; }
+        .verfijn-btn:disabled { color: #6b7280; cursor: not-allowed; }
 
         /* OPENERS */
         .spar-openers {
           padding: clamp(56px,8vw,96px) 20px 0;
-          border-top: 1px solid #1a1a1a;
-          border-bottom: 1px solid #1a1a1a;
+          border-top: 1px solid #1e293b;
+          border-bottom: 1px solid #1e293b;
           display: flex; flex-direction: column; align-items: center;
         }
         .opener-toggle {
           display: grid; grid-template-columns: repeat(3, 142px); gap: 8px; margin: 0 auto 2px;
         }
         .toggle-btn {
-          background: #111; border: none; color: #444;
+          background: #1f2937; border: none; color: #4b5563;
           font-family: 'Bebas Neue', sans-serif;
           font-size: 16px; letter-spacing: 3px;
           padding: 10px 24px; cursor: pointer;
           border-radius: 999px;
           transition: all 0.15s;
         }
-        .toggle-btn:hover { color: #888; }
-        .toggle-btn.active { background: #EE7700; color: #f0ede6; }
+        .toggle-btn:hover { color: #9ca3af; }
+        .toggle-btn.active { background: #f59e0b; color: #111827; }
         .openers-label {
           font-size: 10px; letter-spacing: 4px; text-transform: uppercase;
-          color: #333; padding: 32px 0 20px; display: block;
+          color: #374151; padding: 32px 0 20px; display: block;
         }
         .openers-grid {
           display: grid;
@@ -701,19 +701,19 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
         }
         .openers-grid-line {
           width: 100%; max-width: 1218px;
-          border-top: 2px solid #EE7700;
+          border-top: 2px solid #f59e0b;
           margin-bottom: 0;
         }
         @media (max-width: 560px) { .openers-grid { grid-template-columns: 1fr; } }
         .opener-btn {
-          background: #111; border: none; color: #888;
+          background: #1f2937; border: none; color: #9ca3af;
           font-family: 'Bebas Neue', sans-serif;
           font-size: 22px; letter-spacing: 1px;
           padding: 24px 28px; cursor: pointer; text-align: left;
           line-height: 1.3; transition: all 0.15s;
         }
         .opener-btn:hover {
-          background: #EE7700; color: #f0ede6;
+          background: #f59e0b; color: #111827;
         }
 
         /* GESPREK */
@@ -733,10 +733,10 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
         .msg-user-label {
           font-family: 'Bebas Neue', sans-serif;
           font-size: 18px; letter-spacing: 3px;
-          color: #555; white-space: nowrap; padding-top: 2px; min-width: 48px;
+          color: #6b7280; white-space: nowrap; padding-top: 2px; min-width: 48px;
         }
         .msg-user-text {
-          font-size: clamp(18px,3vw,26px); line-height: 1.5; color: #f0ede6;
+          font-size: clamp(18px,3vw,26px); line-height: 1.5; color: #f1f5f9;
           font-family: 'Bebas Neue', sans-serif; letter-spacing: 0.5px;
         }
 
@@ -747,7 +747,7 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
         .msg-arno-label {
           font-family: 'Bebas Neue', sans-serif;
           font-size: 18px; letter-spacing: 3px;
-          color: #EE7700; white-space: nowrap; padding-top: 2px; min-width: 48px;
+          color: #f59e0b; white-space: nowrap; padding-top: 2px; min-width: 48px;
         }
         .msg-arno-text {
           font-size: 16px; line-height: 1.9; color: #d0cdc6;
@@ -760,7 +760,7 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
         }
         .loading-dots { display: flex; gap: 6px; }
         .loading-dot {
-          width: 8px; height: 8px; background: #EE7700; border-radius: 50%;
+          width: 8px; height: 8px; background: #f59e0b; border-radius: 50%;
           animation: pulse 1.2s ease-in-out infinite;
         }
         .loading-dot:nth-child(2) { animation-delay: 0.2s; }
@@ -770,12 +770,12 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
           50% { opacity: 1; transform: scale(1); }
         }
         .loading-text {
-          font-size: 11px; letter-spacing: 3px; text-transform: uppercase; color: #333;
+          font-size: 11px; letter-spacing: 3px; text-transform: uppercase; color: #374151;
         }
 
         /* GLOW op invoerveld na gesprek */
         .spar-input-row.active-glow {
-          border-color: #EE7700;
+          border-color: #f59e0b;
           box-shadow: 0 0 0 3px rgba(238,119,0,0.25), 0 0 24px rgba(238,119,0,0.15);
           animation: glowpulse 2s ease-in-out infinite;
         }
@@ -807,23 +807,23 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
           border-radius: 999px;
         }
         .msg-action-btn.primary {
-          color: #EE7700; border-color: #EE7700;
+          color: #f59e0b; border-color: #f59e0b;
         }
         .msg-action-btn.primary:hover {
-          background: #EE7700; color: #f0ede6;
+          background: #f59e0b; color: #111827;
         }
         .msg-action-btn.secondary {
-          color: #444; border-color: #222;
+          color: #4b5563; border-color: #222;
         }
         .msg-action-btn.secondary:hover {
-          border-color: #555; color: #888;
+          border-color: #6b7280; color: #9ca3af;
         }
 
         /* HINT / CTA BLOKKEN */
         .msg-hint {
           padding: 16px 0 16px 120px;
           font-size: 12px; letter-spacing: 2px; text-transform: uppercase;
-          color: #EE7700; border-bottom: 1px solid #141414;
+          color: #f59e0b; border-bottom: 1px solid #141414;
           animation: fadein 0.4s ease;
         }
         .msg-cta {
@@ -832,11 +832,11 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
           animation: fadein 0.4s ease;
         }
         .msg-cta p {
-          font-size: 13px; letter-spacing: 1px; color: #888; margin-bottom: 14px;
+          font-size: 13px; letter-spacing: 1px; color: #9ca3af; margin-bottom: 14px;
         }
         .msg-cta-btn {
           display: inline-block;
-          background: #EE7700; color: #f0ede6;
+          background: #f59e0b; color: #111827;
           font-family: 'Bebas Neue', sans-serif;
           font-size: 18px; letter-spacing: 3px;
           padding: 12px 28px; text-decoration: none;
@@ -853,7 +853,7 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
         }
         .empty-label {
           font-size: 10px; letter-spacing: 4px; text-transform: uppercase;
-          color: #333; padding: 32px 0 20px; display: block;
+          color: #374151; padding: 32px 0 20px; display: block;
         }
         .empty-topics {
           display: grid;
@@ -865,40 +865,40 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
         @media (max-width: 700px) { .empty-topics { grid-template-columns: repeat(2, 1fr); } }
         @media (max-width: 480px) { .empty-topics { grid-template-columns: 1fr; } }
         .topic-btn {
-          background: #111; border: none; color: #888;
+          background: #1f2937; border: none; color: #9ca3af;
           font-family: 'Bebas Neue', sans-serif;
           font-size: clamp(20px, 1.8vw, 28px); letter-spacing: 1.5px;
           padding: 32px 28px; cursor: pointer; text-align: left;
           line-height: 1.25; transition: all 0.15s;
         }
         .topic-btn:hover {
-          background: #EE7700; color: #f0ede6;
+          background: #f59e0b; color: #111827;
         }
 
         /* BLOG SUGGESTIES NA GESPREK */
         .blog-suggestions {
           padding: 32px 0 48px;
-          border-top: 1px solid #1a1a1a;
+          border-top: 1px solid #1e293b;
           animation: fadein 0.5s ease;
         }
         .blog-suggestions-label {
           font-family: 'Bebas Neue', sans-serif;
           font-size: 12px; letter-spacing: 4px; text-transform: uppercase;
-          color: #444; display: block; margin-bottom: 20px;
+          color: #4b5563; display: block; margin-bottom: 20px;
         }
         .blog-suggestion-item {
-          display: block; color: #888; text-decoration: none;
+          display: block; color: #9ca3af; text-decoration: none;
           font-family: 'Bebas Neue', sans-serif;
           font-size: 22px; letter-spacing: 1.5px;
           line-height: 1; padding: 14px 20px;
-          border-left: 3px solid #1a1a1a;
+          border-left: 3px solid #1e293b;
           margin-bottom: 2px;
           transition: all 0.15s;
         }
         .blog-suggestion-item:hover {
-          color: #f0ede6;
-          border-left-color: #EE7700;
-          background: #111;
+          color: #f1f5f9;
+          border-left-color: #f59e0b;
+          background: #1f2937;
         }
 
         /* VOORTGANG BAR */
@@ -908,7 +908,7 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
           font-size: 15px; letter-spacing: 3px;
         }
         .archief-btn {
-          background: none; border: 1px solid #444; color: #888;
+          background: none; border: 1px solid #4b5563; color: #9ca3af;
           font-family: 'Bebas Neue', sans-serif;
           font-size: 16px; letter-spacing: 3px;
           padding: 10px 24px; cursor: pointer;
@@ -916,7 +916,7 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
           display: inline-block; margin-bottom: 40px;
           border-radius: 999px;
         }
-        .archief-btn:hover { background: #EE7700; border-color: #EE7700; color: #141414; }
+        .archief-btn:hover { background: #f59e0b; border-color: #f59e0b; color: #141414; }
       `}</style>
 
       {isMobile ? (
@@ -925,7 +925,7 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
             <Link href="/" className="mob-nav-logo">ARNO<span>BOT.</span></Link>
             <button className="mob-hamburger" onClick={() => setMenuOpen(o => !o)} aria-label="Menu">
               {menuOpen
-                ? <span style={{ fontSize: 22, fontFamily: "'Bebas Neue', sans-serif", color: '#EE7700', lineHeight: 1 }}>✕</span>
+                ? <span style={{ fontSize: 22, fontFamily: "'Bebas Neue', sans-serif", color: '#f59e0b', lineHeight: 1 }}>✕</span>
                 : <><span /><span /><span /></>
               }
             </button>
@@ -933,12 +933,12 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
           {menuOpen && (
             <div className="mob-menu" onClick={() => setMenuOpen(false)}>
               <span className="active">ARNOBOT</span>
-              <button style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 28, letterSpacing: 3, color: '#888', background: 'none', border: 'none', cursor: 'pointer', textAlign: 'left', padding: 0 }} onClick={() => handleNavAttempt('/bot/bieb')}>BIEB</button>
-              <button style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 28, letterSpacing: 3, color: '#888', background: 'none', border: 'none', cursor: 'pointer', textAlign: 'left', padding: 0 }} onClick={() => handleNavAttempt('/bot/coaching')}>COACHING</button>
-              {isManager && <button style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 28, letterSpacing: 3, color: '#888', background: 'none', border: 'none', cursor: 'pointer', textAlign: 'left', padding: 0 }} onClick={() => handleNavAttempt('/bot/team')}>TEAM</button>}
-              <button style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 28, letterSpacing: 3, color: '#888', background: 'none', border: 'none', cursor: 'pointer', textAlign: 'left', padding: 0 }} onClick={() => handleNavAttempt('/bot/qa')}>Q&A</button>
-              <button style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 28, letterSpacing: 3, color: '#888', background: 'none', border: 'none', cursor: 'pointer', textAlign: 'left', padding: 0 }} onClick={() => handleNavAttempt('/bot/account')}>ACCOUNT</button>
-              <span style={{ color: '#888', cursor: 'pointer' }} onClick={e => { e.stopPropagation(); setMenuOpen(false); setFeedbackOpen(true) }}>FEEDBACK</span>
+              <button style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 28, letterSpacing: 3, color: '#9ca3af', background: 'none', border: 'none', cursor: 'pointer', textAlign: 'left', padding: 0 }} onClick={() => handleNavAttempt('/bot/bieb')}>BIEB</button>
+              <button style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 28, letterSpacing: 3, color: '#9ca3af', background: 'none', border: 'none', cursor: 'pointer', textAlign: 'left', padding: 0 }} onClick={() => handleNavAttempt('/bot/coaching')}>COACHING</button>
+              {isManager && <button style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 28, letterSpacing: 3, color: '#9ca3af', background: 'none', border: 'none', cursor: 'pointer', textAlign: 'left', padding: 0 }} onClick={() => handleNavAttempt('/bot/team')}>TEAM</button>}
+              <button style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 28, letterSpacing: 3, color: '#9ca3af', background: 'none', border: 'none', cursor: 'pointer', textAlign: 'left', padding: 0 }} onClick={() => handleNavAttempt('/bot/qa')}>Q&A</button>
+              <button style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 28, letterSpacing: 3, color: '#9ca3af', background: 'none', border: 'none', cursor: 'pointer', textAlign: 'left', padding: 0 }} onClick={() => handleNavAttempt('/bot/account')}>ACCOUNT</button>
+              <span style={{ color: '#9ca3af', cursor: 'pointer' }} onClick={e => { e.stopPropagation(); setMenuOpen(false); setFeedbackOpen(true) }}>FEEDBACK</span>
             </div>
           )}
         </>
@@ -946,7 +946,7 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
         <nav className="site-nav">
           <div className="nav-spacer" />
           <div className="nav-links">
-            <span style={{ color: '#EE7700', fontFamily: "'Bebas Neue', sans-serif", fontSize: 22, letterSpacing: 3 }}>ARNOBOT</span>
+            <span style={{ color: '#f59e0b', fontFamily: "'Bebas Neue', sans-serif", fontSize: 22, letterSpacing: 3 }}>ARNOBOT</span>
             <button onClick={() => handleNavAttempt('/bot/bieb')}>BIEB</button>
             <button onClick={() => handleNavAttempt('/bot/coaching')}>COACHING</button>
             {isManager && <button onClick={() => handleNavAttempt('/bot/team')}>TEAM</button>}
@@ -955,15 +955,15 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
           </div>
           <div className="nav-spacer" style={{ display: 'flex', justifyContent: 'flex-end', gap: 32, alignItems: 'center' }}>
             <button
-              style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 22, letterSpacing: 3, color: '#888', background: 'none', border: 'none', cursor: 'pointer', transition: 'color 0.2s' }}
-              onMouseEnter={e => { (e.target as HTMLButtonElement).style.color = '#f0ede6' }}
-              onMouseLeave={e => { (e.target as HTMLButtonElement).style.color = '#888' }}
+              style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 22, letterSpacing: 3, color: '#9ca3af', background: 'none', border: 'none', cursor: 'pointer', transition: 'color 0.2s' }}
+              onMouseEnter={e => { (e.target as HTMLButtonElement).style.color = '#f1f5f9' }}
+              onMouseLeave={e => { (e.target as HTMLButtonElement).style.color = '#9ca3af' }}
               onClick={() => setFeedbackOpen(true)}
             >FEEDBACK</button>
             <button
-              style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 22, letterSpacing: 3, color: '#888', background: 'none', border: 'none', cursor: 'pointer', transition: 'color 0.2s' }}
-              onMouseEnter={e => { (e.target as HTMLButtonElement).style.color = '#f0ede6' }}
-              onMouseLeave={e => { (e.target as HTMLButtonElement).style.color = '#888' }}
+              style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 22, letterSpacing: 3, color: '#9ca3af', background: 'none', border: 'none', cursor: 'pointer', transition: 'color 0.2s' }}
+              onMouseEnter={e => { (e.target as HTMLButtonElement).style.color = '#f1f5f9' }}
+              onMouseLeave={e => { (e.target as HTMLButtonElement).style.color = '#9ca3af' }}
               onClick={() => handleNavAttempt('logout')}
             >UITLOGGEN</button>
           </div>
@@ -995,8 +995,8 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
             </div>
           )}
           <div className="spar-tagline">
-            <p style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 'clamp(28px, 3vw, 42px)', letterSpacing: 2, color: '#f0ede6', lineHeight: 1.05, marginBottom: 16 }}>
-              ARNO<span style={{ color: '#EE7700' }}>BOT.</span><br />
+            <p style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 'clamp(28px, 3vw, 42px)', letterSpacing: 2, color: '#f1f5f9', lineHeight: 1.05, marginBottom: 16 }}>
+              ARNO<span style={{ color: '#f59e0b' }}>BOT.</span><br />
               JOUW 24/7 NO EXCUSES SALES COACH
             </p>
             <p className="spar-tagline-sub" style={{ fontFamily: "'Space Mono', monospace", fontSize: 18, color: 'rgb(240, 237, 230)', lineHeight: 1.8, marginBottom: 14, textAlign: 'right' }}>
@@ -1012,21 +1012,21 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
         </div>
 
         {teamPrompt && !started && (
-          <div style={{ background: '#111', borderTop: '1px solid #1a1a1a', borderBottom: '1px solid #1a1a1a', padding: '16px clamp(20px,5vw,60px)', display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: 12 }}>
-            <p style={{ fontFamily: "'Space Mono', monospace", fontSize: 13, color: '#888', margin: 0 }}>
+          <div style={{ background: '#1f2937', borderTop: '1px solid #1e293b', borderBottom: '1px solid #1e293b', padding: '16px clamp(20px,5vw,60px)', display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: 12 }}>
+            <p style={{ fontFamily: "'Space Mono', monospace", fontSize: 13, color: '#9ca3af', margin: 0 }}>
               Je coacht een team — wil je ArnoBot ook voor je hele team inzetten?
             </p>
             <div style={{ display: 'flex', gap: 12 }}>
               <button
                 onClick={() => { window.location.href = '/bot/team' }}
-                style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 16, letterSpacing: 3, padding: '10px 24px', background: '#EE7700', color: '#f0ede6', border: 'none', cursor: 'pointer' }}
+                style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 16, letterSpacing: 3, padding: '10px 24px', background: '#f59e0b', color: '#111827', border: 'none', cursor: 'pointer' }}
               >TEAM STARTEN</button>
               <button
                 onClick={() => {
                   setTeamPrompt(false)
                   fetch('/api/bot/team/dismiss-prompt', { method: 'POST' }).catch(() => {})
                 }}
-                style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 16, letterSpacing: 3, padding: '10px 24px', background: 'none', color: '#555', border: 'none', cursor: 'pointer' }}
+                style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 16, letterSpacing: 3, padding: '10px 24px', background: 'none', color: '#6b7280', border: 'none', cursor: 'pointer' }}
               >LATER</button>
             </div>
           </div>
@@ -1036,7 +1036,7 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
           {!started && !loading && (
             <>
               <span className="spar-input-intro">begin een gesprek</span>
-              <span style={{ fontFamily: "'Space Mono', monospace", fontSize: 15, color: '#888', display: 'block', textAlign: 'center', width: '100%', maxWidth: 812, marginBottom: 28 }}>hoe concreter jouw info, hoe beter mijn output</span>
+              <span style={{ fontFamily: "'Space Mono', monospace", fontSize: 15, color: '#9ca3af', display: 'block', textAlign: 'center', width: '100%', maxWidth: 812, marginBottom: 28 }}>hoe concreter jouw info, hoe beter mijn output</span>
             </>
           )}
           <div className={`spar-input-row${started ? ' active-glow' : ''}`}>
@@ -1122,17 +1122,17 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
             </p>
           )}
           {verfijndSuggestie && (
-            <div style={{ width: '100%', maxWidth: 812, background: '#111', border: '1px solid #EE7700', padding: '16px 20px', marginTop: 8 }}>
-              <p style={{ fontFamily: "'Space Mono', monospace", fontSize: 13, color: '#EE7700', letterSpacing: 2, marginBottom: 10 }}>VERFIJNDE VERSIE</p>
+            <div style={{ width: '100%', maxWidth: 812, background: '#1f2937', border: '1px solid #f59e0b', padding: '16px 20px', marginTop: 8 }}>
+              <p style={{ fontFamily: "'Space Mono', monospace", fontSize: 13, color: '#f59e0b', letterSpacing: 2, marginBottom: 10 }}>VERFIJNDE VERSIE</p>
               <p style={{ fontFamily: "'Space Mono', monospace", fontSize: 14, color: '#d0cdc6', lineHeight: 1.7, marginBottom: 16 }}>{verfijndSuggestie}</p>
               <div style={{ display: 'flex', gap: 10 }}>
                 <button
                   onClick={() => { setInput(verfijndSuggestie); setVerfijndSuggestie(''); setResizeInput(true) }}
-                  style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 15, letterSpacing: 3, padding: '8px 20px', background: '#EE7700', color: '#f0ede6', border: 'none', cursor: 'pointer', borderRadius: 999 }}
+                  style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 15, letterSpacing: 3, padding: '8px 20px', background: '#f59e0b', color: '#111827', border: 'none', cursor: 'pointer', borderRadius: 999 }}
                 >GEBRUIK DIT</button>
                 <button
                   onClick={() => setVerfijndSuggestie('')}
-                  style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 15, letterSpacing: 3, padding: '8px 20px', background: 'none', color: '#555', border: '1px solid #222', cursor: 'pointer', borderRadius: 999 }}
+                  style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 15, letterSpacing: 3, padding: '8px 20px', background: 'none', color: '#6b7280', border: '1px solid #222', cursor: 'pointer', borderRadius: 999 }}
                 >NEGEER</button>
               </div>
             </div>
@@ -1199,7 +1199,7 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
                 )}
                 {(msg.hint === 'salescanvas' || msg.hint === 'blocked') && (
                   <div className="msg-cta">
-                    <p>{msg.hint === 'blocked' ? 'Toch proberen, hè? 😂' : <>Als je echt de diepte in wilt, doe dan een free trial op <a href="https://salescanvas.app" target="_blank" rel="noopener noreferrer" style={{color:'#EE7700'}}>salescanvas.app</a></>}</p>
+                    <p>{msg.hint === 'blocked' ? 'Toch proberen, hè? 😂' : <>Als je echt de diepte in wilt, doe dan een free trial op <a href="https://salescanvas.app" target="_blank" rel="noopener noreferrer" style={{color:'#f59e0b'}}>salescanvas.app</a></>}</p>
                     <a href="https://salescanvas.app" target="_blank" rel="noopener noreferrer" className="msg-cta-btn">
                       SALESCANVAS
                     </a>
@@ -1234,18 +1234,18 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
 
       {navGuardOpen && (
         <div style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.85)', zIndex: 300, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 20 }}>
-          <div style={{ background: '#111', border: '1px solid #222', maxWidth: 440, width: '100%', padding: 40 }}>
-            <p style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 13, letterSpacing: 4, color: '#EE7700', marginBottom: 8 }}>ARNOBOT</p>
-            <h2 style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 36, letterSpacing: 1, color: '#f0ede6', marginBottom: 12 }}>WACHT EVEN</h2>
-            <p style={{ fontFamily: "'Space Mono', monospace", fontSize: 14, color: '#888', lineHeight: 1.7, marginBottom: 28 }}>Je hebt een gesprek open. Wil je het sluiten voordat je verdergaat?</p>
+          <div style={{ background: '#1f2937', border: '1px solid #222', maxWidth: 440, width: '100%', padding: 40 }}>
+            <p style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 13, letterSpacing: 4, color: '#f59e0b', marginBottom: 8 }}>ARNOBOT</p>
+            <h2 style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 36, letterSpacing: 1, color: '#f1f5f9', marginBottom: 12 }}>WACHT EVEN</h2>
+            <p style={{ fontFamily: "'Space Mono', monospace", fontSize: 14, color: '#9ca3af', lineHeight: 1.7, marginBottom: 28 }}>Je hebt een gesprek open. Wil je het sluiten voordat je verdergaat?</p>
             <div style={{ display: 'flex', gap: 12 }}>
               <button
                 onClick={() => { setNavGuardOpen(false); handleNieuw() }}
-                style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 18, letterSpacing: 3, padding: '12px 28px', background: '#EE7700', color: '#f0ede6', border: 'none', cursor: 'pointer', borderRadius: 999 }}
+                style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 18, letterSpacing: 3, padding: '12px 28px', background: '#f59e0b', color: '#111827', border: 'none', cursor: 'pointer', borderRadius: 999 }}
               >SLUIT GESPREK</button>
               <button
                 onClick={() => { setNavGuardOpen(false); setPendingNavDest(null) }}
-                style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 18, letterSpacing: 3, padding: '12px 28px', background: 'none', color: '#555', border: '1px solid #222', cursor: 'pointer', borderRadius: 999 }}
+                style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 18, letterSpacing: 3, padding: '12px 28px', background: 'none', color: '#6b7280', border: '1px solid #222', cursor: 'pointer', borderRadius: 999 }}
               >DOORGAAN</button>
             </div>
           </div>
@@ -1258,30 +1258,30 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
           onClick={() => setFeedbackOpen(false)}
         >
           <div
-            style={{ background: '#111', border: '1px solid #222', maxWidth: 480, width: '100%', padding: 32 }}
+            style={{ background: '#1f2937', border: '1px solid #222', maxWidth: 480, width: '100%', padding: 32 }}
             onClick={e => e.stopPropagation()}
           >
-            <p style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 13, letterSpacing: 4, color: '#EE7700', marginBottom: 8 }}>ARNOBOT</p>
-            <h2 style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 36, letterSpacing: 1, color: '#f0ede6', marginBottom: 20 }}>FEEDBACK</h2>
+            <p style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 13, letterSpacing: 4, color: '#f59e0b', marginBottom: 8 }}>ARNOBOT</p>
+            <h2 style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 36, letterSpacing: 1, color: '#f1f5f9', marginBottom: 20 }}>FEEDBACK</h2>
             {feedbackSent ? (
-              <p style={{ fontFamily: "'Space Mono', monospace", fontSize: 14, color: '#EE7700', letterSpacing: 1 }}>Bedankt — je feedback is verzonden.</p>
+              <p style={{ fontFamily: "'Space Mono', monospace", fontSize: 14, color: '#f59e0b', letterSpacing: 1 }}>Bedankt — je feedback is verzonden.</p>
             ) : (
               <>
                 <textarea
                   value={feedbackText}
                   onChange={e => setFeedbackText(e.target.value)}
                   placeholder="Wat kan er beter? Wat werkt goed? Alles is welkom."
-                  style={{ width: '100%', minHeight: 120, background: '#0a0a0a', border: '1px solid #333', color: '#f0ede6', fontFamily: "'Space Mono', monospace", fontSize: 13, padding: '12px 16px', resize: 'vertical', outline: 'none', marginBottom: 16, boxSizing: 'border-box' }}
+                  style={{ width: '100%', minHeight: 120, background: '#111827', border: '1px solid #374151', color: '#f1f5f9', fontFamily: "'Space Mono', monospace", fontSize: 13, padding: '12px 16px', resize: 'vertical', outline: 'none', marginBottom: 16, boxSizing: 'border-box' }}
                 />
                 <div style={{ display: 'flex', gap: 12 }}>
                   <button
                     onClick={sendFeedback}
                     disabled={feedbackLoading || !feedbackText.trim()}
-                    style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 18, letterSpacing: 3, padding: '12px 28px', background: '#EE7700', color: '#f0ede6', border: 'none', cursor: 'pointer', borderRadius: 999, opacity: feedbackLoading || !feedbackText.trim() ? 0.5 : 1 }}
+                    style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 18, letterSpacing: 3, padding: '12px 28px', background: '#f59e0b', color: '#111827', border: 'none', cursor: 'pointer', borderRadius: 999, opacity: feedbackLoading || !feedbackText.trim() ? 0.5 : 1 }}
                   >{feedbackLoading ? '...' : 'VERSTUUR'}</button>
                   <button
                     onClick={() => setFeedbackOpen(false)}
-                    style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 18, letterSpacing: 3, padding: '12px 28px', background: 'none', color: '#555', border: '1px solid #222', cursor: 'pointer', borderRadius: 999 }}
+                    style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 18, letterSpacing: 3, padding: '12px 28px', background: 'none', color: '#6b7280', border: '1px solid #222', cursor: 'pointer', borderRadius: 999 }}
                   >ANNULEER</button>
                 </div>
               </>

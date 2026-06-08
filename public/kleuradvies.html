@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ArnoBot — Kleuradvies</title>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Space Mono', monospace;
+      font-weight: 400;
+    }
+
+    .split {
+      display: flex;
+      min-height: 100vh;
+    }
+
+    .panel {
+      flex: 1;
+      padding: 80px 48px;
+      display: flex;
+      flex-direction: column;
+      gap: 32px;
+    }
+
+    .panel--old {
+      background: #0a0a0a;
+      color: #f0ede6;
+      border-right: 2px solid #222;
+    }
+
+    .panel--new {
+      background: #111827;
+      color: #f1f5f9;
+    }
+
+    .label {
+      font-size: 13px;
+      letter-spacing: 4px;
+      color: #555;
+      margin-bottom: 40px;
+    }
+
+    .panel--old .label { color: #444; }
+    .panel--new .label { color: #4b5563; }
+
+    h1 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 64px;
+      letter-spacing: 3px;
+      line-height: 1;
+    }
+
+    p {
+      font-size: 15px;
+      line-height: 1.9;
+    }
+
+    .panel--old p { color: #888; }
+    .panel--new p { color: #9ca3af; }
+
+    .card {
+      padding: 24px 28px;
+      border-left: 4px solid;
+    }
+
+    .panel--old .card {
+      background: #111;
+      border-color: #EE7700;
+    }
+
+    .panel--new .card {
+      background: #1f2937;
+      border-color: #f59e0b;
+    }
+
+    .card-label {
+      font-size: 13px;
+      letter-spacing: 4px;
+      margin-bottom: 8px;
+    }
+
+    .panel--old .card-label { color: #EE7700; }
+    .panel--new .card-label { color: #f59e0b; }
+
+    .card p {
+      font-size: 15px;
+      line-height: 1.8;
+    }
+
+    .panel--old .card p { color: #f0ede6; }
+    .panel--new .card p { color: #f1f5f9; }
+
+    .btn-primary {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 18px;
+      letter-spacing: 3px;
+      padding: 12px 36px;
+      border: none;
+      border-radius: 999px;
+      cursor: pointer;
+      display: inline-block;
+      width: fit-content;
+    }
+
+    .panel--old .btn-primary {
+      background: #EE7700;
+      color: #f0ede6;
+    }
+
+    .panel--new .btn-primary {
+      background: #f59e0b;
+      color: #111827;
+    }
+
+    .btn-secondary {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 18px;
+      letter-spacing: 3px;
+      padding: 12px 32px;
+      border-radius: 999px;
+      background: none;
+      cursor: pointer;
+      display: inline-block;
+      width: fit-content;
+    }
+
+    .panel--old .btn-secondary {
+      border: 1px solid #555;
+      color: #888;
+    }
+
+    .panel--new .btn-secondary {
+      border: 1px solid #374151;
+      color: #9ca3af;
+    }
+
+    .input {
+      width: 100%;
+      font-family: 'Space Mono', monospace;
+      font-size: 15px;
+      padding: 12px 16px;
+      border-radius: 4px;
+      border: 1.5px solid;
+      outline: none;
+    }
+
+    .panel--old .input {
+      background: #111;
+      color: #f0ede6;
+      border-color: #333;
+    }
+
+    .panel--new .input {
+      background: #1f2937;
+      color: #f1f5f9;
+      border-color: #374151;
+    }
+
+    .tag {
+      display: inline-block;
+      font-size: 13px;
+      letter-spacing: 4px;
+      padding: 4px 0;
+      margin-bottom: 8px;
+    }
+
+    .panel--old .tag { color: #EE7700; }
+    .panel--new .tag { color: #f59e0b; }
+
+    .divider {
+      height: 1px;
+    }
+
+    .panel--old .divider { background: #1a1a1a; }
+    .panel--new .divider { background: #1f2937; }
+
+    .version-label {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 22px;
+      letter-spacing: 4px;
+      margin-bottom: 48px;
+    }
+
+    .panel--old .version-label { color: #333; }
+    .panel--new .version-label { color: #374151; }
+  </style>
+</head>
+<body>
+  <div class="split">
+
+    <!-- HUIDIG -->
+    <div class="panel panel--old">
+      <div class="version-label">NU — #0a0a0a + #EE7700</div>
+      <span class="tag">ARNOBOT UNLIMITED</span>
+      <h1>SLUIT JE EERSTE DEAL.</h1>
+      <p>Arno Diepeveen is jouw persoonlijke salescoach. Direct, ongefilterd, altijd beschikbaar.</p>
+
+      <div class="card">
+        <div class="card-label">JOUW UITDAGING</div>
+        <p>Je pipeline ziet er goed uit maar de conversie klopt niet. Waar gaat het mis?</p>
+      </div>
+
+      <input class="input" placeholder="Stel je vraag aan Arno..." />
+
+      <div style="display:flex;gap:12px;flex-wrap:wrap;">
+        <button class="btn-primary">START GESPREK</button>
+        <button class="btn-secondary">BEKIJK ARCHIEF</button>
+      </div>
+    </div>
+
+    <!-- NIEUW ADVIES -->
+    <div class="panel panel--new">
+      <div class="version-label">ADVIES — #111827 + #f59e0b</div>
+      <span class="tag">ARNOBOT UNLIMITED</span>
+      <h1>SLUIT JE EERSTE DEAL.</h1>
+      <p>Arno Diepeveen is jouw persoonlijke salescoach. Direct, ongefilterd, altijd beschikbaar.</p>
+
+      <div class="card">
+        <div class="card-label">JOUW UITDAGING</div>
+        <p>Je pipeline ziet er goed uit maar de conversie klopt niet. Waar gaat het mis?</p>
+      </div>
+
+      <input class="input" placeholder="Stel je vraag aan Arno..." />
+
+      <div style="display:flex;gap:12px;flex-wrap:wrap;">
+        <button class="btn-primary">START GESPREK</button>
+        <button class="btn-secondary">BEKIJK ARCHIEF</button>
+      </div>
+    </div>
+
+  </div>
+</body>
+</html>

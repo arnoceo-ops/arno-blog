@@ -1,4 +1,4 @@
-'use client'
+﻿'use client'
 
 // PageHero.tsx
 // Locatie: components/canvas/PageHero.tsx
@@ -77,7 +77,7 @@ export function PageHero({ number }: PageHeroProps) {
         fontFamily: 'var(--font-barlow, sans-serif)',
         fontSize: '11px',
         letterSpacing: '5px',
-        color: '#f0ede6',
+        color: '#f1f5f9',
         opacity: 0.2,
       }}>
         ROYAL DUTCH SALES
@@ -90,7 +90,7 @@ export function PageHero({ number }: PageHeroProps) {
         left: 0,
         right: 0,
         height: '2px',
-        background: 'linear-gradient(to right, transparent, #EE7700 25%, #EE7700 75%, transparent)',
+        background: 'linear-gradient(to right, transparent, #f59e0b 25%, #f59e0b 75%, transparent)',
         opacity: 0.5,
       }} />
 

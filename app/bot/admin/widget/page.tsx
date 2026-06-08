@@ -1,4 +1,4 @@
-import { redirect } from 'next/navigation'
+﻿import { redirect } from 'next/navigation'
 import { cookies } from 'next/headers'
 import { createClient } from '@supabase/supabase-js'
 import DownloadPdfButton from '../DownloadPdfButton'
@@ -13,14 +13,14 @@ type LogRow = {
 }
 
 const navLinkStyle = (active: boolean): React.CSSProperties => ({
-  color: active ? '#EE7700' : '#888',
+  color: active ? '#f59e0b' : '#9ca3af',
   textDecoration: 'none',
   fontSize: '15px',
   letterSpacing: '3px',
   fontWeight: 700,
   padding: '6px 20px',
   borderRadius: 4,
-  background: active ? '#1a1a1a' : 'none',
+  background: active ? '#1e293b' : 'none',
 })
 
 export default async function AdminWidgetPage({
@@ -68,8 +68,8 @@ export default async function AdminWidgetPage({
   const dateRange = from === to ? from : `${from} t/m ${to}`
 
   return (
-    <main style={{ background: '#0a0a0a', minHeight: '100vh', color: '#f0ede6', fontFamily: 'sans-serif' }}>
-      <nav style={{ background: '#0d0d0d', borderBottom: '1px solid #1a1a1a', height: 56, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+    <main style={{ background: '#111827', minHeight: '100vh', color: '#f1f5f9', fontFamily: 'sans-serif' }}>
+      <nav style={{ background: '#0d0d0d', borderBottom: '1px solid #1e293b', height: 56, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
         <div style={{ display: 'flex', gap: '4px' }}>
           <a href="/bot/admin" style={navLinkStyle(false)}>RDS</a>
           <a href="/bot/admin/widget" style={navLinkStyle(true)}>WIDGET</a>
@@ -79,24 +79,24 @@ export default async function AdminWidgetPage({
     <div style={{ maxWidth: '800px', margin: '0 auto', padding: '48px 24px' }}>
 
       <div style={{ marginBottom: '40px' }}>
-        <p style={{ color: '#EE7700', fontSize: '16px', letterSpacing: '4px', marginBottom: '8px' }}>ARNOBOT — ARNO.BLOG WIDGET</p>
+        <p style={{ color: '#f59e0b', fontSize: '16px', letterSpacing: '4px', marginBottom: '8px' }}>ARNOBOT — ARNO.BLOG WIDGET</p>
         <h1 style={{ fontSize: '48px', fontWeight: 700, margin: '0 0 32px 0', letterSpacing: '-1px' }}>Gesprekken</h1>
 
         <form method="GET" style={{ display: 'flex', gap: '12px', alignItems: 'center', flexWrap: 'wrap' }}>
           <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
-            <label style={{ fontSize: '16px', letterSpacing: '2px', color: '#EE7700', opacity: 0.7 }}>VAN</label>
+            <label style={{ fontSize: '16px', letterSpacing: '2px', color: '#f59e0b', opacity: 0.7 }}>VAN</label>
             <input type="date" name="from" defaultValue={from}
-              style={{ background: '#111', border: '1px solid #222', color: '#f0ede6', padding: '10px 14px', fontSize: '16px' }} />
+              style={{ background: '#1f2937', border: '1px solid #222', color: '#f1f5f9', padding: '10px 14px', fontSize: '16px' }} />
           </div>
           <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
-            <label style={{ fontSize: '16px', letterSpacing: '2px', color: '#EE7700', opacity: 0.7 }}>TOT EN MET</label>
+            <label style={{ fontSize: '16px', letterSpacing: '2px', color: '#f59e0b', opacity: 0.7 }}>TOT EN MET</label>
             <input type="date" name="to" defaultValue={to}
-              style={{ background: '#111', border: '1px solid #222', color: '#f0ede6', padding: '10px 14px', fontSize: '16px' }} />
+              style={{ background: '#1f2937', border: '1px solid #222', color: '#f1f5f9', padding: '10px 14px', fontSize: '16px' }} />
           </div>
           <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
-            <label style={{ fontSize: '16px', letterSpacing: '2px', color: '#EE7700', opacity: 0.7 }}>SORTERING</label>
+            <label style={{ fontSize: '16px', letterSpacing: '2px', color: '#f59e0b', opacity: 0.7 }}>SORTERING</label>
             <select name="sort" defaultValue={sort}
-              style={{ background: '#111', border: '1px solid #222', color: '#f0ede6', padding: '10px 14px', fontSize: '16px' }}>
+              style={{ background: '#1f2937', border: '1px solid #222', color: '#f1f5f9', padding: '10px 14px', fontSize: '16px' }}>
               <option value="date_desc">Nieuwste eerst</option>
               <option value="date_asc">Oudste eerst</option>
               <option value="count_desc">Meeste vragen eerst</option>
@@ -104,7 +104,7 @@ export default async function AdminWidgetPage({
             </select>
           </div>
           <button type="submit"
-            style={{ background: '#EE7700', color: '#000', border: 'none', padding: '10px 24px', fontWeight: 700, cursor: 'pointer', fontSize: '14px', alignSelf: 'flex-end' }}>
+            style={{ background: '#f59e0b', color: '#000', border: 'none', padding: '10px 24px', fontWeight: 700, cursor: 'pointer', fontSize: '14px', alignSelf: 'flex-end' }}>
             LAAD
           </button>
           {sessionList.length > 0 && (
@@ -123,8 +123,8 @@ export default async function AdminWidgetPage({
             {sessionList.length} sessie{sessionList.length !== 1 ? 's' : ''} — {rows.length} berichten
           </p>
           {sessionList.map(([sessionId, messages], idx) => (
-            <div key={sessionId} style={{ marginBottom: '56px', borderTop: '2px solid #EE7700', paddingTop: '20px' }}>
-              <p style={{ fontSize: '16px', letterSpacing: '2px', color: '#EE7700', marginBottom: '4px', opacity: 0.7 }}>
+            <div key={sessionId} style={{ marginBottom: '56px', borderTop: '2px solid #f59e0b', paddingTop: '20px' }}>
+              <p style={{ fontSize: '16px', letterSpacing: '2px', color: '#f59e0b', marginBottom: '4px', opacity: 0.7 }}>
                 SESSIE {idx + 1} — {messages[0].ip}
               </p>
               <p style={{ fontSize: '16px', opacity: 0.3, marginBottom: '28px' }}>
@@ -132,7 +132,7 @@ export default async function AdminWidgetPage({
               </p>
               {messages.map((msg) => (
                 <div key={msg.id} style={{ marginBottom: '28px' }}>
-                  <p style={{ fontWeight: 700, fontSize: '16px', marginBottom: '8px', color: '#f0ede6' }}>
+                  <p style={{ fontWeight: 700, fontSize: '16px', marginBottom: '8px', color: '#f1f5f9' }}>
                     {msg.question}
                   </p>
                   <p style={{ fontSize: '16px', lineHeight: 1.8, color: '#aaa', whiteSpace: 'pre-wrap' }}>

@@ -1,4 +1,4 @@
-'use client'
+﻿'use client'
 
 import { useState } from 'react'
 import { useUser, useClerk } from '@clerk/nextjs'
@@ -61,33 +61,33 @@ export default function AccountPage() {
     }
   }
 
-  const section: React.CSSProperties = { borderTop: '1px solid #1a1a1a', paddingTop: '32px', marginBottom: '48px' }
-  const label: React.CSSProperties = { fontFamily: "'Space Mono', monospace", fontWeight: 400, color: '#EE7700', fontSize: '13px', letterSpacing: '4px', marginBottom: '16px', display: 'block' }
-  const body: React.CSSProperties = { fontWeight: 400, color: '#888', fontSize: '15px', lineHeight: '1.9', maxWidth: 480, marginBottom: '24px' }
-  const btn: React.CSSProperties = { padding: '12px 32px', border: '1px solid #555', background: 'none', color: '#888', fontFamily: "'Bebas Neue', sans-serif", fontSize: '18px', letterSpacing: '3px', cursor: 'pointer', transition: 'all 0.2s', borderRadius: '999px', display: 'inline-block' }
+  const section: React.CSSProperties = { borderTop: '1px solid #1e293b', paddingTop: '32px', marginBottom: '48px' }
+  const label: React.CSSProperties = { fontFamily: "'Space Mono', monospace", fontWeight: 400, color: '#f59e0b', fontSize: '13px', letterSpacing: '4px', marginBottom: '16px', display: 'block' }
+  const body: React.CSSProperties = { fontWeight: 400, color: '#9ca3af', fontSize: '15px', lineHeight: '1.9', maxWidth: 480, marginBottom: '24px' }
+  const btn: React.CSSProperties = { padding: '12px 32px', border: '1px solid #6b7280', background: 'none', color: '#9ca3af', fontFamily: "'Bebas Neue', sans-serif", fontSize: '18px', letterSpacing: '3px', cursor: 'pointer', transition: 'all 0.2s', borderRadius: '999px', display: 'inline-block' }
 
   return (
     <>
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Mono:wght@400;700&display=swap');
         * { box-sizing: border-box; margin: 0; padding: 0; }
-        body { background: #0a0a0a; color: #f0ede6; font-family: 'Space Mono', monospace; font-weight: 400; }
-        input { background: #111; border: 1px solid #333; color: #f0ede6; font-family: 'Space Mono', monospace; font-size: 15px; letter-spacing: 2px; padding: 12px 16px; outline: none; width: 100%; }
-        input:focus { border-color: #EE7700; }
-        .sec-btn:hover { border-color: #EE7700 !important; color: #EE7700 !important; }
+        body { background: #111827; color: #f1f5f9; font-family: 'Space Mono', monospace; font-weight: 400; }
+        input { background: #1f2937; border: 1px solid #374151; color: #f1f5f9; font-family: 'Space Mono', monospace; font-size: 15px; letter-spacing: 2px; padding: 12px 16px; outline: none; width: 100%; }
+        input:focus { border-color: #f59e0b; }
+        .sec-btn:hover { border-color: #f59e0b !important; color: #f59e0b !important; }
       `}</style>
 
       <BotNav active="account" />
 
       <div style={{ maxWidth: 720, margin: '0 auto', padding: '120px 48px 80px' }}>
 
-        <p style={{ color: '#EE7700', fontSize: 13, letterSpacing: 4, marginBottom: 8 }}>ACCOUNT</p>
+        <p style={{ color: '#f59e0b', fontSize: 13, letterSpacing: 4, marginBottom: 8 }}>ACCOUNT</p>
         <h1 style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 64, letterSpacing: 3, margin: '0 0 48px 0', lineHeight: 1 }}>JOUW GEGEVENS</h1>
 
         {/* Privacy statement */}
-        <div style={{ background: '#111', borderLeft: '4px solid #EE7700', padding: '20px 24px', marginBottom: 48 }}>
-          <p style={{ fontFamily: "'Space Mono', monospace", fontSize: 13, letterSpacing: 4, color: '#EE7700', marginBottom: 12 }}>JOUW DATA IS VAN JOU</p>
-          <p style={{ fontSize: 15, lineHeight: '1.9', color: '#888' }}>
+        <div style={{ background: '#1f2937', borderLeft: '4px solid #f59e0b', padding: '20px 24px', marginBottom: 48 }}>
+          <p style={{ fontFamily: "'Space Mono', monospace", fontSize: 13, letterSpacing: 4, color: '#f59e0b', marginBottom: 12 }}>JOUW DATA IS VAN JOU</p>
+          <p style={{ fontSize: 15, lineHeight: '1.9', color: '#9ca3af' }}>
             Alles wat je hier invoert en bespreekt met ArnoBot, is 100% veilig opgeslagen en wordt nooit gedeeld met derden, gebruikt voor marketing of ingezet voor andere doeleinden dan jouw persoonlijke coaching. Je kunt je gegevens op elk moment downloaden of je account volledig verwijderen.
           </p>
         </div>
@@ -97,12 +97,12 @@ export default function AccountPage() {
           <p style={label}>ACCOUNTINFORMATIE</p>
           <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
             <div>
-              <p style={{ fontFamily: "'Space Mono', monospace", color: '#555', fontSize: 13, letterSpacing: 2, marginBottom: 4 }}>NAAM</p>
-              <p style={{ fontSize: 15, color: '#f0ede6' }}>{name}</p>
+              <p style={{ fontFamily: "'Space Mono', monospace", color: '#6b7280', fontSize: 13, letterSpacing: 2, marginBottom: 4 }}>NAAM</p>
+              <p style={{ fontSize: 15, color: '#f1f5f9' }}>{name}</p>
             </div>
             <div>
-              <p style={{ fontFamily: "'Space Mono', monospace", color: '#555', fontSize: 13, letterSpacing: 2, marginBottom: 4 }}>E-MAILADRES</p>
-              <p style={{ fontSize: 15, color: '#f0ede6' }}>{email}</p>
+              <p style={{ fontFamily: "'Space Mono', monospace", color: '#6b7280', fontSize: 13, letterSpacing: 2, marginBottom: 4 }}>E-MAILADRES</p>
+              <p style={{ fontSize: 15, color: '#f1f5f9' }}>{email}</p>
             </div>
           </div>
         </div>
@@ -124,11 +124,11 @@ export default function AccountPage() {
             onClick={handleExport}
             disabled={exporting}
             className="sec-btn"
-            style={{ ...btn, borderColor: exporting ? '#333' : '#555', color: exporting ? '#444' : '#888', cursor: exporting ? 'not-allowed' : 'pointer' }}
+            style={{ ...btn, borderColor: exporting ? '#374151' : '#6b7280', color: exporting ? '#4b5563' : '#9ca3af', cursor: exporting ? 'not-allowed' : 'pointer' }}
           >
             {exporting ? 'EXPORTEREN...' : 'DOWNLOAD MIJN DATA'}
           </button>
-          {exportDone && <p style={{ color: '#EE7700', fontSize: 13, letterSpacing: 2, marginTop: 12 }}>✓ Download gestart</p>}
+          {exportDone && <p style={{ color: '#f59e0b', fontSize: 13, letterSpacing: 2, marginTop: 12 }}>✓ Download gestart</p>}
         </div>
 
         {/* Account verwijderen */}
@@ -145,7 +145,7 @@ export default function AccountPage() {
             </button>
           ) : (
             <div style={{ display: 'flex', flexDirection: 'column', gap: 16, maxWidth: 400 }}>
-              <p style={{ color: '#f0ede6', opacity: 0.7, fontSize: 14, letterSpacing: 1, lineHeight: 1.6 }}>
+              <p style={{ color: '#f1f5f9', opacity: 0.7, fontSize: 14, letterSpacing: 1, lineHeight: 1.6 }}>
                 Typ <strong>VERWIJDER</strong> om te bevestigen:
               </p>
               <input
@@ -158,13 +158,13 @@ export default function AccountPage() {
                 <button
                   onClick={handleDelete}
                   disabled={deleteInput !== 'VERWIJDER' || deleting}
-                  style={{ ...btn, background: deleteInput === 'VERWIJDER' && !deleting ? '#cc2200' : '#1a1a1a', color: deleteInput === 'VERWIJDER' && !deleting ? '#fff' : '#444', cursor: deleteInput === 'VERWIJDER' && !deleting ? 'pointer' : 'not-allowed' }}
+                  style={{ ...btn, background: deleteInput === 'VERWIJDER' && !deleting ? '#cc2200' : '#1e293b', color: deleteInput === 'VERWIJDER' && !deleting ? '#fff' : '#4b5563', cursor: deleteInput === 'VERWIJDER' && !deleting ? 'pointer' : 'not-allowed' }}
                 >
                   {deleting ? 'VERWIJDEREN...' : 'VERWIJDER'}
                 </button>
                 <button
                   onClick={() => { setDeleteConfirm(false); setDeleteInput('') }}
-                  style={{ ...btn, background: 'transparent', color: '#f0ede6', border: '1px solid #333', opacity: 0.5 }}
+                  style={{ ...btn, background: 'transparent', color: '#f1f5f9', border: '1px solid #374151', opacity: 0.5 }}
                 >
                   ANNULEREN
                 </button>

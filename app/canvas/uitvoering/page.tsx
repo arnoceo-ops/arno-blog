@@ -1,4 +1,4 @@
-// @ts-nocheck
+﻿// @ts-nocheck
 'use client'
 
 import React, { useState, useEffect, useCallback, useRef } from 'react'
@@ -100,9 +100,9 @@ function AutoTextarea({ value, onChange, onBlur, style, rows = 3 }: { value: str
 
 function ArnobotBox({ text, onClose, style }: { text: string; onClose: () => void; style?: React.CSSProperties }) {
   return (
-    <div style={{ marginTop: '12px', borderLeft: '2px solid #EE7700', fontSize: '18px', lineHeight: 1.8, color: '#1a1714', opacity: 0.8, fontFamily: 'var(--font-space-mono, monospace)', backgroundColor: '#fdf6ec', padding: '12px', ...style }}>
+    <div style={{ marginTop: '12px', borderLeft: '2px solid #f59e0b', fontSize: '18px', lineHeight: 1.8, color: '#1a1714', opacity: 0.8, fontFamily: 'var(--font-space-mono, monospace)', backgroundColor: '#fdf6ec', padding: '12px', ...style }}>
       {text}
-      <button onClick={onClose} style={{ marginTop: '12px', display: 'block', background: 'none', border: 'none', color: '#EE7700', fontSize: '11px', letterSpacing: '2px', cursor: 'pointer', padding: '0' }}>
+      <button onClick={onClose} style={{ marginTop: '12px', display: 'block', background: 'none', border: 'none', color: '#f59e0b', fontSize: '11px', letterSpacing: '2px', cursor: 'pointer', padding: '0' }}>
         {'→ SLUITEN'}
       </button>
     </div>
@@ -119,10 +119,10 @@ const s = {
   fieldSub: MONO_SUB,
   textarea: { width: '100%', backgroundColor: 'transparent', border: 'none', borderBottom: '1px solid #e0d8cc', color: '#1a1714', fontSize: '18px', padding: '12px 0', resize: 'none' as const, outline: 'none', fontFamily: 'var(--font-space-mono, monospace)', lineHeight: 1.8, minHeight: '90px', boxSizing: 'border-box' as const },
   input: { width: '100%', backgroundColor: 'transparent', border: 'none', borderBottom: '1px solid #e0d8cc', color: '#1a1714', fontSize: '18px', padding: '10px 0', outline: 'none', fontFamily: 'var(--font-space-mono, monospace)', boxSizing: 'border-box' as const },
-  arnobotBtn: { marginTop: '8px', background: 'none', border: 'none', color: '#EE7700', fontSize: '11px', letterSpacing: '2px', cursor: 'pointer', padding: '0' } as React.CSSProperties,
+  arnobotBtn: { marginTop: '8px', background: 'none', border: 'none', color: '#f59e0b', fontSize: '11px', letterSpacing: '2px', cursor: 'pointer', padding: '0' } as React.CSSProperties,
   // fix 1: arnobotBox 18px
-  arnobotBox: { marginTop: '12px', borderLeft: '2px solid #EE7700', paddingLeft: '12px', fontSize: '18px', lineHeight: 1.8, color: '#1a1714', opacity: 0.8, fontFamily: 'var(--font-space-mono, monospace)', backgroundColor: '#fdf6ec', padding: '12px' } as React.CSSProperties,
-  saveStatus: { position: 'fixed' as const, bottom: '24px', right: '24px', fontSize: '11px', letterSpacing: '3px', color: '#EE7700', opacity: 0.8 },
+  arnobotBox: { marginTop: '12px', borderLeft: '2px solid #f59e0b', paddingLeft: '12px', fontSize: '18px', lineHeight: 1.8, color: '#1a1714', opacity: 0.8, fontFamily: 'var(--font-space-mono, monospace)', backgroundColor: '#fdf6ec', padding: '12px' } as React.CSSProperties,
+  saveStatus: { position: 'fixed' as const, bottom: '24px', right: '24px', fontSize: '11px', letterSpacing: '3px', color: '#f59e0b', opacity: 0.8 },
   groupLabel: { ...BEBAS, marginBottom: '8px', display: 'flex', alignItems: 'center', gap: '12px' } as React.CSSProperties,
   groupSub: MONO_SUB,
 }
@@ -272,7 +272,7 @@ function KpiRowWithLight({ id, label, doelVal, realVal, onDoelChange, onRealChan
   const real = parseFloat(realVal.replace(',', '.'))
   const hasLight = !isNaN(doel) && !isNaN(real) && doel > 0
   const pct = hasLight ? (real / doel) * 100 : null
-  const color = pct === null ? '#444'
+  const color = pct === null ? '#4b5563'
     : invert
       ? pct < 100 ? '#38a169' : pct === 100 ? '#dd8800' : '#e53e3e'
       : pct > 100 ? '#38a169' : pct === 100 ? '#dd8800' : '#e53e3e'
@@ -294,7 +294,7 @@ function KpiRowWithLight({ id, label, doelVal, realVal, onDoelChange, onRealChan
 
 // Conversie berekend met traffic light
 function ConversieRow({ label, value, redBelow, greenAbove }: { label: string; value: number | null; redBelow: number; greenAbove: number }) {
-  const color = value === null ? '#444' : trafficLight(value, redBelow, greenAbove)
+  const color = value === null ? '#4b5563' : trafficLight(value, redBelow, greenAbove)
   const display = value === null ? '—' : `${Math.round(value)}%`
   return (
     <div style={{ borderTop: '1px solid #e0d8cc', paddingTop: '16px' }}>
@@ -334,7 +334,7 @@ export default function UitvoeringPage() {
   const supabase = useSupabaseClient()
   const pathname = usePathname()
   const navLink = (href: string, label: string) => (
-    <Link href={href} style={{ color: pathname === href ? '#EE7700' : '#1a1714', textDecoration: 'none', opacity: pathname === href ? 1 : 0.4 }}>
+    <Link href={href} style={{ color: pathname === href ? '#f59e0b' : '#1a1714', textDecoration: 'none', opacity: pathname === href ? 1 : 0.4 }}>
       {label}
     </Link>
   )

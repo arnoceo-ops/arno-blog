@@ -1,4 +1,4 @@
-export const metadata = {
+﻿export const metadata = {
   title: 'Upgrade — Royal Dutch Sales',
 }
 
@@ -10,17 +10,17 @@ export default function UpgradePage() {
         :root {
           --cream: #f5f0e8;
           --cream-dark: #ede7d8;
-          --black: #0a0a0a;
-          --orange: #EE7700;
+          --black: #111827;
+          --orange: #f59e0b;
           --orange-dark: #cc6600;
           --muted: #666;
-          --body: #333;
+          --body: #374151;
         }
         .up-nav { background: var(--black); padding: 0 clamp(20px,5vw,48px); height: 64px; display: flex; align-items: center; justify-content: space-between; }
-        .up-nav-logo { font-family: 'Bebas Neue', sans-serif; font-size: 22px; letter-spacing: 3px; color: #f0ede6; text-decoration: none; }
+        .up-nav-logo { font-family: 'Bebas Neue', sans-serif; font-size: 22px; letter-spacing: 3px; color: #f1f5f9; text-decoration: none; }
         .up-nav-logo span { color: var(--orange); }
-        .up-nav-back { font-family: 'Bebas Neue', sans-serif; font-size: 15px; letter-spacing: 3px; color: #888; text-decoration: none; transition: color 0.2s; }
-        .up-nav-back:hover { color: #f0ede6; }
+        .up-nav-back { font-family: 'Bebas Neue', sans-serif; font-size: 15px; letter-spacing: 3px; color: #9ca3af; text-decoration: none; transition: color 0.2s; }
+        .up-nav-back:hover { color: #f1f5f9; }
         .upgrade-wrap { font-family: 'Barlow', sans-serif; color: var(--black); min-height: 100vh; padding: clamp(56px,8vw,96px) clamp(20px,5vw,48px); max-width: 1100px; margin: 0 auto; }
         .up-eyebrow { font-family: 'Bebas Neue', sans-serif; font-size: 20px; letter-spacing: 5px; color: var(--orange); margin-bottom: 10px; display: block; }
         .up-title { font-family: 'Bebas Neue', sans-serif; font-size: clamp(48px,7vw,80px); line-height: .95; color: var(--black); margin: 0 0 0.75rem; }

@@ -1,4 +1,4 @@
-'use client'
+﻿'use client'
 
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
@@ -111,22 +111,22 @@ export default function CoachingClient({ userId }: Props) {
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Mono:wght@400;700&display=swap');
         * { box-sizing: border-box; margin: 0; padding: 0; }
-        body { background: #0a0a0a; color: #f0ede6; font-family: 'Space Mono', monospace; }
+        body { background: #111827; color: #f1f5f9; font-family: 'Space Mono', monospace; }
         @keyframes fadein { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
         @keyframes pulse { 0%,100% { opacity: 0.4; } 50% { opacity: 1; } }
 
         .coaching-section {
           padding: 48px 0;
-          border-top: 1px solid #1a1a1a;
+          border-top: 1px solid #1e293b;
           animation: fadein 0.4s ease;
         }
         .coaching-label {
           font-family: 'Space Mono', monospace;
-          font-size: 13px; letter-spacing: 4px; color: #EE7700;
+          font-size: 13px; letter-spacing: 4px; color: #f59e0b;
           text-transform: uppercase; display: block; margin-bottom: 16px;
         }
         .coaching-body {
-          color: #f0ede6; font-size: 15px; line-height: 1.9;
+          color: #f1f5f9; font-size: 15px; line-height: 1.9;
           font-family: 'Space Mono', monospace; white-space: pre-wrap;
         }
         .ontwikkelpunt {
@@ -136,67 +136,67 @@ export default function CoachingClient({ userId }: Props) {
         .ontwikkelpunt:last-child { border-bottom: none; }
         .ontwikkelpunt-nr {
           font-family: 'Bebas Neue', sans-serif;
-          font-size: 32px; color: #EE7700; line-height: 1;
+          font-size: 32px; color: #f59e0b; line-height: 1;
           min-width: 32px; padding-top: 2px;
         }
         .ontwikkelpunt-text {
-          font-size: 15px; line-height: 1.9; color: #f0ede6;
+          font-size: 15px; line-height: 1.9; color: #f1f5f9;
           font-family: 'Space Mono', monospace; font-weight: 400;
         }
         .opdracht-box {
-          background: #111; border-left: 3px solid #EE7700;
+          background: #1f2937; border-left: 3px solid #f59e0b;
           padding: 24px 28px; margin-top: 0;
         }
         .opdracht-label {
           font-family: 'Space Mono', monospace;
-          font-size: 13px; letter-spacing: 4px; color: #EE7700;
+          font-size: 13px; letter-spacing: 4px; color: #f59e0b;
           display: block; margin-bottom: 12px;
         }
         .opdracht-text {
-          color: #f0ede6; font-size: 15px; line-height: 1.9;
+          color: #f1f5f9; font-size: 15px; line-height: 1.9;
           font-family: 'Space Mono', monospace; font-weight: 400;
         }
         .blog-item {
-          display: block; color: #888; text-decoration: none;
+          display: block; color: #9ca3af; text-decoration: none;
           font-family: 'Bebas Neue', sans-serif;
           font-size: 22px; letter-spacing: 1.5px; line-height: 1;
-          padding: 14px 20px; border-left: 3px solid #1a1a1a;
+          padding: 14px 20px; border-left: 3px solid #1e293b;
           margin-bottom: 2px; transition: all 0.15s;
         }
-        .blog-item:hover { color: #f0ede6; border-left-color: #EE7700; background: #111; }
+        .blog-item:hover { color: #f1f5f9; border-left-color: #f59e0b; background: #1f2937; }
         .generate-btn {
-          background: none; border: none; box-shadow: inset 0 0 0 1px #EE7700; cursor: pointer;
+          background: none; border: none; box-shadow: inset 0 0 0 1px #f59e0b; cursor: pointer;
           font-family: 'Bebas Neue', sans-serif;
           font-size: 18px; letter-spacing: 3px;
-          color: #f0ede6; padding: 12px 28px; transition: all 0.2s;
+          color: #f1f5f9; padding: 12px 28px; transition: all 0.2s;
           border-radius: 999px; min-width: 220px;
         }
-        .generate-btn:hover:not(:disabled) { background: #EE7700; box-shadow: none; color: #f0ede6; }
-        .generate-btn:disabled { box-shadow: inset 0 0 0 1px #333; color: #444; cursor: not-allowed; }
+        .generate-btn:hover:not(:disabled) { background: #f59e0b; box-shadow: none; color: #111827; }
+        .generate-btn:disabled { box-shadow: inset 0 0 0 1px #374151; color: #4b5563; cursor: not-allowed; }
         .pdf-btn {
-          background: none; border: none; box-shadow: inset 0 0 0 1px #555; cursor: pointer;
+          background: none; border: none; box-shadow: inset 0 0 0 1px #6b7280; cursor: pointer;
           font-family: 'Bebas Neue', sans-serif;
           font-size: 18px; letter-spacing: 3px;
-          color: #888; padding: 12px 28px; transition: all 0.2s;
+          color: #9ca3af; padding: 12px 28px; transition: all 0.2s;
           border-radius: 999px; min-width: 220px;
         }
-        .pdf-btn:hover { box-shadow: inset 0 0 0 1px #EE7700; color: #EE7700; }
+        .pdf-btn:hover { box-shadow: inset 0 0 0 1px #f59e0b; color: #f59e0b; }
         .stat-block { text-align: center; }
-        .stat-number { font-family: 'Bebas Neue', sans-serif; font-size: 56px; color: #EE7700; line-height: 1; }
+        .stat-number { font-family: 'Bebas Neue', sans-serif; font-size: 56px; color: #f59e0b; line-height: 1; }
         .stat-label { font-family: 'Bebas Neue', sans-serif; font-size: 13px; letter-spacing: 4px; color: rgb(136,136,136); margin-top: 4px; }
         @media print {
           body { background: #fff !important; color: #000 !important; }
           .no-print { display: none !important; }
-          .coaching-label { color: #EE7700 !important; }
-          .coaching-body { color: #333 !important; }
+          .coaching-label { color: #f59e0b !important; }
+          .coaching-body { color: #374151 !important; }
           .ontwikkelpunt-text { color: #000 !important; }
-          .opdracht-box { background: #f5f5f5 !important; border-left: 3px solid #EE7700 !important; }
+          .opdracht-box { background: #f5f5f5 !important; border-left: 3px solid #f59e0b !important; }
           .opdracht-text { color: #000 !important; }
-          .blog-item { color: #333 !important; border-left-color: #EE7700 !important; }
+          .blog-item { color: #374151 !important; border-left-color: #f59e0b !important; }
           .coaching-section { border-top-color: #ddd !important; }
         }
         .loading-dot {
-          width: 8px; height: 8px; background: #EE7700; border-radius: 50%;
+          width: 8px; height: 8px; background: #f59e0b; border-radius: 50%;
           animation: pulse 1.2s ease-in-out infinite; display: inline-block; margin: 0 3px;
         }
         .loading-dot:nth-child(2) { animation-delay: 0.2s; }
@@ -206,9 +206,9 @@ export default function CoachingClient({ userId }: Props) {
       <BotNav active="coaching" />
 
       {uitdaging && (
-        <div className="no-print" style={{ borderBottom: '2px solid #EE7700', background: '#0d0d0d', padding: 'clamp(96px,12vw,120px) clamp(20px,6vw,60px) clamp(48px,6vw,64px)' }}>
+        <div className="no-print" style={{ borderBottom: '2px solid #f59e0b', background: '#0d0d0d', padding: 'clamp(96px,12vw,120px) clamp(20px,6vw,60px) clamp(48px,6vw,64px)' }}>
           <div style={{ maxWidth: 680, margin: '0 auto', textAlign: 'center' }}>
-            <span style={{ fontFamily: "'Space Mono', monospace", fontSize: 13, letterSpacing: 4, color: '#EE7700', display: 'block', marginBottom: 24 }}>UITDAGING VAN VANDAAG</span>
+            <span style={{ fontFamily: "'Space Mono', monospace", fontSize: 13, letterSpacing: 4, color: '#f59e0b', display: 'block', marginBottom: 24 }}>UITDAGING VAN VANDAAG</span>
             <div style={{ border: '1px solid #2a2a2a', padding: '28px 32px' }}>
               <p style={{ fontFamily: "'Space Mono', monospace", fontSize: 13, lineHeight: 2, color: '#d0cdc6' }}>{uitdaging}</p>
             </div>
@@ -218,14 +218,14 @@ export default function CoachingClient({ userId }: Props) {
 
       <div style={{ maxWidth: 812, margin: '0 auto', padding: 'clamp(80px,12vw,120px) clamp(16px,4vw,20px) 80px' }}>
 
-        <p style={{ color: '#EE7700', fontSize: 13, letterSpacing: 4, marginBottom: 8 }}>ARNOBOT</p>
+        <p style={{ color: '#f59e0b', fontSize: 13, letterSpacing: 4, marginBottom: 8 }}>ARNOBOT</p>
         <h1 style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 64, letterSpacing: 3, lineHeight: 1, marginBottom: 16 }}>COACHING</h1>
 
         {/* Header met knoppen */}
-        <div style={{ display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between', marginBottom: 48, paddingBottom: 48, borderBottom: '1px solid #1a1a1a', flexWrap: 'wrap', gap: 20 }}>
+        <div style={{ display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between', marginBottom: 48, paddingBottom: 48, borderBottom: '1px solid #1e293b', flexWrap: 'wrap', gap: 20 }}>
           <div>
             {!doc && !loading && (
-              <p style={{ color: '#888', fontSize: 13, lineHeight: 1.8, maxWidth: 480 }}>
+              <p style={{ color: '#9ca3af', fontSize: 13, lineHeight: 1.8, maxWidth: 480 }}>
                 Op basis van je gesprekken maakt Arno een persoonlijk coachingsdocument. Wat je focust, wat je vermijdt, en wat je concreet moet aanpakken.
               </p>
             )}
@@ -347,19 +347,19 @@ export default function CoachingClient({ userId }: Props) {
         )}
 
         {doc && (
-          <div className="no-print" style={{ borderTop: '1px solid #1a1a1a', paddingTop: 40, marginTop: 48, display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: 24 }}>
-            <p style={{ fontFamily: "'Space Mono', monospace", fontSize: 13, color: '#888', lineHeight: 1.7 }}>
+          <div className="no-print" style={{ borderTop: '1px solid #1e293b', paddingTop: 40, marginTop: 48, display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: 24 }}>
+            <p style={{ fontFamily: "'Space Mono', monospace", fontSize: 13, color: '#9ca3af', lineHeight: 1.7 }}>
               Wil je dit aanpakken met Arno zelf?<br />
               Maandelijks 45 minuten. Direct. Ongefilterd.
             </p>
-            <a href="/upgrade" style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 16, letterSpacing: 3, padding: '12px 28px', background: '#EE7700', color: '#f0ede6', textDecoration: 'none', borderRadius: 999, whiteSpace: 'nowrap' }}>
+            <a href="/upgrade" style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 16, letterSpacing: 3, padding: '12px 28px', background: '#f59e0b', color: '#111827', textDecoration: 'none', borderRadius: 999, whiteSpace: 'nowrap' }}>
               BEKIJK ARNOLIVE →
             </a>
           </div>
         )}
 
-        <div className="no-print" style={{ borderTop: '1px solid #1a1a1a', paddingTop: 40, marginTop: doc ? 48 : 0 }}>
-          <Link href="/bot" style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 18, letterSpacing: 3, color: '#EE7700', textDecoration: 'none' }}>
+        <div className="no-print" style={{ borderTop: '1px solid #1e293b', paddingTop: 40, marginTop: doc ? 48 : 0 }}>
+          <Link href="/bot" style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 18, letterSpacing: 3, color: '#f59e0b', textDecoration: 'none' }}>
             ← TERUG NAAR DE BOT
           </Link>
         </div>

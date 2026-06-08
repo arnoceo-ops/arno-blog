@@ -1,4 +1,4 @@
-'use client'
+﻿'use client'
 
 import { useState } from 'react'
 
@@ -44,7 +44,7 @@ export default function SearchLinkedIn({ userId, name, hasLinkedin }: { userId: 
       onClick={search}
       disabled={loading}
       style={{
-        fontSize: '11px', letterSpacing: '2px', color: error ? '#cc4444' : '#EE7700',
+        fontSize: '11px', letterSpacing: '2px', color: error ? '#cc4444' : '#f59e0b',
         background: 'none', border: 'none', cursor: loading ? 'default' : 'pointer',
         flexShrink: 0, fontWeight: 700, padding: 0,
       }}

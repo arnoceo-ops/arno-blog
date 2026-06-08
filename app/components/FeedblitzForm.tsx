@@ -1,4 +1,4 @@
-'use client'
+﻿'use client'
 import { useEffect } from 'react'
 
 export default function FeedblitzForm() {
@@ -81,12 +81,12 @@ export default function FeedblitzForm() {
             <table border="0" cellpadding="6" cellspacing="0" align="center" width="100%" class="F19888_sb_fbz_table">
               <tr class="F19888_sb_fbz_row">
                 <td style="padding:4px 0;width:100%">
-                  <input class="F19888_sb_fbz_input" type="text" name="Naam" id="F19888_sb_Naam" value="" placeholder="Naam" style="width:100%;background:rgba(255,255,255,0.06)!important;border:1px solid rgba(255,255,255,0.12)!important;color:#f0ede6!important;font-family:'Space Mono',monospace;font-size:13px;padding:14px 18px;border-radius:0;">
+                  <input class="F19888_sb_fbz_input" type="text" name="Naam" id="F19888_sb_Naam" value="" placeholder="Naam" style="width:100%;background:rgba(255,255,255,0.06)!important;border:1px solid rgba(255,255,255,0.12)!important;color:#f1f5f9!important;font-family:'Space Mono',monospace;font-size:13px;padding:14px 18px;border-radius:0;">
                 </td>
               </tr>
               <tr class="F19888_sb_fbz_row">
                 <td style="padding:4px 0;width:100%">
-                  <input class="F19888_sb_fbz_input" type="text" name="email" id="F19888_sb_email" value="" placeholder="Email" style="width:100%;background:rgba(255,255,255,0.06)!important;border:1px solid rgba(255,255,255,0.12)!important;color:#f0ede6!important;font-family:'Space Mono',monospace;font-size:13px;padding:14px 18px;border-radius:0;">
+                  <input class="F19888_sb_fbz_input" type="text" name="email" id="F19888_sb_email" value="" placeholder="Email" style="width:100%;background:rgba(255,255,255,0.06)!important;border:1px solid rgba(255,255,255,0.12)!important;color:#f1f5f9!important;font-family:'Space Mono',monospace;font-size:13px;padding:14px 18px;border-radius:0;">
                 </td>
               </tr>
               <input type="hidden" name="feedid" id="F19888_sb_feedid" value="194479">
@@ -97,7 +97,7 @@ export default function FeedblitzForm() {
                   <input class="F19888_sb_fbz_button" type="button"
                     onclick="try{fbzClearChangedBorders();}catch(e){};req=fbz_v('F19888_sb',F19888_sb_requiredFields);val=fbz_v('F19888_sb',F19888_sb_validateFields,1);if(req && val){smartFormSubmit(this);};"
                     name="fbzsubscribe" id="F19888_sb_subscribe" value="SUBSCRIBE"
-                    style="width:100%;background:#EE7700!important;color:#0a0a0a!important;font-family:'Bebas Neue',sans-serif;font-size:24px;letter-spacing:3px;padding:14px 18px;border:none;cursor:pointer;border-radius:0;">
+                    style="width:100%;background:#f59e0b!important;color:#111827!important;font-family:'Bebas Neue',sans-serif;font-size:24px;letter-spacing:3px;padding:14px 18px;border:none;cursor:pointer;border-radius:0;">
                   <img id="F19888_sb_fbz_wait" alt="Please wait..." style="display:none;width:48px;opacity:0.5;" src="https://assets.feedblitz.com/images/spinner.gif">
                 </td>
               </tr>

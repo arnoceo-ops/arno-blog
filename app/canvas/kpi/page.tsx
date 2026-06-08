@@ -1,4 +1,4 @@
-// @ts-nocheck
+﻿// @ts-nocheck
 'use client'
 
 import React, { useState, useEffect } from 'react'
@@ -49,14 +49,14 @@ function fmt(val: number, def: KpiDef): string {
 }
 
 function trafficColor(doel: number | null, real: number | null, invert = false): string {
-  if (doel === null || real === null || doel === 0) return '#333'
+  if (doel === null || real === null || doel === 0) return '#374151'
   const pct = (real / doel) * 100
   if (invert) return pct <= 90 ? '#38a169' : pct <= 100 ? '#dd8800' : '#e53e3e'
   return pct >= 100 ? '#38a169' : pct >= 75 ? '#dd8800' : '#e53e3e'
 }
 
 function convColor(v: number | null, red: number, green: number): string {
-  if (v === null) return '#333'
+  if (v === null) return '#374151'
   return v < red ? '#e53e3e' : v > green ? '#38a169' : '#dd8800'
 }
 
@@ -67,7 +67,7 @@ function TrafficDot({ color }: { color: string }) {
     <div style={{
       width: '10px', height: '10px', borderRadius: '50%',
       backgroundColor: color, flexShrink: 0,
-      boxShadow: color !== '#333' ? `0 0 6px ${color}88` : 'none',
+      boxShadow: color !== '#374151' ? `0 0 6px ${color}88` : 'none',
     }} />
   )
 }
@@ -82,9 +82,9 @@ function KpiCard({ def, doel, real }: { def: KpiDef; doel: string; real: string 
   return (
     <div style={{
       padding: '32px',
-      backgroundColor: '#0a0a0a',
+      backgroundColor: '#111827',
       border: '1px solid',
-      borderColor: hasData ? (color === '#333' ? '#1e1e1e' : `${color}44`) : '#1e1e1e',
+      borderColor: hasData ? (color === '#374151' ? '#1e1e1e' : `${color}44`) : '#1e1e1e',
       minHeight: '180px',
       display: 'flex',
       flexDirection: 'column',
@@ -93,21 +93,21 @@ function KpiCard({ def, doel, real }: { def: KpiDef; doel: string; real: string 
       <div>
         <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '20px' }}>
           <TrafficDot color={hasData ? color : '#222'} />
-          <span style={{ color: '#EE7700', fontSize: '10px', letterSpacing: '3px', opacity: 0.6 }}>
+          <span style={{ color: '#f59e0b', fontSize: '10px', letterSpacing: '3px', opacity: 0.6 }}>
             {def.label.toUpperCase()}
           </span>
         </div>
 
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
           <div>
-            <div style={{ color: '#f0ede6', fontSize: '10px', letterSpacing: '2px', opacity: 0.25, marginBottom: '6px' }}>DOEL</div>
-            <div style={{ fontFamily: 'var(--font-bebas), sans-serif', fontSize: '36px', color: '#f0ede6', lineHeight: 1, opacity: doelN !== null ? 1 : 0.15 }}>
+            <div style={{ color: '#f1f5f9', fontSize: '10px', letterSpacing: '2px', opacity: 0.25, marginBottom: '6px' }}>DOEL</div>
+            <div style={{ fontFamily: 'var(--font-bebas), sans-serif', fontSize: '36px', color: '#f1f5f9', lineHeight: 1, opacity: doelN !== null ? 1 : 0.15 }}>
               {doelN !== null ? fmt(doelN, def) : '—'}
             </div>
           </div>
           <div>
-            <div style={{ color: '#f0ede6', fontSize: '10px', letterSpacing: '2px', opacity: 0.25, marginBottom: '6px' }}>REALISATIE</div>
-            <div style={{ fontFamily: 'var(--font-bebas), sans-serif', fontSize: '36px', color: hasData ? color : '#f0ede6', lineHeight: 1, opacity: realN !== null ? 1 : 0.15 }}>
+            <div style={{ color: '#f1f5f9', fontSize: '10px', letterSpacing: '2px', opacity: 0.25, marginBottom: '6px' }}>REALISATIE</div>
+            <div style={{ fontFamily: 'var(--font-bebas), sans-serif', fontSize: '36px', color: hasData ? color : '#f1f5f9', lineHeight: 1, opacity: realN !== null ? 1 : 0.15 }}>
               {realN !== null ? fmt(realN, def) : '—'}
             </div>
           </div>
@@ -116,7 +116,7 @@ function KpiCard({ def, doel, real }: { def: KpiDef; doel: string; real: string 
 
       {hasData && doelN! > 0 && (
         <div style={{ marginTop: '20px' }}>
-          <div style={{ width: '100%', height: '1px', backgroundColor: '#1a1a1a', marginBottom: '8px' }}>
+          <div style={{ width: '100%', height: '1px', backgroundColor: '#1e293b', marginBottom: '8px' }}>
             <div style={{
               height: '1px',
               width: `${Math.min(pct!, 100)}%`,
@@ -138,12 +138,12 @@ function FunnelBar({ label, value, max, color }: { label: string; value: number;
   return (
     <div style={{ marginBottom: '20px' }}>
       <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '8px' }}>
-        <span style={{ color: '#f0ede6', fontSize: '10px', letterSpacing: '3px', opacity: 0.4 }}>{label}</span>
-        <span style={{ fontFamily: 'var(--font-bebas), sans-serif', fontSize: '20px', color: '#f0ede6', letterSpacing: '2px' }}>
+        <span style={{ color: '#f1f5f9', fontSize: '10px', letterSpacing: '3px', opacity: 0.4 }}>{label}</span>
+        <span style={{ fontFamily: 'var(--font-bebas), sans-serif', fontSize: '20px', color: '#f1f5f9', letterSpacing: '2px' }}>
           {Math.round(value).toLocaleString('nl-NL')}
         </span>
       </div>
-      <div style={{ height: '2px', backgroundColor: '#1a1a1a' }}>
+      <div style={{ height: '2px', backgroundColor: '#1e293b' }}>
         <div style={{ height: '2px', width: `${pct}%`, backgroundColor: color, transition: 'width 0.8s ease' }} />
       </div>
     </div>
@@ -153,11 +153,11 @@ function FunnelBar({ label, value, max, color }: { label: string; value: number;
 function ConversieRij({ from, to, pct, color }: { from: string; to: string; pct: number | null; color: string }) {
   return (
     <div style={{ display: 'flex', alignItems: 'center', gap: '12px', padding: '14px 0', borderBottom: '1px solid #1e1e1e' }}>
-      <TrafficDot color={pct !== null ? color : '#333'} />
-      <span style={{ color: '#f0ede6', fontSize: '10px', letterSpacing: '2px', opacity: 0.35, flex: 1 }}>
+      <TrafficDot color={pct !== null ? color : '#374151'} />
+      <span style={{ color: '#f1f5f9', fontSize: '10px', letterSpacing: '2px', opacity: 0.35, flex: 1 }}>
         {from.toUpperCase()} → {to.toUpperCase()}
       </span>
-      <span style={{ fontFamily: 'var(--font-bebas), sans-serif', fontSize: '32px', color: pct !== null ? color : '#333', letterSpacing: '2px' }}>
+      <span style={{ fontFamily: 'var(--font-bebas), sans-serif', fontSize: '32px', color: pct !== null ? color : '#374151', letterSpacing: '2px' }}>
         {pct !== null ? `${Math.round(pct)}%` : '—'}
       </span>
     </div>
@@ -229,7 +229,7 @@ export default function KpiDashboardPage() {
 
   return (
     <main style={{
-      backgroundColor: '#0a0a0a', minHeight: '100vh', color: '#f0ede6',
+      backgroundColor: '#111827', minHeight: '100vh', color: '#f1f5f9',
       fontFamily: 'var(--font-geist-sans), sans-serif',
     }}>
 
@@ -240,10 +240,10 @@ export default function KpiDashboardPage() {
 
       {/* HEADER */}
       <div style={{ borderBottom: '1px solid #1f1f1f', padding: '48px 40px 40px' }}>
-        <p style={{ color: '#EE7700', fontSize: '13px', letterSpacing: '0.05em', marginBottom: '8px', opacity: 1, fontFamily: 'Geist, system-ui, sans-serif', textTransform: 'uppercase' as const }}>
+        <p style={{ color: '#f59e0b', fontSize: '13px', letterSpacing: '0.05em', marginBottom: '8px', opacity: 1, fontFamily: 'Geist, system-ui, sans-serif', textTransform: 'uppercase' as const }}>
           ROYAL DUTCH SALES
         </p>
-        <h1 style={{ fontFamily: 'Bebas Neue, sans-serif', fontSize: 'clamp(48px, 7vw, 96px)', fontWeight: 400, letterSpacing: '0.02em', color: '#f0ede6', margin: '0 0 8px 0', lineHeight: 1 }}>
+        <h1 style={{ fontFamily: 'Bebas Neue, sans-serif', fontSize: 'clamp(48px, 7vw, 96px)', fontWeight: 400, letterSpacing: '0.02em', color: '#f1f5f9', margin: '0 0 8px 0', lineHeight: 1 }}>
           KPI DASHBOARD
         </h1>
         <p style={{ color: 'rgb(136,136,136)', opacity: 1, fontSize: '13px', letterSpacing: '0.03em', fontFamily: 'Geist, system-ui, sans-serif', textTransform: 'uppercase' as const, marginTop: 12 }}>
@@ -252,23 +252,23 @@ export default function KpiDashboardPage() {
       </div>
 
       {loading ? (
-        <div style={{ padding: '64px 48px', color: '#f0ede6', opacity: 0.2, fontSize: '11px', letterSpacing: '3px' }}>LADEN...</div>
+        <div style={{ padding: '64px 48px', color: '#f1f5f9', opacity: 0.2, fontSize: '11px', letterSpacing: '3px' }}>LADEN...</div>
       ) : (
         <div style={{ padding: '64px 48px' }}>
           {/* STATUS SAMENVATTING */}
           <div style={{ borderTop: '1px solid #1e1e1e', paddingTop: '48px', marginBottom: '80px' }}>
             <div style={{ display: 'flex', alignItems: 'baseline', gap: '20px', marginBottom: '32px' }}>
-              <span style={{ color: '#EE7700', fontSize: '11px', letterSpacing: '4px' }}>KPI STATUS</span>
+              <span style={{ color: '#f59e0b', fontSize: '11px', letterSpacing: '4px' }}>KPI STATUS</span>
             </div>
             <div style={{ display: 'flex', gap: '64px' }}>
               {[
                 { label: 'GROEN', count: statusCounts.groen, color: '#38a169' },
                 { label: 'ORANJE', count: statusCounts.oranje, color: '#dd8800' },
                 { label: 'ROOD', count: statusCounts.rood, color: '#e53e3e' },
-                { label: 'LEEG', count: statusCounts.leeg, color: '#333' },
+                { label: 'LEEG', count: statusCounts.leeg, color: '#374151' },
               ].map(({ label, count, color }) => (
                 <div key={label}>
-                  <p style={{ color: '#EE7700', fontSize: '10px', letterSpacing: '3px', marginBottom: '6px', opacity: 0.6 }}>{label}</p>
+                  <p style={{ color: '#f59e0b', fontSize: '10px', letterSpacing: '3px', marginBottom: '6px', opacity: 0.6 }}>{label}</p>
                   <p style={{ fontFamily: 'var(--font-bebas), sans-serif', fontSize: '64px', color, lineHeight: 1, letterSpacing: '2px' }}>
                     {count}
                   </p>
@@ -280,10 +280,10 @@ export default function KpiDashboardPage() {
           {/* KPI KAARTEN */}
           <div style={{ borderTop: '1px solid #1e1e1e', paddingTop: '48px', marginBottom: '80px' }}>
             <div style={{ display: 'flex', alignItems: 'baseline', gap: '20px', marginBottom: '32px' }}>
-              <span style={{ color: '#EE7700', fontSize: '11px', letterSpacing: '4px' }}>KPI METERS</span>
-              <span style={{ color: '#f0ede6', fontSize: '10px', opacity: 0.2, letterSpacing: '2px' }}>
+              <span style={{ color: '#f59e0b', fontSize: '11px', letterSpacing: '4px' }}>KPI METERS</span>
+              <span style={{ color: '#f1f5f9', fontSize: '10px', opacity: 0.2, letterSpacing: '2px' }}>
                 KPI's aanpassen via{' '}
-                <Link href="/canvas/uitvoering" style={{ color: '#EE7700', opacity: 0.6, textDecoration: 'none' }}>
+                <Link href="/canvas/uitvoering" style={{ color: '#f59e0b', opacity: 0.6, textDecoration: 'none' }}>
                   UITVOERING
                 </Link>
               </span>
@@ -303,13 +303,13 @@ export default function KpiDashboardPage() {
           {/* SALES FUNNEL + CONVERSIES */}
           <div style={{ borderTop: '1px solid #1e1e1e', paddingTop: '48px', marginBottom: '80px' }}>
             <div style={{ display: 'flex', alignItems: 'baseline', gap: '20px', marginBottom: '48px' }}>
-              <span style={{ color: '#EE7700', fontSize: '11px', letterSpacing: '4px' }}>SALES FUNNEL</span>
+              <span style={{ color: '#f59e0b', fontSize: '11px', letterSpacing: '4px' }}>SALES FUNNEL</span>
             </div>
 
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '80px' }}>
               {/* Funnel bars */}
               <div>
-                <FunnelBar label="LEADS" value={funnel.leads} max={funnelMax} color="#EE7700" />
+                <FunnelBar label="LEADS" value={funnel.leads} max={funnelMax} color="#f59e0b" />
                 <FunnelBar label="BEZOEKEN" value={funnel.bezoeken} max={funnelMax} color="#dd8800" />
                 <FunnelBar label="OFFERTES" value={funnel.offertes} max={funnelMax} color="#e07000" />
                 <FunnelBar label="ORDERS" value={funnel.orders} max={funnelMax} color="#c05800" />
@@ -323,13 +323,13 @@ export default function KpiDashboardPage() {
 
                 {totalConv !== null && (
                   <div style={{ marginTop: '32px', paddingTop: '32px', borderTop: '1px solid #1e1e1e' }}>
-                    <p style={{ color: '#EE7700', fontSize: '10px', letterSpacing: '3px', marginBottom: '8px', opacity: 0.6 }}>
+                    <p style={{ color: '#f59e0b', fontSize: '10px', letterSpacing: '3px', marginBottom: '8px', opacity: 0.6 }}>
                       TOTALE CONVERSIE
                     </p>
-                    <div style={{ fontFamily: 'var(--font-bebas), sans-serif', fontSize: '96px', color: '#EE7700', lineHeight: 1, letterSpacing: '2px' }}>
+                    <div style={{ fontFamily: 'var(--font-bebas), sans-serif', fontSize: '96px', color: '#f59e0b', lineHeight: 1, letterSpacing: '2px' }}>
                       {totalConv}%
                     </div>
-                    <p style={{ color: '#f0ede6', fontSize: '10px', opacity: 0.25, letterSpacing: '2px', marginTop: '8px' }}>
+                    <p style={{ color: '#f1f5f9', fontSize: '10px', opacity: 0.25, letterSpacing: '2px', marginTop: '8px' }}>
                       VAN LEAD NAAR ORDER
                     </p>
                   </div>

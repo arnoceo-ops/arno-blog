@@ -1,4 +1,4 @@
-import Link from 'next/link'
+﻿import Link from 'next/link'
 
 export default function PrivacyPage() {
   return (
@@ -6,7 +6,7 @@ export default function PrivacyPage() {
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Mono:wght@400;700&family=Barlow:wght@400;700&display=swap');
         *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-        body { background: #0a0a0a; color: #f0ede6; font-family: 'Space Mono', monospace; }
+        body { background: #111827; color: #f1f5f9; font-family: 'Space Mono', monospace; }
 
         .site-nav {
           position: fixed; top: 0; left: 0; right: 0; z-index: 100;
@@ -16,48 +16,48 @@ export default function PrivacyPage() {
         }
         .nav-links { display: flex; gap: 48px; align-items: center; }
         .nav-links a {
-          color: #888; text-decoration: none;
+          color: #9ca3af; text-decoration: none;
           font-family: 'Bebas Neue', sans-serif;
           font-size: 22px; letter-spacing: 3px; transition: color 0.2s;
         }
-        .nav-links a:hover { color: #f0ede6; }
-        .nav-cta { color: #EE7700 !important; }
+        .nav-links a:hover { color: #f1f5f9; }
+        .nav-cta { color: #f59e0b !important; }
 
         .page { padding-top: 80px; min-height: 100vh; }
 
         .hero {
           padding: 80px 60px 60px;
-          border-bottom: 3px solid #EE7700;
+          border-bottom: 3px solid #f59e0b;
         }
         .hero-title {
           font-family: 'Bebas Neue', sans-serif;
-          font-size: clamp(48px, 7vw, 96px); line-height: 0.9; color: #f0ede6;
+          font-size: clamp(48px, 7vw, 96px); line-height: 0.9; color: #f1f5f9;
         }
-        .hero-title span { color: #EE7700; }
-        .hero-meta { font-size: 12px; color: #444; margin-top: 16px; }
+        .hero-title span { color: #f59e0b; }
+        .hero-meta { font-size: 12px; color: #4b5563; margin-top: 16px; }
 
         .body { max-width: 760px; margin: 0 auto; padding: 80px 40px 120px; }
 
         .section { margin-bottom: 56px; }
         .section-title {
           font-family: 'Bebas Neue', sans-serif; font-size: 22px;
-          letter-spacing: 2px; color: #EE7700; margin-bottom: 20px;
+          letter-spacing: 2px; color: #f59e0b; margin-bottom: 20px;
         }
         .section-num {
           font-family: 'Bebas Neue', sans-serif; font-size: 13px;
-          letter-spacing: 2px; color: #444; margin-bottom: 6px;
+          letter-spacing: 2px; color: #4b5563; margin-bottom: 6px;
         }
-        p { font-size: 13px; color: #888; line-height: 1.9; margin-bottom: 16px; }
-        strong { color: #f0ede6; }
-        a { color: #EE7700; text-decoration: none; }
+        p { font-size: 13px; color: #9ca3af; line-height: 1.9; margin-bottom: 16px; }
+        strong { color: #f1f5f9; }
+        a { color: #f59e0b; text-decoration: none; }
         a:hover { text-decoration: underline; }
         ul { margin: 0 0 16px 0; padding-left: 20px; }
-        ul li { font-size: 13px; color: #888; line-height: 1.9; }
+        ul li { font-size: 13px; color: #9ca3af; line-height: 1.9; }
 
-        .divider { height: 1px; background: #1a1a1a; margin: 40px 0; }
+        .divider { height: 1px; background: #1e293b; margin: 40px 0; }
 
         .notice {
-          background: #0f0f0f; border-left: 3px solid #EE7700;
+          background: #0f0f0f; border-left: 3px solid #f59e0b;
           padding: 20px 24px; margin-bottom: 40px;
           font-size: 12px; color: #666; line-height: 1.8;
         }
@@ -65,10 +65,10 @@ export default function PrivacyPage() {
         footer {
           background: #050505; padding: 40px 60px;
           display: flex; justify-content: space-between; align-items: center;
-          border-top: 1px solid #111;
+          border-top: 1px solid #1f2937;
         }
-        .footer-logo { font-family: 'Bebas Neue', sans-serif; font-size: 24px; color: #EE7700; letter-spacing: 3px; }
-        .footer-copy { font-size: 10px; color: #333; }
+        .footer-logo { font-family: 'Bebas Neue', sans-serif; font-size: 24px; color: #f59e0b; letter-spacing: 3px; }
+        .footer-copy { font-size: 10px; color: #374151; }
 
         @media (max-width: 600px) {
           .hero { padding: 60px 24px 40px; }
@@ -216,7 +216,7 @@ export default function PrivacyPage() {
 
           <div className="divider" />
 
-          <p style={{ fontSize: 11, color: '#444' }}>
+          <p style={{ fontSize: 11, color: '#4b5563' }}>
             Vragen over deze privacyverklaring? Mail naar <a href="mailto:arno@arno.bot">arno@arno.bot</a>
           </p>
 
