@@ -458,7 +458,7 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
         @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Mono:wght@400;700&family=Barlow:wght@400;700&family=Barlow+Condensed:wght@300;600;900&display=swap');
         * { box-sizing: border-box; margin: 0; padding: 0; }
         html, body { height: 100%; }
-        body { background: #1f2937; color: #f1f5f9; font-family: 'Space Mono', monospace; }
+        body { background: #111827; color: #f1f5f9; font-family: 'Space Mono', monospace; }
 
                 /* NAV */
         .site-nav {
@@ -638,18 +638,18 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
         .spar-reset.sluiten:hover { background: #ff8800; }
         .spar-input-intro {
           font-family: 'Bebas Neue', sans-serif;
-          font-size: 26px; letter-spacing: 2px; color: rgb(240, 237, 230);
+          font-size: 26px; letter-spacing: 2px; color: #f1f5f9;
           width: 100%; max-width: 812px;
           display: block; margin-bottom: 20px; text-align: center;
         }
         .spar-discipline-label {
           font-family: 'Bebas Neue', sans-serif;
-          font-size: 26px; letter-spacing: 2px; color: rgb(240, 237, 230);
+          font-size: 26px; letter-spacing: 2px; color: #f1f5f9;
           display: block; margin-bottom: 20px; text-align: center; width: 100%;
         }
         .spar-questions-label {
           font-family: 'Bebas Neue', sans-serif;
-          font-size: 26px; letter-spacing: 2px; color: rgb(240, 237, 230);
+          font-size: 26px; letter-spacing: 2px; color: #f1f5f9;
           display: block; margin-top: clamp(56px,8vw,80px); margin-bottom: 12px; text-align: center; width: 100%;
         }
         .spar-questions-sub {
@@ -904,7 +904,7 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
         /* VOORTGANG BAR */
         .voortgang-bar {
           text-align: center; padding: 48px 0 16px;
-          color: rgb(240,237,230); font-family: 'Bebas Neue', sans-serif;
+          color: #f1f5f9; font-family: 'Bebas Neue', sans-serif;
           font-size: 15px; letter-spacing: 3px;
         }
         .archief-btn {
@@ -999,11 +999,11 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
               ARNO<span style={{ color: '#f59e0b' }}>BOT.</span><br />
               JOUW 24/7 NO EXCUSES SALES COACH
             </p>
-            <p className="spar-tagline-sub" style={{ fontFamily: "'Space Mono', monospace", fontSize: 18, color: 'rgb(240, 237, 230)', lineHeight: 1.8, marginBottom: 14, textAlign: 'right' }}>
+            <p className="spar-tagline-sub" style={{ fontFamily: "'Space Mono', monospace", fontSize: 18, color: '#f1f5f9', lineHeight: 1.8, marginBottom: 14, textAlign: 'right' }}>
               Betere relaties. Meer deals.<br />
               Hogere marges. Harder groeien.
             </p>
-            <p className="spar-tagline-sub" style={{ fontFamily: "'Space Mono', monospace", fontSize: 'clamp(11px, 0.9vw, 13px)', color: 'rgb(136, 136, 136)', lineHeight: 1.8 }}>
+            <p className="spar-tagline-sub" style={{ fontFamily: "'Space Mono', monospace", fontSize: 'clamp(11px, 0.9vw, 13px)', color: '#9ca3af', lineHeight: 1.8 }}>
               gebouwd op 40 jaar sales, 30 jaar entrepreneurship,<br />
               20 jaar bloggen, 15 jaar scale-up coaching.<br />
               369.000 woorden. altijd up to date.

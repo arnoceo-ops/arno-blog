@@ -183,7 +183,7 @@ export default function CoachingClient({ userId }: Props) {
         .pdf-btn:hover { box-shadow: inset 0 0 0 1px #f59e0b; color: #f59e0b; }
         .stat-block { text-align: center; }
         .stat-number { font-family: 'Bebas Neue', sans-serif; font-size: 56px; color: #f59e0b; line-height: 1; }
-        .stat-label { font-family: 'Bebas Neue', sans-serif; font-size: 13px; letter-spacing: 4px; color: rgb(136,136,136); margin-top: 4px; }
+        .stat-label { font-family: 'Bebas Neue', sans-serif; font-size: 13px; letter-spacing: 4px; color: #9ca3af; margin-top: 4px; }
         @media print {
           body { background: #fff !important; color: #000 !important; }
           .no-print { display: none !important; }
@@ -251,7 +251,7 @@ export default function CoachingClient({ userId }: Props) {
                 const isUpToDate = (!lastSession || docDate >= lastSession) && (!lastAnalyse || docDate >= lastAnalyse)
                 if (!isUpToDate) return null
                 return (
-                  <p style={{ fontFamily: "'Space Mono', monospace", fontSize: 12, color: 'rgb(136,136,136)', letterSpacing: 1, textAlign: 'center' }}>
+                  <p style={{ fontFamily: "'Space Mono', monospace", fontSize: 12, color: '#9ca3af', letterSpacing: 1, textAlign: 'center' }}>
                     ✓ Advies is actueel
                   </p>
                 )
@@ -266,7 +266,7 @@ export default function CoachingClient({ userId }: Props) {
         </div>
 
         {loading && (
-          <p style={{ color: 'rgb(136,136,136)', fontSize: 12, letterSpacing: 3, textTransform: 'uppercase' }}>Laden...</p>
+          <p style={{ color: '#9ca3af', fontSize: 12, letterSpacing: 3, textTransform: 'uppercase' }}>Laden...</p>
         )}
 
         {doc && (
