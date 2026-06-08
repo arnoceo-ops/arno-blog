@@ -517,10 +517,12 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
 
         /* HERO */
         .spar-hero {
-          padding: clamp(32px,6vw,80px) clamp(20px,5vw,60px) clamp(28px,4vw,60px);
+          height: 400px;
           border-bottom: 3px solid #f59e0b;
           display: flex; justify-content: space-between; align-items: flex-end;
-          flex-wrap: wrap; gap: 24px;
+          position: relative;
+          padding: 0 clamp(20px,5vw,60px) 28px 0;
+          overflow: hidden;
         }
         .spar-title {
           font-family: 'Bebas Neue', sans-serif;
@@ -529,7 +531,10 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
         }
         .spar-title span { color: #f59e0b; }
         .spar-tagline {
-          text-align: right; padding-bottom: 8px; flex: 1; min-width: 0; align-self: center;
+          text-align: right; flex: 1; min-width: 0;
+          align-self: stretch;
+          display: flex; flex-direction: column; justify-content: space-between;
+          padding-top: 20px; padding-bottom: 12px;
         }
         .spar-tagline p { font-size: 15px; line-height: 1.9; color: #9ca3af; }
         @media (max-width: 600px) {
@@ -975,14 +980,14 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
       <div className="spar-page" style={started ? { paddingBottom: isMobile ? 200 : 110 } : {}}>
 
         <div className="spar-hero">
-          <div style={{ flex: '0 0 auto', display: 'flex', alignItems: 'flex-start', gap: 'clamp(16px, 2vw, 32px)', minWidth: 0 }}>
-            <img src="/cyborg.jpg" alt="Arno" style={{ height: 'clamp(180px, 22vw, 300px)', width: 'auto', maxWidth: '180px', objectFit: 'contain', display: 'block', flexShrink: 0 }} />
+          <div style={{ flex: '0 0 auto', display: 'flex', alignItems: 'flex-end', gap: 'clamp(12px, 1.5vw, 24px)' }}>
+            <img src="/cyborg.jpg" alt="Arno" style={{ height: 300, width: 'auto', display: 'block', flexShrink: 0 }} />
             <h1 className="spar-title">
               ARNO<br /><span>BOT.</span>
             </h1>
           </div>
           {!isMobile && (
-            <div style={{ flex: '1 1 0', display: 'flex', justifyContent: 'center', alignItems: 'flex-end', minWidth: 0, overflow: 'hidden' }}>
+            <div style={{ position: 'absolute', left: '50%', transform: 'translateX(-50%)', bottom: 0, display: 'flex', alignItems: 'flex-end', pointerEvents: 'none' }}>
               {(() => {
                 const total = 17
                 const idx = Math.floor(Date.now() / (48 * 60 * 60 * 1000)) % total + 1
@@ -990,22 +995,22 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
                   <img
                     src={`/header-fotos/foto-${idx}.jpg`}
                     alt=""
-                    style={{ maxHeight: '300px', width: 'auto', maxWidth: '100%', objectFit: 'contain', display: 'block' }}
+                    style={{ height: 300, width: 'auto', display: 'block' }}
                   />
                 )
               })()}
             </div>
           )}
           <div className="spar-tagline">
-            <p style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 'clamp(28px, 3vw, 42px)', letterSpacing: 2, color: '#f1f5f9', lineHeight: 1.05, marginBottom: 16 }}>
+            <p style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 'clamp(28px, 3.2vw, 48px)', letterSpacing: 2, color: '#f1f5f9', lineHeight: 1.05 }}>
               ARNO<span style={{ color: '#f59e0b' }}>BOT.</span><br />
               JOUW 24/7 NO EXCUSES SALES COACH
             </p>
-            <p className="spar-tagline-sub" style={{ fontFamily: "'Space Mono', monospace", fontSize: 18, color: '#f1f5f9', lineHeight: 1.8, marginBottom: 14, textAlign: 'right' }}>
+            <p className="spar-tagline-sub" style={{ fontFamily: "'Space Mono', monospace", fontSize: 'clamp(14px, 1.3vw, 18px)', color: '#f1f5f9', lineHeight: 1.8, textAlign: 'right' }}>
               Betere relaties. Meer deals.<br />
               Hogere marges. Harder groeien.
             </p>
-            <p className="spar-tagline-sub" style={{ fontFamily: "'Space Mono', monospace", fontSize: 'clamp(11px, 0.9vw, 13px)', color: '#9ca3af', lineHeight: 1.8 }}>
+            <p className="spar-tagline-sub" style={{ fontFamily: "'Space Mono', monospace", fontSize: 'clamp(10px, 0.9vw, 13px)', color: '#9ca3af', lineHeight: 1.8 }}>
               gebouwd op 40 jaar sales, 30 jaar entrepreneurship,<br />
               20 jaar bloggen, 15 jaar scale-up coaching.<br />
               369.000 woorden. altijd up to date.
