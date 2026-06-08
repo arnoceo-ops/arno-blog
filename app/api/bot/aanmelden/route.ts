@@ -51,7 +51,7 @@ export async function POST(req: Request) {
     }
 
     await resend.emails.send({
-      from: 'ArnoBot <info@royaldutchsales.com>',
+      from: 'ArnoBot <info@arno.bot>',
       to: email,
       subject: 'Je gratis trial staat klaar — ArnoBot Unlimited',
       html: `
@@ -77,24 +77,24 @@ export async function POST(req: Request) {
             <p style="font-size: 15px; color: #888; line-height: 1.8; margin-bottom: 32px;">
               Maak nu je account aan via de knop hieronder — je hebt binnen een minuut toegang.
             </p>
-            <a href="https://www.royaldutchsales.com/sign-up?email=${encodeURIComponent(email)}"
+            <a href="https://arno.bot/sign-up?email=${encodeURIComponent(email)}"
                style="display:inline-block;background:#EE7700;color:#0a0a0a;font-family:'Courier New',monospace;font-size:16px;font-weight:700;letter-spacing:3px;padding:16px 40px;text-decoration:none;border-radius:999px;">
               MAAK JE ACCOUNT AAN →
             </a>
             <p style="font-size: 13px; color: #555; line-height: 1.7; margin-top: 32px;">
               Vragen? Mail naar
-              <a href="mailto:info@royaldutchsales.com" style="color: #EE7700;">info@royaldutchsales.com</a>
+              <a href="mailto:info@arno.bot" style="color: #EE7700;">info@arno.bot</a>
             </p>
           </div>
           <div style="padding: 16px 32px; border-top: 1px solid #1a1a1a;">
-            <p style="font-size: 11px; color: #444; margin: 0; letter-spacing: 1px;">© 2026 ROYAL DUTCH SALES</p>
+            <p style="font-size: 11px; color: #444; margin: 0; letter-spacing: 1px;">© 2026 ARNOBOT</p>
           </div>
         </div>
       `,
     })
 
     await resend.emails.send({
-      from: 'ArnoBot <info@royaldutchsales.com>',
+      from: 'ArnoBot <info@arno.bot>',
       to: 'arnodiepeveen@gmail.com',
       subject: `Nieuwe trial aanmelding: ${naam}`,
       html: `

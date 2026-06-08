@@ -1,7 +1,7 @@
 (function () {
   'use strict';
 
-  var API_URL = 'https://www.royaldutchsales.com/api/chat';
+  var API_URL = 'https://arno.bot/api/chat';
 
   // Check bij laden of IP geblokkeerd is — zo ja, direct naar /lost
   fetch(API_URL, { method: 'GET' })
@@ -325,7 +325,7 @@
       '<div class="ab-cta-card ab-cta-card--secondary">',
       '<div class="ab-cta-card-title">ARNOBOT UNLIMITED</div>',
       '<div class="ab-cta-card-body">Oneindig doorvragen. Tot je een ons weegt. Geen limiet, 24/7.</div>',
-      '<a href="https://www.royaldutchsales.com/arnobot" target="_blank" class="ab-cta-btn--secondary">ABONNEER &rarr;</a>',
+      '<a href="https://arno.bot/arnobot" target="_blank" class="ab-cta-btn--secondary">ABONNEER &rarr;</a>',
       '</div>',
       '</div>',
     ].join('');

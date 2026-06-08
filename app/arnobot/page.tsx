@@ -212,7 +212,7 @@ export default async function ArnoBotLandingPage() {
         <div className="nav-links">
           <Link href="/">HOME</Link>
           <Link href="/bio">ARNO</Link>
-          <a href="https://www.royaldutchsales.com/arnobot" className="nav-active">BOT</a>
+          <a href="https://arno.bot/arnobot" className="nav-active">BOT</a>
           <a href="https://salescanvas.app" target="_blank" rel="noopener noreferrer">CANVAS</a>
           <a href="https://arno.blog/subscribe" target="_blank" rel="noopener noreferrer" className="nav-cta">SUBSCRIBE</a>
         </div>
@@ -326,7 +326,7 @@ export default async function ArnoBotLandingPage() {
           <span style={{fontFamily:"'Space Mono', monospace", fontSize:'13px', color:'#888', letterSpacing:'0.5px'}}>
             Wil je je hele salesteam uitrusten met ArnoBot als persoonlijke coach?
           </span>
-          <a href="mailto:arno@royaldutchsales.com" style={{
+          <a href="mailto:arno@arno.bot" style={{
             fontFamily:"'Bebas Neue', sans-serif", fontSize:'18px', letterSpacing:'3px',
             color:'#EE7700', textDecoration:'none', textTransform:'uppercase', whiteSpace:'nowrap'
           }}>Neem contact op →</a>

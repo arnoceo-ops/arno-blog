@@ -1,8 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server'
 
 const ALLOWED_ORIGINS = [
-  'https://royaldutchsales.com',
-  'https://www.royaldutchsales.com',
+  'https://arno.bot',
+  'https://www.arno.bot',
   'https://arno.blog',
   'https://www.arno.blog',
 ]

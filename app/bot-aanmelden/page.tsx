@@ -89,7 +89,7 @@ export default function BotAanmeldenPage() {
               </p>
               <p style={{ fontSize: 13, color: '#555', lineHeight: '24px' }}>
                 Geen mail ontvangen? Check je spam of mail naar{' '}
-                <a href="mailto:info@royaldutchsales.com" style={{ color: '#EE7700' }}>info@royaldutchsales.com</a>
+                <a href="mailto:info@arno.bot" style={{ color: '#EE7700' }}>info@arno.bot</a>
               </p>
             </div>
           ) : (

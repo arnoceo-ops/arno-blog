@@ -79,7 +79,7 @@ export default function VoorwaardenPage() {
         <div className="nav-links">
           <Link href="/">HOME</Link>
           <Link href="/bio">ARNO</Link>
-          <a href="https://www.royaldutchsales.com/arnobot">BOT</a>
+          <a href="https://arno.bot/arnobot">BOT</a>
           <a href="https://salescanvas.app" target="_blank" rel="noopener noreferrer">CANVAS</a>
           <a href="https://arno.blog/subscribe" target="_blank" rel="noopener noreferrer" className="nav-cta">SUBSCRIBE</a>
         </div>
@@ -99,7 +99,7 @@ export default function VoorwaardenPage() {
           <div className="section">
             <div className="section-num">ARTIKEL 1</div>
             <div className="section-title">DEFINITIES</div>
-            <p><strong>Royal Dutch Sales</strong> — de eenmanszaak of onderneming van Arno Diepeveen, gevestigd in Nederland, KvK-nummer [invullen], bereikbaar via arno@royaldutchsales.com.</p>
+            <p><strong>Royal Dutch Sales</strong> — de eenmanszaak of onderneming van Arno Diepeveen, gevestigd in Nederland, KvK-nummer [invullen], bereikbaar via arno@arno.bot.</p>
             <p><strong>RDS Canvas</strong> — het digitale SaaS-platform dat toegankelijk is via royaldutchsales.com/canvas en aanverwante subdomeinen.</p>
             <p><strong>Gebruiker</strong> — de natuurlijke of rechtspersoon die zich aanmeldt voor en gebruik maakt van RDS Canvas.</p>
             <p><strong>Abonnement</strong> — de overeenkomst tussen Royal Dutch Sales en de Gebruiker voor toegang tot RDS Canvas tegen de overeengekomen vergoeding.</p>
@@ -167,7 +167,7 @@ export default function VoorwaardenPage() {
           <div className="section">
             <div className="section-num">ARTIKEL 8</div>
             <div className="section-title">OPZEGGING</div>
-            <p>De Gebruiker kan het abonnement op elk moment opzeggen via een email aan arno@royaldutchsales.com. De toegang blijft actief tot het einde van de lopende betaalperiode.</p>
+            <p>De Gebruiker kan het abonnement op elk moment opzeggen via een email aan arno@arno.bot. De toegang blijft actief tot het einde van de lopende betaalperiode.</p>
             <p>Royal Dutch Sales kan het abonnement met onmiddellijke ingang beëindigen bij misbruik of overtreding van deze voorwaarden.</p>
           </div>
 
@@ -182,7 +182,7 @@ export default function VoorwaardenPage() {
           <div className="divider" />
 
           <p style={{ fontSize: 11, color: '#444' }}>
-            Vragen over deze voorwaarden? Mail naar <a href="mailto:arno@royaldutchsales.com">arno@royaldutchsales.com</a>
+            Vragen over deze voorwaarden? Mail naar <a href="mailto:arno@arno.bot">arno@arno.bot</a>
           </p>
 
         </div>

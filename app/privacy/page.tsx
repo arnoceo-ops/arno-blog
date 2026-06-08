@@ -81,7 +81,7 @@ export default function PrivacyPage() {
         <div className="nav-links">
           <Link href="/">HOME</Link>
           <Link href="/bio">ARNO</Link>
-          <a href="https://www.royaldutchsales.com/arnobot">BOT</a>
+          <a href="https://arno.bot/arnobot">BOT</a>
           <a href="https://salescanvas.app" target="_blank" rel="noopener noreferrer">CANVAS</a>
           <a href="https://arno.blog/subscribe" target="_blank" rel="noopener noreferrer" className="nav-cta">SUBSCRIBE</a>
         </div>
@@ -102,7 +102,7 @@ export default function PrivacyPage() {
             <div className="section-num">ARTIKEL 1</div>
             <div className="section-title">VERWERKINGSVERANTWOORDELIJKE</div>
             <p>Royal Dutch Sales, vertegenwoordigd door Arno Diepeveen, is verwerkingsverantwoordelijke voor de persoonsgegevens die worden verwerkt via RDS Canvas en royaldutchsales.com.</p>
-            <p>Contact: <a href="mailto:arno@royaldutchsales.com">arno@royaldutchsales.com</a></p>
+            <p>Contact: <a href="mailto:arno@arno.bot">arno@arno.bot</a></p>
           </div>
 
           <div className="divider" />
@@ -195,7 +195,7 @@ export default function PrivacyPage() {
               <li>Recht van bezwaar</li>
               <li>Recht om toestemming in te trekken</li>
             </ul>
-            <p>Voor het uitoefenen van uw rechten kunt u contact opnemen via <a href="mailto:arno@royaldutchsales.com">arno@royaldutchsales.com</a>. Wij reageren binnen 30 dagen.</p>
+            <p>Voor het uitoefenen van uw rechten kunt u contact opnemen via <a href="mailto:arno@arno.bot">arno@arno.bot</a>. Wij reageren binnen 30 dagen.</p>
           </div>
 
           <div className="divider" />
@@ -217,7 +217,7 @@ export default function PrivacyPage() {
           <div className="divider" />
 
           <p style={{ fontSize: 11, color: '#444' }}>
-            Vragen over deze privacyverklaring? Mail naar <a href="mailto:arno@royaldutchsales.com">arno@royaldutchsales.com</a>
+            Vragen over deze privacyverklaring? Mail naar <a href="mailto:arno@arno.bot">arno@arno.bot</a>
           </p>
 
         </div>

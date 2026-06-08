@@ -67,7 +67,7 @@ export async function GET(req: NextRequest) {
             <p style="font-size: 15px; line-height: 1.8; color: #f0ede6;">${uitdaging}</p>
           </div>
           <p style="font-size: 14px; color: #888; line-height: 1.8; margin-bottom: 32px;">Heb je dit gedaan? Of zit er nog iets in de weg? Kom terug en ga het gesprek aan.</p>
-          <a href="https://royaldutchsales.com/bot" style="display: inline-block; background: #EE7700; color: #0a0a0a; font-weight: 700; font-size: 14px; letter-spacing: 3px; padding: 14px 28px; text-decoration: none;">OPEN DE BOT →</a>
+          <a href="https://arno.bot/bot" style="display: inline-block; background: #EE7700; color: #0a0a0a; font-weight: 700; font-size: 14px; letter-spacing: 3px; padding: 14px 28px; text-decoration: none;">OPEN DE BOT →</a>
         </div>
       `
       : `
@@ -75,13 +75,13 @@ export async function GET(req: NextRequest) {
           <p style="color: #EE7700; font-size: 12px; letter-spacing: 4px; margin-bottom: 32px;">ARNOBOT — ROYAL DUTCH SALES</p>
           <h1 style="font-size: 28px; font-weight: 700; margin-bottom: 24px; line-height: 1.3;">Je hebt een week niet gespart.</h1>
           <p style="font-size: 14px; color: #888; line-height: 1.8; margin-bottom: 32px;">Arno staat klaar. Wat houdt je bezig? Eén vraag is genoeg om weer scherp te worden.</p>
-          <a href="https://royaldutchsales.com/bot" style="display: inline-block; background: #EE7700; color: #0a0a0a; font-weight: 700; font-size: 14px; letter-spacing: 3px; padding: 14px 28px; text-decoration: none;">OPEN DE BOT →</a>
+          <a href="https://arno.bot/bot" style="display: inline-block; background: #EE7700; color: #0a0a0a; font-weight: 700; font-size: 14px; letter-spacing: 3px; padding: 14px 28px; text-decoration: none;">OPEN DE BOT →</a>
         </div>
       `
 
     try {
       await resend.emails.send({
-        from: 'Arno <arno@royaldutchsales.com>',
+        from: 'Arno <arno@arno.bot>',
         to: user.email,
         subject,
         html: bodyHtml,

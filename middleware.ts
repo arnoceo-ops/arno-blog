@@ -84,7 +84,7 @@ export default clerkMiddleware(async (auth, req) => {
             const resend = new Resend(process.env.RESEND_API_KEY)
             const voornaam = clerkUser.firstName || 'daar'
             resend.emails.send({
-              from: 'ArnoBot <info@royaldutchsales.com>',
+              from: 'ArnoBot <info@arno.bot>',
               to: email,
               subject: 'Je ArnoBot trial staat klaar',
               html: `
@@ -107,7 +107,7 @@ export default clerkMiddleware(async (auth, req) => {
                       <p style="font-size:16px;font-weight:600;color:#f0ede6;margin:0;">30 dagen gratis — geen automatische afschrijving</p>
                       <p style="font-size:13px;color:#666;margin:4px 0 0;">Na je trial geef je zelf per e-mail aan of je doorgaat.</p>
                     </div>
-                    <a href="https://www.royaldutchsales.com/bot"
+                    <a href="https://arno.bot/bot"
                        style="display:inline-block;background:#EE7700;color:#0a0a0a;font-family:'Courier New',monospace;font-size:16px;font-weight:700;letter-spacing:3px;padding:16px 40px;text-decoration:none;border-radius:999px;">
                       OPEN ARNOBOT →
                     </a>
