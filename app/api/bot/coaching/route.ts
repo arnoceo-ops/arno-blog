@@ -138,17 +138,65 @@ De pijlar-waarden mogen alleen zijn: "mindset", "systeem" of "actie".`,
     return NextResponse.json({ error: 'parse_error' }, { status: 500 })
   }
 
-  type Blog = { title: string; url: string }
+  type Blog = { title: string; url: string; reden: string }
   const blogs: Blog[] = []
   try {
-    const query = parsed.ontwikkelpunten.map(p => p.tekst).join(' ')
-    const chunks = await getRelevantChunks(query, 15)
-    const seen = new Set<string>()
-    for (const c of chunks) {
-      if (c.url && c.source && c.url.includes('arno.blog') && !seen.has(c.url)) {
-        seen.add(c.url)
-        blogs.push({ title: c.source.replace(/\s*\([^)]+\)\s*$/, ''), url: c.url })
-        if (blogs.length === 3) break
+    // 3 parallelle RAG-queries — één per ontwikkelpunt voor precieze matching
+    const ragResults = await Promise.all(
+      parsed.ontwikkelpunten.map(p => getRelevantChunks(p.tekst, 8))
+    )
+
+    // Bouw een map van url → { title, chunks, punten }
+    // Als een blog meerdere punten matcht, worden alle fragmenten en punten bewaard
+    type BlogCandidate = { title: string; chunks: string[]; punten: string[] }
+    const blogMap = new Map<string, BlogCandidate>()
+
+    for (let i = 0; i < parsed.ontwikkelpunten.length; i++) {
+      const punt = parsed.ontwikkelpunten[i].tekst
+      for (const c of ragResults[i]) {
+        if (!c.url || !c.source || !c.url.includes('arno.blog')) continue
+        if (!blogMap.has(c.url)) {
+          blogMap.set(c.url, {
+            title: c.source.replace(/\s*\([^)]+\)\s*$/, ''),
+            chunks: [c.content.slice(0, 400)],
+            punten: [punt],
+          })
+        } else {
+          const existing = blogMap.get(c.url)!
+          if (!existing.punten.includes(punt)) {
+            existing.punten.push(punt)
+            existing.chunks.push(c.content.slice(0, 250))
+          }
+        }
+        break // beste match per punt is voldoende
+      }
+    }
+
+    const candidates = [...blogMap.entries()].slice(0, 3)
+
+    if (candidates.length > 0) {
+      // Kleine Claude-call voor synthese per blog op basis van echte fragmenten
+      const synthContext = candidates.map(([url, b], i) =>
+        `Blog ${i + 1}: "${b.title}" (${url})\nRelevant voor: ${b.punten.join(' + ')}\nFragment(en):\n${b.chunks.join('\n---\n')}`
+      ).join('\n\n===\n\n')
+
+      const synthResponse = await anthropic.messages.create({
+        model: 'claude-haiku-4-5-20251001',
+        max_tokens: 500,
+        system: `Je bent Arno Diepeveen. Schrijf per blog één zin die concreet uitlegt waarom dit blog relevant is voor het genoemde ontwikkelpunt. Baseer je uitsluitend op het meegeleverde fragment — niet op de blogtitel. Direct en specifiek. Geen bullshit.
+
+Return ALLEEN een JSON array, geen uitleg eromheen:
+[{ "url": "...", "reden": "..." }]`,
+        messages: [{ role: 'user', content: synthContext }],
+      })
+
+      const synthRaw = synthResponse.content[0].type === 'text' ? synthResponse.content[0].text : ''
+      const synthMatch = synthRaw.match(/\[[\s\S]*\]/)
+      const synthParsed: { url: string; reden: string }[] = JSON.parse(synthMatch?.[0] ?? '[]')
+
+      for (const [url, b] of candidates) {
+        const synth = synthParsed.find(s => s.url === url)
+        blogs.push({ title: b.title, url, reden: synth?.reden ?? '' })
       }
     }
   } catch {}

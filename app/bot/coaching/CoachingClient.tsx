@@ -18,7 +18,7 @@ interface CoachingDoc {
   ontwikkelpunten: { tekst: string; pijlar: string }[]
   dringende_suggestie: string
   dringende_suggestie_pijlar: string
-  blogs: { title: string; url: string }[]
+  blogs: { title: string; url: string; reden: string }[]
   conversation_count: number
   updated_at?: string
 }
@@ -332,7 +332,14 @@ export default function CoachingClient({ userId }: Props) {
                 <span className="coaching-label">VERDIEPING</span>
                 <div style={{ marginTop: 8 }}>
                   {doc.blogs.map((b, i) => (
-                    <a key={i} href={b.url} target="_blank" rel="noopener noreferrer" className="blog-item">{b.title}</a>
+                    <div key={i} style={{ marginBottom: 8 }}>
+                      <a href={b.url} target="_blank" rel="noopener noreferrer" className="blog-item">{b.title}</a>
+                      {b.reden && (
+                        <p style={{ fontFamily: "'Space Mono', monospace", fontWeight: 400, fontSize: 13, color: '#6b7280', lineHeight: 1.8, padding: '10px 20px 4px', borderLeft: '3px solid #1f2937' }}>
+                          {b.reden}
+                        </p>
+                      )}
+                    </div>
                   ))}
                 </div>
               </div>
