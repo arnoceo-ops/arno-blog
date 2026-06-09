@@ -1,5 +1,5 @@
 import { auth } from '@clerk/nextjs/server'
-import { NextRequest, NextResponse } from 'next/server'
+import { NextResponse } from 'next/server'
 import { createClient } from '@supabase/supabase-js'
 import Anthropic from '@anthropic-ai/sdk'
 import { getRelevantChunks } from '@/lib/rag'
@@ -23,7 +23,7 @@ export async function GET() {
   return NextResponse.json({ coaching: data ?? null })
 }
 
-export async function POST(req: NextRequest) {
+export async function POST() {
   const { userId } = await auth()
   if (!userId) return NextResponse.json({ error: 'Niet ingelogd' }, { status: 401 })
 
@@ -53,7 +53,6 @@ export async function POST(req: NextRequest) {
   }
 
   const analyses = analysesRes.data ?? []
-
   const profiel = profielRes.data?.profiel ?? null
   const profielText = profiel
     ? `\n\nGEBRUIKERSPROFIEL:\nRol: ${profiel.rol || '—'}\nMarkt: ${Array.isArray(profiel.markt) ? profiel.markt.join(', ') : profiel.markt || '—'}\nWat verkoop je: ${profiel.wat_verkoop_je || '—'}\nIdeale klant: ${profiel.ideale_klant || '—'}\nGrootste uitdaging: ${profiel.uitdaging || '—'}`
@@ -75,21 +74,39 @@ export async function POST(req: NextRequest) {
 
   const response = await anthropic.messages.create({
     model: 'claude-sonnet-4-6',
-    max_tokens: 1200,
-    system: `Je bent Arno Diepeveen. Salesstrateeg, 20 jaar ervaring, direct en ongefilterd. Je schrijft een persoonlijk coachingsdocument voor iemand die jouw bot gebruikt. Geen corporate coachtaal. Geen bullshit. Geen accenten op woorden voor nadruk. Spreek de gebruiker aan met "je".
+    max_tokens: 1600,
+    system: `Je bent Arno Diepeveen. Salesstrateeg, 20 jaar ervaring, direct en ongefilterd. Je schrijft een persoonlijk coachingsdocument gebaseerd op drie pijlers: Mindset, Systeem en Actie. Geen corporate coachtaal. Geen bullshit. Geen accenten op woorden voor nadruk. Spreek de gebruiker aan met "je".
 
-Return ALLEEN een JSON-object — geen uitleg, geen markdown eromheen:
+MINDSET = hoe iemand in de wedstrijd zit. Geloof in zichzelf, zelfimage als verkoper, positief of negatief taalgebruik, excuses maken of verantwoordelijkheid nemen.
+SYSTEEM = heeft iemand een verkoopproces? Volgt die dat consequent? Pipeline-denken, opvolging, structuur, terugkomen op dingen. Sales is een proces, geen vak.
+ACTIE = doet iemand het ook echt? Gesprekken voeren, initiatief nemen, consistent actief blijven. Een droom zonder actie is een nachtmerrie.
+
+Score elke pijlar op een schaal van 1 (zwak) tot 5 (sterk) op basis van wat de gesprekken onthullen.
+Bepaal richting op basis van hoe gesprekken zich over tijd ontwikkelen: worden ze dieper, concreter, meer gericht? Stijgend. Draaien ze in cirkels? Dalend. Geen duidelijke beweging? Stabiel.
+
+Return ALLEEN een JSON-object, geen uitleg, geen markdown eromheen:
 {
-  "focus": "2-3 zinnen over welke onderwerpen deze persoon vragen over stelt en wat dat zegt over waar ze in zitten",
-  "blinde_vlekken": "2-3 zinnen over wat structureel ontbreekt in de gesprekken — onderwerpen die iemand die echt sales wil beheersen sowieso moet aanpakken maar blijkbaar vermijdt of over het hoofd ziet",
+  "voortgang": "1-2 zinnen: worden de vragen dieper en concreter over tijd, of draaien ze in cirkels? Wees eerlijk.",
+  "mindset_score": <getal 1 t/m 5>,
+  "mindset_diagnose": "2-3 zinnen over de mindset die je ziet. Wat verraadt het taalgebruik, de vragen, de houding?",
+  "mindset_richting": "stijgend",
+  "systeem_score": <getal 1 t/m 5>,
+  "systeem_diagnose": "2-3 zinnen over het systeemdenken. Zit er structuur in de vragen of is het elke keer ad hoc?",
+  "systeem_richting": "stabiel",
+  "actie_score": <getal 1 t/m 5>,
+  "actie_diagnose": "2-3 zinnen over actiegericht gedrag. Hoe actief is iemand, worden vragen concreter over tijd?",
+  "actie_richting": "stijgend",
   "ontwikkelpunten": [
-    "Eerste concrete ontwikkelpunt — één zin, direct, actiegericht",
-    "Tweede concrete ontwikkelpunt — één zin, direct, actiegericht",
-    "Derde concrete ontwikkelpunt — één zin, direct, actiegericht"
+    { "tekst": "Eerste concrete ontwikkelpunt, één zin, direct en actiegericht", "pijlar": "mindset" },
+    { "tekst": "Tweede concrete ontwikkelpunt, één zin, direct en actiegericht", "pijlar": "systeem" },
+    { "tekst": "Derde concrete ontwikkelpunt, één zin, direct en actiegericht", "pijlar": "actie" }
   ],
-  "voortgang": "1-2 zinnen: worden de vragen dieper, concreter, meer gericht over tijd? Of draaien ze in cirkels? Wees eerlijk.",
-  "opdracht": "Één concrete opdracht voor de komende week — iets wat je morgen kunt doen. Geen theorie."
-}`,
+  "dringende_suggestie": "Één concrete opdracht voor de komende week, iets wat je morgen kunt doen. Geen theorie.",
+  "dringende_suggestie_pijlar": "actie"
+}
+
+De richting-waarden mogen alleen zijn: "stijgend", "stabiel" of "dalend".
+De pijlar-waarden mogen alleen zijn: "mindset", "systeem" of "actie".`,
     messages: [{
       role: 'user',
       content: `Analyseer deze ${sessions.length} gesprekken${analyses.length > 0 ? ` en ${analyses.length} eerder gemaakte patroonanalyses` : ''} en schrijf een coachingsdocument:${profielText}\n\nGESPREKKEN:\n${sessiesText}${analysesText}`
@@ -99,11 +116,19 @@ Return ALLEEN een JSON-object — geen uitleg, geen markdown eromheen:
   const raw = response.content[0].type === 'text' ? response.content[0].text : ''
 
   let parsed: {
-    focus: string
-    blinde_vlekken: string
-    ontwikkelpunten: string[]
     voortgang: string
-    opdracht: string
+    mindset_score: number
+    mindset_diagnose: string
+    mindset_richting: string
+    systeem_score: number
+    systeem_diagnose: string
+    systeem_richting: string
+    actie_score: number
+    actie_diagnose: string
+    actie_richting: string
+    ontwikkelpunten: { tekst: string; pijlar: string }[]
+    dringende_suggestie: string
+    dringende_suggestie_pijlar: string
   }
 
   try {
@@ -113,11 +138,10 @@ Return ALLEEN een JSON-object — geen uitleg, geen markdown eromheen:
     return NextResponse.json({ error: 'parse_error' }, { status: 500 })
   }
 
-  // Blogs via RAG op basis van ontwikkelpunten
   type Blog = { title: string; url: string }
   const blogs: Blog[] = []
   try {
-    const query = parsed.ontwikkelpunten.join(' ')
+    const query = parsed.ontwikkelpunten.map(p => p.tekst).join(' ')
     const chunks = await getRelevantChunks(query, 15)
     const seen = new Set<string>()
     for (const c of chunks) {
