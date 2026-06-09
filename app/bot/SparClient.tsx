@@ -787,6 +787,13 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
           box-shadow: 0 0 0 3px rgba(245,158,11,0.25), 0 0 24px rgba(245,158,11,0.15);
           animation: glowpulse 2s ease-in-out infinite;
         }
+        @media (min-width: 701px) {
+          .spar-input-row.active-glow { flex-direction: column; }
+          .spar-input-row.active-glow .spar-buttons {
+            align-self: stretch; justify-content: flex-end;
+            border-top: 1px solid #374151;
+          }
+        }
         .spar-input-row.blink-glow {
           animation: blinkglow 0.4s ease-in-out 4;
         }
