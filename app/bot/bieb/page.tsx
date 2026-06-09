@@ -439,7 +439,7 @@ export default function GeschiedenisPage() {
                   {session.summary && (
                     <div style={{ background: '#1f2937', borderLeft: '3px solid #f59e0b', padding: '20px 24px', marginBottom: 32 }}>
                       <p style={{ color: '#f59e0b', fontSize: 11, letterSpacing: 4, textTransform: 'uppercase', marginBottom: 12 }}>SYNTHESE</p>
-                      <p style={{ color: '#9ca3af', fontSize: 16, fontFamily: "'Space Mono', monospace", lineHeight: 1.9, marginBottom: session.blog_suggestions?.length ? 24 : 0 }}>{session.summary}</p>
+                      <p style={{ color: '#9ca3af', fontSize: 15, fontFamily: "'Space Mono', monospace", lineHeight: 1.9, marginBottom: session.blog_suggestions?.length ? 24 : 0 }}>{session.summary}</p>
                       {session.blog_suggestions && session.blog_suggestions.length > 0 && (
                         <div style={{ borderTop: '1px solid #374151', paddingTop: 20 }}>
                           <p style={{ color: '#9ca3af', fontSize: 11, letterSpacing: 4, textTransform: 'uppercase', marginBottom: 12, fontFamily: "'Bebas Neue', sans-serif" }}>VERDER LEZEN</p>
@@ -473,7 +473,7 @@ export default function GeschiedenisPage() {
                         {msg.role === 'user' ? 'JIJ' : 'ARNO'}
                       </span>
                       <span
-                        style={{ fontSize: msg.role === 'user' ? 16 : 14, lineHeight: msg.role === 'user' ? 1.6 : 1.9, color: msg.role === 'user' ? '#f1f5f9' : '#9ca3af', fontFamily: "'Space Mono', monospace", fontWeight: 400, letterSpacing: 0, whiteSpace: 'pre-wrap' }}
+                        style={{ fontSize: 15, lineHeight: 1.9, color: msg.role === 'user' ? '#f1f5f9' : '#9ca3af', fontFamily: "'Space Mono', monospace", fontWeight: 400, letterSpacing: 0, whiteSpace: 'pre-wrap' }}
                         dangerouslySetInnerHTML={{ __html: renderContent(msg.content) }}
                       />
                     </div>
@@ -518,7 +518,7 @@ export default function GeschiedenisPage() {
             {activeAnalyse && !isDuplicateAnalyse && !isSimilarAnalyse && (
               <div style={{ marginBottom: 28, background: '#1f2937', borderLeft: '3px solid #f59e0b', padding: '20px 24px' }}>
                 <p style={{ color: '#f59e0b', fontSize: 11, letterSpacing: 4, textTransform: 'uppercase', marginBottom: 12 }}>NIEUW GEGENEREERD</p>
-                <p style={{ color: '#9ca3af', fontSize: 16, lineHeight: 1.9, fontFamily: "'Space Mono', monospace", whiteSpace: 'pre-wrap', marginBottom: 16 }}>{activeAnalyse}</p>
+                <p style={{ color: '#9ca3af', fontSize: 15, lineHeight: 1.9, fontFamily: "'Space Mono', monospace", whiteSpace: 'pre-wrap', marginBottom: 16 }}>{activeAnalyse}</p>
                 <button
                   onClick={() => setActiveAnalyse(null)}
                   style={{ background: 'none', border: 'none', cursor: 'pointer', fontFamily: "'Bebas Neue', sans-serif", fontSize: 13, letterSpacing: 3, color: '#9ca3af', padding: 0 }}
@@ -535,7 +535,7 @@ export default function GeschiedenisPage() {
             {isSimilarAnalyse && (
               <div style={{ background: '#1f2937', borderLeft: '3px solid #6b7280', padding: '20px 24px', marginBottom: 28 }}>
                 <p style={{ color: '#9ca3af', fontSize: 13, letterSpacing: 3, fontFamily: "'Bebas Neue', sans-serif", marginBottom: 10 }}>WEINIG VERANDERD</p>
-                <p style={{ color: '#6b7280', fontSize: 14, lineHeight: 1.9, fontFamily: "'Space Mono', monospace" }}>
+                <p style={{ color: '#6b7280', fontSize: 15, lineHeight: 1.9, fontFamily: "'Space Mono', monospace" }}>
                   Je gesprekken overlappen voor meer dan 80% met een eerdere analyse. Er is niet genoeg veranderd om iets nieuws te zeggen. Ga eens aan de slag met wat er al staat — voer nieuwe gesprekken en kom dan terug.
                 </p>
               </div>

@@ -757,7 +757,7 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
           color: #f59e0b; white-space: nowrap; padding-top: 2px; min-width: 48px;
         }
         .msg-arno-text {
-          font-size: 16px; line-height: 1.9; color: #9ca3af;
+          font-size: 15px; line-height: 1.9; color: #9ca3af;
           max-width: 680px; white-space: pre-wrap;
         }
 
@@ -1131,7 +1131,7 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
           {verfijndSuggestie && (
             <div style={{ width: '100%', maxWidth: 812, background: '#1f2937', border: '1px solid #f59e0b', padding: '16px 20px', marginTop: 8 }}>
               <p style={{ fontFamily: "'Space Mono', monospace", fontSize: 13, color: '#f59e0b', letterSpacing: 2, marginBottom: 10 }}>VERFIJNDE VERSIE</p>
-              <p style={{ fontFamily: "'Space Mono', monospace", fontSize: 14, color: '#9ca3af', lineHeight: 1.7, marginBottom: 16 }}>{verfijndSuggestie}</p>
+              <p style={{ fontFamily: "'Space Mono', monospace", fontSize: 15, color: '#9ca3af', lineHeight: 1.9, marginBottom: 16 }}>{verfijndSuggestie}</p>
               <div style={{ display: 'flex', gap: 10 }}>
                 <button
                   onClick={() => { setInput(verfijndSuggestie); setVerfijndSuggestie(''); setResizeInput(true) }}
@@ -1244,7 +1244,7 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
           <div style={{ background: '#1f2937', border: '1px solid #374151', maxWidth: 440, width: '100%', padding: 40 }}>
             <p style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 13, letterSpacing: 4, color: '#f59e0b', marginBottom: 8 }}>ARNOBOT</p>
             <h2 style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 36, letterSpacing: 1, color: '#f1f5f9', marginBottom: 12 }}>WACHT EVEN</h2>
-            <p style={{ fontFamily: "'Space Mono', monospace", fontSize: 14, color: '#9ca3af', lineHeight: 1.7, marginBottom: 28 }}>Je hebt een gesprek open. Wil je het sluiten voordat je verdergaat?</p>
+            <p style={{ fontFamily: "'Space Mono', monospace", fontSize: 15, color: '#9ca3af', lineHeight: 1.9, marginBottom: 28 }}>Je hebt een gesprek open. Wil je het sluiten voordat je verdergaat?</p>
             <div style={{ display: 'flex', gap: 12 }}>
               <button
                 onClick={() => { setNavGuardOpen(false); handleNieuw() }}
@@ -1271,7 +1271,7 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
             <p style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 13, letterSpacing: 4, color: '#f59e0b', marginBottom: 8 }}>ARNOBOT</p>
             <h2 style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 36, letterSpacing: 1, color: '#f1f5f9', marginBottom: 20 }}>FEEDBACK</h2>
             {feedbackSent ? (
-              <p style={{ fontFamily: "'Space Mono', monospace", fontSize: 14, color: '#f59e0b', letterSpacing: 1 }}>Bedankt — je feedback is verzonden.</p>
+              <p style={{ fontFamily: "'Space Mono', monospace", fontSize: 15, color: '#f59e0b', letterSpacing: 1 }}>Bedankt — je feedback is verzonden.</p>
             ) : (
               <>
                 <textarea
