@@ -308,23 +308,21 @@ export default function GeschiedenisPage() {
         <h1 style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 64, letterSpacing: 3, lineHeight: 1, color: '#f1f5f9', marginBottom: 32 }}>BIEB</h1>
 
         {!loading && sessions.length > 0 && (
-          <div style={{ display: 'flex', gap: 48, marginBottom: 48, flexWrap: 'wrap' }}>
-            <div style={{ textAlign: 'center' }}>
-              <div style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 56, color: '#f59e0b', lineHeight: 1 }}>{sessions.length}</div>
-              <div style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 13, letterSpacing: 4, color: '#9ca3af', marginTop: 4 }}>GESPREKKEN GEVOERD</div>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 2, marginBottom: 48 }}>
+            <div style={{ background: '#1f2937', padding: '28px 20px', textAlign: 'center' }}>
+              <div style={{ fontFamily: "'Space Mono', monospace", fontWeight: 700, fontSize: 13, letterSpacing: 4, color: '#f59e0b', marginBottom: 12 }}>GESPREKKEN</div>
+              <div style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 64, color: '#f1f5f9', lineHeight: 1 }}>{sessions.length}</div>
             </div>
-            <div style={{ textAlign: 'center' }}>
-              <div style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 56, color: '#f59e0b', lineHeight: 1 }}>
+            <div style={{ background: '#1f2937', padding: '28px 20px', textAlign: 'center' }}>
+              <div style={{ fontFamily: "'Space Mono', monospace", fontWeight: 700, fontSize: 13, letterSpacing: 4, color: '#f59e0b', marginBottom: 12 }}>VRAGEN</div>
+              <div style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 64, color: '#f1f5f9', lineHeight: 1 }}>
                 {sessions.reduce((sum, s) => sum + (s.message_count || 0), 0)}
               </div>
-              <div style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 13, letterSpacing: 4, color: '#9ca3af', marginTop: 4 }}>VRAGEN GESTELD</div>
             </div>
-            {savedAnalyses.length > 0 && (
-              <div style={{ textAlign: 'center' }}>
-                <div style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 56, color: '#f59e0b', lineHeight: 1 }}>{savedAnalyses.length}</div>
-                <div style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 13, letterSpacing: 4, color: '#9ca3af', marginTop: 4 }}>ANALYSES</div>
-              </div>
-            )}
+            <div style={{ background: '#1f2937', padding: '28px 20px', textAlign: 'center' }}>
+              <div style={{ fontFamily: "'Space Mono', monospace", fontWeight: 700, fontSize: 13, letterSpacing: 4, color: '#f59e0b', marginBottom: 12 }}>ANALYSES</div>
+              <div style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 64, color: '#f1f5f9', lineHeight: 1 }}>{savedAnalyses.length}</div>
+            </div>
           </div>
         )}
 
