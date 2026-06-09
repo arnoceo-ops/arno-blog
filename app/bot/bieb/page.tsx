@@ -374,7 +374,7 @@ export default function GeschiedenisPage() {
           const isSelected = selected.has(session.session_id)
           const isOpen = expanded === session.session_id
           return (
-            <div key={session.session_id} style={{ borderTop: '1px solid #374151', animation: 'fadein 0.3s ease', background: isOpen ? '#1f2937' : undefined, padding: isOpen ? '0 20px' : undefined, borderRadius: isOpen ? 4 : undefined }}>
+            <div key={session.session_id} style={{ borderTop: '1px solid #374151', animation: 'fadein 0.3s ease', padding: isOpen ? '0 20px' : undefined }}>
 
               {isMobile ? (
                 /* Mobile card layout */
