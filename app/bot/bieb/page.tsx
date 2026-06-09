@@ -232,29 +232,38 @@ export default function GeschiedenisPage() {
         .delete-bar-cancel {
           background: none; border: none; box-shadow: inset 0 0 0 1px #f59e0b; cursor: pointer;
           font-family: 'Bebas Neue', sans-serif;
-          font-size: 16px; letter-spacing: 3px; color: #9ca3af;
+          font-size: 16px; letter-spacing: 3px; color: #f1f5f9;
           transition: all 0.15s; padding: 11px 0;
           width: 180px; text-align: center; border-radius: 999px;
         }
         .delete-bar-cancel:hover { color: #f59e0b; }
         .delete-bar-btn {
-          background: #f59e0b; border: 1px solid #f59e0b; cursor: pointer;
+          background: #f59e0b; border: none; cursor: pointer;
           font-family: 'Bebas Neue', sans-serif;
           font-size: 16px; letter-spacing: 3px; color: #111827;
           padding: 11px 0; transition: background 0.15s;
           width: 180px; text-align: center; border-radius: 999px;
         }
-        .delete-bar-btn:hover { background: #d97706; border-color: #d97706; }
-        .delete-bar-btn:disabled { background: #374151; border-color: #374151; color: #6b7280; cursor: not-allowed; }
+        .delete-bar-btn:hover { background: #d97706; }
+        .delete-bar-btn:disabled { background: #374151; color: #6b7280; cursor: not-allowed; }
         .delete-bar-outline {
-          background: none; border: none; box-shadow: inset 0 0 0 1px #f59e0b; cursor: pointer;
+          background: #f59e0b; border: none; box-shadow: none; cursor: pointer;
           font-family: 'Bebas Neue', sans-serif;
-          font-size: 16px; letter-spacing: 3px; color: #f1f5f9;
+          font-size: 16px; letter-spacing: 3px; color: #111827;
+          padding: 11px 0; transition: background 0.15s;
+          width: 180px; text-align: center; border-radius: 999px;
+        }
+        .delete-bar-outline:hover { background: #d97706; }
+        .delete-bar-outline:disabled { background: #374151; color: #6b7280; cursor: not-allowed; }
+        .delete-bar-destructive {
+          background: none; border: none; box-shadow: inset 0 0 0 1px #cc2200; cursor: pointer;
+          font-family: 'Bebas Neue', sans-serif;
+          font-size: 16px; letter-spacing: 3px; color: #cc2200;
           padding: 11px 0; transition: all 0.15s;
           width: 180px; text-align: center; border-radius: 999px;
         }
-        .delete-bar-outline:hover { background: #f59e0b; color: #111827; }
-        .delete-bar-outline:disabled { border-color: #374151; color: #4b5563; cursor: not-allowed; }
+        .delete-bar-destructive:hover { box-shadow: inset 0 0 0 1px #ff3300; color: #ff3300; }
+        .delete-bar-destructive:disabled { box-shadow: inset 0 0 0 1px #374151; color: #4b5563; cursor: not-allowed; }
 
         .session-checkbox {
           flex-shrink: 0; width: 22px; height: 22px;
@@ -287,7 +296,7 @@ export default function GeschiedenisPage() {
 
         @media (max-width: 768px) {
           .delete-bar { padding: 16px 20px; gap: 12px; }
-          .delete-bar-cancel, .delete-bar-btn, .delete-bar-outline { width: 140px; font-size: 14px; padding: 10px 0; }
+          .delete-bar-cancel, .delete-bar-btn, .delete-bar-outline, .delete-bar-destructive { width: 140px; font-size: 14px; padding: 10px 0; }
         }
       `}</style>
 
@@ -644,7 +653,7 @@ export default function GeschiedenisPage() {
                 {analyseLoading ? 'ANALYSEREN...' : 'ANALYSEER →'}
               </button>
             )}
-            <button className="delete-bar-btn" onClick={deleteSelected} disabled={deleting}>
+            <button className={selected.size >= 3 ? 'delete-bar-destructive' : 'delete-bar-btn'} onClick={deleteSelected} disabled={deleting}>
               {deleting ? 'VERWIJDEREN...' : 'VERWIJDER →'}
             </button>
           </div>
