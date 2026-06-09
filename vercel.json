@@ -7,6 +7,28 @@
   ],
   "redirects": [
     {
+      "source": "/(.*)",
+      "destination": "https://arno.bot/$1",
+      "permanent": true,
+      "has": [
+        {
+          "type": "host",
+          "value": "royaldutchsales.com"
+        }
+      ]
+    },
+    {
+      "source": "/(.*)",
+      "destination": "https://arno.bot/$1",
+      "permanent": true,
+      "has": [
+        {
+          "type": "host",
+          "value": "www.royaldutchsales.com"
+        }
+      ]
+    },
+    {
       "source": "/",
       "destination": "/canvas",
       "permanent": false,
