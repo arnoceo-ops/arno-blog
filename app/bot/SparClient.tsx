@@ -785,13 +785,13 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
         /* GLOW op invoerveld na gesprek */
         .spar-input-row.active-glow {
           border-color: #f59e0b;
-          box-shadow: 0 0 0 3px rgba(245,158,11,0.25), 0 0 24px rgba(245,158,11,0.15);
+          box-shadow: inset 0 0 0 3px rgba(245,158,11,0.25), 0 0 24px rgba(245,158,11,0.15);
           animation: glowpulse 2s ease-in-out infinite;
         }
         @media (min-width: 701px) {
           .spar-input-row.active-glow { flex-direction: column; }
           .spar-input-row.active-glow .spar-buttons {
-            align-self: stretch; justify-content: flex-end;
+            align-self: stretch; justify-content: flex-start;
             border-top: 1px solid #374151;
           }
         }
@@ -799,12 +799,12 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
           animation: blinkglow 0.4s ease-in-out 4;
         }
         @keyframes glowpulse {
-          0%, 100% { box-shadow: 0 0 0 3px rgba(245,158,11,0.2), 0 0 16px rgba(245,158,11,0.1); }
-          50% { box-shadow: 0 0 0 3px rgba(245,158,11,0.5), 0 0 40px rgba(245,158,11,0.3); }
+          0%, 100% { box-shadow: inset 0 0 0 3px rgba(245,158,11,0.2), 0 0 16px rgba(245,158,11,0.1); }
+          50% { box-shadow: inset 0 0 0 3px rgba(245,158,11,0.5), 0 0 40px rgba(245,158,11,0.3); }
         }
         @keyframes blinkglow {
-          0%, 100% { box-shadow: 0 0 0 3px rgba(245,158,11,0.15); }
-          50% { box-shadow: 0 0 0 6px rgba(245,158,11,0.7), 0 0 48px rgba(245,158,11,0.4); border-color: #ff9900; }
+          0%, 100% { box-shadow: inset 0 0 0 3px rgba(245,158,11,0.15); }
+          50% { box-shadow: inset 0 0 0 6px rgba(245,158,11,0.7), 0 0 48px rgba(245,158,11,0.4); border-color: #ff9900; }
         }
 
         /* ACTIE KNOPPEN onder antwoord */
