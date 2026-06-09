@@ -1,6 +1,13 @@
+import type { Metadata } from 'next'
 import Link from 'next/link'
 import { auth } from '@clerk/nextjs/server'
 import { redirect } from 'next/navigation'
+
+export const metadata: Metadata = {
+  title: 'ArnoBot — Jouw Personal Sales Coach',
+  description: 'ArnoBot — 20 jaar sales expertise, 24/7 beschikbaar als jouw persoonlijke coach.',
+  robots: { index: true, follow: true },
+}
 
 export default async function ArnoBotLandingPage() {
   const { userId } = await auth()
