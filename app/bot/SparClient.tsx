@@ -667,7 +667,7 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
         .verfijn-btn {
           background: none; border: none; cursor: pointer;
           font-family: 'Space Mono', monospace;
-          font-size: 15px; letter-spacing: 0px;
+          font-size: 15px; letter-spacing: 0px; line-height: 29px;
           color: #f59e0b; padding: 6px 0 0; text-align: center;
           width: 100%; max-width: 812px;
           transition: opacity 0.15s;
@@ -1120,7 +1120,7 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
                 finally { setVerfijnen(false) }
               }}
             >
-              {verfijnen ? '...' : '→ VERBETER MIJN PROMPT'}
+              {verfijnen ? '...' : '→ verbeter mijn prompt'}
             </button>
           )}
           {verfijnFout && (
