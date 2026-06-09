@@ -440,7 +440,7 @@ export default function GeschiedenisPage() {
                 <div style={{ paddingBottom: 40, animation: 'fadein 0.3s ease' }}>
                   {session.summary && (
                     <div style={{ background: '#1f2937', borderLeft: '3px solid #f59e0b', padding: '20px 24px', marginBottom: 32 }}>
-                      <p style={{ color: '#f59e0b', fontSize: 11, letterSpacing: 4, textTransform: 'uppercase', marginBottom: 12 }}>SYNTHESE</p>
+                      <p style={{ color: '#f59e0b', fontSize: 13, fontWeight: 700, fontFamily: "'Space Mono', monospace", letterSpacing: 4, textTransform: 'uppercase', marginBottom: 12 }}>SYNTHESE</p>
                       <p style={{ color: '#9ca3af', fontSize: 15, fontFamily: "'Space Mono', monospace", lineHeight: 1.9, marginBottom: session.blog_suggestions?.length ? 24 : 0 }}>{session.summary}</p>
                       {session.blog_suggestions && session.blog_suggestions.length > 0 && (
                         <div style={{ borderTop: '1px solid #374151', paddingTop: 20 }}>
