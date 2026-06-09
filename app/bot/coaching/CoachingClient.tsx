@@ -16,8 +16,6 @@ interface CoachingDoc {
   actie_diagnose: string
   actie_richting: 'stijgend' | 'stabiel' | 'dalend'
   ontwikkelpunten: { tekst: string; pijlar: string }[]
-  dringende_suggestie: string
-  dringende_suggestie_pijlar: string
   blogs: { title: string; url: string; reden: string }[]
   conversation_count: number
   updated_at?: string
@@ -39,7 +37,7 @@ interface Props {
   userId: string
 }
 
-const PIJLAR_COLOR = '#f59e0b'
+const PIJLAR_COLOR = '#f1f5f9'
 
 const RICHTING_CONFIG: Record<string, { arrow: string; color: string }> = {
   stijgend: { arrow: '↑', color: '#f59e0b' },
@@ -159,9 +157,6 @@ export default function CoachingClient({ userId }: Props) {
         .ontwikkelpunt-text { font-size: 15px; line-height: 1.9; color: #f1f5f9; font-family: 'Space Mono', monospace; font-weight: 400; }
         .pijlar-tag { font-family: 'Space Mono', monospace; font-size: 11px; letter-spacing: 3px; text-transform: uppercase; display: block; margin-bottom: 4px; }
 
-        .suggestie-box { background: #1f2937; border-left: 3px solid #f59e0b; padding: 24px 28px; }
-        .suggestie-text { color: #9ca3af; font-size: 15px; line-height: 1.9; font-family: 'Space Mono', monospace; font-weight: 400; }
-
         .blog-item { display: block; color: #9ca3af; text-decoration: none; font-family: 'Bebas Neue', sans-serif; font-size: 22px; letter-spacing: 1.5px; line-height: 1; padding: 14px 20px; border-left: 3px solid #374151; margin-bottom: 2px; transition: all 0.15s; }
         .blog-item:hover { color: #f1f5f9; border-left-color: #f59e0b; background: #1f2937; }
 
@@ -192,8 +187,6 @@ export default function CoachingClient({ userId }: Props) {
           .coaching-label { color: #f59e0b !important; }
           .coaching-body { color: #374151 !important; }
           .ontwikkelpunt-text { color: #000 !important; }
-          .suggestie-box { background: #f5f5f5 !important; border-left: 3px solid #f59e0b !important; }
-          .suggestie-text { color: #374151 !important; }
           .blog-item { color: #374151 !important; border-left-color: #f59e0b !important; }
           .coaching-section { border-top-color: #ddd !important; }
         }
@@ -204,7 +197,7 @@ export default function CoachingClient({ userId }: Props) {
       {uitdaging && (
         <div className="no-print" style={{ borderBottom: '2px solid #f59e0b', background: '#111827', padding: 'clamp(96px,12vw,120px) clamp(20px,6vw,60px) clamp(48px,6vw,64px)' }}>
           <div style={{ maxWidth: 680, margin: '0 auto', textAlign: 'center' }}>
-            <span style={{ fontFamily: "'Space Mono', monospace", fontSize: 13, letterSpacing: 4, fontWeight: 700, color: '#f59e0b', display: 'block', marginBottom: 24 }}>UITDAGING VAN VANDAAG</span>
+            <span style={{ fontFamily: "'Space Mono', monospace", fontSize: 13, letterSpacing: 4, fontWeight: 700, color: '#f59e0b', display: 'block', marginBottom: 24 }}>THOUGHT OF THE DAY</span>
             <div style={{ background: '#1f2937', border: '1px solid #374151', padding: '28px 32px' }}>
               <p style={{ fontFamily: "'Space Mono', monospace", fontSize: 13, lineHeight: 2, color: '#9ca3af' }}>{uitdaging}</p>
             </div>
@@ -312,17 +305,6 @@ export default function CoachingClient({ userId }: Props) {
                     </div>
                   </div>
                 ))}
-              </div>
-            </div>
-
-            {/* Dringende suggestie */}
-            <div className="coaching-section">
-              <div className="suggestie-box">
-                <span className="pijlar-tag" style={{ color: PIJLAR_COLOR, marginBottom: 8 }}>
-                  [{(doc.dringende_suggestie_pijlar ?? 'actie').toUpperCase()}]
-                </span>
-                <span className="coaching-label" style={{ marginBottom: 12, color: '#f1f5f9' }}>DOEN. NU.</span>
-                <p className="suggestie-text">{doc.dringende_suggestie}</p>
               </div>
             </div>
 
