@@ -63,7 +63,7 @@ export default function CoachingClient({ userId }: Props) {
   useEffect(() => {
     fetch('/api/bot/coaching')
       .then(r => r.json())
-      .then(data => setDoc(data.coaching?.mindset_score != null ? data.coaching : null))
+      .then(data => setDoc(data.coaching ?? null))
       .finally(() => setLoading(false))
     fetch('/api/bot/sessions')
       .then(r => r.json())
@@ -124,10 +124,16 @@ export default function CoachingClient({ userId }: Props) {
     return (!lastSession || docDate >= lastSession) && (!lastAnalyse || docDate >= lastAnalyse)
   })()
 
-  const msaPijlars = doc ? [
-    { key: 'mindset', label: 'MINDSET', score: doc.mindset_score, richting: doc.mindset_richting, diagnose: doc.mindset_diagnose },
-    { key: 'systeem', label: 'SYSTEEM', score: doc.systeem_score, richting: doc.systeem_richting, diagnose: doc.systeem_diagnose },
-    { key: 'actie',   label: 'ACTIE',   score: doc.actie_score,   richting: doc.actie_richting,   diagnose: doc.actie_diagnose },
+  const hasMSA = doc?.mindset_score != null && doc?.systeem_score != null && doc?.actie_score != null
+
+  const msaScore = hasMSA
+    ? Math.round((doc!.mindset_score * doc!.systeem_score * doc!.actie_score) / 1.25)
+    : null
+
+  const msaPijlars = hasMSA ? [
+    { key: 'mindset', label: 'MINDSET', score: doc!.mindset_score, richting: doc!.mindset_richting },
+    { key: 'systeem', label: 'SYSTEEM', score: doc!.systeem_score, richting: doc!.systeem_richting },
+    { key: 'actie',   label: 'ACTIE',   score: doc!.actie_score,   richting: doc!.actie_richting   },
   ] : []
 
   return (
@@ -150,7 +156,6 @@ export default function CoachingClient({ userId }: Props) {
         .msa-dot-filled { width: 10px; height: 10px; border-radius: 50%; background: #f59e0b; border: 1.5px solid #f59e0b; }
         .msa-dot-empty { width: 10px; height: 10px; border-radius: 50%; background: transparent; border: 1.5px solid #374151; }
         .msa-richting { font-family: 'Space Mono', monospace; font-size: 12px; letter-spacing: 3px; text-transform: uppercase; display: block; margin-bottom: 0; }
-        .msa-diagnose { font-family: 'Space Mono', monospace; font-size: 13px; color: #9ca3af; line-height: 1.9; margin-top: 16px; font-weight: 400; }
 
         .ontwikkelpunt { display: flex; gap: 20px; align-items: flex-start; padding: 20px 0; border-bottom: 1px solid #374151; }
         .ontwikkelpunt:last-child { border-bottom: none; }
@@ -255,24 +260,32 @@ export default function CoachingClient({ userId }: Props) {
           <div style={{ animation: 'fadein 0.5s ease' }}>
 
             {/* MSA Dashboard */}
-            <div className="msa-grid">
-              {msaPijlars.map(({ key, label, score, richting, diagnose }) => {
-                const rc = RICHTING_CONFIG[richting] ?? RICHTING_CONFIG.stabiel
-                return (
-                  <div key={key} className="msa-card">
-                    <span className="coaching-label">{label}</span>
-                    <div className="msa-score-number">{score}</div>
-                    <div className="msa-dots">
-                      {[1, 2, 3, 4, 5].map(i => (
-                        <div key={i} className={i <= score ? 'msa-dot-filled' : 'msa-dot-empty'} />
-                      ))}
-                    </div>
-                    <span className="msa-richting" style={{ color: rc.color }}>{rc.arrow} {richting.toUpperCase()}</span>
-                    <p className="msa-diagnose">{diagnose}</p>
-                  </div>
-                )
-              })}
-            </div>
+            {hasMSA && (
+              <>
+                <div style={{ textAlign: 'center', marginBottom: 8 }}>
+                  <span style={{ fontFamily: "'Space Mono', monospace", fontWeight: 700, fontSize: 13, letterSpacing: 4, color: '#f59e0b', display: 'block', marginBottom: 8 }}>MSA SCORE</span>
+                  <span style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 96, color: '#f1f5f9', lineHeight: 1 }}>{msaScore}</span>
+                  <span style={{ fontFamily: "'Space Mono', monospace", fontSize: 13, color: '#6b7280', display: 'block', marginTop: 4 }}>/ 100</span>
+                </div>
+                <div className="msa-grid">
+                  {msaPijlars.map(({ key, label, score, richting }) => {
+                    const rc = RICHTING_CONFIG[richting] ?? RICHTING_CONFIG.stabiel
+                    return (
+                      <div key={key} className="msa-card">
+                        <span className="coaching-label">{label}</span>
+                        <div className="msa-score-number">{score}</div>
+                        <div className="msa-dots">
+                          {[1, 2, 3, 4, 5].map(i => (
+                            <div key={i} className={i <= score ? 'msa-dot-filled' : 'msa-dot-empty'} />
+                          ))}
+                        </div>
+                        <span className="msa-richting" style={{ color: rc.color }}>{rc.arrow} {richting.toUpperCase()}</span>
+                      </div>
+                    )
+                  })}
+                </div>
+              </>
+            )}
 
             {/* Voortgang */}
             <div className="coaching-section" style={{ borderTop: 'none', paddingTop: 0 }}>
