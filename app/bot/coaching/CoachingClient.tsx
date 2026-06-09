@@ -281,19 +281,19 @@ export default function CoachingClient({ userId }: Props) {
 
             {/* Mindset */}
             <div className="coaching-section" style={{ borderTop: 'none', paddingTop: 0 }}>
-              <span className="coaching-label">MINDSET</span>
+              <span className="coaching-label" style={{ color: '#f1f5f9' }}>MINDSET</span>
               <p className="coaching-body">{doc.mindset_diagnose}</p>
             </div>
 
             {/* Systeem */}
             <div className="coaching-section">
-              <span className="coaching-label">SYSTEEM</span>
+              <span className="coaching-label" style={{ color: '#f1f5f9' }}>SYSTEEM</span>
               <p className="coaching-body">{doc.systeem_diagnose}</p>
             </div>
 
             {/* Actie */}
             <div className="coaching-section">
-              <span className="coaching-label">ACTIE</span>
+              <span className="coaching-label" style={{ color: '#f1f5f9' }}>ACTIE</span>
               <p className="coaching-body">{doc.actie_diagnose}</p>
             </div>
 
@@ -321,7 +321,7 @@ export default function CoachingClient({ userId }: Props) {
                 <span className="pijlar-tag" style={{ color: PIJLAR_COLOR, marginBottom: 8 }}>
                   [{(doc.dringende_suggestie_pijlar ?? 'actie').toUpperCase()}]
                 </span>
-                <span className="coaching-label" style={{ marginBottom: 12 }}>DRINGENDE SUGGESTIE</span>
+                <span className="coaching-label" style={{ marginBottom: 12, color: '#f1f5f9' }}>DOEN. NU.</span>
                 <p className="suggestie-text">{doc.dringende_suggestie}</p>
               </div>
             </div>
@@ -329,7 +329,7 @@ export default function CoachingClient({ userId }: Props) {
             {/* Verdieping */}
             {doc.blogs.length > 0 && (
               <div className="coaching-section">
-                <span className="coaching-label">VERDIEPING</span>
+                <span className="coaching-label">ARNO.BLOGS</span>
                 <div style={{ marginTop: 8 }}>
                   {doc.blogs.map((b, i) => (
                     <div key={i} style={{ marginBottom: 8 }}>

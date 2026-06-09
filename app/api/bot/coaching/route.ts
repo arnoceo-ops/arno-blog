@@ -101,7 +101,7 @@ Return ALLEEN een JSON-object, geen uitleg, geen markdown eromheen:
     { "tekst": "Tweede concrete ontwikkelpunt, één zin, direct en actiegericht", "pijlar": "systeem" },
     { "tekst": "Derde concrete ontwikkelpunt, één zin, direct en actiegericht", "pijlar": "actie" }
   ],
-  "dringende_suggestie": "Één concrete opdracht voor de komende week, iets wat je morgen kunt doen. Geen theorie.",
+  "dringende_suggestie": "Één concrete actie die deze persoon NU kan uitvoeren — vandaag, dit uur. Niet 'bel morgen' of 'voor tien uur', maar wat gooit hij nu uit zijn handen? Een gesprek voeren, iets in zijn forecast bijwerken, een naam opschrijven, een bericht sturen. Baseer dit op wat de gesprekken en analyses onthullen als meest urgent. Wat is het één ding dat nu gedaan moet worden?",
   "dringende_suggestie_pijlar": "actie"
 }
 
