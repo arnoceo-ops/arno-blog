@@ -19,15 +19,16 @@ export async function GET() {
       .single(),
     supabase
       .from('arnobot_blog_profiles')
-      .select('team_prompt_dismissed')
+      .select('team_prompt_dismissed, profiel')
       .eq('user_id', userId)
       .single(),
   ])
 
   const member = memberRes.data
   const promptDismissed = profileRes.data?.team_prompt_dismissed ?? false
+  const gebruik = profileRes.data?.profiel?.gebruik ?? null
 
-  if (!member) {
+  if (!member || gebruik === 'individueel') {
     return NextResponse.json({ hasTeam: false, isManager: false, promptDismissed })
   }
 
