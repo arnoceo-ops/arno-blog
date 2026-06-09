@@ -126,7 +126,7 @@ export default function CoachingClient({ userId }: Props) {
           text-transform: uppercase; display: block; margin-bottom: 16px;
         }
         .coaching-body {
-          color: #9ca3af; font-size: 15px; line-height: 1.9; font-weight: 400;
+          color: #f1f5f9; font-size: 15px; line-height: 1.9; font-weight: 400;
           font-family: 'Space Mono', monospace; white-space: pre-wrap;
         }
         .ontwikkelpunt {
@@ -140,7 +140,7 @@ export default function CoachingClient({ userId }: Props) {
           min-width: 32px; padding-top: 2px;
         }
         .ontwikkelpunt-text {
-          font-size: 15px; line-height: 1.9; color: #9ca3af;
+          font-size: 15px; line-height: 1.9; color: #f1f5f9;
           font-family: 'Space Mono', monospace; font-weight: 400;
         }
         .opdracht-box {
