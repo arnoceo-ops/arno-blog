@@ -64,9 +64,13 @@ export default function CoachingClient({ userId }: Props) {
     fetch('/api/bot/coaching')
       .then(r => r.json())
       .then(data => {
-        if (data.coaching) {
-          setDoc(data.coaching)
-          localStorage.setItem(cacheKey, JSON.stringify(data.coaching))
+        const c = data.coaching
+        if (c && c.mindset_score != null && c.systeem_score != null && c.actie_score != null) {
+          setDoc(c)
+          localStorage.setItem(cacheKey, JSON.stringify(c))
+        } else if (c && !localStorage.getItem(cacheKey)) {
+          // oude rij zonder MSA — toon niets, zodat de gebruiker genereert
+          setDoc(null)
         }
       })
       .finally(() => setLoading(false))
@@ -285,22 +289,28 @@ export default function CoachingClient({ userId }: Props) {
             )}
 
             {/* Mindset */}
-            <div className="coaching-section" style={{ borderTop: 'none', paddingTop: 0 }}>
-              <span className="coaching-label" style={{ color: '#f1f5f9' }}>MINDSET</span>
-              <p className="coaching-body">{doc.mindset_diagnose}</p>
-            </div>
+            {hasMSA && doc.mindset_diagnose && (
+              <div className="coaching-section" style={{ borderTop: 'none', paddingTop: 0 }}>
+                <span className="coaching-label" style={{ color: '#f1f5f9' }}>MINDSET</span>
+                <p className="coaching-body">{doc.mindset_diagnose}</p>
+              </div>
+            )}
 
             {/* Systeem */}
-            <div className="coaching-section">
-              <span className="coaching-label" style={{ color: '#f1f5f9' }}>SYSTEEM</span>
-              <p className="coaching-body">{doc.systeem_diagnose}</p>
-            </div>
+            {hasMSA && doc.systeem_diagnose && (
+              <div className="coaching-section">
+                <span className="coaching-label" style={{ color: '#f1f5f9' }}>SYSTEEM</span>
+                <p className="coaching-body">{doc.systeem_diagnose}</p>
+              </div>
+            )}
 
             {/* Actie */}
-            <div className="coaching-section">
-              <span className="coaching-label" style={{ color: '#f1f5f9' }}>ACTIE</span>
-              <p className="coaching-body">{doc.actie_diagnose}</p>
-            </div>
+            {hasMSA && doc.actie_diagnose && (
+              <div className="coaching-section">
+                <span className="coaching-label" style={{ color: '#f1f5f9' }}>ACTIE</span>
+                <p className="coaching-body">{doc.actie_diagnose}</p>
+              </div>
+            )}
 
             {/* Ontwikkelpunten */}
             <div className="coaching-section">
