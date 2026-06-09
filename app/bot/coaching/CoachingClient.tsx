@@ -91,16 +91,16 @@ export default function CoachingClient({ userId }: Props) {
       .catch(() => {})
 
     const today = new Date().toISOString().slice(0, 10)
-    const cacheKey = `arnobot_uitdaging_${today}`
-    const cached = localStorage.getItem(cacheKey)
-    if (cached) {
-      setUitdaging(cached)
+    const uitdagingKey = `arnobot_uitdaging_${today}`
+    const cachedUitdaging = localStorage.getItem(uitdagingKey)
+    if (cachedUitdaging) {
+      setUitdaging(cachedUitdaging)
     } else {
       fetch('/api/bot/uitdaging')
         .then(r => r.json())
         .then(data => {
           if (data.uitdaging) {
-            localStorage.setItem(cacheKey, data.uitdaging)
+            localStorage.setItem(uitdagingKey, data.uitdaging)
             setUitdaging(data.uitdaging)
           }
         })
