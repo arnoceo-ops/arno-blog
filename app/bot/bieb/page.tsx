@@ -477,7 +477,7 @@ export default function GeschiedenisPage() {
                       gap: isMobile ? 4 : 32, alignItems: 'flex-start',
                       background: msg.role === 'user' ? undefined : '#1f2937',
                     }}>
-                      <span style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 14, letterSpacing: 3, color: msg.role === 'user' ? '#9ca3af' : '#f59e0b', whiteSpace: 'nowrap', paddingTop: isMobile ? 0 : 3, minWidth: isMobile ? 0 : 60 }}>
+                      <span style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 18, letterSpacing: 3, color: msg.role === 'user' ? '#9ca3af' : '#f59e0b', whiteSpace: 'nowrap', paddingTop: isMobile ? 0 : 2, minWidth: isMobile ? 0 : 48 }}>
                         {msg.role === 'user' ? 'JIJ' : 'ARNO'}
                       </span>
                       <span
