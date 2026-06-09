@@ -568,7 +568,7 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
           bottom: 0; left: 0; right: 0;
           background: rgba(17,24,39,0.97);
           border-top: 2px solid #f59e0b;
-          padding: 12px clamp(16px,4vw,60px);
+          padding: 12px 0 16px;
           z-index: 50;
         }
         .spar-input-label {
@@ -581,6 +581,7 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
           display: flex; gap: 0;
           border: 2px solid #f59e0b;
           width: 100%; max-width: 812px;
+          margin: 0 auto;
         }
         .spar-textarea {
           flex: 1;
@@ -985,7 +986,7 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
         </nav>
       )}
 
-      <div className="spar-page" style={started ? { paddingBottom: isMobile ? 200 : 110 } : {}}>
+      <div className="spar-page" style={started ? { paddingBottom: isMobile ? 200 : 160 } : {}}>
 
         <div className="spar-hero">
           <div style={{ flex: '0 0 auto', display: 'flex', alignItems: 'flex-end', gap: 'clamp(12px, 1.5vw, 24px)' }}>
