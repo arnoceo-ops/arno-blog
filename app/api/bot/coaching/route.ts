@@ -18,7 +18,9 @@ export async function GET() {
     .from('arnobot_coaching')
     .select('*')
     .eq('user_id', userId)
-    .single()
+    .order('updated_at', { ascending: false })
+    .limit(1)
+    .maybeSingle()
 
   return NextResponse.json({ coaching: data ?? null })
 }
@@ -202,10 +204,25 @@ Return ALLEEN een JSON array, geen uitleg eromheen:
   } catch {}
 
   const doc = { ...parsed, blogs, conversation_count: sessions.length }
+  const payload = { ...doc, updated_at: new Date().toISOString() }
 
-  await supabase
+  const { data: existing } = await supabase
     .from('arnobot_coaching')
-    .upsert({ user_id: userId, ...doc, updated_at: new Date().toISOString() }, { onConflict: 'user_id' })
+    .select('id')
+    .eq('user_id', userId)
+    .limit(1)
+    .maybeSingle()
+
+  if (existing) {
+    await supabase
+      .from('arnobot_coaching')
+      .update(payload)
+      .eq('user_id', userId)
+  } else {
+    await supabase
+      .from('arnobot_coaching')
+      .insert({ user_id: userId, ...payload })
+  }
 
   return NextResponse.json({ coaching: doc })
 }
