@@ -731,7 +731,6 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
           max-width: 812px;
           width: 100%;
           margin: 0 auto;
-          padding: 0 20px;
         }
 
         .msg-user {
