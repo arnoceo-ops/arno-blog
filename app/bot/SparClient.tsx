@@ -666,8 +666,8 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
         }
         .verfijn-btn {
           background: none; border: none; cursor: pointer;
-          font-family: 'Bebas Neue', sans-serif;
-          font-size: 18px; letter-spacing: 3px;
+          font-family: 'Space Mono', monospace;
+          font-size: 15px; letter-spacing: 0px;
           color: #f59e0b; padding: 6px 0 0; text-align: center;
           width: 100%; max-width: 812px;
           transition: opacity 0.15s;
