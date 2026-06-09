@@ -982,7 +982,7 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
         <div className="spar-hero">
           <div style={{ flex: '0 0 auto', display: 'flex', alignItems: 'flex-end', gap: 'clamp(12px, 1.5vw, 24px)' }}>
             <img src="/cyborg.jpg" alt="Arno" style={{ height: 300, width: 'auto', display: 'block', flexShrink: 0 }} />
-            <h1 className="spar-title">
+            <h1 className="spar-title" style={{ marginBottom: '-18px' }}>
               ARNO<br /><span>BOT.</span>
             </h1>
           </div>
@@ -1010,7 +1010,7 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
               Betere relaties. Meer deals.<br />
               Hogere marges. Harder groeien.
             </p>
-            <p className="spar-tagline-sub" style={{ fontFamily: "'Space Mono', monospace", fontSize: 'clamp(10px, 0.9vw, 13px)', color: '#9ca3af', lineHeight: 1.8 }}>
+            <p className="spar-tagline-sub" style={{ fontFamily: "'Space Mono', monospace", fontSize: 15, color: '#9ca3af', lineHeight: 1.9 }}>
               gebouwd op 40 jaar sales, 30 jaar entrepreneurship,<br />
               20 jaar bloggen, 15 jaar scale-up coaching.<br />
               369.000 woorden. altijd up to date.
