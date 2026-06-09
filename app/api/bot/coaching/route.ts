@@ -204,7 +204,8 @@ Return ALLEEN een JSON array, geen uitleg eromheen:
     }
   } catch {}
 
-  const doc = { ...parsed, blogs, conversation_count: sessions.length }
+  const { dringende_suggestie: _ds, dringende_suggestie_pijlar: _dsp, ...coachingData } = parsed
+  const doc = { ...coachingData, blogs, conversation_count: sessions.length }
 
   const { data: existing } = await supabase
     .from('arnobot_coaching')
