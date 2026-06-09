@@ -136,6 +136,7 @@ export default function GeschiedenisPage() {
       setConvMessages([])
       return
     }
+    setExpandedAnalyse(null)
     setExpanded(sessionId)
     expandedRef.current = sessionId
     setConvLoading(true)
@@ -568,7 +569,11 @@ export default function GeschiedenisPage() {
             {savedAnalyses.map(a => (
               <div key={a.id} style={{ borderTop: '1px solid #374151', animation: 'fadein 0.3s ease' }}>
                 <button
-                  onClick={() => setExpandedAnalyse(expandedAnalyse === a.id ? null : a.id)}
+                  onClick={() => {
+                    if (expandedAnalyse === a.id) { setExpandedAnalyse(null); return }
+                    setExpanded(null); expandedRef.current = null; setConvMessages([])
+                    setExpandedAnalyse(a.id)
+                  }}
                   style={{ width: '100%', background: 'none', border: 'none', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 24, textAlign: 'left', padding: '28px 0' }}
                 >
                   <span style={{ color: '#9ca3af', fontSize: 11, letterSpacing: 2, textTransform: 'uppercase', whiteSpace: 'nowrap', minWidth: isMobile ? 0 : 120, fontFamily: "'Space Mono', monospace" }}>
