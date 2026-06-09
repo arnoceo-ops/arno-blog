@@ -279,7 +279,7 @@ export default function CoachingClient({ userId }: Props) {
                             <div key={i} className={i <= score ? 'msa-dot-filled' : 'msa-dot-empty'} />
                           ))}
                         </div>
-                        <span className="msa-richting" style={{ color: rc.color }}>{rc.arrow} {richting.toUpperCase()}</span>
+                        <span className="msa-richting" style={{ color: rc.color }}>{rc.arrow} {richting?.toUpperCase() ?? ''}</span>
                       </div>
                     )
                   })}
@@ -338,7 +338,7 @@ export default function CoachingClient({ userId }: Props) {
                     <span className="ontwikkelpunt-nr">{i + 1}</span>
                     <div>
                       <span className="pijlar-tag" style={{ color: PIJLAR_COLORS[p.pijlar] ?? '#9ca3af' }}>
-                        [{p.pijlar.toUpperCase()}]
+                        [{p.pijlar?.toUpperCase() ?? ''}]
                       </span>
                       <span className="ontwikkelpunt-text">{p.tekst}</span>
                     </div>
