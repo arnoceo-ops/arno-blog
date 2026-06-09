@@ -1,7 +1,7 @@
 ﻿(function () {
   'use strict';
 
-  var API_URL = 'https://www.royaldutchsales.com/api/chat';
+  var API_URL = 'https://arno.bot/api/chat';
 
   // Check bij laden of IP geblokkeerd is — zo ja, direct naar /lost
   fetch(API_URL, { method: 'GET' })
