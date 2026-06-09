@@ -32,7 +32,7 @@ export default function QAClient({ isOnboarding }: { isOnboarding: boolean }) {
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Mono:wght@400;700&display=swap');
         * { box-sizing: border-box; margin: 0; padding: 0; }
-        body { background: #111827; color: #f1f5f9; font-family: 'Space Mono', monospace; }
+        body { background: #111827; color: #f1f5f9; font-family: 'Space Mono', monospace; font-weight: 400; }
         .qa-continue:hover { background: #d97706 !important; }
       `}</style>
 
@@ -67,7 +67,7 @@ export default function QAClient({ isOnboarding }: { isOnboarding: boolean }) {
         <div style={{ maxWidth: 812, margin: '0 auto', padding: 'clamp(60px,8vw,80px) clamp(16px,4vw,20px) 80px' }}>
 
           <p style={{ fontFamily: "'Space Mono', monospace", fontSize: 13, letterSpacing: 4, color: '#f59e0b', marginBottom: 8 }}>WELKOM</p>
-          <h1 style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 'clamp(40px, 6vw, 64px)', color: '#f1f5f9', lineHeight: 1.0, letterSpacing: 1, marginBottom: 16 }}>
+          <h1 style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 'clamp(40px, 6vw, 64px)', color: '#f1f5f9', lineHeight: 1.0, letterSpacing: 3, marginBottom: 16 }}>
             Voordat je begint.
           </h1>
           <p style={{ fontFamily: "'Space Mono', monospace", fontSize: 15, color: '#9ca3af', lineHeight: 1.9, marginBottom: 48, maxWidth: 520 }}>
@@ -92,7 +92,7 @@ export default function QAClient({ isOnboarding }: { isOnboarding: boolean }) {
 
           {/* FAQ */}
           <div style={{ borderTop: '3px solid #f59e0b', paddingTop: 40, marginBottom: 64 }}>
-            <p style={{ fontFamily: "'Space Mono', monospace", fontSize: 13, letterSpacing: 4, color: '#f59e0b', marginBottom: 8 }}>VRAGEN</p>
+            <p style={{ fontFamily: "'Space Mono', monospace", fontWeight: 700, fontSize: 13, letterSpacing: 4, color: '#f59e0b', marginBottom: 8 }}>VRAGEN</p>
             <h2 style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 40, color: '#f1f5f9', letterSpacing: 1, marginBottom: 40 }}>
               Veel gestelde vragen
             </h2>

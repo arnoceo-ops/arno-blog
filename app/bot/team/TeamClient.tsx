@@ -40,7 +40,7 @@ interface Team {
 }
 
 const label: React.CSSProperties = {
-  fontFamily: "'Space Mono', monospace", fontWeight: 400,
+  fontFamily: "'Space Mono', monospace", fontWeight: 700,
   fontSize: 13, letterSpacing: 4, color: '#f59e0b',
   display: 'block', marginBottom: 16,
 }
@@ -299,7 +299,7 @@ export default function TeamClient() {
                       <div key={a.id}>
                         <span style={{ ...label, marginBottom: 12 }}>{formatAnalyseDate(a.created_at)}</span>
                         <div style={{ background: '#1f2937', borderLeft: '4px solid #f59e0b', padding: '24px 28px' }}>
-                          <p style={{ ...body, color: '#f1f5f9', marginBottom: 0, whiteSpace: 'pre-wrap' }}>{a.analyse_text}</p>
+                          <p style={{ ...body, marginBottom: 0, whiteSpace: 'pre-wrap' }}>{a.analyse_text}</p>
                         </div>
                       </div>
                     ))}

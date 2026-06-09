@@ -205,7 +205,7 @@ export default function BotProfielPage() {
             <p style={{ fontFamily: "'Space Mono', monospace", fontSize: 13, letterSpacing: 4, color: '#f59e0b', marginBottom: 8 }}>
               {isFirstTime ? 'WELKOM' : 'JOUW PROFIEL'}
             </p>
-            <h1 style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 64, color: '#f1f5f9', lineHeight: 1.05, letterSpacing: 1, marginBottom: 24 }}>
+            <h1 style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 64, color: '#f1f5f9', lineHeight: 1.05, letterSpacing: 3, marginBottom: 24 }}>
               {isFirstTime ? `Goed dat je er bent, ${firstName}.` : 'Profiel aanpassen'}
             </h1>
             <div style={{ borderLeft: '4px solid #f59e0b', paddingLeft: 20, color: '#9ca3af', fontSize: 15, lineHeight: '30px' }}>
