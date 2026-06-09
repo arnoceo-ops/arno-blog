@@ -145,7 +145,7 @@ export default function CoachingClient({ userId }: Props) {
 
         .msa-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; margin: 32px 0 48px; }
         .msa-card { background: #1f2937; padding: 32px 28px; text-align: center; }
-        .msa-score-number { font-family: 'Bebas Neue', sans-serif; font-size: 80px; color: #f59e0b; line-height: 1; }
+        .msa-score-number { font-family: 'Bebas Neue', sans-serif; font-size: 80px; color: #f1f5f9; line-height: 1; }
         .msa-dots { display: flex; gap: 6px; margin: 12px 0 8px; justify-content: center; }
         .msa-dot-filled { width: 10px; height: 10px; border-radius: 50%; background: #f59e0b; border: 1.5px solid #f59e0b; }
         .msa-dot-empty { width: 10px; height: 10px; border-radius: 50%; background: transparent; border: 1.5px solid #374151; }
