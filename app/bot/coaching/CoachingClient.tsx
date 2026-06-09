@@ -111,7 +111,7 @@ export default function CoachingClient({ userId }: Props) {
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Mono:wght@400;700&display=swap');
         * { box-sizing: border-box; margin: 0; padding: 0; }
-        body { background: #111827; color: #f1f5f9; font-family: 'Space Mono', monospace; }
+        body { background: #111827; color: #f1f5f9; font-family: 'Space Mono', monospace; font-weight: 400; }
         @keyframes fadein { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
         @keyframes pulse { 0%,100% { opacity: 0.4; } 50% { opacity: 1; } }
 
@@ -122,11 +122,11 @@ export default function CoachingClient({ userId }: Props) {
         }
         .coaching-label {
           font-family: 'Space Mono', monospace;
-          font-size: 13px; letter-spacing: 4px; color: #f59e0b;
+          font-size: 13px; font-weight: 700; letter-spacing: 4px; color: #f59e0b;
           text-transform: uppercase; display: block; margin-bottom: 16px;
         }
         .coaching-body {
-          color: #f1f5f9; font-size: 15px; line-height: 1.9;
+          color: #9ca3af; font-size: 15px; line-height: 1.9; font-weight: 400;
           font-family: 'Space Mono', monospace; white-space: pre-wrap;
         }
         .ontwikkelpunt {
@@ -140,7 +140,7 @@ export default function CoachingClient({ userId }: Props) {
           min-width: 32px; padding-top: 2px;
         }
         .ontwikkelpunt-text {
-          font-size: 15px; line-height: 1.9; color: #f1f5f9;
+          font-size: 15px; line-height: 1.9; color: #9ca3af;
           font-family: 'Space Mono', monospace; font-weight: 400;
         }
         .opdracht-box {
@@ -149,11 +149,11 @@ export default function CoachingClient({ userId }: Props) {
         }
         .opdracht-label {
           font-family: 'Space Mono', monospace;
-          font-size: 13px; letter-spacing: 4px; color: #f59e0b;
+          font-size: 13px; font-weight: 700; letter-spacing: 4px; color: #f59e0b;
           display: block; margin-bottom: 12px;
         }
         .opdracht-text {
-          color: #f1f5f9; font-size: 15px; line-height: 1.9;
+          color: #9ca3af; font-size: 15px; line-height: 1.9;
           font-family: 'Space Mono', monospace; font-weight: 400;
         }
         .blog-item {
@@ -165,22 +165,22 @@ export default function CoachingClient({ userId }: Props) {
         }
         .blog-item:hover { color: #f1f5f9; border-left-color: #f59e0b; background: #1f2937; }
         .generate-btn {
-          background: none; border: none; box-shadow: inset 0 0 0 1px #f59e0b; cursor: pointer;
+          background: #f59e0b; border: none; cursor: pointer;
           font-family: 'Bebas Neue', sans-serif;
           font-size: 18px; letter-spacing: 3px;
-          color: #f1f5f9; padding: 12px 28px; transition: all 0.2s;
+          color: #111827; padding: 12px 36px; transition: all 0.2s;
           border-radius: 999px; min-width: 220px;
         }
-        .generate-btn:hover:not(:disabled) { background: #f59e0b; box-shadow: none; color: #111827; }
-        .generate-btn:disabled { box-shadow: inset 0 0 0 1px #374151; color: #4b5563; cursor: not-allowed; }
+        .generate-btn:hover:not(:disabled) { background: #d97706; }
+        .generate-btn:disabled { background: #374151; color: #6b7280; cursor: not-allowed; }
         .pdf-btn {
-          background: none; border: none; box-shadow: inset 0 0 0 1px #6b7280; cursor: pointer;
+          background: none; border: 1px solid #374151; cursor: pointer;
           font-family: 'Bebas Neue', sans-serif;
           font-size: 18px; letter-spacing: 3px;
-          color: #9ca3af; padding: 12px 28px; transition: all 0.2s;
+          color: #9ca3af; padding: 12px 32px; transition: all 0.2s;
           border-radius: 999px; min-width: 220px;
         }
-        .pdf-btn:hover { box-shadow: inset 0 0 0 1px #f59e0b; color: #f59e0b; }
+        .pdf-btn:hover { border-color: #6b7280; color: #f1f5f9; }
         .stat-block { text-align: center; }
         .stat-number { font-family: 'Bebas Neue', sans-serif; font-size: 56px; color: #f59e0b; line-height: 1; }
         .stat-label { font-family: 'Bebas Neue', sans-serif; font-size: 13px; letter-spacing: 4px; color: #9ca3af; margin-top: 4px; }
