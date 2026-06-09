@@ -264,8 +264,10 @@ export default function GeschiedenisPage() {
           letter-spacing: 2px; color: #9ca3af;
         }
         .analyse-item-full {
-          color: #9ca3af; font-size: 16px; line-height: 1.9;
-          margin-top: 12px; white-space: pre-wrap;
+          color: #9ca3af; font-size: 15px; line-height: 1.9;
+          white-space: pre-wrap; font-family: 'Space Mono', monospace;
+          background: #1f2937; border-left: 3px solid #f59e0b;
+          padding: 20px 24px; margin-bottom: 8px;
         }
 
         @media (max-width: 768px) {
@@ -468,7 +470,13 @@ export default function GeschiedenisPage() {
                     </div>
                   )}
                   {convMessages.map((msg, i) => (
-                    <div key={i} style={{ padding: '20px 0', borderTop: '1px solid #374151', display: 'flex', flexDirection: isMobile ? 'column' : 'row', gap: isMobile ? 4 : 32, alignItems: 'flex-start' }}>
+                    <div key={i} style={{
+                      padding: msg.role === 'user' ? '20px 0' : '20px 24px',
+                      borderTop: '1px solid #374151',
+                      display: 'flex', flexDirection: isMobile ? 'column' : 'row',
+                      gap: isMobile ? 4 : 32, alignItems: 'flex-start',
+                      background: msg.role === 'user' ? undefined : '#1f2937',
+                    }}>
                       <span style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 14, letterSpacing: 3, color: msg.role === 'user' ? '#9ca3af' : '#f59e0b', whiteSpace: 'nowrap', paddingTop: isMobile ? 0 : 3, minWidth: isMobile ? 0 : 60 }}>
                         {msg.role === 'user' ? 'JIJ' : 'ARNO'}
                       </span>
