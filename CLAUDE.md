@@ -6,6 +6,9 @@
 
 ## UI-stijl — ALTIJD consistent toepassen
 
+**Regel**: elke keer dat een UI-norm wordt vastgesteld of gewijzigd, update je CLAUDE.md in dezelfde commit. Geen uitzondering.
+
+
 Bij elke nieuwe pagina of component: lees eerst een bestaande pagina (account of profiel) door en leg de stijl naast elkaar. Nooit afwijken zonder expliciete opdracht.
 
 ### Vaste normen
