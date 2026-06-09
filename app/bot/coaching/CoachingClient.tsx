@@ -266,7 +266,7 @@ export default function CoachingClient({ userId }: Props) {
                 <div style={{ textAlign: 'center', marginBottom: 8 }}>
                   <span style={{ fontFamily: "'Space Mono', monospace", fontWeight: 700, fontSize: 13, letterSpacing: 4, color: '#f59e0b', display: 'block', marginBottom: 8 }}>MSA SCORE</span>
                   <span style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 96, color: '#f1f5f9', lineHeight: 1 }}>{msaScore}</span>
-                  <span style={{ fontFamily: "'Space Mono', monospace", fontSize: 13, color: '#6b7280', display: 'block', marginTop: 4 }}>/ 100</span>
+                  <span style={{ fontFamily: "'Space Mono', monospace", fontSize: 15, color: '#9ca3af', display: 'block', marginTop: 4 }}>/ 100</span>
                 </div>
                 <div className="msa-grid">
                   {msaPijlars.map(({ key, label, score, richting }) => {
