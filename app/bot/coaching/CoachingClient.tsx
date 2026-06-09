@@ -55,9 +55,20 @@ export default function CoachingClient({ userId }: Props) {
   const [uitdaging, setUitdaging] = useState<string | null>(null)
 
   useEffect(() => {
+    const cacheKey = `arnobot_coaching_doc_${userId}`
+    const cached = localStorage.getItem(cacheKey)
+    if (cached) {
+      try { setDoc(JSON.parse(cached)) } catch {}
+    }
+
     fetch('/api/bot/coaching')
       .then(r => r.json())
-      .then(data => setDoc(data.coaching ?? null))
+      .then(data => {
+        if (data.coaching) {
+          setDoc(data.coaching)
+          localStorage.setItem(cacheKey, JSON.stringify(data.coaching))
+        }
+      })
       .finally(() => setLoading(false))
     fetch('/api/bot/sessions')
       .then(r => r.json())
@@ -102,7 +113,8 @@ export default function CoachingClient({ userId }: Props) {
       if (data.error === 'te_weinig') {
         setError(`Je hebt ${data.count} gesprekken. Minimaal 5 nodig.`)
       } else if (data.coaching) {
-        setDoc({ ...data.coaching, updated_at: new Date().toISOString() })
+        setDoc(data.coaching)
+        localStorage.setItem(`arnobot_coaching_doc_${userId}`, JSON.stringify(data.coaching))
       }
     } catch {
       setError('Er ging iets mis. Probeer opnieuw.')

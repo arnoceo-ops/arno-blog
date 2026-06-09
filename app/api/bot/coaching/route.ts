@@ -14,14 +14,15 @@ export async function GET() {
   const { userId } = await auth()
   if (!userId) return NextResponse.json({ error: 'Niet ingelogd' }, { status: 401 })
 
-  const { data } = await supabase
+  const { data, error } = await supabase
     .from('arnobot_coaching')
     .select('*')
     .eq('user_id', userId)
-    .order('updated_at', { ascending: false })
+    .order('created_at', { ascending: false })
     .limit(1)
     .maybeSingle()
 
+  if (error) console.error('[coaching GET]', error.message)
   return NextResponse.json({ coaching: data ?? null })
 }
 
@@ -204,7 +205,6 @@ Return ALLEEN een JSON array, geen uitleg eromheen:
   } catch {}
 
   const doc = { ...parsed, blogs, conversation_count: sessions.length }
-  const payload = { ...doc, updated_at: new Date().toISOString() }
 
   const { data: existing } = await supabase
     .from('arnobot_coaching')
@@ -213,16 +213,11 @@ Return ALLEEN een JSON array, geen uitleg eromheen:
     .limit(1)
     .maybeSingle()
 
-  if (existing) {
-    await supabase
-      .from('arnobot_coaching')
-      .update(payload)
-      .eq('user_id', userId)
-  } else {
-    await supabase
-      .from('arnobot_coaching')
-      .insert({ user_id: userId, ...payload })
-  }
+  const saveResult = existing
+    ? await supabase.from('arnobot_coaching').update(doc).eq('user_id', userId)
+    : await supabase.from('arnobot_coaching').insert({ user_id: userId, ...doc })
+
+  if (saveResult.error) console.error('[coaching POST save]', saveResult.error.message)
 
   return NextResponse.json({ coaching: doc })
 }
