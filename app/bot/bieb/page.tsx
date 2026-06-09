@@ -29,6 +29,9 @@ interface SavedAnalyse {
 
 function renderContent(text: string) {
   return text
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
     .replace(/\*\*([^*\n]+)\*\*/g, '<strong>$1</strong>')
     .replace(/\*([^*\n]+)\*/g, '<em>$1</em>')
 }
@@ -62,6 +65,7 @@ export default function GeschiedenisPage() {
   const [isDuplicateAnalyse, setIsDuplicateAnalyse] = useState(false)
   const [isSimilarAnalyse, setIsSimilarAnalyse] = useState(false)
   const analysesSectionRef = useRef<HTMLDivElement>(null)
+  const expandedRef = useRef<string | null>(null)
 
   useEffect(() => {
     fetch('/api/bot/sessions')
@@ -106,11 +110,15 @@ export default function GeschiedenisPage() {
       setSessions(prev => prev.filter(s => !selected.has(s.session_id)))
       if (expanded && selected.has(expanded)) {
         setExpanded(null)
+        expandedRef.current = null
         setConvMessages([])
       }
       setSelected(new Set())
-    } catch {}
-    setDeleting(false)
+    } catch {
+      alert('Verwijderen mislukt — probeer opnieuw.')
+    } finally {
+      setDeleting(false)
+    }
   }
 
   function getAnalyseTitle(text: string): string {
@@ -124,18 +132,24 @@ export default function GeschiedenisPage() {
   async function toggleSession(sessionId: string) {
     if (expanded === sessionId) {
       setExpanded(null)
+      expandedRef.current = null
       setConvMessages([])
       return
     }
     setExpanded(sessionId)
+    expandedRef.current = sessionId
     setConvLoading(true)
     setConvMessages([])
     try {
       const res = await fetch(`/api/bot/session?sessionId=${sessionId}`)
       const data = await res.json()
-      setConvMessages(data.messages ?? [])
-    } catch {}
-    setConvLoading(false)
+      if (expandedRef.current === sessionId) {
+        setConvMessages(data.messages ?? [])
+        setConvLoading(false)
+      }
+    } catch {
+      if (expandedRef.current === sessionId) setConvLoading(false)
+    }
   }
 
   async function runAnalyse(sessionIds?: string[]) {
@@ -483,7 +497,7 @@ export default function GeschiedenisPage() {
                       <span
                         style={msg.role === 'user'
                           ? { fontFamily: "'Bebas Neue', sans-serif", fontSize: 'clamp(18px,3vw,26px)', lineHeight: 1.5, color: '#f1f5f9', letterSpacing: '0.5px', whiteSpace: 'pre-wrap' }
-                          : { fontFamily: "'Space Mono', monospace", fontSize: 15, lineHeight: 1.9, color: '#9ca3af', fontWeight: 400, letterSpacing: 0, whiteSpace: 'pre-wrap' }}
+                          : { fontFamily: "'Space Mono', monospace", fontSize: 15, lineHeight: 1.9, color: '#9ca3af', fontWeight: 400, letterSpacing: 0, whiteSpace: 'pre-wrap', maxWidth: 680 }}
                         dangerouslySetInnerHTML={{ __html: renderContent(msg.content) }}
                       />
                     </div>

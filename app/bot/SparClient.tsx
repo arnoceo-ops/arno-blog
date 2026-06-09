@@ -20,7 +20,12 @@ function formatLastDate(iso: string | null): string {
 }
 
 function renderContent(text: string) {
-  return text
+  const escaped = text
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+  return escaped
     .replace(/\[([^\]]+)\]\s*\((https?:\/\/[^\s)]+)\)/g, (_, linkText, url) => {
       const display = linkText.length > 52 ? linkText.slice(0, 49) + '...' : linkText
       return `<a href="${url}" target="_blank" rel="noopener noreferrer" style="color:#f59e0b;text-decoration:underline">${display}</a>`
@@ -135,6 +140,9 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
   const inputRef = useRef<HTMLTextAreaElement>(null)
   const synthesisRef = useRef<HTMLDivElement>(null)
   const lastMessageRef = useRef<HTMLDivElement>(null)
+  const sessionIdRef = useRef(sessionId)
+
+  useEffect(() => { sessionIdRef.current = sessionId }, [sessionId])
 
   useEffect(() => {
     const SR = (window as any).SpeechRecognition || (window as any).webkitSpeechRecognition
@@ -306,20 +314,21 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
 
   useEffect(() => {
     function handleUnload(e: BeforeUnloadEvent) {
-      if (!sessionId || messages.length === 0) return
+      const sid = sessionIdRef.current
+      if (!sid || messages.length === 0) return
       if (started && !showSluiten) {
         e.preventDefault()
         e.returnValue = ''
       }
       const blob = new Blob(
-        [JSON.stringify({ sessionId, messages })],
+        [JSON.stringify({ sessionId: sid, messages })],
         { type: 'application/json' }
       )
       navigator.sendBeacon('/api/bot/session-end', blob)
     }
     window.addEventListener('beforeunload', handleUnload)
     return () => window.removeEventListener('beforeunload', handleUnload)
-  }, [sessionId, messages, started, showSluiten])
+  }, [messages, started, showSluiten])
 
   useEffect(() => {
     if (resizeInput && inputRef.current) {
@@ -356,11 +365,13 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
     setSynthesisLoading(false)
     setSynthesisMessageCount(0)
     setSuggestedBlogs([])
+    setPendingNavDest(null)
     window.scrollTo({ top: 0, behavior: 'smooth' })
     setTimeout(() => inputRef.current?.focus(), 150)
   }
 
   async function handleNieuw() {
+    if (synthesisLoading) return
     // Na synthese zonder nieuwe berichten: gewoon sluiten
     if (synthesisMessageCount > 0 && messages.length <= synthesisMessageCount) {
       reset()
@@ -568,7 +579,7 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
           bottom: 0; left: 0; right: 0;
           background: rgba(17,24,39,0.97);
           border-top: 2px solid #f59e0b;
-          padding: 12px 0 28px;
+          padding: 12px 16px 28px;
           z-index: 50;
         }
         .spar-input-label {
