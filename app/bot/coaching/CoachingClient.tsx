@@ -352,7 +352,7 @@ export default function CoachingClient({ userId }: Props) {
               Wil je dit aanpakken met Arno zelf?<br />
               Maandelijks 45 minuten. Direct. Ongefilterd.
             </p>
-            <a href="/upgrade" style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 16, letterSpacing: 3, padding: '12px 28px', background: '#f59e0b', color: '#111827', textDecoration: 'none', borderRadius: 999, whiteSpace: 'nowrap' }}>
+            <a href="/upgrade" style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 18, letterSpacing: 3, padding: '12px 36px', background: '#f59e0b', color: '#111827', textDecoration: 'none', borderRadius: 999, whiteSpace: 'nowrap' }}>
               BEKIJK ARNOLIVE →
             </a>
           </div>
