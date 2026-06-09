@@ -84,7 +84,7 @@ export default function BotNav({ active }: Props) {
         style={{ background: '#1f2937', border: '1px solid #374151', maxWidth: 480, width: '100%', padding: 32 }}
         onClick={e => e.stopPropagation()}
       >
-        <p style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 13, letterSpacing: 4, color: '#f59e0b', marginBottom: 8 }}>ARNOBOT</p>
+        <p style={{ fontFamily: "'Space Mono', monospace", fontSize: 13, letterSpacing: 4, color: '#f59e0b', marginBottom: 8 }}>ARNOBOT</p>
         <h2 style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 36, letterSpacing: 1, color: '#f1f5f9', marginBottom: 20 }}>FEEDBACK</h2>
         {feedbackSent ? (
           <p style={{ fontFamily: "'Space Mono', monospace", fontSize: 14, color: '#f59e0b', letterSpacing: 1 }}>Bedankt — je feedback is verzonden.</p>
@@ -94,13 +94,13 @@ export default function BotNav({ active }: Props) {
               value={feedbackText}
               onChange={e => setFeedbackText(e.target.value)}
               placeholder="Wat kan er beter? Wat werkt goed? Alles is welkom."
-              style={{ width: '100%', minHeight: 120, background: '#1f2937', border: '1px solid #374151', color: '#f1f5f9', fontFamily: "'Space Mono', monospace", fontSize: 13, padding: '12px 16px', resize: 'vertical', outline: 'none', marginBottom: 16, boxSizing: 'border-box' }}
+              style={{ width: '100%', minHeight: 120, background: '#1f2937', border: '1.5px solid #374151', color: '#f1f5f9', fontFamily: "'Space Mono', monospace", fontSize: 13, padding: '12px 16px', resize: 'vertical', outline: 'none', marginBottom: 16, boxSizing: 'border-box' }}
             />
             <div style={{ display: 'flex', gap: 12 }}>
               <button
                 onClick={sendFeedback}
                 disabled={feedbackLoading || !feedbackText.trim()}
-                style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 18, letterSpacing: 3, padding: '12px 28px', background: '#f59e0b', color: '#111827', border: 'none', cursor: 'pointer', borderRadius: 999, opacity: feedbackLoading || !feedbackText.trim() ? 0.5 : 1 }}
+                style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 18, letterSpacing: 3, padding: '12px 36px', background: '#f59e0b', color: '#111827', border: 'none', cursor: 'pointer', borderRadius: 999, opacity: feedbackLoading || !feedbackText.trim() ? 0.5 : 1 }}
               >{feedbackLoading ? '...' : 'VERSTUUR'}</button>
               <button
                 onClick={() => setFeedbackOpen(false)}
