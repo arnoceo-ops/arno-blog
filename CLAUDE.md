@@ -10,7 +10,8 @@ Bij elke nieuwe pagina of component: lees eerst een bestaande pagina (account of
 
 ### Vaste normen
 - **Body tekst**: Space Mono, fontWeight 400, fontSize 15px, lineHeight 1.9, kleur #9ca3af
-- **Labels (amber)**: Space Mono, fontWeight 400, fontSize 13px, letterSpacing 4, kleur #f59e0b
+- **Labels (amber, inline)**: Space Mono, fontWeight 400, fontSize 13px, letterSpacing 4, kleur #f59e0b
+- **Labels (amber, sectietitel zoals SYNTHESE)**: Space Mono, fontWeight 700, fontSize 13px, letterSpacing 4, kleur #f59e0b
 - **H1**: Bebas Neue, fontSize 64, letterSpacing 3, kleur #f1f5f9
 - **Primaire knop**: Bebas Neue 18px, letterSpacing 3, padding '12px 36px', borderRadius 999, background #f59e0b, **color #111827**
 - **Secundaire knop**: Bebas Neue 18px, letterSpacing 3, padding '12px 32px', borderRadius 999, border '1px solid #374151', color #9ca3af
