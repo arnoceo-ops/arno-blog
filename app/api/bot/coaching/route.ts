@@ -186,7 +186,7 @@ De pijlar-waarden mogen alleen zijn: "mindset", "systeem" of "actie".`,
       const synthResponse = await anthropic.messages.create({
         model: 'claude-haiku-4-5-20251001',
         max_tokens: 500,
-        system: `Je bent Arno Diepeveen. Schrijf per blog één zin die concreet uitlegt waarom dit blog relevant is voor het genoemde ontwikkelpunt. Baseer je uitsluitend op het meegeleverde fragment — niet op de blogtitel. Direct en specifiek. Geen bullshit.
+        system: `Je bent Arno Diepeveen. Schrijf per blog één korte zin in gewone spreektaal die uitlegt wat iemand uit dit blog haalt. Geen formele taal, geen jargon, geen lange zinnen. Schrijf zoals je het aan een vriend uitlegt. Begin met "Hier leer je..." of "Dit legt uit hoe je..." of iets vergelijkbaars — kort, concreet, actiegericht.
 
 Return ALLEEN een JSON array, geen uitleg eromheen:
 [{ "url": "...", "reden": "..." }]`,
