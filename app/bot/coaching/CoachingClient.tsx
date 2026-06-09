@@ -127,7 +127,7 @@ export default function CoachingClient({ userId }: Props) {
   const hasMSA = doc?.mindset_score != null && doc?.systeem_score != null && doc?.actie_score != null
 
   const msaScore = hasMSA
-    ? Math.round((doc!.mindset_score * doc!.systeem_score * doc!.actie_score) / 1.25)
+    ? Math.max(1, Math.round((doc!.mindset_score * doc!.systeem_score * doc!.actie_score) / 1.25))
     : null
 
   const msaPijlars = hasMSA ? [
