@@ -564,19 +564,12 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
           align-items: center;
         }
         .spar-input-area.active {
-          position: sticky;
-          bottom: 0;
-          width: 100%;
+          position: fixed;
+          bottom: 0; left: 0; right: 0;
           background: rgba(17,24,39,0.97);
           border-top: 2px solid #f59e0b;
           padding: 12px 0 28px;
           z-index: 50;
-        }
-        @media (max-width: 700px) {
-          .spar-input-area.active {
-            position: fixed;
-            left: 0; right: 0;
-          }
         }
         .spar-input-label {
           font-family: 'Bebas Neue', sans-serif;
@@ -792,7 +785,7 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
         /* GLOW op invoerveld na gesprek */
         .spar-input-row.active-glow {
           border-color: #f59e0b;
-          box-shadow: inset 0 0 0 3px rgba(245,158,11,0.25), 0 0 24px rgba(245,158,11,0.15);
+          box-shadow: inset 0 0 0 3px rgba(245,158,11,0.25);
           animation: glowpulse 2s ease-in-out infinite;
         }
         @media (min-width: 701px) {
@@ -806,12 +799,12 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
           animation: blinkglow 0.4s ease-in-out 4;
         }
         @keyframes glowpulse {
-          0%, 100% { box-shadow: inset 0 0 0 3px rgba(245,158,11,0.2), 0 0 16px rgba(245,158,11,0.1); }
-          50% { box-shadow: inset 0 0 0 3px rgba(245,158,11,0.5), 0 0 40px rgba(245,158,11,0.3); }
+          0%, 100% { box-shadow: inset 0 0 0 3px rgba(245,158,11,0.2); }
+          50% { box-shadow: inset 0 0 0 3px rgba(245,158,11,0.5); }
         }
         @keyframes blinkglow {
           0%, 100% { box-shadow: inset 0 0 0 3px rgba(245,158,11,0.15); }
-          50% { box-shadow: inset 0 0 0 6px rgba(245,158,11,0.7), 0 0 48px rgba(245,158,11,0.4); border-color: #ff9900; }
+          50% { box-shadow: inset 0 0 0 6px rgba(245,158,11,0.7); border-color: #ff9900; }
         }
 
         /* ACTIE KNOPPEN onder antwoord */
@@ -993,7 +986,7 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
         </nav>
       )}
 
-      <div className="spar-page" style={started ? { paddingBottom: isMobile ? 200 : 0 } : {}}>
+      <div className="spar-page" style={started ? { paddingBottom: isMobile ? 200 : 160 } : {}}>
 
         <div className="spar-hero">
           <div style={{ flex: '0 0 auto', display: 'flex', alignItems: 'flex-end', gap: 'clamp(12px, 1.5vw, 24px)' }}>
