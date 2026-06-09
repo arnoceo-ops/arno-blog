@@ -64,7 +64,7 @@ export default function AccountPage() {
   const section: React.CSSProperties = { borderTop: '1px solid #374151', paddingTop: '32px', marginBottom: '48px' }
   const label: React.CSSProperties = { fontFamily: "'Space Mono', monospace", fontWeight: 700, color: '#f59e0b', fontSize: '13px', letterSpacing: '4px', marginBottom: '16px', display: 'block' }
   const body: React.CSSProperties = { fontWeight: 400, color: '#9ca3af', fontSize: '15px', lineHeight: '1.9', maxWidth: 480, marginBottom: '24px' }
-  const btn: React.CSSProperties = { padding: '12px 32px', border: '1px solid #374151', background: 'none', color: '#9ca3af', fontFamily: "'Bebas Neue', sans-serif", fontSize: '18px', letterSpacing: '3px', cursor: 'pointer', transition: 'all 0.2s', borderRadius: '999px', display: 'inline-block' }
+  const btn: React.CSSProperties = { padding: '12px 36px', border: 'none', background: '#f59e0b', color: '#111827', fontFamily: "'Bebas Neue', sans-serif", fontSize: '18px', letterSpacing: '3px', cursor: 'pointer', transition: 'background 0.2s', borderRadius: '999px', display: 'inline-block' }
 
   return (
     <>
@@ -74,7 +74,7 @@ export default function AccountPage() {
         body { background: #111827; color: #f1f5f9; font-family: 'Space Mono', monospace; font-weight: 400; }
         input { background: #1f2937; border: 1.5px solid #374151; color: #f1f5f9; font-family: 'Space Mono', monospace; font-size: 15px; letter-spacing: 2px; padding: 12px 16px; outline: none; width: 100%; }
         input:focus { border-color: #f59e0b; }
-        .sec-btn:hover { border-color: #f59e0b !important; color: #f59e0b !important; }
+        .primary-btn:hover { background: #d97706 !important; }
       `}</style>
 
       <BotNav active="account" />
@@ -111,7 +111,7 @@ export default function AccountPage() {
         <div style={section}>
           <p style={label}>ARNOBOT PROFIEL</p>
           <p style={body}>Pas je profiel aan zodat ArnoBot beter op jou is afgestemd.</p>
-          <Link href="/bot/profiel" className="sec-btn" style={{ ...btn, textDecoration: 'none', display: 'inline-block' }}>
+          <Link href="/bot/profiel" className="primary-btn" style={{ ...btn, textDecoration: 'none', display: 'inline-block' }}>
             PROFIEL AANPASSEN
           </Link>
         </div>
@@ -123,8 +123,8 @@ export default function AccountPage() {
           <button
             onClick={handleExport}
             disabled={exporting}
-            className="sec-btn"
-            style={{ ...btn, borderColor: exporting ? '#374151' : '#6b7280', color: exporting ? '#4b5563' : '#9ca3af', cursor: exporting ? 'not-allowed' : 'pointer' }}
+            className="primary-btn"
+            style={{ ...btn, background: exporting ? '#374151' : '#f59e0b', color: exporting ? '#4b5563' : '#111827', cursor: exporting ? 'not-allowed' : 'pointer' }}
           >
             {exporting ? 'EXPORTEREN...' : 'DOWNLOAD MIJN DATA'}
           </button>
