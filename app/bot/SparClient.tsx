@@ -362,7 +362,7 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
 
   async function handleNieuw() {
     // Na synthese zonder nieuwe berichten: gewoon sluiten
-    if (showSluiten && messages.length <= synthesisMessageCount) {
+    if (synthesisMessageCount > 0 && messages.length <= synthesisMessageCount) {
       reset()
       return
     }
