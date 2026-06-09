@@ -564,12 +564,19 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
           align-items: center;
         }
         .spar-input-area.active {
-          position: fixed;
-          bottom: 0; left: 0; right: 0;
+          position: sticky;
+          bottom: 0;
+          width: 100%;
           background: rgba(17,24,39,0.97);
           border-top: 2px solid #f59e0b;
-          padding: 12px 0 16px;
+          padding: 12px 0 28px;
           z-index: 50;
+        }
+        @media (max-width: 700px) {
+          .spar-input-area.active {
+            position: fixed;
+            left: 0; right: 0;
+          }
         }
         .spar-input-label {
           font-family: 'Bebas Neue', sans-serif;
@@ -986,7 +993,7 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
         </nav>
       )}
 
-      <div className="spar-page" style={started ? { paddingBottom: isMobile ? 200 : 160 } : {}}>
+      <div className="spar-page" style={started ? { paddingBottom: isMobile ? 200 : 0 } : {}}>
 
         <div className="spar-hero">
           <div style={{ flex: '0 0 auto', display: 'flex', alignItems: 'flex-end', gap: 'clamp(12px, 1.5vw, 24px)' }}>
