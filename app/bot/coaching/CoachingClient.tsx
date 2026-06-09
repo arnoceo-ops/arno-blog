@@ -39,11 +39,7 @@ interface Props {
   userId: string
 }
 
-const PIJLAR_COLORS: Record<string, string> = {
-  mindset: '#9ca3af',
-  systeem: '#f59e0b',
-  actie: '#f1f5f9',
-}
+const PIJLAR_COLOR = '#f59e0b'
 
 const RICHTING_CONFIG: Record<string, { arrow: string; color: string }> = {
   stijgend: { arrow: '↑', color: '#f59e0b' },
@@ -150,9 +146,9 @@ export default function CoachingClient({ userId }: Props) {
         .coaching-body { color: #9ca3af; font-size: 15px; line-height: 1.9; font-weight: 400; font-family: 'Space Mono', monospace; white-space: pre-wrap; }
 
         .msa-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; margin: 32px 0 48px; }
-        .msa-card { background: #1f2937; padding: 32px 28px; }
+        .msa-card { background: #1f2937; padding: 32px 28px; text-align: center; }
         .msa-score-number { font-family: 'Bebas Neue', sans-serif; font-size: 80px; color: #f59e0b; line-height: 1; }
-        .msa-dots { display: flex; gap: 6px; margin: 12px 0 8px; }
+        .msa-dots { display: flex; gap: 6px; margin: 12px 0 8px; justify-content: center; }
         .msa-dot-filled { width: 10px; height: 10px; border-radius: 50%; background: #f59e0b; border: 1.5px solid #f59e0b; }
         .msa-dot-empty { width: 10px; height: 10px; border-radius: 50%; background: transparent; border: 1.5px solid #374151; }
         .msa-richting { font-family: 'Space Mono', monospace; font-size: 12px; letter-spacing: 3px; text-transform: uppercase; display: block; margin-bottom: 0; }
@@ -221,35 +217,31 @@ export default function CoachingClient({ userId }: Props) {
         <p style={{ fontFamily: "'Space Mono', monospace", fontWeight: 700, color: '#f59e0b', fontSize: 13, letterSpacing: 4, marginBottom: 8 }}>ARNOBOT</p>
         <h1 style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 64, letterSpacing: 3, lineHeight: 1, color: '#f1f5f9', marginBottom: 16 }}>COACHING</h1>
 
-        <div className="no-print" style={{ display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between', marginBottom: 16, paddingBottom: 48, borderBottom: '1px solid #374151', flexWrap: 'wrap', gap: 20 }}>
-          <div>
-            {!doc && !loading && (
-              <p style={{ fontFamily: "'Space Mono', monospace", fontWeight: 400, color: '#9ca3af', fontSize: 15, lineHeight: 1.9, maxWidth: 480 }}>
-                Arno analyseert je gesprekken op drie pijlers: Mindset, Systeem en Actie. Waar sta je en wat moet je aanpakken?
-              </p>
-            )}
-            {error && <p style={{ fontFamily: "'Space Mono', monospace", color: '#ff6644', fontSize: 13, letterSpacing: 1, marginTop: 8 }}>{error}</p>}
-          </div>
-          <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap', alignItems: 'flex-start' }}>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
-              <button className="generate-btn" onClick={generate} disabled={generating || loading}>
-                {generating ? (
-                  <span style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 10 }}>
-                    <span className="loading-dot" />
-                    <span className="loading-dot" />
-                    <span className="loading-dot" />
-                    <span>ARNO GENEREERT</span>
-                  </span>
-                ) : doc ? 'ADVISEER →' : 'GENEREER COACHING →'}
-              </button>
-              {isUpToDate && (
-                <p style={{ fontFamily: "'Space Mono', monospace", fontSize: 12, color: '#9ca3af', letterSpacing: 1, textAlign: 'center' }}>✓ Advies is actueel</p>
-              )}
-            </div>
+        <div className="no-print" style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start', marginBottom: 16, paddingBottom: 48, borderBottom: '1px solid #374151', gap: 12 }}>
+          <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap', alignItems: 'center' }}>
+            <button className="generate-btn" onClick={generate} disabled={generating || loading}>
+              {generating ? (
+                <span style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 10 }}>
+                  <span className="loading-dot" />
+                  <span className="loading-dot" />
+                  <span className="loading-dot" />
+                  <span>ARNO GENEREERT</span>
+                </span>
+              ) : doc ? 'ADVISEER →' : 'GENEREER COACHING →'}
+            </button>
             {doc && (
               <button className="pdf-btn no-print" onClick={() => window.print()}>DOWNLOAD PDF ↓</button>
             )}
+            {isUpToDate && (
+              <p style={{ fontFamily: "'Space Mono', monospace", fontSize: 12, color: '#9ca3af', letterSpacing: 1 }}>✓ Advies is actueel</p>
+            )}
           </div>
+          {!doc && !loading && (
+            <p style={{ fontFamily: "'Space Mono', monospace", fontWeight: 400, color: '#9ca3af', fontSize: 15, lineHeight: 1.9, maxWidth: 480 }}>
+              Arno analyseert je gesprekken op drie pijlers: Mindset, Systeem en Actie. Waar sta je en wat moet je aanpakken?
+            </p>
+          )}
+          {error && <p style={{ fontFamily: "'Space Mono', monospace", color: '#ff6644', fontSize: 13, letterSpacing: 1 }}>{error}</p>}
         </div>
 
         {loading && (
@@ -287,32 +279,8 @@ export default function CoachingClient({ userId }: Props) {
               </>
             )}
 
-            {/* Voortgang */}
-            <div className="coaching-section" style={{ borderTop: 'none', paddingTop: 0 }}>
-              <span className="coaching-label">JOUW VOORTGANG</span>
-              {stats && (
-                <div style={{ display: 'flex', gap: 48, marginBottom: 32, flexWrap: 'wrap' }}>
-                  <div className="stat-block">
-                    <div className="stat-number">{stats.sessionCount}</div>
-                    <div className="stat-label">GESPREKKEN GEVOERD</div>
-                  </div>
-                  <div className="stat-block">
-                    <div className="stat-number">{stats.totalQuestions}</div>
-                    <div className="stat-label">VRAGEN GESTELD</div>
-                  </div>
-                  {analyses.length > 0 && (
-                    <div className="stat-block">
-                      <div className="stat-number">{analyses.length}</div>
-                      <div className="stat-label">ANALYSES</div>
-                    </div>
-                  )}
-                </div>
-              )}
-              <p className="coaching-body">{doc.voortgang}</p>
-            </div>
-
             {/* Mindset */}
-            <div className="coaching-section">
+            <div className="coaching-section" style={{ borderTop: 'none', paddingTop: 0 }}>
               <span className="coaching-label">MINDSET</span>
               <p className="coaching-body">{doc.mindset_diagnose}</p>
             </div>
@@ -337,7 +305,7 @@ export default function CoachingClient({ userId }: Props) {
                   <div key={i} className="ontwikkelpunt">
                     <span className="ontwikkelpunt-nr">{i + 1}</span>
                     <div>
-                      <span className="pijlar-tag" style={{ color: PIJLAR_COLORS[p.pijlar] ?? '#9ca3af' }}>
+                      <span className="pijlar-tag" style={{ color: PIJLAR_COLOR }}>
                         [{p.pijlar?.toUpperCase() ?? ''}]
                       </span>
                       <span className="ontwikkelpunt-text">{p.tekst}</span>
@@ -350,7 +318,7 @@ export default function CoachingClient({ userId }: Props) {
             {/* Dringende suggestie */}
             <div className="coaching-section">
               <div className="suggestie-box">
-                <span className="pijlar-tag" style={{ color: PIJLAR_COLORS[doc.dringende_suggestie_pijlar] ?? '#f59e0b', marginBottom: 8 }}>
+                <span className="pijlar-tag" style={{ color: PIJLAR_COLOR, marginBottom: 8 }}>
                   [{(doc.dringende_suggestie_pijlar ?? 'actie').toUpperCase()}]
                 </span>
                 <span className="coaching-label" style={{ marginBottom: 12 }}>DRINGENDE SUGGESTIE</span>

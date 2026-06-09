@@ -304,8 +304,29 @@ export default function GeschiedenisPage() {
 
       <div style={{ maxWidth: 812, margin: '0 auto', padding: `clamp(80px,12vw,120px) clamp(16px,4vw,20px) ${hasSelected ? 100 : 80}px` }}>
 
-        <p style={{ color: '#f59e0b', fontSize: 13, letterSpacing: 4, marginBottom: 8 }}>ARNOBOT</p>
-        <h1 style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 64, letterSpacing: 3, lineHeight: 1, marginBottom: 48 }}>GESPREKKEN</h1>
+        <p style={{ fontFamily: "'Space Mono', monospace", fontWeight: 700, color: '#f59e0b', fontSize: 13, letterSpacing: 4, marginBottom: 8 }}>ARNOBOT</p>
+        <h1 style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 64, letterSpacing: 3, lineHeight: 1, color: '#f1f5f9', marginBottom: 32 }}>BIEB</h1>
+
+        {!loading && sessions.length > 0 && (
+          <div style={{ display: 'flex', gap: 48, marginBottom: 48, flexWrap: 'wrap' }}>
+            <div style={{ textAlign: 'center' }}>
+              <div style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 56, color: '#f59e0b', lineHeight: 1 }}>{sessions.length}</div>
+              <div style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 13, letterSpacing: 4, color: '#9ca3af', marginTop: 4 }}>GESPREKKEN GEVOERD</div>
+            </div>
+            <div style={{ textAlign: 'center' }}>
+              <div style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 56, color: '#f59e0b', lineHeight: 1 }}>
+                {sessions.reduce((sum, s) => sum + (s.message_count || 0), 0)}
+              </div>
+              <div style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 13, letterSpacing: 4, color: '#9ca3af', marginTop: 4 }}>VRAGEN GESTELD</div>
+            </div>
+            {savedAnalyses.length > 0 && (
+              <div style={{ textAlign: 'center' }}>
+                <div style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 56, color: '#f59e0b', lineHeight: 1 }}>{savedAnalyses.length}</div>
+                <div style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 13, letterSpacing: 4, color: '#9ca3af', marginTop: 4 }}>ANALYSES</div>
+              </div>
+            )}
+          </div>
+        )}
 
         {/* Zoekbalk */}
         <div style={{ marginBottom: 16 }}>
