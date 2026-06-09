@@ -471,7 +471,7 @@ export default function GeschiedenisPage() {
                   )}
                   {convMessages.map((msg, i) => (
                     <div key={i} style={{
-                      padding: msg.role === 'user' ? '20px 0' : '20px 24px',
+                      padding: '20px 24px',
                       borderTop: '1px solid #374151',
                       display: 'flex', flexDirection: isMobile ? 'column' : 'row',
                       gap: isMobile ? 4 : 32, alignItems: 'flex-start',
