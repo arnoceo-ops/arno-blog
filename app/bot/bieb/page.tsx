@@ -477,11 +477,13 @@ export default function GeschiedenisPage() {
                       gap: isMobile ? 4 : 32, alignItems: 'flex-start',
                       background: msg.role === 'user' ? undefined : '#1f2937',
                     }}>
-                      <span style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 18, letterSpacing: 3, color: msg.role === 'user' ? '#9ca3af' : '#f59e0b', whiteSpace: 'nowrap', paddingTop: isMobile ? 0 : 2, minWidth: isMobile ? 0 : 48 }}>
+                      <span style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 18, letterSpacing: 3, color: msg.role === 'user' ? '#6b7280' : '#f59e0b', whiteSpace: 'nowrap', paddingTop: isMobile ? 0 : 2, minWidth: isMobile ? 0 : 48 }}>
                         {msg.role === 'user' ? 'JIJ' : 'ARNO'}
                       </span>
                       <span
-                        style={{ fontSize: 15, lineHeight: 1.9, color: msg.role === 'user' ? '#f1f5f9' : '#9ca3af', fontFamily: "'Space Mono', monospace", fontWeight: 400, letterSpacing: 0, whiteSpace: 'pre-wrap' }}
+                        style={msg.role === 'user'
+                          ? { fontFamily: "'Bebas Neue', sans-serif", fontSize: 'clamp(18px,3vw,26px)', lineHeight: 1.5, color: '#f1f5f9', letterSpacing: '0.5px', whiteSpace: 'pre-wrap' }
+                          : { fontFamily: "'Space Mono', monospace", fontSize: 15, lineHeight: 1.9, color: '#9ca3af', fontWeight: 400, letterSpacing: 0, whiteSpace: 'pre-wrap' }}
                         dangerouslySetInnerHTML={{ __html: renderContent(msg.content) }}
                       />
                     </div>
