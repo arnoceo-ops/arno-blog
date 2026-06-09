@@ -32,7 +32,6 @@ const linkBase: React.CSSProperties = {
 export default function BotNav({ active }: Props) {
   const isMobile = useIsMobile()
   const [menuOpen, setMenuOpen] = useState(false)
-  const [isManager, setIsManager] = useState(false)
   const [feedbackOpen, setFeedbackOpen] = useState(false)
   const [feedbackText, setFeedbackText] = useState('')
   const [feedbackSent, setFeedbackSent] = useState(false)
@@ -62,18 +61,6 @@ export default function BotNav({ active }: Props) {
     } finally { setFeedbackLoading(false) }
   }
 
-  useEffect(() => {
-    const cached = localStorage.getItem('arnobot_is_manager') === '1'
-    if (cached) setIsManager(true)
-    fetch('/api/bot/team/status')
-      .then(r => r.json())
-      .then(d => {
-        const manager = !!d.isManager
-        localStorage.setItem('arnobot_is_manager', manager ? '1' : '0')
-        setIsManager(manager)
-      })
-      .catch(() => {})
-  }, [])
 
   const feedbackModal = feedbackOpen && (
     <div
@@ -142,7 +129,6 @@ export default function BotNav({ active }: Props) {
             {active === 'bot'      ? <span className="mob-active">ARNOBOT</span>   : <Link href="/bot">ARNOBOT</Link>}
             {active === 'bieb'  ? <span className="mob-active">BIEB</span>     : <Link href="/bot/bieb">BIEB</Link>}
             {active === 'coaching' ? <span className="mob-active">COACHING</span> : <Link href="/bot/coaching">COACHING</Link>}
-            {isManager && (active === 'team' ? <span className="mob-active">TEAM</span> : <Link href="/bot/team">TEAM</Link>)}
             {active === 'qa'       ? <span className="mob-active">Q&A</span>      : <Link href="/bot/qa">Q&A</Link>}
             {active === 'account'  ? <span className="mob-active">ACCOUNT</span>  : <Link href="/bot/account">ACCOUNT</Link>}
             <span style={{ color: '#9ca3af', cursor: 'pointer' }} onClick={e => { e.stopPropagation(); setMenuOpen(false); setFeedbackOpen(true) }}>FEEDBACK</span>
@@ -167,9 +153,6 @@ export default function BotNav({ active }: Props) {
           {active === 'coaching'
             ? <span style={{ ...linkBase, color: '#f59e0b' }}>COACHING</span>
             : <Link href="/bot/coaching" style={linkBase}>COACHING</Link>}
-          {isManager && (active === 'team'
-            ? <span style={{ ...linkBase, color: '#f59e0b' }}>TEAM</span>
-            : <Link href="/bot/team" style={linkBase}>TEAM</Link>)}
           {active === 'qa'
             ? <span style={{ ...linkBase, color: '#f59e0b' }}>Q&A</span>
             : <Link href="/bot/qa" style={linkBase}>Q&A</Link>}

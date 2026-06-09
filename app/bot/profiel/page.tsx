@@ -98,6 +98,7 @@ export default function BotProfielPage() {
   const [isFirstTime, setIsFirstTime] = useState<boolean | null>(null)
 
   const [isDirty, setIsDirty] = useState(false)
+  const [teamWaitlist, setTeamWaitlist] = useState(false)
   const firstName = user?.firstName || 'daar'
 
   useEffect(() => {
@@ -106,6 +107,7 @@ export default function BotProfielPage() {
       .then(data => {
         if (data?.profiel) {
           setAnswers(prev => ({ ...prev, ...data.profiel }))
+          setTeamWaitlist(data.profiel.team_waitlist ?? false)
           setIsFirstTime(false)
         } else {
           setIsFirstTime(true)
@@ -144,11 +146,11 @@ export default function BotProfielPage() {
       const res = await fetch('/api/bot/profiel', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ profiel: { ...answers, rol: answers.rol === 'Anders' ? rolAnders.trim() : answers.rol } }),
+        body: JSON.stringify({ profiel: { ...answers, rol: answers.rol === 'Anders' ? rolAnders.trim() : answers.rol, team_waitlist: teamWaitlist } }),
       })
       if (!res.ok) throw new Error('Opslaan mislukt')
       setIsDirty(false)
-      router.push(answers.gebruik === 'team' ? '/bot/team' : '/bot')
+      router.push('/bot')
     } catch {
       setError('Er ging iets mis. Probeer het opnieuw.')
       setSaving(false)
@@ -237,6 +239,25 @@ export default function BotProfielPage() {
                     <Chip label="INDIVIDUEEL" selected={answers.gebruik === 'individueel'} onClick={() => set('gebruik', 'individueel')} />
                     <Chip label="VOOR MIJN TEAM" selected={answers.gebruik === 'team'} onClick={() => set('gebruik', 'team')} />
                   </div>
+                  {answers.gebruik === 'team' && (
+                    <div style={{ marginTop: 20, background: '#1f2937', border: '1px solid #374151', borderLeft: '3px solid #f59e0b', padding: '20px 24px' }}>
+                      <p style={{ fontFamily: "'Space Mono', monospace", fontWeight: 700, fontSize: 13, letterSpacing: 4, color: '#f59e0b', marginBottom: 10 }}>COMING SEPTEMBER 2026</p>
+                      <p style={{ fontFamily: "'Space Mono', monospace", fontSize: 15, color: '#9ca3af', lineHeight: 1.9, marginBottom: 16 }}>
+                        ArnoBot Team is in ontwikkeling. Je kunt je nu alvast aanmelden — zodra het live gaat, ben jij de eerste die het weet.
+                      </p>
+                      <label style={{ display: 'flex', alignItems: 'flex-start', gap: 12, cursor: 'pointer' }}>
+                        <input
+                          type="checkbox"
+                          checked={teamWaitlist}
+                          onChange={e => setTeamWaitlist(e.target.checked)}
+                          style={{ width: 18, height: 18, marginTop: 3, accentColor: '#f59e0b', flexShrink: 0, cursor: 'pointer' }}
+                        />
+                        <span style={{ fontFamily: "'Space Mono', monospace", fontSize: 14, color: '#f1f5f9', lineHeight: 1.7 }}>
+                          Ja, hou me op de hoogte zodra ArnoBot Team beschikbaar is.
+                        </span>
+                      </label>
+                    </div>
+                  )}
                 </div>
                 <div style={{ marginTop: 24 }}>
                   <p style={{ fontSize: 15, fontWeight: 400, lineHeight: '30px', color: '#9ca3af', marginBottom: 12 }}>Hoe groot is je sales team?</p>
