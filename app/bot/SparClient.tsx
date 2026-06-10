@@ -1257,19 +1257,19 @@ export default function SparClient({ userId, profiel, tier, taglineTitle, taglin
               <div key={i} ref={msg.content?.startsWith('**Terugblik') ? synthesisRef : i === messages.length - 1 ? lastMessageRef : undefined}>
                 {msg.content && (
                   <div className="msg-arno" style={isMobile ? { flexDirection: 'column', gap: 4 } : {}}>
-                    <span className="msg-arno-label">ARNO</span>
-                    <div style={{ flex: 1, minWidth: 0 }}>
-                      <span className="msg-arno-text" dangerouslySetInnerHTML={{ __html: renderContent(msg.content) }} />
+                    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 8, minWidth: 48, paddingTop: 2, flexShrink: 0 }}>
+                      <span className="msg-arno-label">ARNO</span>
                       <button
                         onClick={() => speak(msg.content, i)}
                         title={speakingIdx === i ? 'Stop' : 'Beluister'}
-                        style={{ marginTop: 12, background: 'none', border: 'none', cursor: 'pointer', color: speakingIdx === i ? '#f59e0b' : '#374151', fontSize: 18, padding: 0, display: 'block', transition: 'color 0.15s' }}
+                        style={{ background: 'none', border: 'none', cursor: 'pointer', color: speakingIdx === i ? '#f59e0b' : '#374151', fontSize: 18, padding: 0, transition: 'color 0.15s', lineHeight: 1 }}
                         onMouseEnter={e => { if (speakingIdx !== i) (e.currentTarget as HTMLButtonElement).style.color = '#6b7280' }}
                         onMouseLeave={e => { if (speakingIdx !== i) (e.currentTarget as HTMLButtonElement).style.color = '#374151' }}
                       >
                         {speakingIdx === i ? '⏹' : '▶'}
                       </button>
                     </div>
+                    <span className="msg-arno-text" dangerouslySetInnerHTML={{ __html: renderContent(msg.content) }} />
                   </div>
                 )}
                 {msg.hint === 'last_chance' && (
