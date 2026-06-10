@@ -33,9 +33,9 @@ export async function POST() {
   const [sessionsRes, analysesRes, profielRes] = await Promise.all([
     supabase
       .from('arnobot_blog_sessions')
-      .select('title, summary, message_count, created_at')
+      .select('title, summary, feiten, message_count, created_at')
       .eq('user_id', userId)
-      .order('created_at', { ascending: true })
+      .order('created_at', { ascending: false })
       .limit(100),
     supabase
       .from('arnobot_analyses')
@@ -63,7 +63,7 @@ export async function POST() {
 
   const sessiesText = sessions
     .map((s, i) =>
-      `Gesprek ${i + 1} (${new Date(s.created_at).toLocaleDateString('nl-NL')}, ${s.message_count} vragen): ${s.title}${s.summary ? `\nSamenvatting: ${s.summary}` : ''}`
+      `Gesprek ${i + 1} (${new Date(s.created_at).toLocaleDateString('nl-NL')}, ${s.message_count} vragen): ${s.title}${s.summary ? `\nSamenvatting: ${s.summary}` : ''}${s.feiten ? `\nFeiten: ${s.feiten}` : ''}`
     )
     .join('\n\n')
 

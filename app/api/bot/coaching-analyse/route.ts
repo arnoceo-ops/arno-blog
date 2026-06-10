@@ -21,7 +21,7 @@ export async function POST(req: NextRequest) {
     .select('title, summary, message_count, created_at, session_id')
     .eq('user_id', userId)
     .order('created_at', { ascending: false })
-    .limit(50)
+    .limit(200)
 
   let sessions = data ?? []
 
