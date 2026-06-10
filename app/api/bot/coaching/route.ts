@@ -30,7 +30,7 @@ export async function POST() {
   const { userId } = await auth()
   if (!userId) return NextResponse.json({ error: 'Niet ingelogd' }, { status: 401 })
 
-  const [sessionsRes, analysesRes, profielRes] = await Promise.all([
+  const [sessionsRes, analysesRes, profielRes, prevScoreRes] = await Promise.all([
     supabase
       .from('arnobot_blog_sessions')
       .select('title, summary, feiten, message_count, created_at')
@@ -48,6 +48,13 @@ export async function POST() {
       .select('profiel')
       .eq('user_id', userId)
       .single(),
+    supabase
+      .from('arnobot_coaching_scores')
+      .select('mindset_score, systeem_score, actie_score')
+      .eq('user_id', userId)
+      .order('created_at', { ascending: false })
+      .limit(1)
+      .maybeSingle(),
   ])
 
   const sessions = sessionsRes.data ?? []
@@ -135,6 +142,15 @@ De pijlar-waarden mogen alleen zijn: "mindset", "systeem" of "actie".`,
     parsed = JSON.parse(jsonMatch?.[0] ?? raw)
   } catch {
     return NextResponse.json({ error: 'parse_error' }, { status: 500 })
+  }
+
+  // Richting berekenen op basis van vorige score, niet LLM-gissing
+  const prev = prevScoreRes.data
+  if (prev) {
+    const r = (curr: number, p: number) => curr > p ? 'stijgend' : curr < p ? 'dalend' : 'stabiel'
+    parsed.mindset_richting = r(parsed.mindset_score, prev.mindset_score)
+    parsed.systeem_richting = r(parsed.systeem_score, prev.systeem_score)
+    parsed.actie_richting = r(parsed.actie_score, prev.actie_score)
   }
 
   type Blog = { title: string; url: string; reden: string }
