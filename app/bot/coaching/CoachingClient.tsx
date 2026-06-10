@@ -61,6 +61,7 @@ const SERIES = [
   { key: 'systeem_score' as keyof ScoreEntry, color: '#60a5fa', label: 'SYSTEEM' },
   { key: 'actie_score'   as keyof ScoreEntry, color: '#34d399', label: 'ACTIE'   },
 ]
+const TOTAAL_COLOR = '#e2e8f0'
 
 function ProgressieChart({ history }: { history: ScoreEntry[] }) {
   const data = [...history].reverse()
@@ -92,6 +93,13 @@ function ProgressieChart({ history }: { history: ScoreEntry[] }) {
             <span className="progressie-legend-label">{s.label}</span>
           </div>
         ))}
+        <div className="progressie-legend-item">
+          <svg width="24" height="10" style={{ display: 'block', flexShrink: 0 }}>
+            <line x1="0" y1="5" x2="24" y2="5" stroke={TOTAAL_COLOR} strokeWidth="2" strokeLinecap="round" strokeDasharray="4 3" />
+            <circle cx="12" cy="5" r="3" fill="#111827" stroke={TOTAAL_COLOR} strokeWidth="2" />
+          </svg>
+          <span className="progressie-legend-label">TOTAAL</span>
+        </div>
       </div>
       <svg viewBox={`0 0 ${W} ${H}`} style={{ width: '100%', display: 'block' }}>
         <defs>
@@ -134,6 +142,28 @@ function ProgressieChart({ history }: { history: ScoreEntry[] }) {
             </g>
           )
         })}
+        {(() => {
+          const pts = data.map((d, i) => ({ x: xAt(i), y: yAt((d.mindset_score + d.systeem_score + d.actie_score) / 3) }))
+          const lp = curvePath(pts)
+          return lp ? (
+            <g>
+              <path d={lp} fill="none" stroke={TOTAAL_COLOR} strokeWidth="1.5"
+                strokeLinecap="round" strokeLinejoin="round" strokeDasharray="5 3" />
+              {pts.map((pt, i) => {
+                const avg = ((data[i].mindset_score + data[i].systeem_score + data[i].actie_score) / 3).toFixed(1)
+                return (
+                  <g key={i}>
+                    <circle cx={pt.x} cy={pt.y} r="4.5" fill="#111827" stroke={TOTAAL_COLOR} strokeWidth="1.5" />
+                    <text x={pt.x} y={pt.y - 10} fill={TOTAAL_COLOR} fontSize="11"
+                      textAnchor="middle" fontFamily="Bebas Neue, sans-serif" letterSpacing="1">
+                      {avg}
+                    </text>
+                  </g>
+                )
+              })}
+            </g>
+          ) : null
+        })()}
         {data.map((d, i) => (
           <text key={i} x={xAt(i)} y={H - 6} fill="#4b5563" fontSize="11"
             textAnchor="middle" fontFamily="Space Mono, monospace">
