@@ -50,7 +50,7 @@ export async function POST() {
       .single(),
     supabase
       .from('arnobot_coaching_scores')
-      .select('mindset_score, systeem_score, actie_score')
+      .select('mindset_score, systeem_score, actie_score, created_at')
       .eq('user_id', userId)
       .order('created_at', { ascending: false })
       .limit(1)
