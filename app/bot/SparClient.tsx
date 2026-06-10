@@ -135,6 +135,7 @@ export default function SparClient({ userId, profiel, tier, taglineTitle, taglin
   const [feedbackSent, setFeedbackSent] = useState(false)
   const [feedbackLoading, setFeedbackLoading] = useState(false)
   const [dagelijksTeller, setDagelijksTeller] = useState<number | null>(null)
+  const [speakingIdx, setSpeakingIdx] = useState<number | null>(null)
   const [navGuardOpen, setNavGuardOpen] = useState(false)
   const [pendingNavDest, setPendingNavDest] = useState<string | null>(null)
   const [teamPrompt, setTeamPrompt] = useState(false)
@@ -372,6 +373,18 @@ export default function SparClient({ userId, profiel, tier, taglineTitle, taglin
     setPendingNavDest(null)
     window.scrollTo({ top: 0, behavior: 'smooth' })
     setTimeout(() => inputRef.current?.focus(), 150)
+  }
+
+  function speak(text: string, idx: number) {
+    window.speechSynthesis.cancel()
+    if (speakingIdx === idx) { setSpeakingIdx(null); return }
+    const clean = text.replace(/\*\*([^*]+)\*\*/g, '$1').replace(/\*([^*]+)\*/g, '$1').replace(/_([^_]+)_/g, '$1').replace(/\[([^\]]+)\]\([^)]+\)/g, '$1')
+    const utt = new SpeechSynthesisUtterance(clean)
+    utt.lang = 'nl-NL'
+    utt.onend = () => setSpeakingIdx(null)
+    utt.onerror = () => setSpeakingIdx(null)
+    setSpeakingIdx(idx)
+    window.speechSynthesis.speak(utt)
   }
 
   async function handleNieuw() {
@@ -1245,7 +1258,18 @@ export default function SparClient({ userId, profiel, tier, taglineTitle, taglin
                 {msg.content && (
                   <div className="msg-arno" style={isMobile ? { flexDirection: 'column', gap: 4 } : {}}>
                     <span className="msg-arno-label">ARNO</span>
-                    <span className="msg-arno-text" dangerouslySetInnerHTML={{ __html: renderContent(msg.content) }} />
+                    <div style={{ flex: 1, minWidth: 0 }}>
+                      <span className="msg-arno-text" dangerouslySetInnerHTML={{ __html: renderContent(msg.content) }} />
+                      <button
+                        onClick={() => speak(msg.content, i)}
+                        title={speakingIdx === i ? 'Stop' : 'Beluister'}
+                        style={{ marginTop: 12, background: 'none', border: 'none', cursor: 'pointer', color: speakingIdx === i ? '#f59e0b' : '#374151', fontSize: 18, padding: 0, display: 'block', transition: 'color 0.15s' }}
+                        onMouseEnter={e => { if (speakingIdx !== i) (e.currentTarget as HTMLButtonElement).style.color = '#6b7280' }}
+                        onMouseLeave={e => { if (speakingIdx !== i) (e.currentTarget as HTMLButtonElement).style.color = '#374151' }}
+                      >
+                        {speakingIdx === i ? '⏹' : '▶'}
+                      </button>
+                    </div>
                   </div>
                 )}
                 {msg.hint === 'last_chance' && (
