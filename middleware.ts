@@ -52,7 +52,7 @@ export default clerkMiddleware(async (auth, req) => {
             .single()
 
           if (pending) {
-            await supabase
+            const { error: updateErr } = await supabase
               .from('approved_users')
               .update({
                 user_id: userId,
@@ -60,6 +60,10 @@ export default clerkMiddleware(async (auth, req) => {
                 achternaam: clerkUser.lastName || undefined,
               })
               .eq('email', email)
+            if (updateErr) {
+              console.error('Pending user update failed:', updateErr.message)
+              return NextResponse.redirect(new URL('/bot-aanmelden', req.url))
+            }
             user = pending
           } else {
             // Nieuwe gebruiker via LinkedIn OAuth — automatisch trial starten
@@ -78,7 +82,11 @@ export default clerkMiddleware(async (auth, req) => {
               trial_start: new Date().toISOString(),
               is_active: true,
             }
-            await supabase.from('approved_users').insert(newRow)
+            const { error: insertErr } = await supabase.from('approved_users').insert(newRow)
+            if (insertErr) {
+              console.error('New user insert failed:', insertErr.message)
+              return NextResponse.redirect(new URL('/bot-aanmelden', req.url))
+            }
             user = { is_active: true, paid_at: null, expires_at: null, trial_start: newRow.trial_start, welcome_seen: false, onboarding_done: false }
             // Welkomstmail — fire and forget
             const resend = new Resend(process.env.RESEND_API_KEY)

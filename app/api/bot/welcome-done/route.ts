@@ -16,6 +16,9 @@ export async function POST() {
     .update({ welcome_seen: true })
     .eq('user_id', userId)
 
-  if (error) console.error('[welcome-done]', error.message)
+  if (error) {
+    console.error('[welcome-done]', error.message)
+    return NextResponse.json({ error: 'Opslaan mislukt' }, { status: 500 })
+  }
   return NextResponse.json({ ok: true })
 }

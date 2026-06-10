@@ -17,8 +17,15 @@ export default function WelkomPage() {
       return
     }
     setLoading(true)
-    await fetch('/api/bot/welcome-done', { method: 'POST' })
-    router.push('/bot/profiel')
+    try {
+      const res = await fetch('/api/bot/welcome-done', { method: 'POST' })
+      if (!res.ok) throw new Error('Opslaan mislukt')
+      router.push('/bot/profiel')
+    } catch {
+      setLoading(false)
+      setTooEarly(true)
+      setTimeout(() => setTooEarly(false), 4000)
+    }
   }
 
   return (
@@ -68,7 +75,7 @@ export default function WelkomPage() {
 
           {tooEarly && (
             <p style={{ marginTop: 16, fontSize: 13, color: '#f59e0b', letterSpacing: 2, fontFamily: "'Space Mono', monospace" }}>
-              Kijk eerst de video af.
+              {videoEnded ? 'Er ging iets mis. Probeer opnieuw.' : 'Kijk eerst de video af.'}
             </p>
           )}
         </div>

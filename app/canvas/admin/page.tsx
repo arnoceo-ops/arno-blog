@@ -37,6 +37,7 @@ export default function AdminPage() {
         if (!d.isAdmin) router.push('/canvas')
         else setIsAdmin(true)
       })
+      .catch(() => router.push('/canvas'))
   }, [isLoaded, user, router])
 
   useEffect(() => {
@@ -64,7 +65,7 @@ export default function AdminPage() {
       setLoading(false)
     }
     load()
-  }, [user])
+  }, [isAdmin])
 
   const handleInvite = async () => {
     if (!inviteEmail.trim() || !user) return

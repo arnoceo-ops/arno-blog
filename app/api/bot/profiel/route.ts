@@ -26,19 +26,28 @@ export async function POST(req: Request) {
     return NextResponse.json({ error: 'Server error' }, { status: 500 })
   }
 
-  await serviceDb
+  const { error: onboardingError } = await serviceDb
     .from('approved_users')
     .update({ onboarding_done: true })
     .eq('user_id', userId)
 
+  if (onboardingError) {
+    console.error('onboarding_done update:', onboardingError)
+    return NextResponse.json({ error: 'Server error' }, { status: 500 })
+  }
+
   if (profiel.team_waitlist === true) {
-    const clerk = await clerkClient()
-    const user = await clerk.users.getUser(userId)
-    const email = user.emailAddresses[0]?.emailAddress ?? null
-    const naam = [user.firstName, user.lastName].filter(Boolean).join(' ') || null
-    await serviceDb
-      .from('arnobot_team_waitlist')
-      .upsert({ user_id: userId, email, naam }, { onConflict: 'user_id' })
+    try {
+      const clerk = await clerkClient()
+      const user = await clerk.users.getUser(userId)
+      const email = user.emailAddresses[0]?.emailAddress ?? null
+      const naam = [user.firstName, user.lastName].filter(Boolean).join(' ') || null
+      await serviceDb
+        .from('arnobot_team_waitlist')
+        .upsert({ user_id: userId, email, naam }, { onConflict: 'user_id' })
+    } catch (e) {
+      console.error('team_waitlist upsert:', e)
+    }
   } else if (profiel.team_waitlist === false) {
     await serviceDb.from('arnobot_team_waitlist').delete().eq('user_id', userId)
   }
