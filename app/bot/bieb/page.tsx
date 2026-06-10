@@ -67,6 +67,7 @@ export default function GeschiedenisPage() {
   const [isDuplicateAnalyse, setIsDuplicateAnalyse] = useState(false)
   const [isSimilarAnalyse, setIsSimilarAnalyse] = useState(false)
   const [isDeltaAnalyse, setIsDeltaAnalyse] = useState(false)
+  const [analyseLimiet, setAnalyseLimiet] = useState(false)
   const analysesSectionRef = useRef<HTMLDivElement>(null)
   const expandedRef = useRef<string | null>(null)
 
@@ -187,6 +188,7 @@ export default function GeschiedenisPage() {
     setIsDuplicateAnalyse(false)
     setIsSimilarAnalyse(false)
     setIsDeltaAnalyse(false)
+    setAnalyseLimiet(false)
     try {
       const body = sessionIds ? { sessionIds } : {}
       const res = await fetch('/api/bot/coaching-analyse', {
@@ -194,6 +196,12 @@ export default function GeschiedenisPage() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(body),
       })
+      if (res.status === 429) {
+        setAnalyseLimiet(true)
+        setAnalyseLoading(false)
+        setSelected(new Set())
+        return
+      }
       const data = await res.json()
       if (data.duplicate) {
         setIsDuplicateAnalyse(true)
@@ -626,6 +634,14 @@ export default function GeschiedenisPage() {
         )}
 
         {/* Analyses sectie */}
+        {analyseLimiet && (
+          <div ref={analysesSectionRef} style={{ borderTop: '1px solid #374151', paddingTop: 32, marginTop: 16 }}>
+            <p style={{ fontFamily: "'Space Mono', monospace", fontSize: 15, color: '#f59e0b', lineHeight: 1.9, border: '1px solid #f59e0b', borderLeft: '3px solid #f59e0b', padding: '16px 20px' }}>
+              Je hebt vandaag al een analyse gemaakt. Basis-gebruikers kunnen 1 analyse per dag aanmaken. Kom morgen terug of upgrade naar Pro voor onbeperkte analyses.
+            </p>
+          </div>
+        )}
+
         {(activeAnalyse || savedAnalyses.length > 0) && (
           <div ref={analysesSectionRef} style={{ borderTop: '1px solid #374151', paddingTop: 40, marginTop: 16 }}>
             <p style={{ color: '#f59e0b', fontSize: 13, letterSpacing: 4, marginBottom: 8 }}>ARNOBOT</p>
