@@ -70,13 +70,9 @@ export default function QAClient({ isOnboarding }: { isOnboarding: boolean }) {
           <h1 style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 'clamp(40px, 6vw, 64px)', color: '#f1f5f9', lineHeight: 1.0, letterSpacing: 3, marginBottom: 16 }}>
             Video.
           </h1>
-          <p style={{ fontFamily: "'Space Mono', monospace", fontSize: 15, color: '#9ca3af', lineHeight: 1.9, marginBottom: 48, maxWidth: 520 }}>
-            Dit is de video die je bij je ArnoBot entree hebt gezien.<br />
-            Heb je vragen die hier niet beantwoord worden?<br />
-            <br />
-            Neem dan contact op met Arno op{' '}
-            <a href="https://t.me/arnodiepeveen" target="_blank" rel="noopener noreferrer" style={{ color: '#f59e0b', textDecoration: 'none' }}>Telegram</a>.<br />
-            Niet de bot, de man.
+          <p style={{ fontFamily: "'Space Mono', monospace", fontSize: 15, color: '#9ca3af', lineHeight: 1.9, marginBottom: 48 }}>
+            Dit is de video die je bij je ArnoBot entree hebt gezien. Heb je vragen die hier niet beantwoord worden? Neem dan contact op met Arno op{' '}
+            <a href="https://t.me/arnodiepeveen" target="_blank" rel="noopener noreferrer" style={{ color: '#f59e0b', textDecoration: 'none' }}>Telegram</a>. Niet de bot, de man 😎
           </p>
 
           {/* Video */}
