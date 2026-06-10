@@ -145,22 +145,26 @@ function ProgressieChart({ history }: { history: ScoreEntry[] }) {
         {(() => {
           const pts = data.map((d, i) => ({ x: xAt(i), y: yAt((d.mindset_score + d.systeem_score + d.actie_score) / 3) }))
           const lp = curvePath(pts)
+          const latestMsa = data[data.length - 1]?.msa_score
           return lp ? (
             <g>
               <path d={lp} fill="none" stroke={TOTAAL_COLOR} strokeWidth="1.5"
                 strokeLinecap="round" strokeLinejoin="round" strokeDasharray="5 3" />
-              {pts.map((pt, i) => {
-                const avg = ((data[i].mindset_score + data[i].systeem_score + data[i].actie_score) / 3).toFixed(1)
-                return (
-                  <g key={i}>
-                    <circle cx={pt.x} cy={pt.y} r="4.5" fill="#111827" stroke={TOTAAL_COLOR} strokeWidth="1.5" />
-                    <text x={pt.x} y={pt.y - 10} fill={TOTAAL_COLOR} fontSize="11"
-                      textAnchor="middle" fontFamily="Bebas Neue, sans-serif" letterSpacing="1">
-                      {avg}
-                    </text>
-                  </g>
-                )
-              })}
+              {pts.map((pt, i) => (
+                <circle key={i} cx={pt.x} cy={pt.y} r="4.5" fill="#111827" stroke={TOTAAL_COLOR} strokeWidth="1.5" />
+              ))}
+              {latestMsa != null && (
+                <g>
+                  <text x={W - PR} y={PT - 10} fill={TOTAAL_COLOR} fontSize="22"
+                    textAnchor="end" fontFamily="Bebas Neue, sans-serif" letterSpacing="1">
+                    {latestMsa}
+                  </text>
+                  <text x={W - PR} y={PT + 4} fill="#6b7280" fontSize="9"
+                    textAnchor="end" fontFamily="Space Mono, monospace" letterSpacing="2">
+                    MSA
+                  </text>
+                </g>
+              )}
             </g>
           ) : null
         })()}
