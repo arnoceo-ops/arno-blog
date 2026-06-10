@@ -69,39 +69,51 @@ export async function POST(req: NextRequest) {
     })
   }
 
-  // Jaccard-overlap: als >= 80% overlap met een bestaande analyse → verwijs terug
-  const similar = existingAnalyses?.find(a => {
-    if (!Array.isArray(a.session_ids) || a.session_ids.length === 0) return false
-    const existingIds = new Set(a.session_ids as string[])
-    const intersection = [...newIds].filter(id => existingIds.has(id)).length
-    const union = new Set([...newIds, ...existingIds]).size
-    return intersection / union >= 0.8
-  })
+  // Jaccard-overlap: als >= 80% overlap → delta-analyse op alleen de nieuwe sessies
+  const similarAnalyse = existingAnalyses
+    ?.map(a => {
+      if (!Array.isArray(a.session_ids) || a.session_ids.length === 0) return null
+      const existingIds = new Set(a.session_ids as string[])
+      const intersection = [...newIds].filter(id => existingIds.has(id)).length
+      const union = new Set([...newIds, ...existingIds]).size
+      return intersection / union >= 0.8 ? a : null
+    })
+    .find(Boolean) ?? null
 
-  if (similar) {
+  const newSessionIds = similarAnalyse
+    ? sessions.filter(s => !(similarAnalyse.session_ids as string[]).includes(s.session_id))
+    : sessions
+
+  const isDelta = !!similarAnalyse && newSessionIds.length > 0
+
+  // Exacte duplicate (geen nieuwe sessies): geef oude analyse terug
+  if (similarAnalyse && newSessionIds.length === 0) {
     return NextResponse.json({
-      similar: true,
-      analyse: similar.analyse_text,
-      id: similar.id,
-      created_at: similar.created_at,
-      count: similar.session_count,
+      duplicate: true,
+      analyse: similarAnalyse.analyse_text,
+      id: similarAnalyse.id,
+      created_at: similarAnalyse.created_at,
+      count: similarAnalyse.session_count,
     })
   }
 
-  const sessiesText = sessions
+  const sessiesText = (isDelta ? newSessionIds : sessions)
     .map((s, i) =>
       `Gesprek ${i + 1} (${new Date(s.created_at).toLocaleDateString('nl-NL')}): ${s.title}${s.summary ? `\nSamenvatting: ${s.summary}` : ''}`
     )
     .join('\n\n')
 
+  const systemPrompt = `Je bent Arno Diepeveen. Salesstrateeg, direct, ongefilterd. Spreek de gebruiker direct aan met "je". Geen bullet points. Geen inleiding. Geen accenten op woorden voor nadruk.`
+
+  const userContent = isDelta
+    ? `Eerder zei je dit over deze persoon:\n"${similarAnalyse.analyse_text}"\n\nSindsdien zijn er ${newSessionIds.length} nieuwe gesprekken. Wat is er veranderd? Benoem concreet wat er nieuw is, wat er doorgebroken is, en wat de volgende stap is. Max 3 alinea's.${profielText}\n\nNIEUWE GESPREKKEN:\n${sessiesText}`
+    : `Analyseer deze ${sessions.length} gesprekken en geef een patroonanalyse in Arno's stijl. Gewoon de patronen, wat ze zeggen, en één concrete uitdaging die de gebruiker zichzelf moet stellen. Max 3 alinea's.${profielText}\n\nGESPREKKEN:\n${sessiesText}`
+
   const response = await anthropic.messages.create({
     model: 'claude-sonnet-4-6',
     max_tokens: 500,
-    system: `Je bent Arno Diepeveen. Salesstrateeg, direct, ongefilterd. Je analyseert de gesprekken van iemand die jouw bot gebruikt en geeft een patroonanalyse. Spreek de gebruiker direct aan met "je". Geen bullet points. Geen inleiding. Gewoon de patronen, wat ze zeggen, en één concrete uitdaging die de gebruiker zichzelf moet stellen. Max 3 alinea's. Geen accenten op woorden voor nadruk.`,
-    messages: [{
-      role: 'user',
-      content: `Analyseer deze ${sessions.length} gesprekken en geef een patroonanalyse in Arno's stijl:${profielText}\n\nGESPREKKEN:\n${sessiesText}`
-    }]
+    system: systemPrompt,
+    messages: [{ role: 'user', content: userContent }]
   })
 
   const analyse = response.content[0].type === 'text' ? response.content[0].text : ''
@@ -117,5 +129,5 @@ export async function POST(req: NextRequest) {
     .select('id, created_at')
     .single()
 
-  return NextResponse.json({ analyse, count: sessions.length, id: saved?.id, created_at: saved?.created_at })
+  return NextResponse.json({ analyse, count: sessions.length, id: saved?.id, created_at: saved?.created_at, delta: isDelta })
 }

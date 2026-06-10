@@ -64,6 +64,7 @@ export default function GeschiedenisPage() {
   const [showAllSessions, setShowAllSessions] = useState(false)
   const [isDuplicateAnalyse, setIsDuplicateAnalyse] = useState(false)
   const [isSimilarAnalyse, setIsSimilarAnalyse] = useState(false)
+  const [isDeltaAnalyse, setIsDeltaAnalyse] = useState(false)
   const analysesSectionRef = useRef<HTMLDivElement>(null)
   const expandedRef = useRef<string | null>(null)
 
@@ -158,6 +159,7 @@ export default function GeschiedenisPage() {
     setActiveAnalyse(null)
     setIsDuplicateAnalyse(false)
     setIsSimilarAnalyse(false)
+    setIsDeltaAnalyse(false)
     try {
       const body = sessionIds ? { sessionIds } : {}
       const res = await fetch('/api/bot/coaching-analyse', {
@@ -169,10 +171,8 @@ export default function GeschiedenisPage() {
       if (data.duplicate) {
         setIsDuplicateAnalyse(true)
         setActiveAnalyse(data.analyse)
-      } else if (data.similar) {
-        setIsSimilarAnalyse(true)
-        setActiveAnalyse(data.analyse)
       } else if (data.analyse) {
+        if (data.delta) setIsDeltaAnalyse(true)
         setActiveAnalyse(data.analyse)
         if (data.id) {
           setSavedAnalyses(prev => [{
@@ -568,9 +568,11 @@ export default function GeschiedenisPage() {
             <p style={{ color: '#f59e0b', fontSize: 13, letterSpacing: 4, marginBottom: 8 }}>ARNOBOT</p>
             <h2 style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 64, letterSpacing: 3, lineHeight: 1, marginBottom: 48 }}>ANALYSES</h2>
 
-            {activeAnalyse && !isDuplicateAnalyse && !isSimilarAnalyse && (
-              <div style={{ marginBottom: 28, background: '#1f2937', borderLeft: '3px solid #f59e0b', padding: '20px 24px' }}>
-                <p style={{ color: '#f59e0b', fontSize: 11, letterSpacing: 4, textTransform: 'uppercase', marginBottom: 12 }}>NIEUW GEGENEREERD</p>
+            {activeAnalyse && !isDuplicateAnalyse && (
+              <div style={{ marginBottom: 28, background: '#1f2937', borderLeft: `3px solid ${isDeltaAnalyse ? '#f59e0b' : '#f59e0b'}`, padding: '20px 24px' }}>
+                <p style={{ color: '#f59e0b', fontSize: 11, letterSpacing: 4, textTransform: 'uppercase', marginBottom: 12 }}>
+                  {isDeltaAnalyse ? 'WAT ER VERANDERD IS' : 'NIEUW GEGENEREERD'}
+                </p>
                 <p style={{ color: '#9ca3af', fontSize: 15, lineHeight: 1.9, fontFamily: "'Space Mono', monospace", whiteSpace: 'pre-wrap', marginBottom: 16 }}>{activeAnalyse}</p>
                 <button
                   onClick={() => setActiveAnalyse(null)}
@@ -584,14 +586,6 @@ export default function GeschiedenisPage() {
               <p style={{ color: '#6b7280', fontSize: 12, letterSpacing: 2, fontFamily: "'Space Mono', monospace", marginBottom: 28 }}>
                 Deze combinatie is al eerder geanalyseerd — zie hieronder.
               </p>
-            )}
-            {isSimilarAnalyse && (
-              <div style={{ background: '#1f2937', borderLeft: '3px solid #6b7280', padding: '20px 24px', marginBottom: 28 }}>
-                <p style={{ color: '#9ca3af', fontSize: 13, letterSpacing: 3, fontFamily: "'Bebas Neue', sans-serif", marginBottom: 10 }}>WEINIG VERANDERD</p>
-                <p style={{ color: '#6b7280', fontSize: 15, lineHeight: 1.9, fontFamily: "'Space Mono', monospace" }}>
-                  Je gesprekken overlappen voor meer dan 80% met een eerdere analyse. Er is niet genoeg veranderd om iets nieuws te zeggen. Ga eens aan de slag met wat er al staat — voer nieuwe gesprekken en kom dan terug.
-                </p>
-              </div>
             )}
 
             {savedAnalyses.map(a => (
