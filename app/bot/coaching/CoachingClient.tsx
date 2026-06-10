@@ -33,6 +33,17 @@ interface SavedAnalyse {
   session_count: number
 }
 
+// SCOREGESCHIEDENIS — zet op false om te verbergen
+const SCORE_HISTORY_ENABLED = true
+
+interface ScoreEntry {
+  mindset_score: number
+  systeem_score: number
+  actie_score: number
+  msa_score: number
+  created_at: string
+}
+
 interface Props {
   userId: string
 }
@@ -53,6 +64,7 @@ export default function CoachingClient({ userId }: Props) {
   const [stats, setStats] = useState<Stats | null>(null)
   const [analyses, setAnalyses] = useState<SavedAnalyse[]>([])
   const [uitdaging, setUitdaging] = useState<string | null>(null)
+  const [scoreHistory, setScoreHistory] = useState<ScoreEntry[]>([])
 
   useEffect(() => {
     const cacheKey = `arnobot_coaching_doc_${userId}`
@@ -89,6 +101,13 @@ export default function CoachingClient({ userId }: Props) {
       .then(r => r.json())
       .then(data => setAnalyses(data.analyses ?? []))
       .catch(() => {})
+
+    if (SCORE_HISTORY_ENABLED) {
+      fetch('/api/bot/coaching-scores')
+        .then(r => r.json())
+        .then(data => setScoreHistory(data.scores ?? []))
+        .catch(() => {})
+    }
 
     const today = new Date().toISOString().slice(0, 10)
     const uitdagingKey = `arnobot_uitdaging_${today}`
@@ -189,6 +208,15 @@ export default function CoachingClient({ userId }: Props) {
         .loading-dot { width: 8px; height: 8px; background: #f59e0b; border-radius: 50%; animation: pulse 1.2s ease-in-out infinite; display: inline-block; margin: 0 3px; }
         .loading-dot:nth-child(2) { animation-delay: 0.2s; }
         .loading-dot:nth-child(3) { animation-delay: 0.4s; }
+
+        .score-row { display: flex; align-items: center; gap: 20px; padding: 14px 0; border-bottom: 1px solid #1f2937; flex-wrap: wrap; }
+        .score-row:last-child { border-bottom: none; }
+        .score-date { font-family: 'Space Mono', monospace; font-size: 12px; color: #6b7280; letter-spacing: 2px; min-width: 90px; }
+        .score-pijlars { display: flex; gap: 16px; flex: 1; }
+        .score-pijlar { display: flex; flex-direction: column; align-items: center; gap: 2px; }
+        .score-pijlar-label { font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 3px; color: #4b5563; }
+        .score-pijlar-num { font-family: 'Bebas Neue', sans-serif; font-size: 28px; color: #f1f5f9; line-height: 1; }
+        .score-msa { font-family: 'Bebas Neue', sans-serif; font-size: 40px; color: #f59e0b; line-height: 1; min-width: 40px; text-align: right; }
 
         @media (max-width: 640px) {
           .msa-grid { grid-template-columns: 1fr; gap: 2px; }
@@ -329,6 +357,37 @@ export default function CoachingClient({ userId }: Props) {
                 ))}
               </div>
             </div>
+
+            {/* Scoregeschiedenis */}
+            {SCORE_HISTORY_ENABLED && scoreHistory.length > 0 && (
+              <div className="coaching-section">
+                <span className="coaching-label">PROGRESSIE</span>
+                <div style={{ marginTop: 8 }}>
+                  {scoreHistory.map((s, i) => {
+                    const d = new Date(s.created_at)
+                    const dateStr = d.toLocaleDateString('nl-NL', { day: 'numeric', month: 'short', year: '2-digit' }).toUpperCase()
+                    return (
+                      <div key={i} className="score-row">
+                        <span className="score-date">{dateStr}</span>
+                        <div className="score-pijlars">
+                          {[
+                            { label: 'MINDSET', score: s.mindset_score },
+                            { label: 'SYSTEEM', score: s.systeem_score },
+                            { label: 'ACTIE',   score: s.actie_score   },
+                          ].map(({ label, score }) => (
+                            <div key={label} className="score-pijlar">
+                              <span className="score-pijlar-label">{label}</span>
+                              <span className="score-pijlar-num">{score}</span>
+                            </div>
+                          ))}
+                        </div>
+                        <span className="score-msa">{s.msa_score}</span>
+                      </div>
+                    )
+                  })}
+                </div>
+              </div>
+            )}
 
             {/* Verdieping */}
             {(doc.blogs?.length ?? 0) > 0 && (

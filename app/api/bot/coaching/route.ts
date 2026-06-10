@@ -216,5 +216,15 @@ Return ALLEEN een JSON array, geen uitleg eromheen:
 
   if (saveResult.error) console.error('[coaching POST save]', saveResult.error.message)
 
+  const msaScore = Math.max(1, Math.ceil((parsed.mindset_score * parsed.systeem_score * parsed.actie_score) / 1.25))
+  const { error: scoreErr } = await supabase.from('arnobot_coaching_scores').insert({
+    user_id: userId,
+    mindset_score: parsed.mindset_score,
+    systeem_score: parsed.systeem_score,
+    actie_score: parsed.actie_score,
+    msa_score: msaScore,
+  })
+  if (scoreErr) console.error('[coaching scores insert]', scoreErr.message)
+
   return NextResponse.json({ coaching: doc })
 }
