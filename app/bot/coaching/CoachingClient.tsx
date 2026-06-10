@@ -268,7 +268,7 @@ export default function CoachingClient({ userId }: Props) {
         .coaching-body { color: #9ca3af; font-size: 15px; line-height: 1.9; font-weight: 400; font-family: 'Space Mono', monospace; white-space: pre-wrap; }
 
         .msa-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; margin: 32px 0 48px; }
-        .msa-card { background: #1f2937; padding: 32px 28px; text-align: center; }
+        .msa-card { background: #1f2937; padding: clamp(16px,4vw,32px) clamp(8px,3vw,28px); text-align: center; }
         .msa-score-number { font-family: 'Bebas Neue', sans-serif; font-size: 80px; color: #f1f5f9; line-height: 1; }
         .msa-dots { display: flex; gap: 6px; margin: 12px 0 8px; justify-content: center; }
         .msa-dot-filled { width: 10px; height: 10px; border-radius: 50%; background: #f59e0b; border: 1.5px solid #f59e0b; }
@@ -303,8 +303,8 @@ export default function CoachingClient({ userId }: Props) {
         .progressie-legend-label { font-family: 'Space Mono', monospace; font-size: 11px; letter-spacing: 3px; color: #6b7280; }
 
         @media (max-width: 640px) {
-          .msa-grid { grid-template-columns: 1fr; gap: 2px; }
-          .msa-score-number { font-size: 64px; }
+          .msa-grid { grid-template-columns: repeat(3, 1fr); }
+          .msa-score-number { font-size: clamp(36px, 10vw, 64px); }
         }
         @media print {
           body { background: #fff !important; color: #000 !important; }
