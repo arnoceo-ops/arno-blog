@@ -100,7 +100,7 @@ export default function QAClient({ isOnboarding }: { isOnboarding: boolean }) {
             <div style={{ display: 'flex', flexDirection: 'column', gap: 0 }}>
               {FAQS.map((faq, i) => (
                 <div key={i} style={{ borderBottom: '1px solid #374151', paddingBottom: 28, marginBottom: 28 }}>
-                  <p style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 22, letterSpacing: 1, color: '#f1f5f9', marginBottom: 10 }}>{faq.q}</p>
+                  <p style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 20, letterSpacing: 1, color: '#f1f5f9', marginBottom: 10 }}>{faq.q}</p>
                   <p style={{ fontFamily: "'Space Mono', monospace", fontSize: 15, color: '#9ca3af', lineHeight: 1.9 }}>{faq.a}</p>
                 </div>
               ))}
