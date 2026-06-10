@@ -516,7 +516,11 @@ export default function GeschiedenisPage() {
               )}
 
               {isOpen && (
-                <div style={{ paddingBottom: 40, animation: 'fadein 0.3s ease' }}>
+                <div
+                  onClick={() => toggleSession(session.session_id)}
+                  style={{ paddingBottom: 40, animation: 'fadein 0.3s ease', cursor: 'pointer' }}
+                  title="Klik om te sluiten"
+                >
                   {session.summary && (
                     <div style={{ background: '#1f2937', borderLeft: '3px solid #f59e0b', padding: '20px 24px', marginBottom: 32 }}>
                       <p style={{ color: '#f59e0b', fontSize: 13, fontWeight: 700, fontFamily: "'Space Mono', monospace", letterSpacing: 4, textTransform: 'uppercase', marginBottom: 12 }}>SYNTHESE</p>
@@ -525,7 +529,7 @@ export default function GeschiedenisPage() {
                         <div style={{ borderTop: '1px solid #374151', paddingTop: 20 }}>
                           <p style={{ color: '#9ca3af', fontSize: 11, letterSpacing: 4, textTransform: 'uppercase', marginBottom: 12, fontFamily: "'Bebas Neue', sans-serif" }}>VERDER LEZEN</p>
                           {session.blog_suggestions.map((b, i) => (
-                            <a key={i} href={b.url} target="_blank" rel="noopener noreferrer" style={{
+                            <a key={i} href={b.url} target="_blank" rel="noopener noreferrer" onClick={e => e.stopPropagation()} style={{
                               display: 'block', color: '#9ca3af', textDecoration: 'none',
                               fontFamily: "'Bebas Neue', sans-serif", fontSize: 20, letterSpacing: 1.5,
                               lineHeight: 1, padding: '10px 16px', marginBottom: 2,
@@ -568,15 +572,24 @@ export default function GeschiedenisPage() {
                     </div>
                   ))}
 
-                  <div style={{ marginTop: 24, paddingTop: 24, borderTop: '1px solid #374151' }}>
+                  <div style={{ marginTop: 24, paddingTop: 24, borderTop: '1px solid #374151', display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: 16 }}>
                     <Link
                       href={`/bot?resume=${session.session_id}`}
+                      onClick={e => e.stopPropagation()}
                       style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 18, letterSpacing: 3, color: '#9ca3af', textDecoration: 'none' }}
                       onMouseOver={e => (e.currentTarget.style.color = '#f59e0b')}
                       onMouseOut={e => (e.currentTarget.style.color = '#9ca3af')}
                     >
                       ← Vervolg dit gesprek met ArnoBot.
                     </Link>
+                    <button
+                      onClick={() => { toggleSession(session.session_id); window.scrollTo({ top: 0, behavior: 'smooth' }) }}
+                      style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 18, letterSpacing: 3, color: '#9ca3af', background: 'none', border: 'none', cursor: 'pointer', padding: 0 }}
+                      onMouseOver={e => (e.currentTarget.style.color = '#f1f5f9')}
+                      onMouseOut={e => (e.currentTarget.style.color = '#9ca3af')}
+                    >
+                      SLUITEN ↑
+                    </button>
                   </div>
                 </div>
               )}
