@@ -130,9 +130,9 @@ export default function SparClient({ userId, profiel, tier, taglineTitle, taglin
   )
   const [recording, setRecording] = useState(false)
   const [speechSupported, setSpeechSupported] = useState(false)
-  const [voices, setVoices] = useState<SpeechSynthesisVoice[]>([])
-  const [selectedVoice, setSelectedVoice] = useState<string>('')
-  const [voicePickerOpen, setVoicePickerOpen] = useState(false)
+  const [ttsLoading, setTtsLoading] = useState<number | null>(null)
+  const [ttsSpeed, setTtsSpeed] = useState(1.0)
+  const [ttsSpeedOpen, setTtsSpeedOpen] = useState(false)
   const [feedbackOpen, setFeedbackOpen] = useState(false)
   const [feedbackText, setFeedbackText] = useState('')
   const [feedbackSent, setFeedbackSent] = useState(false)
@@ -144,6 +144,7 @@ export default function SparClient({ userId, profiel, tier, taglineTitle, taglin
   const [teamPrompt, setTeamPrompt] = useState(false)
   const [isManager, setIsManager] = useState(false)
   const recognitionRef = useRef<any>(null)
+  const audioRef = useRef<HTMLAudioElement | null>(null)
   const bottomRef = useRef<HTMLDivElement>(null)
   const inputRef = useRef<HTMLTextAreaElement>(null)
   const synthesisRef = useRef<HTMLDivElement>(null)
@@ -155,22 +156,8 @@ export default function SparClient({ userId, profiel, tier, taglineTitle, taglin
   useEffect(() => {
     const SR = (window as any).SpeechRecognition || (window as any).webkitSpeechRecognition
     if (SR) setSpeechSupported(true)
-
-    const loadVoices = () => {
-      const v = window.speechSynthesis.getVoices()
-      if (v.length > 0) {
-        setVoices(v)
-        const saved = localStorage.getItem('arnobot_voice')
-        if (saved && v.find(x => x.name === saved)) {
-          setSelectedVoice(saved)
-        } else {
-          const dutch = v.find(x => x.lang.startsWith('nl'))
-          setSelectedVoice(dutch?.name ?? v[0]?.name ?? '')
-        }
-      }
-    }
-    loadVoices()
-    window.speechSynthesis.onvoiceschanged = loadVoices
+    const saved = localStorage.getItem('arnobot_tts_speed')
+    if (saved) setTtsSpeed(parseFloat(saved))
   }, [])
 
   function toggleRecording() {
@@ -394,18 +381,37 @@ export default function SparClient({ userId, profiel, tier, taglineTitle, taglin
     setTimeout(() => inputRef.current?.focus(), 150)
   }
 
-  function speak(text: string, idx: number) {
-    window.speechSynthesis.cancel()
-    if (speakingIdx === idx) { setSpeakingIdx(null); return }
-    const clean = text.replace(/\*\*([^*]+)\*\*/g, '$1').replace(/\*([^*]+)\*/g, '$1').replace(/_([^_]+)_/g, '$1').replace(/\[([^\]]+)\]\([^)]+\)/g, '$1')
-    const utt = new SpeechSynthesisUtterance(clean)
-    const voice = voices.find(v => v.name === selectedVoice)
-    if (voice) utt.voice = voice
-    utt.lang = voice?.lang ?? 'nl-NL'
-    utt.onend = () => setSpeakingIdx(null)
-    utt.onerror = () => setSpeakingIdx(null)
-    setSpeakingIdx(idx)
-    window.speechSynthesis.speak(utt)
+  async function speak(text: string, idx: number) {
+    if (speakingIdx === idx) {
+      audioRef.current?.pause()
+      audioRef.current = null
+      setSpeakingIdx(null)
+      return
+    }
+    if (audioRef.current) { audioRef.current.pause(); audioRef.current = null }
+    setSpeakingIdx(null)
+    setTtsLoading(idx)
+    try {
+      const clean = text.replace(/\*\*([^*]+)\*\*/g, '$1').replace(/\*([^*]+)\*/g, '$1').replace(/_([^_]+)_/g, '$1').replace(/\[([^\]]+)\]\([^)]+\)/g, '$1')
+      const res = await fetch('/api/tts', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ text: clean, speed: ttsSpeed })
+      })
+      if (!res.ok) throw new Error('TTS mislukt')
+      const blob = await res.blob()
+      const url = URL.createObjectURL(blob)
+      const audio = new Audio(url)
+      audioRef.current = audio
+      audio.onended = () => { setSpeakingIdx(null); URL.revokeObjectURL(url) }
+      audio.onerror = () => { setSpeakingIdx(null) }
+      setSpeakingIdx(idx)
+      audio.play()
+    } catch {
+      setSpeakingIdx(null)
+    } finally {
+      setTtsLoading(null)
+    }
   }
 
   async function handleNieuw() {
@@ -1283,32 +1289,31 @@ export default function SparClient({ userId, profiel, tier, taglineTitle, taglin
                       <button
                         onClick={() => speak(msg.content, i)}
                         title={speakingIdx === i ? 'Stop' : 'Beluister'}
-                        style={{ background: 'none', border: 'none', cursor: 'pointer', color: speakingIdx === i ? '#f59e0b' : '#374151', fontSize: 18, padding: 0, transition: 'color 0.15s', lineHeight: 1 }}
-                        onMouseEnter={e => { if (speakingIdx !== i) (e.currentTarget as HTMLButtonElement).style.color = '#6b7280' }}
-                        onMouseLeave={e => { if (speakingIdx !== i) (e.currentTarget as HTMLButtonElement).style.color = '#374151' }}
+                        disabled={ttsLoading !== null && ttsLoading !== i}
+                        style={{ background: 'none', border: 'none', cursor: ttsLoading === i ? 'wait' : 'pointer', color: speakingIdx === i ? '#f59e0b' : ttsLoading === i ? '#f59e0b' : '#374151', fontSize: 18, padding: 0, transition: 'color 0.15s', lineHeight: 1 }}
+                        onMouseEnter={e => { if (speakingIdx !== i && ttsLoading !== i) (e.currentTarget as HTMLButtonElement).style.color = '#6b7280' }}
+                        onMouseLeave={e => { if (speakingIdx !== i && ttsLoading !== i) (e.currentTarget as HTMLButtonElement).style.color = '#374151' }}
                       >
-                        {speakingIdx === i ? '⏹' : '▶'}
+                        {ttsLoading === i ? '⏳' : speakingIdx === i ? '⏹' : '▶'}
                       </button>
-                      {i === messages.findIndex(m => m.role === 'arno') && voices.length > 1 && (
+                      {i === messages.findIndex(m => m.role === 'arno') && (
                         <button
-                          onClick={() => setVoicePickerOpen(o => !o)}
-                          title="Kies stem"
-                          style={{ background: 'none', border: 'none', cursor: 'pointer', color: '#374151', fontSize: 12, padding: 0, lineHeight: 1, transition: 'color 0.15s' }}
+                          onClick={() => setTtsSpeedOpen(o => !o)}
+                          title="Snelheid"
+                          style={{ background: 'none', border: 'none', cursor: 'pointer', color: '#374151', fontSize: 11, padding: 0, lineHeight: 1, fontFamily: "'Space Mono', monospace", transition: 'color 0.15s' }}
                           onMouseEnter={e => (e.currentTarget.style.color = '#6b7280')}
                           onMouseLeave={e => (e.currentTarget.style.color = '#374151')}
                         >⚙</button>
                       )}
-                      {voicePickerOpen && i === messages.findIndex(m => m.role === 'arno') && (
-                        <div style={{ position: 'absolute', top: '100%', left: 0, zIndex: 200, background: '#1f2937', border: '1px solid #374151', padding: '8px 0', minWidth: 240, maxHeight: 280, overflowY: 'auto', boxShadow: '0 8px 24px rgba(0,0,0,0.4)' }}>
-                          {voices.map(v => (
+                      {ttsSpeedOpen && i === messages.findIndex(m => m.role === 'arno') && (
+                        <div style={{ position: 'absolute', top: '100%', left: 0, zIndex: 200, background: '#1f2937', border: '1px solid #374151', padding: '6px 0', boxShadow: '0 8px 24px rgba(0,0,0,0.4)' }}>
+                          {[0.75, 1.0, 1.25].map(s => (
                             <button
-                              key={v.name}
-                              onClick={() => { setSelectedVoice(v.name); localStorage.setItem('arnobot_voice', v.name); setVoicePickerOpen(false) }}
-                              style={{ display: 'block', width: '100%', textAlign: 'left', background: v.name === selectedVoice ? '#374151' : 'none', border: 'none', cursor: 'pointer', padding: '8px 14px', fontFamily: "'Space Mono', monospace", fontSize: 11, color: v.name === selectedVoice ? '#f59e0b' : '#9ca3af', letterSpacing: 1, transition: 'all 0.1s' }}
-                              onMouseEnter={e => { if (v.name !== selectedVoice) (e.currentTarget as HTMLButtonElement).style.background = '#374151' }}
-                              onMouseLeave={e => { if (v.name !== selectedVoice) (e.currentTarget as HTMLButtonElement).style.background = 'none' }}
+                              key={s}
+                              onClick={() => { setTtsSpeed(s); localStorage.setItem('arnobot_tts_speed', String(s)); setTtsSpeedOpen(false) }}
+                              style={{ display: 'block', width: '100%', textAlign: 'left', background: ttsSpeed === s ? '#374151' : 'none', border: 'none', cursor: 'pointer', padding: '7px 14px', fontFamily: "'Space Mono', monospace", fontSize: 11, color: ttsSpeed === s ? '#f59e0b' : '#9ca3af', letterSpacing: 1, whiteSpace: 'nowrap' }}
                             >
-                              {v.name} <span style={{ color: '#4b5563' }}>({v.lang})</span>
+                              {s === 0.75 ? '0.75× langzamer' : s === 1.0 ? '1.0× normaal' : '1.25× sneller'}
                             </button>
                           ))}
                         </div>
