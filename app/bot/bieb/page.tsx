@@ -393,6 +393,15 @@ export default function GeschiedenisPage() {
               {selected.size > 0 ? 'DESELECTEER ALLES' : 'SELECTEER ALLES'}
             </button>
             <div style={{ display: 'flex', gap: 4 }}>
+              {showAllSessions && !search && sorted.length > 5 && (
+                <button
+                  className="sort-btn"
+                  style={{ borderRadius: 8 }}
+                  onClick={() => setShowAllSessions(false)}
+                >
+                  TOON MINDER ↑
+                </button>
+              )}
               <button
                 className={`sort-btn${sort === 'newest' || sort === 'oldest' ? ' active' : ''}`}
                 style={{ borderRadius: 8, minWidth: 110 }}
