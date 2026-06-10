@@ -49,7 +49,8 @@ export async function POST(req: Request) {
       console.error('team_waitlist upsert:', e)
     }
   } else if (profiel.team_waitlist === false) {
-    await serviceDb.from('arnobot_team_waitlist').delete().eq('user_id', userId)
+    const { error: deleteErr } = await serviceDb.from('arnobot_team_waitlist').delete().eq('user_id', userId)
+    if (deleteErr) console.error('team_waitlist delete:', deleteErr)
   }
 
   return NextResponse.json({ ok: true })

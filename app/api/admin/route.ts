@@ -7,7 +7,8 @@ const supabaseAdmin = createClient(
   process.env.SUPABASE_SECRET_KEY!
 )
 
-const ADMIN_ID = process.env.ADMIN_USER_ID!
+const ADMIN_ID = process.env.ADMIN_USER_ID
+if (!ADMIN_ID) console.error('ADMIN_USER_ID env var not set')
 
 export async function POST(req: NextRequest) {
   try {
@@ -38,7 +39,7 @@ export async function POST(req: NextRequest) {
   }
 }
 
-export async function GET(req: NextRequest) {
+export async function GET() {
   try {
     const { userId } = await auth()
 

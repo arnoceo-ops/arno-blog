@@ -122,6 +122,7 @@ export async function POST(req: NextRequest) {
     if (!isWidget) {
       const { userId: sessionUserId } = await auth()
       userId = sessionUserId
+      if (!userId) return NextResponse.json({ error: 'Unauthorized' }, { status: 401, headers: corsHeaders(origin) })
     }
 
     const sessionId = clientSessionId ?? userId ?? (ip ? `${ip}-${new Date().toISOString().slice(0, 10)}` : 'unknown')
