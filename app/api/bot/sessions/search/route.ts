@@ -28,6 +28,7 @@ export async function GET(req: NextRequest) {
     return NextResponse.json({ sessions: [] })
   }
 
+  console.log('[search] raw results:', JSON.stringify((data ?? []).map((s: { similarity: number; title?: string }) => ({ similarity: s.similarity, title: s.title }))))
   const filtered = (data ?? [])
     .filter((s: { similarity: number }) => s.similarity >= 0.65)
     .slice(0, 5)
