@@ -624,7 +624,7 @@ export default function GeschiedenisPage() {
               </p>
             )}
 
-            {savedAnalyses.map(a => (
+            {savedAnalyses.slice(activeAnalyse && !isDuplicateAnalyse ? 1 : 0).map(a => (
               <div key={a.id} style={{ borderTop: '1px solid #374151', animation: 'fadein 0.3s ease' }}>
                 <button
                   onClick={() => {
