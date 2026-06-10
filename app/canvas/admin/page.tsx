@@ -7,7 +7,6 @@ import { useSupabaseClient } from '@/lib/supabase'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 
-const ADMIN_USER_ID = process.env.NEXT_PUBLIC_ADMIN_USER_ID
 const ALL_TOTAL = 82
 
 type UserProfile = {
@@ -27,14 +26,21 @@ export default function AdminPage() {
   const [inviteEmail, setInviteEmail] = useState('')
   const [inviteStatus, setInviteStatus] = useState('')
   const [loading, setLoading] = useState(true)
+  const [isAdmin, setIsAdmin] = useState<boolean | null>(null)
 
   useEffect(() => {
-    if (isLoaded && !user) router.push('/sign-in')
-    if (isLoaded && user && user.id !== ADMIN_USER_ID) router.push('/canvas')
+    if (isLoaded && !user) { router.push('/sign-in'); return }
+    if (!user) return
+    fetch('/api/canvas/admin/verify')
+      .then(r => r.json())
+      .then(d => {
+        if (!d.isAdmin) router.push('/canvas')
+        else setIsAdmin(true)
+      })
   }, [isLoaded, user, router])
 
   useEffect(() => {
-    if (!user || user.id !== ADMIN_USER_ID) return
+    if (!isAdmin) return
     const load = async () => {
       const { data: profiles } = await supabase
         .from('user_profiles')
@@ -85,7 +91,7 @@ export default function AdminPage() {
     setTimeout(() => setInviteStatus(''), 3000)
   }
 
-  if (!isLoaded || !user || user.id !== ADMIN_USER_ID) return null
+  if (!isLoaded || !user || !isAdmin) return null
 
   return (
     <main style={{ backgroundColor: '#111827', minHeight: '100vh', color: '#f1f5f9', fontFamily: 'var(--font-geist-sans), sans-serif', padding: '64px 48px' }}>

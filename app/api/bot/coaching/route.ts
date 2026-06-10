@@ -30,7 +30,7 @@ export async function POST() {
   const { userId } = await auth()
   if (!userId) return NextResponse.json({ error: 'Niet ingelogd' }, { status: 401 })
 
-  const [sessionsRes, analysesRes, profielRes, prevScoreRes] = await Promise.all([
+  const [sessionsRes, analysesRes, profielRes, prevScoreRes, prevCoachingRes] = await Promise.all([
     supabase
       .from('arnobot_blog_sessions')
       .select('title, summary, feiten, message_count, created_at')
@@ -55,11 +55,25 @@ export async function POST() {
       .order('created_at', { ascending: false })
       .limit(1)
       .maybeSingle(),
+    supabase
+      .from('arnobot_coaching')
+      .select('updated_at')
+      .eq('user_id', userId)
+      .maybeSingle(),
   ])
 
   const sessions = sessionsRes.data ?? []
   if (sessions.length < 5) {
     return NextResponse.json({ error: 'te_weinig', count: sessions.length }, { status: 400 })
+  }
+
+  const prevCoaching = prevCoachingRes.data
+  if (prevCoaching?.updated_at) {
+    const hoursSince = (Date.now() - new Date(prevCoaching.updated_at).getTime()) / 3600000
+    const newSessions = sessions.filter(s => s.created_at > prevCoaching.updated_at).length
+    if (hoursSince < 48 && newSessions < 10) {
+      return NextResponse.json({ error: 'te_vroeg' }, { status: 429 })
+    }
   }
 
   const analyses = analysesRes.data ?? []
