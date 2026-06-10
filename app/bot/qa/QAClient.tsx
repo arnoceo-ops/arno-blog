@@ -24,7 +24,7 @@ const FAQS = [
     q: 'Zijn mijn gegevens veilig?',
     a: (
       <>
-        Jouw gesprekken en profiel zijn strikt vertrouwelijk. We slaan je data op bij gecertificeerde sub-verwerkers (Supabase, Clerk, Vercel, Anthropic). Je kunt je data altijd downloaden of je account verwijderen. Lees onze{' '}
+        Jouw gesprekken en profiel zijn strikt vertrouwelijk. We slaan je gegevens op bij gecertificeerde sub-verwerkers (Supabase, Clerk, Vercel, Anthropic). Je kunt je data altijd downloaden of je account verwijderen. Lees onze{' '}
         <a href="/privacy" style={{ color: '#f59e0b', textDecoration: 'none' }}>privacyverklaring</a>.
       </>
     ),
