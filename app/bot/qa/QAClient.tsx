@@ -99,7 +99,7 @@ export default function QAClient({ isOnboarding }: { isOnboarding: boolean }) {
           <div style={{ borderTop: '3px solid #f59e0b', paddingTop: 40, marginBottom: 64 }}>
             <p style={{ fontFamily: "'Space Mono', monospace", fontWeight: 400, fontSize: 13, letterSpacing: 4, color: '#f59e0b', marginBottom: 8 }}>VRAGEN</p>
             <h2 style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 64, letterSpacing: 3, color: '#f1f5f9', lineHeight: 1.0, marginBottom: 40 }}>
-              Veel gestelde vragen
+              FAQ
             </h2>
 
             <div style={{ display: 'flex', flexDirection: 'column', gap: 0 }}>
