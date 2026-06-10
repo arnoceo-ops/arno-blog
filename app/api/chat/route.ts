@@ -131,11 +131,27 @@ export async function POST(req: NextRequest) {
 
     // Content moderatie voor widget
     if (isWidget && ip) {
+      const lastArnoMessage = history && history.length > 0
+        ? history.filter((m: { role: string }) => m.role === 'assistant').slice(-1)[0]?.content
+        : null
+
+      const moderatiePrompt = lastArnoMessage
+        ? `Je beoordeelt een widget-gesprek over sales en business.
+
+Vorige vraag/opmerking van ArnoBot: "${lastArnoMessage}"
+Reactie van de gebruiker: "${question}"
+
+Antwoord met precies één woord:
+ONGEPAST — seksueel, beledigend of trollen
+OFFTOPIC — heeft geen logische samenhang met het gesprek én gaat niet over sales/business
+OK — logisch vervolg op het gesprek of relevant voor sales/business`
+        : `Categoriseer het bericht. Antwoord met precies één woord: ONGEPAST (seksueel, beledigend, trollen), OFFTOPIC (niet over sales/business/Arno, maar niet beledigend), of OK.`
+
       const checkRes = await client.messages.create({
         model: 'claude-haiku-4-5-20251001',
         max_tokens: 10,
-        system: 'Categoriseer het bericht. Antwoord met precies één woord: ONGEPAST (seksueel, beledigend, trollen), OFFTOPIC (niet over sales/business/Arno, maar niet beledigend), of OK.',
-        messages: [{ role: 'user', content: `Categoriseer: "${question}"` }]
+        system: moderatiePrompt,
+        messages: [{ role: 'user', content: lastArnoMessage ? 'Beoordeel deze reactie.' : `Categoriseer: "${question}"` }]
       })
       const check = checkRes.content[0].type === 'text' ? checkRes.content[0].text.trim().toUpperCase() : 'OK'
 
@@ -144,7 +160,7 @@ export async function POST(req: NextRequest) {
         return NextResponse.json({ redirect: LOST_URL }, { headers: corsHeaders(origin) })
       }
 
-      if (check.includes('OFFTOPIC') && history && history.length > 0) {
+      if (check.includes('OFFTOPIC')) {
         await supabase.from('arno_blog_widget_blocked').upsert({ ip }, { onConflict: 'ip' })
         return NextResponse.json({ answer: '...echt, joh?' }, { headers: corsHeaders(origin) })
       }
