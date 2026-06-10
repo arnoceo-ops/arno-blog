@@ -33,9 +33,14 @@ export default function WelkomPage() {
 
         <div style={{ width: '100%', maxWidth: 720 }}>
           <p style={{ fontFamily: "'Space Mono', monospace", fontWeight: 700, fontSize: 13, letterSpacing: 4, color: '#f59e0b', marginBottom: 12 }}>ARNOBOT</p>
-          <h1 style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 'clamp(48px,10vw,80px)', letterSpacing: 3, lineHeight: 1, color: '#f1f5f9', marginBottom: 8 }}>WELKOM.</h1>
+          <h1 style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 'clamp(48px,10vw,80px)', letterSpacing: 3, lineHeight: 1, color: '#f1f5f9', marginBottom: 8 }}>VIDEO.</h1>
           <p style={{ fontSize: 15, lineHeight: 1.9, color: '#9ca3af', marginBottom: 32 }}>
-            Kijk even de video af. Dan weet je precies hoe je het meeste uit ArnoBot haalt.
+            Dit is de video die je bij je ArnoBot entree hebt gezien.<br />
+            Heb je vragen die hier niet beantwoord worden?<br />
+            <br />
+            Neem dan contact op met Arno op{' '}
+            <a href="https://t.me/arnodiepeveen" target="_blank" rel="noopener noreferrer" style={{ color: '#f59e0b', textDecoration: 'none' }}>Telegram</a>.<br />
+            Niet de bot, de man.
           </p>
 
           <video
