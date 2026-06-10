@@ -476,7 +476,7 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
                 /* NAV */
         .site-nav {
           position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-          padding: 0 40px; height: 64px; display: flex; align-items: center;
+          padding: 0 clamp(20px,5vw,60px); height: 64px; display: flex; align-items: center;
           border-bottom: 1px solid rgba(255,255,255,0.06);
           background: rgba(17,24,39,0.95); backdrop-filter: blur(12px);
         }
