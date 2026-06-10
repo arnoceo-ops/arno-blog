@@ -66,13 +66,17 @@ export default function QAClient({ isOnboarding }: { isOnboarding: boolean }) {
       <div style={{ minHeight: '100vh', paddingTop: 64, background: '#111827' }}>
         <div style={{ maxWidth: 812, margin: '0 auto', padding: 'clamp(60px,8vw,80px) clamp(16px,4vw,20px) 80px' }}>
 
-          <p style={{ fontFamily: "'Space Mono', monospace", fontSize: 13, letterSpacing: 4, color: '#f59e0b', marginBottom: 8 }}>WELKOM</p>
+          <p style={{ fontFamily: "'Space Mono', monospace", fontSize: 13, letterSpacing: 4, color: '#f59e0b', marginBottom: 8 }}>ARNOBOT</p>
           <h1 style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 'clamp(40px, 6vw, 64px)', color: '#f1f5f9', lineHeight: 1.0, letterSpacing: 3, marginBottom: 16 }}>
-            Voordat je begint.
+            Video.
           </h1>
           <p style={{ fontFamily: "'Space Mono', monospace", fontSize: 15, color: '#9ca3af', lineHeight: 1.9, marginBottom: 48, maxWidth: 520 }}>
-            Kijk de introductievideo en lees de vragen hieronder.<br />
-            Daarna richt je je profiel in. Dat duurt 3 minuten.
+            Dit is de video die je bij je ArnoBot entree hebt gezien.<br />
+            Heb je vragen die hier niet beantwoord worden?<br />
+            <br />
+            Neem dan contact op met Arno op{' '}
+            <a href="https://t.me/arnodiepeveen" target="_blank" rel="noopener noreferrer" style={{ color: '#f59e0b', textDecoration: 'none' }}>Telegram</a>.<br />
+            Niet de bot, de man.
           </p>
 
           {/* Video */}
