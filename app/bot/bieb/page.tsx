@@ -339,20 +339,16 @@ export default function GeschiedenisPage() {
 
         {!loading && sessions.length > 0 && (
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 2, marginBottom: 48 }}>
-            <div style={{ background: '#1f2937', padding: '28px 20px', textAlign: 'center' }}>
-              <div style={{ fontFamily: "'Space Mono', monospace", fontWeight: 700, fontSize: 13, letterSpacing: 4, color: '#f59e0b', marginBottom: 12 }}>GESPREKKEN</div>
-              <div style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 64, color: '#f1f5f9', lineHeight: 1 }}>{sessions.length}</div>
-            </div>
-            <div style={{ background: '#1f2937', padding: '28px 20px', textAlign: 'center' }}>
-              <div style={{ fontFamily: "'Space Mono', monospace", fontWeight: 700, fontSize: 13, letterSpacing: 4, color: '#f59e0b', marginBottom: 12 }}>VRAGEN</div>
-              <div style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 64, color: '#f1f5f9', lineHeight: 1 }}>
-                {sessions.reduce((sum, s) => sum + (s.message_count || 0), 0)}
+            {[
+              { label: 'GESPREKKEN', value: sessions.length },
+              { label: 'VRAGEN', value: sessions.reduce((sum, s) => sum + (s.message_count || 0), 0) },
+              { label: 'ANALYSES', value: savedAnalyses.length },
+            ].map(({ label, value }) => (
+              <div key={label} style={{ background: '#1f2937', padding: 'clamp(16px,3vw,28px) clamp(8px,2vw,20px)', textAlign: 'center' }}>
+                <div style={{ fontFamily: "'Space Mono', monospace", fontWeight: 700, fontSize: 'clamp(9px,2vw,13px)', letterSpacing: 'clamp(1px,0.5vw,4px)', color: '#f59e0b', marginBottom: 8 }}>{label}</div>
+                <div style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 'clamp(36px,9vw,64px)', color: '#f1f5f9', lineHeight: 1 }}>{value}</div>
               </div>
-            </div>
-            <div style={{ background: '#1f2937', padding: '28px 20px', textAlign: 'center' }}>
-              <div style={{ fontFamily: "'Space Mono', monospace", fontWeight: 700, fontSize: 13, letterSpacing: 4, color: '#f59e0b', marginBottom: 12 }}>ANALYSES</div>
-              <div style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 64, color: '#f1f5f9', lineHeight: 1 }}>{savedAnalyses.length}</div>
-            </div>
+            ))}
           </div>
         )}
 
