@@ -528,25 +528,17 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
 
         /* HERO */
         .spar-hero {
-          height: 400px;
           border-bottom: 3px solid #f59e0b;
-          display: flex; justify-content: space-between; align-items: flex-start;
-          position: relative;
-          padding: clamp(20px,3vw,36px) clamp(20px,5vw,60px) 28px clamp(20px,5vw,60px);
-          overflow: hidden;
+          display: flex; flex-direction: column; align-items: center; justify-content: center;
+          text-align: center;
+          padding: clamp(48px,8vw,80px) clamp(20px,5vw,60px) clamp(40px,6vw,64px);
         }
         .spar-title {
           font-family: 'Bebas Neue', sans-serif;
-          font-size: clamp(64px, 10vw, 120px);
-          line-height: 0.9; letter-spacing: -2px; white-space: nowrap;
+          font-size: clamp(72px, 14vw, 140px);
+          line-height: 0.9; letter-spacing: -2px;
         }
         .spar-title span { color: #f59e0b; }
-        @media (max-width: 600px) {
-          .spar-hero {
-            height: auto; flex-direction: column; align-items: flex-start;
-            padding: 0 0 0 0; gap: 0;
-          }
-        }
         .spar-tagline {
           text-align: right; flex: 1; min-width: 0;
           align-self: flex-start;
@@ -1003,42 +995,10 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
       <div className="spar-page" style={started ? { paddingBottom: isMobile ? 200 : 160 } : {}}>
 
         <div className="spar-hero">
-          <div style={{ flex: '0 0 auto', display: 'flex', alignItems: isMobile ? 'flex-start' : 'flex-end', flexDirection: isMobile ? 'column' : 'row', gap: isMobile ? 0 : 'clamp(12px, 1.5vw, 24px)', width: isMobile ? '100%' : 'auto' }}>
-            <img src="/cyborg.jpg" alt="Arno" style={{ height: isMobile ? 'auto' : 300, width: isMobile ? '100%' : 'auto', display: 'block', flexShrink: 0 }} />
-            <h1 className="spar-title" style={{ marginBottom: isMobile ? 0 : '-18px', padding: isMobile ? '12px 20px' : 0, fontSize: isMobile ? 'clamp(52px, 14vw, 80px)' : undefined }}>
-              ARNO<span>BOT.</span>
-            </h1>
-          </div>
-          {!isMobile && (
-            <div style={{ position: 'absolute', left: '50%', transform: 'translateX(-50%)', top: 'clamp(20px,3vw,36px)', display: 'flex', alignItems: 'flex-start', pointerEvents: 'none' }}>
-              {(() => {
-                const total = 17
-                const idx = Math.floor(Date.now() / (48 * 60 * 60 * 1000)) % total + 1
-                return (
-                  <img
-                    src={`/header-fotos/foto-${idx}.jpg`}
-                    alt=""
-                    style={{ height: 300, width: 'auto', display: 'block' }}
-                  />
-                )
-              })()}
-            </div>
-          )}
-          <div className="spar-tagline">
-            <p style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 'clamp(28px, 3.2vw, 48px)', letterSpacing: 2, color: '#f1f5f9', lineHeight: 1.05 }}>
-              ARNO<span style={{ color: '#f59e0b' }}>BOT.</span><br />
-              JOUW 24/7 NO EXCUSES SALES COACH
-            </p>
-            <p className="spar-tagline-sub" style={{ fontFamily: "'Space Mono', monospace", fontSize: 'clamp(14px, 1.3vw, 18px)', color: '#f1f5f9', lineHeight: 1.8, textAlign: 'right' }}>
-              Betere relaties. Meer deals.<br />
-              Hogere marges. Harder groeien.
-            </p>
-            <p className="spar-tagline-sub" style={{ fontFamily: "'Space Mono', monospace", fontSize: 15, color: '#9ca3af', lineHeight: 1.9 }}>
-              gebouwd op 40 jaar sales, 30 jaar entrepreneurship,<br />
-              20 jaar bloggen, 15 jaar scale-up coaching.<br />
-              369.000 woorden. altijd up to date.
-            </p>
-          </div>
+          <h1 className="spar-title">ARNO<span>BOT.</span></h1>
+          <p style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 'clamp(22px, 4vw, 40px)', letterSpacing: 2, color: '#9ca3af', lineHeight: 1.2, marginTop: 16 }}>
+            JOUW 24/7 NO EXCUSES<br />SALES COACH
+          </p>
         </div>
 
         {teamPrompt && !started && (
