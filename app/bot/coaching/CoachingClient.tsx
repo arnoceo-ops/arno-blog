@@ -316,7 +316,7 @@ export default function CoachingClient({ userId }: Props) {
             <div className="coaching-section">
               <span className="coaching-label">JOUW ONTWIKKELPUNTEN</span>
               <div style={{ marginTop: 8 }}>
-                {doc.ontwikkelpunten.map((p, i) => (
+                {(doc.ontwikkelpunten ?? []).map((p, i) => (
                   <div key={i} className="ontwikkelpunt">
                     <span className="ontwikkelpunt-nr">{i + 1}</span>
                     <div>
@@ -331,7 +331,7 @@ export default function CoachingClient({ userId }: Props) {
             </div>
 
             {/* Verdieping */}
-            {doc.blogs.length > 0 && (
+            {(doc.blogs?.length ?? 0) > 0 && (
               <div className="coaching-section">
                 <span className="coaching-label">ARNO.BLOGS</span>
                 <div style={{ marginTop: 8 }}>

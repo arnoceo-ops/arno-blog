@@ -201,6 +201,7 @@ Return ALLEEN een JSON array, geen uitleg eromheen:
   } catch {}
 
   const doc = { ...parsed, blogs, conversation_count: sessions.length }
+  const payload = { ...doc, updated_at: new Date().toISOString() }
 
   const { data: existing } = await supabase
     .from('arnobot_coaching')
@@ -210,8 +211,8 @@ Return ALLEEN een JSON array, geen uitleg eromheen:
     .maybeSingle()
 
   const saveResult = existing
-    ? await supabase.from('arnobot_coaching').update(doc).eq('user_id', userId)
-    : await supabase.from('arnobot_coaching').insert({ user_id: userId, ...doc })
+    ? await supabase.from('arnobot_coaching').update(payload).eq('user_id', userId)
+    : await supabase.from('arnobot_coaching').insert({ user_id: userId, ...payload })
 
   if (saveResult.error) console.error('[coaching POST save]', saveResult.error.message)
 
