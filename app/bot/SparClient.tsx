@@ -538,9 +538,15 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
         .spar-title {
           font-family: 'Bebas Neue', sans-serif;
           font-size: clamp(64px, 10vw, 120px);
-          line-height: 0.9; letter-spacing: -2px;
+          line-height: 0.9; letter-spacing: -2px; white-space: nowrap;
         }
         .spar-title span { color: #f59e0b; }
+        @media (max-width: 600px) {
+          .spar-hero {
+            height: auto; flex-direction: column; align-items: flex-start;
+            padding: 0 0 0 0; gap: 0;
+          }
+        }
         .spar-tagline {
           text-align: right; flex: 1; min-width: 0;
           align-self: flex-start;
@@ -997,10 +1003,10 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
       <div className="spar-page" style={started ? { paddingBottom: isMobile ? 200 : 160 } : {}}>
 
         <div className="spar-hero">
-          <div style={{ flex: '0 0 auto', display: 'flex', alignItems: 'flex-end', gap: 'clamp(12px, 1.5vw, 24px)' }}>
-            <img src="/cyborg.jpg" alt="Arno" style={{ height: 300, width: 'auto', display: 'block', flexShrink: 0 }} />
-            <h1 className="spar-title" style={{ marginBottom: '-18px' }}>
-              ARNO<br /><span>BOT.</span>
+          <div style={{ flex: '0 0 auto', display: 'flex', alignItems: isMobile ? 'flex-start' : 'flex-end', flexDirection: isMobile ? 'column' : 'row', gap: isMobile ? 0 : 'clamp(12px, 1.5vw, 24px)', width: isMobile ? '100%' : 'auto' }}>
+            <img src="/cyborg.jpg" alt="Arno" style={{ height: isMobile ? 'auto' : 300, width: isMobile ? '100%' : 'auto', display: 'block', flexShrink: 0 }} />
+            <h1 className="spar-title" style={{ marginBottom: isMobile ? 0 : '-18px', padding: isMobile ? '12px 20px' : 0, fontSize: isMobile ? 'clamp(52px, 14vw, 80px)' : undefined }}>
+              ARNO<span>BOT.</span>
             </h1>
           </div>
           {!isMobile && (
