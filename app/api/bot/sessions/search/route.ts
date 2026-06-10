@@ -28,9 +28,12 @@ export async function GET(req: NextRequest) {
     return NextResponse.json({ sessions: [] })
   }
 
-  console.log('[search] raw results:', JSON.stringify((data ?? []).map((s: { similarity: number; title?: string }) => ({ similarity: s.similarity, title: s.title }))))
-  const filtered = (data ?? [])
-    .filter((s: { similarity: number }) => s.similarity >= 0.65)
-    .slice(0, 5)
+  const results = (data ?? []) as { similarity: number; title?: string }[]
+  // Na RPC fix: 1 - cosine_distance = cosine_similarity (0.65+ = relevant)
+  // Sorteer laagste distance eerst (meest relevant), neem top 5 boven threshold
+  const isDistanceMode = results.length > 0 && results[0].similarity < 0.5
+  const filtered = isDistanceMode
+    ? results.sort((a, b) => a.similarity - b.similarity).filter(s => s.similarity <= 0.35).slice(0, 5)
+    : results.filter(s => s.similarity >= 0.65).slice(0, 5)
   return NextResponse.json({ sessions: filtered })
 }
