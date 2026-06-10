@@ -13,20 +13,21 @@ const FAQS = [
     a: 'Wees concreet. Beschrijf je situatie, je markt en je uitdaging zo specifiek mogelijk. ArnoBot is geen zoekmachine; het is een coach. Stel vragen zoals je dat aan een senior advisor zou doen.',
   },
   {
-    q: 'Is mijn gesprek privé?',
-    a: 'Ja. Jouw sessies zijn volledig privé. Niemand anders heeft toegang tot jouw gesprekken.',
-  },
-  {
     q: 'Wat als het antwoord niet klopt?',
     a: 'ArnoBot antwoordt altijd vanuit de bibliotheek. Als een antwoord je verbaast, kun je doorvragen. Gebruik je eigen oordeel, net als bij een gesprek met een echte coach.',
   },
   {
     q: 'Wat is het verschil met ChatGPT?',
-    a: 'ChatGPT is generiek. ArnoBot is uitsluitend getraind op Arno\'s content. Geen Wikipedia, geen internet. Alleen wat Arno heeft geschreven en gedoceerd in 40 jaar.',
+    a: 'ChatGPT is een generieke LLM. Het middelt wat het kan vinden. ArnoBot heeft focus op jouw profiel en persoonlijke succes. Dan pas data. ArnoBot redeneert uitsluitend binnen het kader van Arno\'s content.',
   },
   {
-    q: 'Wat doet ArnoBot met mijn gegevens?',
-    a: 'Jouw gesprekken en profiel zijn strikt vertrouwelijk. We slaan je data op bij gecertificeerde sub-verwerkers (Supabase, Clerk, Vercel, Anthropic) en verkopen niets door. Je kunt je data op elk moment downloaden of je account verwijderen. Lees de volledige privacyverklaring op arno.bot/privacy.',
+    q: 'Zijn mijn gegevens veilig?',
+    a: (
+      <>
+        Jouw gesprekken en profiel zijn strikt vertrouwelijk. We slaan je data op bij gecertificeerde sub-verwerkers (Supabase, Clerk, Vercel, Anthropic). Je kunt je data altijd downloaden of je account verwijderen. Lees onze{' '}
+        <a href="/privacy" style={{ color: '#f59e0b', textDecoration: 'none' }}>privacyverklaring</a>.
+      </>
+    ),
   },
 ]
 
