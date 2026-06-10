@@ -439,7 +439,7 @@ export default function GeschiedenisPage() {
           const isSelected = selected.has(session.session_id)
           const isOpen = expanded === session.session_id
           return (
-            <div key={session.session_id} style={{ borderTop: '1px solid #374151', animation: 'fadein 0.3s ease', padding: isOpen ? '0 20px' : undefined }}>
+            <div key={session.session_id} id={`session-${session.session_id}`} style={{ borderTop: '1px solid #374151', animation: 'fadein 0.3s ease', padding: isOpen ? '0 20px' : undefined }}>
 
               {isMobile ? (
                 /* Mobile card layout */
@@ -517,7 +517,12 @@ export default function GeschiedenisPage() {
 
               {isOpen && (
                 <div
-                  onClick={() => toggleSession(session.session_id)}
+                  onClick={() => {
+                    toggleSession(session.session_id)
+                    setTimeout(() => {
+                      document.getElementById(`session-${session.session_id}`)?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+                    }, 50)
+                  }}
                   style={{ paddingBottom: 40, animation: 'fadein 0.3s ease', cursor: 'pointer' }}
                   title="Klik om te sluiten"
                 >
