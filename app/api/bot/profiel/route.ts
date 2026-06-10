@@ -26,6 +26,11 @@ export async function POST(req: Request) {
     return NextResponse.json({ error: 'Server error' }, { status: 500 })
   }
 
+  await serviceDb
+    .from('approved_users')
+    .update({ onboarding_done: true })
+    .eq('user_id', userId)
+
   if (profiel.team_waitlist === true) {
     const clerk = await clerkClient()
     const user = await clerk.users.getUser(userId)

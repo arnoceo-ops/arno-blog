@@ -12,7 +12,7 @@ const isPublicRoute = createRouteMatcher([
   '/sign-up(.*)',
 ])
 
-const isProtectedBot = createRouteMatcher(['/bot', '/bot/profiel', '/bot/account', '/bot/archief'])
+const isProtectedBot = createRouteMatcher(['/bot', '/bot/:path*'])
 
 export default clerkMiddleware(async (auth, req) => {
   const path = req.nextUrl.pathname
@@ -33,7 +33,7 @@ export default clerkMiddleware(async (auth, req) => {
 
     let { data: user } = await supabase
       .from('approved_users')
-      .select('is_active, paid_at, expires_at, trial_start')
+      .select('is_active, paid_at, expires_at, trial_start, welcome_seen, onboarding_done')
       .eq('user_id', userId)
       .single()
 
@@ -46,7 +46,7 @@ export default clerkMiddleware(async (auth, req) => {
         if (email) {
           const { data: pending } = await supabase
             .from('approved_users')
-            .select('is_active, paid_at, expires_at, trial_start')
+            .select('is_active, paid_at, expires_at, trial_start, welcome_seen, onboarding_done')
             .eq('email', email)
             .like('user_id', 'pending_%')
             .single()
@@ -79,7 +79,7 @@ export default clerkMiddleware(async (auth, req) => {
               is_active: true,
             }
             await supabase.from('approved_users').insert(newRow)
-            user = { is_active: true, paid_at: null, expires_at: null, trial_start: newRow.trial_start }
+            user = { is_active: true, paid_at: null, expires_at: null, trial_start: newRow.trial_start, welcome_seen: false, onboarding_done: false }
             // Welkomstmail — fire and forget
             const resend = new Resend(process.env.RESEND_API_KEY)
             const voornaam = clerkUser.firstName || 'daar'
@@ -140,6 +140,15 @@ export default clerkMiddleware(async (auth, req) => {
 
     if (!toegestaan) {
       return NextResponse.redirect(new URL('/bot-aanmelden', req.url))
+    }
+
+    const welcome_seen = (user as any).welcome_seen as boolean | null
+    const onboarding_done = (user as any).onboarding_done as boolean | null
+
+    if (!welcome_seen) {
+      if (path !== '/bot/welkom') return NextResponse.redirect(new URL('/bot/welkom', req.url))
+    } else if (!onboarding_done) {
+      if (path !== '/bot/profiel') return NextResponse.redirect(new URL('/bot/profiel', req.url))
     }
   }
 })

@@ -380,7 +380,7 @@ export default function BotProfielPage() {
               display: 'block', margin: '0 auto',
             }}
           >
-            {saving ? 'Bezig...' : isFirstTime ? 'START ARNOBOT →' : 'PROFIEL OPSLAAN →'}
+            {saving ? 'Bezig...' : isFirstTime ? 'IK GA AKKOORD EN START →' : 'PROFIEL OPSLAAN →'}
           </button>
         </div>
       </div>
