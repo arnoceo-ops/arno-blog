@@ -217,7 +217,7 @@ export default function GeschiedenisPage() {
   }
 
   const hasSelected = selected.size > 0
-  const isSemanticMode = semanticSessions !== null
+  const isSemanticMode = semanticSessions !== null && semanticSessions.length > 0
   const visibleSessions = isSemanticMode
     ? semanticSessions
     : (search ? sorted : sorted.slice(0, showAllSessions ? sorted.length : 5))
@@ -385,7 +385,7 @@ export default function GeschiedenisPage() {
               onClick={() => {
                 if (selected.size > 0) setSelected(new Set())
                 else {
-                  const pool = isSemanticMode ? semanticSessions! : sorted
+                  const pool = isSemanticMode && semanticSessions ? semanticSessions : sorted
                   setSelected(new Set(pool.slice(0, ANALYSE_MAX).map(s => s.session_id)))
                 }
               }}
