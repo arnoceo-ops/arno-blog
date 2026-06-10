@@ -28,5 +28,6 @@ export async function GET(req: NextRequest) {
     return NextResponse.json({ sessions: [] })
   }
 
-  return NextResponse.json({ sessions: data ?? [] })
+  const filtered = (data ?? []).filter((s: { similarity: number }) => s.similarity >= 0.65)
+  return NextResponse.json({ sessions: filtered })
 }

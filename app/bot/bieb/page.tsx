@@ -377,7 +377,7 @@ export default function GeschiedenisPage() {
         </div>
 
         {/* Knoppen balk */}
-        {!loading && sorted.length > 0 && (
+        {!loading && visibleSessions.length > 0 && (
           <div style={{ marginBottom: 32, padding: '4px 0', display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 12, flexWrap: 'wrap' }}>
             <button
               className={`sort-btn${selected.size > 0 ? ' active' : ''}`}
