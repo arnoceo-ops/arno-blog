@@ -1199,9 +1199,7 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
               </>
             )}
             <span className="spar-questions-label">{isSalesOnlyProfiel ? 'of selecteer een van de onderstaande vragen' : 'en selecteer een van de onderstaande vragen'}</span>
-            {!isSalesOnlyProfiel && (
-              <span className="spar-questions-sub">als het je bezighoudt, dan hè? waarom zou je er anders antwoord op willen hebben?</span>
-            )}
+            <span className="spar-questions-sub">als het je bezighoudt, dan hè? waarom zou je er anders antwoord op willen hebben?</span>
             <div className="openers-grid-line" />
             <div className="openers-grid">
               {(openerModus === 'strategisch' ? VRAGEN_STRATEGISCH : openerModus === 'organisatorisch' ? VRAGEN_ORGANISATORISCH : VRAGEN_OPERATIONEEL).map((q, i) => (
