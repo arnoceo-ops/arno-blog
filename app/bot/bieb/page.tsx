@@ -92,11 +92,16 @@ export default function GeschiedenisPage() {
     return new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
   })
 
+  const ANALYSE_MAX = 20
+
   function toggleSelect(sessionId: string) {
     setSelected(prev => {
       const next = new Set(prev)
-      if (next.has(sessionId)) next.delete(sessionId)
-      else next.add(sessionId)
+      if (next.has(sessionId)) {
+        next.delete(sessionId)
+      } else if (next.size < ANALYSE_MAX) {
+        next.add(sessionId)
+      }
       return next
     })
   }
@@ -347,14 +352,14 @@ export default function GeschiedenisPage() {
         {!loading && sorted.length > 0 && (
           <div style={{ marginBottom: 32, padding: '4px 0', display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 12, flexWrap: 'wrap' }}>
             <button
-              className={`sort-btn${selected.size === sorted.length ? ' active' : ''}`}
+              className={`sort-btn${selected.size > 0 ? ' active' : ''}`}
               style={{ borderRadius: 8 }}
               onClick={() => {
-                if (selected.size === sorted.length) setSelected(new Set())
-                else setSelected(new Set(sorted.map(s => s.session_id)))
+                if (selected.size > 0) setSelected(new Set())
+                else setSelected(new Set(sorted.slice(0, ANALYSE_MAX).map(s => s.session_id)))
               }}
             >
-              {selected.size === sorted.length ? 'DESELECTEER ALLES' : 'SELECTEER ALLES'}
+              {selected.size > 0 ? 'DESELECTEER ALLES' : 'SELECTEER ALLES'}
             </button>
             <div style={{ display: 'flex', gap: 4 }}>
               <button

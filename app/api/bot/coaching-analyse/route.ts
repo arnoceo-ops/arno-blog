@@ -44,6 +44,9 @@ export async function POST(req: NextRequest) {
   if (sessions.length < minRequired) {
     return NextResponse.json({ error: 'te_weinig', count: sessions.length }, { status: 400 })
   }
+  if (sessions.length > 20) {
+    return NextResponse.json({ error: 'te_veel', max: 20 }, { status: 400 })
+  }
 
   // Dedup: check exacte match of grote overlap (Jaccard >= 0.8)
   const newIds = new Set(sessions.map(s => s.session_id))
