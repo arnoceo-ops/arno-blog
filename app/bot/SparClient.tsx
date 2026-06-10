@@ -1177,7 +1177,7 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
         </div>}
 
         {!started && !loading && (
-          <div className="spar-openers" style={isSalesOnlyProfiel ? { paddingTop: 156 } : undefined}>
+          <div className="spar-openers" style={isSalesOnlyProfiel ? { paddingTop: 20 } : undefined}>
             {!isSalesOnlyProfiel && (
               <>
                 <span className="spar-discipline-label">of kies een discipline</span>
