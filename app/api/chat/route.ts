@@ -161,8 +161,15 @@ OK — logisch vervolg op het gesprek of relevant voor sales/business`
       }
 
       if (check.includes('OFFTOPIC')) {
-        await supabase.from('arno_blog_widget_blocked').upsert({ ip }, { onConflict: 'ip' })
-        return NextResponse.json({ answer: '...echt, joh?' }, { headers: corsHeaders(origin) })
+        const alreadyWarned = history && history.some(
+          (m: { role: string; content: string }) =>
+            m.role === 'assistant' && m.content?.includes('Zullen we het zakelijk houden?')
+        )
+        if (alreadyWarned) {
+          await supabase.from('arno_blog_widget_blocked').upsert({ ip }, { onConflict: 'ip' })
+          return NextResponse.json({ redirect: LOST_URL }, { headers: corsHeaders(origin) })
+        }
+        return NextResponse.json({ answer: 'Zullen we het zakelijk houden?', hint: null }, { headers: corsHeaders(origin) })
       }
     }
 
