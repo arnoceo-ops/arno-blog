@@ -35,6 +35,7 @@ export async function GET(req: NextRequest) {
 }
 
 import Anthropic from '@anthropic-ai/sdk'
+import { auth } from '@clerk/nextjs/server'
 import { createClient } from '@supabase/supabase-js'
 import { getRelevantChunks, formatChunksForPrompt } from '@/lib/rag'
 
@@ -110,12 +111,20 @@ ${context}`
 
 export async function POST(req: NextRequest) {
   try {
-    const { question, history, userId, profiel, sessionId: clientSessionId } = await req.json()
+    const { question, history, userId: bodyUserId, profiel, sessionId: clientSessionId } = await req.json()
     const origin = req.headers.get('origin')
     const ip = req.headers.get('x-forwarded-for')?.split(',')[0]?.trim() || null
-    const sessionId = clientSessionId ?? userId ?? (ip ? `${ip}-${new Date().toISOString().slice(0, 10)}` : 'unknown')
 
     const isWidget = origin?.includes('arno.blog') ?? false
+
+    // Voor ArnoBot-gebruikers (niet-widget): altijd de Clerk session gebruiken, nooit de body-waarde vertrouwen
+    let userId: string | null = bodyUserId ?? null
+    if (!isWidget) {
+      const { userId: sessionUserId } = await auth()
+      userId = sessionUserId
+    }
+
+    const sessionId = clientSessionId ?? userId ?? (ip ? `${ip}-${new Date().toISOString().slice(0, 10)}` : 'unknown')
     const LOST_URL = 'https://arno.blog/lost'
 
     // Geblokkeerde IPs direct doorsturen

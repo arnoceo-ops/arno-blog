@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { clerkClient } from '@clerk/nextjs/server'
+import { auth, clerkClient } from '@clerk/nextjs/server'
 import { createClient } from '@supabase/supabase-js'
 
 const supabaseAdmin = createClient(
@@ -7,13 +7,14 @@ const supabaseAdmin = createClient(
   process.env.SUPABASE_SECRET_KEY!
 )
 
-const ADMIN_ID = 'user_3Anf3P2XruhPw1Zkko7sxqrfUvp'
+const ADMIN_ID = process.env.ADMIN_USER_ID!
 
 export async function POST(req: NextRequest) {
   try {
-    const { userId, email } = await req.json()
+    const { userId: _ignored, email } = await req.json()
+    const { userId } = await auth()
 
-    if (userId !== ADMIN_ID) {
+    if (!userId || userId !== ADMIN_ID) {
       return NextResponse.json({ error: 'Geen toegang.' }, { status: 403 })
     }
 
@@ -39,10 +40,9 @@ export async function POST(req: NextRequest) {
 
 export async function GET(req: NextRequest) {
   try {
-    const { searchParams } = new URL(req.url)
-    const userId = searchParams.get('userId')
+    const { userId } = await auth()
 
-    if (userId !== ADMIN_ID) {
+    if (!userId || userId !== ADMIN_ID) {
       return NextResponse.json({ error: 'Geen toegang.' }, { status: 403 })
     }
 
