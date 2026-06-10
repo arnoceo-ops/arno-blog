@@ -130,6 +130,9 @@ export default function SparClient({ userId, profiel, tier, taglineTitle, taglin
   )
   const [recording, setRecording] = useState(false)
   const [speechSupported, setSpeechSupported] = useState(false)
+  const [voices, setVoices] = useState<SpeechSynthesisVoice[]>([])
+  const [selectedVoice, setSelectedVoice] = useState<string>('')
+  const [voicePickerOpen, setVoicePickerOpen] = useState(false)
   const [feedbackOpen, setFeedbackOpen] = useState(false)
   const [feedbackText, setFeedbackText] = useState('')
   const [feedbackSent, setFeedbackSent] = useState(false)
@@ -152,6 +155,22 @@ export default function SparClient({ userId, profiel, tier, taglineTitle, taglin
   useEffect(() => {
     const SR = (window as any).SpeechRecognition || (window as any).webkitSpeechRecognition
     if (SR) setSpeechSupported(true)
+
+    const loadVoices = () => {
+      const v = window.speechSynthesis.getVoices()
+      if (v.length > 0) {
+        setVoices(v)
+        const saved = localStorage.getItem('arnobot_voice')
+        if (saved && v.find(x => x.name === saved)) {
+          setSelectedVoice(saved)
+        } else {
+          const dutch = v.find(x => x.lang.startsWith('nl'))
+          setSelectedVoice(dutch?.name ?? v[0]?.name ?? '')
+        }
+      }
+    }
+    loadVoices()
+    window.speechSynthesis.onvoiceschanged = loadVoices
   }, [])
 
   function toggleRecording() {
@@ -380,7 +399,9 @@ export default function SparClient({ userId, profiel, tier, taglineTitle, taglin
     if (speakingIdx === idx) { setSpeakingIdx(null); return }
     const clean = text.replace(/\*\*([^*]+)\*\*/g, '$1').replace(/\*([^*]+)\*/g, '$1').replace(/_([^_]+)_/g, '$1').replace(/\[([^\]]+)\]\([^)]+\)/g, '$1')
     const utt = new SpeechSynthesisUtterance(clean)
-    utt.lang = 'nl-NL'
+    const voice = voices.find(v => v.name === selectedVoice)
+    if (voice) utt.voice = voice
+    utt.lang = voice?.lang ?? 'nl-NL'
     utt.onend = () => setSpeakingIdx(null)
     utt.onerror = () => setSpeakingIdx(null)
     setSpeakingIdx(idx)
@@ -1257,7 +1278,7 @@ export default function SparClient({ userId, profiel, tier, taglineTitle, taglin
               <div key={i} ref={msg.content?.startsWith('**Terugblik') ? synthesisRef : i === messages.length - 1 ? lastMessageRef : undefined}>
                 {msg.content && (
                   <div className="msg-arno" style={isMobile ? { flexDirection: 'column', gap: 4 } : {}}>
-                    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 8, minWidth: 48, paddingTop: 2, flexShrink: 0 }}>
+                    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 8, minWidth: 48, paddingTop: 2, flexShrink: 0, position: 'relative' }}>
                       <span className="msg-arno-label">ARNO</span>
                       <button
                         onClick={() => speak(msg.content, i)}
@@ -1268,6 +1289,30 @@ export default function SparClient({ userId, profiel, tier, taglineTitle, taglin
                       >
                         {speakingIdx === i ? '⏹' : '▶'}
                       </button>
+                      {i === messages.findIndex(m => m.role === 'arno') && voices.length > 1 && (
+                        <button
+                          onClick={() => setVoicePickerOpen(o => !o)}
+                          title="Kies stem"
+                          style={{ background: 'none', border: 'none', cursor: 'pointer', color: '#374151', fontSize: 12, padding: 0, lineHeight: 1, transition: 'color 0.15s' }}
+                          onMouseEnter={e => (e.currentTarget.style.color = '#6b7280')}
+                          onMouseLeave={e => (e.currentTarget.style.color = '#374151')}
+                        >⚙</button>
+                      )}
+                      {voicePickerOpen && i === messages.findIndex(m => m.role === 'arno') && (
+                        <div style={{ position: 'absolute', top: '100%', left: 0, zIndex: 200, background: '#1f2937', border: '1px solid #374151', padding: '8px 0', minWidth: 240, maxHeight: 280, overflowY: 'auto', boxShadow: '0 8px 24px rgba(0,0,0,0.4)' }}>
+                          {voices.map(v => (
+                            <button
+                              key={v.name}
+                              onClick={() => { setSelectedVoice(v.name); localStorage.setItem('arnobot_voice', v.name); setVoicePickerOpen(false) }}
+                              style={{ display: 'block', width: '100%', textAlign: 'left', background: v.name === selectedVoice ? '#374151' : 'none', border: 'none', cursor: 'pointer', padding: '8px 14px', fontFamily: "'Space Mono', monospace", fontSize: 11, color: v.name === selectedVoice ? '#f59e0b' : '#9ca3af', letterSpacing: 1, transition: 'all 0.1s' }}
+                              onMouseEnter={e => { if (v.name !== selectedVoice) (e.currentTarget as HTMLButtonElement).style.background = '#374151' }}
+                              onMouseLeave={e => { if (v.name !== selectedVoice) (e.currentTarget as HTMLButtonElement).style.background = 'none' }}
+                            >
+                              {v.name} <span style={{ color: '#4b5563' }}>({v.lang})</span>
+                            </button>
+                          ))}
+                        </div>
+                      )}
                     </div>
                     <span className="msg-arno-text" dangerouslySetInnerHTML={{ __html: renderContent(msg.content) }} />
                   </div>
