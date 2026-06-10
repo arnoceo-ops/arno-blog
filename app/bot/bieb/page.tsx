@@ -632,24 +632,45 @@ export default function GeschiedenisPage() {
                     setExpanded(null); expandedRef.current = null; setConvMessages([])
                     setExpandedAnalyse(a.id)
                   }}
-                  style={{ width: '100%', background: 'none', border: 'none', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 24, textAlign: 'left', padding: '28px 0' }}
+                  style={{ width: '100%', background: 'none', border: 'none', cursor: 'pointer', textAlign: 'left', padding: '20px 0' }}
                 >
-                  <span style={{ color: '#9ca3af', fontSize: 11, letterSpacing: 2, textTransform: 'uppercase', whiteSpace: 'nowrap', minWidth: isMobile ? 0 : 120, fontFamily: "'Space Mono', monospace" }}>
-                    {isMobile ? formatDateShort(a.created_at) : formatDate(a.created_at)}
-                  </span>
-                  <div style={{ flex: 1 }}>
-                    <p style={{ color: '#f1f5f9', fontSize: 20, fontFamily: "'Bebas Neue', sans-serif", letterSpacing: 1, lineHeight: 1.4 }}>
-                      {getAnalyseTitle(a.analyse_text)}
-                    </p>
-                  </div>
-                  <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: 6, flexShrink: 0 }}>
-                    <span style={{ color: '#9ca3af', fontSize: 11, letterSpacing: 2, textTransform: 'uppercase', whiteSpace: 'nowrap', fontFamily: "'Space Mono', monospace" }}>
-                      {a.session_count} {a.session_count === 1 ? 'GESPREK' : 'GESPREKKEN'}
-                    </span>
-                    <span style={{ color: expandedAnalyse === a.id ? '#f59e0b' : '#9ca3af', fontSize: 18, fontFamily: "'Bebas Neue', sans-serif", letterSpacing: 2 }}>
-                      {expandedAnalyse === a.id ? '↑ SLUITEN' : '↓ OPEN'}
-                    </span>
-                  </div>
+                  {isMobile ? (
+                    <div>
+                      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 8 }}>
+                        <span style={{ color: '#9ca3af', fontSize: 11, letterSpacing: 2, textTransform: 'uppercase', fontFamily: "'Space Mono', monospace" }}>
+                          {formatDateShort(a.created_at)}
+                        </span>
+                        <span style={{ color: '#6b7280', fontSize: 11, letterSpacing: 2, textTransform: 'uppercase', fontFamily: "'Space Mono', monospace" }}>
+                          {a.session_count} {a.session_count === 1 ? 'GESPREK' : 'GESPREKKEN'}
+                        </span>
+                      </div>
+                      <p style={{ color: '#f1f5f9', fontSize: 18, fontFamily: "'Bebas Neue', sans-serif", letterSpacing: 1, lineHeight: 1.4, marginBottom: 8 }}>
+                        {getAnalyseTitle(a.analyse_text)}
+                      </p>
+                      <span style={{ color: expandedAnalyse === a.id ? '#f59e0b' : '#6b7280', fontSize: 13, fontFamily: "'Bebas Neue', sans-serif", letterSpacing: 2 }}>
+                        {expandedAnalyse === a.id ? '↑ SLUITEN' : '↓ OPEN'}
+                      </span>
+                    </div>
+                  ) : (
+                    <div style={{ display: 'flex', alignItems: 'center', gap: 24 }}>
+                      <span style={{ color: '#9ca3af', fontSize: 11, letterSpacing: 2, textTransform: 'uppercase', whiteSpace: 'nowrap', minWidth: 120, fontFamily: "'Space Mono', monospace" }}>
+                        {formatDate(a.created_at)}
+                      </span>
+                      <div style={{ flex: 1 }}>
+                        <p style={{ color: '#f1f5f9', fontSize: 20, fontFamily: "'Bebas Neue', sans-serif", letterSpacing: 1, lineHeight: 1.4 }}>
+                          {getAnalyseTitle(a.analyse_text)}
+                        </p>
+                      </div>
+                      <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: 6, flexShrink: 0 }}>
+                        <span style={{ color: '#9ca3af', fontSize: 11, letterSpacing: 2, textTransform: 'uppercase', whiteSpace: 'nowrap', fontFamily: "'Space Mono', monospace" }}>
+                          {a.session_count} {a.session_count === 1 ? 'GESPREK' : 'GESPREKKEN'}
+                        </span>
+                        <span style={{ color: expandedAnalyse === a.id ? '#f59e0b' : '#9ca3af', fontSize: 18, fontFamily: "'Bebas Neue', sans-serif", letterSpacing: 2 }}>
+                          {expandedAnalyse === a.id ? '↑ SLUITEN' : '↓ OPEN'}
+                        </span>
+                      </div>
+                    </div>
+                  )}
                 </button>
                 {expandedAnalyse === a.id && (
                   <div style={{ paddingBottom: 40, animation: 'fadein 0.3s ease' }}>
