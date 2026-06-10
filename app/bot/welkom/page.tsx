@@ -56,10 +56,10 @@ export default function WelkomPage() {
               letterSpacing: 3,
               padding: '12px 36px',
               borderRadius: 999,
-              background: videoEnded ? '#f59e0b' : '#1f2937',
-              color: videoEnded ? '#111827' : '#4b5563',
-              border: videoEnded ? 'none' : '1.5px solid #374151',
-              cursor: videoEnded ? 'pointer' : 'default',
+              background: '#f59e0b',
+              color: '#111827',
+              border: 'none',
+              cursor: 'pointer',
               transition: 'all 0.2s',
             }}
           >
