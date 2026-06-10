@@ -3,6 +3,7 @@ import { cookies } from 'next/headers'
 import { createClient } from '@supabase/supabase-js'
 import { clerkClient } from '@clerk/nextjs/server'
 import SearchLinkedIn from './SearchLinkedIn'
+import TierToggle from './TierToggle'
 
 const navLinkStyle = (active: boolean): React.CSSProperties => ({
   color: active ? '#f59e0b' : '#9ca3af',
@@ -70,7 +71,7 @@ export default async function GebruikersPage({
   const [usersRes, logsRes, coachingRes] = await Promise.all([
     supabase
       .from('approved_users')
-      .select('user_id, email, full_name, voornaam, achternaam, linkedin, trial_start, expires_at, paid_at, is_active, created_at'),
+      .select('user_id, email, full_name, voornaam, achternaam, linkedin, trial_start, expires_at, paid_at, is_active, created_at, tier'),
     supabase
       .from('arnobot_rds_logs')
       .select('user_id, session_id, created_at')
@@ -136,7 +137,7 @@ export default async function GebruikersPage({
     return 0
   })
 
-  const cols = '56px 1fr 140px 80px 80px 100px 70px 80px 80px'
+  const cols = '56px 1fr 140px 80px 80px 100px 70px 80px 70px 80px'
 
   return (
     <main style={{ background: '#111827', minHeight: '100vh', color: '#f1f5f9', fontFamily: 'sans-serif' }}>
@@ -169,6 +170,7 @@ export default async function GebruikersPage({
           <SortHeader label="LAATSTE GESPREK" field="laatste" sort={sort} dir={dir} />
           <SortHeader label="COACHING" field="coaching" sort={sort} dir={dir} />
           <SortHeader label="7 DAGEN" field="actief" sort={sort} dir={dir} />
+          <span style={{ fontSize: '11px', letterSpacing: '3px', color: '#4b5563', textAlign: 'right' }}>TIER</span>
           <span style={{ fontSize: '11px', letterSpacing: '3px', color: '#4b5563', textAlign: 'right' }}>LINKEDIN</span>
         </div>
 
@@ -223,6 +225,10 @@ export default async function GebruikersPage({
                 {/* Actief 7d */}
                 <div style={{ textAlign: 'right' }}>
                   <span style={{ fontSize: '18px' }}>{actief7d ? '🟢' : '🔴'}</span>
+                </div>
+                {/* Tier */}
+                <div style={{ textAlign: 'right' }}>
+                  <TierToggle userId={u.user_id} currentTier={(u.tier as 'basis' | 'pro') ?? 'pro'} />
                 </div>
                 {/* LinkedIn */}
                 <div style={{ textAlign: 'right' }}>

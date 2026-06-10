@@ -10,9 +10,19 @@ const supabase = createClient(
 )
 const anthropic = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY! })
 
+async function checkProTier(userId: string): Promise<boolean> {
+  const { data } = await supabase
+    .from('approved_users')
+    .select('tier')
+    .eq('user_id', userId)
+    .single()
+  return data?.tier === 'pro'
+}
+
 export async function GET() {
   const { userId } = await auth()
   if (!userId) return NextResponse.json({ error: 'Niet ingelogd' }, { status: 401 })
+  if (!await checkProTier(userId)) return NextResponse.json({ error: 'Pro vereist' }, { status: 403 })
 
   const { data, error } = await supabase
     .from('arnobot_coaching')
@@ -29,6 +39,7 @@ export async function GET() {
 export async function POST() {
   const { userId } = await auth()
   if (!userId) return NextResponse.json({ error: 'Niet ingelogd' }, { status: 401 })
+  if (!await checkProTier(userId)) return NextResponse.json({ error: 'Pro vereist' }, { status: 403 })
 
   const [sessionsRes, analysesRes, profielRes, prevScoreRes, prevCoachingRes] = await Promise.all([
     supabase

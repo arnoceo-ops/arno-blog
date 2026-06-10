@@ -17,20 +17,21 @@ export default async function BotPage({ searchParams }: { searchParams: Promise<
   const { userId } = await auth()
   if (!userId) redirect('/sign-in')
 
-  const { data: profileRow } = await serviceDb
-    .from('arnobot_blog_profiles')
-    .select('profiel')
-    .eq('user_id', userId)
-    .single()
+  const [profileRes, tierRes] = await Promise.all([
+    serviceDb.from('arnobot_blog_profiles').select('profiel').eq('user_id', userId).single(),
+    serviceDb.from('approved_users').select('tier').eq('user_id', userId).single(),
+  ])
 
-  if (!profileRow) redirect('/bot/qa')
+  if (!profileRes.data) redirect('/bot/qa')
 
+  const tier = (tierRes.data?.tier as 'basis' | 'pro') ?? 'pro'
   const spar = await getSparPage()
   const { resume } = await searchParams
   return (
     <SparClient
       userId={userId}
-      profiel={profileRow.profiel}
+      profiel={profileRes.data.profiel}
+      tier={tier}
       taglineTitle="Ik ben ARNOBOT: Jouw 24/7 salescoach."
       taglineSub="Gebaseerd op 40 jaar sales executie, 30 jaar bedrijven bouwen, 20 jaar blogs schrijven en 15 jaar scaling up coaching. Jouw vragen worden beantwoord uit mijn bibliotheek van 369.000 woorden."
       openers={spar?.openers ?? []}

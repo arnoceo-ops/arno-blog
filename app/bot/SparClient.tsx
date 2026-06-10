@@ -45,6 +45,7 @@ interface Message {
 interface Props {
   userId: string
   profiel: Record<string, unknown>
+  tier: 'basis' | 'pro'
   taglineTitle: string
   taglineSub: string
   openers: string[]
@@ -100,7 +101,7 @@ const VRAGEN_ORGANISATORISCH = [
   'Wanneer is een bonussysteem een motor en wanneer is het een pleister op een cultuurprobleem?',
 ]
 
-export default function SparClient({ userId, profiel, taglineTitle, taglineSub, openers, resumeSessionId }: Props) {
+export default function SparClient({ userId, profiel, tier, taglineTitle, taglineSub, openers, resumeSessionId }: Props) {
   const isMobile = useIsMobile()
   const { signOut } = useClerk()
   const router = useRouter()
@@ -133,6 +134,7 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
   const [feedbackText, setFeedbackText] = useState('')
   const [feedbackSent, setFeedbackSent] = useState(false)
   const [feedbackLoading, setFeedbackLoading] = useState(false)
+  const [dagelijksTeller, setDagelijksTeller] = useState<number | null>(null)
   const [navGuardOpen, setNavGuardOpen] = useState(false)
   const [pendingNavDest, setPendingNavDest] = useState<string | null>(null)
   const [teamPrompt, setTeamPrompt] = useState(false)
@@ -440,9 +442,17 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
       const data = await res.json()
 
       if (!res.ok) {
-        setMessages(prev => [...prev, { role: 'arno', content: `Fout: ${data.error || res.status}` }])
+        if (res.status === 429 && data.error === 'dagelijks_limiet') {
+          setBlocked(true)
+          setDagelijksTeller(25)
+          setMessages(prev => [...prev, { role: 'arno', content: 'Je dagelijkse limiet van 25 vragen is bereikt. Kom morgen terug.' }])
+        } else {
+          setMessages(prev => [...prev, { role: 'arno', content: `Fout: ${data.error || res.status}` }])
+        }
         return
       }
+
+      if (data.dagelijks_gebruikt != null) setDagelijksTeller(data.dagelijks_gebruikt)
 
       if (data.blocked) {
         setBlocked(true)
@@ -1126,6 +1136,11 @@ export default function SparClient({ userId, profiel, taglineTitle, taglineSub, 
               )}
             </div>
           </div>
+          {tier === 'basis' && dagelijksTeller !== null && (
+            <p style={{ fontFamily: "'Space Mono', monospace", fontSize: 12, color: dagelijksTeller >= 20 ? '#f59e0b' : '#4b5563', letterSpacing: 2, textAlign: 'center', marginTop: 10, width: '100%', maxWidth: 812 }}>
+              {dagelijksTeller} / 25 vragen gebruikt vandaag
+            </p>
+          )}
           {input.trim().length > 5 && (
             <button
               className="verfijn-btn"

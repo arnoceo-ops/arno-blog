@@ -125,6 +125,25 @@ export async function POST(req: NextRequest) {
       if (!userId) return NextResponse.json({ error: 'Unauthorized' }, { status: 401, headers: corsHeaders(origin) })
     }
 
+    // Tier + dagelijks gebruik
+    let tier: 'basis' | 'pro' = 'basis'
+    let todayUsage = 0
+    if (!isWidget) {
+      const [tierRes, todayRes] = await Promise.all([
+        supabase.from('approved_users').select('tier').eq('user_id', userId!).single(),
+        supabase
+          .from('arnobot_rds_logs')
+          .select('*', { count: 'exact', head: true })
+          .eq('user_id', userId!)
+          .gte('created_at', new Date().toISOString().slice(0, 10) + 'T00:00:00.000Z'),
+      ])
+      tier = (tierRes.data?.tier as 'basis' | 'pro') ?? 'basis'
+      todayUsage = todayRes.count ?? 0
+      if (tier === 'basis' && todayUsage >= 25) {
+        return NextResponse.json({ error: 'dagelijks_limiet', dagelijks_gebruikt: todayUsage }, { status: 429, headers: corsHeaders(origin) })
+      }
+    }
+
     const sessionId = clientSessionId ?? userId ?? (ip ? `${ip}-${new Date().toISOString().slice(0, 10)}` : 'unknown')
     const LOST_URL = 'https://arno.blog/lost'
 
@@ -232,7 +251,7 @@ PROFIEL VAN DE GEBRUIKER:
         .eq('user_id', userId)
         .not('session_id', 'eq', sessionId)
         .order('created_at', { ascending: false })
-        .limit(10)
+        .limit(tier === 'pro' ? 25 : 10)
 
       if (prevSessions && prevSessions.length > 0) {
         const feitenBlokken = prevSessions
@@ -256,9 +275,25 @@ PROFIEL VAN DE GEBRUIKER:
       }
     }
 
+    // Coaching context voor pro gebruikers
+    let coachingContext = ''
+    if (!isWidget && tier === 'pro' && userId) {
+      const { data: coachingDoc } = await supabase
+        .from('arnobot_coaching')
+        .select('mindset_score, systeem_score, actie_score, mindset_diagnose, systeem_diagnose, actie_diagnose, ontwikkelpunten, voortgang')
+        .eq('user_id', userId)
+        .maybeSingle()
+      if (coachingDoc?.mindset_score != null) {
+        const msa = Math.max(1, Math.ceil((coachingDoc.mindset_score * coachingDoc.systeem_score * coachingDoc.actie_score) / 1.25))
+        const punten = (coachingDoc.ontwikkelpunten as {tekst:string;pijlar:string}[] | null)
+          ?.map(p => `[${p.pijlar}] ${p.tekst}`).join(' | ') ?? ''
+        coachingContext = `\n\nCOACHINGSDIAGNOSE (MSA ${msa}/100):\nVoortgang: ${coachingDoc.voortgang}\nMindset (${coachingDoc.mindset_score}/5): ${coachingDoc.mindset_diagnose}\nSysteem (${coachingDoc.systeem_score}/5): ${coachingDoc.systeem_diagnose}\nActie (${coachingDoc.actie_score}/5): ${coachingDoc.actie_diagnose}${punten ? `\nOntwikkelpunten: ${punten}` : ''}`
+      }
+    }
+
     const systemPrompt = isWidget
       ? buildWidgetSystemPrompt(context, hint === 'salescanvas')
-      : buildRdsSystemPrompt(profielContext + geheugentekst, context)
+      : buildRdsSystemPrompt(profielContext + geheugentekst + coachingContext, context)
 
     const response = await client.messages.create({
       model: 'claude-sonnet-4-6',
@@ -272,7 +307,9 @@ PROFIEL VAN DE GEBRUIKER:
     const logTable = isWidget ? 'arno_blog_widget_logs' : 'arnobot_rds_logs'
     await supabase.from(logTable).insert({ question, answer, ip, session_id: sessionId, user_id: userId ?? null })
 
-    return NextResponse.json({ answer, hint }, { headers: corsHeaders(origin) })
+    const responseBody: Record<string, unknown> = { answer, hint }
+    if (!isWidget && tier === 'basis') responseBody.dagelijks_gebruikt = todayUsage + 1
+    return NextResponse.json(responseBody, { headers: corsHeaders(origin) })
   } catch (err) {
     const msg = err instanceof Error ? err.message : String(err)
     console.error('Chat error:', msg)
