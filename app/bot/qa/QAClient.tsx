@@ -17,8 +17,8 @@ const FAQS = [
     a: 'ArnoBot antwoordt altijd vanuit de bibliotheek. Als een antwoord je verbaast, kun je doorvragen. Gebruik je eigen oordeel, net als bij een gesprek met een echte coach.',
   },
   {
-    q: 'Wat is het verschil met ChatGPT?',
-    a: 'ChatGPT is een generieke LLM. Het middelt wat het kan vinden. ArnoBot heeft focus op jouw profiel en persoonlijke succes. Dan pas data. ArnoBot redeneert uitsluitend binnen het kader van Arno\'s content.',
+    q: 'Waarom geen ChatGPT o.i.d.?',
+    a: 'ChatGPT is een generieke LLM. Het middelt wat het kan vinden. ArnoBot heeft focus op jouw profiel, groei en succes. Dat wordt gematcht met supergerichte data. ArnoBot redeneert uitsluitend binnen het kader van Arno\'s content.',
   },
   {
     q: 'Zijn mijn gegevens veilig?',

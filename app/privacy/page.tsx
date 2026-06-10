@@ -43,7 +43,7 @@ export default function PrivacyPage() {
 
           <div style={{ borderTop: '3px solid #f59e0b', paddingTop: 32, marginBottom: 48 }}>
             <p style={{ fontFamily: "'Space Mono', monospace", fontWeight: 700, fontSize: 13, letterSpacing: 4, color: '#f59e0b', marginBottom: 8 }}>ARTIKEL 1</p>
-            <h2 style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 36, letterSpacing: 2, color: '#f1f5f9', marginBottom: 20 }}>Verantwoordelijke</h2>
+            <h2 style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 32, letterSpacing: 2, color: '#f1f5f9', marginBottom: 20 }}>Verantwoordelijke</h2>
             <p style={{ fontSize: 15, color: '#9ca3af', lineHeight: 1.9, marginBottom: 20 }}>
               ArnoBot (arno.bot) is een product van Royal Dutch Sales, gevestigd in Lissabon, Portugal.
             </p>
@@ -60,7 +60,7 @@ export default function PrivacyPage() {
 
           <div style={{ borderTop: '1px solid #374151', paddingTop: 32, marginBottom: 48 }}>
             <p style={{ fontFamily: "'Space Mono', monospace", fontWeight: 700, fontSize: 13, letterSpacing: 4, color: '#f59e0b', marginBottom: 8 }}>ARTIKEL 2</p>
-            <h2 style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 36, letterSpacing: 2, color: '#f1f5f9', marginBottom: 20 }}>Welke gegevens we verwerken</h2>
+            <h2 style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 32, letterSpacing: 2, color: '#f1f5f9', marginBottom: 20 }}>Welke gegevens we verwerken</h2>
             <table>
               <thead>
                 <tr><th>Categorie</th><th>Toelichting</th></tr>
@@ -79,7 +79,7 @@ export default function PrivacyPage() {
 
           <div style={{ borderTop: '1px solid #374151', paddingTop: 32, marginBottom: 48 }}>
             <p style={{ fontFamily: "'Space Mono', monospace", fontWeight: 700, fontSize: 13, letterSpacing: 4, color: '#f59e0b', marginBottom: 8 }}>ARTIKEL 3</p>
-            <h2 style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 36, letterSpacing: 2, color: '#f1f5f9', marginBottom: 20 }}>Waarvoor we het gebruiken</h2>
+            <h2 style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 32, letterSpacing: 2, color: '#f1f5f9', marginBottom: 20 }}>Waarvoor we het gebruiken</h2>
             <div style={{ display: 'flex', flexDirection: 'column', gap: 12, marginBottom: 20 }}>
               {[
                 'Het verlenen van toegang tot ArnoBot',
@@ -101,7 +101,7 @@ export default function PrivacyPage() {
 
           <div style={{ borderTop: '1px solid #374151', paddingTop: 32, marginBottom: 48 }}>
             <p style={{ fontFamily: "'Space Mono', monospace", fontWeight: 700, fontSize: 13, letterSpacing: 4, color: '#f59e0b', marginBottom: 8 }}>ARTIKEL 4</p>
-            <h2 style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 36, letterSpacing: 2, color: '#f1f5f9', marginBottom: 20 }}>Beveiliging</h2>
+            <h2 style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 32, letterSpacing: 2, color: '#f1f5f9', marginBottom: 20 }}>Beveiliging</h2>
             <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
               {[
                 'Versleutelde verbindingen (HTTPS/TLS) voor al het datatransport',
@@ -120,7 +120,7 @@ export default function PrivacyPage() {
 
           <div style={{ borderTop: '1px solid #374151', paddingTop: 32, marginBottom: 48 }}>
             <p style={{ fontFamily: "'Space Mono', monospace", fontWeight: 700, fontSize: 13, letterSpacing: 4, color: '#f59e0b', marginBottom: 8 }}>ARTIKEL 5</p>
-            <h2 style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 36, letterSpacing: 2, color: '#f1f5f9', marginBottom: 20 }}>Sub-verwerkers</h2>
+            <h2 style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 32, letterSpacing: 2, color: '#f1f5f9', marginBottom: 20 }}>Sub-verwerkers</h2>
             <p style={{ fontSize: 15, color: '#9ca3af', lineHeight: 1.9, marginBottom: 20 }}>
               ArnoBot maakt gebruik van de volgende partijen. Alle sub-verwerkers zijn contractueel gebonden aan vertrouwelijkheid en voldoen aan de AVG.
             </p>
@@ -163,7 +163,7 @@ export default function PrivacyPage() {
 
           <div style={{ borderTop: '1px solid #374151', paddingTop: 32, marginBottom: 48 }}>
             <p style={{ fontFamily: "'Space Mono', monospace", fontWeight: 700, fontSize: 13, letterSpacing: 4, color: '#f59e0b', marginBottom: 8 }}>ARTIKEL 6</p>
-            <h2 style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 36, letterSpacing: 2, color: '#f1f5f9', marginBottom: 20 }}>Bewaartermijnen</h2>
+            <h2 style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 32, letterSpacing: 2, color: '#f1f5f9', marginBottom: 20 }}>Bewaartermijnen</h2>
             <table>
               <thead>
                 <tr><th>Categorie</th><th>Bewaartermijn</th></tr>
@@ -178,7 +178,7 @@ export default function PrivacyPage() {
 
           <div style={{ borderTop: '1px solid #374151', paddingTop: 32, marginBottom: 48 }}>
             <p style={{ fontFamily: "'Space Mono', monospace", fontWeight: 700, fontSize: 13, letterSpacing: 4, color: '#f59e0b', marginBottom: 8 }}>ARTIKEL 7</p>
-            <h2 style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 36, letterSpacing: 2, color: '#f1f5f9', marginBottom: 20 }}>Jouw rechten</h2>
+            <h2 style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 32, letterSpacing: 2, color: '#f1f5f9', marginBottom: 20 }}>Jouw rechten</h2>
             <p style={{ fontSize: 15, color: '#9ca3af', lineHeight: 1.9, marginBottom: 20 }}>
               Je hebt het recht op inzage, rectificatie, verwijdering en overdraagbaarheid van jouw gegevens. Je kunt dit direct uitoefenen via jouw account:
             </p>
@@ -201,7 +201,7 @@ export default function PrivacyPage() {
 
           <div style={{ borderTop: '1px solid #374151', paddingTop: 32, marginBottom: 48 }}>
             <p style={{ fontFamily: "'Space Mono', monospace", fontWeight: 700, fontSize: 13, letterSpacing: 4, color: '#f59e0b', marginBottom: 8 }}>ARTIKEL 8</p>
-            <h2 style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 36, letterSpacing: 2, color: '#f1f5f9', marginBottom: 20 }}>Datalekken</h2>
+            <h2 style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 32, letterSpacing: 2, color: '#f1f5f9', marginBottom: 20 }}>Datalekken</h2>
             <p style={{ fontSize: 15, color: '#9ca3af', lineHeight: 1.9 }}>
               In geval van een datalek word je zo spoedig mogelijk geïnformeerd, uiterlijk binnen 72 uur na ontdekking, via het e-mailadres dat aan jouw account is gekoppeld.
             </p>

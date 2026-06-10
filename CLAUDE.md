@@ -16,6 +16,7 @@ Bij elke nieuwe pagina of component: lees eerst een bestaande pagina (account of
 - **Labels (amber, inline)**: Space Mono, fontWeight 400, fontSize 13px, letterSpacing 4, kleur #f59e0b
 - **Labels (amber, sectietitel zoals SYNTHESE)**: Space Mono, fontWeight 700, fontSize 13px, letterSpacing 4, kleur #f59e0b
 - **H1**: Bebas Neue, fontSize 64, letterSpacing 3, kleur #f1f5f9
+- **H2**: Bebas Neue, fontSize 32, letterSpacing 2, kleur #f1f5f9
 - **Primaire knop**: Bebas Neue 18px, letterSpacing 3, padding '12px 36px', borderRadius 999, background #f59e0b, **color #111827**, hover #d97706. Gebruik wanneer het de enige of belangrijkste actie in een sectie is.
 - **Secundaire knop**: Bebas Neue 18px, letterSpacing 3, padding '12px 32px', borderRadius 999, border '1px solid #374151', color #9ca3af. Alleen gebruiken als er al een primaire knop in dezelfde context staat (bijv. Annuleren naast Opslaan).
 - **Destructieve knop**: zelfde vorm als secundair maar border + color #cc2200. Voor onomkeerbare acties (verwijderen, account wissen).
