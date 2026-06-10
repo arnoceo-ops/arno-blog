@@ -142,9 +142,12 @@ export default clerkMiddleware(async (auth, req) => {
       return NextResponse.redirect(new URL('/bot-aanmelden', req.url))
     }
 
+    const welcome_seen = (user as any).welcome_seen as boolean | null
     const onboarding_done = (user as any).onboarding_done as boolean | null
 
-    if (!onboarding_done) {
+    if (!welcome_seen) {
+      if (path !== '/bot/welkom') return NextResponse.redirect(new URL('/bot/welkom', req.url))
+    } else if (!onboarding_done) {
       if (path !== '/bot/profiel') return NextResponse.redirect(new URL('/bot/profiel', req.url))
     }
   }

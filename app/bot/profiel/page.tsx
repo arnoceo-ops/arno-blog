@@ -382,6 +382,7 @@ export default function BotProfielPage() {
           >
             {saving ? 'Bezig...' : isFirstTime ? 'IK GA AKKOORD EN START →' : 'PROFIEL OPSLAAN →'}
           </button>
+
         </div>
       </div>
     </>

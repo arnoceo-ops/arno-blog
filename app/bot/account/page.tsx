@@ -116,15 +116,6 @@ export default function AccountPage() {
           </Link>
         </div>
 
-        {/* Video */}
-        <div style={section}>
-          <p style={label}>VIDEO</p>
-          <p style={body}>Bekijk de introductievideo en de veelgestelde vragen over ArnoBot.</p>
-          <Link href="/bot/qa" className="primary-btn" style={{ ...btn, textDecoration: 'none', display: 'inline-block' }}>
-            BEKIJK VIDEO
-          </Link>
-        </div>
-
         {/* Data export */}
         <div style={section}>
           <p style={label}>JOUW DATA</p>
