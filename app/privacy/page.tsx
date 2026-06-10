@@ -1,232 +1,206 @@
-﻿import Link from 'next/link'
+export const metadata = {
+  title: 'Privacy — ArnoBot',
+  robots: 'noindex',
+}
 
 export default function PrivacyPage() {
   return (
     <>
       <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Mono:wght@400;700&family=Barlow:wght@400;700&display=swap');
-        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-        body { background: #111827; color: #f1f5f9; font-family: 'Space Mono', monospace; }
-
-        .site-nav {
-          position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-          padding: 16px 40px; display: flex; justify-content: center;
-          border-bottom: 1px solid rgba(255,255,255,0.06);
-          background: rgba(17,24,39,0.9); backdrop-filter: blur(12px);
-        }
-        .nav-links { display: flex; gap: 48px; align-items: center; }
-        .nav-links a {
-          color: #9ca3af; text-decoration: none;
-          font-family: 'Bebas Neue', sans-serif;
-          font-size: 22px; letter-spacing: 3px; transition: color 0.2s;
-        }
-        .nav-links a:hover { color: #f1f5f9; }
-        .nav-cta { color: #f59e0b !important; }
-
-        .page { padding-top: 80px; min-height: 100vh; }
-
-        .hero {
-          padding: 80px 60px 60px;
-          border-bottom: 3px solid #f59e0b;
-        }
-        .hero-title {
-          font-family: 'Bebas Neue', sans-serif;
-          font-size: clamp(48px, 7vw, 96px); line-height: 0.9; color: #f1f5f9;
-        }
-        .hero-title span { color: #f59e0b; }
-        .hero-meta { font-size: 12px; color: #4b5563; margin-top: 16px; }
-
-        .body { max-width: 760px; margin: 0 auto; padding: 80px 40px 120px; }
-
-        .section { margin-bottom: 56px; }
-        .section-title {
-          font-family: 'Bebas Neue', sans-serif; font-size: 22px;
-          letter-spacing: 2px; color: #f59e0b; margin-bottom: 20px;
-        }
-        .section-num {
-          font-family: 'Bebas Neue', sans-serif; font-size: 13px;
-          letter-spacing: 2px; color: #4b5563; margin-bottom: 6px;
-        }
-        p { font-size: 13px; color: #9ca3af; line-height: 1.9; margin-bottom: 16px; }
-        strong { color: #f1f5f9; }
+        @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Mono:wght@400;700&display=swap');
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { background: #111827; color: #f1f5f9; font-family: 'Space Mono', monospace; font-weight: 400; }
         a { color: #f59e0b; text-decoration: none; }
         a:hover { text-decoration: underline; }
-        ul { margin: 0 0 16px 0; padding-left: 20px; }
-        ul li { font-size: 13px; color: #9ca3af; line-height: 1.9; }
-
-        .divider { height: 1px; background: #1e293b; margin: 40px 0; }
-
-        .notice {
-          background: #1f2937; border-left: 3px solid #f59e0b;
-          padding: 20px 24px; margin-bottom: 40px;
-          font-size: 12px; color: #6b7280; line-height: 1.8;
-        }
-
-        footer {
-          background: #0d1117; padding: 40px 60px;
-          display: flex; justify-content: space-between; align-items: center;
-          border-top: 1px solid #1f2937;
-        }
-        .footer-logo { font-family: 'Bebas Neue', sans-serif; font-size: 24px; color: #f59e0b; letter-spacing: 3px; }
-        .footer-copy { font-size: 10px; color: #374151; }
-
-        @media (max-width: 600px) {
-          .hero { padding: 60px 24px 40px; }
-          .body { padding: 60px 24px 80px; }
-          footer { padding: 32px 24px; flex-direction: column; gap: 12px; }
-        }
+        table { width: 100%; border-collapse: collapse; margin-bottom: 24px; }
+        th { background: #1f2937; color: #f59e0b; font-family: 'Space Mono', monospace; font-size: 12px; letter-spacing: 3px; text-align: left; padding: 10px 14px; border-bottom: 2px solid #f59e0b; }
+        td { font-family: 'Space Mono', monospace; font-size: 14px; color: #9ca3af; padding: 10px 14px; border-bottom: 1px solid #374151; vertical-align: top; }
+        tr:last-child td { border-bottom: none; }
       `}</style>
 
-      <nav className="site-nav">
-        <div className="nav-links">
-          <Link href="/">HOME</Link>
-          <Link href="/bio">ARNO</Link>
-          <a href="https://arno.bot/arnobot">BOT</a>
-          <a href="https://salescanvas.app" target="_blank" rel="noopener noreferrer">CANVAS</a>
-          <a href="https://arno.blog/subscribe" target="_blank" rel="noopener noreferrer" className="nav-cta">SUBSCRIBE</a>
-        </div>
-      </nav>
+      <div style={{ minHeight: '100vh', background: '#111827' }}>
+        <div style={{ maxWidth: 720, margin: '0 auto', padding: '80px 48px 80px' }}>
 
-      <div className="page">
-        <div className="hero">
-          <h1 className="hero-title"><span>PRIVACY</span>VERKLARING</h1>
-          <div className="hero-meta">Versie 1.0 — Januari 2025 · Royal Dutch Sales</div>
-        </div>
-
-        <div className="body">
-          <div className="notice">
-            Deze privacyverklaring is opgesteld conform de AVG (Algemene Verordening Gegevensbescherming) en dient te worden nagekeken door een juridisch adviseur vóór commerciële inzet.
-          </div>
-
-          <div className="section">
-            <div className="section-num">ARTIKEL 1</div>
-            <div className="section-title">VERWERKINGSVERANTWOORDELIJKE</div>
-            <p>Royal Dutch Sales, vertegenwoordigd door Arno Diepeveen, is verwerkingsverantwoordelijke voor de persoonsgegevens die worden verwerkt via RDS Canvas en royaldutchsales.com.</p>
-            <p>Contact: <a href="mailto:arno@arno.bot">arno@arno.bot</a></p>
-          </div>
-
-          <div className="divider" />
-
-          <div className="section">
-            <div className="section-num">ARTIKEL 2</div>
-            <div className="section-title">WELKE GEGEVENS VERWERKEN WIJ?</div>
-            <p>Bij aanmelding voor RDS Canvas verzamelen wij:</p>
-            <ul>
-              <li>Naam en emailadres</li>
-              <li>Bedrijfsnaam</li>
-              <li>Telefoonnummer (optioneel)</li>
-              <li>Gekozen abonnementsvorm (Solo of Team)</li>
-              <li>Gewenste startdatum en opmerkingen</li>
-              <li>Hoe u ons heeft gevonden</li>
-              <li>Opt-in voor marketingcommunicatie</li>
-            </ul>
-            <p>Bij gebruik van RDS Canvas verwerken wij:</p>
-            <ul>
-              <li>De antwoorden die u invoert in het Canvas platform</li>
-              <li>Inloggegevens via Clerk (authenticatiedienst)</li>
-              <li>Gebruiksdata voor het verbeteren van de dienst</li>
-            </ul>
-          </div>
-
-          <div className="divider" />
-
-          <div className="section">
-            <div className="section-num">ARTIKEL 3</div>
-            <div className="section-title">DOEL VAN VERWERKING</div>
-            <p>Wij verwerken uw gegevens voor de volgende doeleinden:</p>
-            <ul>
-              <li>Het leveren en beheren van de RDS Canvas dienst</li>
-              <li>Communicatie over uw account en abonnement</li>
-              <li>Het versturen van marketingcommunicatie (alleen met uw toestemming)</li>
-              <li>Het verbeteren van de dienstverlening</li>
-              <li>Het voldoen aan wettelijke verplichtingen</li>
-            </ul>
-          </div>
-
-          <div className="divider" />
-
-          <div className="section">
-            <div className="section-num">ARTIKEL 4</div>
-            <div className="section-title">GRONDSLAG</div>
-            <p>Wij verwerken uw gegevens op basis van:</p>
-            <ul>
-              <li><strong>Uitvoering van een overeenkomst</strong> — voor het leveren van RDS Canvas</li>
-              <li><strong>Toestemming</strong> — voor marketingcommunicatie</li>
-              <li><strong>Gerechtvaardigd belang</strong> — voor verbetering van de dienst</li>
-            </ul>
-          </div>
-
-          <div className="divider" />
-
-          <div className="section">
-            <div className="section-num">ARTIKEL 5</div>
-            <div className="section-title">DERDEN EN VERWERKERS</div>
-            <p>Wij maken gebruik van de volgende verwerkers:</p>
-            <ul>
-              <li><strong>Clerk</strong> — authenticatie en accountbeheer (VS, Privacy Shield)</li>
-              <li><strong>Supabase</strong> — opslag van Canvas data (EU)</li>
-              <li><strong>Vercel</strong> — hosting van de applicatie (VS, Privacy Shield)</li>
-              <li><strong>Resend</strong> — verzending van transactionele emails (VS)</li>
-              <li><strong>Anthropic</strong> — AI-verwerking van Canvas antwoorden voor ArnoBot feedback</li>
-            </ul>
-            <p>Met alle verwerkers zijn verwerkersovereenkomsten afgesloten of worden standaard contractbepalingen gehanteerd.</p>
-          </div>
-
-          <div className="divider" />
-
-          <div className="section">
-            <div className="section-num">ARTIKEL 6</div>
-            <div className="section-title">BEWAARTERMIJN</div>
-            <p>Wij bewaren uw gegevens zolang uw account actief is. Na opzegging worden uw gegevens binnen <strong>90 dagen</strong> verwijderd, tenzij wettelijke verplichtingen een langere bewaartermijn vereisen.</p>
-          </div>
-
-          <div className="divider" />
-
-          <div className="section">
-            <div className="section-num">ARTIKEL 7</div>
-            <div className="section-title">UW RECHTEN</div>
-            <p>U heeft de volgende rechten met betrekking tot uw persoonsgegevens:</p>
-            <ul>
-              <li>Recht op inzage</li>
-              <li>Recht op rectificatie</li>
-              <li>Recht op verwijdering ("recht om vergeten te worden")</li>
-              <li>Recht op beperking van verwerking</li>
-              <li>Recht op dataportabiliteit</li>
-              <li>Recht van bezwaar</li>
-              <li>Recht om toestemming in te trekken</li>
-            </ul>
-            <p>Voor het uitoefenen van uw rechten kunt u contact opnemen via <a href="mailto:arno@arno.bot">arno@arno.bot</a>. Wij reageren binnen 30 dagen.</p>
-          </div>
-
-          <div className="divider" />
-
-          <div className="section">
-            <div className="section-num">ARTIKEL 8</div>
-            <div className="section-title">BEVEILIGING</div>
-            <p>Wij nemen passende technische en organisatorische maatregelen om uw persoonsgegevens te beveiligen tegen verlies, ongeautoriseerde toegang of misbruik. Dit omvat onder meer versleutelde verbindingen (HTTPS), toegangscontrole en regelmatige beveiligingscontroles.</p>
-          </div>
-
-          <div className="divider" />
-
-          <div className="section">
-            <div className="section-num">ARTIKEL 9</div>
-            <div className="section-title">KLACHTEN</div>
-            <p>Als u van mening bent dat wij uw persoonsgegevens niet correct verwerken, heeft u het recht een klacht in te dienen bij de Autoriteit Persoonsgegevens via <a href="https://www.autoriteitpersoonsgegevens.nl" target="_blank" rel="noopener noreferrer">autoriteitpersoonsgegevens.nl</a>.</p>
-          </div>
-
-          <div className="divider" />
-
-          <p style={{ fontSize: 11, color: '#4b5563' }}>
-            Vragen over deze privacyverklaring? Mail naar <a href="mailto:arno@arno.bot">arno@arno.bot</a>
+          <p style={{ fontFamily: "'Space Mono', monospace", fontWeight: 400, fontSize: 13, letterSpacing: 4, color: '#f59e0b', marginBottom: 8 }}>ARNOBOT</p>
+          <h1 style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 64, letterSpacing: 3, color: '#f1f5f9', lineHeight: 1.0, marginBottom: 16 }}>PRIVACY.</h1>
+          <p style={{ fontSize: 15, color: '#9ca3af', lineHeight: 1.9, marginBottom: 48 }}>
+            Jouw gegevens zijn van jou. Hier lees je precies wat we opslaan, waarom, hoe lang, en wie er verder bij betrokken is.
           </p>
+
+          <div style={{ borderTop: '3px solid #f59e0b', paddingTop: 32, marginBottom: 48 }}>
+            <p style={{ fontFamily: "'Space Mono', monospace", fontWeight: 400, fontSize: 13, letterSpacing: 4, color: '#f59e0b', marginBottom: 8 }}>ARTIKEL 1</p>
+            <h2 style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 36, letterSpacing: 2, color: '#f1f5f9', marginBottom: 20 }}>Verantwoordelijke</h2>
+            <p style={{ fontSize: 15, color: '#9ca3af', lineHeight: 1.9, marginBottom: 20 }}>
+              ArnoBot (arno.bot) is een product van Royal Dutch Sales, gevestigd in Lissabon, Portugal.
+            </p>
+            <table>
+              <tbody>
+                <tr><td style={{ color: '#f1f5f9', width: '40%' }}>Bedrijf</td><td>Royal Dutch Sales</td></tr>
+                <tr><td style={{ color: '#f1f5f9' }}>Handelsnaam</td><td>ArnoBot</td></tr>
+                <tr><td style={{ color: '#f1f5f9' }}>Vestigingsplaats</td><td>Lissabon, Portugal</td></tr>
+                <tr><td style={{ color: '#f1f5f9' }}>Contactpersoon</td><td>Arno Diepeveen</td></tr>
+                <tr><td style={{ color: '#f1f5f9' }}>Privacycontact</td><td><a href="mailto:privacy@arno.bot">privacy@arno.bot</a></td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div style={{ borderTop: '1px solid #374151', paddingTop: 32, marginBottom: 48 }}>
+            <p style={{ fontFamily: "'Space Mono', monospace", fontWeight: 400, fontSize: 13, letterSpacing: 4, color: '#f59e0b', marginBottom: 8 }}>ARTIKEL 2</p>
+            <h2 style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 36, letterSpacing: 2, color: '#f1f5f9', marginBottom: 20 }}>Welke gegevens we verwerken</h2>
+            <table>
+              <thead>
+                <tr><th>Categorie</th><th>Toelichting</th></tr>
+              </thead>
+              <tbody>
+                <tr><td style={{ color: '#f1f5f9' }}>Accountgegevens</td><td>Naam en e-mailadres, afkomstig uit jouw LinkedIn-profiel via Clerk</td></tr>
+                <tr><td style={{ color: '#f1f5f9' }}>Profielgegevens</td><td>Salesrol, markt, uitdagingen en doelstellingen die jij invult</td></tr>
+                <tr><td style={{ color: '#f1f5f9' }}>Gesprekslogs</td><td>AI-coachingsgesprekken die jij voert met ArnoBot</td></tr>
+                <tr><td style={{ color: '#f1f5f9' }}>Technische gegevens</td><td>IP-adres en sessiedata, uitsluitend voor beveiliging en foutopsporing</td></tr>
+              </tbody>
+            </table>
+            <p style={{ fontSize: 15, color: '#9ca3af', lineHeight: 1.9 }}>
+              Bijzondere categorieën persoonsgegevens (artikel 9 AVG) worden niet verwerkt.
+            </p>
+          </div>
+
+          <div style={{ borderTop: '1px solid #374151', paddingTop: 32, marginBottom: 48 }}>
+            <p style={{ fontFamily: "'Space Mono', monospace", fontWeight: 400, fontSize: 13, letterSpacing: 4, color: '#f59e0b', marginBottom: 8 }}>ARTIKEL 3</p>
+            <h2 style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 36, letterSpacing: 2, color: '#f1f5f9', marginBottom: 20 }}>Waarvoor we het gebruiken</h2>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 12, marginBottom: 20 }}>
+              {[
+                'Het verlenen van toegang tot ArnoBot',
+                'Het opslaan en tonen van jouw coachingsgesprekken en profiel',
+                'Het genereren van persoonlijke AI-coaching via Anthropic',
+                'Het versturen van transactionele e-mails (welkom, trial)',
+                'Het beveiligen van de dienst en het opsporen van fouten',
+              ].map((item, i) => (
+                <div key={i} style={{ display: 'flex', gap: 12, alignItems: 'flex-start' }}>
+                  <span style={{ color: '#f59e0b', flexShrink: 0 }}>—</span>
+                  <p style={{ fontSize: 15, color: '#9ca3af', lineHeight: 1.9 }}>{item}</p>
+                </div>
+              ))}
+            </div>
+            <p style={{ fontSize: 15, color: '#9ca3af', lineHeight: 1.9 }}>
+              Jouw gegevens worden nooit verkocht aan derden, gebruikt voor marketing of gedeeld buiten de hieronder genoemde sub-verwerkers.
+            </p>
+          </div>
+
+          <div style={{ borderTop: '1px solid #374151', paddingTop: 32, marginBottom: 48 }}>
+            <p style={{ fontFamily: "'Space Mono', monospace", fontWeight: 400, fontSize: 13, letterSpacing: 4, color: '#f59e0b', marginBottom: 8 }}>ARTIKEL 4</p>
+            <h2 style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 36, letterSpacing: 2, color: '#f1f5f9', marginBottom: 20 }}>Beveiliging</h2>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
+              {[
+                'Versleutelde verbindingen (HTTPS/TLS) voor al het datatransport',
+                'Row Level Security (RLS) in de database — jij hebt uitsluitend toegang tot jouw eigen data',
+                'Authenticatie via Clerk (SOC 2 Type II gecertificeerd)',
+                'Toegangscontrole via JWT-tokens en server-side API routes',
+                'Geautomatiseerde monitoring voor foutdetectie',
+              ].map((item, i) => (
+                <div key={i} style={{ display: 'flex', gap: 12, alignItems: 'flex-start' }}>
+                  <span style={{ color: '#f59e0b', flexShrink: 0 }}>—</span>
+                  <p style={{ fontSize: 15, color: '#9ca3af', lineHeight: 1.9 }}>{item}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <div style={{ borderTop: '1px solid #374151', paddingTop: 32, marginBottom: 48 }}>
+            <p style={{ fontFamily: "'Space Mono', monospace", fontWeight: 400, fontSize: 13, letterSpacing: 4, color: '#f59e0b', marginBottom: 8 }}>ARTIKEL 5</p>
+            <h2 style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 36, letterSpacing: 2, color: '#f1f5f9', marginBottom: 20 }}>Sub-verwerkers</h2>
+            <p style={{ fontSize: 15, color: '#9ca3af', lineHeight: 1.9, marginBottom: 20 }}>
+              ArnoBot maakt gebruik van de volgende partijen. Alle sub-verwerkers zijn contractueel gebonden aan vertrouwelijkheid en voldoen aan de AVG.
+            </p>
+            <table>
+              <thead>
+                <tr><th>Partij</th><th>Doel</th><th>DPA</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style={{ color: '#f1f5f9' }}>Supabase</td>
+                  <td>Database en opslag van gesprekken en profiel</td>
+                  <td>EU — SOC 2 Type II</td>
+                </tr>
+                <tr>
+                  <td style={{ color: '#f1f5f9' }}>Clerk</td>
+                  <td>Authenticatie en gebruikersbeheer (LinkedIn OAuth)</td>
+                  <td><a href="https://clerk.com/legal/dpa" target="_blank" rel="noopener noreferrer">clerk.com/legal/dpa</a></td>
+                </tr>
+                <tr>
+                  <td style={{ color: '#f1f5f9' }}>Vercel</td>
+                  <td>Hosting en deployment</td>
+                  <td><a href="https://vercel.com/legal/dpa" target="_blank" rel="noopener noreferrer">vercel.com/legal/dpa</a></td>
+                </tr>
+                <tr>
+                  <td style={{ color: '#f1f5f9' }}>Anthropic</td>
+                  <td>AI-verwerking voor coaching (geen training op jouw data)</td>
+                  <td><a href="https://anthropic.com/legal" target="_blank" rel="noopener noreferrer">anthropic.com/legal</a></td>
+                </tr>
+                <tr>
+                  <td style={{ color: '#f1f5f9' }}>Resend</td>
+                  <td>Transactionele e-mails</td>
+                  <td><a href="https://resend.com/legal/dpa" target="_blank" rel="noopener noreferrer">resend.com/legal/dpa</a></td>
+                </tr>
+              </tbody>
+            </table>
+            <p style={{ fontSize: 15, color: '#9ca3af', lineHeight: 1.9 }}>
+              Een deel van de verwerking vindt plaats bij partijen gevestigd buiten de EER (VS). ArnoBot waarborgt passende bescherming via Standard Contractual Clauses (SCC&apos;s) en sub-verwerkers met SOC 2 Type II certificering.
+            </p>
+          </div>
+
+          <div style={{ borderTop: '1px solid #374151', paddingTop: 32, marginBottom: 48 }}>
+            <p style={{ fontFamily: "'Space Mono', monospace", fontWeight: 400, fontSize: 13, letterSpacing: 4, color: '#f59e0b', marginBottom: 8 }}>ARTIKEL 6</p>
+            <h2 style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 36, letterSpacing: 2, color: '#f1f5f9', marginBottom: 20 }}>Bewaartermijnen</h2>
+            <table>
+              <thead>
+                <tr><th>Categorie</th><th>Bewaartermijn</th></tr>
+              </thead>
+              <tbody>
+                <tr><td style={{ color: '#f1f5f9' }}>Accountgegevens en profiel</td><td>Zolang het account actief is + 30 dagen na opzegging</td></tr>
+                <tr><td style={{ color: '#f1f5f9' }}>Gesprekslogs</td><td>Maximaal 12 maanden, daarna geanonimiseerd</td></tr>
+                <tr><td style={{ color: '#f1f5f9' }}>Technische logs</td><td>Maximaal 90 dagen</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div style={{ borderTop: '1px solid #374151', paddingTop: 32, marginBottom: 48 }}>
+            <p style={{ fontFamily: "'Space Mono', monospace", fontWeight: 400, fontSize: 13, letterSpacing: 4, color: '#f59e0b', marginBottom: 8 }}>ARTIKEL 7</p>
+            <h2 style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 36, letterSpacing: 2, color: '#f1f5f9', marginBottom: 20 }}>Jouw rechten</h2>
+            <p style={{ fontSize: 15, color: '#9ca3af', lineHeight: 1.9, marginBottom: 20 }}>
+              Je hebt het recht op inzage, rectificatie, verwijdering en overdraagbaarheid van jouw gegevens. Je kunt dit direct uitoefenen via jouw account:
+            </p>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 12, marginBottom: 20 }}>
+              {[
+                'Data downloaden — Accountinstellingen → Jouw data',
+                'Account verwijderen — Accountinstellingen → Account verwijderen',
+                'Profiel aanpassen — via Profiel',
+              ].map((item, i) => (
+                <div key={i} style={{ display: 'flex', gap: 12, alignItems: 'flex-start' }}>
+                  <span style={{ color: '#f59e0b', flexShrink: 0 }}>—</span>
+                  <p style={{ fontSize: 15, color: '#9ca3af', lineHeight: 1.9 }}>{item}</p>
+                </div>
+              ))}
+            </div>
+            <p style={{ fontSize: 15, color: '#9ca3af', lineHeight: 1.9 }}>
+              Voor overige verzoeken: <a href="mailto:privacy@arno.bot">privacy@arno.bot</a>. Verzoeken worden binnen 5 werkdagen beantwoord.
+            </p>
+          </div>
+
+          <div style={{ borderTop: '1px solid #374151', paddingTop: 32, marginBottom: 48 }}>
+            <p style={{ fontFamily: "'Space Mono', monospace", fontWeight: 400, fontSize: 13, letterSpacing: 4, color: '#f59e0b', marginBottom: 8 }}>ARTIKEL 8</p>
+            <h2 style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 36, letterSpacing: 2, color: '#f1f5f9', marginBottom: 20 }}>Datalekken</h2>
+            <p style={{ fontSize: 15, color: '#9ca3af', lineHeight: 1.9 }}>
+              In geval van een datalek word je zo spoedig mogelijk geïnformeerd, uiterlijk binnen 72 uur na ontdekking, via het e-mailadres dat aan jouw account is gekoppeld.
+            </p>
+          </div>
+
+          <div style={{ borderTop: '1px solid #374151', paddingTop: 32 }}>
+            <p style={{ fontSize: 13, color: '#4b5563', lineHeight: 1.9 }}>
+              Laatste update: juni 2025 — Royal Dutch Sales, Lissabon, Portugal — <a href="mailto:privacy@arno.bot">privacy@arno.bot</a>
+            </p>
+          </div>
 
         </div>
       </div>
-
-      <footer>
-        <span className="footer-logo">Royal Dutch Sales</span>
-        <span className="footer-copy">© Since 2007 — CC BY-ND 4.0</span>
-      </footer>
     </>
   )
 }

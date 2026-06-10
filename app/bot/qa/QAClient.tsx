@@ -24,6 +24,10 @@ const FAQS = [
     q: 'Wat is het verschil met ChatGPT?',
     a: 'ChatGPT is generiek. ArnoBot is uitsluitend getraind op Arno\'s content. Geen Wikipedia, geen internet. Alleen wat Arno heeft geschreven en gedoceerd in 40 jaar.',
   },
+  {
+    q: 'Wat doet ArnoBot met mijn gegevens?',
+    a: 'Jouw gesprekken en profiel zijn strikt vertrouwelijk. We slaan je data op bij gecertificeerde sub-verwerkers (Supabase, Clerk, Vercel, Anthropic) en verkopen niets door. Je kunt je data op elk moment downloaden of je account verwijderen. Lees de volledige privacyverklaring op arno.bot/privacy.',
+  },
 ]
 
 export default function QAClient({ isOnboarding }: { isOnboarding: boolean }) {
