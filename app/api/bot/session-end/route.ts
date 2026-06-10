@@ -2,7 +2,7 @@ import { auth } from '@clerk/nextjs/server'
 import { NextRequest, NextResponse } from 'next/server'
 import { createClient } from '@supabase/supabase-js'
 import Anthropic from '@anthropic-ai/sdk'
-import { getRelevantChunks } from '@/lib/rag'
+import { getRelevantChunks, getVoyageEmbedding } from '@/lib/rag'
 
 const supabase = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_URL!,
@@ -146,6 +146,15 @@ export async function POST(req: NextRequest) {
       message_count: messageCount,
       blog_suggestions: blogSuggestions,
     }, { onConflict: 'session_id' })
+
+  // Embedding genereren en opslaan (voor semantisch zoeken)
+  try {
+    const embeddingText = [title, summary, feiten].filter(Boolean).join('\n\n')
+    const embedding = await getVoyageEmbedding(embeddingText)
+    await supabase.from('arnobot_blog_sessions').update({ embedding }).eq('session_id', sessionId)
+  } catch (e) {
+    console.error('[session-end] Embedding error:', e)
+  }
 
   return NextResponse.json({ ok: true, summary, blogs: blogSuggestions })
 }

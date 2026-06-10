@@ -5,7 +5,7 @@ const supabase = createClient(
   process.env.SUPABASE_SERVICE_ROLE_KEY!
 )
 
-async function getEmbedding(text: string): Promise<number[]> {
+export async function getVoyageEmbedding(text: string): Promise<number[]> {
   const res = await fetch('https://api.voyageai.com/v1/embeddings', {
     method: 'POST',
     headers: {
@@ -20,6 +20,10 @@ async function getEmbedding(text: string): Promise<number[]> {
   }
   const json = await res.json()
   return json.data[0].embedding
+}
+
+async function getEmbedding(text: string): Promise<number[]> {
+  return getVoyageEmbedding(text)
 }
 
 async function rerankChunks(

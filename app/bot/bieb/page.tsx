@@ -62,6 +62,8 @@ export default function GeschiedenisPage() {
   const [savedAnalyses, setSavedAnalyses] = useState<SavedAnalyse[]>([])
   const [expandedAnalyse, setExpandedAnalyse] = useState<string | null>(null)
   const [showAllSessions, setShowAllSessions] = useState(false)
+  const [semanticSessions, setSemanticSessions] = useState<Session[] | null>(null)
+  const [searchLoading, setSearchLoading] = useState(false)
   const [isDuplicateAnalyse, setIsDuplicateAnalyse] = useState(false)
   const [isSimilarAnalyse, setIsSimilarAnalyse] = useState(false)
   const [isDeltaAnalyse, setIsDeltaAnalyse] = useState(false)
@@ -78,6 +80,26 @@ export default function GeschiedenisPage() {
       .then(data => setSavedAnalyses(data.analyses ?? []))
       .catch(() => {})
   }, [])
+
+  useEffect(() => {
+    if (!search || search.length < 2) {
+      setSemanticSessions(null)
+      setSearchLoading(false)
+      return
+    }
+    setSearchLoading(true)
+    const timer = setTimeout(async () => {
+      try {
+        const res = await fetch(`/api/bot/sessions/search?q=${encodeURIComponent(search)}`)
+        const data = await res.json()
+        setSemanticSessions(data.sessions ?? [])
+      } catch {
+        setSemanticSessions([])
+      }
+      setSearchLoading(false)
+    }, 400)
+    return () => clearTimeout(timer)
+  }, [search])
 
   const filtered = sessions.filter(s =>
     !search ||
@@ -195,8 +217,11 @@ export default function GeschiedenisPage() {
   }
 
   const hasSelected = selected.size > 0
-  const visibleSessions = search ? sorted : sorted.slice(0, showAllSessions ? sorted.length : 5)
-  const hasMore = !search && !showAllSessions && sorted.length > 5
+  const isSemanticMode = semanticSessions !== null
+  const visibleSessions = isSemanticMode
+    ? semanticSessions
+    : (search ? sorted : sorted.slice(0, showAllSessions ? sorted.length : 5))
+  const hasMore = !isSemanticMode && !search && !showAllSessions && sorted.length > 5
 
   return (
     <>
@@ -332,20 +357,27 @@ export default function GeschiedenisPage() {
         )}
 
         {/* Zoekbalk */}
-        <div style={{ marginBottom: 16 }}>
+        <div style={{ marginBottom: 16, position: 'relative' }}>
           <input
             type="text"
             value={search}
             onChange={e => setSearch(e.target.value)}
-            placeholder="Zoek in gesprekken..."
+            placeholder="Zoek semantisch in gesprekken..."
             style={{
               width: '100%', background: '#1f2937', border: '1px solid #374151',
               color: '#f1f5f9', fontFamily: "'Space Mono', monospace",
-              fontSize: 15, padding: '12px 16px', outline: 'none', letterSpacing: 1,
+              fontSize: 15, padding: '12px 16px', paddingRight: 44, outline: 'none', letterSpacing: 1,
             }}
             onFocus={e => (e.target.style.borderColor = '#f59e0b')}
             onBlur={e => (e.target.style.borderColor = '#374151')}
           />
+          {searchLoading && (
+            <span style={{ position: 'absolute', right: 14, top: '50%', transform: 'translateY(-50%)', display: 'flex', gap: 3 }}>
+              <span className="loading-dot" style={{ width: 5, height: 5 }} />
+              <span className="loading-dot" style={{ width: 5, height: 5, animationDelay: '0.2s' }} />
+              <span className="loading-dot" style={{ width: 5, height: 5, animationDelay: '0.4s' }} />
+            </span>
+          )}
         </div>
 
         {/* Knoppen balk */}
@@ -356,7 +388,10 @@ export default function GeschiedenisPage() {
               style={{ borderRadius: 8 }}
               onClick={() => {
                 if (selected.size > 0) setSelected(new Set())
-                else setSelected(new Set(sorted.slice(0, ANALYSE_MAX).map(s => s.session_id)))
+                else {
+                  const pool = isSemanticMode ? semanticSessions! : sorted
+                  setSelected(new Set(pool.slice(0, ANALYSE_MAX).map(s => s.session_id)))
+                }
               }}
             >
               {selected.size > 0 ? 'DESELECTEER ALLES' : 'SELECTEER ALLES'}
@@ -390,7 +425,7 @@ export default function GeschiedenisPage() {
           <p style={{ color: '#9ca3af', fontSize: 12, letterSpacing: 3, textTransform: 'uppercase' }}>Laden...</p>
         )}
 
-        {!loading && sorted.length === 0 && (
+        {!loading && !searchLoading && visibleSessions.length === 0 && (
           <div style={{ padding: '48px 0', textAlign: 'center' }}>
             <p style={{ color: '#374151', fontSize: 13, letterSpacing: 3, textTransform: 'uppercase', marginBottom: 16 }}>
               {search ? 'Geen gesprekken gevonden' : 'Nog geen gesprekken'}
