@@ -367,7 +367,7 @@ export default function GeschiedenisPage() {
             type="text"
             value={search}
             onChange={e => setSearch(e.target.value)}
-            placeholder="Zoek semantisch in gesprekken..."
+            placeholder="Zoek in gesprekken..."
             style={{
               width: '100%', background: '#1f2937', border: '1px solid #374151',
               color: '#f1f5f9', fontFamily: "'Space Mono', monospace",
