@@ -78,6 +78,7 @@ export async function POST() {
     return NextResponse.json({ error: 'te_weinig', count: sessions.length }, { status: 400 })
   }
 
+  const analyses = analysesRes.data ?? []
   const prevCoaching = prevCoachingRes.data
   if (prevCoaching) {
     const prevSessionIds = new Set<string>(prevCoaching.used_session_ids ?? [])
@@ -88,8 +89,6 @@ export async function POST() {
       return NextResponse.json({ error: 'te_weinig_voortgang' }, { status: 429 })
     }
   }
-
-  const analyses = analysesRes.data ?? []
   const profiel = profielRes.data?.profiel ?? null
   const profielText = profiel
     ? `\n\nGEBRUIKERSPROFIEL:\nRol: ${profiel.rol || '—'}\nMarkt: ${Array.isArray(profiel.markt) ? profiel.markt.join(', ') : profiel.markt || '—'}\nWat verkoop je: ${profiel.wat_verkoop_je || '—'}\nIdeale klant: ${profiel.ideale_klant || '—'}\nGrootste uitdaging: ${profiel.uitdaging || '—'}`
