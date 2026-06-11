@@ -41,5 +41,24 @@ export async function GET() {
   const ok = results.filter(r => r.ok).length
   const failed = results.filter(r => !r.ok)
 
-  return NextResponse.json({ processed: results.length, ok, failed })
+  // Test: run match_sessions voor "forecast" en toon raw scores
+  let testScores: { session_id: string; title: string; similarity: number }[] = []
+  try {
+    const { getVoyageEmbedding: getEmb } = await import('@/lib/rag')
+    const emb = await getEmb('forecast')
+    const { data } = await supabase.rpc('match_sessions', {
+      query_embedding: emb,
+      match_user_id: userId,
+      match_count: 10,
+    })
+    testScores = (data ?? []).map((r: { session_id: string; title: string; similarity: number }) => ({
+      session_id: r.session_id,
+      title: r.title,
+      similarity: r.similarity,
+    }))
+  } catch (e) {
+    testScores = [{ session_id: 'error', title: String(e), similarity: 0 }]
+  }
+
+  return NextResponse.json({ processed: results.length, ok, failed, testScores })
 }
