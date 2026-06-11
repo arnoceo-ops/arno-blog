@@ -49,7 +49,7 @@ export default function ReferralSpelregelsPage() {
           <div style={section}>
             <span style={num}>ARTIKEL 1</span>
             <h2 style={h2}>WAT IS HET REFERRALPROGRAMMA</h2>
-            <p style={body}>Iedere actieve ArnoBot-gebruiker ontvangt een persoonlijke referral link. Deelt hij of zij die link en meldt er iemand zich via aan, dan profiteren beide partijen van een korting zodra de nieuwe gebruiker een betaald abonnement afsluit.</p>
+            <p style={body}>Je ontvangt als actieve ArnoBot-gebruiker een persoonlijke referral link. Deel je die link en meldt iemand zich daarmee aan, dan profiteren zowel jij als de nieuwe gebruiker van een korting zodra de laatstgenoemde een betaald abonnement afsluit.</p>
             <p style={body}>Deelname is automatisch voor iedere actieve gebruiker. Er zijn geen aparte aanmeldstappen vereist.</p>
           </div>
 
