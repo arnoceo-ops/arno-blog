@@ -3,8 +3,8 @@
 import { useState } from 'react'
 
 const FREQUENTIE = ['Dagelijks', '2-3x per week', '1x per week', 'Minder dan 1x per week']
-const ONDERDELEN = ['ArnoBot chat', 'Bieb', 'Coaching', 'Analyses']
-const BETALEN_OPTIES = ['Ja', 'Misschien', 'Nee']
+const ONDERDELEN = ['ArnoBot chat', 'Bieb', 'Analyses', 'Coaching']
+const PERSONA_OPTIES = ['Verkoper', 'Salesbaas', 'Eindbaas', 'Anders']
 const AANBEVELEN_OPTIES = ['Ja', 'Misschien', 'Nee']
 
 function Chip({ label, selected, onClick }: { label: string; selected: boolean; onClick: () => void }) {
@@ -30,13 +30,14 @@ function Chip({ label, selected, onClick }: { label: string; selected: boolean; 
   )
 }
 
-function Block({ nr, title, children }: { nr: string; title: string; children: React.ReactNode }) {
+function Block({ nr, title, sub, children }: { nr: string; title: string; sub?: string; children: React.ReactNode }) {
   return (
     <div style={{ marginBottom: 48, borderBottom: '1px solid #374151', paddingBottom: 40 }}>
-      <div style={{ display: 'flex', alignItems: 'baseline', gap: 12, marginBottom: 20 }}>
+      <div style={{ display: 'flex', alignItems: 'baseline', gap: 12, marginBottom: sub ? 8 : 20 }}>
         <span style={{ fontFamily: "'Space Mono', monospace", fontSize: 13, letterSpacing: 4, color: '#f59e0b' }}>{nr}</span>
         <h3 style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 26, fontWeight: 400, color: '#f1f5f9', margin: 0, letterSpacing: 1 }}>{title}</h3>
       </div>
+      {sub && <p style={{ fontSize: 13, color: '#6b7280', letterSpacing: 2, marginBottom: 20 }}>{sub}</p>}
       {children}
     </div>
   )
@@ -47,8 +48,9 @@ export default function EvaluatiePage() {
   const [onderdelen, setOnderdelen] = useState<string[]>([])
   const [waardevol, setWaardevol] = useState('')
   const [ontbreekt, setOntbreekt] = useState('')
-  const [betalen, setBetalen] = useState('')
-  const [betalenToelichting, setBetalenToelichting] = useState('')
+  const [persona, setPersona] = useState<string[]>([])
+  const [personaAnders, setPersonaAnders] = useState('')
+  const [tariefstelling, setTariefstelling] = useState('')
   const [aanbevelen, setAanbevelen] = useState('')
   const [aanbevelenToelichting, setAanbevelenToelichting] = useState('')
   const [naam, setNaam] = useState('')
@@ -60,19 +62,21 @@ export default function EvaluatiePage() {
     setOnderdelen(prev => prev.includes(o) ? prev.filter(x => x !== o) : [...prev, o])
   }
 
+  function togglePersona(o: string) {
+    setPersona(prev => prev.includes(o) ? prev.filter(x => x !== o) : [...prev, o])
+  }
+
   async function submit(e: React.FormEvent) {
     e.preventDefault()
-    if (!frequentie || !betalen || !aanbevelen) {
-      setError('Vul minimaal de meerkeuzevragen in.')
-      return
-    }
+    if (!naam.trim()) { setError('Vul je naam in.'); return }
+    if (!frequentie || !aanbevelen) { setError('Vul minimaal de meerkeuzevragen in.'); return }
     setLoading(true)
     setError('')
     try {
       const res = await fetch('/api/evaluatie', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ naam, frequentie, onderdelen, waardevol, ontbreekt, betalen, betalenToelichting, aanbevelen, aanbevelenToelichting }),
+        body: JSON.stringify({ naam, frequentie, onderdelen, waardevol, ontbreekt, persona, personaAnders, tariefstelling, aanbevelen, aanbevelenToelichting }),
       })
       if (!res.ok) throw new Error()
       setSent(true)
@@ -114,7 +118,7 @@ export default function EvaluatiePage() {
         ) : (
           <form onSubmit={submit}>
 
-            <Block nr="—" title="Naam (optioneel)">
+            <Block nr="—" title="Naam">
               <input type="text" value={naam} onChange={e => setNaam(e.target.value)} placeholder="Jouw naam" />
             </Block>
 
@@ -126,8 +130,7 @@ export default function EvaluatiePage() {
               </div>
             </Block>
 
-            <Block nr="02" title="Welke onderdelen heb je gebruikt?">
-              <p style={{ fontSize: 13, color: '#6b7280', letterSpacing: 2, marginBottom: 16 }}>MEERDERE MOGELIJK</p>
+            <Block nr="02" title="Welke onderdelen heb je gebruikt?" sub="MEERDERE MOGELIJK">
               <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8 }}>
                 {ONDERDELEN.map(o => (
                   <Chip key={o} label={o} selected={onderdelen.includes(o)} onClick={() => toggleOnderdeel(o)} />
@@ -143,25 +146,36 @@ export default function EvaluatiePage() {
               <textarea rows={4} value={ontbreekt} onChange={e => setOntbreekt(e.target.value)} placeholder="Geen sugarcoating nodig." />
             </Block>
 
-            <Block nr="05" title="Zou je €77/maand betalen voor de pro-versie?">
-              <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap', marginBottom: (betalen === 'Nee' || betalen === 'Misschien') ? 16 : 0 }}>
-                {BETALEN_OPTIES.map(o => (
-                  <Chip key={o} label={o} selected={betalen === o} onClick={() => setBetalen(o)} />
+            <Block nr="05" title="Wat is de ideale doelgroep voor ArnoBot?" sub="MEERDERE MOGELIJK">
+              <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8, marginBottom: persona.includes('Anders') ? 16 : 0 }}>
+                {PERSONA_OPTIES.map(o => (
+                  <Chip key={o} label={o} selected={persona.includes(o)} onClick={() => togglePersona(o)} />
                 ))}
               </div>
-              {(betalen === 'Nee' || betalen === 'Misschien') && (
-                <input type="text" value={betalenToelichting} onChange={e => setBetalenToelichting(e.target.value)} placeholder="Waarom niet?" />
+              {persona.includes('Anders') && (
+                <input type="text" value={personaAnders} onChange={e => setPersonaAnders(e.target.value)} placeholder="Namelijk..." style={{ marginTop: 16 }} />
               )}
             </Block>
 
-            <Block nr="06" title="Zou je ArnoBot aan anderen aanbevelen?">
-              <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap', marginBottom: (aanbevelen === 'Nee' || aanbevelen === 'Misschien') ? 16 : 0 }}>
+            <Block nr="06" title="Wat vind je van de tariefstelling?" sub="€97 P/M — €777 P/J — PER GEBRUIKER">
+              <textarea rows={3} value={tariefstelling} onChange={e => setTariefstelling(e.target.value)} placeholder="Te duur, prima, te goedkoop — wat is je eerste reactie?" />
+            </Block>
+
+            <Block nr="07" title="Zou je ArnoBot aan anderen aanbevelen?">
+              <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap', marginBottom: 16 }}>
                 {AANBEVELEN_OPTIES.map(o => (
                   <Chip key={o} label={o} selected={aanbevelen === o} onClick={() => setAanbevelen(o)} />
                 ))}
               </div>
-              {(aanbevelen === 'Nee' || aanbevelen === 'Misschien') && (
-                <input type="text" value={aanbevelenToelichting} onChange={e => setAanbevelenToelichting(e.target.value)} placeholder="Waarom niet?" />
+              {aanbevelen === 'Ja' && (
+                <div style={{ background: '#1f2937', borderLeft: '3px solid #f59e0b', padding: '16px 20px' }}>
+                  <p style={{ fontSize: 15, lineHeight: 1.9, color: '#9ca3af' }}>
+                    Gebruik dan je referral code en je krijgt x maanden gratis per y gebruikers die je aanbrengt. We sturen je de details zodra het programma live is.
+                  </p>
+                </div>
+              )}
+              {(aanbevelen === 'Misschien' || aanbevelen === 'Nee') && (
+                <input type="text" value={aanbevelenToelichting} onChange={e => setAanbevelenToelichting(e.target.value)} placeholder="Wat zou je tegenhouden?" />
               )}
             </Block>
 

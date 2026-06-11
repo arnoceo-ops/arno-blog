@@ -1,14 +1,16 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { createClient } from '@supabase/supabase-js'
+import { Resend } from 'resend'
 
 const supabase = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_URL!,
   process.env.SUPABASE_SERVICE_ROLE_KEY!
 )
+const resend = new Resend(process.env.RESEND_API_KEY)
 
 export async function POST(req: NextRequest) {
   const body = await req.json()
-  const { naam, frequentie, onderdelen, waardevol, ontbreekt, betalen, betalenToelichting, aanbevelen, aanbevelenToelichting } = body
+  const { naam, frequentie, onderdelen, waardevol, ontbreekt, persona, personaAnders, tariefstelling, aanbevelen, aanbevelenToelichting } = body
 
   const { error } = await supabase.from('arnobot_evaluaties').insert({
     naam: naam || null,
@@ -16,12 +18,44 @@ export async function POST(req: NextRequest) {
     onderdelen,
     waardevol: waardevol || null,
     ontbreekt: ontbreekt || null,
-    betalen,
-    betalen_toelichting: betalenToelichting || null,
+    persona,
+    persona_anders: personaAnders || null,
+    tariefstelling: tariefstelling || null,
     aanbevelen,
     aanbevelen_toelichting: aanbevelenToelichting || null,
   })
 
   if (error) return NextResponse.json({ error: error.message }, { status: 500 })
+
+  const r = (label: string, val: string | string[] | undefined) => {
+    if (!val || (Array.isArray(val) && val.length === 0)) return ''
+    const v = Array.isArray(val) ? val.join(', ') : val
+    return `<tr><td style="padding:8px 16px 8px 0;color:#9ca3af;white-space:nowrap;vertical-align:top">${label}</td><td style="padding:8px 0;color:#f1f5f9">${v}</td></tr>`
+  }
+
+  await resend.emails.send({
+    from: 'ArnoBot <noreply@arno.bot>',
+    to: 'evaluatie@arno.bot',
+    subject: `Evaluatie van ${naam || 'onbekend'}`,
+    html: `
+      <div style="background:#111827;padding:40px;font-family:monospace;color:#f1f5f9;max-width:600px">
+        <p style="color:#f59e0b;font-size:13px;letter-spacing:4px;margin:0 0 8px">ARNOBOT</p>
+        <h1 style="font-size:32px;margin:0 0 32px;color:#f1f5f9">Nieuwe evaluatie</h1>
+        <table style="width:100%;border-collapse:collapse">
+          ${r('Naam', naam)}
+          ${r('Frequentie', frequentie)}
+          ${r('Onderdelen', onderdelen)}
+          ${r('Waardevol', waardevol)}
+          ${r('Ontbreekt', ontbreekt)}
+          ${r('Doelgroep', persona)}
+          ${personaAnders ? r('Anders', personaAnders) : ''}
+          ${r('Tariefstelling', tariefstelling)}
+          ${r('Aanbevelen', aanbevelen)}
+          ${aanbevelenToelichting ? r('Toelichting', aanbevelenToelichting) : ''}
+        </table>
+      </div>
+    `,
+  }).catch(() => {})
+
   return NextResponse.json({ ok: true })
 }
