@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import BotNav from '../BotNav'
+import { useUser } from '@clerk/nextjs'
 
 interface CoachingDoc {
   voortgang: string
@@ -146,6 +147,8 @@ function ProgressieChart({ history }: { history: ScoreEntry[] }) {
 }
 
 export default function CoachingClient({ userId }: Props) {
+  const { user } = useUser()
+  const firstName = user?.firstName ?? ''
   const [doc, setDoc] = useState<CoachingDoc | null>(null)
   const [loading, setLoading] = useState(true)
   const [generating, setGenerating] = useState(false)
@@ -368,7 +371,7 @@ export default function CoachingClient({ userId }: Props) {
           )}
           {voortgangError && (
             <p style={{ fontFamily: "'Space Mono', monospace", color: '#ff6644', fontSize: 15, lineHeight: '29px', fontWeight: 400 }}>
-              Er is te weinig voortgang zichtbaar om een nieuw document te rechtvaardigen. Blijkbaar heb je de handrem er nog op. Hieronder kun je lezen hoe je los kunt. Iets mee doen, is het dringende advies om te gaan vliegen. It&apos;s your call.
+              Hey {firstName}, ik zie te weinig voortgang om een nieuw document voor je coaching te rechtvaardigen. Hieronder kun je lezen hoe je los kunt. Iets mee doen, is het dringende advies om te gaan vliegen. It&apos;s your call. Succes!
             </p>
           )}
           {error && <p style={{ fontFamily: "'Space Mono', monospace", color: '#ff6644', fontSize: 13, letterSpacing: 1 }}>{error}</p>}
