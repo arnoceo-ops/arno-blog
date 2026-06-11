@@ -68,7 +68,7 @@ export default async function GebruikersPage({
 
   const sevenDaysAgo = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString()
 
-  const [usersRes, logsRes, coachingRes] = await Promise.all([
+  const [usersRes, logsRes, coachingRes, analysesRes] = await Promise.all([
     supabase
       .from('approved_users')
       .select('user_id, email, full_name, voornaam, achternaam, linkedin, trial_start, expires_at, paid_at, is_active, created_at, tier'),
@@ -79,10 +79,18 @@ export default async function GebruikersPage({
     supabase
       .from('arnobot_coaching')
       .select('user_id, updated_at'),
+    supabase
+      .from('arnobot_analyses')
+      .select('user_id'),
   ])
 
   const logs = logsRes.data ?? []
   const coachingRows = coachingRes.data ?? []
+
+  const analysesMap: Record<string, number> = {}
+  for (const a of analysesRes.data ?? []) {
+    analysesMap[a.user_id] = (analysesMap[a.user_id] || 0) + 1
+  }
 
   // Aggregate per user from rds_logs (real-time source, not session-end dependent)
   const sessionMap: Record<string, { count: number; questions: number; lastSession: string | null; recentCount: number }> = {}
@@ -117,7 +125,7 @@ export default async function GebruikersPage({
         } catch {}
       }
       const activity = sessionMap[u.user_id] ?? { count: 0, questions: 0, lastSession: null, recentCount: 0 }
-      return { ...u, imageUrl, clerkName, ...activity, coachingCount: coachingMap[u.user_id] ?? 0 }
+      return { ...u, imageUrl, clerkName, ...activity, coachingCount: coachingMap[u.user_id] ?? 0, analysesCount: analysesMap[u.user_id] ?? 0 }
     })
   )
 
@@ -131,13 +139,14 @@ export default async function GebruikersPage({
     if (sort === 'vragen') { av = a.questions; bv = b.questions }
     if (sort === 'laatste') { av = a.lastSession || ''; bv = b.lastSession || '' }
     if (sort === 'coaching') { av = a.coachingCount; bv = b.coachingCount }
+    if (sort === 'analyses') { av = a.analysesCount; bv = b.analysesCount }
     if (sort === 'actief') { av = a.recentCount; bv = b.recentCount }
     if (av < bv) return dir === 'asc' ? -1 : 1
     if (av > bv) return dir === 'asc' ? 1 : -1
     return 0
   })
 
-  const cols = '56px 1fr 140px 80px 80px 100px 70px 80px 70px 80px'
+  const cols = '56px 1fr 140px 80px 80px 100px 70px 70px 80px 70px 80px'
 
   return (
     <main style={{ background: '#111827', minHeight: '100vh', color: '#f1f5f9', fontFamily: 'sans-serif' }}>
@@ -169,6 +178,7 @@ export default async function GebruikersPage({
           <SortHeader label="VRAGEN" field="vragen" sort={sort} dir={dir} />
           <SortHeader label="LAATSTE GESPREK" field="laatste" sort={sort} dir={dir} />
           <SortHeader label="COACHING" field="coaching" sort={sort} dir={dir} />
+          <SortHeader label="ANALYSES" field="analyses" sort={sort} dir={dir} />
           <SortHeader label="7 DAGEN" field="actief" sort={sort} dir={dir} />
           <span style={{ fontSize: '11px', letterSpacing: '3px', color: '#4b5563', textAlign: 'right' }}>TIER</span>
           <span style={{ fontSize: '11px', letterSpacing: '3px', color: '#4b5563', textAlign: 'right' }}>LINKEDIN</span>
@@ -221,6 +231,10 @@ export default async function GebruikersPage({
                 {/* Coaching */}
                 <div style={{ textAlign: 'right' }}>
                   <p style={{ fontSize: '16px', fontWeight: 700, color: u.coachingCount > 0 ? '#44cc88' : '#374151' }}>{u.coachingCount || '—'}</p>
+                </div>
+                {/* Analyses */}
+                <div style={{ textAlign: 'right' }}>
+                  <p style={{ fontSize: '16px', fontWeight: 700, color: u.analysesCount > 0 ? '#44cc88' : '#374151' }}>{u.analysesCount || '—'}</p>
                 </div>
                 {/* Actief 7d */}
                 <div style={{ textAlign: 'right' }}>
