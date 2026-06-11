@@ -85,7 +85,30 @@ export async function POST() {
     const prevAnalyseIds = new Set<string>(prevCoaching.used_analyse_ids ?? [])
     const newSessions = sessions.filter(s => !prevSessionIds.has(s.session_id))
     const newAnalyses = analyses.filter(a => !prevAnalyseIds.has(a.id))
-    if (newSessions.length < 3 && newAnalyses.length === 0) {
+
+    if (newSessions.length > 0 || newAnalyses.length > 0) {
+      const newSessiesText = newSessions
+        .map(s => `- ${s.title}${s.summary ? `: ${s.summary}` : ''}`)
+        .join('\n')
+      const newAnalysesText = newAnalyses
+        .map(a => `- ${a.analyse_text.slice(0, 200)}`)
+        .join('\n')
+
+      const precheck = await anthropic.messages.create({
+        model: 'claude-sonnet-4-6',
+        max_tokens: 10,
+        system: 'Je beoordeelt of nieuwe gesprekken kwalitatief andere patronen laten zien dan de vorige coaching. Antwoord uitsluitend met "ja" of "nee".',
+        messages: [{
+          role: 'user',
+          content: `Vorige coaching:\nMindset (${prevCoaching.mindset_score}/5): ${prevCoaching.mindset_diagnose}\nSysteem (${prevCoaching.systeem_score}/5): ${prevCoaching.systeem_diagnose}\nActie (${prevCoaching.actie_score}/5): ${prevCoaching.actie_diagnose}\n\nNieuwe gesprekken:\n${newSessiesText || '—'}\n\nNieuwe analyses:\n${newAnalysesText || '—'}\n\nIs er kwalitatief iets veranderd in het patroon?`,
+        }],
+      })
+
+      const verdict = precheck.content[0].type === 'text' ? precheck.content[0].text.trim().toLowerCase() : 'nee'
+      if (!verdict.startsWith('ja')) {
+        return NextResponse.json({ error: 'te_weinig_voortgang' }, { status: 429 })
+      }
+    } else {
       return NextResponse.json({ error: 'te_weinig_voortgang' }, { status: 429 })
     }
   }
