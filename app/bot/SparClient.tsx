@@ -268,6 +268,17 @@ export default function SparClient({ userId, profiel, tier, taglineTitle, taglin
       .then(data => { if (data.openers) setDynamicOpeners(data.openers) })
       .catch(() => {})
 
+    // Verwerk referral code uit localStorage na OAuth
+    const referralCode = localStorage.getItem('arnobot_referral')
+    if (referralCode) {
+      localStorage.removeItem('arnobot_referral')
+      fetch('/api/bot/referral', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ code: referralCode }),
+      }).catch(() => {})
+    }
+
     if (userId) {
       fetch('/api/bot/sessions')
         .then(r => r.json())

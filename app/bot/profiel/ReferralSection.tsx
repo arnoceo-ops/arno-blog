@@ -1,0 +1,71 @@
+'use client'
+
+import { useState, useEffect } from 'react'
+
+export default function ReferralSection() {
+  const [data, setData] = useState<{ code: string; link: string; referrals: number; converted: number; credit: number } | null>(null)
+  const [copied, setCopied] = useState(false)
+
+  useEffect(() => {
+    fetch('/api/bot/referral')
+      .then(r => r.json())
+      .then(d => { if (d.code) setData(d) })
+      .catch(() => {})
+  }, [])
+
+  function copy() {
+    if (!data) return
+    navigator.clipboard.writeText(data.link)
+    setCopied(true)
+    setTimeout(() => setCopied(false), 2000)
+  }
+
+  if (!data) return null
+
+  return (
+    <div style={{ marginTop: 56, borderTop: '1px solid #374151', paddingTop: 40 }}>
+      <div style={{ display: 'flex', alignItems: 'baseline', gap: 12, marginBottom: 8 }}>
+        <span style={{ fontFamily: "'Space Mono', monospace", fontSize: 13, letterSpacing: 4, color: '#f59e0b' }}>REF</span>
+        <h3 style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 26, fontWeight: 400, color: '#f1f5f9', margin: 0, letterSpacing: 1 }}>Jouw referral code</h3>
+      </div>
+      <p style={{ fontSize: 15, lineHeight: 1.9, color: '#9ca3af', marginBottom: 24 }}>
+        Deel deze link. Nieuwe gebruikers krijgen de eerste maand 50% korting — jij ook op je volgende maand.
+      </p>
+
+      <div style={{ display: 'flex', gap: 8, alignItems: 'center', marginBottom: 24, flexWrap: 'wrap' }}>
+        <code style={{
+          flex: 1, background: '#1f2937', border: '1.5px solid #374151',
+          borderRadius: 4, padding: '12px 16px', fontSize: 14,
+          fontFamily: "'Space Mono', monospace", color: '#f59e0b', letterSpacing: 2,
+          wordBreak: 'break-all',
+        }}>
+          {data.link}
+        </code>
+        <button
+          onClick={copy}
+          style={{
+            fontFamily: "'Bebas Neue', sans-serif", fontSize: 16, letterSpacing: 3,
+            padding: '12px 24px', borderRadius: 999, border: 'none', cursor: 'pointer',
+            background: copied ? '#374151' : '#f59e0b', color: copied ? '#9ca3af' : '#111827',
+            transition: 'all 0.15s', whiteSpace: 'nowrap',
+          }}
+        >
+          {copied ? 'GEKOPIEERD ✓' : 'KOPIEER LINK'}
+        </button>
+      </div>
+
+      <div style={{ display: 'flex', gap: 2 }}>
+        {[
+          { label: 'AANGEMELD', value: data.referrals },
+          { label: 'BETALEND', value: data.converted },
+          { label: 'TEGOED', value: `€${data.credit.toFixed(0)}` },
+        ].map(({ label, value }) => (
+          <div key={label} style={{ background: '#1f2937', padding: '16px 20px', flex: 1, textAlign: 'center' }}>
+            <div style={{ fontFamily: "'Space Mono', monospace", fontWeight: 700, fontSize: 11, letterSpacing: 3, color: '#f59e0b', marginBottom: 6 }}>{label}</div>
+            <div style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 32, color: '#f1f5f9', lineHeight: 1 }}>{value}</div>
+          </div>
+        ))}
+      </div>
+    </div>
+  )
+}
