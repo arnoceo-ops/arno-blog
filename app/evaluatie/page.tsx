@@ -154,7 +154,7 @@ export default function EvaluatiePage() {
                 ))}
               </div>
               {persona.includes('Anders') && (
-                <input type="text" value={personaAnders} onChange={e => setPersonaAnders(e.target.value)} placeholder="Namelijk..." style={{ marginTop: 16 }} />
+                <input type="text" value={personaAnders} onChange={e => setPersonaAnders(e.target.value)} placeholder="Ik ben benieuwd." style={{ marginTop: 16 }} />
               )}
             </Block>
 
