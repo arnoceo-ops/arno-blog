@@ -101,7 +101,7 @@ export default function ReferralSpelregelsPage() {
             <h2 style={h2}>SPELREGELS VOOR TEGOED</h2>
             <p style={body}>Tegoed is uitsluitend inzetbaar als verlenging van een bestaand maand- of jaarabonnement, of als bijdrage aan een tweede licentie. Uitbetaling in contanten of via andere betaalmethoden is niet mogelijk.</p>
             <p style={body}>Tegoed heeft geen vervaldatum en kent geen maximum. Het loopt door totdat het wordt ingezet voor een verlenging of tweede licentie.</p>
-            <p style={body}>Verrekening vindt handmatig plaats via <a href="mailto:arno@arno.bot">arno@arno.bot</a>.</p>
+            <p style={body}>Verrekening vindt handmatig plaats via <a href="mailto:referrals@arno.bot">referrals@arno.bot</a>.</p>
           </div>
 
           <div style={section}>
@@ -118,7 +118,7 @@ export default function ReferralSpelregelsPage() {
           </div>
 
           <p style={{ fontFamily: "'Space Mono', monospace", fontSize: 13, color: '#4b5563', lineHeight: 1.8, marginTop: 16 }}>
-            Vragen? Mail naar <a href="mailto:arno@arno.bot">arno@arno.bot</a>
+            Vragen? Mail naar <a href="mailto:referrals@arno.bot">referrals@arno.bot</a>
           </p>
 
         </div>

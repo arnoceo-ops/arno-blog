@@ -73,7 +73,7 @@ export default function ReferralSection({ inAccount }: { inAccount?: boolean }) 
         ))}
       </div>
       <p style={{ marginTop: 16, fontSize: 13, color: '#4b5563', lineHeight: 1.8 }}>
-        <a href="/referral-spelregels" target="_blank" rel="noopener noreferrer" style={{ color: '#6b7280', textDecoration: 'none', borderBottom: '1px solid #374151' }}>
+        <a href="/referrals" target="_blank" rel="noopener noreferrer" style={{ color: '#6b7280', textDecoration: 'none', borderBottom: '1px solid #374151' }}>
           Spelregels referralprogramma →
         </a>
       </p>
