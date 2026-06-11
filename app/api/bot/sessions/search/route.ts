@@ -16,48 +16,46 @@ export async function GET(req: NextRequest) {
   const q = req.nextUrl.searchParams.get('q') ?? ''
   if (q.length < 2) return NextResponse.json({ sessions: [] })
 
-  // Verbreed de zoekopdracht naar verwante termen via Claude
-  let terms = [q]
+  // Haal alle sessie-titels en samenvattingen op
+  const { data: allSessions } = await supabase
+    .from('arnobot_blog_sessions')
+    .select('session_id, title, summary')
+    .eq('user_id', userId)
+    .order('created_at', { ascending: false })
+    .limit(100)
+
+  if (!allSessions || allSessions.length === 0) return NextResponse.json({ sessions: [] })
+
+  // Laat Claude bepalen welke sessies inhoudelijk relevant zijn
+  const sessionList = allSessions
+    .map(s => `ID:${s.session_id} | ${s.title ?? ''} | ${s.summary ?? ''}`)
+    .join('\n')
+
+  let matchedIds: string[] = []
   try {
     const res = await anthropic.messages.create({
       model: 'claude-haiku-4-5-20251001',
-      max_tokens: 100,
+      max_tokens: 200,
       messages: [{
         role: 'user',
-        content: `Geef maximaal 6 verwante zoektermen voor "${q}" in de context van sales en zakelijke gesprekken. Zowel Nederlands als Engels. Retourneer alleen een JSON-array van strings, niets anders.`,
+        content: `Hieronder staan gesprekssessies in het formaat "ID:xxx | titel | samenvatting".\n\nGeef een JSON-array terug met alleen de session-IDs die inhoudelijk relevant zijn voor de zoekopdracht: "${q}"\n\nWees ruimhartig: als het gesprek ook maar raakvlak heeft met het onderwerp, neem het mee. Geef alleen de JSON-array terug, niets anders.\n\nSessies:\n${sessionList}`,
       }],
     })
     const text = res.content[0].type === 'text' ? res.content[0].text.trim() : '[]'
-    const match = text.indexOf('[')
+    const start = text.indexOf('[')
     const end = text.lastIndexOf(']')
-    const parsed = JSON.parse(match >= 0 && end >= 0 ? text.slice(match, end + 1) : '[]')
-    if (Array.isArray(parsed)) terms = [...new Set([q, ...parsed])]
+    const parsed = JSON.parse(start >= 0 && end >= 0 ? text.slice(start, end + 1) : '[]')
+    if (Array.isArray(parsed)) matchedIds = parsed.map(String)
   } catch {}
 
-  // Zoek voor elke term in de gespreksteksten
-  const results = await Promise.all(
-    terms.map(term =>
-      supabase.rpc('search_sessions_text', {
-        search_query: term,
-        search_user_id: userId,
-        match_count: 20,
-      })
-    )
-  )
-
-  const sessionIds = [...new Set(
-    results.flatMap(r => ((r.data ?? []) as { session_id: string }[]).map(l => l.session_id))
-  )]
-
-  if (sessionIds.length === 0) return NextResponse.json({ sessions: [] })
+  if (matchedIds.length === 0) return NextResponse.json({ sessions: [] })
 
   const { data: sessions } = await supabase
     .from('arnobot_blog_sessions')
     .select('session_id, title, summary, message_count, created_at, blog_suggestions')
     .eq('user_id', userId)
-    .in('session_id', sessionIds)
+    .in('session_id', matchedIds)
     .order('created_at', { ascending: false })
-    .limit(20)
 
   return NextResponse.json({ sessions: sessions ?? [] })
 }
