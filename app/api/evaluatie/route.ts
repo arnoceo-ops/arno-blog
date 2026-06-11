@@ -10,7 +10,7 @@ const resend = new Resend(process.env.RESEND_API_KEY)
 
 export async function POST(req: NextRequest) {
   const body = await req.json()
-  const { naam, frequentie, onderdelen, waardevol, ontbreekt, persona, personaAnders, tariefstelling, aanbevelen, aanbevelenToelichting } = body
+  const { naam, frequentie, onderdelen, waardevol, ontbreekt, persona, personaAnders, tariefstelling, aanbevelen, aanbevelenToelichting, slotwoord } = body
 
   const { error } = await supabase.from('arnobot_evaluaties').insert({
     naam: naam || null,
@@ -23,6 +23,7 @@ export async function POST(req: NextRequest) {
     tariefstelling: tariefstelling || null,
     aanbevelen,
     aanbevelen_toelichting: aanbevelenToelichting || null,
+    slotwoord: slotwoord || null,
   })
 
   if (error) return NextResponse.json({ error: error.message }, { status: 500 })
@@ -52,6 +53,7 @@ export async function POST(req: NextRequest) {
           ${r('Tariefstelling', tariefstelling)}
           ${r('Aanbevelen', aanbevelen)}
           ${aanbevelenToelichting ? r('Toelichting', aanbevelenToelichting) : ''}
+          ${slotwoord ? r('Slotwoord', slotwoord) : ''}
         </table>
       </div>
     `,

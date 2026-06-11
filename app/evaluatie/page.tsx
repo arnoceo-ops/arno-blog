@@ -54,6 +54,7 @@ export default function EvaluatiePage() {
   const [aanbevelen, setAanbevelen] = useState('')
   const [aanbevelenToelichting, setAanbevelenToelichting] = useState('')
   const [naam, setNaam] = useState('')
+  const [slotwoord, setSlotwoord] = useState('')
   const [loading, setLoading] = useState(false)
   const [sent, setSent] = useState(false)
   const [error, setError] = useState('')
@@ -76,7 +77,7 @@ export default function EvaluatiePage() {
       const res = await fetch('/api/evaluatie', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ naam, frequentie, onderdelen, waardevol, ontbreekt, persona, personaAnders, tariefstelling, aanbevelen, aanbevelenToelichting }),
+        body: JSON.stringify({ naam, frequentie, onderdelen, waardevol, ontbreekt, persona, personaAnders, tariefstelling, aanbevelen, aanbevelenToelichting, slotwoord }),
       })
       if (!res.ok) throw new Error()
       setSent(true)
@@ -107,7 +108,7 @@ export default function EvaluatiePage() {
         <p style={{ fontFamily: "'Space Mono', monospace", fontWeight: 700, color: '#f59e0b', fontSize: 13, letterSpacing: 4, marginBottom: 8 }}>ARNOBOT</p>
         <h1 style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 64, letterSpacing: 3, lineHeight: 1, color: '#f1f5f9', marginBottom: 16 }}>EVALUATIE</h1>
         <p style={{ fontSize: 15, lineHeight: 1.9, color: '#9ca3af', marginBottom: 56 }}>
-          30 dagen ArnoBot. Wat vond je ervan? Vijf minuten, eerlijk antwoord. Helpt ons de app beter te maken.
+          30 dagen ArnoBot. Benieuwd hoe je het hebt ervaren. Ik stel je feedback op prijs. Helpt me de app beter te maken. Thanks!
         </p>
 
         {sent ? (
@@ -157,8 +158,8 @@ export default function EvaluatiePage() {
               )}
             </Block>
 
-            <Block nr="06" title="Wat vind je van de tariefstelling?" sub="€97 P/M — €777 P/J — PER GEBRUIKER">
-              <textarea rows={3} value={tariefstelling} onChange={e => setTariefstelling(e.target.value)} placeholder="Te duur, prima, te goedkoop — wat is je eerste reactie?" />
+            <Block nr="06" title="Wat vind je van de tariefstelling?" sub="€97 P/M — 4 MAANDEN GRATIS: €777 P/J — PER GEBRUIKER">
+              <textarea rows={3} value={tariefstelling} onChange={e => setTariefstelling(e.target.value)} placeholder="Te duur, precies goed, te laag? Graag met onderbouwing." />
             </Block>
 
             <Block nr="07" title="Zou je ArnoBot aan anderen aanbevelen?">
@@ -174,9 +175,16 @@ export default function EvaluatiePage() {
                   </p>
                 </div>
               )}
-              {(aanbevelen === 'Misschien' || aanbevelen === 'Nee') && (
-                <input type="text" value={aanbevelenToelichting} onChange={e => setAanbevelenToelichting(e.target.value)} placeholder="Wat zou je tegenhouden?" />
+              {aanbevelen === 'Misschien' && (
+                <input type="text" value={aanbevelenToelichting} onChange={e => setAanbevelenToelichting(e.target.value)} placeholder="Wat zou je over de streep trekken?" />
               )}
+              {aanbevelen === 'Nee' && (
+                <input type="text" value={aanbevelenToelichting} onChange={e => setAanbevelenToelichting(e.target.value)} placeholder="😰 Nee, toch...?" />
+              )}
+            </Block>
+
+            <Block nr="08" title="Nog andere mooie laatste woorden?">
+              <textarea rows={4} value={slotwoord} onChange={e => setSlotwoord(e.target.value)} placeholder="Alles wat je kwijt wilt." />
             </Block>
 
             {error && (
