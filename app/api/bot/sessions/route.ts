@@ -2,6 +2,7 @@ import { auth } from '@clerk/nextjs/server'
 import { NextResponse } from 'next/server'
 import { createClient } from '@supabase/supabase-js'
 import Anthropic from '@anthropic-ai/sdk'
+import { getVoyageEmbedding } from '@/lib/rag'
 
 const supabase = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_URL!,
@@ -71,6 +72,12 @@ export async function GET() {
           feiten = feitenRes.content[0].type === 'text' ? feitenRes.content[0].text : ''
         } catch {}
 
+        let embedding: number[] | null = null
+        try {
+          const embeddingText = [title, summary, feiten].filter(Boolean).join('\n')
+          embedding = await getVoyageEmbedding(embeddingText)
+        } catch {}
+
         await supabase.from('arnobot_blog_sessions').upsert({
           user_id: userId,
           session_id: sessionId,
@@ -80,9 +87,26 @@ export async function GET() {
           message_count: messageCount,
           blog_suggestions: [],
           created_at: createdAt,
+          ...(embedding ? { embedding } : {}),
         }, { onConflict: 'session_id' })
       })
     )
+  }
+
+  // Backfill embeddings voor sessies die er nog geen hebben
+  const { data: noEmbedding } = await supabase
+    .from('arnobot_blog_sessions')
+    .select('session_id, title, summary, feiten')
+    .eq('user_id', userId)
+    .is('embedding', null)
+    .limit(10)
+
+  if (noEmbedding && noEmbedding.length > 0) {
+    await Promise.allSettled(noEmbedding.map(async s => {
+      const text = [s.title, s.summary, s.feiten].filter(Boolean).join('\n')
+      const emb = await getVoyageEmbedding(text)
+      await supabase.from('arnobot_blog_sessions').update({ embedding: emb }).eq('session_id', s.session_id)
+    }))
   }
 
   const { data } = await supabase
