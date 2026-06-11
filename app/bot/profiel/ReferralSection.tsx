@@ -23,15 +23,17 @@ export default function ReferralSection({ inAccount }: { inAccount?: boolean }) 
   if (!data) return null
 
   const wrapStyle: React.CSSProperties = inAccount
-    ? { borderTop: '1px solid #374151', paddingTop: '32px', marginBottom: '48px' }
+    ? {}
     : { marginTop: 56, borderTop: '1px solid #374151', paddingTop: 40 }
 
   return (
     <div style={wrapStyle}>
-      <p style={{ fontFamily: "'Space Mono', monospace", fontWeight: 700, color: '#f59e0b', fontSize: '13px', letterSpacing: '4px', marginBottom: '16px', display: 'block' }}>REFERRAL</p>
-      <div style={{ display: 'flex', alignItems: 'baseline', gap: 12, marginBottom: 8 }}>
-        <h3 style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 26, fontWeight: 400, color: '#f1f5f9', margin: 0, letterSpacing: 1 }}>Jouw referral code</h3>
-      </div>
+      {!inAccount && (
+        <>
+          <p style={{ fontFamily: "'Space Mono', monospace", fontWeight: 700, color: '#f59e0b', fontSize: '13px', letterSpacing: '4px', marginBottom: '16px', display: 'block' }}>REFERRAL</p>
+          <h3 style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 26, fontWeight: 400, color: '#f1f5f9', margin: '0 0 8px', letterSpacing: 1 }}>Jouw referral code</h3>
+        </>
+      )}
       <p style={{ fontSize: 15, lineHeight: 1.9, color: '#9ca3af', marginBottom: 24 }}>
         Deel deze link. Nieuwe gebruikers krijgen de eerste maand 50% korting — jij ook op je volgende maand.
       </p>
@@ -40,7 +42,7 @@ export default function ReferralSection({ inAccount }: { inAccount?: boolean }) 
         <code style={{
           flex: 1, background: '#1f2937', border: '1.5px solid #374151',
           borderRadius: 4, padding: '12px 16px', fontSize: 14,
-          fontFamily: "'Space Mono', monospace", color: '#f59e0b', letterSpacing: 2,
+          fontFamily: "'Space Mono', monospace", color: '#f1f5f9', letterSpacing: 2,
           wordBreak: 'break-all',
         }}>
           {data.link}

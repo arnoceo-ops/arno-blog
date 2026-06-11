@@ -82,8 +82,16 @@ export default function AccountPage() {
 
       <div style={{ maxWidth: 812, margin: '0 auto', padding: 'clamp(80px,12vw,120px) clamp(16px,4vw,20px) 80px' }}>
 
-        <p style={{ color: '#f59e0b', fontSize: 13, letterSpacing: 4, marginBottom: 8 }}>ACCOUNT</p>
-        <h1 style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 64, letterSpacing: 3, margin: '0 0 48px 0', lineHeight: 1 }}>JOUW GEGEVENS</h1>
+        {/* Referral — openingssectie */}
+        <p style={{ color: '#f59e0b', fontSize: 13, letterSpacing: 4, marginBottom: 8 }}>REFERRAL</p>
+        <h1 style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 64, letterSpacing: 3, margin: '0 0 32px 0', lineHeight: 1 }}>JOUW REFERRAL CODE</h1>
+        <ReferralSection inAccount />
+
+        {/* Gegevens — tweede sectie */}
+        <div style={{ borderTop: '1px solid #374151', paddingTop: 48, marginTop: 56 }}>
+          <p style={{ color: '#f59e0b', fontSize: 13, letterSpacing: 4, marginBottom: 8 }}>ACCOUNT</p>
+          <h1 style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 64, letterSpacing: 3, margin: '0 0 40px 0', color: '#f1f5f9', lineHeight: 1 }}>JOUW GEGEVENS</h1>
+        </div>
 
         {/* Privacy statement */}
         <div style={{ background: '#1f2937', borderLeft: '4px solid #f59e0b', padding: '20px 24px', marginBottom: 48 }}>
@@ -116,9 +124,6 @@ export default function AccountPage() {
             PROFIEL AANPASSEN
           </Link>
         </div>
-
-        {/* Referral */}
-        <ReferralSection inAccount />
 
         {/* Data export */}
         <div style={section}>
