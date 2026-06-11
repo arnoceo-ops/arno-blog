@@ -34,7 +34,7 @@ export async function GET(req: NextRequest) {
       match_count: 30,
     })
     const filtered = ((vectorResults ?? []) as { session_id: string; similarity: number }[])
-      .filter(s => s.similarity >= 0.45)
+      .filter(s => s.similarity >= 0.12)
     for (const r of filtered) semanticSessionIds.add(r.session_id)
   } catch {}
 
