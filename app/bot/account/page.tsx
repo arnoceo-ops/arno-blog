@@ -5,6 +5,7 @@ import { useUser, useClerk } from '@clerk/nextjs'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import BotNav from '../BotNav'
+import ReferralSection from '../profiel/ReferralSection'
 
 export default function AccountPage() {
   const { user, isLoaded } = useUser()
@@ -115,6 +116,9 @@ export default function AccountPage() {
             PROFIEL AANPASSEN
           </Link>
         </div>
+
+        {/* Referral */}
+        <ReferralSection inAccount />
 
         {/* Data export */}
         <div style={section}>

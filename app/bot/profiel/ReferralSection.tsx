@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react'
 
-export default function ReferralSection() {
+export default function ReferralSection({ inAccount }: { inAccount?: boolean }) {
   const [data, setData] = useState<{ code: string; link: string; referrals: number; converted: number; credit: number } | null>(null)
   const [copied, setCopied] = useState(false)
 
@@ -22,10 +22,14 @@ export default function ReferralSection() {
 
   if (!data) return null
 
+  const wrapStyle: React.CSSProperties = inAccount
+    ? { borderTop: '1px solid #374151', paddingTop: '32px', marginBottom: '48px' }
+    : { marginTop: 56, borderTop: '1px solid #374151', paddingTop: 40 }
+
   return (
-    <div style={{ marginTop: 56, borderTop: '1px solid #374151', paddingTop: 40 }}>
+    <div style={wrapStyle}>
+      <p style={{ fontFamily: "'Space Mono', monospace", fontWeight: 700, color: '#f59e0b', fontSize: '13px', letterSpacing: '4px', marginBottom: '16px', display: 'block' }}>REFERRAL</p>
       <div style={{ display: 'flex', alignItems: 'baseline', gap: 12, marginBottom: 8 }}>
-        <span style={{ fontFamily: "'Space Mono', monospace", fontSize: 13, letterSpacing: 4, color: '#f59e0b' }}>REF</span>
         <h3 style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 26, fontWeight: 400, color: '#f1f5f9', margin: 0, letterSpacing: 1 }}>Jouw referral code</h3>
       </div>
       <p style={{ fontSize: 15, lineHeight: 1.9, color: '#9ca3af', marginBottom: 24 }}>

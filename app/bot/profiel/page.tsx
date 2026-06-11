@@ -4,7 +4,6 @@ import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import { useUser } from '@clerk/nextjs'
 import BotNav from '@/app/bot/BotNav'
-import ReferralSection from './ReferralSection'
 
 type Answers = {
   rol: string
@@ -384,9 +383,7 @@ export default function BotProfielPage() {
             {saving ? 'Bezig...' : isFirstTime ? 'IK GA AKKOORD EN START →' : 'PROFIEL OPSLAAN →'}
           </button>
 
-        {!isFirstTime && <ReferralSection />}
-
-        </div>
+</div>
       </div>
     </>
   )
