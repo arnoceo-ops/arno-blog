@@ -145,5 +145,16 @@ export async function POST(req: NextRequest) {
     .select('id, created_at')
     .single()
 
+  // Houd maximum 20 analyses — verwijder de oudste als er meer zijn
+  const { data: allAnalyses } = await supabase
+    .from('arnobot_analyses')
+    .select('id, created_at')
+    .eq('user_id', userId)
+    .order('created_at', { ascending: false })
+  if (allAnalyses && allAnalyses.length > 20) {
+    const toDelete = allAnalyses.slice(20).map(a => a.id)
+    await supabase.from('arnobot_analyses').delete().in('id', toDelete)
+  }
+
   return NextResponse.json({ analyse, count: sessions.length, id: saved?.id, created_at: saved?.created_at, delta: isDelta })
 }

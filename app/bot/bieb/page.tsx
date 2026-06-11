@@ -62,6 +62,7 @@ export default function GeschiedenisPage() {
   const [savedAnalyses, setSavedAnalyses] = useState<SavedAnalyse[]>([])
   const [expandedAnalyse, setExpandedAnalyse] = useState<string | null>(null)
   const [showAllSessions, setShowAllSessions] = useState(false)
+  const [showAllAnalyses, setShowAllAnalyses] = useState(false)
   const [semanticSessions, setSemanticSessions] = useState<Session[] | null>(null)
   const [searchLoading, setSearchLoading] = useState(false)
   const [isDuplicateAnalyse, setIsDuplicateAnalyse] = useState(false)
@@ -667,7 +668,7 @@ export default function GeschiedenisPage() {
               </p>
             )}
 
-            {savedAnalyses.slice(activeAnalyse && !isDuplicateAnalyse ? 1 : 0).map(a => (
+            {savedAnalyses.slice(activeAnalyse && !isDuplicateAnalyse ? 1 : 0, showAllAnalyses ? undefined : (activeAnalyse && !isDuplicateAnalyse ? 4 : 5)).map(a => (
               <div key={a.id} style={{ borderTop: '1px solid #374151', animation: 'fadein 0.3s ease' }}>
                 <button
                   onClick={() => {
@@ -722,6 +723,18 @@ export default function GeschiedenisPage() {
                 )}
               </div>
             ))}
+          {savedAnalyses.length > 5 && (
+            <div style={{ borderTop: '1px solid #374151', padding: '28px 0', textAlign: 'center' }}>
+              <button
+                onClick={() => setShowAllAnalyses(v => !v)}
+                style={{ background: 'none', border: '1px solid #374151', cursor: 'pointer', fontFamily: "'Bebas Neue', sans-serif", fontSize: 16, letterSpacing: 3, color: '#9ca3af', padding: '11px 32px', borderRadius: 999, transition: 'all 0.15s' }}
+                onMouseEnter={e => { (e.currentTarget as HTMLButtonElement).style.borderColor = '#f59e0b'; (e.currentTarget as HTMLButtonElement).style.color = '#f59e0b' }}
+                onMouseLeave={e => { (e.currentTarget as HTMLButtonElement).style.borderColor = '#374151'; (e.currentTarget as HTMLButtonElement).style.color = '#9ca3af' }}
+              >
+                {showAllAnalyses ? 'TOON MINDER ↑' : `TOON ALLE ${savedAnalyses.length} ANALYSES ↓`}
+              </button>
+            </div>
+          )}
           </div>
         )}
 
