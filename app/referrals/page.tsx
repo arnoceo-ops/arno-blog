@@ -101,6 +101,7 @@ export default function ReferralSpelregelsPage() {
             <h2 style={h2}>SPELREGELS VOOR TEGOED</h2>
             <p style={body}>Tegoed is uitsluitend inzetbaar als verlenging van een bestaand maand- of jaarabonnement, of als bijdrage aan een tweede licentie. Uitbetaling in contanten of via andere betaalmethoden is niet mogelijk.</p>
             <p style={body}>Tegoed heeft geen vervaldatum en kent geen maximum. Het loopt door totdat het wordt ingezet voor een verlenging of tweede licentie.</p>
+            <p style={body}>De actuele stand van je referral saldo is te zien op je <a href="/bot/account">accountpagina</a>.</p>
             <p style={body}>Verrekening vindt handmatig plaats via <a href="mailto:referrals@arno.bot">referrals@arno.bot</a>.</p>
           </div>
 
