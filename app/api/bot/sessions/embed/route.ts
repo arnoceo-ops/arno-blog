@@ -1,7 +1,7 @@
 import { auth } from '@clerk/nextjs/server'
 import { NextResponse } from 'next/server'
 import { createClient } from '@supabase/supabase-js'
-import { getVoyageEmbedding } from '@/lib/rag'
+import { getMultilingualEmbedding } from '@/lib/rag'
 
 const supabase = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_URL!,
@@ -26,7 +26,7 @@ export async function GET() {
   for (const s of sessions ?? []) {
     try {
       const text = [s.title, s.summary, s.feiten].filter(Boolean).join('\n')
-      const emb = await getVoyageEmbedding(text)
+      const emb = await getMultilingualEmbedding(text)
       const { error: updateErr } = await supabase
         .from('arnobot_blog_sessions')
         .update({ embedding: emb })
@@ -44,7 +44,7 @@ export async function GET() {
   // Test: run match_sessions voor "forecast" en toon raw scores
   let testScores: { session_id: string; title: string; similarity: number }[] = []
   try {
-    const { getVoyageEmbedding: getEmb } = await import('@/lib/rag')
+    const { getMultilingualEmbedding: getEmb } = await import('@/lib/rag')
     const emb = await getEmb('forecast')
     const { data } = await supabase.rpc('match_sessions', {
       query_embedding: emb,

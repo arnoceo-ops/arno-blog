@@ -1,7 +1,7 @@
 import { auth } from '@clerk/nextjs/server'
 import { NextRequest, NextResponse } from 'next/server'
 import { createClient } from '@supabase/supabase-js'
-import { getVoyageEmbedding } from '@/lib/rag'
+import { getMultilingualEmbedding } from '@/lib/rag'
 
 const supabase = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_URL!,
@@ -27,7 +27,7 @@ export async function GET(req: NextRequest) {
   // 2. Semantische search via embeddings (vindt verwante concepten zonder exact woordgebruik)
   const semanticSessionIds = new Set<string>()
   try {
-    const embedding = await getVoyageEmbedding(q)
+    const embedding = await getMultilingualEmbedding(q)
     const { data: vectorResults } = await supabase.rpc('match_sessions', {
       query_embedding: embedding,
       match_user_id: userId,

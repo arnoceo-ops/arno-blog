@@ -22,6 +22,24 @@ export async function getVoyageEmbedding(text: string): Promise<number[]> {
   return json.data[0].embedding
 }
 
+// Voor Nederlandse gesprekken en cross-language zoekopdrachten
+export async function getMultilingualEmbedding(text: string): Promise<number[]> {
+  const res = await fetch('https://api.voyageai.com/v1/embeddings', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${process.env.VOYAGE_API_KEY}`,
+    },
+    body: JSON.stringify({ input: [text], model: 'voyage-multilingual-2' }),
+  })
+  if (!res.ok) {
+    const err = await res.text()
+    throw new Error(`Voyage multilingual API error: ${err}`)
+  }
+  const json = await res.json()
+  return json.data[0].embedding
+}
+
 async function getEmbedding(text: string): Promise<number[]> {
   return getVoyageEmbedding(text)
 }

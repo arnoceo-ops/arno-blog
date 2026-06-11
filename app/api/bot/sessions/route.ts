@@ -2,7 +2,7 @@ import { auth } from '@clerk/nextjs/server'
 import { NextResponse } from 'next/server'
 import { createClient } from '@supabase/supabase-js'
 import Anthropic from '@anthropic-ai/sdk'
-import { getVoyageEmbedding } from '@/lib/rag'
+import { getMultilingualEmbedding } from '@/lib/rag'
 
 const supabase = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_URL!,
@@ -106,7 +106,7 @@ export async function GET() {
     for (let i = 0; i < Math.min(noEmbedding.length, 20); i += BATCH) {
       await Promise.allSettled(noEmbedding.slice(i, i + BATCH).map(async s => {
         const text = [s.title, s.summary, s.feiten].filter(Boolean).join('\n')
-        const emb = await getVoyageEmbedding(text)
+        const emb = await getMultilingualEmbedding(text)
         await supabase.from('arnobot_blog_sessions').update({ embedding: emb }).eq('session_id', s.session_id)
       }))
     }
