@@ -8,7 +8,7 @@ export const metadata = {
 export default function ReferralSpelregelsPage() {
   const section: React.CSSProperties = { borderTop: '1px solid #374151', paddingTop: 32, marginBottom: 48 }
   const label: React.CSSProperties = { fontFamily: "'Space Mono', monospace", fontWeight: 700, fontSize: 13, letterSpacing: 4, color: '#f59e0b', marginBottom: 8, display: 'block' }
-  const num: React.CSSProperties = { fontFamily: "'Space Mono', monospace", fontWeight: 400, fontSize: 13, letterSpacing: 2, color: '#4b5563', marginBottom: 6, display: 'block' }
+  const num: React.CSSProperties = { fontFamily: "'Space Mono', monospace", fontWeight: 400, fontSize: 13, letterSpacing: 2, color: '#6b7280', marginBottom: 6, display: 'block' }
   const h2: React.CSSProperties = { fontFamily: "'Bebas Neue', sans-serif", fontSize: 32, letterSpacing: 2, color: '#f1f5f9', marginBottom: 20, lineHeight: 1 }
   const body: React.CSSProperties = { fontFamily: "'Space Mono', monospace", fontWeight: 400, fontSize: 15, lineHeight: 1.9, color: '#9ca3af', marginBottom: 16 }
 
@@ -117,7 +117,7 @@ export default function ReferralSpelregelsPage() {
             <p style={body}>ArnoBot behoudt zich het recht voor de voorwaarden van het referralprogramma op elk moment te wijzigen. Bestaand tegoed opgebouwd voor de wijziging blijft geldig onder de oorspronkelijke voorwaarden.</p>
           </div>
 
-          <p style={{ fontFamily: "'Space Mono', monospace", fontSize: 13, color: '#4b5563', lineHeight: 1.8, marginTop: 16 }}>
+          <p style={{ fontFamily: "'Space Mono', monospace", fontSize: 13, color: '#6b7280', lineHeight: 1.8, marginTop: 16 }}>
             Vragen? Mail naar <a href="mailto:referrals@arno.bot">referrals@arno.bot</a>
           </p>
 
