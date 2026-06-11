@@ -15,15 +15,14 @@ export async function GET(req: NextRequest) {
   const q = req.nextUrl.searchParams.get('q') ?? ''
   if (q.length < 2) return NextResponse.json({ sessions: [] })
 
-  // 1. Tekst-search in de echte gesprekken (exacte en gedeeltelijke matches)
-  const { data: logs } = await supabase
-    .from('arnobot_rds_logs')
-    .select('session_id')
-    .eq('user_id', userId)
-    .or(`question.ilike.%${q}%,answer.ilike.%${q}%`)
-    .limit(100)
+  // 1. Tekst-search via SQL-functie (betrouwbaar, bypast JS-client escaping)
+  const { data: logs } = await supabase.rpc('search_sessions_text', {
+    search_query: q,
+    search_user_id: userId,
+    match_count: 50,
+  })
 
-  const textSessionIds = new Set((logs ?? []).map(l => l.session_id))
+  const textSessionIds = new Set(((logs ?? []) as { session_id: string }[]).map(l => l.session_id))
 
   // 2. Semantische search via embeddings (vindt verwante concepten zonder exact woordgebruik)
   const semanticSessionIds = new Set<string>()
