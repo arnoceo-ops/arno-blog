@@ -75,7 +75,7 @@ export async function GET() {
         let embedding: number[] | null = null
         try {
           const embeddingText = [title, summary, feiten].filter(Boolean).join('\n')
-          embedding = await getVoyageEmbedding(embeddingText)
+          embedding = await getMultilingualEmbedding(embeddingText)
         } catch {}
 
         await supabase.from('arnobot_blog_sessions').upsert({
