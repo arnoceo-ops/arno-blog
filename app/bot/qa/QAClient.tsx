@@ -116,7 +116,7 @@ export default function QAClient({ isOnboarding }: { isOnboarding: boolean }) {
 
           <p style={{ fontFamily: "'Space Mono', monospace", fontWeight: 400, fontSize: 13, letterSpacing: 4, color: '#f59e0b', marginBottom: 8 }}>ARNOBOT</p>
           <h1 style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 'clamp(40px, 6vw, 64px)', color: '#f1f5f9', lineHeight: 1.0, letterSpacing: 3, marginBottom: 16 }}>
-            Video.
+            Video
           </h1>
           <p style={{ fontFamily: "'Space Mono', monospace", fontSize: 15, color: '#9ca3af', lineHeight: 1.9, marginBottom: 48 }}>
             Dit is de video die je bij je ArnoBot entree hebt gezien. Heb je vragen die hier niet beantwoord worden? Neem dan contact op met Arno op{' '}
@@ -141,7 +141,7 @@ export default function QAClient({ isOnboarding }: { isOnboarding: boolean }) {
 
             {FAQ_GROUPS.map((group, gi) => (
               <div key={gi} style={{ marginBottom: 48 }}>
-                <p style={{ fontFamily: "'Space Mono', monospace", fontSize: 11, letterSpacing: 4, color: '#4b5563', marginBottom: 4, textTransform: 'uppercase' }}>{group.label}</p>
+                <p style={{ fontFamily: "'Space Mono', monospace", fontWeight: 400, fontSize: 11, letterSpacing: 4, color: '#f59e0b', marginBottom: 4, textTransform: 'uppercase' }}>{group.label}</p>
                 <div style={{ borderTop: '1px solid #374151' }}>
                   {group.items.map((faq, fi) => {
                     const key = `${gi}-${fi}`

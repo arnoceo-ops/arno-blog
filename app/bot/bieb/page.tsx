@@ -388,20 +388,20 @@ export default function GeschiedenisPage() {
         {/* Knoppen balk */}
         {!loading && visibleSessions.length > 0 && (
           <div style={{ marginBottom: 32, padding: '4px 0', display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 12, flexWrap: 'wrap' }}>
-            <button
-              className={`sort-btn${selected.size > 0 ? ' active' : ''}`}
-              style={{ borderRadius: 8 }}
-              onClick={() => {
-                if (selected.size > 0) setSelected(new Set())
-                else {
-                  const pool = isSemanticMode && semanticSessions ? semanticSessions : sorted
-                  setSelected(new Set(pool.slice(0, ANALYSE_MAX).map(s => s.session_id)))
-                }
-              }}
-            >
-              {selected.size > 0 ? 'DESELECTEER ALLES' : 'SELECTEER ALLES'}
-            </button>
             <div style={{ display: 'flex', gap: 4 }}>
+              <button
+                className={`sort-btn${selected.size > 0 ? ' active' : ''}`}
+                style={{ borderRadius: 8 }}
+                onClick={() => {
+                  if (selected.size > 0) setSelected(new Set())
+                  else {
+                    const pool = isSemanticMode && semanticSessions ? semanticSessions : sorted
+                    setSelected(new Set(pool.slice(0, ANALYSE_MAX).map(s => s.session_id)))
+                  }
+                }}
+              >
+                {selected.size > 0 ? 'DESELECTEER ALLES' : 'SELECTEER ALLES'}
+              </button>
               {showAllSessions && !search && sorted.length > 5 && (
                 <button
                   className="sort-btn"
@@ -411,6 +411,8 @@ export default function GeschiedenisPage() {
                   TOON MINDER ↑
                 </button>
               )}
+            </div>
+            <div style={{ display: 'flex', gap: 4 }}>
               <button
                 className={`sort-btn${sort === 'newest' || sort === 'oldest' ? ' active' : ''}`}
                 style={{ borderRadius: 8, minWidth: 110 }}
