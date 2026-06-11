@@ -35,7 +35,7 @@ export default function ReferralSection({ inAccount }: { inAccount?: boolean }) 
         </>
       )}
       <p style={{ fontSize: 15, lineHeight: 1.9, color: '#9ca3af', marginBottom: 24 }}>
-        Deel deze link. Nieuwe gebruikers krijgen de eerste maand 50% korting — jij ook op je volgende maand.
+        Deel deze link. Nieuwe gebruikers krijgen de eerste maand 50% korting. Jij ook op je volgende maand.
       </p>
 
       <div style={{ display: 'flex', gap: 8, alignItems: 'center', marginBottom: 24, flexWrap: 'wrap' }}>
