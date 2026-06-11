@@ -99,14 +99,17 @@ export async function GET() {
     .select('session_id, title, summary, feiten')
     .eq('user_id', userId)
     .is('embedding', null)
-    .limit(40)
+    .limit(20)
 
   if (noEmbedding && noEmbedding.length > 0) {
-    await Promise.allSettled(noEmbedding.map(async s => {
-      const text = [s.title, s.summary, s.feiten].filter(Boolean).join('\n')
-      const emb = await getVoyageEmbedding(text)
-      await supabase.from('arnobot_blog_sessions').update({ embedding: emb }).eq('session_id', s.session_id)
-    }))
+    const BATCH = 5
+    for (let i = 0; i < Math.min(noEmbedding.length, 20); i += BATCH) {
+      await Promise.allSettled(noEmbedding.slice(i, i + BATCH).map(async s => {
+        const text = [s.title, s.summary, s.feiten].filter(Boolean).join('\n')
+        const emb = await getVoyageEmbedding(text)
+        await supabase.from('arnobot_blog_sessions').update({ embedding: emb }).eq('session_id', s.session_id)
+      }))
+    }
   }
 
   const { data } = await supabase
