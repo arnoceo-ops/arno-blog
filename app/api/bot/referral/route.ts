@@ -48,16 +48,10 @@ export async function GET() {
     await supabase.from('approved_users').update({ referral_code: code }).eq('user_id', userId)
   }
 
-  const { count } = await supabase
-    .from('arnobot_referrals')
-    .select('*', { count: 'exact', head: true })
-    .eq('referrer_user_id', userId)
-
-  const { count: converted } = await supabase
-    .from('arnobot_referrals')
-    .select('*', { count: 'exact', head: true })
-    .eq('referrer_user_id', userId)
-    .eq('status', 'converted')
+  const [{ count }, { count: converted }] = await Promise.all([
+    supabase.from('arnobot_referrals').select('*', { count: 'exact', head: true }).eq('referrer_user_id', userId),
+    supabase.from('arnobot_referrals').select('*', { count: 'exact', head: true }).eq('referrer_user_id', userId).eq('status', 'converted'),
+  ])
 
   return NextResponse.json({
     code,
