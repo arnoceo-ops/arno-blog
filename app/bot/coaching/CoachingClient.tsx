@@ -224,8 +224,8 @@ export default function CoachingClient({ userId }: Props) {
       const data = await res.json()
       if (data.error === 'te_weinig') {
         setError(`Je hebt ${data.count} gesprekken. Minimaal 5 nodig.`)
-      } else if (data.error === 'te_vroeg') {
-        setError('Coaching vernieuwen kan pas na 48 uur of 10 nieuwe gesprekken.')
+      } else if (data.error === 'te_weinig_voortgang') {
+        setError('Er is te weinig voortgang zichtbaar om een nieuw document te rechtvaardigen.')
       } else if (data.coaching) {
         setDoc(data.coaching)
         localStorage.setItem(`arnobot_coaching_doc_${userId}`, JSON.stringify(data.coaching))

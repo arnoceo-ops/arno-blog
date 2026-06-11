@@ -44,13 +44,13 @@ export async function POST() {
   const [sessionsRes, analysesRes, profielRes, prevScoreRes, prevCoachingRes] = await Promise.all([
     supabase
       .from('arnobot_blog_sessions')
-      .select('title, summary, feiten, message_count, created_at')
+      .select('session_id, title, summary, feiten, message_count, created_at')
       .eq('user_id', userId)
       .order('created_at', { ascending: false })
       .limit(100),
     supabase
       .from('arnobot_analyses')
-      .select('analyse_text, created_at, session_count')
+      .select('id, analyse_text, created_at, session_count')
       .eq('user_id', userId)
       .order('created_at', { ascending: false })
       .limit(10),
@@ -68,7 +68,7 @@ export async function POST() {
       .maybeSingle(),
     supabase
       .from('arnobot_coaching')
-      .select('updated_at')
+      .select('updated_at, used_session_ids, used_analyse_ids, mindset_score, mindset_diagnose, systeem_score, systeem_diagnose, actie_score, actie_diagnose, voortgang')
       .eq('user_id', userId)
       .maybeSingle(),
   ])
@@ -79,11 +79,13 @@ export async function POST() {
   }
 
   const prevCoaching = prevCoachingRes.data
-  if (prevCoaching?.updated_at) {
-    const hoursSince = (Date.now() - new Date(prevCoaching.updated_at).getTime()) / 3600000
-    const newSessions = sessions.filter(s => s.created_at > prevCoaching.updated_at).length
-    if (hoursSince < 48 && newSessions < 10) {
-      return NextResponse.json({ error: 'te_vroeg' }, { status: 429 })
+  if (prevCoaching) {
+    const prevSessionIds = new Set<string>(prevCoaching.used_session_ids ?? [])
+    const prevAnalyseIds = new Set<string>(prevCoaching.used_analyse_ids ?? [])
+    const newSessions = sessions.filter(s => !prevSessionIds.has(s.session_id))
+    const newAnalyses = analyses.filter(a => !prevAnalyseIds.has(a.id))
+    if (newSessions.length < 3 && newAnalyses.length === 0) {
+      return NextResponse.json({ error: 'te_weinig_voortgang' }, { status: 429 })
     }
   }
 
@@ -91,6 +93,15 @@ export async function POST() {
   const profiel = profielRes.data?.profiel ?? null
   const profielText = profiel
     ? `\n\nGEBRUIKERSPROFIEL:\nRol: ${profiel.rol || '—'}\nMarkt: ${Array.isArray(profiel.markt) ? profiel.markt.join(', ') : profiel.markt || '—'}\nWat verkoop je: ${profiel.wat_verkoop_je || '—'}\nIdeale klant: ${profiel.ideale_klant || '—'}\nGrootste uitdaging: ${profiel.uitdaging || '—'}`
+    : ''
+
+  const prevSessionIds = new Set<string>(prevCoaching?.used_session_ids ?? [])
+  const prevAnalyseIds = new Set<string>(prevCoaching?.used_analyse_ids ?? [])
+  const newSessionCount = prevCoaching ? sessions.filter(s => !prevSessionIds.has(s.session_id)).length : sessions.length
+  const newAnalyseCount = prevCoaching ? analyses.filter(a => !prevAnalyseIds.has(a.id)).length : analyses.length
+
+  const deltaContext = prevCoaching
+    ? `\n\nVORIGE COACHING (ter vergelijking — ${newSessionCount} nieuwe gesprekken en ${newAnalyseCount} nieuwe analyses sindsdien):\nVoortgang: ${prevCoaching.voortgang}\nMindset (${prevCoaching.mindset_score}/5): ${prevCoaching.mindset_diagnose}\nSysteem (${prevCoaching.systeem_score}/5): ${prevCoaching.systeem_diagnose}\nActie (${prevCoaching.actie_score}/5): ${prevCoaching.actie_diagnose}`
     : ''
 
   const sessiesText = sessions
@@ -142,7 +153,7 @@ De richting-waarden mogen alleen zijn: "stijgend", "stabiel" of "dalend".
 De pijlar-waarden mogen alleen zijn: "mindset", "systeem" of "actie".`,
     messages: [{
       role: 'user',
-      content: `Analyseer deze ${sessions.length} gesprekken${analyses.length > 0 ? ` en ${analyses.length} eerder gemaakte patroonanalyses` : ''} en schrijf een coachingsdocument:${profielText}\n\nGESPREKKEN:\n${sessiesText}${analysesText}`
+      content: `Analyseer deze ${sessions.length} gesprekken${analyses.length > 0 ? ` en ${analyses.length} eerder gemaakte patroonanalyses` : ''} en schrijf een coachingsdocument:${profielText}${deltaContext}\n\nGESPREKKEN:\n${sessiesText}${analysesText}`
     }]
   })
 
@@ -242,7 +253,12 @@ Return ALLEEN een JSON array, geen uitleg eromheen:
   } catch {}
 
   const doc = { ...parsed, blogs, conversation_count: sessions.length }
-  const payload = { ...doc, updated_at: new Date().toISOString() }
+  const payload = {
+    ...doc,
+    updated_at: new Date().toISOString(),
+    used_session_ids: sessions.map(s => s.session_id),
+    used_analyse_ids: analyses.map(a => a.id),
+  }
 
   const { data: existing } = await supabase
     .from('arnobot_coaching')
