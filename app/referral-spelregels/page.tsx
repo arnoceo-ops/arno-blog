@@ -44,7 +44,7 @@ export default function ReferralSpelregelsPage() {
 
           <p style={{ ...label, marginBottom: 8 }}>ARNOBOT</p>
           <h1 style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 64, letterSpacing: 3, color: '#f1f5f9', lineHeight: 1.0, marginBottom: 16 }}>REFERRAL SPELREGELS</h1>
-          <p style={{ ...body, marginBottom: 64 }}>Versie 1.0 — Juni 2026</p>
+          <p style={{ ...body, marginBottom: 64 }}>Versie 1.0 · Juni 2026</p>
 
           <div style={section}>
             <span style={num}>ARTIKEL 1</span>
