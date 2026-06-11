@@ -99,7 +99,7 @@ export async function GET() {
     .select('session_id, title, summary, feiten')
     .eq('user_id', userId)
     .is('embedding', null)
-    .limit(10)
+    .limit(40)
 
   if (noEmbedding && noEmbedding.length > 0) {
     await Promise.allSettled(noEmbedding.map(async s => {
