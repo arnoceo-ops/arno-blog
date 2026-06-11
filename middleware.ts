@@ -7,7 +7,10 @@ const isPublicRoute = createRouteMatcher([
   '/canvas-aanmelden(.*)',
   '/api/canvas/aanmelden(.*)',
   '/bot-aanmelden(.*)',
+  '/aanmelden(.*)',
+  '/evaluatie(.*)',
   '/api/bot/aanmelden(.*)',
+  '/api/evaluatie(.*)',
   '/sign-in(.*)',
   '/sign-up(.*)',
 ])
