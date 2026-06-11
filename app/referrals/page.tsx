@@ -56,7 +56,7 @@ export default function ReferralSpelregelsPage() {
           <div style={section}>
             <span style={num}>ARTIKEL 2</span>
             <h2 style={h2}>HOE HET WERKT</h2>
-            <p style={body}>De referrer deelt zijn of haar persoonlijke link (bijv. <strong style={{ color: '#f1f5f9' }}>arno.bot/aanmelden?ref=NAAM-XXXX</strong>). De nieuwe gebruiker klikt op die link, doorloopt de standaard 30-daagse gratis trial en sluit daarna een abonnement af. Op dat moment worden de kortingen en het tegoed van toepassing.</p>
+            <p style={body}>Jij deelt als referrer je persoonlijke link (bijv. <strong style={{ color: '#f1f5f9' }}>arno.bot/aanmelden?ref=NAAM-XXXX</strong>). De nieuwe gebruiker klikt op die link, doorloopt de standaard 30-daagse gratis trial en sluit daarna een abonnement af. Op dat moment worden de kortingen en het tegoed van toepassing.</p>
             <p style={body}>Een referral code wordt eenmalig per account gekoppeld, op het moment van de eerste inlog via de link.</p>
           </div>
 
