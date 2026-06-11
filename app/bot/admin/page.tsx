@@ -74,6 +74,7 @@ export default async function ArnoBotAdminPage({
           <a href="/bot/admin" style={navLinkStyle(true)}>RDS</a>
           <a href="/bot/admin/widget" style={navLinkStyle(false)}>WIDGET</a>
           <a href="/bot/admin/gebruikers" style={navLinkStyle(false)}>USERS</a>
+          <a href="/bot/admin/evaluaties" style={navLinkStyle(false)}>EVALUATIES</a>
         </div>
       </nav>
     <div style={{ maxWidth: '800px', margin: '0 auto', padding: '48px 24px' }}>
