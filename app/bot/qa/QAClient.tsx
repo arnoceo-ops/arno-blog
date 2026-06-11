@@ -30,6 +30,10 @@ const FAQ_GROUPS = [
         a: 'Wees concreet. Beschrijf je situatie, je markt en je uitdaging zo specifiek mogelijk. ArnoBot is geen zoekmachine; het is een coach. Stel vragen zoals je dat aan een senior advisor zou doen.',
       },
       {
+        q: 'Hoe komt een coachingsadvies tot stand?',
+        a: 'Arno combineert alles wat hij over je weet. Hij kijkt naar je recente gesprekken, de patroonanalyses die je al hebt laten maken in de BIEB, je profiel en de richting van je vorige MSA-score. Op basis daarvan trekt hij een lijn: wat is er aan het veranderen, wat staat vast, en wat vraagt nu aandacht. Hoe meer gesprekken en analyses je hebt opgebouwd, hoe scherper en persoonlijker het beeld.',
+      },
+      {
         q: 'Waarom kan ik maximaal 20 gesprekken selecteren voor een analyse?',
         a: 'Een analyse wordt scherper als Arno zich kan focussen. Boven de 20 gesprekken verdunnen de patronen zich — je krijgt dan een gemiddelde in plaats van een diagnose. Twintig gesprekken is het maximum waarbij de analyse nog concreet en bruikbaar is.',
       },
