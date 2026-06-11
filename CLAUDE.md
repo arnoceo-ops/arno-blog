@@ -9,7 +9,9 @@
 **Regel**: elke keer dat een UI-norm wordt vastgesteld of gewijzigd, update je CLAUDE.md in dezelfde commit. Geen uitzondering.
 
 
-Bij elke nieuwe pagina of component: lees eerst een bestaande pagina (account of profiel) door en leg de stijl naast elkaar. Nooit afwijken zonder expliciete opdracht.
+Bij elke nieuwe pagina of component: lees eerst een bestaande pagina door en leg de stijl naast elkaar. Nooit afwijken zonder expliciete opdracht.
+- **/bot-pagina's** (achter login): referentie is `app/bot/account/page.tsx`
+- **Publieke pagina's** (geen login vereist): referentie is `app/privacy/page.tsx` — nooit de voorwaardenpagina als referentie gebruiken
 
 ### Vaste normen
 - **Body tekst**: Space Mono, fontWeight 400, fontSize 15px, lineHeight 1.9, kleur #9ca3af
