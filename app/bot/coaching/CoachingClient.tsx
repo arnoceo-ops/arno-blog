@@ -150,6 +150,7 @@ export default function CoachingClient({ userId }: Props) {
   const [loading, setLoading] = useState(true)
   const [generating, setGenerating] = useState(false)
   const [error, setError] = useState<string | null>(null)
+  const [voortgangError, setVoortgangError] = useState(false)
   const [stats, setStats] = useState<Stats | null>(null)
   const [analyses, setAnalyses] = useState<SavedAnalyse[]>([])
   const [uitdaging, setUitdaging] = useState<string | null>(null)
@@ -219,13 +220,14 @@ export default function CoachingClient({ userId }: Props) {
   async function generate() {
     setGenerating(true)
     setError(null)
+    setVoortgangError(false)
     try {
       const res = await fetch('/api/bot/coaching', { method: 'POST' })
       const data = await res.json()
       if (data.error === 'te_weinig') {
         setError(`Je hebt ${data.count} gesprekken. Minimaal 5 nodig.`)
       } else if (data.error === 'te_weinig_voortgang') {
-        setError('Er is te weinig voortgang zichtbaar om een nieuw document te rechtvaardigen.')
+        setVoortgangError(true)
       } else if (data.coaching) {
         setDoc(data.coaching)
         localStorage.setItem(`arnobot_coaching_doc_${userId}`, JSON.stringify(data.coaching))
@@ -362,6 +364,11 @@ export default function CoachingClient({ userId }: Props) {
           {!doc && !loading && (
             <p style={{ fontFamily: "'Space Mono', monospace", fontWeight: 400, color: '#9ca3af', fontSize: 15, lineHeight: 1.9, maxWidth: 480 }}>
               Arno analyseert je gesprekken op drie pijlers: Mindset, Systeem en Actie. Dit geeft je een indruk waar je staat en wat je het best aan zou kunnen pakken.
+            </p>
+          )}
+          {voortgangError && (
+            <p style={{ fontFamily: "'Space Mono', monospace", color: '#ff6644', fontSize: 15, lineHeight: '29px', fontWeight: 400 }}>
+              Er is te weinig voortgang zichtbaar om een nieuw document te rechtvaardigen. Blijkbaar heb je de handrem er nog op. Hieronder kun je lezen hoe je los kunt. Iets mee doen, is het dringende advies om te gaan vliegen. It&apos;s your call.
             </p>
           )}
           {error && <p style={{ fontFamily: "'Space Mono', monospace", color: '#ff6644', fontSize: 13, letterSpacing: 1 }}>{error}</p>}
