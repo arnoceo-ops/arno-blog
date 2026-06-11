@@ -1,7 +1,7 @@
 import Link from 'next/link'
 
 export const metadata = {
-  title: 'Referral Spelregels — ArnoBot',
+  title: 'Referral Spelregels →ArnoBot',
   robots: 'noindex',
 }
 
@@ -75,17 +75,17 @@ export default function ReferralSpelregelsPage() {
                 <tr>
                   <td><strong>Nieuwe gebruiker</strong></td>
                   <td>Maandabonnement (€97/m)</td>
-                  <td>50% korting eerste maand — <strong>€48,50</strong></td>
+                  <td>50% korting eerste maand → <strong>€48,50</strong></td>
                 </tr>
                 <tr>
                   <td><strong>Nieuwe gebruiker</strong></td>
                   <td>Jaarabonnement (€777/j)</td>
-                  <td>€97 korting — <strong>€680</strong></td>
+                  <td>€97 korting → <strong>€680</strong></td>
                 </tr>
                 <tr>
                   <td><strong>Referrer</strong></td>
                   <td>Nieuwe gebruiker converteert naar maand</td>
-                  <td>50% korting volgende maand — <strong>€48,50</strong></td>
+                  <td>50% korting volgende maand → <strong>€48,50</strong></td>
                 </tr>
                 <tr>
                   <td><strong>Referrer</strong></td>
