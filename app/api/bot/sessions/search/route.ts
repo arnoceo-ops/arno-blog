@@ -1,7 +1,6 @@
 import { auth } from '@clerk/nextjs/server'
 import { NextRequest, NextResponse } from 'next/server'
 import { createClient } from '@supabase/supabase-js'
-import { getVoyageEmbedding } from '@/lib/rag'
 
 const supabase = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_URL!,
@@ -15,20 +14,26 @@ export async function GET(req: NextRequest) {
   const q = req.nextUrl.searchParams.get('q') ?? ''
   if (q.length < 2) return NextResponse.json({ sessions: [] })
 
-  const embedding = await getVoyageEmbedding(q)
+  // Zoek session_ids met de zoekterm in vraag of antwoord
+  const { data: logs } = await supabase
+    .from('arnobot_rds_logs')
+    .select('session_id')
+    .eq('user_id', userId)
+    .or(`question.ilike.%${q}%,answer.ilike.%${q}%`)
+    .limit(100)
 
-  const { data, error } = await supabase.rpc('match_sessions', {
-    query_embedding: embedding,
-    match_user_id: userId,
-    match_count: 30,
-  })
+  if (!logs || logs.length === 0) return NextResponse.json({ sessions: [] })
 
-  if (error) {
-    console.error('[sessions/search]', error.message)
-    return NextResponse.json({ sessions: [] })
-  }
+  const sessionIds = [...new Set(logs.map(l => l.session_id))]
 
-  const results = (data ?? []) as { similarity: number; title?: string }[]
-  const filtered = results.filter(s => s.similarity >= 0.45).slice(0, 8)
-  return NextResponse.json({ sessions: filtered })
+  // Haal sessie-metadata op voor die session_ids
+  const { data: sessions } = await supabase
+    .from('arnobot_blog_sessions')
+    .select('session_id, title, summary, message_count, created_at, blog_suggestions')
+    .eq('user_id', userId)
+    .in('session_id', sessionIds)
+    .order('created_at', { ascending: false })
+    .limit(20)
+
+  return NextResponse.json({ sessions: sessions ?? [] })
 }
