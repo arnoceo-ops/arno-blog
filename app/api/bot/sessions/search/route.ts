@@ -28,7 +28,9 @@ export async function GET(req: NextRequest) {
       }],
     })
     const text = res.content[0].type === 'text' ? res.content[0].text.trim() : '[]'
-    const parsed = JSON.parse(text.match(/\[.*\]/s)?.[0] ?? '[]')
+    const match = text.indexOf('[')
+    const end = text.lastIndexOf(']')
+    const parsed = JSON.parse(match >= 0 && end >= 0 ? text.slice(match, end + 1) : '[]')
     if (Array.isArray(parsed)) terms = [...new Set([q, ...parsed])]
   } catch {}
 
