@@ -11,6 +11,10 @@
     {
       "path": "/api/bot/backfill-embeddings",
       "schedule": "0 4 * * *"
+    },
+    {
+      "path": "/api/cron/refresh-openers",
+      "schedule": "0 6 1 * *"
     }
   ],
   "redirects": [

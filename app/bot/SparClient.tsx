@@ -138,6 +138,7 @@ export default function SparClient({ userId, profiel, tier, taglineTitle, taglin
   const [feedbackSent, setFeedbackSent] = useState(false)
   const [feedbackLoading, setFeedbackLoading] = useState(false)
   const [dagelijksTeller, setDagelijksTeller] = useState<number | null>(null)
+  const [dynamicOpeners, setDynamicOpeners] = useState<{ strategisch: string[]; organisatorisch: string[]; operationeel: string[] } | null>(null)
   const [speakingIdx, setSpeakingIdx] = useState<number | null>(null)
   const [navGuardOpen, setNavGuardOpen] = useState(false)
   const [pendingNavDest, setPendingNavDest] = useState<string | null>(null)
@@ -261,6 +262,11 @@ export default function SparClient({ userId, profiel, tier, taglineTitle, taglin
           .catch(() => {})
       }
     }
+
+    fetch('/api/bot/openers')
+      .then(r => r.json())
+      .then(data => { if (data.openers) setDynamicOpeners(data.openers) })
+      .catch(() => {})
 
     if (userId) {
       fetch('/api/bot/sessions')
@@ -1257,7 +1263,12 @@ export default function SparClient({ userId, profiel, tier, taglineTitle, taglin
             <span className="spar-questions-sub">als het je bezighoudt, dan hè? waarom zou je er anders antwoord op willen hebben?</span>
             <div className="openers-grid-line" />
             <div className="openers-grid">
-              {(openerModus === 'strategisch' ? VRAGEN_STRATEGISCH : openerModus === 'organisatorisch' ? VRAGEN_ORGANISATORISCH : VRAGEN_OPERATIONEEL).map((q, i) => (
+              {(openerModus === 'strategisch'
+                ? (dynamicOpeners?.strategisch?.length ? dynamicOpeners.strategisch : VRAGEN_STRATEGISCH)
+                : openerModus === 'organisatorisch'
+                  ? (dynamicOpeners?.organisatorisch?.length ? dynamicOpeners.organisatorisch : VRAGEN_ORGANISATORISCH)
+                  : (dynamicOpeners?.operationeel?.length ? dynamicOpeners.operationeel : VRAGEN_OPERATIONEEL)
+              ).map((q, i) => (
                 <button key={i} className="opener-btn" onClick={() => ask(q)}>{q}</button>
               ))}
             </div>
