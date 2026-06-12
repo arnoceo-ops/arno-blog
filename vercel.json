@@ -15,6 +15,10 @@
     {
       "path": "/api/cron/refresh-openers",
       "schedule": "0 6 1 * *"
+    },
+    {
+      "path": "/api/cron/model-check",
+      "schedule": "5 3 1 * *"
     }
   ],
   "redirects": [
