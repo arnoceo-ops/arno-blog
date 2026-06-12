@@ -131,7 +131,7 @@ export default function BotAanmeldenPage() {
                   </div>
                   <div>
                     <label style={{ display: 'block', fontFamily: "'Bebas Neue', sans-serif", fontSize: 18, letterSpacing: 3, color: '#9ca3af', marginBottom: 8 }}>
-                      TELEFOON <span style={{ fontSize: 12, color: '#4b5563', letterSpacing: 1 }}>OPTIONEEL</span>
+                      TELEFOON <span style={{ fontSize: 12, color: '#6b7280', letterSpacing: 1 }}>OPTIONEEL</span>
                     </label>
                     <input
                       className="field-input"
@@ -154,7 +154,7 @@ export default function BotAanmeldenPage() {
                   </div>
                 </div>
 
-                {error && <p style={{ color: '#c0392b', fontSize: 14, marginBottom: 16, fontWeight: 700 }}>{error}</p>}
+                {error && <p style={{ color: '#cc2200', fontSize: 14, marginBottom: 16, fontWeight: 700 }}>{error}</p>}
 
                 <button
                   type="submit"
@@ -169,7 +169,7 @@ export default function BotAanmeldenPage() {
                 >
                   {loading ? 'Bezig...' : 'Start free trial →'}
                 </button>
-                <p style={{ fontSize: 13, color: '#4b5563', textAlign: 'center', marginTop: 16, lineHeight: '22px', letterSpacing: 1 }}>
+                <p style={{ fontSize: 13, color: '#6b7280', textAlign: 'center', marginTop: 16, lineHeight: '22px', letterSpacing: 1 }}>
                   GEEN KLEINE LETTERTJES. WEL EEN GROOT PLAN.
                 </p>
               </form>

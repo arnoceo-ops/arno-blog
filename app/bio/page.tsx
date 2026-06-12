@@ -59,7 +59,7 @@ export default async function BioPage() {
           font-size: 26px; font-weight: 700; color: #f1f5f9;
           display: block; margin-bottom: 8px; letter-spacing: 0.5px;
         }
-        .bio-tagline-sub { font-family: 'Space Mono', monospace; font-size: 15px; line-height: 1.9; color: #aaa; display: block; }
+        .bio-tagline-sub { font-family: 'Space Mono', monospace; font-size: 15px; line-height: 1.9; color: #9ca3af; display: block; }
 
         .bio-body {
           max-width: 960px; margin: 0 auto;

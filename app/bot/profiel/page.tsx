@@ -272,7 +272,7 @@ export default function BotProfielPage() {
           </Block>
 
           <Block nr="02" title="Jouw markt">
-            <p style={{ fontSize: 15, fontWeight: 400, lineHeight: '30px', color: '#9ca3af', marginBottom: 12 }}>In welke markt ben je actief? <span style={{ color: '#4b5563' }}>(meerdere antwoorden mogelijk)</span></p>
+            <p style={{ fontSize: 15, fontWeight: 400, lineHeight: '30px', color: '#9ca3af', marginBottom: 12 }}>In welke markt ben je actief? <span style={{ color: '#6b7280' }}>(meerdere antwoorden mogelijk)</span></p>
             <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8 }}>
               {MARKT_OPTIONS.map(o => (
                 <Chip key={o} label={o} selected={answers.markt.includes(o)} onClick={() => toggleMarkt(o)} />
@@ -362,7 +362,7 @@ export default function BotProfielPage() {
             </div>
           </Block>
 
-          {error && <p style={{ color: '#c0392b', fontSize: 15, fontWeight: 400, lineHeight: '30px', marginBottom: 16 }}>{error}</p>}
+          {error && <p style={{ color: '#cc2200', fontSize: 15, fontWeight: 400, lineHeight: '30px', marginBottom: 16 }}>{error}</p>}
 
           <button
             type="button"

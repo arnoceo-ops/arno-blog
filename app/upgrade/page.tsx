@@ -32,7 +32,7 @@ export default function UpgradePage() {
         .up-plan { font-family: 'Bebas Neue', sans-serif; font-size: 28px; letter-spacing: 3px; color: var(--black); margin-bottom: 4px; }
         .up-card-dark .up-plan { color: #fff; }
         .up-for { font-family: 'Bebas Neue', sans-serif; font-size: 15px; letter-spacing: 2px; color: var(--muted); margin-bottom: 20px; }
-        .up-card-dark .up-for { color: #aaa; }
+        .up-card-dark .up-for { color: #9ca3af; }
         .up-price { display: flex; align-items: baseline; gap: 8px; margin-bottom: 24px; }
         .up-currency { font-family: 'Bebas Neue', sans-serif; font-size: 24px; color: var(--black); line-height: 1; }
         .up-card-dark .up-currency { color: #fff; }
@@ -43,7 +43,7 @@ export default function UpgradePage() {
         .up-features { list-style: none; display: flex; flex-direction: column; gap: 10px; margin-bottom: 32px; flex: 1; padding: 0; }
         .up-features li { font-size: 15px; color: var(--body); padding-left: 20px; position: relative; line-height: 1.5; }
         .up-features li::before { content: '→'; position: absolute; left: 0; color: var(--orange); font-size: 12px; }
-        .up-card-dark .up-features li { color: #aaa; }
+        .up-card-dark .up-features li { color: #9ca3af; }
         .up-cta { display: block; background: var(--cream); color: var(--black); font-family: 'Bebas Neue', sans-serif; font-size: 16px; letter-spacing: 3px; padding: 14px 24px; text-decoration: none; border: 2px solid var(--black); text-align: center; transition: all .15s; border-radius: 6px; }
         .up-cta:hover { background: var(--orange); color: #fff; border-color: var(--orange); }
         .up-cta-featured { background: var(--orange); color: #fff; border-color: var(--orange); }

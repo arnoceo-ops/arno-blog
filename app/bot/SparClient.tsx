@@ -775,7 +775,7 @@ export default function SparClient({ userId, profiel, tier, taglineTitle, taglin
           display: grid; grid-template-columns: repeat(3, 142px); gap: 8px; margin: 0 auto 2px;
         }
         .toggle-btn {
-          background: #1f2937; border: none; color: #4b5563;
+          background: #1f2937; border: none; color: #6b7280;
           font-family: 'Bebas Neue', sans-serif;
           font-size: 16px; letter-spacing: 3px;
           padding: 10px 24px; cursor: pointer;
@@ -916,7 +916,7 @@ export default function SparClient({ userId, profiel, tier, taglineTitle, taglin
           background: #f59e0b; color: #111827;
         }
         .msg-action-btn.secondary {
-          color: #4b5563; border-color: #374151;
+          color: #6b7280; border-color: #374151;
         }
         .msg-action-btn.secondary:hover {
           border-color: #6b7280; color: #9ca3af;
@@ -987,7 +987,7 @@ export default function SparClient({ userId, profiel, tier, taglineTitle, taglin
         .blog-suggestions-label {
           font-family: 'Bebas Neue', sans-serif;
           font-size: 12px; letter-spacing: 4px; text-transform: uppercase;
-          color: #4b5563; display: block; margin-bottom: 20px;
+          color: #6b7280; display: block; margin-bottom: 20px;
         }
         .blog-suggestion-item {
           display: block; color: #9ca3af; text-decoration: none;
@@ -1011,7 +1011,7 @@ export default function SparClient({ userId, profiel, tier, taglineTitle, taglin
           font-size: 15px; letter-spacing: 3px;
         }
         .archief-btn {
-          background: none; border: 1px solid #4b5563; color: #9ca3af;
+          background: none; border: 1px solid #374151; color: #9ca3af;
           font-family: 'Bebas Neue', sans-serif;
           font-size: 16px; letter-spacing: 3px;
           padding: 10px 24px; cursor: pointer;

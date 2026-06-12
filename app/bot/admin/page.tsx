@@ -136,7 +136,7 @@ export default async function ArnoBotAdminPage({
                   <p style={{ fontWeight: 700, fontSize: '16px', marginBottom: '8px', color: '#f1f5f9' }}>
                     {msg.question}
                   </p>
-                  <p style={{ fontSize: '16px', lineHeight: 1.8, color: '#aaa', whiteSpace: 'pre-wrap' }}>
+                  <p style={{ fontSize: '16px', lineHeight: 1.8, color: '#9ca3af', whiteSpace: 'pre-wrap' }}>
                     {msg.answer}
                   </p>
                   <p style={{ fontSize: '11px', opacity: 0.25, marginTop: '6px' }}>
