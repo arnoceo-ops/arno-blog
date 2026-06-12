@@ -16,7 +16,7 @@ export default function ReferralSpelregelsPage() {
         a:hover { text-decoration: underline; }
         table { width: 100%; border-collapse: collapse; margin-bottom: 24px; }
         th { background: #1f2937; color: #f59e0b; font-family: 'Space Mono', monospace; font-size: 12px; letter-spacing: 3px; text-align: left; padding: 10px 14px; border-bottom: 2px solid #f59e0b; }
-        td { font-family: 'Space Mono', monospace; font-size: 14px; color: #9ca3af; padding: 10px 14px; border-bottom: 1px solid #374151; vertical-align: top; }
+        td { font-family: 'Space Mono', monospace; font-size: 15px; color: #9ca3af; padding: 10px 14px; border-bottom: 1px solid #374151; vertical-align: top; line-height: 1.9; }
         tr:last-child td { border-bottom: none; }
       `}</style>
 
@@ -68,22 +68,22 @@ export default function ReferralSpelregelsPage() {
                 <tr>
                   <td style={{ color: '#f1f5f9' }}>Nieuwe gebruiker</td>
                   <td>Maandabonnement (€97/m)</td>
-                  <td>50% korting eerste maand → <strong style={{ color: '#f1f5f9' }}>€48,50</strong></td>
+                  <td>50% korting eerste maand: €48,50</td>
                 </tr>
                 <tr>
                   <td style={{ color: '#f1f5f9' }}>Nieuwe gebruiker</td>
                   <td>Jaarabonnement (€777/j)</td>
-                  <td>€97 korting → <strong style={{ color: '#f1f5f9' }}>€680</strong></td>
+                  <td>€97 korting: €680</td>
                 </tr>
                 <tr>
                   <td style={{ color: '#f1f5f9' }}>Referrer</td>
                   <td>Nieuwe gebruiker converteert naar maand</td>
-                  <td>50% korting volgende maand → <strong style={{ color: '#f1f5f9' }}>€48,50</strong></td>
+                  <td>50% korting volgende maand: €48,50</td>
                 </tr>
                 <tr>
                   <td style={{ color: '#f1f5f9' }}>Referrer</td>
                   <td>Nieuwe gebruiker converteert naar jaar</td>
-                  <td><strong style={{ color: '#f1f5f9' }}>€97 tegoed</strong></td>
+                  <td>€97 tegoed</td>
                 </tr>
               </tbody>
             </table>
