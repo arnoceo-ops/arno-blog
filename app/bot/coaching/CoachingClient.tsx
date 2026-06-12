@@ -488,7 +488,7 @@ export default function CoachingClient({ userId }: Props) {
 
         {doc && (
           <div className="no-print" style={{ borderTop: '1px solid #374151', paddingTop: 40, marginTop: 48, display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: 24 }}>
-            <p style={{ fontFamily: "'Space Mono', monospace", fontWeight: 400, fontSize: 13, color: '#9ca3af', lineHeight: 1.7 }}>
+            <p style={{ fontFamily: "'Space Mono', monospace", fontWeight: 400, fontSize: 15, color: '#9ca3af', lineHeight: 1.9 }}>
               Wil je dit aanpakken met Arno zelf?<br />
               Maandelijks 45 minuten. Direct. Ongefilterd.
             </p>
