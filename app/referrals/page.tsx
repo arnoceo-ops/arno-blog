@@ -15,7 +15,7 @@ export default function ReferralSpelregelsPage() {
         a { color: #f59e0b; text-decoration: none; }
         a:hover { text-decoration: underline; }
         table { width: 100%; border-collapse: collapse; margin-bottom: 24px; }
-        th { background: #1f2937; color: #f59e0b; font-family: 'Space Mono', monospace; font-size: 12px; letter-spacing: 3px; text-align: left; padding: 10px 14px; border-bottom: 2px solid #f59e0b; }
+        th { background: #1f2937; color: #f59e0b; font-family: 'Space Mono', monospace; font-weight: 700; font-size: 13px; letter-spacing: 4px; text-align: left; padding: 10px 14px; border-bottom: 2px solid #f59e0b; }
         td { font-family: 'Space Mono', monospace; font-size: 15px; color: #9ca3af; padding: 10px 14px; border-bottom: 1px solid #374151; vertical-align: top; line-height: 1.9; }
         tr:last-child td { border-bottom: none; }
       `}</style>
