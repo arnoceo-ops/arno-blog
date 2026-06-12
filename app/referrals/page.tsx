@@ -98,6 +98,14 @@ export default function ReferralSpelregelsPage() {
 
           <div style={section}>
             <span style={num}>ARTIKEL 4</span>
+            <h2 style={h2}>GELDIGHEID VAN EEN REFERRAL</h2>
+            <p style={body}>Een referral wordt als geldig beschouwd zodra de nieuwe gebruiker voldoet aan één van de volgende voorwaarden:</p>
+            <p style={body}><strong>Jaarabonnement</strong> — de referral telt direct mee zodra de betaling is ontvangen.</p>
+            <p style={body}><strong>Maandabonnement</strong> — de referral telt mee na 3 aaneengesloten betalende maanden. Wordt het abonnement eerder opgezegd, dan telt de referral niet mee.</p>
+          </div>
+
+          <div style={section}>
+            <span style={num}>ARTIKEL 5</span>
             <h2 style={h2}>SPELREGELS VOOR TEGOED</h2>
             <p style={body}>Tegoed is uitsluitend inzetbaar als verlenging van een bestaand maand- of jaarabonnement, of als bijdrage aan een tweede licentie. Uitbetaling in contanten of via andere betaalmethoden is niet mogelijk.</p>
             <p style={body}>Tegoed heeft geen vervaldatum en kent geen maximum. Het loopt door totdat het wordt ingezet voor een verlenging of tweede licentie.</p>
@@ -105,14 +113,42 @@ export default function ReferralSpelregelsPage() {
           </div>
 
           <div style={section}>
-            <span style={num}>ARTIKEL 5</span>
+            <span style={num}>ARTIKEL 6</span>
+            <h2 style={h2}>MIJLPALEN</h2>
+            <p style={body}>Bij het bereiken van de volgende aantallen betalende referrals gelden de onderstaande beloningen:</p>
+            <table>
+              <thead>
+                <tr>
+                  <th>BETALENDE REFERRALS</th>
+                  <th>BELONING</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>25</strong></td>
+                  <td>Toegang tot de <strong>ArnoBot Ambassadors Club</strong></td>
+                </tr>
+                <tr>
+                  <td><strong>50</strong></td>
+                  <td><strong>Lifetime Subscription</strong> op ArnoBot</td>
+                </tr>
+                <tr>
+                  <td><strong>100</strong></td>
+                  <td>Persoonlijk aanbod voor deelname in de <strong>ArnoBot Venture 🚀</strong></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div style={section}>
+            <span style={num}>ARTIKEL 7</span>
             <h2 style={h2}>UITSLUITINGEN</h2>
             <p style={body}>Teamlicenties zijn uitgesloten van het referralprogramma. Kortingen en tegoed gelden alleen voor individuele abonnementen.</p>
             <p style={body}>Een gebruiker kan zijn of haar eigen referral code niet gebruiken. Codes zijn persoonsgebonden en niet overdraagbaar.</p>
           </div>
 
           <div style={section}>
-            <span style={num}>ARTIKEL 6</span>
+            <span style={num}>ARTIKEL 8</span>
             <h2 style={h2}>WIJZIGINGEN</h2>
             <p style={body}>ArnoBot behoudt zich het recht voor de voorwaarden van het referralprogramma op elk moment te wijzigen. Bestaand tegoed opgebouwd voor de wijziging blijft geldig onder de oorspronkelijke voorwaarden.</p>
           </div>
