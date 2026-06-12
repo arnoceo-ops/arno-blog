@@ -74,12 +74,11 @@ export default function QAClient({ isOnboarding }: { isOnboarding: boolean }) {
         .faq-question:hover .faq-q-text { color: #f1f5f9; }
         .faq-q-text {
           font-family: 'Bebas Neue', sans-serif; font-size: 20px; letter-spacing: 1px;
-          color: #9ca3af; transition: color 0.15s; line-height: 1.3;
+          color: #f1f5f9; transition: color 0.15s; line-height: 1.3;
         }
-        .faq-q-text.open { color: #f59e0b; }
         .faq-arrow {
           font-family: 'Bebas Neue', sans-serif; font-size: 18px;
-          color: #4b5563; flex-shrink: 0; transition: color 0.15s;
+          color: #6b7280; flex-shrink: 0; transition: color 0.15s;
         }
         .faq-arrow.open { color: #f59e0b; }
         .faq-answer {
@@ -156,7 +155,7 @@ export default function QAClient({ isOnboarding }: { isOnboarding: boolean }) {
                           className="faq-question"
                           onClick={() => setOpenKey(isOpen ? null : key)}
                         >
-                          <span className={`faq-q-text${isOpen ? ' open' : ''}`}>{faq.q}</span>
+                          <span className="faq-q-text">{faq.q}</span>
                           <span className={`faq-arrow${isOpen ? ' open' : ''}`}>{isOpen ? '↑' : '↓'}</span>
                         </button>
                         {isOpen && (
