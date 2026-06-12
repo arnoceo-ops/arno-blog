@@ -1,17 +1,11 @@
 import Link from 'next/link'
 
 export const metadata = {
-  title: 'Referral Spelregels →ArnoBot',
+  title: 'Referral Spelregels — ArnoBot',
   robots: 'noindex',
 }
 
 export default function ReferralSpelregelsPage() {
-  const section: React.CSSProperties = { borderTop: '1px solid #374151', paddingTop: 32, marginBottom: 48 }
-  const label: React.CSSProperties = { fontFamily: "'Space Mono', monospace", fontWeight: 700, fontSize: 13, letterSpacing: 4, color: '#f59e0b', marginBottom: 8, display: 'block' }
-  const num: React.CSSProperties = { fontFamily: "'Space Mono', monospace", fontWeight: 400, fontSize: 13, letterSpacing: 2, color: '#6b7280', marginBottom: 6, display: 'block' }
-  const h2: React.CSSProperties = { fontFamily: "'Bebas Neue', sans-serif", fontSize: 32, letterSpacing: 2, color: '#f1f5f9', marginBottom: 20, lineHeight: 1 }
-  const body: React.CSSProperties = { fontFamily: "'Space Mono', monospace", fontWeight: 400, fontSize: 15, lineHeight: 1.9, color: '#9ca3af', marginBottom: 16 }
-
   return (
     <>
       <style>{`
@@ -20,10 +14,9 @@ export default function ReferralSpelregelsPage() {
         body { background: #111827; color: #f1f5f9; font-family: 'Space Mono', monospace; font-weight: 400; }
         a { color: #f59e0b; text-decoration: none; }
         a:hover { text-decoration: underline; }
-        table { width: 100%; border-collapse: collapse; margin-bottom: 8px; }
-        th { background: #1f2937; color: #f59e0b; font-family: 'Space Mono', monospace; font-size: 11px; letter-spacing: 3px; text-align: left; padding: 10px 14px; border-bottom: 2px solid #374151; }
-        td { font-family: 'Space Mono', monospace; font-size: 14px; color: #9ca3af; padding: 12px 14px; border-bottom: 1px solid #1f2937; vertical-align: top; line-height: 1.7; }
-        td strong { color: #f1f5f9; }
+        table { width: 100%; border-collapse: collapse; margin-bottom: 24px; }
+        th { background: #1f2937; color: #f59e0b; font-family: 'Space Mono', monospace; font-size: 12px; letter-spacing: 3px; text-align: left; padding: 10px 14px; border-bottom: 2px solid #f59e0b; }
+        td { font-family: 'Space Mono', monospace; font-size: 14px; color: #9ca3af; padding: 10px 14px; border-bottom: 1px solid #374151; vertical-align: top; }
         tr:last-child td { border-bottom: none; }
       `}</style>
 
@@ -42,27 +35,27 @@ export default function ReferralSpelregelsPage() {
       <div style={{ minHeight: '100vh', background: '#111827' }}>
         <div style={{ maxWidth: 812, margin: '0 auto', padding: 'clamp(80px,12vw,120px) clamp(16px,4vw,20px) 80px' }}>
 
-          <p style={{ ...label, marginBottom: 8 }}>ARNOBOT</p>
+          <p style={{ fontFamily: "'Space Mono', monospace", fontWeight: 400, fontSize: 13, letterSpacing: 4, color: '#f59e0b', marginBottom: 8 }}>ARNOBOT</p>
           <h1 style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 64, letterSpacing: 3, color: '#f1f5f9', lineHeight: 1.0, marginBottom: 16 }}>REFERRAL SPELREGELS</h1>
-          <p style={{ ...body, marginBottom: 64 }}>Versie 1.0 · Juni 2026</p>
+          <p style={{ fontSize: 15, color: '#9ca3af', lineHeight: 1.9, marginBottom: 48 }}>Versie 1.1 · Juni 2026</p>
 
-          <div style={section}>
-            <span style={num}>ARTIKEL 1</span>
-            <h2 style={h2}>WAT IS HET REFERRALPROGRAMMA</h2>
-            <p style={body}>Je ontvangt als actieve ArnoBot-gebruiker een persoonlijke referral link. Deel je die link en meldt iemand zich daarmee aan, dan profiteren zowel jij als de nieuwe gebruiker van een korting zodra de laatstgenoemde een betaald abonnement afsluit.</p>
-            <p style={body}>Deelname is automatisch voor iedere actieve gebruiker. Er zijn geen aparte aanmeldstappen vereist.</p>
+          <div style={{ borderTop: '3px solid #f59e0b', paddingTop: 32, marginBottom: 48 }}>
+            <p style={{ fontFamily: "'Space Mono', monospace", fontWeight: 700, fontSize: 13, letterSpacing: 4, color: '#f59e0b', marginBottom: 8 }}>ARTIKEL 1</p>
+            <h2 style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 32, letterSpacing: 2, color: '#f1f5f9', marginBottom: 20 }}>Wat is het referralprogramma</h2>
+            <p style={{ fontSize: 15, color: '#9ca3af', lineHeight: 1.9, marginBottom: 16 }}>Je ontvangt als actieve ArnoBot-gebruiker een persoonlijke referral link. Deel je die link en meldt iemand zich daarmee aan, dan profiteren zowel jij als de nieuwe gebruiker van een korting zodra de laatstgenoemde een betaald abonnement afsluit.</p>
+            <p style={{ fontSize: 15, color: '#9ca3af', lineHeight: 1.9 }}>Deelname is automatisch voor iedere actieve gebruiker. Er zijn geen aparte aanmeldstappen vereist.</p>
           </div>
 
-          <div style={section}>
-            <span style={num}>ARTIKEL 2</span>
-            <h2 style={h2}>HOE HET WERKT</h2>
-            <p style={body}>Jij deelt als referrer je persoonlijke link (bijv. <strong style={{ color: '#f1f5f9' }}>arno.bot/aanmelden?ref=NAAM-XXXX</strong>). De nieuwe gebruiker klikt op die link, doorloopt de standaard 30-daagse gratis trial en sluit daarna een abonnement af. Op dat moment worden de kortingen en het tegoed van toepassing.</p>
-            <p style={body}>Een referral code wordt eenmalig per account gekoppeld, op het moment van de eerste inlog via de link.</p>
+          <div style={{ borderTop: '1px solid #374151', paddingTop: 32, marginBottom: 48 }}>
+            <p style={{ fontFamily: "'Space Mono', monospace", fontWeight: 700, fontSize: 13, letterSpacing: 4, color: '#f59e0b', marginBottom: 8 }}>ARTIKEL 2</p>
+            <h2 style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 32, letterSpacing: 2, color: '#f1f5f9', marginBottom: 20 }}>Hoe het werkt</h2>
+            <p style={{ fontSize: 15, color: '#9ca3af', lineHeight: 1.9, marginBottom: 16 }}>Jij deelt als referrer je persoonlijke link (bijv. <strong style={{ color: '#f1f5f9' }}>arno.bot/aanmelden?ref=NAAM-XXXX</strong>). De nieuwe gebruiker klikt op die link, doorloopt de standaard gratis trial en sluit daarna een abonnement af. Op dat moment worden de kortingen en het tegoed van toepassing.</p>
+            <p style={{ fontSize: 15, color: '#9ca3af', lineHeight: 1.9 }}>Een referral code wordt eenmalig per account gekoppeld, op het moment van de eerste inlog via de link.</p>
           </div>
 
-          <div style={section}>
-            <span style={num}>ARTIKEL 3</span>
-            <h2 style={h2}>KORTINGEN BIJ CONVERSIE</h2>
+          <div style={{ borderTop: '1px solid #374151', paddingTop: 32, marginBottom: 48 }}>
+            <p style={{ fontFamily: "'Space Mono', monospace", fontWeight: 700, fontSize: 13, letterSpacing: 4, color: '#f59e0b', marginBottom: 8 }}>ARTIKEL 3</p>
+            <h2 style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 32, letterSpacing: 2, color: '#f1f5f9', marginBottom: 20 }}>Kortingen bij conversie</h2>
             <table>
               <thead>
                 <tr>
@@ -73,49 +66,58 @@ export default function ReferralSpelregelsPage() {
               </thead>
               <tbody>
                 <tr>
-                  <td><strong>Nieuwe gebruiker</strong></td>
+                  <td style={{ color: '#f1f5f9' }}>Nieuwe gebruiker</td>
                   <td>Maandabonnement (€97/m)</td>
-                  <td>50% korting eerste maand → <strong>€48,50</strong></td>
+                  <td>50% korting eerste maand → <strong style={{ color: '#f1f5f9' }}>€48,50</strong></td>
                 </tr>
                 <tr>
-                  <td><strong>Nieuwe gebruiker</strong></td>
+                  <td style={{ color: '#f1f5f9' }}>Nieuwe gebruiker</td>
                   <td>Jaarabonnement (€777/j)</td>
-                  <td>€97 korting → <strong>€680</strong></td>
+                  <td>€97 korting → <strong style={{ color: '#f1f5f9' }}>€680</strong></td>
                 </tr>
                 <tr>
-                  <td><strong>Referrer</strong></td>
+                  <td style={{ color: '#f1f5f9' }}>Referrer</td>
                   <td>Nieuwe gebruiker converteert naar maand</td>
-                  <td>50% korting volgende maand → <strong>€48,50</strong></td>
+                  <td>50% korting volgende maand → <strong style={{ color: '#f1f5f9' }}>€48,50</strong></td>
                 </tr>
                 <tr>
-                  <td><strong>Referrer</strong></td>
+                  <td style={{ color: '#f1f5f9' }}>Referrer</td>
                   <td>Nieuwe gebruiker converteert naar jaar</td>
-                  <td><strong>€97 tegoed</strong></td>
+                  <td><strong style={{ color: '#f1f5f9' }}>€97 tegoed</strong></td>
                 </tr>
               </tbody>
             </table>
           </div>
 
-          <div style={section}>
-            <span style={num}>ARTIKEL 4</span>
-            <h2 style={h2}>GELDIGHEID VAN EEN REFERRAL</h2>
-            <p style={body}>Een referral wordt als geldig beschouwd zodra de nieuwe gebruiker voldoet aan één van de volgende voorwaarden:</p>
-            <p style={body}><strong>Jaarabonnement</strong> — de referral telt direct mee zodra de betaling is ontvangen.</p>
-            <p style={body}><strong>Maandabonnement</strong> — de referral telt mee na 3 aaneengesloten betalende maanden. Wordt het abonnement eerder opgezegd, dan telt de referral niet mee.</p>
+          <div style={{ borderTop: '1px solid #374151', paddingTop: 32, marginBottom: 48 }}>
+            <p style={{ fontFamily: "'Space Mono', monospace", fontWeight: 700, fontSize: 13, letterSpacing: 4, color: '#f59e0b', marginBottom: 8 }}>ARTIKEL 4</p>
+            <h2 style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 32, letterSpacing: 2, color: '#f1f5f9', marginBottom: 20 }}>Geldigheid van een referral</h2>
+            <p style={{ fontSize: 15, color: '#9ca3af', lineHeight: 1.9, marginBottom: 16 }}>Een referral wordt als geldig beschouwd zodra de nieuwe gebruiker voldoet aan één van de volgende voorwaarden:</p>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 12, marginBottom: 16 }}>
+              {[
+                'Jaarabonnement — de referral telt direct mee zodra de betaling is ontvangen.',
+                'Maandabonnement — de referral telt mee na 3 aaneengesloten betalende maanden. Wordt het abonnement eerder opgezegd, dan telt de referral niet mee.',
+              ].map((item, i) => (
+                <div key={i} style={{ display: 'flex', gap: 12, alignItems: 'flex-start' }}>
+                  <span style={{ color: '#f59e0b', flexShrink: 0 }}>—</span>
+                  <p style={{ fontSize: 15, color: '#9ca3af', lineHeight: 1.9 }}>{item}</p>
+                </div>
+              ))}
+            </div>
           </div>
 
-          <div style={section}>
-            <span style={num}>ARTIKEL 5</span>
-            <h2 style={h2}>SPELREGELS VOOR TEGOED</h2>
-            <p style={body}>Tegoed is uitsluitend inzetbaar als verlenging van een bestaand maand- of jaarabonnement, of als bijdrage aan een tweede licentie. Uitbetaling in contanten of via andere betaalmethoden is niet mogelijk.</p>
-            <p style={body}>Tegoed heeft geen vervaldatum en kent geen maximum. Het loopt door totdat het wordt ingezet voor een verlenging of tweede licentie.</p>
-            <p style={body}>De actuele stand van je referral saldo is te zien op je <a href="/bot/account">accountpagina</a>.</p>
+          <div style={{ borderTop: '1px solid #374151', paddingTop: 32, marginBottom: 48 }}>
+            <p style={{ fontFamily: "'Space Mono', monospace", fontWeight: 700, fontSize: 13, letterSpacing: 4, color: '#f59e0b', marginBottom: 8 }}>ARTIKEL 5</p>
+            <h2 style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 32, letterSpacing: 2, color: '#f1f5f9', marginBottom: 20 }}>Spelregels voor tegoed</h2>
+            <p style={{ fontSize: 15, color: '#9ca3af', lineHeight: 1.9, marginBottom: 16 }}>Tegoed is uitsluitend inzetbaar als verlenging van een bestaand maand- of jaarabonnement, of als bijdrage aan een tweede licentie. Uitbetaling in contanten of via andere betaalmethoden is niet mogelijk.</p>
+            <p style={{ fontSize: 15, color: '#9ca3af', lineHeight: 1.9, marginBottom: 16 }}>Tegoed heeft geen vervaldatum en kent geen maximum. Het loopt door totdat het wordt ingezet voor een verlenging of tweede licentie.</p>
+            <p style={{ fontSize: 15, color: '#9ca3af', lineHeight: 1.9 }}>De actuele stand van je referral saldo is te zien op je <a href="/bot/account">accountpagina</a>.</p>
           </div>
 
-          <div style={section}>
-            <span style={num}>ARTIKEL 6</span>
-            <h2 style={h2}>MIJLPALEN</h2>
-            <p style={body}>Bij het bereiken van de volgende aantallen betalende referrals gelden de onderstaande beloningen:</p>
+          <div style={{ borderTop: '1px solid #374151', paddingTop: 32, marginBottom: 48 }}>
+            <p style={{ fontFamily: "'Space Mono', monospace", fontWeight: 700, fontSize: 13, letterSpacing: 4, color: '#f59e0b', marginBottom: 8 }}>ARTIKEL 6</p>
+            <h2 style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 32, letterSpacing: 2, color: '#f1f5f9', marginBottom: 20 }}>Mijlpalen</h2>
+            <p style={{ fontSize: 15, color: '#9ca3af', lineHeight: 1.9, marginBottom: 20 }}>Bij het bereiken van de volgende aantallen betalende referrals gelden de onderstaande beloningen:</p>
             <table>
               <thead>
                 <tr>
@@ -125,37 +127,39 @@ export default function ReferralSpelregelsPage() {
               </thead>
               <tbody>
                 <tr>
-                  <td><strong>25</strong></td>
-                  <td>Toegang tot de <strong>ArnoBot Ambassadors Club</strong></td>
+                  <td style={{ color: '#f1f5f9' }}>25</td>
+                  <td>Toegang tot de <strong style={{ color: '#f1f5f9' }}>ArnoBot Ambassadors Club</strong></td>
                 </tr>
                 <tr>
-                  <td><strong>50</strong></td>
-                  <td><strong>Lifetime Subscription</strong> op ArnoBot</td>
+                  <td style={{ color: '#f1f5f9' }}>50</td>
+                  <td><strong style={{ color: '#f1f5f9' }}>Lifetime Subscription</strong> op ArnoBot</td>
                 </tr>
                 <tr>
-                  <td><strong>100</strong></td>
-                  <td>Persoonlijk aanbod voor deelname in de <strong>ArnoBot Venture 🚀</strong></td>
+                  <td style={{ color: '#f1f5f9' }}>100</td>
+                  <td>Persoonlijk aanbod voor deelname in de <strong style={{ color: '#f1f5f9' }}>ArnoBot Venture 🚀</strong></td>
                 </tr>
               </tbody>
             </table>
           </div>
 
-          <div style={section}>
-            <span style={num}>ARTIKEL 7</span>
-            <h2 style={h2}>UITSLUITINGEN</h2>
-            <p style={body}>Teamlicenties zijn uitgesloten van het referralprogramma. Kortingen en tegoed gelden alleen voor individuele abonnementen.</p>
-            <p style={body}>Een gebruiker kan zijn of haar eigen referral code niet gebruiken. Codes zijn persoonsgebonden en niet overdraagbaar.</p>
+          <div style={{ borderTop: '1px solid #374151', paddingTop: 32, marginBottom: 48 }}>
+            <p style={{ fontFamily: "'Space Mono', monospace", fontWeight: 700, fontSize: 13, letterSpacing: 4, color: '#f59e0b', marginBottom: 8 }}>ARTIKEL 7</p>
+            <h2 style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 32, letterSpacing: 2, color: '#f1f5f9', marginBottom: 20 }}>Uitsluitingen</h2>
+            <p style={{ fontSize: 15, color: '#9ca3af', lineHeight: 1.9, marginBottom: 16 }}>Teamlicenties zijn uitgesloten van het referralprogramma. Kortingen en tegoed gelden alleen voor individuele abonnementen.</p>
+            <p style={{ fontSize: 15, color: '#9ca3af', lineHeight: 1.9 }}>Een gebruiker kan zijn of haar eigen referral code niet gebruiken. Codes zijn persoonsgebonden en niet overdraagbaar.</p>
           </div>
 
-          <div style={section}>
-            <span style={num}>ARTIKEL 8</span>
-            <h2 style={h2}>WIJZIGINGEN</h2>
-            <p style={body}>ArnoBot behoudt zich het recht voor de voorwaarden van het referralprogramma op elk moment te wijzigen. Bestaand tegoed opgebouwd voor de wijziging blijft geldig onder de oorspronkelijke voorwaarden.</p>
+          <div style={{ borderTop: '1px solid #374151', paddingTop: 32, marginBottom: 48 }}>
+            <p style={{ fontFamily: "'Space Mono', monospace", fontWeight: 700, fontSize: 13, letterSpacing: 4, color: '#f59e0b', marginBottom: 8 }}>ARTIKEL 8</p>
+            <h2 style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 32, letterSpacing: 2, color: '#f1f5f9', marginBottom: 20 }}>Wijzigingen</h2>
+            <p style={{ fontSize: 15, color: '#9ca3af', lineHeight: 1.9 }}>ArnoBot behoudt zich het recht voor de voorwaarden van het referralprogramma op elk moment te wijzigen. Bestaand tegoed opgebouwd voor de wijziging blijft geldig onder de oorspronkelijke voorwaarden.</p>
           </div>
 
-          <p style={{ fontFamily: "'Space Mono', monospace", fontSize: 13, color: '#6b7280', lineHeight: 1.8, marginTop: 16 }}>
-            Vragen? Mail naar <a href="mailto:referrals@arno.bot">referrals@arno.bot</a>
-          </p>
+          <div style={{ borderTop: '1px solid #374151', paddingTop: 32 }}>
+            <p style={{ fontSize: 13, color: '#4b5563', lineHeight: 1.9 }}>
+              Vragen? Mail naar <a href="mailto:referrals@arno.bot">referrals@arno.bot</a>
+            </p>
+          </div>
 
         </div>
       </div>
