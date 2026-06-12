@@ -76,14 +76,24 @@ export default function ReferralSpelregelsPage() {
                   <td>€97 korting: €680</td>
                 </tr>
                 <tr>
-                  <td style={{ color: '#f1f5f9' }}>Referrer</td>
+                  <td style={{ color: '#f1f5f9' }}>Referrer (maand)</td>
                   <td>Nieuwe gebruiker converteert naar maand</td>
                   <td>50% korting volgende maand: €48,50</td>
                 </tr>
                 <tr>
-                  <td style={{ color: '#f1f5f9' }}>Referrer</td>
+                  <td style={{ color: '#f1f5f9' }}>Referrer (jaar)</td>
+                  <td>Nieuwe gebruiker converteert naar maand</td>
+                  <td>€48,50 tegoed op jaarverlenging</td>
+                </tr>
+                <tr>
+                  <td style={{ color: '#f1f5f9' }}>Referrer (maand)</td>
                   <td>Nieuwe gebruiker converteert naar jaar</td>
-                  <td>€97 tegoed</td>
+                  <td>100% korting volgende maand: €97,00</td>
+                </tr>
+                <tr>
+                  <td style={{ color: '#f1f5f9' }}>Referrer (jaar)</td>
+                  <td>Nieuwe gebruiker converteert naar jaar</td>
+                  <td>€97,00 tegoed op jaarverlenging</td>
                 </tr>
               </tbody>
             </table>
