@@ -40,6 +40,22 @@ Bij elke nieuwe pagina of component: lees eerst een bestaande pagina door en leg
 - **Container breedte gesprek**: maxWidth 812px, margin 0 auto
 - **Designregel**: AI-gegenereerde content = #1f2937 card. Gebruikersinput = transparant op #111827.
 
+## Model-inventaris — controleer elk kwartaal
+
+Elke route gebruikt een bewust gekozen model. Controleer elk kwartaal (of na een nieuwe Anthropic release) of dit nog de juiste keuzes zijn.
+
+| Route | Model | Reden | Laatste check |
+|---|---|---|---|
+| `app/api/chat/route.ts` (hoofdchat) | `claude-sonnet-4-6` | Conversationele turns, hoog volume, Sonnet volstaat | 2026-06 |
+| `app/api/bot/uitdaging/route.ts` | `claude-sonnet-4-6` | Één korte vraag genereren, Sonnet volstaat | 2026-06 |
+| `app/api/bot/session-end/route.ts` (synthese) | `claude-haiku-4-5-20251001` | Drie snelle batch-calls per sessie, kwaliteit voldoende | 2026-06 |
+| `app/api/bot/coaching/route.ts` (precheck) | `claude-sonnet-4-6` | Alleen ja/nee-vraag, Fable 5 overkill | 2026-06 |
+| `app/api/bot/coaching/route.ts` (hoofdsynthese) | `claude-fable-5` | Meerdere gesprekken + profiel + patronen verbinden — reasoning model nodig | 2026-06 |
+| `app/api/bot/coaching/route.ts` (blog-synthese) | `claude-haiku-4-5-20251001` | Korte label per blog, Haiku volstaat | 2026-06 |
+| `app/api/bot/coaching-analyse/route.ts` (BIEB-analyse) | `claude-sonnet-4-6` | Patroonanalyse van max 20 gesprekken, Sonnet volstaat | 2026-06 |
+
+**Hoe te controleren**: vraag Claude Code "check de modelinventaris in CLAUDE.md — zijn er nieuwere of betere modellen beschikbaar?"
+
 ## Foto (cyborg.jpg in arnobot/page.tsx)
 - NOOIT meer aanpassen tenzij de gebruiker er expliciet om vraagt
 - Correct formaat: `<img src="/cyborg.jpg" style={{display:'block', width:'380px', maxWidth:'100%', height:'auto'}} />` in een `subscribe-text-col` div
