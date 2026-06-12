@@ -181,6 +181,23 @@ export default function VoorwaardenPage() {
 
           <div className="divider" />
 
+          <div className="section">
+            <div className="section-num">ARTIKEL 10</div>
+            <div className="section-title">REFERRALPROGRAMMA</div>
+            <p>Gebruikers kunnen anderen uitnodigen via een persoonlijke referral link. Nieuwe gebruikers die via deze link instappen ontvangen <strong>50% korting op de eerste maand</strong>. De verwijzende gebruiker ontvangt tegoed op zijn eigen volgende maand.</p>
+            <p>Een referral wordt als <strong>geldig</strong> beschouwd zodra de nieuwe gebruiker voldoet aan één van de volgende voorwaarden:</p>
+            <p>— De nieuwe gebruiker heeft een <strong>jaarabonnement</strong> afgesloten: de referral telt direct mee.</p>
+            <p>— De nieuwe gebruiker heeft een <strong>maandabonnement</strong>: de referral telt mee na <strong>3 aaneengesloten betalende maanden</strong>.</p>
+            <p>Referrals die eerder worden opgezegd tellen niet mee.</p>
+            <p>Bij het bereiken van de volgende drempels van betalende referrals gelden de volgende beloningen:</p>
+            <p><strong>25 betalende referrals</strong> — toegang tot de ArnoBot Ambassadors Club.</p>
+            <p><strong>50 betalende referrals</strong> — Lifetime Subscription op ArnoBot.</p>
+            <p><strong>100 betalende referrals</strong> — persoonlijk aanbod voor deelname in de ArnoBot Venture.</p>
+            <p>Royal Dutch Sales behoudt zich het recht voor de voorwaarden van het referralprogramma te wijzigen. Reeds behaalde drempels worden gerespecteerd.</p>
+          </div>
+
+          <div className="divider" />
+
           <p style={{ fontSize: 11, color: '#4b5563' }}>
             Vragen over deze voorwaarden? Mail naar <a href="mailto:arno@arno.bot">arno@arno.bot</a>
           </p>
