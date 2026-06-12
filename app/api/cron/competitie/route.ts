@@ -11,6 +11,17 @@ const resend = new Resend(process.env.RESEND_API_KEY)
 const VALID_ROLES = ['Verkoper', 'Salesbaas', 'Eindbaas'] as const
 type Rol = typeof VALID_ROLES[number]
 
+const ROL_MAP: Record<string, Rol> = {
+  'AE Hunter':     'Verkoper',
+  'AM Farmer':     'Verkoper',
+  'Key AM':        'Verkoper',
+  'Inside Sales':  'Verkoper',
+  'Solopreneur':   'Verkoper',
+  'Sales Director':'Salesbaas',
+  'VP of Sales':   'Salesbaas',
+  'CEO/DGA':       'Eindbaas',
+}
+
 // Eerste run: 1 oktober 2026
 const FIRST_RUN = new Date('2026-10-01T00:00:00Z')
 
@@ -128,7 +139,7 @@ export async function GET(req: NextRequest) {
     .from('arnobot_blog_profiles')
     .select('user_id, profiel')
 
-  const geldig = (profielen ?? []).filter(p => VALID_ROLES.includes(p.profiel?.rol))
+  const geldig = (profielen ?? []).filter(p => ROL_MAP[p.profiel?.rol] !== undefined)
   if (!geldig.length) return NextResponse.json({ ok: true, kandidaten: 0 })
 
   const userIds = geldig.map(p => p.user_id)
@@ -165,7 +176,8 @@ export async function GET(req: NextRequest) {
 
   for (const profiel of geldig) {
     const userId = profiel.user_id
-    const rol = profiel.profiel.rol as Rol
+    const rol = ROL_MAP[profiel.profiel.rol]
+    if (!rol) continue
 
     const scores = (alleScores ?? []).filter(s => s.user_id === userId)
     if (scores.length < 2) continue // minimaal 2 coaching-scores vereist
