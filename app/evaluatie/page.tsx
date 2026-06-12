@@ -107,14 +107,10 @@ export default function EvaluatiePage() {
 
         <p style={{ fontFamily: "'Space Mono', monospace", fontWeight: 700, color: '#f59e0b', fontSize: 13, letterSpacing: 4, marginBottom: 8 }}>ARNOBOT</p>
         <h1 style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 64, letterSpacing: 3, lineHeight: 1, color: '#f1f5f9', marginBottom: 16 }}>EVALUATIE</h1>
-        <p style={{ fontSize: 15, lineHeight: 1.9, color: '#9ca3af', marginBottom: 56 }}>
-          30 dagen ArnoBot. Benieuwd hoe je het hebt ervaren. Ik stel je feedback op prijs. Helpt me de app beter te maken. Thanks!
-        </p>
-
         {sent ? (
           <div style={{ background: '#1f2937', borderLeft: '3px solid #f59e0b', padding: '32px 28px' }}>
-            <h2 style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 32, letterSpacing: 2, color: '#f1f5f9', marginBottom: 12 }}>BEDANKT</h2>
-            <p style={{ fontSize: 15, lineHeight: 1.9, color: '#9ca3af' }}>Je feedback is ontvangen. We nemen hem serieus.</p>
+            <h2 style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 32, letterSpacing: 2, color: '#f1f5f9', marginBottom: 12 }}>MUITO OBRIGADO</h2>
+            <p style={{ fontSize: 15, lineHeight: 1.9, color: '#9ca3af' }}>Je feedback is binnen.</p>
           </div>
         ) : (
           <form onSubmit={submit}>
