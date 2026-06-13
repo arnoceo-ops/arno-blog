@@ -109,13 +109,13 @@ export default async function ArnoBotAdminPage({
         <form method="GET" style={{ display: 'flex', gap: '12px', alignItems: 'center', flexWrap: 'wrap' }}>
           <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
             <label style={{ fontSize: '16px', letterSpacing: '2px', color: '#f59e0b', opacity: 0.7 }}>VAN</label>
-            <input type="text" name="from" defaultValue={fmtDate(from)} placeholder="dd/mm/yyyy"
-              style={{ background: '#1f2937', border: '1px solid #222', color: '#f1f5f9', padding: '10px 14px', fontSize: '16px', width: '140px' }} />
+            <input type="date" name="from" defaultValue={from}
+              style={{ background: '#1f2937', border: '1px solid #222', color: '#f1f5f9', padding: '10px 14px', fontSize: '16px' }} />
           </div>
           <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
             <label style={{ fontSize: '16px', letterSpacing: '2px', color: '#f59e0b', opacity: 0.7 }}>TOT EN MET</label>
-            <input type="text" name="to" defaultValue={fmtDate(to)} placeholder="dd/mm/yyyy"
-              style={{ background: '#1f2937', border: '1px solid #222', color: '#f1f5f9', padding: '10px 14px', fontSize: '16px', width: '140px' }} />
+            <input type="date" name="to" defaultValue={to}
+              style={{ background: '#1f2937', border: '1px solid #222', color: '#f1f5f9', padding: '10px 14px', fontSize: '16px' }} />
           </div>
           <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
             <label style={{ fontSize: '16px', letterSpacing: '2px', color: '#f59e0b', opacity: 0.7 }}>SORTERING</label>
