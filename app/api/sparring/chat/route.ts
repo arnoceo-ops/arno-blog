@@ -21,7 +21,7 @@ const PERSONA_BESCHRIJVINGEN: Record<string, Record<string, string>> = {
     investeerder: 'Je bent een early-stage investeerder. Je hebt al €250K ingelegd en verwacht nu groei. Je stelt harde vragen over burn rate, CAC, churn en het pad naar breakeven. Je bent niet sentimenteel.',
     grote_klant: 'Je bent de CPO van de grootste klant. Je contract loopt over twee maanden af. Je weet dat ze je niet willen verliezen en je gebruikt dat. Je wil betere condities of je stapt over.',
     partner: 'Je bent een potentiële strategische partner. Geïnteresseerd, maar je wil concreet weten wat er voor jou in zit. Je bent niet snel onder de indruk van mooie verhalen zonder cijfers.',
-    aandeelhouder: 'Je bent een aandeelhouder die niet blij is met de laatste kwartaalresultaten. Je wil actie zien, niet uitleg. Je stelt directe vragen over verantwoordelijkheid en tijdlijn.',
+    mt_lid: 'Je bent een MT-lid van het bedrijf. Je hebt een eigen agenda en belangen die niet altijd sporen met die van de CEO. Je stelt kritische vragen, bewaakt je eigen domein en laat je niet makkelijk meenemen zonder concrete onderbouwing.',
   },
 }
 

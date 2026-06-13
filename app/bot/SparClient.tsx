@@ -79,7 +79,8 @@ const PERSONAS: Record<string, { key: string; label: string }[]> = {
     { key: 'investeerder', label: 'Investeerder' },
     { key: 'grote_klant', label: 'Grote klant' },
     { key: 'partner', label: 'Partner' },
-    { key: 'aandeelhouder', label: 'Aandeelhouder' },
+    { key: 'mt_lid', label: 'MT-lid' },
+    { key: 'anders', label: 'Anders' },
   ],
 }
 
