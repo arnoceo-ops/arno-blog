@@ -34,7 +34,8 @@ export default async function ArnoBotAdminPage({
 
   const params = await searchParams
   const today = new Date().toISOString().slice(0, 10)
-  const from = params.from || today
+  const thirtyDaysAgo = new Date(Date.now() - 30 * 24 * 60 * 60 * 1000).toISOString().slice(0, 10)
+  const from = params.from || thirtyDaysAgo
   const to = params.to || today
   const sort = params.sort || 'date_desc'
 
