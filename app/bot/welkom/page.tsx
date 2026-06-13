@@ -35,7 +35,7 @@ export default function WelkomPage() {
           <p style={{ fontFamily: "'Space Mono', monospace", fontWeight: 400, fontSize: 13, letterSpacing: 4, color: '#f59e0b', marginBottom: 12 }}>ARNOBOT</p>
           <h1 style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 64, letterSpacing: 3, lineHeight: 1, color: '#f1f5f9', marginBottom: 8 }}>WELKOM.</h1>
           <p style={{ fontFamily: "'Space Mono', monospace", fontWeight: 400, fontSize: 15, lineHeight: 1.9, color: '#9ca3af', marginBottom: 32 }}>
-            Kijk de video in zijn geheel af. 05:49 lousy minutes met de basics. Te ongeduldig? Log dan een andere keer in of doe niet mee. Cheers!
+            Kijk de video in zijn geheel af: 05:49 lousy minutes om de basics tot je te nemen. Te ongeduldig? Log dan een andere keer in of doe niet mee. Cheers!
           </p>
 
           <div style={{ position: 'relative', paddingBottom: '56.25%', height: 0, marginBottom: 32, overflow: 'hidden' }}>
