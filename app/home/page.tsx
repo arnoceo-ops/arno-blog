@@ -293,7 +293,7 @@ export default async function Home() {
               <span className="black">ARNO</span><span className="orange">BOT.</span>
             </h2>
             <p className="subscribe-body">
-              19 jaar blogs. 369.000 woorden. Alles over sales, strategie en mindset — nu beschikbaar als directe gesprekspartner. Geen chatbot-gedoe, geen corporate taal. Gewoon Arno, ongefilterd en zonder omwegen.
+              19 jaar blogs. 369.000 woorden. Alles over sales, strategie en mindset. Nu beschikbaar als directe gesprekspartner. Geen chatbot-gedoe, geen corporate taal. Gewoon Arno, ongefilterd en zonder omwegen.
             </p>
             <a href="https://arno.blog/bot" target="_blank" rel="noopener noreferrer" className="subscribe-btn">STEL JE VRAAG →</a>
           </div>
@@ -344,7 +344,7 @@ export default async function Home() {
           </div>
         </div>
         <div className="footer-bottom">
-          <span>© Royal Dutch Sales — Since 2007</span>
+          <span>© Royal Dutch Sales · Since 2007</span>
           <span>CC BY-ND 4.0</span>
         </div>
       </footer>

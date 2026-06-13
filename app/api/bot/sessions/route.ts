@@ -59,7 +59,7 @@ export async function GET() {
               model: 'claude-haiku-4-5-20251001',
               max_tokens: 150,
               system: 'Je bent Arno Diepeveen. Direct, ongefilterd, geen bullshit. Geen accenten op woorden voor nadruk.',
-              messages: [{ role: 'user', content: `Schrijf een terugblik op dit gesprek in maximaal 2-3 zinnen. Wat was de kern en wat is de ene concrete takeaway. Geen inleiding — direct de essentie, in eerste persoon als Arno.\n\n${conversationText}` }],
+              messages: [{ role: 'user', content: `Schrijf een terugblik op dit gesprek in maximaal 2-3 zinnen. Wat was de kern en wat is de ene concrete takeaway. Geen inleiding. Direct de essentie, in eerste persoon als Arno.\n\n${conversationText}` }],
             }),
             anthropic.messages.create({
               model: 'claude-haiku-4-5-20251001',

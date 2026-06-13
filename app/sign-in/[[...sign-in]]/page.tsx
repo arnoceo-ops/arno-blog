@@ -17,7 +17,7 @@ export default function SignInPage() {
 
   async function handleLinkedIn() {
     if (fetchStatus !== 'idle' || !signIn) {
-      setError('Pagina nog niet geladen — ververs de pagina.')
+      setError('Pagina nog niet geladen. Ververs de pagina.')
       return
     }
     setError('')

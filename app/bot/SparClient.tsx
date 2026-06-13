@@ -109,7 +109,7 @@ const VRAGEN_STRATEGISCH = [
 
 const VRAGEN_OPERATIONEEL = [
   'Ik werk keihard maar mijn pipeline blijft leeg. Waar gaat mijn energie naartoe?',
-  'Mijn prospect zegt "te duur" — maar is dat de echte reden of geef ik hem een excuus?',
+  'Mijn prospect zegt "te duur". Maar is dat de echte reden of geef ik hem een excuus?',
   'Wanneer is een eerste gesprek een investering en wanneer is het gewoon tijdverspilling?',
   'Ik presenteer goed, mijn offerte klopt, en toch tekent niemand. Wat zie ik niet?',
   'Mijn prospect was enthousiast. Tot ik de offerte stuurde. Wat ging er mis?',
@@ -119,7 +119,7 @@ const VRAGEN_OPERATIONEEL = [
   'Hoe onderscheid ik me als ik objectief gezien hetzelfde verkoop als mijn concurrent?',
   'Mijn deal is al drie maanden "bijna rond". Wat klopt er niet?',
   'Wanneer is cold outreach gewoon doorzetten en wanneer is het jezelf voor de gek houden?',
-  'Wanneer stop ik met verkopen en begin ik echt te overtuigen — en wat is het verschil?',
+  'Wanneer stop ik met verkopen en begin ik echt te overtuigen. En wat is het verschil?',
 ]
 
 const VRAGEN_ORGANISATORISCH = [
@@ -262,14 +262,14 @@ export default function SparClient({ userId, profiel, tier, taglineTitle, taglin
       if (!res.ok) {
         const data = await res.json().catch(() => ({}))
         setFeedbackText(feedbackText)
-        alert(data.error || 'Er ging iets mis — probeer opnieuw.')
+        alert(data.error || 'Er ging iets mis. Probeer opnieuw.')
         return
       }
       setFeedbackSent(true)
       setFeedbackText('')
       setTimeout(() => { setFeedbackOpen(false); setFeedbackSent(false) }, 2000)
     } catch {
-      alert('Er ging iets mis — probeer opnieuw.')
+      alert('Er ging iets mis. Probeer opnieuw.')
     } finally { setFeedbackLoading(false) }
   }
 
@@ -1210,7 +1210,7 @@ export default function SparClient({ userId, profiel, tier, taglineTitle, taglin
         {teamPrompt && !started && (
           <div style={{ background: '#1f2937', borderTop: '1px solid #374151', borderBottom: '1px solid #374151', padding: '16px clamp(20px,5vw,60px)', display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: 12 }}>
             <p style={{ fontFamily: "'Space Mono', monospace", fontSize: 13, color: '#9ca3af', margin: 0 }}>
-              Je coacht een team — wil je ArnoBot ook voor je hele team inzetten?
+              Je coacht een team. Wil je ArnoBot ook voor je hele team inzetten?
             </p>
             <div style={{ display: 'flex', gap: 12 }}>
               <button
@@ -1574,7 +1574,7 @@ export default function SparClient({ userId, profiel, tier, taglineTitle, taglin
             <p style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 13, letterSpacing: 4, color: '#f59e0b', marginBottom: 8 }}>ARNOBOT</p>
             <h2 style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 36, letterSpacing: 1, color: '#f1f5f9', marginBottom: 20 }}>FEEDBACK</h2>
             {feedbackSent ? (
-              <p style={{ fontFamily: "'Space Mono', monospace", fontSize: 15, color: '#f59e0b', letterSpacing: 1 }}>Bedankt — je feedback is verzonden.</p>
+              <p style={{ fontFamily: "'Space Mono', monospace", fontSize: 15, color: '#f59e0b', letterSpacing: 1 }}>Bedankt. Je feedback is verzonden.</p>
             ) : (
               <>
                 <textarea

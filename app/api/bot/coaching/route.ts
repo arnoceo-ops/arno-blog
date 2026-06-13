@@ -123,7 +123,7 @@ export async function POST() {
   const newAnalyseCount = prevCoaching ? analyses.filter(a => !prevAnalyseIds.has(a.id)).length : analyses.length
 
   const deltaContext = prevCoaching
-    ? `\n\nVORIGE COACHING (ter vergelijking — ${newSessionCount} nieuwe gesprekken en ${newAnalyseCount} nieuwe analyses sindsdien):\nVoortgang: ${prevCoaching.voortgang}\nMindset (${prevCoaching.mindset_score}/5): ${prevCoaching.mindset_diagnose}\nSysteem (${prevCoaching.systeem_score}/5): ${prevCoaching.systeem_diagnose}\nActie (${prevCoaching.actie_score}/5): ${prevCoaching.actie_diagnose}`
+    ? `\n\nVORIGE COACHING (ter vergelijking: ${newSessionCount} nieuwe gesprekken en ${newAnalyseCount} nieuwe analyses sindsdien):\nVoortgang: ${prevCoaching.voortgang}\nMindset (${prevCoaching.mindset_score}/5): ${prevCoaching.mindset_diagnose}\nSysteem (${prevCoaching.systeem_score}/5): ${prevCoaching.systeem_diagnose}\nActie (${prevCoaching.actie_score}/5): ${prevCoaching.actie_diagnose}`
     : ''
 
   const sessiesText = sessions
@@ -256,7 +256,7 @@ De pijlar-waarden mogen alleen zijn: "mindset", "systeem" of "actie".`,
       const synthResponse = await anthropic.messages.create({
         model: 'claude-haiku-4-5-20251001',
         max_tokens: 500,
-        system: `Je bent Arno Diepeveen. Schrijf per blog één korte zin in gewone spreektaal die uitlegt wat iemand uit dit blog haalt. Geen formele taal, geen jargon, geen lange zinnen. Schrijf zoals je het aan een vriend uitlegt. Begin met "Hier leer je..." of "Dit legt uit hoe je..." of iets vergelijkbaars — kort, concreet, actiegericht.
+        system: `Je bent Arno Diepeveen. Schrijf per blog één korte zin in gewone spreektaal die uitlegt wat iemand uit dit blog haalt. Geen formele taal, geen jargon, geen lange zinnen. Schrijf zoals je het aan een vriend uitlegt. Begin met "Hier leer je..." of "Dit legt uit hoe je..." of iets vergelijkbaars. Kort, concreet, actiegericht.
 
 Return ALLEEN een JSON array, geen uitleg eromheen:
 [{ "url": "...", "reden": "..." }]`,

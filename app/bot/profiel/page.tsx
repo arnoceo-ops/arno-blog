@@ -243,7 +243,7 @@ export default function BotProfielPage() {
                     <div style={{ marginTop: 20, background: '#1f2937', border: '1px solid #374151', borderLeft: '3px solid #f59e0b', padding: '20px 24px' }}>
                       <p style={{ fontFamily: "'Space Mono', monospace", fontWeight: 700, fontSize: 13, letterSpacing: 4, color: '#f59e0b', marginBottom: 10 }}>COMING SEPTEMBER 2026</p>
                       <p style={{ fontFamily: "'Space Mono', monospace", fontSize: 15, color: '#9ca3af', lineHeight: 1.9, marginBottom: 16 }}>
-                        ArnoBot Team is in ontwikkeling. Je kunt je nu alvast aanmelden — zodra het live gaat, ben jij de eerste die het weet.
+                        ArnoBot Team is in ontwikkeling. Je kunt je nu alvast aanmelden. Zodra het live gaat, ben jij de eerste die het weet.
                       </p>
                       <label style={{ display: 'flex', alignItems: 'flex-start', gap: 12, cursor: 'pointer' }}>
                         <input
@@ -285,7 +285,7 @@ export default function BotProfielPage() {
             <textarea
               value={answers.wat_verkoop_je}
               onChange={e => set('wat_verkoop_je', e.target.value)}
-              placeholder="Bijv: Software voor HR-teams bij scale-ups, jaarcontracten van €15k–€40k..."
+              placeholder="Bijv: Software voor HR-teams bij scale-ups, jaarcontracten van €15k tot €40k..."
               rows={3}
             />
           </Block>
@@ -295,7 +295,7 @@ export default function BotProfielPage() {
             <textarea
               value={answers.ideale_klant}
               onChange={e => set('ideale_klant', e.target.value)}
-              placeholder="Bijv: CFO's bij productiebedrijven met 50–200 medewerkers, beslissen op cijfers..."
+              placeholder="Bijv: CFO's bij productiebedrijven met 50 tot 200 medewerkers, beslissen op cijfers..."
               rows={3}
             />
           </Block>
@@ -315,7 +315,7 @@ export default function BotProfielPage() {
             <input
               value={answers.dealgrootte}
               onChange={e => set('dealgrootte', e.target.value)}
-              placeholder="Bijv: €15.000 — €40.000"
+              placeholder="Bijv: €15.000 tot €40.000"
             />
           </Block>
 

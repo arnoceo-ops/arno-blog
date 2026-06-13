@@ -53,7 +53,7 @@ export async function POST(req: Request) {
     await resend.emails.send({
       from: 'ArnoBot <info@arno.bot>',
       to: email,
-      subject: 'Je gratis trial staat klaar — ArnoBot Unlimited',
+      subject: 'Je gratis trial staat klaar: ArnoBot Unlimited',
       html: `
         <div style="font-family: sans-serif; max-width: 560px; margin: 0 auto; color: #f1f5f9; background: #111827;">
           <div style="padding: 24px 32px; border-bottom: 3px solid #f59e0b;">
@@ -67,15 +67,15 @@ export async function POST(req: Request) {
             </h1>
             <p style="font-size: 15px; color: #9ca3af; line-height: 1.8; margin-bottom: 24px;">
               Je aanmelding voor <strong style="color: #f1f5f9;">ArnoBot Unlimited</strong> is binnen.<br />
-              Je hebt <strong style="color: #f59e0b;">30 dagen gratis toegang</strong> — geen creditcard, geen verplichtingen.
+              Je hebt <strong style="color: #f59e0b;">30 dagen gratis toegang</strong>. Geen creditcard, geen verplichtingen.
             </p>
             <div style="background: #1f2937; padding: 20px 24px; margin-bottom: 24px; border-left: 3px solid #f59e0b;">
               <p style="font-size: 12px; letter-spacing: 2px; color: #f59e0b; margin-bottom: 4px; text-transform: uppercase;">Jouw trial</p>
-              <p style="font-size: 16px; font-weight: 600; color: #f1f5f9; margin: 0;">30 dagen gratis — geen automatische afschrijving</p>
+              <p style="font-size: 16px; font-weight: 600; color: #f1f5f9; margin: 0;">30 dagen gratis. Geen automatische afschrijving.</p>
               <p style="font-size: 13px; color: #666; margin: 4px 0 0;">Na je trial geef je zelf per e-mail aan of je doorgaat.</p>
             </div>
             <p style="font-size: 15px; color: #9ca3af; line-height: 1.8; margin-bottom: 32px;">
-              Maak nu je account aan via de knop hieronder — je hebt binnen een minuut toegang.
+              Maak nu je account aan via de knop hieronder. Je hebt binnen een minuut toegang.
             </p>
             <a href="https://arno.bot/sign-up?email=${encodeURIComponent(email)}"
                style="display:inline-block;background:#f59e0b;color:#111827;font-family:'Courier New',monospace;font-size:16px;font-weight:700;letter-spacing:3px;padding:16px 40px;text-decoration:none;border-radius:999px;">

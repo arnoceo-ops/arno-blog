@@ -78,8 +78,8 @@ export async function GET() {
   const context = contextParts.join('\n\n')
 
   const weekendInstructie = isWeekend
-    ? `Het is weekend. Stel een reflectieve mindsetvraag die iemand met zichzelf laat nadenken over wie hij is als salesprofessional — geen acties, geen bellen, geen afspraken. Filosofisch, confronterend op het niveau van overtuigingen en identiteit.`
-    : `Stel een mindsetvraag die rechtstreeks aansluit op de patronen en blinde vlekken uit het coachingsprofiel hierboven. Geen acties als "bel nu een klant" of "maak een lijst" — die staan al in het coachingsdocument. Richt je op overtuigingen, zelfbeeld, en de manier van denken die bepaalt of iemand groeit of stilstaat.`
+    ? `Het is weekend. Stel een reflectieve mindsetvraag die iemand met zichzelf laat nadenken over wie hij is als salesprofessional. Geen acties, geen bellen, geen afspraken. Filosofisch, confronterend op het niveau van overtuigingen en identiteit.`
+    : `Stel een mindsetvraag die rechtstreeks aansluit op de patronen en blinde vlekken uit het coachingsprofiel hierboven. Geen acties als "bel nu een klant" of "maak een lijst". Die staan al in het coachingsdocument. Richt je op overtuigingen, zelfbeeld, en de manier van denken die bepaalt of iemand groeit of stilstaat.`
 
   const hasContext = contextParts.length > 0
 

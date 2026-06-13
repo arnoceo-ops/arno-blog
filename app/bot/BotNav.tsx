@@ -50,14 +50,14 @@ export default function BotNav({ active }: Props) {
       })
       if (!res.ok) {
         const data = await res.json().catch(() => ({}))
-        alert(data.error || 'Er ging iets mis — probeer opnieuw.')
+        alert(data.error || 'Er ging iets mis. Probeer opnieuw.')
         return
       }
       setFeedbackSent(true)
       setFeedbackText('')
       setTimeout(() => { setFeedbackOpen(false); setFeedbackSent(false) }, 2000)
     } catch {
-      alert('Er ging iets mis — probeer opnieuw.')
+      alert('Er ging iets mis. Probeer opnieuw.')
     } finally { setFeedbackLoading(false) }
   }
 
@@ -74,7 +74,7 @@ export default function BotNav({ active }: Props) {
         <p style={{ fontFamily: "'Space Mono', monospace", fontSize: 13, letterSpacing: 4, color: '#f59e0b', marginBottom: 8 }}>ARNOBOT</p>
         <h2 style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 36, letterSpacing: 1, color: '#f1f5f9', marginBottom: 20 }}>FEEDBACK</h2>
         {feedbackSent ? (
-          <p style={{ fontFamily: "'Space Mono', monospace", fontSize: 14, color: '#f59e0b', letterSpacing: 1 }}>Bedankt — je feedback is verzonden.</p>
+          <p style={{ fontFamily: "'Space Mono', monospace", fontSize: 14, color: '#f59e0b', letterSpacing: 1 }}>Bedankt. Je feedback is verzonden.</p>
         ) : (
           <>
             <textarea

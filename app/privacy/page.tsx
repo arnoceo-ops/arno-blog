@@ -1,7 +1,7 @@
 import Link from 'next/link'
 
 export const metadata = {
-  title: 'Privacy — ArnoBot',
+  title: 'Privacy: ArnoBot',
   robots: 'noindex',
 }
 
@@ -89,7 +89,7 @@ export default function PrivacyPage() {
                 'Het beveiligen van de dienst en het opsporen van fouten',
               ].map((item, i) => (
                 <div key={i} style={{ display: 'flex', gap: 12, alignItems: 'flex-start' }}>
-                  <span style={{ color: '#f59e0b', flexShrink: 0 }}>—</span>
+                  <span style={{ color: '#f59e0b', flexShrink: 0 }}>·</span>
                   <p style={{ fontSize: 15, color: '#9ca3af', lineHeight: 1.9 }}>{item}</p>
                 </div>
               ))}
@@ -105,13 +105,13 @@ export default function PrivacyPage() {
             <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
               {[
                 'Versleutelde verbindingen (HTTPS/TLS) voor al het datatransport',
-                'Row Level Security (RLS) in de database — jij hebt uitsluitend toegang tot jouw eigen data',
+                'Row Level Security (RLS) in de database. Jij hebt uitsluitend toegang tot jouw eigen data.',
                 'Authenticatie via Clerk (SOC 2 Type II gecertificeerd)',
                 'Toegangscontrole via JWT-tokens en server-side API routes',
                 'Geautomatiseerde monitoring voor foutdetectie',
               ].map((item, i) => (
                 <div key={i} style={{ display: 'flex', gap: 12, alignItems: 'flex-start' }}>
-                  <span style={{ color: '#f59e0b', flexShrink: 0 }}>—</span>
+                  <span style={{ color: '#f59e0b', flexShrink: 0 }}>·</span>
                   <p style={{ fontSize: 15, color: '#9ca3af', lineHeight: 1.9 }}>{item}</p>
                 </div>
               ))}
@@ -132,7 +132,7 @@ export default function PrivacyPage() {
                 <tr>
                   <td style={{ color: '#f1f5f9' }}>Supabase</td>
                   <td>Database en opslag van gesprekken en profiel</td>
-                  <td>EU — SOC 2 Type II</td>
+                  <td>EU · SOC 2 Type II</td>
                 </tr>
                 <tr>
                   <td style={{ color: '#f1f5f9' }}>Clerk</td>
@@ -184,12 +184,12 @@ export default function PrivacyPage() {
             </p>
             <div style={{ display: 'flex', flexDirection: 'column', gap: 12, marginBottom: 20 }}>
               {[
-                'Data downloaden — Accountinstellingen → Jouw data',
-                'Account verwijderen — Accountinstellingen → Account verwijderen',
-                'Profiel aanpassen — via Profiel',
+                'Data downloaden: Accountinstellingen → Jouw data',
+                'Account verwijderen: Accountinstellingen → Account verwijderen',
+                'Profiel aanpassen: via Profiel',
               ].map((item, i) => (
                 <div key={i} style={{ display: 'flex', gap: 12, alignItems: 'flex-start' }}>
-                  <span style={{ color: '#f59e0b', flexShrink: 0 }}>—</span>
+                  <span style={{ color: '#f59e0b', flexShrink: 0 }}>·</span>
                   <p style={{ fontSize: 15, color: '#9ca3af', lineHeight: 1.9 }}>{item}</p>
                 </div>
               ))}
@@ -209,7 +209,7 @@ export default function PrivacyPage() {
 
           <div style={{ borderTop: '1px solid #374151', paddingTop: 32 }}>
             <p style={{ fontSize: 13, color: '#4b5563', lineHeight: 1.9 }}>
-              Laatste update: juni 2026 — Royal Dutch Sales, Lissabon, Portugal — <a href="mailto:privacy@arno.bot">privacy@arno.bot</a>
+              Laatste update: juni 2026 · Royal Dutch Sales, Lissabon, Portugal · <a href="mailto:privacy@arno.bot">privacy@arno.bot</a>
             </p>
           </div>
 

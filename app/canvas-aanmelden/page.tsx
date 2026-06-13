@@ -328,7 +328,7 @@ export default function CanvasAanmeldenPage() {
 
       <footer>
         <span className="footer-logo">Royal Dutch Sales</span>
-        <span className="footer-copy">© Since 2007 — CC BY-ND 4.0</span>
+        <span className="footer-copy">© Since 2007 · CC BY-ND 4.0</span>
       </footer>
     </>
   );

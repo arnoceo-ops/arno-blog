@@ -35,7 +35,7 @@ const FAQ_GROUPS = [
       },
       {
         q: 'Waarom kan ik maximaal 20 gesprekken selecteren voor een analyse?',
-        a: 'Een analyse wordt scherper als Arno zich kan focussen. Boven de 20 gesprekken verdunnen de patronen zich — je krijgt dan een gemiddelde in plaats van een diagnose. Twintig gesprekken is het maximum waarbij de analyse nog concreet en bruikbaar is.',
+        a: 'Een analyse wordt scherper als Arno zich kan focussen. Boven de 20 gesprekken verdunnen de patronen zich. Je krijgt dan een gemiddelde in plaats van een diagnose. Twintig gesprekken is het maximum waarbij de analyse nog concreet en bruikbaar is.',
       },
     ],
   },
@@ -44,7 +44,7 @@ const FAQ_GROUPS = [
     items: [
       {
         q: 'Wat is het verschil tussen Coaching en Sparren?',
-        a: 'Bij Coaching beschrijf jij een situatie en geeft ArnoBot advies. Bij Sparren speelt ArnoBot de tegenstander — een prospect, je CEO, een underperformer. Jij oefent het gesprek live. Coaching helpt je nadenken. Sparren helpt je presteren als het erop aankomt.',
+        a: 'Bij Coaching beschrijf jij een situatie en geeft ArnoBot advies. Bij Sparren speelt ArnoBot de tegenstander: een prospect, je CEO, een underperformer. Jij oefent het gesprek live. Coaching helpt je nadenken. Sparren helpt je presteren als het erop aankomt.',
       },
       {
         q: 'Voor wie is Sparren beschikbaar?',

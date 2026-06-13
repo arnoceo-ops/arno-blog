@@ -49,7 +49,7 @@ ${coachingContext}
 Schrijf een debrief van maximaal 200 woorden. Geen inleiding. Direct de analyse.
 
 1. Wat ging goed (1-2 zinnen)
-2. Het kritieke moment — wanneer verloor de gebruiker de controle of het momentum? Citeer de exacte woorden.
+2. Het kritieke moment: wanneer verloor de gebruiker de controle of het momentum? Citeer de exacte woorden.
 3. Eén herkenbaar patroon (gebruik coaching-context als beschikbaar, anders observeer vanuit het gesprek)
 4. Één concrete tip voor het volgende gesprek`
 

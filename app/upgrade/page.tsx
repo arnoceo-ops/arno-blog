@@ -1,5 +1,5 @@
 ﻿export const metadata = {
-  title: 'Upgrade — Royal Dutch Sales',
+  title: 'Upgrade: Royal Dutch Sales',
 }
 
 export default function UpgradePage() {
@@ -107,11 +107,11 @@ export default function UpgradePage() {
             <ul className="up-features">
               <li>Maandelijks 45 minuten met Arno</li>
               <li>Sessies via Proton Meet</li>
-              <li>Continuïteit — Arno kent jouw context</li>
+              <li>Continuïteit: Arno kent jouw context</li>
               <li>Grip op het hele jaar</li>
               <li>Één kwartaal gratis</li>
             </ul>
-            <a href="mailto:arnolive@salescanvas.app?subject=ARNOLIVE%20Jaar%20%E2%80%94%20aanmelding" className="up-cta up-cta-featured">STARTEN →</a>
+            <a href="mailto:arnolive@salescanvas.app?subject=ARNOLIVE%20Jaar%20aanmelding" className="up-cta up-cta-featured">STARTEN →</a>
           </div>
         </div>
 
@@ -119,7 +119,7 @@ export default function UpgradePage() {
           <div className="up-intro-text">
             <span className="up-intro-eyebrow">Gratis · 30 minuten</span>
             <h2 className="up-intro-title">Eerst kijken of je 't aandurft?</h2>
-            <p className="up-intro-sub">Plan een kennismakingsgesprek met Arno. Geen pitch, geen druk — gewoon kijken of het klikt en wat voor jou werkt.</p>
+            <p className="up-intro-sub">Plan een kennismakingsgesprek met Arno. Geen pitch, geen druk. Gewoon kijken of het klikt en wat voor jou werkt.</p>
           </div>
           <a href="https://calendly.com/arnodiepeveen/30min" target="_blank" rel="noopener noreferrer" className="up-intro-cta">
             PLAN EEN GESPREK →

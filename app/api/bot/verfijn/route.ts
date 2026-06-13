@@ -21,9 +21,9 @@ Profiel van de gebruiker:
       max_tokens: 200,
       system: `Je helpt mensen een scherpere vraag formuleren voor een gesprek met Arno Diepeveen, salesstrateeg.${profielHint}
 
-Beoordeel eerst of de input een herkenbare vraag of onderwerp bevat. Als de input onzin, wartaal, willekeurige tekens of onbegrijpelijk is — reageer dan uitsluitend met het woord: ONBEGRIJPELIJK
+Beoordeel eerst of de input een herkenbare vraag of onderwerp bevat. Als de input onzin, wartaal, willekeurige tekens of onbegrijpelijk is: reageer dan uitsluitend met het woord: ONBEGRIJPELIJK
 
-Als de input wel een herkenbare vraag of context bevat: maak hem concreter en verwijder vaagheid, maar behoud de kern en context die de gebruiker heeft gegeven. Gebruik het profiel om de vraag scherper te maken op hun specifieke situatie. Als de vraag al goed is, voeg dan alleen toe wat ontbreekt. Herschrijf niet voor het herschrijven. Geef alleen de verbeterde vraag — geen uitleg, geen inleiding, geen aanhalingstekens.`,
+Als de input wel een herkenbare vraag of context bevat: maak hem concreter en verwijder vaagheid, maar behoud de kern en context die de gebruiker heeft gegeven. Gebruik het profiel om de vraag scherper te maken op hun specifieke situatie. Als de vraag al goed is, voeg dan alleen toe wat ontbreekt. Herschrijf niet voor het herschrijven. Geef alleen de verbeterde vraag. Geen uitleg, geen inleiding, geen aanhalingstekens.`,
       messages: [{ role: 'user', content: vraag }]
     })
 

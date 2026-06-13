@@ -41,7 +41,7 @@ export async function GET(req: NextRequest) {
   const prompt = `Je bent Arno Diepeveen. Analyseer de onderstaande gesprekken en analyses van ArnoBot-gebruikers en identificeer de meest voorkomende patronen, struggles en thema's.
 
 Genereer op basis hiervan 12 nieuwe voorgeformuleerde vragen per categorie. De vragen moeten:
-- Concreet zijn, direct, in Arno's stem — geen vage open deuren
+- Concreet zijn, direct, in Arno's stem. Geen vage open deuren.
 - Gebaseerd op echte patronen uit de data
 - In het Nederlands, eerste persoon of directe aanspraakvorm
 - Geen accenten op woorden voor nadruk
@@ -54,9 +54,9 @@ Geef de output als JSON in dit exacte formaat:
 }
 
 Categorie-uitleg:
-- strategisch: voor CEO/DGA en VP of Sales — strategie, groei, marktpositie, commercieel model
-- organisatorisch: voor Sales Manager/Director — team, recruitment, coaching, performance
-- operationeel: voor AE/AM/Inside Sales — deals, pipeline, bezwaren, afsluiten, klantgesprekken
+- strategisch: voor CEO/DGA en VP of Sales. Strategie, groei, marktpositie, commercieel model.
+- organisatorisch: voor Sales Manager/Director. Team, recruitment, coaching, performance.
+- operationeel: voor AE/AM/Inside Sales. Deals, pipeline, bezwaren, afsluiten, klantgesprekken.
 
 GESPREKKEN (${(sessions ?? []).length} stuks):
 ${sessiesText}

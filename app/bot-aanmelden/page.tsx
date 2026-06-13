@@ -100,7 +100,7 @@ export default function BotAanmeldenPage() {
               </h1>
               <div style={{ borderLeft: '4px solid #f59e0b', paddingLeft: 20, marginBottom: 40 }}>
                 <p style={{ fontSize: 15, fontWeight: 700, lineHeight: '30px', color: '#9ca3af' }}>
-                  40 jaar saleskennis van Arno Diepeveen — direct, ongefilterd, afgestemd op jouw situatie. Na je trial geef je per e-mail aan of je doorgaat.
+                  40 jaar saleskennis van Arno Diepeveen. Direct, ongefilterd, afgestemd op jouw situatie. Na je trial geef je per e-mail aan of je doorgaat.
                 </p>
               </div>
 

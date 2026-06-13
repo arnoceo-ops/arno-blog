@@ -145,7 +145,7 @@ export default function GeschiedenisPage() {
       }
       setSelected(new Set())
     } catch {
-      alert('Verwijderen mislukt — probeer opnieuw.')
+      alert('Verwijderen mislukt. Probeer opnieuw.')
     } finally {
       setDeleting(false)
     }
@@ -666,7 +666,7 @@ export default function GeschiedenisPage() {
             )}
             {isDuplicateAnalyse && (
               <p style={{ color: '#6b7280', fontSize: 12, letterSpacing: 2, fontFamily: "'Space Mono', monospace", marginBottom: 28 }}>
-                Deze combinatie is al eerder geanalyseerd — zie hieronder.
+                Deze combinatie is al eerder geanalyseerd. Zie hieronder.
               </p>
             )}
 
