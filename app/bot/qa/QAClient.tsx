@@ -48,7 +48,7 @@ const FAQ_GROUPS = [
       },
       {
         q: 'Voor wie is Sparren beschikbaar?',
-        a: 'Sparren is beschikbaar voor alle rollen: verkopers, solopreneurs, salesmanagers en CEO\'s. Elke rol heeft zijn eigen set tegenstanders, afgestemd op de gesprekken die jij in de praktijk voert.',
+        a: 'Sparren is beschikbaar voor alle rollen: verkopers, solopreneurs, salesmanagers en CEO\'s. Elke rol heeft zijn eigen set uitdagers, afgestemd op de gesprekken die jij in de praktijk voert.',
       },
       {
         q: 'Wat betekent de weerstandsinstelling?',
