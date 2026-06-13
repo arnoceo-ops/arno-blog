@@ -40,6 +40,27 @@ const FAQ_GROUPS = [
     ],
   },
   {
+    label: 'SPARREN',
+    items: [
+      {
+        q: 'Wat is het verschil tussen Coaching en Sparren?',
+        a: 'Bij Coaching beschrijf jij een situatie en geeft ArnoBot advies. Bij Sparren speelt ArnoBot de tegenstander — een prospect, je CEO, een underperformer. Jij oefent het gesprek live. Coaching helpt je nadenken. Sparren helpt je presteren als het erop aankomt.',
+      },
+      {
+        q: 'Voor wie is Sparren beschikbaar?',
+        a: 'Sparren is beschikbaar voor alle rollen: verkopers, solopreneurs, salesmanagers en CEO\'s. Elke rol heeft zijn eigen set tegenstanders, afgestemd op de gesprekken die jij in de praktijk voert.',
+      },
+      {
+        q: 'Wat betekent de weerstandsinstelling?',
+        a: 'Licht: de ander is professioneel kritisch maar beweegt mee als je argumenten kloppen. Stevig: harde vragen, geen cadeau. Zwaar: sceptisch, onderbreekt bij vaagheden, geeft vrijwel nooit toe zonder bewijs. Begin met Stevig als je niet weet waar je staat.',
+      },
+      {
+        q: 'Wat gebeurt er na een sparring-sessie?',
+        a: 'ArnoBot geeft een debrief: wat ging goed, het kritieke moment waarop je de controle verloor of het momentum brak, een herkenbaar patroon uit je eerdere coaching, en één concrete tip voor het volgende gesprek.',
+      },
+    ],
+  },
+  {
     label: 'PRIVACY',
     items: [
       {
