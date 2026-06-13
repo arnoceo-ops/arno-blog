@@ -148,12 +148,13 @@ export default function QAClient({ isOnboarding }: { isOnboarding: boolean }) {
           </p>
 
           {/* Video */}
-          <div style={{
-            width: '100%', aspectRatio: '16/9', background: '#1f2937',
-            border: '1px solid #374151', display: 'flex', alignItems: 'center',
-            justifyContent: 'center', marginBottom: 64, borderRadius: 4,
-          }}>
-            <p style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 20, letterSpacing: 4, color: '#374151' }}>VIDEO KOMT BINNENKORT</p>
+          <div style={{ position: 'relative', paddingBottom: '54.375%', height: 0, marginBottom: 64 }}>
+            <iframe
+              src="https://www.loom.com/embed/0ac8f70256fa4ecb8d49bc111c897050"
+              frameBorder={0}
+              allowFullScreen
+              style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%' }}
+            />
           </div>
 
           {/* FAQ */}
