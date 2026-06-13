@@ -1255,7 +1255,7 @@ export default function SparClient({ userId, profiel, tier, taglineTitle, taglin
                 </div>
                 <div>
                   <p style={{ fontFamily: "'Space Mono', monospace", fontWeight: 400, fontSize: 13, letterSpacing: 4, color: '#f59e0b', marginBottom: 12 }}>
-                    {sparPersona === 'anders' ? 'BESCHRIJF DE ROL' : 'SITUATIE (OPTIONEEL)'}
+                    {sparPersona === 'anders' ? 'SITUATIESCHETS' : 'SITUATIE (OPTIONEEL)'}
                   </p>
                   <textarea
                     value={sparContext}
