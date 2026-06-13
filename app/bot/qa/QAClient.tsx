@@ -148,9 +148,9 @@ export default function QAClient({ isOnboarding }: { isOnboarding: boolean }) {
           </p>
 
           {/* Video */}
-          <div style={{ position: 'relative', paddingBottom: '54.375%', height: 0, marginBottom: 64 }}>
+          <div style={{ position: 'relative', paddingBottom: '56.25%', height: 0, marginBottom: 64 }}>
             <iframe
-              src="https://www.loom.com/embed/0ac8f70256fa4ecb8d49bc111c897050"
+              src="https://www.loom.com/embed/0ac8f70256fa4ecb8d49bc111c897050?hide_owner=true&hide_share=true&hide_title=true&hideEmbedTopBar=true"
               frameBorder={0}
               allowFullScreen
               style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%' }}
