@@ -56,9 +56,10 @@ const STRATEGISCH_ROLLEN = ['VP of Sales', 'CEO/DGA']
 const ORGANISATORISCH_ROLLEN = ['Sales Manager/Director']
 const SALES_ONLY_ROLLEN = ['AE Hunter', 'AM Farmer', 'Key AM', 'Inside Sales']
 
-const VERKOPER_ROLLEN_SPAR = ['AE Hunter', 'AM Farmer', 'Key AM', 'Inside Sales', 'Solopreneur']
+const VERKOPER_ROLLEN_SPAR = ['AE Hunter', 'AM Farmer', 'Key AM', 'Inside Sales']
 const SALESBAAS_ROLLEN_SPAR = ['Sales Director', 'VP of Sales']
 const EINDBAAS_ROLLEN_SPAR = ['CEO/DGA']
+const SOLOPRENEUR_ROLLEN_SPAR = ['Solopreneur']
 
 const PERSONAS: Record<string, { key: string; label: string }[]> = {
   verkoper: [
@@ -80,6 +81,13 @@ const PERSONAS: Record<string, { key: string; label: string }[]> = {
     { key: 'grote_klant', label: 'Grote klant' },
     { key: 'partner', label: 'Partner' },
     { key: 'mt_lid', label: 'MT-lid' },
+    { key: 'anders', label: 'Anders' },
+  ],
+  solopreneur: [
+    { key: 'prospect', label: 'Prospect' },
+    { key: 'te_duur', label: 'Te Duur' },
+    { key: 'grote_klant', label: 'Grote Klant' },
+    { key: 'oud_klant', label: 'Oud Klant' },
     { key: 'anders', label: 'Anders' },
   ],
 }
@@ -155,7 +163,8 @@ export default function SparClient({ userId, profiel, tier, taglineTitle, taglin
   const isSalesOnlyProfiel = SALES_ONLY_ROLLEN.includes((profiel?.rol as string) ?? '')
   const rolCategorie = VERKOPER_ROLLEN_SPAR.includes((profiel?.rol as string) ?? '') ? 'verkoper' :
     SALESBAAS_ROLLEN_SPAR.includes((profiel?.rol as string) ?? '') ? 'salesbaas' :
-    EINDBAAS_ROLLEN_SPAR.includes((profiel?.rol as string) ?? '') ? 'eindbaas' : null
+    EINDBAAS_ROLLEN_SPAR.includes((profiel?.rol as string) ?? '') ? 'eindbaas' :
+    SOLOPRENEUR_ROLLEN_SPAR.includes((profiel?.rol as string) ?? '') ? 'solopreneur' : null
   const [openerModus, setOpenerModus] = useState<'strategisch' | 'organisatorisch' | 'sales'>(
     isStrategischProfiel ? 'strategisch' : isOrganisatorischProfiel ? 'organisatorisch' : 'sales'
   )

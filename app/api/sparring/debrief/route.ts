@@ -12,6 +12,7 @@ const supabase = createClient(
 const PERSONA_LABELS: Record<string, Record<string, string>> = {
   verkoper: { dga: 'DGA', cfo: 'CFO', inkoopmanager: 'Inkoopmanager', sales_director: 'Sales Director', anders: 'Gesprekspartner' },
   salesbaas: { underperformer: 'Underperformer', marketing: 'Marketing Director', ceo: 'CEO', grote_klant: 'Grote Klant', anders: 'Gesprekspartner' },
+  solopreneur: { prospect: 'Prospect', te_duur: 'Opdrachtgever (prijsbezwaar)', grote_klant: 'Grote klant', oud_klant: 'Oud-klant', anders: 'Gesprekspartner' },
   eindbaas: { investeerder: 'Investeerder', grote_klant: 'Grote klant', partner: 'Potentiële partner', mt_lid: 'MT-lid', anders: 'Gesprekspartner' },
 }
 
