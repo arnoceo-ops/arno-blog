@@ -1262,7 +1262,7 @@ export default function SparClient({ userId, profiel, tier, taglineTitle, taglin
                     onChange={e => setSparContext(e.target.value)}
                     onFocus={e => { e.currentTarget.style.borderColor = '#f59e0b' }}
                     onBlur={e => { e.currentTarget.style.borderColor = '#374151' }}
-                    placeholder={sparPersona === 'anders' ? 'Beschrijf wie ik speel — naam, functie, houding.' : 'Wat is de context van het gesprek?'}
+                    placeholder={sparPersona === 'anders' ? 'Beschrijf mijn rol en de context van ons gesprek.' : 'Wat is de context van het gesprek?'}
                     rows={2}
                     className="spar-context-textarea"
                     style={{ width: '100%', background: '#1f2937', border: `1.5px solid ${sparPersona === 'anders' && !sparContext.trim() ? '#f59e0b' : '#374151'}`, color: '#f1f5f9', fontFamily: "'Space Mono', monospace", fontSize: 15, fontWeight: 400, padding: '12px 16px', resize: 'none', outline: 'none', borderRadius: 4, caretColor: '#f59e0b' }}
