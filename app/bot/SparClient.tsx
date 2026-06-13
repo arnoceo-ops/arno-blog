@@ -1234,7 +1234,7 @@ export default function SparClient({ userId, profiel, tier, taglineTitle, taglin
             {sparModus === 'sparren' && (
               <div style={{ width: '100%', maxWidth: 812, display: 'flex', flexDirection: 'column', gap: 20, paddingBottom: 24 }}>
                 <div>
-                  <p style={{ fontFamily: "'Space Mono', monospace", fontWeight: 700, fontSize: 13, letterSpacing: 4, color: '#f59e0b', marginBottom: 12 }}>WAT IS MIJN ROL</p>
+                  <p style={{ fontFamily: "'Space Mono', monospace", fontWeight: 400, fontSize: 13, letterSpacing: 4, color: '#f59e0b', marginBottom: 12 }}>WAT IS MIJN ROL</p>
                   <div style={{ display: 'grid', gridTemplateColumns: `repeat(${PERSONAS[rolCategorie].length}, 1fr)`, gap: 8 }}>
                     {PERSONAS[rolCategorie].map(p => (
                       <button key={p.key} onClick={() => setSparPersona(p.key)} style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 18, letterSpacing: 3, padding: '12px 20px', borderRadius: 999, background: sparPersona === p.key ? '#f59e0b' : 'none', color: sparPersona === p.key ? '#111827' : '#9ca3af', border: sparPersona === p.key ? 'none' : '1px solid #374151', cursor: 'pointer', transition: 'all 0.15s', textAlign: 'center' }}>
@@ -1244,7 +1244,7 @@ export default function SparClient({ userId, profiel, tier, taglineTitle, taglin
                   </div>
                 </div>
                 <div>
-                  <p style={{ fontFamily: "'Space Mono', monospace", fontWeight: 700, fontSize: 13, letterSpacing: 4, color: '#f59e0b', marginBottom: 12 }}>WEERSTAND</p>
+                  <p style={{ fontFamily: "'Space Mono', monospace", fontWeight: 400, fontSize: 13, letterSpacing: 4, color: '#f59e0b', marginBottom: 12 }}>WEERSTAND</p>
                   <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 8 }}>
                     {(['licht', 'stevig', 'zwaar'] as const).map(w => (
                       <button key={w} onClick={() => setSparWeerstand(w)} style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 18, letterSpacing: 3, padding: '12px 20px', borderRadius: 999, background: sparWeerstand === w ? '#f59e0b' : 'none', color: sparWeerstand === w ? '#111827' : '#9ca3af', border: sparWeerstand === w ? 'none' : '1px solid #374151', cursor: 'pointer', transition: 'all 0.15s', textAlign: 'center' }}>
@@ -1254,7 +1254,7 @@ export default function SparClient({ userId, profiel, tier, taglineTitle, taglin
                   </div>
                 </div>
                 <div>
-                  <p style={{ fontFamily: "'Space Mono', monospace", fontWeight: 700, fontSize: 13, letterSpacing: 4, color: '#f59e0b', marginBottom: 12 }}>
+                  <p style={{ fontFamily: "'Space Mono', monospace", fontWeight: 400, fontSize: 13, letterSpacing: 4, color: '#f59e0b', marginBottom: 12 }}>
                     {sparPersona === 'anders' ? 'BESCHRIJF DE ROL' : 'SITUATIE (OPTIONEEL)'}
                   </p>
                   <textarea
@@ -1262,7 +1262,7 @@ export default function SparClient({ userId, profiel, tier, taglineTitle, taglin
                     onChange={e => setSparContext(e.target.value)}
                     onFocus={e => { e.currentTarget.style.borderColor = '#f59e0b' }}
                     onBlur={e => { e.currentTarget.style.borderColor = '#374151' }}
-                    placeholder={sparPersona === 'anders' ? 'Beschrijf wie ik speel — naam, functie, houding.' : ''}
+                    placeholder={sparPersona === 'anders' ? 'Beschrijf wie ik speel — naam, functie, houding.' : 'Wat is de context van het gesprek?'}
                     rows={2}
                     className="spar-context-textarea"
                     style={{ width: '100%', background: '#1f2937', border: `1.5px solid ${sparPersona === 'anders' && !sparContext.trim() ? '#f59e0b' : '#374151'}`, color: '#f1f5f9', fontFamily: "'Space Mono', monospace", fontSize: 15, fontWeight: 400, padding: '12px 16px', resize: 'none', outline: 'none', borderRadius: 4, caretColor: '#f59e0b' }}
