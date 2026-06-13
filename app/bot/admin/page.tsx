@@ -1,4 +1,4 @@
-﻿import { redirect } from 'next/navigation'
+import { redirect } from 'next/navigation'
 import { cookies } from 'next/headers'
 import { createClient } from '@supabase/supabase-js'
 import DownloadPdfButton from './DownloadPdfButton'
@@ -21,6 +21,11 @@ type LogRow = {
   answer: string
   ip: string
   session_id: string
+  user_id?: string
+}
+
+function fmtDate(iso: string): string {
+  return iso.slice(8, 10) + '/' + iso.slice(5, 7) + '/' + iso.slice(0, 4)
 }
 
 export default async function ArnoBotAdminPage({
@@ -53,6 +58,15 @@ export default async function ArnoBotAdminPage({
 
   const rows: LogRow[] = data || []
 
+  const userIds = [...new Set(rows.map(r => r.user_id).filter(Boolean) as string[])]
+  const { data: gebruikers } = userIds.length > 0
+    ? await supabase.from('approved_users').select('user_id, voornaam, achternaam').in('user_id', userIds)
+    : { data: [] }
+  const naamMap: Record<string, string> = {}
+  for (const u of gebruikers ?? []) {
+    naamMap[u.user_id] = [u.voornaam, u.achternaam].filter(Boolean).join(' ')
+  }
+
   const sessions: Record<string, LogRow[]> = {}
   for (const row of rows) {
     const key = row.session_id || row.ip || 'onbekend'
@@ -66,14 +80,14 @@ export default async function ArnoBotAdminPage({
   if (sort === 'count_desc') sessionList.sort((a, b) => b[1].length - a[1].length)
   if (sort === 'count_asc')  sessionList.sort((a, b) => a[1].length - b[1].length)
 
-  const dateRange = from === to ? from : `${from} t/m ${to}`
+  const dateRange = from === to ? fmtDate(from) : `${fmtDate(from)} t/m ${fmtDate(to)}`
 
   return (
     <main style={{ background: '#111827', minHeight: '100vh', color: '#f1f5f9', fontFamily: 'sans-serif' }}>
       <nav style={{ background: '#0d0d0d', borderBottom: '1px solid #1e293b', height: 56, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
         <div style={{ display: 'flex', gap: '4px' }}>
-          <a href="/bot/admin" style={navLinkStyle(true)}>RDS</a>
-          <a href="/bot/admin/widget" style={navLinkStyle(false)}>WIDGET</a>
+          <a href="/bot/admin" style={navLinkStyle(true)}>APP</a>
+          <a href="/bot/admin/widget" style={navLinkStyle(false)}>BLOG</a>
           <a href="/bot/admin/gebruikers" style={navLinkStyle(false)}>USERS</a>
           <a href="/bot/admin/evaluaties" style={navLinkStyle(false)}>EVALUATIES</a>
         </div>
@@ -81,7 +95,7 @@ export default async function ArnoBotAdminPage({
     <div style={{ maxWidth: '800px', margin: '0 auto', padding: '48px 24px' }}>
 
       <div style={{ marginBottom: '40px' }}>
-        <p style={{ color: '#f59e0b', fontSize: '16px', letterSpacing: '4px', marginBottom: '8px' }}>ARNOBOT — ROYAL DUTCH SALES</p>
+        <p style={{ color: '#f59e0b', fontSize: '16px', letterSpacing: '4px', marginBottom: '8px' }}>ARNOBOT — ARNO.BOT APP</p>
         <h1 style={{ fontSize: '48px', fontWeight: 700, margin: '0 0 32px 0', letterSpacing: '-1px' }}>Gesprekken</h1>
 
         <form method="GET" style={{ display: 'flex', gap: '12px', alignItems: 'center', flexWrap: 'wrap' }}>
@@ -124,29 +138,39 @@ export default async function ArnoBotAdminPage({
           <p style={{ opacity: 0.4, fontSize: '16px', marginBottom: '32px' }}>
             {sessionList.length} sessie{sessionList.length !== 1 ? 's' : ''} — {rows.length} berichten
           </p>
-          {sessionList.map(([sessionId, messages], idx) => (
-            <div key={sessionId} style={{ marginBottom: '56px', borderTop: '2px solid #f59e0b', paddingTop: '20px' }}>
-              <p style={{ fontSize: '16px', letterSpacing: '2px', color: '#f59e0b', marginBottom: '4px', opacity: 0.7 }}>
-                SESSIE {idx + 1} — {messages[0].ip}
-              </p>
-              <p style={{ fontSize: '16px', opacity: 0.3, marginBottom: '28px' }}>
-                {new Date(messages[0].created_at).toLocaleTimeString('nl-NL')} – {new Date(messages[messages.length - 1].created_at).toLocaleTimeString('nl-NL')}
-              </p>
-              {messages.map((msg) => (
-                <div key={msg.id} style={{ marginBottom: '28px' }}>
-                  <p style={{ fontWeight: 700, fontSize: '16px', marginBottom: '8px', color: '#f1f5f9' }}>
-                    {msg.question}
+          {sessionList.map(([sessionId, messages], idx) => {
+            const userId = messages[0].user_id
+            const naam = userId ? naamMap[userId] : undefined
+            const sessionDate = fmtDate(messages[0].created_at.slice(0, 10))
+            return (
+              <div key={sessionId} style={{ marginBottom: '56px', borderTop: '2px solid #f59e0b', paddingTop: '20px' }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', marginBottom: '4px' }}>
+                  <p style={{ fontSize: '16px', letterSpacing: '2px', color: '#f59e0b', opacity: 0.7, margin: 0 }}>
+                    SESSIE {idx + 1} — {messages[0].ip}
                   </p>
-                  <p style={{ fontSize: '16px', lineHeight: 1.8, color: '#9ca3af', whiteSpace: 'pre-wrap' }}>
-                    {msg.answer}
-                  </p>
-                  <p style={{ fontSize: '11px', opacity: 0.25, marginTop: '6px' }}>
-                    {new Date(msg.created_at).toLocaleTimeString('nl-NL')}
-                  </p>
+                  {naam && (
+                    <p style={{ fontSize: '15px', color: '#f1f5f9', margin: 0, fontWeight: 700 }}>{naam}</p>
+                  )}
                 </div>
-              ))}
-            </div>
-          ))}
+                <p style={{ fontSize: '16px', opacity: 0.3, marginBottom: '28px' }}>
+                  {sessionDate} · {new Date(messages[0].created_at).toLocaleTimeString('nl-NL')} – {new Date(messages[messages.length - 1].created_at).toLocaleTimeString('nl-NL')}
+                </p>
+                {messages.map((msg) => (
+                  <div key={msg.id} style={{ marginBottom: '28px' }}>
+                    <p style={{ fontWeight: 700, fontSize: '16px', marginBottom: '8px', color: '#f1f5f9' }}>
+                      {msg.question}
+                    </p>
+                    <p style={{ fontSize: '16px', lineHeight: 1.8, color: '#9ca3af', whiteSpace: 'pre-wrap' }}>
+                      {msg.answer}
+                    </p>
+                    <p style={{ fontSize: '11px', opacity: 0.25, marginTop: '6px' }}>
+                      {new Date(msg.created_at).toLocaleTimeString('nl-NL')}
+                    </p>
+                  </div>
+                ))}
+              </div>
+            )
+          })}
         </div>
       )}
     </div>

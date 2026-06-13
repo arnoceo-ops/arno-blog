@@ -153,8 +153,8 @@ export default async function GebruikersPage({
 
       <nav style={{ background: '#0d0d0d', borderBottom: '1px solid #1e293b', height: 56, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
         <div style={{ display: 'flex', gap: '4px' }}>
-          <a href="/bot/admin" style={navLinkStyle(false)}>RDS</a>
-          <a href="/bot/admin/widget" style={navLinkStyle(false)}>WIDGET</a>
+          <a href="/bot/admin" style={navLinkStyle(false)}>APP</a>
+          <a href="/bot/admin/widget" style={navLinkStyle(false)}>BLOG</a>
           <a href="/bot/admin/gebruikers" style={navLinkStyle(true)}>USERS</a>
           <a href="/bot/admin/evaluaties" style={navLinkStyle(false)}>EVALUATIES</a>
         </div>
