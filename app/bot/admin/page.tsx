@@ -28,6 +28,14 @@ function fmtDate(iso: string): string {
   return iso.slice(8, 10) + '/' + iso.slice(5, 7) + '/' + iso.slice(0, 4)
 }
 
+function parseDate(input: string): string {
+  if (/^\d{2}\/\d{2}\/\d{4}$/.test(input)) {
+    const [d, m, y] = input.split('/')
+    return `${y}-${m}-${d}`
+  }
+  return input
+}
+
 export default async function ArnoBotAdminPage({
   searchParams,
 }: {
@@ -40,8 +48,8 @@ export default async function ArnoBotAdminPage({
   const params = await searchParams
   const today = new Date().toISOString().slice(0, 10)
   const thirtyDaysAgo = new Date(Date.now() - 30 * 24 * 60 * 60 * 1000).toISOString().slice(0, 10)
-  const from = params.from || thirtyDaysAgo
-  const to = params.to || today
+  const from = parseDate(params.from || '') || thirtyDaysAgo
+  const to = parseDate(params.to || '') || today
   const sort = params.sort || 'date_desc'
 
   const supabase = createClient(
@@ -101,13 +109,13 @@ export default async function ArnoBotAdminPage({
         <form method="GET" style={{ display: 'flex', gap: '12px', alignItems: 'center', flexWrap: 'wrap' }}>
           <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
             <label style={{ fontSize: '16px', letterSpacing: '2px', color: '#f59e0b', opacity: 0.7 }}>VAN</label>
-            <input type="date" name="from" defaultValue={from}
-              style={{ background: '#1f2937', border: '1px solid #222', color: '#f1f5f9', padding: '10px 14px', fontSize: '16px' }} />
+            <input type="text" name="from" defaultValue={fmtDate(from)} placeholder="dd/mm/yyyy"
+              style={{ background: '#1f2937', border: '1px solid #222', color: '#f1f5f9', padding: '10px 14px', fontSize: '16px', width: '140px' }} />
           </div>
           <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
             <label style={{ fontSize: '16px', letterSpacing: '2px', color: '#f59e0b', opacity: 0.7 }}>TOT EN MET</label>
-            <input type="date" name="to" defaultValue={to}
-              style={{ background: '#1f2937', border: '1px solid #222', color: '#f1f5f9', padding: '10px 14px', fontSize: '16px' }} />
+            <input type="text" name="to" defaultValue={fmtDate(to)} placeholder="dd/mm/yyyy"
+              style={{ background: '#1f2937', border: '1px solid #222', color: '#f1f5f9', padding: '10px 14px', fontSize: '16px', width: '140px' }} />
           </div>
           <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
             <label style={{ fontSize: '16px', letterSpacing: '2px', color: '#f59e0b', opacity: 0.7 }}>SORTERING</label>
