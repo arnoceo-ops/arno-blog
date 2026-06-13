@@ -766,6 +766,7 @@ export default function SparClient({ userId, profiel, tier, taglineTitle, taglin
           field-sizing: content;
         }
         .spar-textarea::placeholder { color: #4b5563; font-style: normal; font-size: 15px; font-weight: 400; }
+        .spar-context-textarea::placeholder { color: #4b5563; }
         .spar-textarea:focus { background: #1f2937; }
         .spar-buttons {
           display: flex; align-self: flex-end;
@@ -1221,11 +1222,11 @@ export default function SparClient({ userId, profiel, tier, taglineTitle, taglin
             <div style={{ display: 'flex', gap: 8, marginBottom: sparModus === 'sparren' ? 24 : 0 }}>
               <button
                 onClick={() => setSparModus('coaching')}
-                style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 18, letterSpacing: 3, padding: '12px 36px', borderRadius: 999, background: sparModus === 'coaching' ? '#f59e0b' : '#1f2937', color: sparModus === 'coaching' ? '#111827' : '#9ca3af', border: sparModus === 'coaching' ? 'none' : '1px solid #374151', cursor: 'pointer', transition: 'all 0.15s' }}
+                style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 18, letterSpacing: 3, padding: sparModus === 'coaching' ? '12px 36px' : '12px 32px', borderRadius: 999, background: sparModus === 'coaching' ? '#f59e0b' : 'none', color: sparModus === 'coaching' ? '#111827' : '#9ca3af', border: sparModus === 'coaching' ? 'none' : '1px solid #374151', cursor: 'pointer', transition: 'all 0.15s' }}
               >COACHING</button>
               <button
                 onClick={() => { setSparModus('sparren'); if (!sparPersona) setSparPersona(PERSONAS[rolCategorie][0].key) }}
-                style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 18, letterSpacing: 3, padding: '12px 36px', borderRadius: 999, background: sparModus === 'sparren' ? '#f59e0b' : '#1f2937', color: sparModus === 'sparren' ? '#111827' : '#9ca3af', border: sparModus === 'sparren' ? 'none' : '1px solid #374151', cursor: 'pointer', transition: 'all 0.15s' }}
+                style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 18, letterSpacing: 3, padding: sparModus === 'sparren' ? '12px 36px' : '12px 32px', borderRadius: 999, background: sparModus === 'sparren' ? '#f59e0b' : 'none', color: sparModus === 'sparren' ? '#111827' : '#9ca3af', border: sparModus === 'sparren' ? 'none' : '1px solid #374151', cursor: 'pointer', transition: 'all 0.15s' }}
               >SPARREN</button>
             </div>
 
@@ -1235,7 +1236,7 @@ export default function SparClient({ userId, profiel, tier, taglineTitle, taglin
                   <p style={{ fontFamily: "'Space Mono', monospace", fontWeight: 700, fontSize: 13, letterSpacing: 4, color: '#f59e0b', marginBottom: 12 }}>WIE SPEEL IK</p>
                   <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
                     {PERSONAS[rolCategorie].map(p => (
-                      <button key={p.key} onClick={() => setSparPersona(p.key)} style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 16, letterSpacing: 2, padding: '8px 20px', borderRadius: 999, background: sparPersona === p.key ? '#f59e0b' : '#1f2937', color: sparPersona === p.key ? '#111827' : '#9ca3af', border: sparPersona === p.key ? 'none' : '1px solid #374151', cursor: 'pointer', transition: 'all 0.15s' }}>
+                      <button key={p.key} onClick={() => setSparPersona(p.key)} style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 18, letterSpacing: 3, padding: sparPersona === p.key ? '12px 36px' : '12px 32px', borderRadius: 999, background: sparPersona === p.key ? '#f59e0b' : 'none', color: sparPersona === p.key ? '#111827' : '#9ca3af', border: sparPersona === p.key ? 'none' : '1px solid #374151', cursor: 'pointer', transition: 'all 0.15s' }}>
                         {p.label}
                       </button>
                     ))}
@@ -1245,7 +1246,7 @@ export default function SparClient({ userId, profiel, tier, taglineTitle, taglin
                   <p style={{ fontFamily: "'Space Mono', monospace", fontWeight: 700, fontSize: 13, letterSpacing: 4, color: '#f59e0b', marginBottom: 12 }}>WEERSTAND</p>
                   <div style={{ display: 'flex', gap: 8 }}>
                     {(['licht', 'stevig', 'zwaar'] as const).map(w => (
-                      <button key={w} onClick={() => setSparWeerstand(w)} style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 16, letterSpacing: 2, padding: '8px 20px', borderRadius: 999, background: sparWeerstand === w ? '#f59e0b' : '#1f2937', color: sparWeerstand === w ? '#111827' : '#9ca3af', border: sparWeerstand === w ? 'none' : '1px solid #374151', cursor: 'pointer', transition: 'all 0.15s' }}>
+                      <button key={w} onClick={() => setSparWeerstand(w)} style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 18, letterSpacing: 3, padding: sparWeerstand === w ? '12px 36px' : '12px 32px', borderRadius: 999, background: sparWeerstand === w ? '#f59e0b' : 'none', color: sparWeerstand === w ? '#111827' : '#9ca3af', border: sparWeerstand === w ? 'none' : '1px solid #374151', cursor: 'pointer', transition: 'all 0.15s' }}>
                         {w.charAt(0).toUpperCase() + w.slice(1)}
                       </button>
                     ))}
@@ -1256,9 +1257,12 @@ export default function SparClient({ userId, profiel, tier, taglineTitle, taglin
                   <textarea
                     value={sparContext}
                     onChange={e => setSparContext(e.target.value)}
+                    onFocus={e => { e.currentTarget.style.borderColor = '#f59e0b' }}
+                    onBlur={e => { e.currentTarget.style.borderColor = '#374151' }}
                     placeholder="Wat verkoop je? Wat is de context van het gesprek?"
                     rows={2}
-                    style={{ width: '100%', background: '#1f2937', border: '1.5px solid #374151', color: '#f1f5f9', fontFamily: "'Space Mono', monospace", fontSize: 15, fontWeight: 400, padding: '12px 16px', resize: 'none', outline: 'none', borderRadius: 4 }}
+                    className="spar-context-textarea"
+                    style={{ width: '100%', background: '#1f2937', border: '1.5px solid #374151', color: '#f1f5f9', fontFamily: "'Space Mono', monospace", fontSize: 15, fontWeight: 400, padding: '12px 16px', resize: 'none', outline: 'none', borderRadius: 4, caretColor: '#f59e0b' }}
                   />
                 </div>
               </div>
