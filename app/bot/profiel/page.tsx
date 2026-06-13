@@ -150,7 +150,7 @@ export default function BotProfielPage() {
       })
       if (!res.ok) throw new Error('Opslaan mislukt')
       setIsDirty(false)
-      router.push('/bot')
+      window.location.href = '/bot'
     } catch {
       setError('Er ging iets mis. Probeer het opnieuw.')
       setSaving(false)
