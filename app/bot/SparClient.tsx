@@ -66,7 +66,7 @@ const PERSONAS: Record<string, { key: string; label: string }[]> = {
     { key: 'cfo', label: 'CFO' },
     { key: 'inkoopmanager', label: 'Inkoopmanager' },
     { key: 'sales_director', label: 'Sales Director' },
-    { key: 'eindgebruiker', label: 'Eindgebruiker' },
+    { key: 'anders', label: 'Anders' },
   ],
   salesbaas: [
     { key: 'underperformer', label: 'Underperformer' },
@@ -1232,7 +1232,7 @@ export default function SparClient({ userId, profiel, tier, taglineTitle, taglin
             </div>
 
             {sparModus === 'sparren' && (
-              <div style={{ width: '100%', maxWidth: 812, display: 'flex', flexDirection: 'column', gap: 20, paddingBottom: 24 }}>
+              <div style={{ width: '100%', maxWidth: 812, display: 'flex', flexDirection: 'column', gap: 32, paddingBottom: 24 }}>
                 <div>
                   <p style={{ fontFamily: "'Space Mono', monospace", fontWeight: 400, fontSize: 13, letterSpacing: 4, color: '#f59e0b', marginBottom: 12 }}>WAT IS MIJN ROL</p>
                   <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 8, marginBottom: PERSONAS[rolCategorie].some(p => p.key === 'anders') ? 8 : 0 }}>

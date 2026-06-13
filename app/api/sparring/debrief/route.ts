@@ -10,7 +10,7 @@ const supabase = createClient(
 )
 
 const PERSONA_LABELS: Record<string, Record<string, string>> = {
-  verkoper: { dga: 'DGA', cfo: 'CFO', inkoopmanager: 'Inkoopmanager', sales_director: 'Sales Director', eindgebruiker: 'Eindgebruiker' },
+  verkoper: { dga: 'DGA', cfo: 'CFO', inkoopmanager: 'Inkoopmanager', sales_director: 'Sales Director', anders: 'Gesprekspartner' },
   salesbaas: { underperformer: 'Underperformer', marketing: 'Marketing Director', ceo: 'CEO', grote_klant: 'Grote Klant', anders: 'Gesprekspartner' },
   eindbaas: { investeerder: 'Investeerder', grote_klant: 'Grote klant', partner: 'Potentiële partner', aandeelhouder: 'Aandeelhouder' },
 }
