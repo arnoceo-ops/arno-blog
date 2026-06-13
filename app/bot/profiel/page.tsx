@@ -136,7 +136,14 @@ export default function BotProfielPage() {
     answers.markt.length > 0 &&
     answers.wat_verkoop_je.trim().length > 2 &&
     answers.ideale_klant.trim().length > 2 &&
-    answers.uitdaging.trim().length > 2
+    answers.uitdaging.trim().length > 2 &&
+    answers.dealgrootte.trim().length > 0 &&
+    answers.salescyclus.trim().length > 0 &&
+    answers.target_dit_jaar !== '' &&
+    answers.target_3_jaar !== '' &&
+    answers.jaren_sales !== '' &&
+    answers.jaren_functie !== '' &&
+    (!HEEFT_TEAM.includes(answers.rol) || (answers.gebruik !== '' && answers.teamgrootte !== ''))
 
   async function handleSubmit() {
     if (!allFilled) return
