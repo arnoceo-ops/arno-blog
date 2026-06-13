@@ -1,0 +1,63 @@
+import { NextRequest, NextResponse } from 'next/server'
+import { auth } from '@clerk/nextjs/server'
+import Anthropic from '@anthropic-ai/sdk'
+import { createClient } from '@supabase/supabase-js'
+
+const anthropic = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY })
+const supabase = createClient(
+  process.env.NEXT_PUBLIC_SUPABASE_URL!,
+  process.env.SUPABASE_SERVICE_ROLE_KEY!
+)
+
+const PERSONA_LABELS: Record<string, Record<string, string>> = {
+  verkoper: { dga: 'DGA', cfo: 'CFO', inkoopmanager: 'Inkoopmanager', sales_director: 'Sales Director', eindgebruiker: 'Eindgebruiker' },
+  salesbaas: { underperformer: 'Underperformer', vertreklust: 'Verkoper die wil vertrekken', boardlid: 'Boardlid', eigen_manager: 'Eigen manager' },
+  eindbaas: { investeerder: 'Investeerder', grote_klant: 'Grote klant', partner: 'Potentiële partner', aandeelhouder: 'Aandeelhouder' },
+}
+
+export async function POST(req: NextRequest) {
+  const { userId } = await auth()
+  if (!userId) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+
+  const { messages, profiel, persona, weerstand, rolCategorie } = await req.json()
+
+  const { data: coachingScores } = await supabase
+    .from('arnobot_coaching_scores')
+    .select('msa_score, notes, created_at')
+    .eq('user_id', userId)
+    .order('created_at', { ascending: false })
+    .limit(3)
+
+  const personaLabel = PERSONA_LABELS[rolCategorie]?.[persona] ?? persona
+  const transcript = (messages as { role: string; content: string }[])
+    .map(m => `${m.role === 'user' ? 'GEBRUIKER' : personaLabel.toUpperCase()}: ${m.content}`)
+    .join('\n\n')
+
+  const coachingContext = coachingScores?.length
+    ? `Recente coaching-aantekeningen van deze gebruiker:\n${coachingScores.map(s => s.notes || '').filter(Boolean).join('\n')}`
+    : ''
+
+  const prompt = `Je bent een harde maar eerlijke sales coach. Analyseer dit sparring-gesprek en schrijf een debrief.
+
+PERSONA: ${personaLabel} (weerstand: ${weerstand})
+GESPREK (${messages.length} berichten):
+${transcript}
+
+${coachingContext}
+
+Schrijf een debrief van maximaal 200 woorden. Geen inleiding. Direct de analyse.
+
+1. Wat ging goed (1-2 zinnen)
+2. Het kritieke moment — wanneer verloor de gebruiker de controle of het momentum? Citeer de exacte woorden.
+3. Eén herkenbaar patroon (gebruik coaching-context als beschikbaar, anders observeer vanuit het gesprek)
+4. Één concrete tip voor het volgende gesprek`
+
+  const response = await anthropic.messages.create({
+    model: 'claude-sonnet-4-6',
+    max_tokens: 600,
+    messages: [{ role: 'user', content: prompt }],
+  })
+
+  const debrief = response.content[0].type === 'text' ? response.content[0].text : ''
+  return NextResponse.json({ debrief })
+}

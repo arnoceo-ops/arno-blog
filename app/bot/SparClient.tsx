@@ -56,6 +56,32 @@ const STRATEGISCH_ROLLEN = ['VP of Sales', 'CEO/DGA']
 const ORGANISATORISCH_ROLLEN = ['Sales Manager/Director']
 const SALES_ONLY_ROLLEN = ['AE Hunter', 'AM Farmer', 'Key AM', 'Inside Sales']
 
+const VERKOPER_ROLLEN_SPAR = ['AE Hunter', 'AM Farmer', 'Key AM', 'Inside Sales', 'Solopreneur']
+const SALESBAAS_ROLLEN_SPAR = ['Sales Director', 'VP of Sales']
+const EINDBAAS_ROLLEN_SPAR = ['CEO/DGA']
+
+const PERSONAS: Record<string, { key: string; label: string }[]> = {
+  verkoper: [
+    { key: 'dga', label: 'DGA' },
+    { key: 'cfo', label: 'CFO' },
+    { key: 'inkoopmanager', label: 'Inkoopmanager' },
+    { key: 'sales_director', label: 'Sales Director' },
+    { key: 'eindgebruiker', label: 'Eindgebruiker' },
+  ],
+  salesbaas: [
+    { key: 'underperformer', label: 'Underperformer' },
+    { key: 'vertreklust', label: 'Wil vertrekken' },
+    { key: 'boardlid', label: 'Boardlid' },
+    { key: 'eigen_manager', label: 'Eigen manager' },
+  ],
+  eindbaas: [
+    { key: 'investeerder', label: 'Investeerder' },
+    { key: 'grote_klant', label: 'Grote klant' },
+    { key: 'partner', label: 'Partner' },
+    { key: 'aandeelhouder', label: 'Aandeelhouder' },
+  ],
+}
+
 const VRAGEN_STRATEGISCH = [
   'Mijn salesteam haalt structureel de targets niet. Waar ligt het écht aan?',
   'Wat onderscheidt een winnende salesorganisatie van een gemiddelde?',
@@ -125,6 +151,9 @@ export default function SparClient({ userId, profiel, tier, taglineTitle, taglin
   const isStrategischProfiel = STRATEGISCH_ROLLEN.includes((profiel?.rol as string) ?? '')
   const isOrganisatorischProfiel = ORGANISATORISCH_ROLLEN.includes((profiel?.rol as string) ?? '')
   const isSalesOnlyProfiel = SALES_ONLY_ROLLEN.includes((profiel?.rol as string) ?? '')
+  const rolCategorie = VERKOPER_ROLLEN_SPAR.includes((profiel?.rol as string) ?? '') ? 'verkoper' :
+    SALESBAAS_ROLLEN_SPAR.includes((profiel?.rol as string) ?? '') ? 'salesbaas' :
+    EINDBAAS_ROLLEN_SPAR.includes((profiel?.rol as string) ?? '') ? 'eindbaas' : null
   const [openerModus, setOpenerModus] = useState<'strategisch' | 'organisatorisch' | 'sales'>(
     isStrategischProfiel ? 'strategisch' : isOrganisatorischProfiel ? 'organisatorisch' : 'sales'
   )
@@ -144,6 +173,10 @@ export default function SparClient({ userId, profiel, tier, taglineTitle, taglin
   const [pendingNavDest, setPendingNavDest] = useState<string | null>(null)
   const [teamPrompt, setTeamPrompt] = useState(false)
   const [isManager, setIsManager] = useState(false)
+  const [sparModus, setSparModus] = useState<'coaching' | 'sparren'>('coaching')
+  const [sparPersona, setSparPersona] = useState('')
+  const [sparWeerstand, setSparWeerstand] = useState<'licht' | 'stevig' | 'zwaar'>('stevig')
+  const [sparContext, setSparContext] = useState('')
   const recognitionRef = useRef<any>(null)
   const audioRef = useRef<HTMLAudioElement | null>(null)
   const bottomRef = useRef<HTMLDivElement>(null)
@@ -433,7 +466,6 @@ export default function SparClient({ userId, profiel, tier, taglineTitle, taglin
 
   async function handleNieuw() {
     if (synthesisLoading) return
-    // Na synthese zonder nieuwe berichten: gewoon sluiten
     if (synthesisMessageCount > 0 && messages.length <= synthesisMessageCount) {
       reset()
       return
@@ -446,6 +478,38 @@ export default function SparClient({ userId, profiel, tier, taglineTitle, taglin
     setInput('')
     if (inputRef.current) inputRef.current.style.height = '55px'
     setSynthesisLoading(true)
+
+    if (sparModus === 'sparren') {
+      try {
+        const res = await fetch('/api/sparring/debrief', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ messages, profiel, persona: sparPersona, weerstand: sparWeerstand, rolCategorie })
+        })
+        const data = await res.json()
+        if (data.debrief) {
+          const newCount = messages.length + 1
+          setMessages(prev => [...prev, {
+            role: 'arno',
+            content: `**Debrief**\n\n${data.debrief}`,
+            hint: null
+          }])
+          setSynthesisMessageCount(newCount)
+          const newId = crypto.randomUUID()
+          sessionStorage.setItem('arnobot_session', newId)
+          setSessionId(newId)
+          setShowSluiten(true)
+        } else {
+          reset()
+        }
+      } catch {
+        reset()
+      } finally {
+        setSynthesisLoading(false)
+      }
+      return
+    }
+
     try {
       const res = await fetch('/api/bot/session-end', {
         method: 'POST',
@@ -491,39 +555,55 @@ export default function SparClient({ userId, profiel, tier, taglineTitle, taglin
     setLoading(true)
 
     try {
-      const res = await fetch('/api/chat', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ question, history, userId, profiel, sessionId })
-      })
-      const data = await res.json()
+      if (sparModus === 'sparren') {
+        const res = await fetch('/api/sparring/chat', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ message: question, history, rolCategorie, persona: sparPersona, weerstand: sparWeerstand, context: sparContext })
+        })
+        const data = await res.json()
+        const answer = data.answer || 'Er ging iets mis.'
+        setMessages(prev => [...prev, { role: 'arno', content: answer, hint: null }])
+        setHistory(prev => [
+          ...prev,
+          { role: 'user', content: question },
+          { role: 'assistant', content: answer }
+        ])
+      } else {
+        const res = await fetch('/api/chat', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ question, history, userId, profiel, sessionId })
+        })
+        const data = await res.json()
 
-      if (!res.ok) {
-        if (res.status === 429 && data.error === 'dagelijks_limiet') {
-          setBlocked(true)
-          setDagelijksTeller(25)
-          setMessages(prev => [...prev, { role: 'arno', content: 'Je dagelijkse limiet van 25 vragen is bereikt. Kom morgen terug.' }])
-        } else {
-          setMessages(prev => [...prev, { role: 'arno', content: `Fout: ${data.error || res.status}` }])
+        if (!res.ok) {
+          if (res.status === 429 && data.error === 'dagelijks_limiet') {
+            setBlocked(true)
+            setDagelijksTeller(25)
+            setMessages(prev => [...prev, { role: 'arno', content: 'Je dagelijkse limiet van 25 vragen is bereikt. Kom morgen terug.' }])
+          } else {
+            setMessages(prev => [...prev, { role: 'arno', content: `Fout: ${data.error || res.status}` }])
+          }
+          return
         }
-        return
+
+        if (data.dagelijks_gebruikt != null) setDagelijksTeller(data.dagelijks_gebruikt)
+
+        if (data.blocked) {
+          setBlocked(true)
+          setMessages(prev => [...prev, { role: 'arno', content: '', hint: 'blocked' }])
+          return
+        }
+
+        const answer = data.answer || 'Geen antwoord ontvangen.'
+        setMessages(prev => [...prev, { role: 'arno', content: answer, hint: data.hint ?? null }])
+        setHistory(prev => [
+          ...prev,
+          { role: 'user', content: question },
+          { role: 'assistant', content: answer }
+        ])
       }
-
-      if (data.dagelijks_gebruikt != null) setDagelijksTeller(data.dagelijks_gebruikt)
-
-      if (data.blocked) {
-        setBlocked(true)
-        setMessages(prev => [...prev, { role: 'arno', content: '', hint: 'blocked' }])
-        return
-      }
-
-      const answer = data.answer || 'Geen antwoord ontvangen.'
-      setMessages(prev => [...prev, { role: 'arno', content: answer, hint: data.hint ?? null }])
-      setHistory(prev => [
-        ...prev,
-        { role: 'user', content: question },
-        { role: 'assistant', content: answer }
-      ])
     } catch {
       setMessages(prev => [...prev, { role: 'arno', content: 'Er ging iets mis. Probeer opnieuw.' }])
     } finally {
@@ -1136,11 +1216,61 @@ export default function SparClient({ userId, profiel, tier, taglineTitle, taglin
           </div>
         )}
 
+        {!started && rolCategorie && (
+          <div style={{ background: '#111827', padding: '32px clamp(20px,5vw,60px) 0', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 0 }}>
+            <div style={{ display: 'flex', gap: 8, marginBottom: sparModus === 'sparren' ? 24 : 0 }}>
+              <button
+                onClick={() => setSparModus('coaching')}
+                style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 18, letterSpacing: 3, padding: '12px 36px', borderRadius: 999, background: sparModus === 'coaching' ? '#f59e0b' : '#1f2937', color: sparModus === 'coaching' ? '#111827' : '#9ca3af', border: sparModus === 'coaching' ? 'none' : '1px solid #374151', cursor: 'pointer', transition: 'all 0.15s' }}
+              >COACHING</button>
+              <button
+                onClick={() => { setSparModus('sparren'); if (!sparPersona) setSparPersona(PERSONAS[rolCategorie][0].key) }}
+                style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 18, letterSpacing: 3, padding: '12px 36px', borderRadius: 999, background: sparModus === 'sparren' ? '#f59e0b' : '#1f2937', color: sparModus === 'sparren' ? '#111827' : '#9ca3af', border: sparModus === 'sparren' ? 'none' : '1px solid #374151', cursor: 'pointer', transition: 'all 0.15s' }}
+              >SPARREN</button>
+            </div>
+
+            {sparModus === 'sparren' && (
+              <div style={{ width: '100%', maxWidth: 812, display: 'flex', flexDirection: 'column', gap: 20, paddingBottom: 24 }}>
+                <div>
+                  <p style={{ fontFamily: "'Space Mono', monospace", fontWeight: 700, fontSize: 13, letterSpacing: 4, color: '#f59e0b', marginBottom: 12 }}>WIE SPEEL IK</p>
+                  <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
+                    {PERSONAS[rolCategorie].map(p => (
+                      <button key={p.key} onClick={() => setSparPersona(p.key)} style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 16, letterSpacing: 2, padding: '8px 20px', borderRadius: 999, background: sparPersona === p.key ? '#f59e0b' : '#1f2937', color: sparPersona === p.key ? '#111827' : '#9ca3af', border: sparPersona === p.key ? 'none' : '1px solid #374151', cursor: 'pointer', transition: 'all 0.15s' }}>
+                        {p.label}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+                <div>
+                  <p style={{ fontFamily: "'Space Mono', monospace", fontWeight: 700, fontSize: 13, letterSpacing: 4, color: '#f59e0b', marginBottom: 12 }}>WEERSTAND</p>
+                  <div style={{ display: 'flex', gap: 8 }}>
+                    {(['licht', 'stevig', 'zwaar'] as const).map(w => (
+                      <button key={w} onClick={() => setSparWeerstand(w)} style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 16, letterSpacing: 2, padding: '8px 20px', borderRadius: 999, background: sparWeerstand === w ? '#f59e0b' : '#1f2937', color: sparWeerstand === w ? '#111827' : '#9ca3af', border: sparWeerstand === w ? 'none' : '1px solid #374151', cursor: 'pointer', transition: 'all 0.15s' }}>
+                        {w.charAt(0).toUpperCase() + w.slice(1)}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+                <div>
+                  <p style={{ fontFamily: "'Space Mono', monospace", fontWeight: 700, fontSize: 13, letterSpacing: 4, color: '#f59e0b', marginBottom: 12 }}>SITUATIE (OPTIONEEL)</p>
+                  <textarea
+                    value={sparContext}
+                    onChange={e => setSparContext(e.target.value)}
+                    placeholder="Wat verkoop je? Wat is de context van het gesprek?"
+                    rows={2}
+                    style={{ width: '100%', background: '#1f2937', border: '1.5px solid #374151', color: '#f1f5f9', fontFamily: "'Space Mono', monospace", fontSize: 15, fontWeight: 400, padding: '12px 16px', resize: 'none', outline: 'none', borderRadius: 4 }}
+                  />
+                </div>
+              </div>
+            )}
+          </div>
+        )}
+
         {!blocked && <div className={`spar-input-area${started ? ' active' : ''}`}>
           {!started && !loading && (
             <>
-              <span className="spar-input-intro">begin een gesprek</span>
-              <span style={{ fontFamily: "'Space Mono', monospace", fontSize: 15, color: '#9ca3af', display: 'block', textAlign: 'center', width: '100%', maxWidth: 812, marginBottom: 28 }}>hoe concreter jouw info, hoe beter mijn output</span>
+              <span className="spar-input-intro">{sparModus === 'sparren' ? 'maak de eerste zet' : 'begin een gesprek'}</span>
+              {sparModus === 'coaching' && <span style={{ fontFamily: "'Space Mono', monospace", fontSize: 15, color: '#9ca3af', display: 'block', textAlign: 'center', width: '100%', maxWidth: 812, marginBottom: 28 }}>hoe concreter jouw info, hoe beter mijn output</span>}
             </>
           )}
           <div className={`spar-input-row${started ? ' active-glow' : ''}`}>
@@ -1160,7 +1290,7 @@ export default function SparClient({ userId, profiel, tier, taglineTitle, taglin
                   ask(input)
                 }
               }}
-              placeholder={started ? "vervolg het gesprek" : isMobile ? "beschrijf je casus" : "beschrijf je casus of stel je vraag"}
+              placeholder={sparModus === 'sparren' ? (started ? "jouw reactie" : "maak de eerste zet") : started ? "vervolg het gesprek" : isMobile ? "beschrijf je casus" : "beschrijf je casus of stel je vraag"}
               disabled={loading || blocked}
               rows={1}
             />
@@ -1248,7 +1378,7 @@ export default function SparClient({ userId, profiel, tier, taglineTitle, taglin
           )}
         </div>}
 
-        {!started && !loading && (
+        {!started && !loading && sparModus !== 'sparren' && (
           <div className="spar-openers" style={isSalesOnlyProfiel ? { paddingTop: 20 } : undefined}>
             {!isSalesOnlyProfiel && (
               <>
@@ -1303,11 +1433,15 @@ export default function SparClient({ userId, profiel, tier, taglineTitle, taglin
                 <span className="msg-user-text">{msg.content}</span>
               </div>
             ) : (
-              <div key={i} ref={msg.content?.startsWith('**Terugblik') ? synthesisRef : i === messages.length - 1 ? lastMessageRef : undefined}>
+              <div key={i} ref={(msg.content?.startsWith('**Terugblik') || msg.content?.startsWith('**Debrief')) ? synthesisRef : i === messages.length - 1 ? lastMessageRef : undefined}>
                 {msg.content && (
                   <div className="msg-arno" style={isMobile ? { flexDirection: 'column', gap: 4 } : {}}>
                     <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 8, minWidth: 48, paddingTop: 2, flexShrink: 0, position: 'relative' }}>
-                      <span className="msg-arno-label">ARNO</span>
+                      <span className="msg-arno-label">
+                        {sparModus === 'sparren' && rolCategorie && sparPersona
+                          ? (PERSONAS[rolCategorie].find(p => p.key === sparPersona)?.label ?? 'ARNO').toUpperCase()
+                          : 'ARNO'}
+                      </span>
                       <button
                         onClick={() => speak(msg.content, i)}
                         title={speakingIdx === i ? 'Stop' : 'Beluister'}
