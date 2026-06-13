@@ -44,7 +44,7 @@ const FAQ_GROUPS = [
     items: [
       {
         q: 'Wat is het verschil tussen Coaching en Sparren?',
-        a: 'Bij Coaching beschrijf jij een situatie en geeft ArnoBot advies. Bij Sparren speelt ArnoBot de tegenstander: een prospect, je CEO, een underperformer. Jij oefent het gesprek live. Coaching helpt je nadenken. Sparren helpt je presteren als het erop aankomt.',
+        a: 'Bij Coaching beschrijf jij een situatie en geeft ArnoBot advies. Bij Sparren speelt ArnoBot de uitdager: een prospect, je CEO, een underperformer. Jij oefent het gesprek live. Coaching helpt je nadenken. Sparren helpt je presteren als het erop aankomt.',
       },
       {
         q: 'Voor wie is Sparren beschikbaar?',
