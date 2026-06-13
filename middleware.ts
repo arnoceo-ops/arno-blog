@@ -120,7 +120,7 @@ export default clerkMiddleware(async (auth, req) => {
                     </p>
                     <div style="background:#1f2937;padding:20px 24px;margin-bottom:24px;border-left:3px solid #f59e0b;">
                       <p style="font-size:12px;letter-spacing:2px;color:#f59e0b;margin-bottom:4px;text-transform:uppercase;">Jouw trial</p>
-                      <p style="font-size:16px;font-weight:600;color:#f1f5f9;margin:0;">30 dagen gratis — geen automatische afschrijving</p>
+                      <p style="font-size:16px;font-weight:600;color:#f1f5f9;margin:0;">30 dagen gratis, geen automatische afschrijving</p>
                       <p style="font-size:13px;color:#666;margin:4px 0 0;">Na je trial geef je zelf per e-mail aan of je doorgaat.</p>
                     </div>
                     <a href="https://arno.bot/bot"
