@@ -26,15 +26,15 @@ export default function WelkomPage() {
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Mono:wght@400;700&display=swap');
         * { box-sizing: border-box; margin: 0; padding: 0; }
-        body { background: #111827; color: #f1f5f9; font-family: 'Space Mono', monospace; }
+        body { background: #111827; color: #f1f5f9; font-family: 'Space Mono', monospace; font-weight: 400; }
       `}</style>
 
-      <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: 'clamp(40px,8vw,80px) clamp(20px,5vw,48px)' }}>
+      <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: 'clamp(80px,12vw,120px) clamp(16px,4vw,20px) 80px' }}>
 
-        <div style={{ width: '100%', maxWidth: 720 }}>
-          <p style={{ fontFamily: "'Space Mono', monospace", fontWeight: 700, fontSize: 13, letterSpacing: 4, color: '#f59e0b', marginBottom: 12 }}>ARNOBOT</p>
-          <h1 style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 'clamp(48px,10vw,80px)', letterSpacing: 3, lineHeight: 1, color: '#f1f5f9', marginBottom: 8 }}>WELKOM.</h1>
-          <p style={{ fontSize: 15, lineHeight: 1.9, color: '#9ca3af', marginBottom: 32 }}>
+        <div style={{ width: '100%', maxWidth: 812 }}>
+          <p style={{ fontFamily: "'Space Mono', monospace", fontWeight: 400, fontSize: 13, letterSpacing: 4, color: '#f59e0b', marginBottom: 12 }}>ARNOBOT</p>
+          <h1 style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 64, letterSpacing: 3, lineHeight: 1, color: '#f1f5f9', marginBottom: 8 }}>WELKOM.</h1>
+          <p style={{ fontFamily: "'Space Mono', monospace", fontWeight: 400, fontSize: 15, lineHeight: 1.9, color: '#9ca3af', marginBottom: 32 }}>
             Kijk de video in zijn geheel af. 05:49 lousy minutes met de basics. Te ongeduldig? Log dan een andere keer in of doe niet mee. Cheers!
           </p>
 
