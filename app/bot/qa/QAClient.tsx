@@ -23,15 +23,23 @@ const FAQ_GROUPS = [
     ],
   },
   {
-    label: 'GEBRUIK',
+    label: 'DE ROUTE',
     items: [
       {
-        q: 'Hoe gebruik ik het optimaal?',
-        a: 'Wees concreet. Beschrijf je situatie, je markt en je uitdaging zo specifiek mogelijk. ArnoBot is geen zoekmachine; het is een coach. Stel vragen zoals je dat aan een senior advisor zou doen.',
+        q: 'Hoe werkt ArnoBot stap voor stap?',
+        a: 'Voer eerst gesprekken, maak dan een patroonanalyse in de Bieb, en vraag daarna een coachingsadvies aan. Elke stap bouwt voort op de vorige. Hoe meer je erin stopt, hoe meer je eruit haalt.',
       },
       {
-        q: 'Hoe komt een coachingsadvies tot stand?',
-        a: 'Arno combineert alles wat hij over je weet. Hij kijkt naar je recente gesprekken, de patroonanalyses die je al hebt laten maken in de BIEB, je profiel en de richting van je vorige MSA-score. Op basis daarvan trekt hij een lijn: wat is er aan het veranderen, wat staat vast, en wat vraagt nu aandacht. Hoe meer gesprekken en analyses je hebt opgebouwd, hoe scherper en persoonlijker het beeld.',
+        q: 'Hoe gebruik ik de gesprekken optimaal?',
+        a: 'Wees concreet. Beschrijf je situatie, je markt en je uitdaging zo specifiek mogelijk. Stel vragen zoals je dat aan een senior advisor zou doen. Elk gesprek vergroot het beeld dat Arno van je opbouwt.',
+      },
+      {
+        q: 'Wat is een patroonanalyse en hoe maak ik er een?',
+        a: 'Ga naar de Bieb, selecteer de gesprekken die je wilt meenemen (maximaal 20) en klik op Analyseer. ArnoBot trekt de rode draden eruit: wat komt steeds terug, wat valt op, wat vraagt aandacht. Maak er geregeld een. Hoe meer je analyseert, hoe scherper het patroon.',
+      },
+      {
+        q: 'Wanneer kan ik een coachingsadvies aanvragen?',
+        a: 'Pas als je minimaal 5 gesprekken hebt gevoerd. Ga dan naar Coaching en klik op de knop. Arno combineert je gesprekken, profiel en eerdere analyses op drie pijlers: Mindset, Systeem en Actie. Het resultaat wordt elke keer scherper naarmate je meer hebt opgebouwd.',
       },
       {
         q: 'Waarom kan ik maximaal 20 gesprekken selecteren voor een analyse?',
