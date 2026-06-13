@@ -1,21 +1,14 @@
 'use client'
 
-import { useState, useRef } from 'react'
+import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 
 export default function WelkomPage() {
   const router = useRouter()
-  const videoRef = useRef<HTMLVideoElement>(null)
-  const [videoEnded, setVideoEnded] = useState(false)
-  const [tooEarly, setTooEarly] = useState(false)
   const [loading, setLoading] = useState(false)
+  const [error, setError] = useState(false)
 
   async function handleGaVerder() {
-    if (!videoEnded) {
-      setTooEarly(true)
-      setTimeout(() => setTooEarly(false), 3000)
-      return
-    }
     setLoading(true)
     try {
       const res = await fetch('/api/bot/welcome-done', { method: 'POST' })
@@ -23,8 +16,8 @@ export default function WelkomPage() {
       router.push('/bot/profiel')
     } catch {
       setLoading(false)
-      setTooEarly(true)
-      setTimeout(() => setTooEarly(false), 4000)
+      setError(true)
+      setTimeout(() => setError(false), 4000)
     }
   }
 
@@ -45,14 +38,14 @@ export default function WelkomPage() {
             Kijk even de video af. Dan weet je precies hoe je het meeste uit ArnoBot haalt.
           </p>
 
-          <video
-            ref={videoRef}
-            src="/onboarding.mp4"
-            controls
-            playsInline
-            onEnded={() => setVideoEnded(true)}
-            style={{ width: '100%', display: 'block', background: '#000', borderRadius: 4, marginBottom: 32 }}
-          />
+          <div style={{ position: 'relative', paddingBottom: '56.25%', height: 0, marginBottom: 32, overflow: 'hidden' }}>
+            <iframe
+              src="https://www.loom.com/embed/0ac8f70256fa4ecb8d49bc111c897050?hide_owner=true&hide_share=true&hide_title=true&hideEmbedTopBar=true"
+              frameBorder={0}
+              allowFullScreen
+              style={{ position: 'absolute', top: -36, left: 0, width: '100%', height: 'calc(100% + 36px)' }}
+            />
+          </div>
 
           <button
             onClick={handleGaVerder}
@@ -73,9 +66,9 @@ export default function WelkomPage() {
             {loading ? 'EVEN WACHTEN...' : 'GA VERDER →'}
           </button>
 
-          {tooEarly && (
+          {error && (
             <p style={{ marginTop: 16, fontSize: 13, color: '#f59e0b', letterSpacing: 2, fontFamily: "'Space Mono', monospace" }}>
-              {videoEnded ? 'Er ging iets mis. Probeer opnieuw.' : 'Kijk eerst de video af.'}
+              Er ging iets mis. Probeer opnieuw.
             </p>
           )}
         </div>
