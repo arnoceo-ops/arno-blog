@@ -107,17 +107,25 @@ export async function POST() {
         .map(a => `- ${a.analyse_text.slice(0, 200)}`)
         .join('\n')
 
-      const precheck = await anthropic.messages.create({
-        model: 'claude-sonnet-4-6',
-        max_tokens: 10,
-        system: 'Je beoordeelt of nieuwe gesprekken kwalitatief andere patronen laten zien dan de vorige coaching. Antwoord uitsluitend met "ja" of "nee".',
-        messages: [{
-          role: 'user',
-          content: `Vorige coaching:\nMindset (${prevCoaching.mindset_score}/5): ${prevCoaching.mindset_diagnose}\nSysteem (${prevCoaching.systeem_score}/5): ${prevCoaching.systeem_diagnose}\nActie (${prevCoaching.actie_score}/5): ${prevCoaching.actie_diagnose}\n\nNieuwe gesprekken:\n${newSessiesText || '(geen)'}\n\nNieuwe analyses:\n${newAnalysesText || '(geen)'}\n\nIs er kwalitatief iets veranderd in het patroon?`,
-        }],
-      })
+      let precheckText = 'nee'
+      try {
+        const precheck = await anthropic.messages.create({
+          model: 'claude-sonnet-4-6',
+          max_tokens: 10,
+          system: 'Je beoordeelt of nieuwe gesprekken kwalitatief andere patronen laten zien dan de vorige coaching. Antwoord uitsluitend met "ja" of "nee".',
+          messages: [{
+            role: 'user',
+            content: `Vorige coaching:\nMindset (${prevCoaching.mindset_score}/5): ${prevCoaching.mindset_diagnose}\nSysteem (${prevCoaching.systeem_score}/5): ${prevCoaching.systeem_diagnose}\nActie (${prevCoaching.actie_score}/5): ${prevCoaching.actie_diagnose}\n\nNieuwe gesprekken:\n${newSessiesText || '(geen)'}\n\nNieuwe analyses:\n${newAnalysesText || '(geen)'}\n\nIs er kwalitatief iets veranderd in het patroon?`,
+          }],
+        })
+        precheckText = precheck.content[0].type === 'text' ? precheck.content[0].text.trim().toLowerCase() : 'nee'
+      } catch (err: any) {
+        console.error('[coaching precheck error]', err?.status, err?.message ?? err)
+        // precheck mislukt: laat generatie door, behandel als "ja"
+        precheckText = 'ja'
+      }
 
-      const verdict = precheck.content[0].type === 'text' ? precheck.content[0].text.trim().toLowerCase() : 'nee'
+      const verdict = precheckText
       if (!verdict.startsWith('ja')) {
         if (forceAllow) {
           weinig_voortgang = true
@@ -163,7 +171,9 @@ export async function POST() {
         .join('\n\n')
     : ''
 
-  const response = await anthropic.messages.create({
+  let response
+  try {
+    response = await anthropic.messages.create({
     model: 'claude-fable-5',
     max_tokens: 1600,
     system: `Je bent Arno Diepeveen. Salesstrateeg, 20 jaar ervaring, direct en ongefilterd. Je schrijft een persoonlijk coachingsdocument gebaseerd op drie pijlers: Mindset, Systeem en Actie. Geen corporate coachtaal. Geen bullshit. Geen accenten op woorden voor nadruk. Spreek de gebruiker aan met "je".
@@ -201,6 +211,10 @@ De pijlar-waarden mogen alleen zijn: "mindset", "systeem" of "actie".${stagnatie
       content: `Analyseer deze ${sessions.length} gesprekken${analyses.length > 0 ? ` en ${analyses.length} eerder gemaakte patroonanalyses` : ''} en schrijf een coachingsdocument:${profielText}${deltaContext}\n\nGESPREKKEN:\n${sessiesText}${analysesText}`
     }]
   })
+  } catch (err: any) {
+    console.error('[coaching generate error]', err?.status, err?.message ?? err)
+    return NextResponse.json({ error: 'generate_error', detail: err?.message ?? 'unknown' }, { status: 500 })
+  }
 
   const raw = response.content[0].type === 'text' ? response.content[0].text : ''
 

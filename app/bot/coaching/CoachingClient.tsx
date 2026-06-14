@@ -242,6 +242,8 @@ export default function CoachingClient({ userId }: Props) {
       } else if (data.coaching) {
         setDoc(data.coaching)
         localStorage.setItem(`arnobot_coaching_doc_${userId}`, JSON.stringify(data.coaching))
+      } else if (data.error) {
+        setError('Er ging iets mis. Probeer opnieuw.')
       }
     } catch {
       setError('Er ging iets mis. Probeer opnieuw.')
