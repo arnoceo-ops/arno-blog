@@ -20,6 +20,7 @@ interface CoachingDoc {
   blogs: { title: string; url: string; reden: string }[]
   conversation_count: number
   updated_at?: string
+  weinig_voortgang?: boolean
 }
 
 interface Stats {
@@ -153,7 +154,7 @@ export default function CoachingClient({ userId }: Props) {
   const [loading, setLoading] = useState(true)
   const [generating, setGenerating] = useState(false)
   const [error, setError] = useState<string | null>(null)
-  const [voortgangError, setVoortgangError] = useState(false)
+  const [blockReason, setBlockReason] = useState<'te_weinig_voortgang' | 'hoge_scores' | null>(null)
   const [stats, setStats] = useState<Stats | null>(null)
   const [analyses, setAnalyses] = useState<SavedAnalyse[]>([])
   const [uitdaging, setUitdaging] = useState<string | null>(null)
@@ -223,14 +224,16 @@ export default function CoachingClient({ userId }: Props) {
   async function generate() {
     setGenerating(true)
     setError(null)
-    setVoortgangError(false)
+    setBlockReason(null)
     try {
       const res = await fetch('/api/bot/coaching', { method: 'POST' })
       const data = await res.json()
       if (data.error === 'te_weinig') {
         setError(`Je hebt ${data.count} gesprekken. Minimaal 5 nodig.`)
       } else if (data.error === 'te_weinig_voortgang') {
-        setVoortgangError(true)
+        setBlockReason('te_weinig_voortgang')
+      } else if (data.error === 'hoge_scores') {
+        setBlockReason('hoge_scores')
       } else if (data.coaching) {
         setDoc(data.coaching)
         localStorage.setItem(`arnobot_coaching_doc_${userId}`, JSON.stringify(data.coaching))
@@ -369,9 +372,14 @@ export default function CoachingClient({ userId }: Props) {
               Arno analyseert je gesprekken op drie pijlers: Mindset, Systeem en Actie. Dit geeft je een indruk waar je staat en wat je het best aan zou kunnen pakken.
             </p>
           )}
-          {voortgangError && (
-            <p style={{ fontFamily: "'Space Mono', monospace", color: '#ff6644', fontSize: 15, lineHeight: '29px', fontWeight: 400 }}>
-              Hey {firstName}, ik zie te weinig voortgang om een nieuw document voor je coaching te rechtvaardigen. Hieronder kun je lezen hoe je los kunt. Iets mee doen, is het dringende advies om te gaan vliegen. It&apos;s your call. Succes!
+          {blockReason === 'hoge_scores' && (
+            <p style={{ fontFamily: "'Space Mono', monospace", color: '#f59e0b', fontSize: 15, lineHeight: '29px', fontWeight: 400 }}>
+              Je staat al sterk op de drie pijlers. Voer meer gesprekken om het beeld verder aan te scherpen. Een nieuw document is beschikbaar zodra er genoeg nieuwe input is.
+            </p>
+          )}
+          {blockReason === 'te_weinig_voortgang' && (
+            <p style={{ fontFamily: "'Space Mono', monospace", color: '#9ca3af', fontSize: 15, lineHeight: '29px', fontWeight: 400 }}>
+              Er zijn nog niet genoeg nieuwe gesprekken om een zinvol nieuw document te maken. Kom terug als je minstens 3 gesprekken hebt gevoerd en het vorige document minimaal 48 uur oud is.
             </p>
           )}
           {error && <p style={{ fontFamily: "'Space Mono', monospace", color: '#ff6644', fontSize: 13, letterSpacing: 1 }}>{error}</p>}
@@ -383,6 +391,14 @@ export default function CoachingClient({ userId }: Props) {
 
         {doc && (
           <div style={{ animation: 'fadein 0.5s ease' }}>
+
+            {doc.weinig_voortgang && (
+              <div style={{ background: '#1f2937', borderLeft: '3px solid #f59e0b', padding: '16px 20px', marginBottom: 32 }}>
+                <p style={{ fontFamily: "'Space Mono', monospace", fontSize: 13, color: '#f59e0b', letterSpacing: 1, fontWeight: 400, lineHeight: 1.8 }}>
+                  Er is weinig kwalitatieve verandering zichtbaar in je gesprekken. De actiepunten hieronder zijn bewust concreter dan normaal.
+                </p>
+              </div>
+            )}
 
             {/* MSA Dashboard */}
             {hasMSA && (

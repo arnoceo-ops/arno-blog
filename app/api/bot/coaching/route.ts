@@ -80,11 +80,20 @@ export async function POST() {
 
   const analyses = analysesRes.data ?? []
   const prevCoaching = prevCoachingRes.data
+  let weinig_voortgang = false
+
   if (prevCoaching) {
+    const hoursSince = (Date.now() - new Date((prevCoaching as any).updated_at ?? 0).getTime()) / 3600000
+    const allPrevHighScores =
+      ((prevCoaching.mindset_score ?? 0) >= 4) &&
+      ((prevCoaching.systeem_score ?? 0) >= 4) &&
+      ((prevCoaching.actie_score ?? 0) >= 4)
+
     const prevSessionIds = new Set<string>(prevCoaching.used_session_ids ?? [])
     const prevAnalyseIds = new Set<string>(prevCoaching.used_analyse_ids ?? [])
     const newSessions = sessions.filter(s => !prevSessionIds.has(s.session_id))
     const newAnalyses = analyses.filter(a => !prevAnalyseIds.has(a.id))
+    const forceAllow = newSessions.length >= 3 && hoursSince >= 48
 
     if (newSessions.length > 0 || newAnalyses.length > 0) {
       const newSessiesText = newSessions
@@ -100,16 +109,24 @@ export async function POST() {
         system: 'Je beoordeelt of nieuwe gesprekken kwalitatief andere patronen laten zien dan de vorige coaching. Antwoord uitsluitend met "ja" of "nee".',
         messages: [{
           role: 'user',
-          content: `Vorige coaching:\nMindset (${prevCoaching.mindset_score}/5): ${prevCoaching.mindset_diagnose}\nSysteem (${prevCoaching.systeem_score}/5): ${prevCoaching.systeem_diagnose}\nActie (${prevCoaching.actie_score}/5): ${prevCoaching.actie_diagnose}\n\nNieuwe gesprekken:\n${newSessiesText || '—'}\n\nNieuwe analyses:\n${newAnalysesText || '—'}\n\nIs er kwalitatief iets veranderd in het patroon?`,
+          content: `Vorige coaching:\nMindset (${prevCoaching.mindset_score}/5): ${prevCoaching.mindset_diagnose}\nSysteem (${prevCoaching.systeem_score}/5): ${prevCoaching.systeem_diagnose}\nActie (${prevCoaching.actie_score}/5): ${prevCoaching.actie_diagnose}\n\nNieuwe gesprekken:\n${newSessiesText || '(geen)'}\n\nNieuwe analyses:\n${newAnalysesText || '(geen)'}\n\nIs er kwalitatief iets veranderd in het patroon?`,
         }],
       })
 
       const verdict = precheck.content[0].type === 'text' ? precheck.content[0].text.trim().toLowerCase() : 'nee'
       if (!verdict.startsWith('ja')) {
-        return NextResponse.json({ error: 'te_weinig_voortgang' }, { status: 429 })
+        if (forceAllow) {
+          weinig_voortgang = true
+        } else {
+          return NextResponse.json({ error: allPrevHighScores ? 'hoge_scores' : 'te_weinig_voortgang' }, { status: 429 })
+        }
       }
     } else {
-      return NextResponse.json({ error: 'te_weinig_voortgang' }, { status: 429 })
+      if (forceAllow) {
+        weinig_voortgang = true
+      } else {
+        return NextResponse.json({ error: allPrevHighScores ? 'hoge_scores' : 'te_weinig_voortgang' }, { status: 429 })
+      }
     }
   }
   const profiel = profielRes.data?.profiel ?? null
@@ -172,7 +189,7 @@ Return ALLEEN een JSON-object, geen uitleg, geen markdown eromheen:
 }
 
 De richting-waarden mogen alleen zijn: "stijgend", "stabiel" of "dalend".
-De pijlar-waarden mogen alleen zijn: "mindset", "systeem" of "actie".`,
+De pijlar-waarden mogen alleen zijn: "mindset", "systeem" of "actie".${weinig_voortgang ? '\n\nBELANGRIJK: Er is weinig kwalitatieve verandering zichtbaar in de nieuwe gesprekken. Geef in de ontwikkelpunten extra specifieke, directe acties die de gebruiker vandaag kan uitvoeren. Concreet gedrag, geen algemene adviezen.' : ''}`,
     messages: [{
       role: 'user',
       content: `Analyseer deze ${sessions.length} gesprekken${analyses.length > 0 ? ` en ${analyses.length} eerder gemaakte patroonanalyses` : ''} en schrijf een coachingsdocument:${profielText}${deltaContext}\n\nGESPREKKEN:\n${sessiesText}${analysesText}`
@@ -274,7 +291,7 @@ Return ALLEEN een JSON array, geen uitleg eromheen:
     }
   } catch {}
 
-  const doc = { ...parsed, blogs, conversation_count: sessions.length }
+  const doc = { ...parsed, blogs, conversation_count: sessions.length, weinig_voortgang }
   const payload = {
     ...doc,
     updated_at: new Date().toISOString(),
