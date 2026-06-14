@@ -149,6 +149,10 @@ export default function BotProfielPage() {
   async function handleSubmit() {
     if (!allFilled) {
       setSubmitted(true)
+      setTimeout(() => {
+        const el = document.querySelector('[data-error="true"]')
+        el?.scrollIntoView({ behavior: 'smooth', block: 'center' })
+      }, 50)
       return
     }
     setSaving(true)
@@ -243,7 +247,7 @@ export default function BotProfielPage() {
               />
             )}
             {submitted && !rolIngevuld && (
-              <p style={{ fontFamily: "'Space Mono', monospace", fontSize: 13, color: '#cc2200', marginTop: 8 }}>Selecteer je rol.</p>
+              <p data-error="true" style={{ fontFamily: "'Space Mono', monospace", fontSize: 13, color: '#cc2200', marginTop: 8 }}>Selecteer je rol.</p>
             )}
             {HEEFT_TEAM.includes(answers.rol) && (
               <>
@@ -254,7 +258,7 @@ export default function BotProfielPage() {
                     <Chip label="VOOR MIJN TEAM" selected={answers.gebruik === 'team'} onClick={() => set('gebruik', 'team')} />
                   </div>
                   {submitted && answers.gebruik === '' && (
-                    <p style={{ fontFamily: "'Space Mono', monospace", fontSize: 13, color: '#cc2200', marginTop: 8 }}>Geef aan of je ArnoBot individueel of voor je team gebruikt.</p>
+                    <p data-error="true" style={{ fontFamily: "'Space Mono', monospace", fontSize: 13, color: '#cc2200', marginTop: 8 }}>Geef aan of je ArnoBot individueel of voor je team gebruikt.</p>
                   )}
                   {answers.gebruik === 'team' && (
                     <div style={{ marginTop: 20, background: '#1f2937', border: '1px solid #374151', borderLeft: '3px solid #f59e0b', padding: '20px 24px' }}>
@@ -284,7 +288,7 @@ export default function BotProfielPage() {
                     ))}
                   </div>
                   {submitted && answers.teamgrootte === '' && (
-                    <p style={{ fontFamily: "'Space Mono', monospace", fontSize: 13, color: '#cc2200', marginTop: 8 }}>Geef aan hoe groot je sales team is.</p>
+                    <p data-error="true" style={{ fontFamily: "'Space Mono', monospace", fontSize: 13, color: '#cc2200', marginTop: 8 }}>Geef aan hoe groot je sales team is.</p>
                   )}
                 </div>
               </>
@@ -299,7 +303,7 @@ export default function BotProfielPage() {
               ))}
             </div>
             {submitted && answers.markt.length === 0 && (
-              <p style={{ fontFamily: "'Space Mono', monospace", fontSize: 13, color: '#cc2200', marginTop: 8 }}>Selecteer minimaal één markt.</p>
+              <p data-error="true" style={{ fontFamily: "'Space Mono', monospace", fontSize: 13, color: '#cc2200', marginTop: 8 }}>Selecteer minimaal één markt.</p>
             )}
           </Block>
 
@@ -312,7 +316,7 @@ export default function BotProfielPage() {
               rows={3}
             />
             {submitted && answers.wat_verkoop_je.trim().length <= 2 && (
-              <p style={{ fontFamily: "'Space Mono', monospace", fontSize: 13, color: '#cc2200', marginTop: 8 }}>Omschrijf wat je verkoopt.</p>
+              <p data-error="true" style={{ fontFamily: "'Space Mono', monospace", fontSize: 13, color: '#cc2200', marginTop: 8 }}>Omschrijf wat je verkoopt.</p>
             )}
           </Block>
 
@@ -325,7 +329,7 @@ export default function BotProfielPage() {
               rows={3}
             />
             {submitted && answers.ideale_klant.trim().length <= 2 && (
-              <p style={{ fontFamily: "'Space Mono', monospace", fontSize: 13, color: '#cc2200', marginTop: 8 }}>Omschrijf je ideale klant.</p>
+              <p data-error="true" style={{ fontFamily: "'Space Mono', monospace", fontSize: 13, color: '#cc2200', marginTop: 8 }}>Omschrijf je ideale klant.</p>
             )}
           </Block>
 
@@ -338,7 +342,7 @@ export default function BotProfielPage() {
               rows={3}
             />
             {submitted && answers.uitdaging.trim().length <= 2 && (
-              <p style={{ fontFamily: "'Space Mono', monospace", fontSize: 13, color: '#cc2200', marginTop: 8 }}>Omschrijf je grootste uitdaging.</p>
+              <p data-error="true" style={{ fontFamily: "'Space Mono', monospace", fontSize: 13, color: '#cc2200', marginTop: 8 }}>Omschrijf je grootste uitdaging.</p>
             )}
           </Block>
 
@@ -350,7 +354,7 @@ export default function BotProfielPage() {
               placeholder="Bijv: €15.000 tot €40.000"
             />
             {submitted && answers.dealgrootte.trim().length === 0 && (
-              <p style={{ fontFamily: "'Space Mono', monospace", fontSize: 13, color: '#cc2200', marginTop: 8 }}>Vul je gemiddelde dealgrootte in.</p>
+              <p data-error="true" style={{ fontFamily: "'Space Mono', monospace", fontSize: 13, color: '#cc2200', marginTop: 8 }}>Vul je gemiddelde dealgrootte in.</p>
             )}
           </Block>
 
@@ -362,7 +366,7 @@ export default function BotProfielPage() {
               placeholder="Bijv: 2 tot 6 weken"
             />
             {submitted && answers.salescyclus.trim().length === 0 && (
-              <p style={{ fontFamily: "'Space Mono', monospace", fontSize: 13, color: '#cc2200', marginTop: 8 }}>Vul je salescyclus in.</p>
+              <p data-error="true" style={{ fontFamily: "'Space Mono', monospace", fontSize: 13, color: '#cc2200', marginTop: 8 }}>Vul je salescyclus in.</p>
             )}
           </Block>
 
@@ -376,7 +380,7 @@ export default function BotProfielPage() {
               ))}
             </div>
             {submitted && answers.target_dit_jaar === '' && (
-              <p style={{ fontFamily: "'Space Mono', monospace", fontSize: 13, color: '#cc2200', marginTop: 8, marginBottom: 20 }}>Maak een keuze.</p>
+              <p data-error="true" style={{ fontFamily: "'Space Mono', monospace", fontSize: 13, color: '#cc2200', marginTop: 8, marginBottom: 20 }}>Maak een keuze.</p>
             )}
             <p style={{ fontSize: 15, fontWeight: 400, lineHeight: '30px', color: '#9ca3af', marginBottom: 12 }}>
               Heb je de afgelopen 3 jaar je {getTargetLabel(answers.rol) ? `${getTargetLabel(answers.rol)} ` : ''}target gehaald?
@@ -387,7 +391,7 @@ export default function BotProfielPage() {
               ))}
             </div>
             {submitted && answers.target_3_jaar === '' && (
-              <p style={{ fontFamily: "'Space Mono', monospace", fontSize: 13, color: '#cc2200', marginTop: 8 }}>Maak een keuze.</p>
+              <p data-error="true" style={{ fontFamily: "'Space Mono', monospace", fontSize: 13, color: '#cc2200', marginTop: 8 }}>Maak een keuze.</p>
             )}
           </Block>
 
@@ -399,7 +403,7 @@ export default function BotProfielPage() {
               ))}
             </div>
             {submitted && answers.jaren_sales === '' && (
-              <p style={{ fontFamily: "'Space Mono', monospace", fontSize: 13, color: '#cc2200', marginTop: 8, marginBottom: 20 }}>Maak een keuze.</p>
+              <p data-error="true" style={{ fontFamily: "'Space Mono', monospace", fontSize: 13, color: '#cc2200', marginTop: 8, marginBottom: 20 }}>Maak een keuze.</p>
             )}
             <p style={{ fontSize: 15, fontWeight: 400, lineHeight: '30px', color: '#9ca3af', marginBottom: 12 }}>Hoe lang doe je al de functie die je hierboven hebt aangegeven?</p>
             <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8 }}>
@@ -408,7 +412,7 @@ export default function BotProfielPage() {
               ))}
             </div>
             {submitted && answers.jaren_functie === '' && (
-              <p style={{ fontFamily: "'Space Mono', monospace", fontSize: 13, color: '#cc2200', marginTop: 8 }}>Maak een keuze.</p>
+              <p data-error="true" style={{ fontFamily: "'Space Mono', monospace", fontSize: 13, color: '#cc2200', marginTop: 8 }}>Maak een keuze.</p>
             )}
           </Block>
 
