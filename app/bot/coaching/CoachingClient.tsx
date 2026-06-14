@@ -21,6 +21,7 @@ interface CoachingDoc {
   conversation_count: number
   updated_at?: string
   weinig_voortgang?: boolean
+  stagnatie?: boolean
 }
 
 interface Stats {
@@ -154,7 +155,8 @@ export default function CoachingClient({ userId }: Props) {
   const [loading, setLoading] = useState(true)
   const [generating, setGenerating] = useState(false)
   const [error, setError] = useState<string | null>(null)
-  const [blockReason, setBlockReason] = useState<'te_weinig_voortgang' | 'hoge_scores' | null>(null)
+  const [blockReason, setBlockReason] = useState<'te_weinig' | 'te_weinig_voortgang' | 'stagnatie' | 'hoge_scores' | null>(null)
+  const [teWeinigCount, setTeWeinigCount] = useState(0)
   const [stats, setStats] = useState<Stats | null>(null)
   const [analyses, setAnalyses] = useState<SavedAnalyse[]>([])
   const [uitdaging, setUitdaging] = useState<string | null>(null)
@@ -229,9 +231,12 @@ export default function CoachingClient({ userId }: Props) {
       const res = await fetch('/api/bot/coaching', { method: 'POST' })
       const data = await res.json()
       if (data.error === 'te_weinig') {
-        setError(`Je hebt ${data.count} gesprekken. Minimaal 5 nodig.`)
+        setBlockReason('te_weinig')
+        setTeWeinigCount(data.count ?? 0)
       } else if (data.error === 'te_weinig_voortgang') {
         setBlockReason('te_weinig_voortgang')
+      } else if (data.error === 'stagnatie') {
+        setBlockReason('stagnatie')
       } else if (data.error === 'hoge_scores') {
         setBlockReason('hoge_scores')
       } else if (data.coaching) {
@@ -367,22 +372,49 @@ export default function CoachingClient({ userId }: Props) {
               <p style={{ fontFamily: "'Space Mono', monospace", fontSize: 12, color: '#9ca3af', letterSpacing: 1 }}>✓ Advies is actueel</p>
             )}
           </div>
-          {!doc && !loading && (
+          {!doc && !loading && !blockReason && (
             <p style={{ fontFamily: "'Space Mono', monospace", fontWeight: 400, color: '#9ca3af', fontSize: 15, lineHeight: 1.9, maxWidth: 480 }}>
               Arno analyseert je gesprekken op drie pijlers: Mindset, Systeem en Actie. Dit geeft je een indruk waar je staat en wat je het best aan zou kunnen pakken.
             </p>
           )}
-          {blockReason === 'hoge_scores' && (
-            <p style={{ fontFamily: "'Space Mono', monospace", color: '#f59e0b', fontSize: 15, lineHeight: '29px', fontWeight: 400 }}>
-              Je staat al sterk op de drie pijlers. Voer meer gesprekken om het beeld verder aan te scherpen. Een nieuw document is beschikbaar zodra er genoeg nieuwe input is.
-            </p>
+          {blockReason === 'te_weinig' && (
+            <div style={{ display: 'flex', alignItems: 'flex-start', gap: 10 }}>
+              <span style={{ display: 'inline-block', width: 8, height: 8, borderRadius: '50%', background: '#f59e0b', flexShrink: 0, marginTop: 5 }} />
+              <p style={{ fontFamily: "'Space Mono', monospace", color: '#9ca3af', fontSize: 15, lineHeight: '29px', fontWeight: 400 }}>
+                Je hebt {teWeinigCount} {teWeinigCount === 1 ? 'gesprek' : 'gesprekken'}. Minimaal 5 nodig voor een coachingsadvies.
+              </p>
+            </div>
           )}
           {blockReason === 'te_weinig_voortgang' && (
-            <p style={{ fontFamily: "'Space Mono', monospace", color: '#9ca3af', fontSize: 15, lineHeight: '29px', fontWeight: 400 }}>
-              Er zijn nog niet genoeg nieuwe gesprekken om een zinvol nieuw document te maken. Kom terug als je minstens 3 gesprekken hebt gevoerd en het vorige document minimaal 48 uur oud is.
-            </p>
+            <div style={{ display: 'flex', alignItems: 'flex-start', gap: 10 }}>
+              <span style={{ display: 'inline-block', width: 8, height: 8, borderRadius: '50%', background: '#f59e0b', flexShrink: 0, marginTop: 5 }} />
+              <p style={{ fontFamily: "'Space Mono', monospace", color: '#9ca3af', fontSize: 15, lineHeight: '29px', fontWeight: 400 }}>
+                Er is te weinig nieuwe input voor een zinvol nieuw advies. Voer minstens 3 gesprekken en wacht 48 uur na je vorige coaching.
+              </p>
+            </div>
           )}
-          {error && <p style={{ fontFamily: "'Space Mono', monospace", color: '#ff6644', fontSize: 13, letterSpacing: 1 }}>{error}</p>}
+          {blockReason === 'stagnatie' && (
+            <div style={{ display: 'flex', alignItems: 'flex-start', gap: 10 }}>
+              <span style={{ display: 'inline-block', width: 8, height: 8, borderRadius: '50%', background: '#cc2200', flexShrink: 0, marginTop: 5 }} />
+              <p style={{ fontFamily: "'Space Mono', monospace", color: '#9ca3af', fontSize: 15, lineHeight: '29px', fontWeight: 400 }}>
+                Je patronen herhalen zich over meerdere coachingsronden. Arno genereert hieronder bewust confronterende opdrachten.
+              </p>
+            </div>
+          )}
+          {blockReason === 'hoge_scores' && (
+            <div style={{ display: 'flex', alignItems: 'flex-start', gap: 10 }}>
+              <span style={{ display: 'inline-block', width: 8, height: 8, borderRadius: '50%', background: '#34d399', flexShrink: 0, marginTop: 5 }} />
+              <p style={{ fontFamily: "'Space Mono', monospace", color: '#9ca3af', fontSize: 15, lineHeight: '29px', fontWeight: 400 }}>
+                Je staat al sterk op de drie pijlers. Voer meer gesprekken om het beeld verder aan te scherpen.
+              </p>
+            </div>
+          )}
+          {error && (
+            <div style={{ display: 'flex', alignItems: 'flex-start', gap: 10 }}>
+              <span style={{ display: 'inline-block', width: 8, height: 8, borderRadius: '50%', background: '#cc2200', flexShrink: 0, marginTop: 5 }} />
+              <p style={{ fontFamily: "'Space Mono', monospace", color: '#9ca3af', fontSize: 15, lineHeight: '29px', fontWeight: 400 }}>{error}</p>
+            </div>
+          )}
         </div>
 
         {loading && (
@@ -392,10 +424,19 @@ export default function CoachingClient({ userId }: Props) {
         {doc && (
           <div style={{ animation: 'fadein 0.5s ease' }}>
 
-            {doc.weinig_voortgang && (
-              <div style={{ background: '#1f2937', borderLeft: '3px solid #f59e0b', padding: '16px 20px', marginBottom: 32 }}>
-                <p style={{ fontFamily: "'Space Mono', monospace", fontSize: 13, color: '#f59e0b', letterSpacing: 1, fontWeight: 400, lineHeight: 1.8 }}>
-                  Er is weinig kwalitatieve verandering zichtbaar in je gesprekken. De actiepunten hieronder zijn bewust concreter dan normaal.
+            {doc.stagnatie && (
+              <div style={{ display: 'flex', alignItems: 'flex-start', gap: 10, marginBottom: 32 }}>
+                <span style={{ display: 'inline-block', width: 8, height: 8, borderRadius: '50%', background: '#cc2200', flexShrink: 0, marginTop: 5 }} />
+                <p style={{ fontFamily: "'Space Mono', monospace", color: '#9ca3af', fontSize: 15, lineHeight: '29px', fontWeight: 400 }}>
+                  Je patronen herhalen zich hardnekkig over meerdere coachingsronden. Neem de actiepunten hieronder serieus en doe er iets mee voor het volgende advies.
+                </p>
+              </div>
+            )}
+            {!doc.stagnatie && doc.weinig_voortgang && (
+              <div style={{ display: 'flex', alignItems: 'flex-start', gap: 10, marginBottom: 32 }}>
+                <span style={{ display: 'inline-block', width: 8, height: 8, borderRadius: '50%', background: '#f59e0b', flexShrink: 0, marginTop: 5 }} />
+                <p style={{ fontFamily: "'Space Mono', monospace", color: '#9ca3af', fontSize: 15, lineHeight: '29px', fontWeight: 400 }}>
+                  Er is weinig kwalitatieve verandering zichtbaar. De actiepunten hieronder zijn bewust concreter dan normaal.
                 </p>
               </div>
             )}

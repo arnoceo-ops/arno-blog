@@ -81,6 +81,7 @@ export async function POST() {
   const analyses = analysesRes.data ?? []
   const prevCoaching = prevCoachingRes.data
   let weinig_voortgang = false
+  let stagnatie = false
 
   if (prevCoaching) {
     const hoursSince = (Date.now() - new Date((prevCoaching as any).updated_at ?? 0).getTime()) / 3600000
@@ -88,12 +89,15 @@ export async function POST() {
       ((prevCoaching.mindset_score ?? 0) >= 4) &&
       ((prevCoaching.systeem_score ?? 0) >= 4) &&
       ((prevCoaching.actie_score ?? 0) >= 4)
+    const prevWeinigVoortgang = (prevCoaching as any).weinig_voortgang === true
 
     const prevSessionIds = new Set<string>(prevCoaching.used_session_ids ?? [])
     const prevAnalyseIds = new Set<string>(prevCoaching.used_analyse_ids ?? [])
     const newSessions = sessions.filter(s => !prevSessionIds.has(s.session_id))
     const newAnalyses = analyses.filter(a => !prevAnalyseIds.has(a.id))
     const forceAllow = newSessions.length >= 3 && hoursSince >= 48
+
+    const blockError = allPrevHighScores ? 'hoge_scores' : prevWeinigVoortgang ? 'stagnatie' : 'te_weinig_voortgang'
 
     if (newSessions.length > 0 || newAnalyses.length > 0) {
       const newSessiesText = newSessions
@@ -117,15 +121,17 @@ export async function POST() {
       if (!verdict.startsWith('ja')) {
         if (forceAllow) {
           weinig_voortgang = true
+          if (prevWeinigVoortgang) stagnatie = true
         } else {
-          return NextResponse.json({ error: allPrevHighScores ? 'hoge_scores' : 'te_weinig_voortgang' }, { status: 429 })
+          return NextResponse.json({ error: blockError }, { status: 429 })
         }
       }
     } else {
       if (forceAllow) {
         weinig_voortgang = true
+        if (prevWeinigVoortgang) stagnatie = true
       } else {
-        return NextResponse.json({ error: allPrevHighScores ? 'hoge_scores' : 'te_weinig_voortgang' }, { status: 429 })
+        return NextResponse.json({ error: blockError }, { status: 429 })
       }
     }
   }
@@ -189,7 +195,7 @@ Return ALLEEN een JSON-object, geen uitleg, geen markdown eromheen:
 }
 
 De richting-waarden mogen alleen zijn: "stijgend", "stabiel" of "dalend".
-De pijlar-waarden mogen alleen zijn: "mindset", "systeem" of "actie".${weinig_voortgang ? '\n\nBELANGRIJK: Er is weinig kwalitatieve verandering zichtbaar in de nieuwe gesprekken. Geef in de ontwikkelpunten extra specifieke, directe acties die de gebruiker vandaag kan uitvoeren. Concreet gedrag, geen algemene adviezen.' : ''}`,
+De pijlar-waarden mogen alleen zijn: "mindset", "systeem" of "actie".${weinig_voortgang ? '\n\nBELANGRIJK: Er is sprake van hardnekkige stagnatie. De gebruiker zit al meerdere coaching-rondes in hetzelfde patroon. Benoem dit expliciet en geef directe, confronterende actieadviezen. Concreet gedrag, geen zachte aanmoedigingen.' : '\n\nBELANGRIJK: Er is weinig kwalitatieve verandering zichtbaar in de nieuwe gesprekken. Geef in de ontwikkelpunten extra specifieke, directe acties die de gebruiker vandaag kan uitvoeren. Concreet gedrag, geen algemene adviezen.') : ''}`,
     messages: [{
       role: 'user',
       content: `Analyseer deze ${sessions.length} gesprekken${analyses.length > 0 ? ` en ${analyses.length} eerder gemaakte patroonanalyses` : ''} en schrijf een coachingsdocument:${profielText}${deltaContext}\n\nGESPREKKEN:\n${sessiesText}${analysesText}`
@@ -291,7 +297,7 @@ Return ALLEEN een JSON array, geen uitleg eromheen:
     }
   } catch {}
 
-  const doc = { ...parsed, blogs, conversation_count: sessions.length, weinig_voortgang }
+  const doc = { ...parsed, blogs, conversation_count: sessions.length, weinig_voortgang, stagnatie }
   const payload = {
     ...doc,
     updated_at: new Date().toISOString(),
