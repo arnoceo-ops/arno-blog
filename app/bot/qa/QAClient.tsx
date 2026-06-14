@@ -45,6 +45,10 @@ const FAQ_GROUPS = [
         q: 'Waarom kan ik maximaal 20 gesprekken selecteren voor een analyse?',
         a: 'Een analyse wordt scherper als Arno zich kan focussen. Boven de 20 gesprekken verdunnen de patronen zich. Je krijgt dan een gemiddelde in plaats van een diagnose. Twintig gesprekken is het maximum waarbij de analyse nog concreet en bruikbaar is.',
       },
+      {
+        q: 'Kan ik een eerder gesprek voortzetten?',
+        a: 'Ja. Al je gesprekken staan in de Bieb. Open een gesprek, scroll naar beneden en klik op "Zet dit gesprek voort bij ArnoBot?" ArnoBot pakt de draad op waar je gebleven was.',
+      },
     ],
   },
   {
