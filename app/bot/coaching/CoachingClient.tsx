@@ -381,7 +381,7 @@ export default function CoachingClient({ userId }: Props) {
           )}
           {blockReason === 'te_weinig' && (
             <div style={{ display: 'flex', alignItems: 'flex-start', gap: 10 }}>
-              <span style={{ display: 'inline-block', width: 8, height: 8, borderRadius: '50%', background: '#f59e0b', flexShrink: 0, marginTop: 5 }} />
+              <span style={{ display: 'inline-block', width: 8, height: 8, borderRadius: '50%', background: '#f59e0b', flexShrink: 0, marginTop: 10 }} />
               <p style={{ fontFamily: "'Space Mono', monospace", color: '#9ca3af', fontSize: 15, lineHeight: '29px', fontWeight: 400 }}>
                 Je hebt {teWeinigCount} {teWeinigCount === 1 ? 'gesprek' : 'gesprekken'}. Minimaal 5 nodig voor een coachingsadvies.
               </p>
@@ -389,7 +389,7 @@ export default function CoachingClient({ userId }: Props) {
           )}
           {blockReason === 'te_weinig_voortgang' && (
             <div style={{ display: 'flex', alignItems: 'flex-start', gap: 10 }}>
-              <span style={{ display: 'inline-block', width: 8, height: 8, borderRadius: '50%', background: '#f59e0b', flexShrink: 0, marginTop: 5 }} />
+              <span style={{ display: 'inline-block', width: 8, height: 8, borderRadius: '50%', background: '#f59e0b', flexShrink: 0, marginTop: 10 }} />
               <p style={{ fontFamily: "'Space Mono', monospace", color: '#9ca3af', fontSize: 15, lineHeight: '29px', fontWeight: 400 }}>
                 Er is te weinig nieuwe input voor een zinvol nieuw advies. Voer minstens 3 gesprekken en wacht 48 uur na je vorige coaching.
               </p>
@@ -397,7 +397,7 @@ export default function CoachingClient({ userId }: Props) {
           )}
           {blockReason === 'stagnatie' && (
             <div style={{ display: 'flex', alignItems: 'flex-start', gap: 10 }}>
-              <span style={{ display: 'inline-block', width: 8, height: 8, borderRadius: '50%', background: '#cc2200', flexShrink: 0, marginTop: 5 }} />
+              <span style={{ display: 'inline-block', width: 8, height: 8, borderRadius: '50%', background: '#cc2200', flexShrink: 0, marginTop: 10 }} />
               <p style={{ fontFamily: "'Space Mono', monospace", color: '#9ca3af', fontSize: 15, lineHeight: '29px', fontWeight: 400 }}>
                 Je patronen herhalen zich over meerdere coachingsronden. Arno genereert hieronder bewust confronterende opdrachten.
               </p>
@@ -405,7 +405,7 @@ export default function CoachingClient({ userId }: Props) {
           )}
           {blockReason === 'hoge_scores' && (
             <div style={{ display: 'flex', alignItems: 'flex-start', gap: 10 }}>
-              <span style={{ display: 'inline-block', width: 8, height: 8, borderRadius: '50%', background: '#34d399', flexShrink: 0, marginTop: 5 }} />
+              <span style={{ display: 'inline-block', width: 8, height: 8, borderRadius: '50%', background: '#34d399', flexShrink: 0, marginTop: 10 }} />
               <p style={{ fontFamily: "'Space Mono', monospace", color: '#9ca3af', fontSize: 15, lineHeight: '29px', fontWeight: 400 }}>
                 Je staat al sterk op de drie pijlers. Voer meer gesprekken om het beeld verder aan te scherpen.
               </p>
@@ -413,7 +413,7 @@ export default function CoachingClient({ userId }: Props) {
           )}
           {error && (
             <div style={{ display: 'flex', alignItems: 'flex-start', gap: 10 }}>
-              <span style={{ display: 'inline-block', width: 8, height: 8, borderRadius: '50%', background: '#cc2200', flexShrink: 0, marginTop: 5 }} />
+              <span style={{ display: 'inline-block', width: 8, height: 8, borderRadius: '50%', background: '#cc2200', flexShrink: 0, marginTop: 10 }} />
               <p style={{ fontFamily: "'Space Mono', monospace", color: '#9ca3af', fontSize: 15, lineHeight: '29px', fontWeight: 400 }}>{error}</p>
             </div>
           )}
@@ -428,7 +428,7 @@ export default function CoachingClient({ userId }: Props) {
 
             {doc.stagnatie && (
               <div style={{ display: 'flex', alignItems: 'flex-start', gap: 10, marginBottom: 32 }}>
-                <span style={{ display: 'inline-block', width: 8, height: 8, borderRadius: '50%', background: '#cc2200', flexShrink: 0, marginTop: 5 }} />
+                <span style={{ display: 'inline-block', width: 8, height: 8, borderRadius: '50%', background: '#cc2200', flexShrink: 0, marginTop: 10 }} />
                 <p style={{ fontFamily: "'Space Mono', monospace", color: '#9ca3af', fontSize: 15, lineHeight: '29px', fontWeight: 400 }}>
                   Je patronen herhalen zich hardnekkig over meerdere coachingsronden. Neem de actiepunten hieronder serieus en doe er iets mee voor het volgende advies.
                 </p>
@@ -436,7 +436,7 @@ export default function CoachingClient({ userId }: Props) {
             )}
             {!doc.stagnatie && doc.weinig_voortgang && (
               <div style={{ display: 'flex', alignItems: 'flex-start', gap: 10, marginBottom: 32 }}>
-                <span style={{ display: 'inline-block', width: 8, height: 8, borderRadius: '50%', background: '#f59e0b', flexShrink: 0, marginTop: 5 }} />
+                <span style={{ display: 'inline-block', width: 8, height: 8, borderRadius: '50%', background: '#f59e0b', flexShrink: 0, marginTop: 10 }} />
                 <p style={{ fontFamily: "'Space Mono', monospace", color: '#9ca3af', fontSize: 15, lineHeight: '29px', fontWeight: 400 }}>
                   Er is weinig kwalitatieve verandering zichtbaar. De actiepunten hieronder zijn bewust concreter dan normaal.
                 </p>
