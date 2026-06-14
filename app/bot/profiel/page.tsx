@@ -98,6 +98,7 @@ export default function BotProfielPage() {
   const [isFirstTime, setIsFirstTime] = useState<boolean | null>(null)
 
   const [isDirty, setIsDirty] = useState(false)
+  const [submitted, setSubmitted] = useState(false)
   const [teamWaitlist, setTeamWaitlist] = useState(false)
   const firstName = user?.firstName || 'daar'
 
@@ -146,7 +147,10 @@ export default function BotProfielPage() {
     (!HEEFT_TEAM.includes(answers.rol) || (answers.gebruik !== '' && answers.teamgrootte !== ''))
 
   async function handleSubmit() {
-    if (!allFilled) return
+    if (!allFilled) {
+      setSubmitted(true)
+      return
+    }
     setSaving(true)
     setError('')
     try {
@@ -238,6 +242,9 @@ export default function BotProfielPage() {
                 style={{ marginTop: 12 }}
               />
             )}
+            {submitted && !rolIngevuld && (
+              <p style={{ fontFamily: "'Space Mono', monospace", fontSize: 13, color: '#cc2200', marginTop: 8 }}>Selecteer je rol.</p>
+            )}
             {HEEFT_TEAM.includes(answers.rol) && (
               <>
                 <div style={{ marginTop: 24 }}>
@@ -246,6 +253,9 @@ export default function BotProfielPage() {
                     <Chip label="INDIVIDUEEL" selected={answers.gebruik === 'individueel'} onClick={() => set('gebruik', 'individueel')} />
                     <Chip label="VOOR MIJN TEAM" selected={answers.gebruik === 'team'} onClick={() => set('gebruik', 'team')} />
                   </div>
+                  {submitted && answers.gebruik === '' && (
+                    <p style={{ fontFamily: "'Space Mono', monospace", fontSize: 13, color: '#cc2200', marginTop: 8 }}>Geef aan of je ArnoBot individueel of voor je team gebruikt.</p>
+                  )}
                   {answers.gebruik === 'team' && (
                     <div style={{ marginTop: 20, background: '#1f2937', border: '1px solid #374151', borderLeft: '3px solid #f59e0b', padding: '20px 24px' }}>
                       <p style={{ fontFamily: "'Space Mono', monospace", fontWeight: 700, fontSize: 13, letterSpacing: 4, color: '#f59e0b', marginBottom: 10 }}>COMING SEPTEMBER 2026</p>
@@ -273,6 +283,9 @@ export default function BotProfielPage() {
                       <Chip key={o} label={o} selected={answers.teamgrootte === o} onClick={() => set('teamgrootte', o)} />
                     ))}
                   </div>
+                  {submitted && answers.teamgrootte === '' && (
+                    <p style={{ fontFamily: "'Space Mono', monospace", fontSize: 13, color: '#cc2200', marginTop: 8 }}>Geef aan hoe groot je sales team is.</p>
+                  )}
                 </div>
               </>
             )}
@@ -285,6 +298,9 @@ export default function BotProfielPage() {
                 <Chip key={o} label={o} selected={answers.markt.includes(o)} onClick={() => toggleMarkt(o)} />
               ))}
             </div>
+            {submitted && answers.markt.length === 0 && (
+              <p style={{ fontFamily: "'Space Mono', monospace", fontSize: 13, color: '#cc2200', marginTop: 8 }}>Selecteer minimaal één markt.</p>
+            )}
           </Block>
 
           <Block nr="03" title="Wat verkoop je?">
@@ -295,6 +311,9 @@ export default function BotProfielPage() {
               placeholder="Bijv: Software voor HR-teams bij scale-ups, jaarcontracten van €15k tot €40k..."
               rows={3}
             />
+            {submitted && answers.wat_verkoop_je.trim().length <= 2 && (
+              <p style={{ fontFamily: "'Space Mono', monospace", fontSize: 13, color: '#cc2200', marginTop: 8 }}>Omschrijf wat je verkoopt.</p>
+            )}
           </Block>
 
           <Block nr="04" title="Jouw ideale klant">
@@ -305,6 +324,9 @@ export default function BotProfielPage() {
               placeholder="Bijv: CFO's bij productiebedrijven met 50 tot 200 medewerkers, beslissen op cijfers..."
               rows={3}
             />
+            {submitted && answers.ideale_klant.trim().length <= 2 && (
+              <p style={{ fontFamily: "'Space Mono', monospace", fontSize: 13, color: '#cc2200', marginTop: 8 }}>Omschrijf je ideale klant.</p>
+            )}
           </Block>
 
           <Block nr="05" title="Jouw grootste uitdaging">
@@ -315,6 +337,9 @@ export default function BotProfielPage() {
               placeholder="Bijv: Mijn conversie in het tweede gesprek is te laag, ik verlies deals op prijs..."
               rows={3}
             />
+            {submitted && answers.uitdaging.trim().length <= 2 && (
+              <p style={{ fontFamily: "'Space Mono', monospace", fontSize: 13, color: '#cc2200', marginTop: 8 }}>Omschrijf je grootste uitdaging.</p>
+            )}
           </Block>
 
           <Block nr="06" title="Gemiddelde dealgrootte">
@@ -324,6 +349,9 @@ export default function BotProfielPage() {
               onChange={e => set('dealgrootte', e.target.value)}
               placeholder="Bijv: €15.000 tot €40.000"
             />
+            {submitted && answers.dealgrootte.trim().length === 0 && (
+              <p style={{ fontFamily: "'Space Mono', monospace", fontSize: 13, color: '#cc2200', marginTop: 8 }}>Vul je gemiddelde dealgrootte in.</p>
+            )}
           </Block>
 
           <Block nr="07" title="Salescyclus">
@@ -333,17 +361,23 @@ export default function BotProfielPage() {
               onChange={e => set('salescyclus', e.target.value)}
               placeholder="Bijv: 2 tot 6 weken"
             />
+            {submitted && answers.salescyclus.trim().length === 0 && (
+              <p style={{ fontFamily: "'Space Mono', monospace", fontSize: 13, color: '#cc2200', marginTop: 8 }}>Vul je salescyclus in.</p>
+            )}
           </Block>
 
           <Block nr="08" title="Target">
             <p style={{ fontSize: 15, fontWeight: 400, lineHeight: '30px', color: '#9ca3af', marginBottom: 12 }}>
               Verwacht je dit jaar je {getTargetLabel(answers.rol) ? `${getTargetLabel(answers.rol)} ` : ''}target te halen?
             </p>
-            <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8, marginBottom: 28 }}>
+            <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8, marginBottom: submitted && answers.target_dit_jaar === '' ? 8 : 28 }}>
               {TARGET_DIT_JAAR_OPTIONS.map(o => (
                 <Chip key={o} label={o} selected={answers.target_dit_jaar === o} onClick={() => set('target_dit_jaar', o)} />
               ))}
             </div>
+            {submitted && answers.target_dit_jaar === '' && (
+              <p style={{ fontFamily: "'Space Mono', monospace", fontSize: 13, color: '#cc2200', marginTop: 8, marginBottom: 20 }}>Maak een keuze.</p>
+            )}
             <p style={{ fontSize: 15, fontWeight: 400, lineHeight: '30px', color: '#9ca3af', marginBottom: 12 }}>
               Heb je de afgelopen 3 jaar je {getTargetLabel(answers.rol) ? `${getTargetLabel(answers.rol)} ` : ''}target gehaald?
             </p>
@@ -352,21 +386,30 @@ export default function BotProfielPage() {
                 <Chip key={o} label={o} selected={answers.target_3_jaar === o} onClick={() => set('target_3_jaar', o)} />
               ))}
             </div>
+            {submitted && answers.target_3_jaar === '' && (
+              <p style={{ fontFamily: "'Space Mono', monospace", fontSize: 13, color: '#cc2200', marginTop: 8 }}>Maak een keuze.</p>
+            )}
           </Block>
 
           <Block nr="09" title="Jouw ervaring">
             <p style={{ fontSize: 15, fontWeight: 400, lineHeight: '30px', color: '#9ca3af', marginBottom: 12 }}>Hoe lang zit je al in sales?</p>
-            <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8, marginBottom: 28 }}>
+            <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8, marginBottom: submitted && answers.jaren_sales === '' ? 8 : 28 }}>
               {JAREN_SALES_OPTIONS.map(o => (
                 <Chip key={o} label={o} selected={answers.jaren_sales === o} onClick={() => set('jaren_sales', o)} />
               ))}
             </div>
+            {submitted && answers.jaren_sales === '' && (
+              <p style={{ fontFamily: "'Space Mono', monospace", fontSize: 13, color: '#cc2200', marginTop: 8, marginBottom: 20 }}>Maak een keuze.</p>
+            )}
             <p style={{ fontSize: 15, fontWeight: 400, lineHeight: '30px', color: '#9ca3af', marginBottom: 12 }}>Hoe lang doe je al de functie die je hierboven hebt aangegeven?</p>
             <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8 }}>
               {JAREN_FUNCTIE_OPTIONS.map(o => (
                 <Chip key={o} label={o} selected={answers.jaren_functie === o} onClick={() => set('jaren_functie', o)} />
               ))}
             </div>
+            {submitted && answers.jaren_functie === '' && (
+              <p style={{ fontFamily: "'Space Mono', monospace", fontSize: 13, color: '#cc2200', marginTop: 8 }}>Maak een keuze.</p>
+            )}
           </Block>
 
           {error && <p style={{ color: '#cc2200', fontSize: 15, fontWeight: 400, lineHeight: '30px', marginBottom: 16 }}>{error}</p>}
@@ -374,17 +417,18 @@ export default function BotProfielPage() {
           <button
             type="button"
             onClick={handleSubmit}
-            disabled={!allFilled || saving}
+            disabled={saving}
             style={{
               padding: '12px 36px',
-              background: allFilled ? '#f59e0b' : '#374151',
-              color: allFilled ? '#111827' : '#374151',
+              background: '#f59e0b',
+              color: '#111827',
               border: 'none', borderRadius: 999,
               fontFamily: "'Bebas Neue', sans-serif",
               fontSize: 18, letterSpacing: 3,
-              cursor: allFilled ? 'pointer' : 'not-allowed',
+              cursor: 'pointer',
               transition: 'background 0.2s',
               display: 'block', margin: '0 auto',
+              opacity: saving ? 0.6 : 1,
             }}
           >
             {saving ? 'Bezig...' : isFirstTime ? 'IK GA AKKOORD EN START →' : 'PROFIEL OPSLAAN →'}
