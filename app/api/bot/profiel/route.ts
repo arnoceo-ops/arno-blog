@@ -54,7 +54,7 @@ export async function POST(req: Request) {
 
       await serviceDb
         .from('arnobot_team_waitlist')
-        .upsert({ user_id: userId, email, naam }, { onConflict: 'user_id' })
+        .upsert({ user_id: userId, email, naam, rol: profiel.rol ?? null }, { onConflict: 'user_id' })
 
       if (!existing) {
         await resend.emails.send({
