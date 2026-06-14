@@ -1,6 +1,9 @@
 import { auth, clerkClient } from '@clerk/nextjs/server'
 import { NextResponse } from 'next/server'
 import { createClient } from '@supabase/supabase-js'
+import { Resend } from 'resend'
+
+const resend = new Resend(process.env.RESEND_API_KEY)
 
 const serviceDb = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_URL!,
@@ -42,9 +45,25 @@ export async function POST(req: Request) {
       const user = await clerk.users.getUser(userId)
       const email = user.emailAddresses[0]?.emailAddress ?? null
       const naam = [user.firstName, user.lastName].filter(Boolean).join(' ') || null
+
+      const { data: existing } = await serviceDb
+        .from('arnobot_team_waitlist')
+        .select('user_id')
+        .eq('user_id', userId)
+        .maybeSingle()
+
       await serviceDb
         .from('arnobot_team_waitlist')
-        .upsert({ user_id: userId, email, naam }, { onConflict: 'user_id' })
+        .upsert({ user_id: userId, email, naam, rol: profiel.rol ?? null }, { onConflict: 'user_id' })
+
+      if (!existing) {
+        await resend.emails.send({
+          from: 'ArnoBot <info@arno.bot>',
+          to: 'arnodiepeveen@gmail.com',
+          subject: 'Nieuwe aanmelding ArnoBot Team waitlist',
+          text: `Nieuwe aanmelding:\n\nNaam: ${naam ?? 'onbekend'}\nE-mail: ${email ?? 'onbekend'}\nRol: ${profiel.rol ?? 'onbekend'}`,
+        })
+      }
     } catch (e) {
       console.error('team_waitlist upsert:', e)
     }
