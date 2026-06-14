@@ -10,6 +10,10 @@
 
 **Werkwijze**: bij elke nieuwe UI-component, controleer alle elementen direct tegen de vaste normen hieronder vóór commit. Niet achteraf. Bij twijfel over de juiste norm: vragen aan de gebruiker.
 
+## Streepjes — nooit gebruiken
+
+De tekens –, - en — worden NOOIT gebruikt in arno.bot: niet in UI-copy, niet in Q&A, niet in labels, niet in placeholders, en niet in systeemprompts of antwoorden van ArnoBot (coaching, analyse, debrief, synthese). Enige uitzondering: een koppelteken in een samengesteld woord waar het taalkundig echt noodzakelijk is (bijv. MT-lid, oud-klant). Twijfel je? Laat het weg en herschrijf de zin.
+
 ## Nieuwe content of functionaliteit — altijd eerst voorstellen
 
 Bij nieuwe tekst (Q&A, copy, labels) of nieuwe functionaliteit: eerst een voorstel tonen aan de gebruiker, wachten op akkoord, dan pas bouwen. Geen uitzondering.
@@ -55,7 +59,7 @@ Elke route gebruikt een bewust gekozen model. Controleer elk kwartaal (of na een
 | `app/api/bot/uitdaging/route.ts` | `claude-sonnet-4-6` | Één korte vraag genereren, Sonnet volstaat | 2026-06 |
 | `app/api/bot/session-end/route.ts` (synthese) | `claude-haiku-4-5-20251001` | Drie snelle batch-calls per sessie, kwaliteit voldoende | 2026-06 |
 | `app/api/bot/coaching/route.ts` (precheck) | `claude-sonnet-4-6` | Alleen ja/nee-vraag, Fable 5 overkill | 2026-06 |
-| `app/api/bot/coaching/route.ts` (hoofdsynthese) | `claude-fable-5` | Meerdere gesprekken + profiel + patronen verbinden — reasoning model nodig | 2026-06 |
+| `app/api/bot/coaching/route.ts` (hoofdsynthese) | `claude-opus-4-8` | Fable 5 tijdelijk stopgezet. Opus 4.8 is de beste beschikbare keuze voor complexe redenering. Hercheck zodra Fable 5 weer beschikbaar is. | 2026-06 |
 | `app/api/bot/coaching/route.ts` (blog-synthese) | `claude-haiku-4-5-20251001` | Korte label per blog, Haiku volstaat | 2026-06 |
 | `app/api/bot/coaching-analyse/route.ts` (BIEB-analyse) | `claude-sonnet-4-6` | Patroonanalyse van max 20 gesprekken, Sonnet volstaat | 2026-06 |
 
